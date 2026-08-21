@@ -1,0 +1,276 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-18f74031c76c26bfd290e162",
+        "rationale": "Independent coverage audit에서 prior 3건과 다른 과거 NVIDIA 단독공급 관계와 HBM3E 가격압력의 전략적 조정 메커니즘 2건을 추가 추출했다. 산업 일반 계약·수익성·수요 전망은 target signed economics로 귀속하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "rationale": "Independent coverage audit에서 prior 24건의 compound rows를 재검토해 DRAM 생산증가의 시장수요 초과, 전사 OP QoQ 증가, HBM 매출 mix QoQ 확대 등 서로 다른 3개 원자를 추가 추출했다. Broker forecast와 전사·DRAM·HBM 귀속을 유지했고 나머지는 산업 일반 또는 prior semantic duplicate였다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.88,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-18f74031c76c26bfd290e162",
+        "economic_mechanism": "IBK투자증권은 2024년까지 SK하이닉스가 NVIDIA 요구를 충족하는 고성능 HBM의 사실상 단독 공급자였다고 평가했다. 이는 과거 broker characterization이며 현재 signed allocation·물량·가격·기간을 증명하지 않는다.",
+        "exact_quote": "2024년까지는\nSK하이닉스 만이 NVIDIA의 요구를 충족시킬 수 있는 고성능 HBM을 공급할 수 있었고, 이로 인해 사\n실상 1:1에 가까운 독점적인 고객-공급자 관계가 형성되어 있었다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Named customer와 target의 과거 HBM 공급 지위를 직접 연결하지만 2025년 경쟁구도로 supersede된 historical relationship이다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:INFORMATION_ONLY",
+        "normalized_object": "2024년까지 NVIDIA 고성능 HBM 사실상 단독공급 구조",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "through FY2024",
+        "predicate": "2024년까지 NVIDIA 요구를 충족하는 고성능 HBM의 사실상 단독 공급자였다고 평가했다",
+        "predicate_family": "BROKER_HISTORICAL_NAMED_HBM_SUPPLIER_RELATIONSHIP",
+        "primitive_tags": [
+          "HBM",
+          "NVIDIA",
+          "historical_supplier_relationship"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "historical_named_hbm_supplier_relationship",
+        "question_family_tags": [
+          "historical_named_hbm_supplier_relationship",
+          "broker_assessment",
+          "not_contract_terms"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.85,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스와 NVIDIA의 과거 HBM 공급관계",
+        "subject_id": "000660:HYNIX_NVIDIA_HBM_SUPPLY_HISTORY",
+        "unit": "",
+        "value": "사실상 1:1에 가까운 고객-공급자 관계"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.86,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-18f74031c76c26bfd290e162",
+        "economic_mechanism": "IBK투자증권은 SK하이닉스·Micron의 12단 HBM3E 가격 하락 압력을 전통적 공급과잉이 아니라 계약 기반 사업구조에서 고객 점유율을 얻기 위한 전략적 가격 조정으로 해석했다. 이는 signed 계약조건을 공개한 것이 아니다.",
+        "exact_quote": "비록 삼성전자가 아직\nNVIDIA의 전면적인 품질 인증을 받지 못했음에도 불구하고, 2025년 하반기를 앞두고 SK하이닉스\n와 Micron이 공급하는 12단 HBM3E 가격은 하락 압력을 받을 것으로 전망된다. 하지만 이와 같은\n가격 하락을 전통적인 의미의 공급과잉으로 해석해서는 안된다. 이는 오히려 계약 기반의 사업 구조\n내에서 고객 점유율 확보를 위한 전략적 가격 조정의 결과이기때문이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "같은 가격 하락 관측의 원인을 구조적 공급과잉과 전략적 고객점유 조정으로 구분해 pricing-power counter의 의미를 재구성한다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:PRICING_POWER",
+        "normalized_object": "HBM3E 가격 압력의 전략적 점유율 조정 메커니즘",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2H2025 analysis",
+        "predicate": "12단 HBM3E 가격 하락 압력을 계약 기반 구조의 전략적 점유율 가격 조정으로 평가했다",
+        "predicate_family": "BROKER_HBM_STRATEGIC_PRICING_ADJUSTMENT",
+        "primitive_tags": [
+          "HBM3E",
+          "pricing_pressure",
+          "strategic_adjustment"
+        ],
+        "product_family": "HBM3E 12-high",
+        "question_family_id": "hbm_pricing_adjustment_mechanism",
+        "question_family_tags": [
+          "hbm_pricing_adjustment_mechanism",
+          "broker_assessment",
+          "not_signed_contract"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.86,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 12단 HBM3E 가격 조정 메커니즘",
+        "subject_id": "000660:HYNIX_HBM3E_STRATEGIC_PRICING",
+        "unit": "",
+        "value": "전통적 공급과잉이 아닌 전략적 가격 조정"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.9,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권은 FY2025 SK하이닉스 DRAM 생산 B/G가 시장 수요 B/G를 웃돌 것으로 전망했다. Prior fact의 23% 생산성장 숫자와 구별되는 상대 수급 counter이며 HBM-only capacity가 아니다.",
+        "exact_quote": "B/G를 삼성전자 +7%, SK하이닉스 +23%, 마이크론 +14%, CXMT +110%를\n예상하며, 시장 수요 B/G 를 상회하는 업체는 SK 하이닉스, CXMT 뿐 일 것으로\n전망한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Target DRAM 공급증가가 시장수요 증가를 웃돈다는 상대관계는 공급부족·CAPA scarcity 논리에 대한 독립 counter다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:SUPPLY_RESPONSE",
+        "normalized_object": "FY2025 DRAM 생산증가율의 시장수요 증가율 초과 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025 forecast",
+        "predicate": "2025년 DRAM 생산 B/G가 시장 수요 B/G를 상회할 것으로 전망했다",
+        "predicate_family": "BROKER_DRAM_SUPPLY_GROWTH_EXCEEDS_DEMAND",
+        "primitive_tags": [
+          "DRAM",
+          "production_bit_growth",
+          "demand_gap"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "dram_supply_growth_vs_market_demand",
+        "question_family_tags": [
+          "dram_supply_growth_vs_market_demand",
+          "broker_forecast",
+          "not_hbm_only"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM 생산증가와 시장수요 비교 전망",
+        "subject_id": "000660:HYNIX_DRAM_SUPPLY_DEMAND_GAP_FY2025",
+        "unit": "",
+        "value": "생산 B/G가 시장 수요 B/G 상회"
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.92,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권은 4Q24 전사 영업이익이 전분기 대비 17% 증가할 것으로 전망했다. Prior 8.2조원 수준 전망과 구별되는 성장률 원자이며 HBM-only 이익이나 issuer guidance가 아니다.",
+        "exact_quote": "SK하이닉스의 4Q24 영업이익을 8.2조원 (+17% QoQ)으로 수요 둔화 속에서도\n분기 최대 이익을 경신할 것으로 예상한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "영업이익 수준과 별개의 분기 성장률 원자지만 현재 시점에는 경과한 broker forecast다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "4Q24 전사 영업이익 QoQ 증가 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E",
+        "predicate": "4Q24 영업이익이 전분기 대비 17% 증가할 것으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_OPERATING_PROFIT_QOQ_FORECAST",
+        "primitive_tags": [
+          "operating_profit",
+          "QoQ",
+          "4Q2024E"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "quarterly_operating_profit_qoq_forecast",
+        "question_family_tags": [
+          "quarterly_operating_profit_qoq_forecast",
+          "broker_forecast",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 4Q24 전사 영업이익 QoQ 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_OP_QOQ_4Q2024",
+        "unit": "% QoQ",
+        "value": 17
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.93,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-68e4c276617add99c4c6d4fa",
+        "economic_mechanism": "SK증권은 4Q24 DRAM 매출 중 HBM 비중이 전분기 대비 10%p 확대될 것으로 전망했다. Prior 40% mix 수준과 구별되는 변화 원자이며 actual이나 issuer guidance가 아니다.",
+        "exact_quote": "DRAM 내 HBM 매출 비중은 40%\n(+10%p QoQ)으로 믹스 제고 역시 지속되며, 경기 부진 사이클에서의 높은 이익\n방어력을 증명할 것으로 전망한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 매출기여 수준과 별개의 mix 변화 원자지만 현재 시점에는 경과한 broker forecast다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:REVENUE_CONVERSION",
+        "normalized_object": "4Q24 DRAM 내 HBM 매출비중 QoQ 확대 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E",
+        "predicate": "4Q24 DRAM 내 HBM 매출비중이 전분기 대비 10%p 확대될 것으로 전망했다",
+        "predicate_family": "BROKER_HBM_REVENUE_MIX_QOQ_CHANGE_FORECAST",
+        "primitive_tags": [
+          "HBM",
+          "revenue_mix",
+          "percentage_point_change"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_revenue_mix_qoq_change",
+        "question_family_tags": [
+          "hbm_revenue_mix_qoq_change",
+          "broker_forecast",
+          "not_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 DRAM 내 HBM 매출비중 QoQ 전망",
+        "subject_id": "000660:HYNIX_HBM_REVENUE_MIX_QOQ_4Q2024",
+        "unit": "percentage points QoQ",
+        "value": 10
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "f55492301735657967dfcbc86fecbf5fcf76a36f41c35f0151d379558a5e5232",
+  "production_score_authority": false,
+  "prompt_hash": "0d892ceda8396e1315be9619cd209f9de2f8e0c6e0d804b879aacff9bfdccccf",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-38ef4791df63819132bc528c9f6b30f74ba57ffa19fe82f7c582a1b74559bd57",
+  "response_id": "COLLABRESP-40ce6bbcb4003847de6adcb5dc4d572ebee8b345d05a085a2b7504a72081f4f9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

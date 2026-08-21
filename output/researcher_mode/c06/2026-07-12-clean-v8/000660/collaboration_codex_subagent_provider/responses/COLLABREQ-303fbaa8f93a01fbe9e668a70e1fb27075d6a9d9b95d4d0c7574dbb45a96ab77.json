@@ -1,0 +1,64 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      2.3,
+      3.4
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-09ab96433f8087166845bf25는 POSITIVE ordinal anchor로 [1.75, 2.25] 범위를 제시한다. 현재 사실과 정확한 기업·기간 대응은 아니므로 점수 scale 경계로만 사용한다.",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64는 COUNTER ordinal anchor로 [1.5, 2.0] 범위를 제시한다. 현재 사실과 정확한 기업·기간 대응은 아니므로 점수 scale 경계로만 사용한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-4e2037f2e29108c0d4b9e66c",
+      "EFACT-720c15b2be6d3b574ccae715",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-a696155e4f4ed8929c20afd4",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c418009dc8a6493dd0a098b4",
+      "EFACT-e1106fe56703ab347c29ba19"
+    ],
+    "disagreements": [
+      "official filing 수량이 많다는 이유만으로 독립 corroboration 또는 HBM 단독 정보 완전성이 확보됐다는 해석에는 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 2.9,
+    "rationale": "적정 감사의견, DRAM actual, 메모리 가동률, 단기 매출채권과 HBM 제품·고객 실행은 신뢰도를 지지한다. 분기 MD&A·연차 위험공시 제한, 단일 OPENDART 독립성 그룹, 고객 집중과 품질·재고·재공품 위험 및 HBM 단독 계약·경제성 부재를 반영해 2.9점이 적정하다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-59fe4fe59aecdedfd2cd7aac",
+      "EFACT-6da0de1ddbc18e6388a92e8e",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "독립 source 다양성, HBM 단독 계약·매출·이익·현금흐름과 완전한 MD&A·위험공시가 없다.",
+    "why_not_lower": "적정 감사의견과 current actual, 메모리 가동률, HBM 제품·고객 실행이라는 검증 가능한 official evidence가 있다."
+  },
+  "payload_hash": "e2ee8643ae606cbc99197a958d35f51c381fcda950643f7c454a6e4f5c0ccfdc",
+  "production_score_authority": false,
+  "prompt_hash": "f55980ff5d1cb124830a57275907f0cd7c9ecd378c0bf34534a200b69d6c3ca3",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-303fbaa8f93a01fbe9e668a70e1fb27075d6a9d9b95d4d0c7574dbb45a96ab77",
+  "response_id": "COLLABRESP-c7852c3ccfbb86586fe34192ba257656f4aa245f7054af9faf6b10b20f3a9b69",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

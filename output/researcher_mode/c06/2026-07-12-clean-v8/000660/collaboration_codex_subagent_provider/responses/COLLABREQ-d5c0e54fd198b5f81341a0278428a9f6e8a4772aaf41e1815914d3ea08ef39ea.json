@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "e2c3742ef3a703dd1969546348811663f70fba42593fad8319531cc65073905d",
+  "payload": {
+    "allowed_range": [
+      14.5,
+      16.8
+    ],
+    "anchor_comparisons": [
+      "CANCH-3d3e727f09221d0fc00e86a6의 16.08~18.48점 구간과 비교하면 연결 actual 이익·현금흐름, DRAM actual, HBM 가격·제품·고객 실행은 강하지만 HBM 단독 이익·FCF가 없어 하단에 가깝다.",
+      "CANCH-17745cd4887afd21639e9dd6의 10.32~12.72점 구간보다는 실제 영업이익·영업현금흐름·FCF 개선과 가동률이 뚜렷해 높다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-22b3c14ea08f7a3f6c58b170",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-9deebb8473a44150b981c991",
+      "EFACT-c07ed486e6d67134d19d6951"
+    ],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "CANCH-3d3e727f09221d0fc00e86a6",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "proposed_points": 15.8,
+    "rationale": "연결 실적과 현금흐름, 별도 DRAM 매출, HBM 가격·제품·고객 실행을 모두 positive로 반영한다. 다만 연결/DRAM actual을 HBM 단독 EPS·FCF로 재귀속하지 않고, CAPEX 현금유출·재고평가·재공품 계약손실 위험을 함께 반영해 강하지만 상단이 열린 점수로 판단한다.",
+    "support_fact_ids": [
+      "EFACT-0295af0d92028218f77266f2",
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-74d33983a80ca98f18936f31",
+      "EFACT-802a829867fee39ece0b193c",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-d2e799df4d980691c6707a9e",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "HBM 단독 영업이익·마진·CAPEX·FCF가 없고, 유형자산 취득 현금유출과 재고평가 및 재공품 손실 위험이 현금전환의 지속성을 제한한다.",
+    "why_not_lower": "2026년 1분기 actual 이익·영업현금흐름·FCF, DRAM 개선, 높은 가동률과 HBM 가격·제품·고객 실행이 동시에 확인된다."
+  },
+  "payload_hash": "16b94c596360ee5356a01905e0ada9ca5c116f4374fd06c2e0bef8c02ecf46d9",
+  "production_score_authority": false,
+  "prompt_hash": "459a31515d6e60a1aafea5df7ec9447227c8728f4dbd83c1884af91cc2895a19",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d5c0e54fd198b5f81341a0278428a9f6e8a4772aaf41e1815914d3ea08ef39ea",
+  "response_id": "COLLABRESP-e78eafb08a658e9cd398af9ef7509252f3b49331744900bb0256f729c127850e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

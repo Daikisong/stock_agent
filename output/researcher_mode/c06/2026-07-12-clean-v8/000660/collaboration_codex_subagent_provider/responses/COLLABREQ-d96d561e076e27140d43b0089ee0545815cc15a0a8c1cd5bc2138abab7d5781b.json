@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "rationale": "The supplied chunk 2/3 was reviewed in full. Its ten target-name occurrences do not yield a current, target-direct bottleneck-pricing atom: passages about SK or SK Square use SK hynix only as a holding-company stake/value input and therefore concern another reporting subject; the 2023 exchangeable-bond note is historical financing rather than bottleneck pricing; and the compliance-section target-price history is broker valuation/recommendation history rather than capacity, shortage, allocation, or pricing-power evidence. The 2025-10-22 target-price row also postdates the document available_at date of 2025-10-21 and is not used. This chunk-level no-material disposition is not evidence of source absence or parent-document exhaustion.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "4bd73a09db548d0c2c2e2ac529263beca65653a174c34e8a2b0a7f48b07a0e45",
+  "production_score_authority": false,
+  "prompt_hash": "a0d2a262afc98b7bc5d6749de339007a491cbce3b020bcc0c7e809d6a4688545",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d96d561e076e27140d43b0089ee0545815cc15a0a8c1cd5bc2138abab7d5781b",
+  "response_id": "COLLABRESP-d3b3b5c72108fd0472e197408762ba3606dbd0f471dfbdf4e7172c25a5099177",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

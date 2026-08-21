@@ -1,0 +1,33 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "The supervisor asks for an SK hynix official earnings or IR presentation covering period-specific forward HBM demand, production, capacity, or customer allocation, but the executed ledger already contains the semantically equivalent official route 'site:skhynix.com SK하이닉스 2026 1Q investor relations HBM capex capacity free cash flow presentation PDF'. Rewording it for the valuation objective would be a duplicate.",
+      "The four exact PUBLIC_BROKER_PDF identities in the current ledger have already returned no result, and the prompt provides no new verified issuer document identifier, publication title, file name, or alternate official retrieval route. Generic official-site synonyms would be template invention rather than identity-based source repair.",
+      "DURABLE_VISIBILITY remains unresolved: memory-wide utilization, issuer guidance, or customer collaboration must not be converted into a signed contract, fixed allocation, or cancellation protection. An empty query response is not a claim of source absence or completion."
+    ]
+  },
+  "payload_hash": "bcf7e5447be8dce4601c802359e666e9e5f93c3cbd467a1fb3325ad8d7793b0e",
+  "production_score_authority": false,
+  "prompt_hash": "a743cad2dd9e16de22eb45451d1624a29350495af5b358954fd9d597d46c8e6e",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-af1f163fbab75bb99d143804ceb4a462ec8a11e0cd69e5e1bb39d6414b55e6f3",
+  "response_id": "COLLABRESP-a7a040ebd701bffb5926719dab45839ebeb215e2d5b05bd50476b75a53109a35",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

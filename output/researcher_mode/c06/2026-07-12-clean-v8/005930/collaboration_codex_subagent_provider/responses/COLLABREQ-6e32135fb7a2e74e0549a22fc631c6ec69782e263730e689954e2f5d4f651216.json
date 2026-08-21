@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "d26091f17179ee4072d7a1c473d0df7e384a451c92d52af10ad50012f121a4a1",
+  "payload": {
+    "allowed_range": [
+      1.75,
+      2.25
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-09ab96433f8087166845bf25의 1.75~2.25점 구간과 비교하면 재작성·감사 강조사항 부재와 actual 출하, AMD corroboration은 부합하지만 계약·qualification 투명성이 낮아 중간 수준이다.",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64의 1.5~2.0점보다 공식 공시와 독립 counterparty 확인이 강하지만, 추정 불확실성과 HBM-specific 계약 공백 때문에 상단 차이는 작다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1",
+      "EFACT-6868a3fa0d1462e2b1dfd4f2",
+      "EFACT-6a317a6c41253b0fafc79d56",
+      "EFACT-7f35f23f1f02e6327c9a1268"
+    ],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 2.0,
+    "rationale": "재무제표 재작성과 감사 강조·핵심감사사항 부재는 규제공시의 형식적 신뢰도를 지지하고, HBM4 actual 출하와 AMD 공급 이력·CEO 확인은 issuer-only 의존을 일부 낮춘다. 그러나 OpenAI LOI·전망, 엔비디아 협의, AMD MOU·우선공급은 계약조건이 아니며 HBM 고객·qualification·마진의 직접 투명성이 낮아 중간 수준으로 평가한다.",
+    "support_fact_ids": [
+      "EFACT-1003ee870ca8d68689958b0a",
+      "EFACT-303c70f6fb2e11305c82f77b",
+      "EFACT-3dd3bb8fbe1496797f1cd00c",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-7f9fca669110a7e761e6264d",
+      "EFACT-7fe708d0c29a809416e4b893",
+      "EFACT-9eea79412c9f3395a852d248",
+      "EFACT-b6ff1b966b93b843dd6bcd04",
+      "EFACT-d0b79e6c2a1c2bef63f9cb34",
+      "EFACT-e7acbf35eec720d3412bca19",
+      "EFACT-f8487df03aa235fb70883193"
+    ],
+    "why_not_higher": "HBM 고객별 signed 물량·가격·qualification outcome·마진 공시가 없고 여러 협력 신호가 계획·협의·MOU 단계에 머문다.",
+    "why_not_lower": "공식 감사·규제공시의 형식적 신뢰도, HBM4 actual 출하, AMD의 공급 이력과 독립 확인이 존재한다."
+  },
+  "payload_hash": "b82bf51a081c64304b3a1350e5fbf412bf0642661baa7bbcbd9cb08c0d59d178",
+  "production_score_authority": false,
+  "prompt_hash": "14ee3f4dae9b8e532b8ac28de73354dc03abad227b8b28a3431214e065ec8a1b",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6e32135fb7a2e74e0549a22fc631c6ec69782e263730e689954e2f5d4f651216",
+  "response_id": "COLLABRESP-1896be76c65cc836d9e01608f8ef1d10fa813e513f02f8caf0475f4a5f017a85",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

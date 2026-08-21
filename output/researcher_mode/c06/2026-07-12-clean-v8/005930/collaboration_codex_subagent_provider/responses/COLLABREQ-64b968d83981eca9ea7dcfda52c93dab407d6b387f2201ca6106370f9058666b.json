@@ -1,0 +1,33 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "기존 AMD CUSTOMER_OFFICIAL query와 full-fetched newsroom route는 Samsung의 named HBM3E/HBM4 기술 관계를 이미 source-backed fact로 materialize했다. 동일 amd.com 문서, 제목 변형 또는 일반 AMD 검색은 의미 중복이므로 재제안하지 않는다.",
+      "현재 structured source status는 COMPLETE이고 official pending reason도 없다. 남은 SUPERVISOR_SYNTHESIS_LINEAGE_PENDING은 새 source identity로 해결할 문제가 아니므로 query로 변환하지 않는다.",
+      "따라서 신규 verified target-scoped source identity가 없는 이 snapshot에서는 suggested_queries를 비운다. 이는 source absence 선언이나 고정 round 종료 근거가 아니다."
+    ]
+  },
+  "payload_hash": "75e319de01fa41ddb5a4d354e64d069ee410cc6f7314bd8cbfc1781f12db9e74",
+  "production_score_authority": false,
+  "prompt_hash": "88919530c863c36ee08a02f8c1d7b616c551153b2ae8556d1740da54b0e87a30",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-64b968d83981eca9ea7dcfda52c93dab407d6b387f2201ca6106370f9058666b",
+  "response_id": "COLLABRESP-edce6a8b628bf6da1f1e06b33f7720af68259af03f7cc992d35b762215d00990",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

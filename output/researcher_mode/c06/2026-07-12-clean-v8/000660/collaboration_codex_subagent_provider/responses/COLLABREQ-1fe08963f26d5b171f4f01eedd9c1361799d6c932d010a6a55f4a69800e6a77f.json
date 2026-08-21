@@ -1,0 +1,112 @@
+{
+  "output_schema_hash": "7898fd577667183c98b838d240ce0cf709854afb944fd0eb8422e070ea8a6c59",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-763e3c2fa97b27f1820be12e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "회사 역사 페이지로 실적발표 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-778562dfdf86f59ef2914197",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "한국어 뉴스룸 홈 URL로 특정 실적발표 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-bf002c1c7ae82505288e49c6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "영문 뉴스룸 홈 URL로 issuer earnings release 직접 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d149d1db6170434a48b4e69c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "뉴스룸 구독 페이지로 경제 증거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d62b27495009bf414c41342d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "중문 뉴스룸 홈 URL로 특정 실적발표 원문을 식별하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-dda886c3c1806b361d633cc8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "AI 인프라 인사이트 콘텐츠로 실적발표 원문이 아니며 metadata는 계약·CAPA evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f5cfa1ffa1b4ff61583c52b5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "뉴스룸 가이드라인 페이지로 실적발표·경제 증거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-fa1f72b0d967de1776d7ea72",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "YouTube embed 링크로 issuer earnings release 원문이 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition은 parent 문서의 홈·정책·일반 콘텐츠 참조 링크만 포함하고 distinct 실적발표 full-document route는 없다. 이는 공식 자료의 포괄적 부재를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "2d59f2aa573ce79394364cfa6a4e0aa80fa4d9575d3f86871cc8312939559a81",
+  "production_score_authority": false,
+  "prompt_hash": "d817aa6b1466c9388cf584fc072cceadb4403210fc44640d028b05481277389c",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1fe08963f26d5b171f4f01eedd9c1361799d6c932d010a6a55f4a69800e6a77f",
+  "response_id": "COLLABRESP-6be19b3157432f2d1e27121ee323e9b1c0eb1865dba3dcc2cfe6e2314cab11c8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

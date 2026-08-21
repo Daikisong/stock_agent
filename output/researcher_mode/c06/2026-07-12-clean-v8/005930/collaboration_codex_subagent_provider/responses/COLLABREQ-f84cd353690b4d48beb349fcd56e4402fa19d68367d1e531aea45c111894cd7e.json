@@ -1,0 +1,167 @@
+{
+  "output_schema_hash": "ea6c03fb5e7b6103662bcf718c7fd1257807399539b5ac26c711687f0d6fcd49",
+  "payload": {
+    "confidence": 0.72,
+    "counter_case": "메모리·전사 실적과 valuation multiple을 HBM-only earnings에 재귀속할 수 없다. AMD HBM4는 MOU 기반 alignment이며 물량·가격·기간·취소조건이 없고, 엔비디아 HBM4도 협의 중이다. DRAM 점유율은 전년보다 회복했지만 2024년 수준에는 미달한다. Structured DURABLE_VISIBILITY의 corporate AI-factory GPU 계획은 HBM 계약·정상 이익 bridge가 아니므로 선택하지 않았다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df"
+    ],
+    "positive_case": "2026-Q1 메모리 매출 74,779,980백만원과 전년 비교 기준 19,069,038백만원, 메모리 ASP 146% 상승, HBM4 양산 출하는 실현된 operating improvement다. AMD 공식 자료는 삼성전자의 MI350X·MI355X HBM3E 공급 이력과 MI455X HBM4 primary supply alignment를 독립 corroborate해 HBM 실행의 질을 높인다. Current valuation 지표는 재평가 여지를 평가할 정량 기준을 제공한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 36,
+        "reason": "HBM4 actual 양산 출하는 계획과 실현을 구분하는 핵심 rerating 근거라 다시 선택한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 44,
+        "reason": "2025-Q1 메모리 매출은 2026-Q1 actual의 정확한 전년 비교 context이므로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 58,
+        "reason": "DRAM 점유율 회복과 2024년 대비 잔여 격차를 함께 보여주는 중립 경쟁 context라 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 67,
+        "reason": "2026-Q1 메모리 actual 매출은 수익 전환을 확인하되 HBM-only 귀속을 피할 수 있는 핵심 실적이다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 73,
+        "reason": "메모리 ASP actual은 가격력이 매출·이익으로 전환될 가능성을 직접 보여줘 유지한다."
+      }
+    ],
+    "proposed_score_lower": 4.0,
+    "proposed_score_mid": 4.7,
+    "proposed_score_upper": 5.4,
+    "research_complete": true,
+    "researcher_summary": "메모리 actual 매출과 ASP 상승, HBM4 양산 출하, AMD 공식 HBM3E 공급 이력 및 HBM4 alignment는 제품 실행과 고객 가시성을 보강한다. 다만 연결된 valuation plane의 forward PE·PB·EV/EBITDA·FCF yield는 전사 denominator이며, AMD HBM4는 MOU 기반이고 엔비디아 HBM4는 협의 중이어서 HBM-only 정상 이익 bridge와 signed economics가 없다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "독립 고객 공식 자료가 실현된 HBM3E 공급 이력을 확인하므로 HBM 실행의 valuation 질을 보강하지만 비공개 가격·물량·기간 때문에 정상 이익 배수로 직접 전환하지 않는다.",
+        "fact_row_index": 3,
+        "source_economic_mechanism": "AMD 공식 뉴스룸은 삼성전자가 AMD의 primary HBM3E partner로서 Instinct MI350X와 MI355X 가속기를 지원해 왔다고 독립적으로 확인한다. 이는 실현된 고객·제품 공급 이력의 corroboration이지만 가격, 물량, 기간, HBM-only 매출은 공개하지 않는다.",
+        "source_period_json": "\"nearly two decades of collaboration through 2026-03-18; HBM3E partner history current at publication\"",
+        "source_predicate": "AMD_OFFICIAL_CONFIRMED_SAMSUNG_AS_PRIMARY_HBM3E_PARTNER_FOR_MI350X_MI355X",
+        "source_value_json": "\"primary HBM3E partner to AMD powering Instinct MI350X and MI355X\""
+      },
+      {
+        "component_interpretation": "명명 고객과의 협의는 기회가 있으나 signed contract와 배정·물량·가격이 없으므로 HBM rerating의 durable earnings bridge를 제한하는 current counter다.",
+        "fact_row_index": 18,
+        "source_economic_mechanism": "삼성전자는 엔비디아에 HBM3E와 HBM4를 공급할 계획이라고 밝혔지만 HBM4 공급은 아직 긴밀히 협의 중이다. 이는 명명 고객과의 공급 논의를 확인하되 서명 계약·확정 배정·물량·가격을 확인하지 못하는 가시성 counter다.",
+        "source_period_json": "\"2025-10-31 현재 및 이후\"",
+        "source_predicate": "엔비디아 대상 HBM3E·HBM4 공급은 issuer plan이며 HBM4 공급은 2025-10-31 현재 협의 중이다.",
+        "source_value_json": "\"HBM3E·HBM4 공급 계획; HBM4 공급 협의 중\""
+      },
+      {
+        "component_interpretation": "AMD 공식 확인은 HBM4의 named-customer visibility를 높이지만 MOU alignment를 확정 구매계약이나 HBM-only earnings로 승격하지 않는다.",
+        "fact_row_index": 23,
+        "source_economic_mechanism": "AMD 공식 뉴스룸은 MOU 아래 양사가 차세대 AMD Instinct MI455X용 primary HBM4 supply에 맞춰 협력한다고 확인한다. 명명 고객·제품의 미래 공급 가시성을 독립적으로 보강하지만 MOU 기반 정렬이므로 확정 구매계약, 물량, 가격, 기간 또는 취소조건으로 승격하지 않는다.",
+        "source_period_json": "\"2026-03-18 announcement; future AMD Instinct MI455X supply alignment\"",
+        "source_predicate": "AMD_OFFICIAL_CONFIRMED_PRIMARY_HBM4_SUPPLY_ALIGNMENT_FOR_MI455X",
+        "source_value_json": "\"primary HBM4 supply alignment under MOU for AMD Instinct MI455X\""
+      },
+      {
+        "component_interpretation": "HBM4가 계획을 넘어 실제 양산 출하로 전환된 점은 제품 실행과 rerating의 positive지만 매출·마진·계약 조건을 대신하지 않는다.",
+        "fact_row_index": 36,
+        "source_economic_mechanism": "2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.",
+        "source_period_json": "\"2026-02\"",
+        "source_predicate": "COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS",
+        "source_value_json": "\"HBM4 양산 출하\""
+      },
+      {
+        "component_interpretation": "전년 동기 메모리 매출 비교 기준으로만 사용하며 HBM 단독 매출이나 valuation denominator로 재귀속하지 않는다.",
+        "fact_row_index": 44,
+        "source_economic_mechanism": "메모리 제품 매출의 전년 비교 기준",
+        "source_period_json": "\"2025-Q1\"",
+        "source_predicate": "2025년 1분기 메모리 제품 매출액을 비교표에 보고했다",
+        "source_value_json": "19069038"
+      },
+      {
+        "component_interpretation": "DRAM 경쟁지위 회복은 rerating을 보조하지만 2024년 수준 미달과 DRAM·HBM 귀속 차이를 동시에 반영하는 중립 context다.",
+        "fact_row_index": 58,
+        "source_economic_mechanism": "삼성전자의 2026년 1분기 추정 DRAM 금액 기준 점유율 38.4%는 2025년 34.0%보다 높지만 2024년 41.5%에는 미달해 경쟁지위 회복과 잔여 격차를 함께 보여준다.",
+        "source_period_json": "\"2026-Q1 vs 2025 and 2024\"",
+        "source_predicate": "ESTIMATED_DRAM_MARKET_SHARE_RECOVERED_YEAR_ON_YEAR_BUT_BELOW_2024",
+        "source_value_json": "\"38.4% vs 34.0% in 2025 and 41.5% in 2024\""
+      },
+      {
+        "component_interpretation": "2026년 1분기 메모리 actual 매출은 rerating을 뒷받침하는 실현 실적이지만 HBM-only 매출로 분해하지 않는다.",
+        "fact_row_index": 67,
+        "source_economic_mechanism": "메모리 제품 매출의 실제 수익 전환",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 메모리 제품 매출액을 보고했다",
+        "source_value_json": "74779980"
+      },
+      {
+        "component_interpretation": "메모리 ASP actual 상승은 earnings quality와 valuation 재평가의 positive지만 HBM 단독 ASP로 귀속하지 않는다.",
+        "fact_row_index": 73,
+        "source_economic_mechanism": "메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다.",
+        "source_period_json": "\"2026Q1 vs 2025 annual average\"",
+        "source_predicate": "MEMORY_ASP_INCREASED_VERSUS_PRIOR_YEAR_AVERAGE",
+        "source_value_json": "146"
+      }
+    ],
+    "selected_fact_row_indices": [
+      3,
+      18,
+      23,
+      36,
+      44,
+      58,
+      67,
+      73
+    ],
+    "source_coverage": [
+      "CUSTOMER_OFFICIAL",
+      "ISSUER_NEWSROOM",
+      "OPENDART",
+      "KRX_PRICE_MARKET_CAP",
+      "COMPANYGUIDE",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "HBM 단독 매출·마진·FCF와 period-matched normal earnings denominator가 공개되지 않았다.",
+      "AMD MOU 및 엔비디아 협의의 확정 물량·가격·기간·취소조건이 공개되지 않았다.",
+      "Current forward PE, PB, EV/EBITDA와 FCF yield는 전사·scenario 기반이어서 HBM 기여도를 분리하지 못한다.",
+      "Supervisor가 지목한 DB full broker PDF는 이 immutable request에 fetched evidence로 포함되지 않아 선반영하지 않았다."
+    ],
+    "why_not_higher": "HBM-only 정상 이익 denominator와 signed 물량·가격·기간이 없고, AMD HBM4는 MOU alignment이며 엔비디아 HBM4는 협의 중이다. 전사 valuation 지표와 corporate GPU 계획을 HBM rerating 증거로 확대할 수 없다.",
+    "why_not_lower": "메모리 actual 매출·ASP 상승, HBM4 양산 출하, AMD 공식 HBM3E 공급 이력과 HBM4 named-customer alignment가 함께 있어 단순 제품 계획이나 weak rerating case보다 강하다."
+  },
+  "payload_hash": "21d415096ed31322d3a9f58d847a625797ff05e916eb94df4526a719777edc2f",
+  "production_score_authority": false,
+  "prompt_hash": "aca4d84b78227d03e767901f0efe6676ab53f73e085d12df23c9304038313b40",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f84cd353690b4d48beb349fcd56e4402fa19d68367d1e531aea45c111894cd7e",
+  "response_id": "COLLABRESP-b3ca65aa066c6e2190ddf0d03c1412d81e643fcdac3d86a4fd50eb1cf199e4c8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

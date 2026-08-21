@@ -1,0 +1,58 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      2.9,
+      3.7
+    ],
+    "anchor_comparisons": [
+      "양의 ORDTRANSFER-09ab96433f8087166845bf25(1.75~2.25)보다 공식 공시·출하 확인이 강하지만 ORDTRANSFER-9ad693f3cd59964e0c67f797(4.75~5.0)의 완전한 투명성에는 미달한다.",
+      "반증 ORDTRANSFER-90c2b7d4695e62e277703a64(1.5~2.0)보다 형식적 신뢰성이 높고, ORDTRANSFER-994f92d663d0b49c624b1803(4.75~5.0)보다 HBM 계약 공백이 커 중간에 둔다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-6868a3fa0d1462e2b1dfd4f2",
+      "EFACT-6a317a6c41253b0fafc79d56",
+      "EFACT-7f35f23f1f02e6327c9a1268"
+    ],
+    "disagreements": [
+      "중요 장기공급계약 미보고를 모든 HBM 계약 부재로 확대하지 않는다.",
+      "상위 5개 고객 23%는 회사 전체 수치이며 HBM 고객집중도가 아니다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-9ad693f3cd59964e0c67f797",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64",
+      "ORDTRANSFER-994f92d663d0b49c624b1803"
+    ],
+    "proposed_points": 3.3,
+    "rationale": "재작성 없음·감사 강조사항 없음과 공식 HBM4 양산 출하는 기본 신뢰도를 지지한다. 그러나 추정 불확실성, 제한된 장기공급계약 공시 범위, 회사 전체 고객집중도는 HBM 고객·계약·품질·마진 투명성의 공백을 남겨 중상단으로 보정한다.",
+    "support_fact_ids": [
+      "EFACT-3dd3bb8fbe1496797f1cd00c",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-9eea79412c9f3395a852d248"
+    ],
+    "why_not_higher": "HBM 고객명·계약조건·qualification·품질 결과·마진이 없어 4점 이상을 허용하지 않는다.",
+    "why_not_lower": "규제공시의 재작성·감사 맥락과 공식 HBM4 출하가 확인돼 낮은 신뢰도 앵커보다 높다."
+  },
+  "payload_hash": "00d191df1eed9f74e13bf5a95911c558f8a5782791800252b2e4a3fd6947875e",
+  "production_score_authority": false,
+  "prompt_hash": "b2c8b5a38a2bb248e6890f46e59bd4905a2422af5c41a7b4f1760f4ab011467e",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-191824484637b9b6e7bf8e5e166e8dfbc84937a81bb0e2ad22c9e5c170859908",
+  "response_id": "COLLABRESP-fac1a534218959ffaa85f1b74aae8481d720a0761a16d3e9829e61ee9f6e9ca4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

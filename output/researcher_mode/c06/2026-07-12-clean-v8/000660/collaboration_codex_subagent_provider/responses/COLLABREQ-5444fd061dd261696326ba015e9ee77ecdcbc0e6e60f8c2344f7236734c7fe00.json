@@ -1,0 +1,585 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "rationale": "누적 accepted 2건에 고객 집중 추세와 재무표시·위험공시 제한 3건을 추가했다. 연결 금리민감도 등 distinct remainder가 남아 continuation이 필요하다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "rationale": "누적 accepted 18건에 연결 영업이익·영업현금흐름·CAPEX의 전년 동기 비교 3건을 추가했으며 이 문서의 objective-local remainder는 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-20d6db3af3dbec68230dc01c",
+        "rationale": "임원 명단과 직책 이력 중심이며 000660의 현재 메모리 사업 메커니즘 또는 전사 자본·정보 objective에 새로 귀속할 material fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "rationale": "누적 accepted 14건에 감사의견과 분기 MD&A 미기재라는 정보 품질 fact 2건을 추가했고 이 문서의 objective-local remainder는 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "rationale": "누적 accepted 12건을 보존한다. 유형자산 담보와 품질보증 성격의 별도 atomic remainder가 남아 continuation이 필요하다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+        "rationale": "누적 accepted 9건을 보존한다. 별도 기준의 위험공시 범위·자본 관련 distinct remainder가 남아 continuation이 필요하다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-5b6d91276c1af970b04377e6",
+        "rationale": "SK스퀘어 혼합 지배구조·임원 명단 구간으로 000660 current objective에 새로 귀속할 material economic fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "rationale": "누적 accepted 12건에 DRAM·R&D 비교, 자본준비금 전입, 자회사 대여금 4건을 추가했다. 매출 인식 시점과 담보 등 distinct remainder가 남아 continuation이 필요하다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "economic_mechanism": "고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.",
+        "exact_quote": "당분기 중 단일 외부고객으로부터의 매출액이 연결회사 전체 매출액의 10%를 상회하는 고객 (가)로부터 발생한 매출액은 7,780,590백만원이며, 고객 (나)로부터 발생한 매출액은 6,536,458백만원입니다. 전분기 중 단일 외부고객으로부터의 매출액이 연결회사 전체 매출액의 10%를 상회하는 고객 (가)로부터 발생한 매출액은 4,786,233백만원 입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "두 고객이 각각 연결매출 10%를 넘는 구조와 고객 A의 전년 동기 대비 증가를 함께 보여줘 수요 가시성의 고객 집중 counter다. 고객명이나 HBM 비중은 확인되지 않으므로 HBM 계약으로 해석하지 않는다.",
+        "mechanism_scope_id": "000660_MEMORY_CUSTOMER_CONCENTRATION_TREND",
+        "normalized_object": "Q1_2026_MAJOR_CUSTOMER_REVENUE_CONCENTRATION_VS_Q1_2025",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1 vs 2025-Q1",
+        "predicate": "고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.",
+        "predicate_family": "MEMORY_CUSTOMER_CONCENTRATION_TREND",
+        "primitive_tags": [
+          "major_customer_revenue",
+          "concentration_trend"
+        ],
+        "product_family": "Memory products",
+        "question_family_id": "C06_MEMORY_CUSTOMER_CONCENTRATION_TREND",
+        "question_family_tags": [
+          "CUSTOMER_CONCENTRATION",
+          "CUSTOMER_DEPENDENCY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.91,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 주요 고객 매출 집중도 변화",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "7,780,590 and 6,536,458 vs 4,786,233"
+      },
+      {
+        "business_segment": "Corporate consolidated",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "economic_mechanism": "연결 영업이익의 전년 동기 대비 확대가 전사 이익 폭증을 보여주지만 HBM 단독 이익은 아니다.",
+        "exact_quote": "영업이익\n37,610,283\n37,610,283\n7,440,504\n7,440,504",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 이익의 전년 동기 대비 변화는 EPS 폭증 메커니즘의 시간축을 복원한다. 연결 actual이며 DRAM 또는 HBM 이익으로 귀속하지 않는다.",
+        "mechanism_scope_id": "000660_CONSOLIDATED_OPERATING_PROFIT_COMPARATIVE",
+        "normalized_object": "Q1_2026_CONSOLIDATED_OPERATING_PROFIT_VS_Q1_2025",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 vs 2025-Q1",
+        "predicate": "2026년 1분기 연결 영업이익은 37,610,283백만원으로 전년 동기 7,440,504백만원보다 컸다.",
+        "predicate_family": "CONSOLIDATED_OPERATING_PROFIT_COMPARATIVE_ACTUAL",
+        "primitive_tags": [
+          "operating_profit_actual",
+          "year_over_year_comparison"
+        ],
+        "product_family": "Corporate consolidated",
+        "question_family_id": "C06_CONSOLIDATED_OPERATING_PROFIT_COMPARATIVE",
+        "question_family_tags": [
+          "CONSOLIDATED_EARNINGS",
+          "OPERATING_PROFIT_COMPARATIVE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 영업이익 전년 동기 비교",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "37,610,283 vs 7,440,504"
+      },
+      {
+        "business_segment": "Corporate consolidated",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "economic_mechanism": "연결 영업현금흐름의 전년 동기 대비 확대가 전사 현금전환 개선을 보여주지만 HBM FCF는 아니다.",
+        "exact_quote": "영업활동 현금흐름\n26,330,119\n9,023,671",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 현금창출의 비교 시간축은 이익이 현금으로 전환되는지를 판단하는 핵심 근거다. 연결 수치이므로 HBM 단독 현금흐름으로 재분류하지 않는다.",
+        "mechanism_scope_id": "000660_CONSOLIDATED_OPERATING_CASH_FLOW_COMPARATIVE",
+        "normalized_object": "Q1_2026_CONSOLIDATED_OPERATING_CASH_FLOW_VS_Q1_2025",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 vs 2025-Q1",
+        "predicate": "2026년 1분기 연결 영업활동 현금흐름은 26,330,119백만원으로 전년 동기 9,023,671백만원보다 컸다.",
+        "predicate_family": "CONSOLIDATED_OPERATING_CASH_FLOW_COMPARATIVE_ACTUAL",
+        "primitive_tags": [
+          "operating_cash_flow_actual",
+          "year_over_year_comparison"
+        ],
+        "product_family": "Corporate consolidated",
+        "question_family_id": "C06_CONSOLIDATED_OPERATING_CASH_FLOW_COMPARATIVE",
+        "question_family_tags": [
+          "CONSOLIDATED_CASH_FLOW",
+          "OPERATING_CASH_FLOW_COMPARATIVE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CONSOLIDATED_CASH_FLOW_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_OPERATING_CASH_FLOW_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 영업활동 현금흐름 전년 동기 비교",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "26,330,119 vs 9,023,671"
+      },
+      {
+        "business_segment": "Corporate consolidated",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "economic_mechanism": "연결 유형자산 취득 현금유출 증가는 전사 CAPEX 부담을 보여주며 HBM 전용 투자액은 아니다.",
+        "exact_quote": "유형자산의 취득\n(7,657,403)\n(6,284,222)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "영업현금흐름과 함께 실제 CAPEX 현금부담의 변화가 FCF 해석에 필요하다. 전사 연결 수치이며 HBM realised CAPA로 귀속하지 않는다.",
+        "mechanism_scope_id": "000660_CONSOLIDATED_CAPEX_COMPARATIVE",
+        "normalized_object": "Q1_2026_CONSOLIDATED_CAPEX_CASH_OUTFLOW_VS_Q1_2025",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1 vs 2025-Q1",
+        "predicate": "2026년 1분기 유형자산 취득 현금유출은 7,657,403백만원으로 전년 동기 6,284,222백만원보다 컸다.",
+        "predicate_family": "CONSOLIDATED_CAPEX_COMPARATIVE_ACTUAL",
+        "primitive_tags": [
+          "capex_actual",
+          "year_over_year_comparison"
+        ],
+        "product_family": "Corporate consolidated",
+        "question_family_id": "C06_CONSOLIDATED_CAPEX_COMPARATIVE",
+        "question_family_tags": [
+          "CONSOLIDATED_CAPEX",
+          "CAPEX_COMPARATIVE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CONSOLIDATED_CASH_FLOW_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_CAPEX_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 유형자산 취득 현금유출 전년 동기 비교",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "7,657,403 vs 6,284,222"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "economic_mechanism": "별도 DRAM 매출의 전년 동기 대비 확대가 메모리 수익전환을 보여주지만 HBM 단독 매출은 아니다.",
+        "exact_quote": "고객과의 계약에서 생기는 수익의 품목별 구분에 대한 공시\n당분기\n(단위 : 백만원)\nDRAM\nNAND Flash\n기타\n부문 합계\n수익(매출액)\n39,758,279\n8,184,467\n115,842\n48,058,588\n전분기\n(단위 : 백만원)\nDRAM\nNAND Flash\n기타\n부문 합계\n수익(매출액)\n13,607,092\n2,230,583\n107,619\n15,945,294\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 수익의 비교 시간축은 메모리 매출 전환을 직접 보여준다. 표에 NAND가 함께 있지만 제안 값과 귀속은 DRAM 행에만 한정하며 HBM으로 승격하지 않는다.",
+        "mechanism_scope_id": "000660_DRAM_REVENUE_COMPARATIVE",
+        "normalized_object": "Q1_2026_PARENT_DRAM_REVENUE_VS_Q1_2025",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 vs 2025-Q1",
+        "predicate": "별도 DRAM 매출은 2026년 1분기 39,758,279백만원으로 전년 동기 13,607,092백만원보다 컸다.",
+        "predicate_family": "DRAM_REVENUE_COMPARATIVE_ACTUAL",
+        "primitive_tags": [
+          "dram_revenue_actual",
+          "year_over_year_comparison"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "C06_DRAM_REVENUE_COMPARATIVE",
+        "question_family_tags": [
+          "DRAM_REVENUE",
+          "REVENUE_COMPARATIVE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 별도 DRAM 매출 전년 동기 비교",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "39,758,279 vs 13,607,092"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "economic_mechanism": "별도 연구개발비 총지출 확대는 기술투자 강도를 보여주지만 HBM 전용 R&D나 realised ROIC는 아니다.",
+        "exact_quote": "판매비와관리비에 대한 공시\n당분기\n(단위 : 백만원)\n공시금액\n급여\n620,918\n퇴직급여\n11,166\n복리후생비\n58,378\n지급수수료\n105,160\n감가상각비\n44,704\n무형자산상각비\n107,816\n광고선전비\n19,873\n소모품비\n35,995\n품질관리비\n(44,650)\n교육훈련비\n27,627\n기타\n61,027\n소계\n1,048,014\n연구개발비 총지출액\n2,297,080\n개발비 자산화\n(99,015)\n경상개발비\n2,198,065\n판매비와관리비\n3,246,079\n전분기\n(단위 : 백만원)\n공시금액\n급여\n273,616\n퇴직급여\n10,819\n복리후생비\n38,477\n지급수수료\n95,062\n감가상각비\n47,919\n무형자산상각비\n125,830\n광고선전비\n13,519\n소모품비\n18,776\n품질관리비\n(5,018)\n교육훈련비\n25,904\n기타\n42,816\n소계\n687,720\n연구개발비 총지출액\n1,396,595\n개발비 자산화\n(43,349)\n경상개발비\n1,353,246\n판매비와관리비\n2,040,966\n",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "연구개발 투자 증가가 자본배분과 미래 제품경쟁력의 비용 기반을 보여준다. 별도 전사 수치라 HBM에 직접 귀속하지 않는다.",
+        "mechanism_scope_id": "000660_CORPORATE_RND_SPEND_COMPARATIVE",
+        "normalized_object": "Q1_2026_PARENT_RND_SPEND_VS_Q1_2025",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 vs 2025-Q1",
+        "predicate": "별도 연구개발비 총지출은 2026년 1분기 2,297,080백만원으로 전년 동기 1,396,595백만원보다 컸다.",
+        "predicate_family": "CORPORATE_RND_SPEND_COMPARATIVE_ACTUAL",
+        "primitive_tags": [
+          "research_and_development",
+          "year_over_year_comparison"
+        ],
+        "product_family": "Corporate research and development",
+        "question_family_id": "C06_RESEARCH_AND_DEVELOPMENT_SPEND_COMPARATIVE",
+        "question_family_tags": [
+          "RND_SPEND",
+          "CAPITAL_ALLOCATION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 별도 연구개발비 전년 동기 비교",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "2,297,080 vs 1,396,595"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "economic_mechanism": "2027년 적용될 표시 기준이 외환·파생상품 손익의 영업손익 분류를 바꿀 수 있어 과거와 미래 영업이익 비교에 구조적 주의가 필요하다.",
+        "exact_quote": "기준서의 채택이 회사의 순손익에 미치는 영향은 없으나 손익계산서의 수익과 비용을 새로운 범주로 분류하게 되어 영업손익의 계산 및 보고 방식에 영향을 미칠 것으로 예상합니다. 회사가 수행한 전반적인 영향 평가에 따르면, 다음 항목들이 잠재적으로 영업손익에 영향을 미칠 수 있습니다.\n- 현재 영업외손익 내 '금융수익 및 금융비용' 항목에 통합되어 있는 외환차이는 구분 표시되어야 할 수 있으며, 일부 외환손익은 영업손익에 포함되어 표시될 수 있습니다.- 기준서는 파생상품 손익의 범주에 대해 구체적인 요구사항을 명시하고 있습니다. 파생상품 손익은 해당 파생상품이 관리하고자 하는 위험의 영향을 받는 수익 및 비용과 동일한 범주로 표시합니다. 회사는 현재 파생상품 손익을 금융손익으로 인식하고 있습니다. 이러한 손익이 표시되는 위치에 변경이 있을 수 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "영업이익의 표시 기준 변화는 현재 폭증한 영업이익을 향후 기간과 비교하는 정보 품질에 직접 영향을 준다. 경제적 순이익 변화나 HBM 실적 변화로 해석하지 않는다.",
+        "mechanism_scope_id": "000660_FINANCIAL_REPORTING_CLASSIFICATION_CHANGE",
+        "normalized_object": "KIFRS_1118_OPERATING_PROFIT_CLASSIFICATION_CHANGE",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2027 onward; 2026 comparatives restated",
+        "predicate": "회사는 K-IFRS 1118 채택이 순손익을 바꾸지는 않지만 영업손익 계산·보고 방식과 일부 외환·파생상품 손익 표시 위치를 바꿀 수 있다고 평가했다.",
+        "predicate_family": "FINANCIAL_REPORTING_CLASSIFICATION_CHANGE",
+        "primitive_tags": [
+          "kifrs_1118",
+          "classification_change"
+        ],
+        "product_family": "Financial reporting",
+        "question_family_id": "C06_FINANCIAL_REPORTING_CLASSIFICATION_CHANGE",
+        "question_family_tags": [
+          "FINANCIAL_REPORTING",
+          "COMPARABILITY"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 K-IFRS 1118 영업손익 표시 변경 영향",
+        "subject_id": "000660",
+        "unit": "",
+        "value": "Operating profit presentation may change without changing net profit"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "economic_mechanism": "분기 연결재무제표가 연차 보고서의 모든 재무위험 공시를 포함하지 않아 리스크 정보의 현재 범위가 제한된다.",
+        "exact_quote": "중간연결재무제표는 연차연결재무제표에서 요구되는 모든 재무위험관리와 공시사항을 포함하지 않으므로 2025년 12월 31일의 연차연결재무제표를 참고하시기 바랍니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "이는 침묵에서 추론한 부재가 아니라 공시가 명시한 분기 위험정보 범위의 제한으로, 정보 신뢰도와 리스크 해석에 필요하다.",
+        "mechanism_scope_id": "000660_INTERIM_CONSOLIDATED_RISK_DISCLOSURE_LIMITATION",
+        "normalized_object": "Q1_2026_INTERIM_CONSOLIDATED_RISK_DISCLOSURE_LIMITATION",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "중간 연결재무제표에는 연차 연결재무제표가 요구하는 모든 재무위험관리 및 공시사항이 포함되지 않는다.",
+        "predicate_family": "INTERIM_RISK_DISCLOSURE_LIMITATION",
+        "primitive_tags": [
+          "interim_report",
+          "annual_reference_required"
+        ],
+        "product_family": "Financial reporting",
+        "question_family_id": "C06_INTERIM_RISK_DISCLOSURE_LIMITATION",
+        "question_family_tags": [
+          "DISCLOSURE_LIMITATION",
+          "FINANCIAL_RISK"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 중간 연결재무제표 위험 공시 범위",
+        "subject_id": "000660",
+        "unit": "",
+        "value": "Not all annual financial risk disclosures are included"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "economic_mechanism": "삼정회계법인의 적정의견과 의견변형·계속기업 불확실성·강조사항·핵심감사사항 없음은 규제 공시 actual의 재무보고 신뢰도를 지지한다.",
+        "exact_quote": "제79기 1분기(당기)\n감사보고서\n삼정회계법인\n적정의견\n해당사항 없음\n해당사항 없음\n해당사항 없음\n해당사항 없음\n연결감사보고서\n삼정회계법인\n적정의견\n해당사항 없음\n해당사항 없음\n해당사항 없음\n해당사항 없음\n",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "공시된 실적 수치의 재무보고 신뢰도를 지지하는 독립 감사 상태다. 이는 HBM 사업 검증이나 고객 corroboration을 대체하지 않는다.",
+        "mechanism_scope_id": "000660_Q1_2026_AUDIT_OPINION",
+        "normalized_object": "Q1_2026_AUDIT_AND_CONSOLIDATED_AUDIT_OPINION",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 감사보고서와 연결감사보고서는 삼정회계법인의 적정의견이며 표상 추가 제한사항은 모두 해당사항 없음이다.",
+        "predicate_family": "AUDIT_OPINION_STATUS",
+        "primitive_tags": [
+          "external_auditor",
+          "unmodified_opinion"
+        ],
+        "product_family": "Financial reporting",
+        "question_family_id": "C06_Q1_2026_AUDIT_OPINION",
+        "question_family_tags": [
+          "AUDIT_OPINION",
+          "INFORMATION_CONFIDENCE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 1분기 감사 및 연결감사 의견",
+        "subject_id": "000660",
+        "unit": "",
+        "value": "Unmodified opinion; no listed modification or uncertainty"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "economic_mechanism": "분기보고서 형식상 예측정보, 영업실적, 유동성·자금조달, 부외거래에 대한 경영진 분석이 기재되지 않아 서술형 가시성 확인 범위가 제한된다.",
+        "exact_quote": "IV. 이사의 경영진단 및 분석의견\n1. 예측정보에 대한 주의사항\n※ 기업공시서식 작성기준에 따라 분기보고서에는 본 항목을 기재하지 아니하였습니다.\n2. 개요\n※ 기업공시서식 작성기준에 따라 분기보고서에는 본 항목을 기재하지 아니하였습니다.\n3. 재무상태 및 영업실적\n※ 기업공시서식 작성기준에 따라 분기보고서에는 본 항목을 기재하지 아니하였습니다.\n4. 유동성 및 자금조달과 지출\n※ 기업공시서식 작성기준에 따라 분기보고서에는 본 항목을 기재하지 아니하였습니다.\n5. 부외거래\n※ 기업공시서식 작성기준에 따라 분기보고서에는 본 항목을 기재하지 아니하였습니다.\n6. 그 밖에 투자의사결정에 필요한 사항\n※ 기업공시서식 작성기준에 따라 분기보고서에는 본 항목을 기재하지 아니하였습니다.\n",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "명시적으로 이름 붙은 보고서 구간의 미기재라 침묵 추론이 아니다. 수치 공시가 없다는 뜻은 아니지만 management narrative 범위를 제한한다.",
+        "mechanism_scope_id": "000660_QUARTERLY_MDA_DISCLOSURE_LIMITATION",
+        "normalized_object": "Q1_2026_QUARTERLY_MDA_DISCLOSURE_LIMITATION",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "기업공시서식 기준 때문에 분기보고서의 경영진단 및 분석의견 하위 항목들이 기재되지 않았다.",
+        "predicate_family": "MANAGEMENT_DISCUSSION_DISCLOSURE_LIMITATION",
+        "primitive_tags": [
+          "quarterly_report",
+          "mda_not_provided"
+        ],
+        "product_family": "Management reporting",
+        "question_family_id": "C06_QUARTERLY_MD_AND_A_DISCLOSURE_LIMITATION",
+        "question_family_tags": [
+          "DISCLOSURE_LIMITATION",
+          "MANAGEMENT_DISCUSSION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 분기보고서 경영진단 및 분석의견 미기재",
+        "subject_id": "000660",
+        "unit": "",
+        "value": "Management discussion sections not provided in quarterly filing format"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "economic_mechanism": "주식발행초과금과 감자차익을 이익잉여금으로 전입해 배당가능이익을 늘린 자본계정 재분류로 향후 배당 여력을 확대하지만 현금 지급 자체는 아니다.",
+        "exact_quote": "당분기 중 회사는 2026년 3월 25일 정기주주총회에서 자본준비금을 이익잉여금으로 전환하여 배당가능이익을 증가시키기로 결의하였으며, 주식발행초과금 3,604,391백만원 및 감자차익 479,244백만원을 이익잉여금으로 전입하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "4조원대 자본계정 전입은 배당가능이익과 주주환원 선택지를 바꾸는 중요한 자본배분 actual이다. 현금배당 또는 HBM 투자수익으로 간주하지 않는다.",
+        "mechanism_scope_id": "000660_DISTRIBUTABLE_RETAINED_EARNINGS_CONVERSION",
+        "normalized_object": "Q1_2026_CAPITAL_RESERVE_TO_RETAINED_EARNINGS_TRANSFER",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-25",
+        "predicate": "2026년 3월 25일 결의로 주식발행초과금 3,604,391백만원과 감자차익 479,244백만원이 이익잉여금으로 전입됐다.",
+        "predicate_family": "DISTRIBUTABLE_RETAINED_EARNINGS_CONVERSION",
+        "primitive_tags": [
+          "capital_reserve_transfer",
+          "shareholder_distribution_capacity"
+        ],
+        "product_family": "Capital allocation",
+        "question_family_id": "C06_DISTRIBUTABLE_RETAINED_EARNINGS_CONVERSION",
+        "question_family_tags": [
+          "CAPITAL_ALLOCATION",
+          "DISTRIBUTABLE_EARNINGS"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 자본준비금의 이익잉여금 전입",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "3,604,391 plus 479,244"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "economic_mechanism": "대규모 자회사 대여금이 별도 자금의 관계사 배분과 회수 위험을 만든다.",
+        "exact_quote": "매출채권 등에는 SK hynix Semiconductor (Dalian) Co., Ltd. 등 자회사에 대한 대여금 잔액 7,005,529백만원이 포함되어 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "7조원 규모의 관계사 대여금은 별도 유동성의 사용처와 회수 리스크를 보여주는 중요한 자본배분 counter다. Dalian의 NAND/HBM 운영 성과로 귀속하지 않는다.",
+        "mechanism_scope_id": "000660_SUBSIDIARY_LOAN_ALLOCATION",
+        "normalized_object": "Q1_2026_PARENT_SUBSIDIARY_LOAN_BALANCE",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "2026년 1분기말 매출채권 등에는 Dalian 등 자회사 대여금 7,005,529백만원이 포함됐다.",
+        "predicate_family": "SUBSIDIARY_LOAN_ALLOCATION_ACTUAL",
+        "primitive_tags": [
+          "subsidiary_loan",
+          "cash_recovery_risk"
+        ],
+        "product_family": "Capital allocation",
+        "question_family_id": "C06_SUBSIDIARY_LOAN_ALLOCATION",
+        "question_family_tags": [
+          "CAPITAL_ALLOCATION",
+          "RELATED_PARTY_LOAN"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 자회사 대여금 잔액",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": 7005529
+      }
+    ],
+    "unresolved_document_ids": [
+      "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+      "OFFICIALDOC-517ee88c46b03a911ecddcca",
+      "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+      "OFFICIALDOC-5d1c1167b9b6798bbb391320"
+    ],
+    "unresolved_research_notes": [
+      "12개 page cap에 도달했다. 남은 네 문서의 연결·별도 금리 민감도, 유형자산 담보, 품질보증 경제적 성격, 매출 인식 시점 등은 prior와 의미가 다른지 다음 continuation에서 최종 대조해야 한다."
+    ]
+  },
+  "payload_hash": "dca8235df489b5d78d9e5d67869a27b3d39aa30829849b94672727db3102adc5",
+  "production_score_authority": false,
+  "prompt_hash": "bb0a9fc0f6df2ecd82e02b84bebfe4a619449c71f66ff920c7a51199282636d8",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5444fd061dd261696326ba015e9ee77ecdcbc0e6e60f8c2344f7236734c7fe00",
+  "response_id": "COLLABRESP-e47a51529fd5791951165933e21f240b43173921cee3f360e47e7a5bbee94d59",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

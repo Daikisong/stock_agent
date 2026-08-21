@@ -1,0 +1,281 @@
+{
+  "output_schema_hash": "c48e29525adbf698a8e6c5f5fb8dc5f1f5078a0806c47d86b353d2cbe6b50215",
+  "payload": {
+    "confidence": 0.9,
+    "counter_case": "행 18은 NVIDIA HBM4가 아직 협의 중임을 명시한다. 행 40·61의 OpenAI 지원 계획과 월간 수요 전망, 행 52의 다수 고객 공급 확대 계획은 signed 구매의무·가격·확정 물량·배정기간·취소조건·backlog/RPO를 제공하지 않는다. 행 16의 메모리 100% 가동과 행 67·73의 메모리 actual도 HBM-only 계약경제로 승격하지 않는다. CUSTOMER_OFFICIAL material 0은 이 계약 부재를 입증하지 않는다.",
+    "historical_anchor_ids": [
+      "CANCH-5eb80a11ed23fc1102335092",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "nearest_counter_anchor_ids": [
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "nearest_positive_anchor_ids": [
+      "CANCH-5eb80a11ed23fc1102335092"
+    ],
+    "positive_case": "행 36 HBM4 양산 출하와 행 10 HBM4E 고객 샘플은 제품 실행을, 행 66·67·73은 서버향 판매 확대와 메모리 매출·ASP actual을 확인한다. 행 3·23·74는 AMD CUSTOMER_OFFICIAL에서 HBM3E 공급 이력과 HBM4 제품 정렬·기술협력을 독립 확인한다. 다만 행 23은 MOU 기반 forward alignment이고, 행 25·62의 수요·공급 환경도 계약 물량이 아니다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 18,
+        "reason": "RETAIN: NVIDIA HBM4 협의 중이라는 핵심 current counter로 signed 조건과 분리한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 25,
+        "reason": "RETAIN: 서버 메모리 수요 강세의 현재 issuer assessment를 계약 주문과 구분해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 36,
+        "reason": "RETAIN: HBM4 양산 출하라는 직접 actual execution을 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 40,
+        "reason": "RETAIN: OpenAI 지원 계획을 확정 계약과 구분하는 visibility 경계로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 42,
+        "reason": "OMIT: AMD MOU 자체는 더 구체적이고 counterparty-official인 행 23과 74가 동일 관계 및 비구속 경계를 더 직접 담는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 44,
+        "reason": "RETAIN: 2026년 actual 비교를 위한 2025년 메모리 매출 중립 기준을 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 52,
+        "reason": "RETAIN: 다수 고객 공급 확대의 forward plan과 조건 비공개를 함께 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 61,
+        "reason": "RETAIN: OpenAI 전체 수요 전망을 삼성전자 배정·HBM 매출과 구분하는 상단·한계를 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 62,
+        "reason": "RETAIN: 메모리 공급 가용량 제한 전망을 HBM 계약 capacity와 구분해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 66,
+        "reason": "RETAIN: 서버 메모리 판매 확대 actual을 HBM 믹스와 구분해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 67,
+        "reason": "RETAIN: 메모리 매출 actual을 HBM-only 귀속 없이 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 68,
+        "reason": "OMIT: 같은 AMD 기술협력 의미를 더 직접적인 CUSTOMER_OFFICIAL 행 74가 중복 없이 제공한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 71,
+        "reason": "OMIT: AMD HBM4 관계는 counterparty-official 행 23이 MOU 기반 supply alignment와 조건 부재를 더 정확히 제공한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 73,
+        "reason": "RETAIN: 실현된 메모리 ASP 상승을 HBM 계약 가격과 구분해 유지한다."
+      }
+    ],
+    "proposed_score_lower": 11.8,
+    "proposed_score_mid": 12.8,
+    "proposed_score_upper": 13.8,
+    "research_complete": true,
+    "researcher_summary": "HBM4 양산 출하, HBM4E 고객 샘플, 서버향 판매, 메모리 매출·ASP는 현재 실행과 단기 수익 전환을 지지한다. AMD 공식 자료는 HBM3E 공급 이력과 HBM4 공급 정렬 및 기술협력을 독립 확인하지만 MOU·기술관계는 signed 구매계약이 아니다. NVIDIA는 HBM4 협의 중이고 OpenAI는 공급 지원 계획과 잠재 수요 전망뿐이다. CUSTOMER_OFFICIAL 검색의 material 0은 NVIDIA·OpenAI 계약 부재나 source absence 증명이 아니므로, 계획·MOU·협의와 확정 가격·물량·배정·기간을 분리한 중간 범위를 유지한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "AMD 공식 자료가 HBM3E 실제 고객·제품 공급 이력을 독립 확인하지만 가격·물량·기간·HBM-only 매출은 공개하지 않는다.",
+        "fact_row_index": 3,
+        "source_economic_mechanism": "AMD 공식 뉴스룸은 삼성전자가 AMD의 primary HBM3E partner로서 Instinct MI350X와 MI355X 가속기를 지원해 왔다고 독립적으로 확인한다. 이는 실현된 고객·제품 공급 이력의 corroboration이지만 가격, 물량, 기간, HBM-only 매출은 공개하지 않는다.",
+        "source_period_json": "\"nearly two decades of collaboration through 2026-03-18; HBM3E partner history current at publication\"",
+        "source_predicate": "AMD_OFFICIAL_CONFIRMED_SAMSUNG_AS_PRIMARY_HBM3E_PARTNER_FOR_MI350X_MI355X",
+        "source_value_json": "\"primary HBM3E partner to AMD powering Instinct MI350X and MI355X\""
+      },
+      {
+        "component_interpretation": "HBM4E 샘플 출하는 고객 평가 진입의 actual이나 고객 승인·주문·매출 확정은 아니다.",
+        "fact_row_index": 10,
+        "source_economic_mechanism": "HBM4E 12단 샘플을 주요 글로벌 고객에게 실제 출하해 차세대 제품이 고객 평가 단계로 진입했다.",
+        "source_period_json": "\"2026-05-29\"",
+        "source_predicate": "COMMENCED_HBM4E_12_LAYER_SAMPLE_SHIPMENTS_TO_MAJOR_GLOBAL_CUSTOMERS",
+        "source_value_json": "\"industry-first 12-layer HBM4E samples shipped to major global customers\""
+      },
+      {
+        "component_interpretation": "메모리 100% 가동은 현재 공급 제약을 지지하지만 HBM 전용 잠김이나 계약 물량은 아니다.",
+        "fact_row_index": 16,
+        "source_economic_mechanism": "메모리 생산라인의 100% 가동은 해당 분기의 유휴 공급 여력이 없었음을 보여준다.",
+        "source_period_json": "\"2026Q1\"",
+        "source_predicate": "MEMORY_LINES_OPERATED_AT_FULL_UTILIZATION",
+        "source_value_json": "100"
+      },
+      {
+        "component_interpretation": "NVIDIA HBM4가 협의 중이라는 current counter이며 signed 배정·가격·물량이 확인되지 않는다.",
+        "fact_row_index": 18,
+        "source_economic_mechanism": "삼성전자는 엔비디아에 HBM3E와 HBM4를 공급할 계획이라고 밝혔지만 HBM4 공급은 아직 긴밀히 협의 중이다. 이는 명명 고객과의 공급 논의를 확인하되 서명 계약·확정 배정·물량·가격을 확인하지 못하는 가시성 counter다.",
+        "source_period_json": "\"2025-10-31 현재 및 이후\"",
+        "source_predicate": "엔비디아 대상 HBM3E·HBM4 공급은 issuer plan이며 HBM4 공급은 2025-10-31 현재 협의 중이다.",
+        "source_value_json": "\"HBM3E·HBM4 공급 계획; HBM4 공급 협의 중\""
+      },
+      {
+        "component_interpretation": "AMD 공식 primary HBM4 supply alignment는 named-customer visibility를 보강하지만 MOU이고 확정 계약 조건은 아니다.",
+        "fact_row_index": 23,
+        "source_economic_mechanism": "AMD 공식 뉴스룸은 MOU 아래 양사가 차세대 AMD Instinct MI455X용 primary HBM4 supply에 맞춰 협력한다고 확인한다. 명명 고객·제품의 미래 공급 가시성을 독립적으로 보강하지만 MOU 기반 정렬이므로 확정 구매계약, 물량, 가격, 기간 또는 취소조건으로 승격하지 않는다.",
+        "source_period_json": "\"2026-03-18 announcement; future AMD Instinct MI455X supply alignment\"",
+        "source_predicate": "AMD_OFFICIAL_CONFIRMED_PRIMARY_HBM4_SUPPLY_ALIGNMENT_FOR_MI455X",
+        "source_value_json": "\"primary HBM4 supply alignment under MOU for AMD Instinct MI455X\""
+      },
+      {
+        "component_interpretation": "서버 메모리 수요 강세는 issuer의 현재 시장 평가이며 고객 주문·계약과 구분한다.",
+        "fact_row_index": 25,
+        "source_economic_mechanism": "2026년 1분기 데이터센터 AI 인프라 CAPEX 확대와 Agentic AI 초기 수요가 서버향 메모리 수요 강세를 만들었다는 회사의 시장 평가는 수급 우호성을 설명한다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "SERVER_MEMORY_DEMAND_STRENGTHENED_WITH_AI_INFRASTRUCTURE_CAPEX",
+        "source_value_json": "\"서버향 중심 수요 강세가 한층 더 확연\""
+      },
+      {
+        "component_interpretation": "HBM4 양산 출하는 개발에서 실제 상용 출하로 전환된 positive execution이다.",
+        "fact_row_index": 36,
+        "source_economic_mechanism": "2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.",
+        "source_period_json": "\"2026-02\"",
+        "source_predicate": "COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS",
+        "source_value_json": "\"HBM4 양산 출하\""
+      },
+      {
+        "component_interpretation": "OpenAI 메모리 지원은 issuer 계획으로, 구매의무·배정·가격·취소조건·매출이 아니다.",
+        "fact_row_index": 40,
+        "source_economic_mechanism": "OpenAI 스타게이트 수요에 삼성전자 메모리 사업이 대응하려는 issuer 계획으로 고객 접점과 잠재 공급 기회를 보여준다. 그러나 계획 문구만으로 체결된 구매계약, 확정 배정량·가격, 취소 조건 또는 매출을 인정하지 않는다.",
+        "source_period_json": "\"2025-10-01 발표 이후\"",
+        "source_predicate": "삼성전자는 OpenAI가 스타게이트 프로젝트에 필요한 고성능·저전력 메모리를 원활히 공급받도록 지원할 계획이라고 밝혔다.",
+        "source_value_json": "\"고성능·저전력 메모리 공급 지원 계획\""
+      },
+      {
+        "component_interpretation": "2025년 1분기 메모리 매출은 2026년 actual의 중립 비교 기준이다.",
+        "fact_row_index": 44,
+        "source_economic_mechanism": "메모리 제품 매출의 전년 비교 기준",
+        "source_period_json": "\"2025-Q1\"",
+        "source_predicate": "2025년 1분기 메모리 제품 매출액을 비교표에 보고했다",
+        "source_value_json": "19069038"
+      },
+      {
+        "component_interpretation": "다수 고객 HBM4 공급 확대는 forward plan이고 고객명·물량·가격·계약조건이 없다.",
+        "fact_row_index": 52,
+        "source_economic_mechanism": "삼성전자는 다수의 주요 고객사로 HBM4 공급을 확대할 예정이라고 밝혔다. 고객명·확정물량·가격·계약조건은 제시되지 않은 계획이다.",
+        "source_period_json": "\"2026-Q2 onward\"",
+        "source_predicate": "PLANS_TO_EXPAND_HBM4_SUPPLY_TO_MULTIPLE_MAJOR_CUSTOMERS",
+        "source_value_json": "\"다수 주요 고객사 대상 HBM4 공급 확대 계획\""
+      },
+      {
+        "component_interpretation": "OpenAI 월 90만 웨이퍼는 전체 잠재 수요 전망이지 삼성전자 또는 HBM 확정 배정·매출 guidance가 아니다.",
+        "fact_row_index": 61,
+        "source_economic_mechanism": "전략 파트너인 OpenAI의 고성능 DRAM 잠재 수요 규모를 제시해 삼성전자 메모리 기회의 상단을 보여준다. 이 숫자는 OpenAI 전체 필요 전망이지 삼성전자에 확정된 공급 물량, HBM 물량, 매출 또는 issuer guidance가 아니다.",
+        "source_period_json": "\"2025-10-01 발표 기준 미래 수요 전망\"",
+        "source_predicate": "OpenAI는 웨이퍼 기준 월 90만 매의 고성능 DRAM이 필요할 것으로 전망됐지만 삼성전자 공급 몫은 제시되지 않았다.",
+        "source_value_json": "\"월 900,000\""
+      },
+      {
+        "component_interpretation": "메모리 공급 가용량 제한은 수급 전망을 지지하지만 HBM 예약·계약 capacity는 아니다.",
+        "fact_row_index": 62,
+        "source_economic_mechanism": "삼성전자는 2026년 2분기 공급 계획을 설명하면서 메모리 공급 가용량이 제한되어 있다고 명시했다.",
+        "source_period_json": "\"2026-Q2 outlook\"",
+        "source_predicate": "REPORTS_LIMITED_MEMORY_SUPPLY_AVAILABILITY",
+        "source_value_json": "\"제한된 공급 가용량\""
+      },
+      {
+        "component_interpretation": "서버 메모리 판매 확대는 actual 방향이나 HBM 매출 믹스를 직접 특정하지 않는다.",
+        "fact_row_index": 66,
+        "source_economic_mechanism": "2026년 1분기 메모리 사업은 AI 수요 강세 아래 서버향 제품 판매 확대에 주력했다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "FOCUSED_ON_EXPANDING_SERVER_MEMORY_PRODUCT_SALES",
+        "source_value_json": "\"서버향 제품 중심 판매 확대에 주력\""
+      },
+      {
+        "component_interpretation": "2026년 1분기 메모리 매출 actual이며 HBM-only 매출로 귀속하지 않는다.",
+        "fact_row_index": 67,
+        "source_economic_mechanism": "메모리 제품 매출의 실제 수익 전환",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 메모리 제품 매출액을 보고했다",
+        "source_value_json": "74779980"
+      },
+      {
+        "component_interpretation": "실현된 메모리 ASP 상승은 수익 전환을 지지하지만 HBM 계약 가격은 아니다.",
+        "fact_row_index": 73,
+        "source_economic_mechanism": "메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다.",
+        "source_period_json": "\"2026Q1 vs 2025 annual average\"",
+        "source_predicate": "MEMORY_ASP_INCREASED_VERSUS_PRIOR_YEAR_AVERAGE",
+        "source_value_json": "146"
+      },
+      {
+        "component_interpretation": "AMD 공식 기술협력 corroboration은 독립 customer evidence이나 구매의무·매출을 뜻하지 않는다.",
+        "fact_row_index": 74,
+        "source_economic_mechanism": "AMD CEO는 AMD 공식 뉴스룸에서 삼성의 advanced memory와 AMD Instinct GPU, EPYC CPU, rack-scale platform을 결합하는 협력 확대를 직접 확인했다. 이는 기술 참여의 독립 counterparty corroboration이며 구매의무나 매출을 의미하지 않는다.",
+        "source_period_json": "\"2026-03-18\"",
+        "source_predicate": "AMD_CEO_CONFIRMED_SAMSUNG_MEMORY_PLATFORM_COLLABORATION_ON_AMD_OFFICIAL_SOURCE",
+        "source_value_json": "\"Samsung advanced memory collaboration with AMD Instinct GPUs, EPYC CPUs and rack-scale platforms\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      3,
+      10,
+      16,
+      18,
+      23,
+      25,
+      36,
+      40,
+      44,
+      52,
+      61,
+      62,
+      66,
+      67,
+      73,
+      74
+    ],
+    "source_coverage": [
+      "COMPANYGUIDE",
+      "CUSTOMER_OFFICIAL",
+      "ISSUER_NEWSROOM",
+      "OPENDART"
+    ],
+    "structured_metric_row_indices": [
+      0
+    ],
+    "uncertainties": [
+      "NVIDIA·OpenAI CUSTOMER_OFFICIAL 검색 material 0은 source absence나 계약 부재 증명이 아니다.",
+      "AMD HBM4 supply alignment는 MOU이며 가격·물량·기간·취소조건이 공개되지 않았다.",
+      "HBM4E 샘플 출하는 고객 평가 진입이지 qualification 완료·주문·매출이 아니다.",
+      "메모리 전사 actual은 HBM-only durable visibility로 귀속할 수 없다."
+    ],
+    "why_not_higher": "HBM4 actual과 AMD 독립 corroboration에도 NVIDIA·OpenAI의 독립 상태, signed 가격·물량·배정·기간·취소조건 및 HBM-only backlog/RPO가 없다. material 0 검색 결과는 그 부재를 증명하지 않는다.",
+    "why_not_lower": "HBM4 양산 출하, HBM4E 고객 샘플, 서버향 판매, 메모리 매출·ASP actual과 AMD의 HBM3E 실제 공급 이력 및 HBM4 제품 정렬이 존재하므로 계획-only 단계보다 높다."
+  },
+  "payload_hash": "54cc2d4581f60ffbe4b08bae9e6a72e3f7d660283da7aa4d56dd2f2454d82570",
+  "production_score_authority": false,
+  "prompt_hash": "22bcb032f75ffff700496f2475c5cf40c547c1084d236ecc6ec2dca62790d720",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c97c4124e852c112b2594119775840df05fe679f6c53a83d65707a446337e0e1",
+  "response_id": "COLLABRESP-1b2c273d1947d1637f8eb86c43dba41034f22725f4eb9c46dedf845d431bdf25",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

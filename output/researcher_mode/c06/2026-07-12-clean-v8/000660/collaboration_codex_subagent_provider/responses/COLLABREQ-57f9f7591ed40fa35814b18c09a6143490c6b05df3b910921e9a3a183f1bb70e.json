@@ -1,0 +1,592 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "rationale": "Continuation page 5 re-audited the full 120,010-character PUBLIC_BROKER_PDF and strict-deduplicated 48 prior accepted facts. In source order it adds the dated one-, six-, and twelve-month absolute share-price returns, the FY2025E and FY2026E operating-profit estimate revisions, and the next DRAM-segment forecast atoms: FY2025/FY2026 revenue, revenue mix, and operating profit plus FY2025 operating margin. Historical return and FY2025 rows remain superseded; forward rows remain broker forecasts, not issuer guidance, current market performance, signed contract economics, or HBM-only actuals. NAND-only rows are excluded. The page cap is reached before the FY2026 DRAM margin and later pretax/net-income/EPS/cash-flow/valuation-calibration rows.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker reported one-month absolute share-price performance of +37.5% as of 2025-10-21. The strong historical absolute rerating is a counterweight to an unpriced thesis and is not current as-of-date performance.",
+        "exact_quote": "주가상승(%)- 1M 6M 12M\n12,000 160\n상대기준 26.8 123.8 112.1\n10,000 140\n절대기준 37.5 177.4 159.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The one-month absolute move is a distinct historical market-response atom relevant to rerating headroom and limits.",
+        "mechanism_scope_id": "000660:MEMORY:ABSOLUTE_RETURN_1M_20251021",
+        "normalized_object": "SK hynix one-month absolute return of +37.5% as of 2025-10-21",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "1 month through 2025-10-21",
+        "predicate": "broker_reports_one_month_absolute_return",
+        "predicate_family": "BROKER_ABSOLUTE_SHARE_PRICE_RETURN",
+        "primitive_tags": [
+          "ABSOLUTE_RETURN",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_absolute_share_price_return",
+        "question_family_tags": [
+          "absolute_return",
+          "one_month",
+          "market_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix absolute share-price performance",
+        "subject_id": "000660:EUGENE_ABSOLUTE_RETURN:1M_20251021",
+        "unit": "% absolute return",
+        "value": 37.5
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker reported six-month absolute share-price performance of +177.4% as of 2025-10-21. The strong historical absolute rerating is a counterweight to an unpriced thesis and is not current as-of-date performance.",
+        "exact_quote": "주가상승(%)- 1M 6M 12M\n12,000 160\n상대기준 26.8 123.8 112.1\n10,000 140\n절대기준 37.5 177.4 159.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The six-month absolute move is a distinct historical market-response atom relevant to rerating headroom and limits.",
+        "mechanism_scope_id": "000660:MEMORY:ABSOLUTE_RETURN_6M_20251021",
+        "normalized_object": "SK hynix six-month absolute return of +177.4% as of 2025-10-21",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "6 months through 2025-10-21",
+        "predicate": "broker_reports_six_month_absolute_return",
+        "predicate_family": "BROKER_ABSOLUTE_SHARE_PRICE_RETURN",
+        "primitive_tags": [
+          "ABSOLUTE_RETURN",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_absolute_share_price_return",
+        "question_family_tags": [
+          "absolute_return",
+          "six_month",
+          "market_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix absolute share-price performance",
+        "subject_id": "000660:EUGENE_ABSOLUTE_RETURN:6M_20251021",
+        "unit": "% absolute return",
+        "value": 177.4
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker reported twelve-month absolute share-price performance of +159.2% as of 2025-10-21. The strong historical absolute rerating is a counterweight to an unpriced thesis and is not current as-of-date performance.",
+        "exact_quote": "주가상승(%)- 1M 6M 12M\n12,000 160\n상대기준 26.8 123.8 112.1\n10,000 140\n절대기준 37.5 177.4 159.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The twelve-month absolute move is a distinct historical market-response atom relevant to rerating headroom and limits.",
+        "mechanism_scope_id": "000660:MEMORY:ABSOLUTE_RETURN_12M_20251021",
+        "normalized_object": "SK hynix twelve-month absolute return of +159.2% as of 2025-10-21",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "12 months through 2025-10-21",
+        "predicate": "broker_reports_twelve_month_absolute_return",
+        "predicate_family": "BROKER_ABSOLUTE_SHARE_PRICE_RETURN",
+        "primitive_tags": [
+          "ABSOLUTE_RETURN",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_absolute_share_price_return",
+        "question_family_tags": [
+          "absolute_return",
+          "twelve_month",
+          "market_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix absolute share-price performance",
+        "subject_id": "000660:EUGENE_ABSOLUTE_RETURN:12M_20251021",
+        "unit": "% absolute return",
+        "value": 159.2
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "2025-10-22 유진투자증권 표는 FY2025 영업이익 추정치를 직전 36.6조원에서 현재 43.0조원으로 상향했다. 전사 broker revision이며 issuer guidance 또는 HBM-only profit revision이 아니다.",
+        "exact_quote": "(원, 조원) 현재 직전 변동 6,000 100\n투자의견 BUY BUY - 4,000 80\n목표주가 560,000 330,000 ▲ 2,000 60\n영업이익(25) 43.0 36.6 ▲ 0 40\n24.10 25.2 25.6\n영업이익(26) 60.5 40.0 ▲",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Forward operating-profit estimate의 이전·현재 값과 방향이 명시되지만 전사 revision이고 현재는 경과한 forecast다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2025 영업이익 추정치 36.6조원에서 43.0조원으로 상향",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E revision dated 2025-10-22",
+        "predicate": "FY2025 영업이익 추정치를 36.6조원에서 43.0조원으로 상향했다",
+        "predicate_family": "BROKER_OPERATING_PROFIT_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "operating_profit_revision",
+          "FY2025E",
+          "broker_estimate"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "operating_profit_estimate_revision",
+        "question_family_tags": [
+          "operating_profit_estimate_revision",
+          "broker_revision",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스 FY2025 영업이익 추정치 상향",
+        "subject_id": "000660:HYNIX_OPERATING_PROFIT_REVISION_FY2025",
+        "unit": "KRW billion",
+        "value": 43000
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "2025-10-22 유진투자증권 표는 FY2026 영업이익 추정치를 직전 40.0조원에서 현재 60.5조원으로 상향했다. 전사 broker revision이며 issuer guidance 또는 HBM-only profit revision이 아니다.",
+        "exact_quote": "(원, 조원) 현재 직전 변동 6,000 100\n투자의견 BUY BUY - 4,000 80\n목표주가 560,000 330,000 ▲ 2,000 60\n영업이익(25) 43.0 36.6 ▲ 0 40\n24.10 25.2 25.6\n영업이익(26) 60.5 40.0 ▲",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Forward operating-profit estimate의 이전·현재 값과 방향이 명시되지만 전사 revision이고 HBM earnings attribution은 없다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2026 영업이익 추정치 40.0조원에서 60.5조원으로 상향",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E revision dated 2025-10-22",
+        "predicate": "FY2026 영업이익 추정치를 40.0조원에서 60.5조원으로 상향했다",
+        "predicate_family": "BROKER_OPERATING_PROFIT_ESTIMATE_REVISION",
+        "primitive_tags": [
+          "operating_profit_revision",
+          "FY2026E",
+          "broker_estimate"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "operating_profit_estimate_revision",
+        "question_family_tags": [
+          "operating_profit_estimate_revision",
+          "broker_revision",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스 FY2026 영업이익 추정치 상향",
+        "subject_id": "000660:HYNIX_OPERATING_PROFIT_REVISION_FY2026",
+        "unit": "KRW billion",
+        "value": 60500
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권 부문별 표는 FY2025 DRAM 매출 비중을 78%로 전망했다. 경과한 broker segment estimate이며 HBM-only mix actual 또는 issuer guidance가 아니다.",
+        "exact_quote": "(십억원) 1Q24 2Q24 3Q24 4Q24 1Q25 2Q25 3Q25 4Q25 2023 2024 2025F 2026F\n매출액 12,430 16,423 17,573 19,767 17,639 22,232 24,901 27,970 32,766 66,193 92,743 121,100\n%YoY 144% 125% 94% 75% 42% 35% 42% 42% -27% 102% 40% 31%\n%QoQ 10% 32% 7% 12% -11% 26% 12% 12%\nDRAM 7,493 10,700 12,048 14,489 14,037 17,124 19,070 21,695 20,769 44,732 71,925 95,154\nNAND 4,407 5,185 4,981 4,702 3,229 4,728 5,432 5,857 9,653 19,274 19,245 24,327\n비메모리 529 538 544 576 373 380 400 419 2,344 2,187 1,572 1,620\n매출 비중\nDRAM 60% 65% 69% 73% 80% 77% 77% 78% 63% 68% 78% 79%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM segment contribution의 기간 있는 broker estimate이지만 HBM 비중으로 좁힐 수 없고 현재는 경과한 forecast다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:REVENUE_CONVERSION",
+        "normalized_object": "FY2025 DRAM 매출 비중 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "FY2025 DRAM 매출 비중을 78%로 전망했다",
+        "predicate_family": "BROKER_DRAM_REVENUE_MIX_FORECAST",
+        "primitive_tags": [
+          "DRAM_mix",
+          "FY2025F",
+          "broker_estimate"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "dram_revenue_mix_forecast",
+        "question_family_tags": [
+          "dram_revenue_mix_forecast",
+          "broker_segment_estimate",
+          "not_hbm_only"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025 DRAM 매출 비중 전망",
+        "subject_id": "000660:HYNIX_DRAM_REVENUE_MIX_FY2025",
+        "unit": "% of consolidated revenue",
+        "value": 78
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권 부문별 표는 FY2026 DRAM 매출 비중을 79%로 전망했다. Broker segment estimate이며 HBM-only mix actual 또는 issuer guidance가 아니다.",
+        "exact_quote": "(십억원) 1Q24 2Q24 3Q24 4Q24 1Q25 2Q25 3Q25 4Q25 2023 2024 2025F 2026F\n매출액 12,430 16,423 17,573 19,767 17,639 22,232 24,901 27,970 32,766 66,193 92,743 121,100\n%YoY 144% 125% 94% 75% 42% 35% 42% 42% -27% 102% 40% 31%\n%QoQ 10% 32% 7% 12% -11% 26% 12% 12%\nDRAM 7,493 10,700 12,048 14,489 14,037 17,124 19,070 21,695 20,769 44,732 71,925 95,154\nNAND 4,407 5,185 4,981 4,702 3,229 4,728 5,432 5,857 9,653 19,274 19,245 24,327\n비메모리 529 538 544 576 373 380 400 419 2,344 2,187 1,572 1,620\n매출 비중\nDRAM 60% 65% 69% 73% 80% 77% 77% 78% 63% 68% 78% 79%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM segment forward contribution의 직접 수치지만 broker estimate이고 HBM 비중으로 좁힐 수 없다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:REVENUE_CONVERSION",
+        "normalized_object": "FY2026 DRAM 매출 비중 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "FY2026 DRAM 매출 비중을 79%로 전망했다",
+        "predicate_family": "BROKER_DRAM_REVENUE_MIX_FORECAST",
+        "primitive_tags": [
+          "DRAM_mix",
+          "FY2026F",
+          "broker_estimate"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "dram_revenue_mix_forecast",
+        "question_family_tags": [
+          "dram_revenue_mix_forecast",
+          "broker_segment_estimate",
+          "not_hbm_only"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 DRAM 매출 비중 전망",
+        "subject_id": "000660:HYNIX_DRAM_REVENUE_MIX_FY2026",
+        "unit": "% of consolidated revenue",
+        "value": 79
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.95,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권 부문별 표는 FY2025 DRAM 영업이익을 40.448조원으로 전망했다. 경과한 broker estimate이며 HBM-only profit actual 또는 issuer guidance가 아니다.",
+        "exact_quote": "(십억원) 1Q24 2Q24 3Q24 4Q24 1Q25 2Q25 3Q25 4Q25 2023 2024 2025F 2026F\n매출액 12,430 16,423 17,573 19,767 17,639 22,232 24,901 27,970 32,766 66,193 92,743 121,100\n%YoY 144% 125% 94% 75% 42% 35% 42% 42% -27% 102% 40% 31%\n%QoQ 10% 32% 7% 12% -11% 26% 12% 12%\nDRAM 7,493 10,700 12,048 14,489 14,037 17,124 19,070 21,695 20,769 44,732 71,925 95,154\nNAND 4,407 5,185 4,981 4,702 3,229 4,728 5,432 5,857 9,653 19,274 19,245 24,327\n비메모리 529 538 544 576 373 380 400 419 2,344 2,187 1,572 1,620\n매출 비중\nDRAM 60% 65% 69% 73% 80% 77% 77% 78% 63% 68% 78% 79%\nNAND 35% 32% 28% 24% 18% 21% 22% 21% 29% 29% 21% 20%\n비메모리 4% 3% 3% 3% 2% 2% 2% 1% 7% 3% 2% 1%\n영업이익 2,886 5,469 7,030 8,083 7,441 9,213 12,064 14,320 -7,730 23,467 43,038 60,504\n%YoY -185% -290% -492% 2236% 158% 68% 72% 77% -214% -404% 83% 41%\n%QoQ 734% 89% 29% 15% -8% 24% 31% 19%\nDRAM 2,464 4,692 6,038 7,504 7,526 9,038 11,077 12,808 1,020 20,698 40,448 54,679",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM segment profit-conversion의 직접 수치지만 broker estimate이고 현재는 경과한 forecast다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2025 DRAM 영업이익 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "FY2025 DRAM 영업이익을 40.448조원으로 전망했다",
+        "predicate_family": "BROKER_DRAM_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "DRAM_operating_profit",
+          "FY2025F",
+          "broker_estimate"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "dram_operating_profit_forecast",
+        "question_family_tags": [
+          "dram_operating_profit_forecast",
+          "broker_segment_estimate",
+          "not_hbm_only"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025 DRAM 영업이익 전망",
+        "subject_id": "000660:HYNIX_DRAM_OPERATING_PROFIT_FY2025",
+        "unit": "KRW billion",
+        "value": 40448
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권 부문별 표는 FY2026 DRAM 영업이익을 54.679조원으로 전망했다. Broker estimate이며 HBM-only profit actual 또는 issuer guidance가 아니다.",
+        "exact_quote": "(십억원) 1Q24 2Q24 3Q24 4Q24 1Q25 2Q25 3Q25 4Q25 2023 2024 2025F 2026F\n매출액 12,430 16,423 17,573 19,767 17,639 22,232 24,901 27,970 32,766 66,193 92,743 121,100\n%YoY 144% 125% 94% 75% 42% 35% 42% 42% -27% 102% 40% 31%\n%QoQ 10% 32% 7% 12% -11% 26% 12% 12%\nDRAM 7,493 10,700 12,048 14,489 14,037 17,124 19,070 21,695 20,769 44,732 71,925 95,154\nNAND 4,407 5,185 4,981 4,702 3,229 4,728 5,432 5,857 9,653 19,274 19,245 24,327\n비메모리 529 538 544 576 373 380 400 419 2,344 2,187 1,572 1,620\n매출 비중\nDRAM 60% 65% 69% 73% 80% 77% 77% 78% 63% 68% 78% 79%\nNAND 35% 32% 28% 24% 18% 21% 22% 21% 29% 29% 21% 20%\n비메모리 4% 3% 3% 3% 2% 2% 2% 1% 7% 3% 2% 1%\n영업이익 2,886 5,469 7,030 8,083 7,441 9,213 12,064 14,320 -7,730 23,467 43,038 60,504\n%YoY -185% -290% -492% 2236% 158% 68% 72% 77% -214% -404% 83% 41%\n%QoQ 734% 89% 29% 15% -8% 24% 31% 19%\nDRAM 2,464 4,692 6,038 7,504 7,526 9,038 11,077 12,808 1,020 20,698 40,448 54,679",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM segment forward profit-conversion의 직접 수치지만 broker estimate이고 HBM-only profit로 좁힐 수 없다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2026 DRAM 영업이익 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "FY2026 DRAM 영업이익을 54.679조원으로 전망했다",
+        "predicate_family": "BROKER_DRAM_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "DRAM_operating_profit",
+          "FY2026F",
+          "broker_estimate"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "dram_operating_profit_forecast",
+        "question_family_tags": [
+          "dram_operating_profit_forecast",
+          "broker_segment_estimate",
+          "not_hbm_only"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 DRAM 영업이익 전망",
+        "subject_id": "000660:HYNIX_DRAM_OPERATING_PROFIT_FY2026",
+        "unit": "KRW billion",
+        "value": 54679
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.95,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권 부문별 표는 FY2025 DRAM 영업이익률을 56%로 전망했다. 경과한 broker estimate이며 HBM-only margin actual 또는 issuer guidance가 아니다.",
+        "exact_quote": "(십억원) 1Q24 2Q24 3Q24 4Q24 1Q25 2Q25 3Q25 4Q25 2023 2024 2025F 2026F\n매출액 12,430 16,423 17,573 19,767 17,639 22,232 24,901 27,970 32,766 66,193 92,743 121,100\n%YoY 144% 125% 94% 75% 42% 35% 42% 42% -27% 102% 40% 31%\n%QoQ 10% 32% 7% 12% -11% 26% 12% 12%\nDRAM 7,493 10,700 12,048 14,489 14,037 17,124 19,070 21,695 20,769 44,732 71,925 95,154\nNAND 4,407 5,185 4,981 4,702 3,229 4,728 5,432 5,857 9,653 19,274 19,245 24,327\n비메모리 529 538 544 576 373 380 400 419 2,344 2,187 1,572 1,620\n매출 비중\nDRAM 60% 65% 69% 73% 80% 77% 77% 78% 63% 68% 78% 79%\nNAND 35% 32% 28% 24% 18% 21% 22% 21% 29% 29% 21% 20%\n비메모리 4% 3% 3% 3% 2% 2% 2% 1% 7% 3% 2% 1%\n영업이익 2,886 5,469 7,030 8,083 7,441 9,213 12,064 14,320 -7,730 23,467 43,038 60,504\n%YoY -185% -290% -492% 2236% 158% 68% 72% 77% -214% -404% 83% 41%\n%QoQ 734% 89% 29% 15% -8% 24% 31% 19%\nDRAM 2,464 4,692 6,038 7,504 7,526 9,038 11,077 12,808 1,020 20,698 40,448 54,679\nNAND 528 775 987 575 -90 170 982 1,508 -8,747 2,865 2,570 5,800\n비메모리 2 2 5 4 5 5 6 4 -3 -96 20 24\n영업이익률\nDRAM 33% 44% 50% 52% 54% 53% 58% 59% 5% 46% 56% 57%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM margin-conversion의 직접 수치지만 broker estimate이고 현재는 경과한 forecast다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2025 DRAM 영업이익률 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "FY2025 DRAM 영업이익률을 56%로 전망했다",
+        "predicate_family": "BROKER_DRAM_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "DRAM_operating_margin",
+          "FY2025F",
+          "broker_estimate"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "dram_operating_margin_forecast",
+        "question_family_tags": [
+          "dram_operating_margin_forecast",
+          "broker_segment_estimate",
+          "not_hbm_only"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025 DRAM 영업이익률 전망",
+        "subject_id": "000660:HYNIX_DRAM_OPERATING_MARGIN_FY2025",
+        "unit": "%",
+        "value": 56
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권 부문별 표는 FY2026 DRAM 영업이익률을 57%로 전망했다. Broker estimate이며 HBM-only margin actual 또는 issuer guidance가 아니다.",
+        "exact_quote": "(십억원) 1Q24 2Q24 3Q24 4Q24 1Q25 2Q25 3Q25 4Q25 2023 2024 2025F 2026F\n매출액 12,430 16,423 17,573 19,767 17,639 22,232 24,901 27,970 32,766 66,193 92,743 121,100\n%YoY 144% 125% 94% 75% 42% 35% 42% 42% -27% 102% 40% 31%\n%QoQ 10% 32% 7% 12% -11% 26% 12% 12%\nDRAM 7,493 10,700 12,048 14,489 14,037 17,124 19,070 21,695 20,769 44,732 71,925 95,154\nNAND 4,407 5,185 4,981 4,702 3,229 4,728 5,432 5,857 9,653 19,274 19,245 24,327\n비메모리 529 538 544 576 373 380 400 419 2,344 2,187 1,572 1,620\n매출 비중\nDRAM 60% 65% 69% 73% 80% 77% 77% 78% 63% 68% 78% 79%\nNAND 35% 32% 28% 24% 18% 21% 22% 21% 29% 29% 21% 20%\n비메모리 4% 3% 3% 3% 2% 2% 2% 1% 7% 3% 2% 1%\n영업이익 2,886 5,469 7,030 8,083 7,441 9,213 12,064 14,320 -7,730 23,467 43,038 60,504\n%YoY -185% -290% -492% 2236% 158% 68% 72% 77% -214% -404% 83% 41%\n%QoQ 734% 89% 29% 15% -8% 24% 31% 19%\nDRAM 2,464 4,692 6,038 7,504 7,526 9,038 11,077 12,808 1,020 20,698 40,448 54,679\nNAND 528 775 987 575 -90 170 982 1,508 -8,747 2,865 2,570 5,800\n비메모리 2 2 5 4 5 5 6 4 -3 -96 20 24\n영업이익률\nDRAM 33% 44% 50% 52% 54% 53% 58% 59% 5% 46% 56% 57%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM forward margin-conversion의 직접 수치지만 broker estimate이고 HBM-only margin으로 좁힐 수 없다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2026 DRAM 영업이익률 전망",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "FY2026 DRAM 영업이익률을 57%로 전망했다",
+        "predicate_family": "BROKER_DRAM_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "DRAM_operating_margin",
+          "FY2026F",
+          "broker_estimate"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "dram_operating_margin_forecast",
+        "question_family_tags": [
+          "dram_operating_margin_forecast",
+          "broker_segment_estimate",
+          "not_hbm_only"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 DRAM 영업이익률 전망",
+        "subject_id": "000660:HYNIX_DRAM_OPERATING_MARGIN_FY2026",
+        "unit": "%",
+        "value": 57
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.88,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권 상세표는 FY2025 세전이익을 43.782조원으로 제시했다. 같은 보고서의 요약·재무표 값과 다른 broker table estimate이므로 정보 일관성 제한으로 남기며 HBM-only earnings가 아니다.",
+        "exact_quote": "1Q24 2Q24 3Q24 4Q24 1Q25 2Q25 3Q25F 4Q25F 2023 2024 2025F 2026F\n매출액 12,430 16,423 17,573 19,767 17,639 22,232 24,901 27,970 32,766 66,193 92,743 121,100\n영업이익 2,886 5,469 7,030 8,083 7,441 9,213 12,064 14,320 -7,730 23,467 43,038 60,504\n세전이익 2,373 5,052 6,879 9,581 9,299 8,723 11,734 14,025 -11,658 23,885 43,782 59,834",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 보고서 내 다른 표와 값이 달라 current information confidence의 불확실성을 직접 높이는 과거 estimate다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:INFORMATION_ONLY",
+        "normalized_object": "FY2025 세전이익 상세표 전망",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025F",
+        "predicate": "상세표가 FY2025 세전이익을 43.782조원으로 제시했다",
+        "predicate_family": "BROKER_DETAILED_TABLE_PRETAX_INCOME_ESTIMATE",
+        "primitive_tags": [
+          "pretax_income",
+          "FY2025F",
+          "information_consistency"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "detailed_table_pretax_income_forecast",
+        "question_family_tags": [
+          "detailed_table_pretax_income_forecast",
+          "internal_table_difference",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.78,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025 세전이익 상세표 전망",
+        "subject_id": "000660:HYNIX_DETAILED_PRETAX_INCOME_FY2025",
+        "unit": "KRW billion",
+        "value": 43782
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-6e405a0dc5bd4f8f2cf7ed5f"
+    ],
+    "unresolved_research_notes": [
+      "Continue SGDOC-6e405a0dc5bd4f8f2cf7ed5f after the FY2025 DRAM operating-margin row with strict prior-60 dedup. Review the FY2026 DRAM margin and remaining consolidated pretax, controlling net income, EPS, book value, OCF, depreciation, CAPEX, FCF, valuation construction, and historical recommendation calibration; keep NAND-only rows excluded unless directly objective-local counters."
+    ]
+  },
+  "payload_hash": "eb756211a454bbf9659a7fe3677d743a8f4db357e2a101367b73311b775a44a6",
+  "production_score_authority": false,
+  "prompt_hash": "f1c83f76bf6680ef95878463d462ab5fa2b801a793314f1361f431c7f88bc531",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-57f9f7591ed40fa35814b18c09a6143490c6b05df3b910921e9a3a183f1bb70e",
+  "response_id": "COLLABRESP-116f58083832d804c377d09b7026bdd451dc961b30654aa3ffa133dfab18c4b1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

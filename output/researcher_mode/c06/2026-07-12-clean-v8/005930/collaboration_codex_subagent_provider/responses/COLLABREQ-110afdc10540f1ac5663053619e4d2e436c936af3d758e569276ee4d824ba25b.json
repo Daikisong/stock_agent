@@ -1,0 +1,606 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-a2a8ca683447d0f2c86f94e7",
+        "rationale": "임원 명단·경력 문서를 전수 재감사했으나 target-wide current objective에 새 경제 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-a74dd284269075ccdf7ae43f",
+        "rationale": "primary에서 accepted된 3건을 누적 유지한다. 잔여 회계 표와 정책은 current facts 및 primary facts와 의미 중복이라 새 fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "rationale": "primary 19건에 더해 미디어텍 검증, HBM3E 개발·성능·샘플, 차량용 LPDDR4X 온도 신뢰성 5건을 추출해 누적 24건이다. 양산 예정은 actual로 승격하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "rationale": "primary의 연결 연구개발비 1건에 더해 희석주식·PSU 비용과 운전자본 현금흐름 6건을 추출해 누적 7건이다. 페이지 한도 때문에 남은 별도 운전자본·시장위험 수치를 다음 페이지에서 감사한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-ca7b0fc3f6068b34ed598f6e",
+        "rationale": "primary 10건에 더해 issuer의 범용 서버향 DRAM 추가 수요 전망 1건을 추출해 누적 11건이다. SSD 동반 언급은 DRAM 사실에 귀속하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-d47b15dea563431b627b50fc",
+        "rationale": "임원 명단·경력 문서를 전수 재감사했으나 직책만으로 공급·계약·실적을 추론할 수 없어 새 objective-local fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "삼성전자는 미디어텍 최신 플래그십 모바일 AP에서 LPDDR5X 동작 검증을 완료해 고객 플랫폼 기반 상용화 실행 근거를 확보했다. 이는 검증 사실이며 공급계약이나 확정 물량을 의미하지 않는다.",
+        "exact_quote": "미디어텍과 업계 최고 속도 LPDDR5X 동작 검증 성공 (2024.07.) - 미디어텍 최신 플래그십 모바일AP '디멘시티'에 검증 완료로 고성능 제품 상용화 선도",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공식 고객 플랫폼에서 완료된 제품 검증은 DRAM 제품의 상용화 실행 가능성을 직접 뒷받침한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "MEDIATEK_LPDDR5X_VALIDATION_COMPLETION",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae",
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-07",
+        "predicate": "COMPLETED_LPDDR5X_VALIDATION_WITH_MEDIATEK",
+        "predicate_family": "DRAM_CUSTOMER_QUALIFICATION",
+        "primitive_tags": [
+          "MediaTek",
+          "Dimensity",
+          "validation"
+        ],
+        "product_family": "LPDDR5X",
+        "question_family_id": "C06_DRAM_QUALIFICATION",
+        "question_family_tags": [
+          "customer_qualification",
+          "LPDDR5X"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 LPDDR5X 미디어텍 검증",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "MediaTek Dimensity LPDDR5X validation completed"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "삼성전자는 12단 적층으로 36GB 용량의 HBM3E 12H를 개발해 고용량 HBM 제품 포트폴리오를 확보했다.",
+        "exact_quote": "업계 최초 36GB HBM3E 12H D램 개발 (2024.02.)\n- 12단 적층으로 업계 최대 용량 36GB 구현,",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM3E 12단·36GB 개발은 HBM 고용량 제품 경쟁력의 직접적인 제품 사실이다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM3E_12H_CAPACITY",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-02",
+        "predicate": "DEVELOPED_36GB_HBM3E_12H",
+        "predicate_family": "HBM_PRODUCT_DEVELOPMENT",
+        "primitive_tags": [
+          "36GB",
+          "12H",
+          "stacking"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "C06_HBM_PRODUCT_COMMERCIALIZATION",
+        "question_family_tags": [
+          "HBM3E",
+          "product_development"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 36GB HBM3E 12H",
+        "subject_id": "005930",
+        "unit": "GB",
+        "value": 36
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "Advanced TC NCF로 HBM3 8단과 같은 높이에 HBM3E 12단을 적층해 성능과 용량을 모두 50% 이상 높였다는 제품 차별화 근거다.",
+        "exact_quote": "- Advanced TC NCF 기술로 HBM3 8단과 동일한 높이로 12단 적층 구현 및 성능과 용량 모두 50% 이상 향상",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "동일 높이에서 12단 적층과 성능·용량 개선은 HBM 제품 경쟁력과 가격 프리미엄 가능성에 직접 연결된다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM3E_PERFORMANCE_AND_CAPACITY_IMPROVEMENT",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-02 product generation",
+        "predicate": "IMPROVED_HBM3E_PERFORMANCE_AND_CAPACITY",
+        "predicate_family": "HBM_PERFORMANCE_DIFFERENTIATION",
+        "primitive_tags": [
+          "Advanced_TC_NCF",
+          "12_stack",
+          "50_percent"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "C06_HBM_PRODUCT_EFFICIENCY",
+        "question_family_tags": [
+          "HBM3E",
+          "performance"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM3E Advanced TC NCF 적층 성능",
+        "subject_id": "005930",
+        "unit": "% minimum",
+        "value": 50
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "삼성전자는 HBM3E 고객 샘플 제공을 시작했다. 같은 문장의 상반기 양산 예정은 계획일 뿐 이 행에서 실제 양산으로 승격하지 않았다.",
+        "exact_quote": "- 고객사에 샘플 제공 시작, 상반기 양산 예정",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객 샘플 제공 개시는 HBM3E 고객 검증 단계의 실행 사실이지만 계약이나 양산 실적으로는 보지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM3E_CUSTOMER_SAMPLE_PROVISION",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae",
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-02 disclosure",
+        "predicate": "STARTED_HBM3E_CUSTOMER_SAMPLE_DELIVERY",
+        "predicate_family": "HBM_CUSTOMER_QUALIFICATION",
+        "primitive_tags": [
+          "sample",
+          "qualification"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "C06_HBM_QUALIFICATION",
+        "question_family_tags": [
+          "HBM3E",
+          "customer_sample"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM3E 고객 샘플",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "customer sample provision started"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "차량용 LPDDR4X가 영하 40도부터 영상 105도까지 안정적으로 작동한다는 제품 신뢰성 범위를 제시한다.",
+        "exact_quote": "- 영하 40℃~영상 105℃까지 극한 환경에서도 안정적 성능 보장",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "넓은 온도 범위의 안정성은 차량용 DRAM 상용화와 고객 적용에 필요한 제품 품질 근거다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "AUTOMOTIVE_LPDDR4X_OPERATING_TEMPERATURE_RANGE",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-08 product generation",
+        "predicate": "SUPPORTS_AUTOMOTIVE_LPDDR4X_TEMPERATURE_RANGE",
+        "predicate_family": "DRAM_AUTOMOTIVE_RELIABILITY",
+        "primitive_tags": [
+          "LPDDR4X",
+          "temperature_range"
+        ],
+        "product_family": "LPDDR4X",
+        "question_family_id": "C06_DRAM_PRODUCT_EFFICIENCY",
+        "question_family_tags": [
+          "automotive_DRAM",
+          "reliability"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 차량용 LPDDR4X 온도 신뢰성",
+        "subject_id": "005930",
+        "unit": "degrees Celsius",
+        "value": "-40 to 105"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-ca7b0fc3f6068b34ed598f6e",
+        "economic_mechanism": "삼성전자는 Agentic AI 확산으로 범용 서버 역할이 커져 서버향 DRAM 추가 수요가 예상보다 가파르게 증가할 것으로 전망했다. 함께 언급된 SSD 수요는 이 DRAM 행에 귀속하지 않는다.",
+        "exact_quote": "하반기로 갈수록 Hyperscaler 업체의 AI 서비스 확대 및 주요 LLM 업체들의 기업향 서비스 본격 도입에 따라 Agentic AI 확산이 예상보다 더욱 가속화 될 전망됩니다. 이에, AI 서버 외에도 다양한 워크로드에 특화된 범용 서버의 역할이 중요해지고 있어 서버향 DRAM 및 SSD의 추가 수요도 예상 대비 가파른 증가가 예상됩니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "issuer의 서버향 DRAM 수요 전망은 메모리 수급과 매출 지속성을 평가하는 직접적인 수요 근거다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SERVER_DRAM_ADDITIONAL_DEMAND_OUTLOOK",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-H2 onward",
+        "predicate": "FORECASTS_FASTER_SERVER_DRAM_DEMAND_GROWTH",
+        "predicate_family": "DRAM_DEMAND_OUTLOOK",
+        "primitive_tags": [
+          "Agentic_AI",
+          "general_server",
+          "DRAM_demand"
+        ],
+        "product_family": "서버 DRAM",
+        "question_family_id": "C06_DRAM_DEMAND_OUTLOOK",
+        "question_family_tags": [
+          "server_DRAM",
+          "demand_outlook"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 서버향 DRAM 수요 전망",
+        "subject_id": "005930",
+        "unit": "outlook",
+        "value": "additional server DRAM demand expected to increase faster than anticipated"
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "2026년 1분기 주식기준보상 약정의 희석성 잠재효과가 62,715,049주로 전분기 845,000주보다 크게 늘어 주당가치 희석 모니터링 필요성을 높인다.",
+        "exact_quote": "가중평균 희석성 잠재적보통주에 대한 공시\n당분기\n보통주\n보통주식수 주식기준보상약정의 잠재적 효과(단위: 주)\n62,715,049\n전분기\n보통주\n보통주식수 주식기준보상약정의 잠재적 효과(단위: 주)\n845,000",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "실제 보고된 희석성 잠재주식 수는 주당가치와 자본배분 평가의 직접적인 반대 근거다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "DILUTIVE_POTENTIAL_COMMON_SHARES",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_DILUTIVE_POTENTIAL_COMMON_SHARES",
+        "predicate_family": "SHARE_BASED_DILUTION_ACTUAL",
+        "primitive_tags": [
+          "potential_common_shares",
+          "share_based_compensation"
+        ],
+        "product_family": "연결 주식기준보상",
+        "question_family_id": "CORPORATE_DILUTIVE_SHARE_EXPOSURE",
+        "question_family_tags": [
+          "capital_allocation",
+          "dilution"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 희석성 잠재적보통주",
+        "subject_id": "005930",
+        "unit": "shares",
+        "value": 62715049
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "삼성전자 연결회사는 성과연동주식보상제도와 관련해 2026년 1분기 265,248백만원의 비용을 인식했다.",
+        "exact_quote": "당분기 중 연결회사가 이 제도와 관련하여 인식한 비용은 265,248백만원입니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "주식기준보상 비용은 현금지출과 별개로 이익과 잠재 희석을 함께 해석해야 하는 자본배분 반대 근거다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "PERFORMANCE_STOCK_UNIT_EXPENSE",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "RECOGNIZED_PERFORMANCE_STOCK_UNIT_EXPENSE",
+        "predicate_family": "SHARE_BASED_COMPENSATION_EXPENSE_ACTUAL",
+        "primitive_tags": [
+          "PSU",
+          "expense"
+        ],
+        "product_family": "연결 주식기준보상",
+        "question_family_id": "CORPORATE_SHARE_BASED_COMPENSATION_COST",
+        "question_family_tags": [
+          "capital_allocation",
+          "share_based_compensation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 성과연동주식보상 비용",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 265248
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "2026년 1분기 연결 현금흐름에서 매출채권 증가가 28,670,819백만원의 영업현금 감소 요인으로 작용했다.",
+        "exact_quote": "매출채권의 감소(증가)\n(28,670,819)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "매출채권 증가는 큰 규모의 운전자본 현금흡수로, 이익의 현금전환 품질을 제한한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "ACCOUNTS_RECEIVABLE_CASH_FLOW_CHANGE",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_RECEIVABLES_WORKING_CAPITAL_CASH_OUTFLOW",
+        "predicate_family": "WORKING_CAPITAL_CASH_FLOW_ACTUAL",
+        "primitive_tags": [
+          "accounts_receivable",
+          "working_capital"
+        ],
+        "product_family": "연결 운전자본",
+        "question_family_id": "CORPORATE_WORKING_CAPITAL_CASH_CONVERSION",
+        "question_family_tags": [
+          "capital_allocation",
+          "cash_conversion"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 매출채권 현금흐름 변동",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": -28670819
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "2026년 1분기 연결 현금흐름에서 재고자산 증가가 4,115,133백만원의 영업현금 감소 요인으로 작용했다.",
+        "exact_quote": "재고자산의 감소(증가)\n(4,115,133)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "재고 증가는 운전자본 현금흡수와 재고 위험을 동시에 높여 현금전환 평가에 중요하다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "INVENTORY_CASH_FLOW_CHANGE",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_INVENTORY_WORKING_CAPITAL_CASH_OUTFLOW",
+        "predicate_family": "WORKING_CAPITAL_CASH_FLOW_ACTUAL",
+        "primitive_tags": [
+          "inventory",
+          "working_capital"
+        ],
+        "product_family": "연결 운전자본",
+        "question_family_id": "CORPORATE_WORKING_CAPITAL_CASH_CONVERSION",
+        "question_family_tags": [
+          "capital_allocation",
+          "cash_conversion"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 재고자산 현금흐름 변동",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": -4115133
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "2026년 1분기 연결 현금흐름에서 매입채무 증가가 1,661,669백만원의 영업현금 유입 요인으로 작용해 다른 운전자본 유출을 일부 상쇄했다.",
+        "exact_quote": "매입채무의 증가(감소)\n1,661,669",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "매입채무 증가는 보고된 운전자본 현금 유입으로 현금전환의 부분 상쇄 요인이다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "ACCOUNTS_PAYABLE_CASH_FLOW_CHANGE",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_PAYABLES_WORKING_CAPITAL_CASH_INFLOW",
+        "predicate_family": "WORKING_CAPITAL_CASH_FLOW_ACTUAL",
+        "primitive_tags": [
+          "accounts_payable",
+          "working_capital"
+        ],
+        "product_family": "연결 운전자본",
+        "question_family_id": "CORPORATE_WORKING_CAPITAL_CASH_CONVERSION",
+        "question_family_tags": [
+          "capital_allocation",
+          "cash_conversion"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 매입채무 현금흐름 변동",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 1661669
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "2026년 1분기 연결 현금흐름에서 미지급비용 감소가 3,004,248백만원의 영업현금 감소 요인으로 작용했다.",
+        "exact_quote": "미지급비용의 증가(감소)\n(3,004,248)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "미지급비용 감소에 따른 현금 유출은 영업현금흐름의 지속성과 이익 현금전환을 제한한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "ACCRUED_EXPENSES_CASH_FLOW_CHANGE",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_ACCRUED_EXPENSES_WORKING_CAPITAL_CASH_OUTFLOW",
+        "predicate_family": "WORKING_CAPITAL_CASH_FLOW_ACTUAL",
+        "primitive_tags": [
+          "accrued_expenses",
+          "working_capital"
+        ],
+        "product_family": "연결 운전자본",
+        "question_family_id": "CORPORATE_WORKING_CAPITAL_CASH_CONVERSION",
+        "question_family_tags": [
+          "capital_allocation",
+          "cash_conversion"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 미지급비용 현금흐름 변동",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": -3004248
+      }
+    ],
+    "unresolved_document_ids": [
+      "OFFICIALDOC-b8618bed78ae03ea94a9b5cf"
+    ],
+    "unresolved_research_notes": [
+      "coverage audit page cap 12에 도달했다. OFFICIALDOC-b8618bed78ae03ea94a9b5cf의 장단기충당부채 운전자본 변동과 지분가격 민감도 등 distinct 잔여를 다음 페이지에서 최종 감사한다."
+    ]
+  },
+  "payload_hash": "4bf55fcd049718aeb2e9114febebb53ae6c72724cff306874f0d8cf1c252a74f",
+  "production_score_authority": false,
+  "prompt_hash": "0b724007ef76020a9c9ac6b15fbf9b8a7286c9cbaa0d0e779432f302818abe25",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-110afdc10540f1ac5663053619e4d2e436c936af3d758e569276ee4d824ba25b",
+  "response_id": "COLLABRESP-89e3f12fe39e6a1549a343bd557ba77569de7e207504423e437c0841c1648d12",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

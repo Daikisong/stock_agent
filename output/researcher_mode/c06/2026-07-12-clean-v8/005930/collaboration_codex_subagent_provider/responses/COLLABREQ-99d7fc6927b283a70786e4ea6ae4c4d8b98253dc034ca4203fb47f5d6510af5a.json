@@ -1,0 +1,571 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-083a0a242c0d5ed4db567fb0",
+        "rationale": "prior 배당·보상 facts와 이번 전사 R&D actual을 포함하며 이 문서의 objective-local distinct remainder는 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-09916b5452a9727d9ec4985e",
+        "rationale": "디스플레이 High Brightness Mode 제품 카탈로그로 C06 메모리/HBM 사실이 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-0ef42c4edd3dc855b908e1cf",
+        "rationale": "prior 메모리 매출·자기주식 facts와 이번 별도 현금흐름 facts를 포함하며 별도 유동성 remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-1b13101bcc9b1662d45a6e40",
+        "rationale": "가전·모바일 제품 카탈로그로 MEMORY/HBM 목적에 직접 귀속되는 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "rationale": "prior 연결 손익·현금흐름과 이번 희석 EPS·추가 현금항목을 포함하며 재무활동 remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-345071554d2634bef8ce21d3",
+        "rationale": "종속기업 명부 중심으로 현재 C06 경제 메커니즘에 직접 기여하는 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-3b6cc7f69973bfe8b33016e8",
+        "rationale": "prior D&A·재고·투자 facts와 이번 차입 잔액을 포함하며 자산 잔액 remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-3d4d1d527e40e45ee2b60ecd",
+        "rationale": "인력·임원 약력의 메모리 경력명은 현재 목적의 경제적 사실이 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "회사 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-083a0a242c0d5ed4db567fb0",
+        "economic_mechanism": "전사 연구개발 지출",
+        "exact_quote": "경상연구개발비-연구개발 총지출액\n9,660,687",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 R&D 지출은 기술 경쟁력에 대한 투자와 현재 비용·현금 소요를 함께 보여주며 HBM 전용 지출로 귀속하지 않는다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "issuer_research_and_development_total_spend",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 경상 연구개발 총지출액을 보고했다",
+        "predicate_family": "research_and_development_spend_actual",
+        "primitive_tags": [
+          "investment_spend"
+        ],
+        "product_family": "연구개발",
+        "question_family_id": "research_and_development_spend_actual",
+        "question_family_tags": [
+          "research_and_development",
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자",
+        "subject_id": "005930_issuer",
+        "unit": "KRW million",
+        "value": 9660687
+      },
+      {
+        "business_segment": "별도 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-0ef42c4edd3dc855b908e1cf",
+        "economic_mechanism": "별도 영업현금흐름 실제치",
+        "exact_quote": "영업활동현금흐름\n36,009,857\n14,330,619",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "별도 영업현금흐름은 모회사 현금 창출력을 보여주며 연결 영업현금흐름과 회계 범위를 구분한다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "separate_operating_cash_flow",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 별도 영업활동현금흐름을 보고했다",
+        "predicate_family": "separate_operating_cash_flow_actual",
+        "primitive_tags": [
+          "capital_allocation"
+        ],
+        "product_family": "영업현금흐름",
+        "question_family_id": "separate_operating_cash_flow_actual",
+        "question_family_tags": [
+          "cash_conversion",
+          "separate_financials"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 별도회사",
+        "subject_id": "005930_separate",
+        "unit": "KRW million",
+        "value": 36009857
+      },
+      {
+        "business_segment": "별도 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-0ef42c4edd3dc855b908e1cf",
+        "economic_mechanism": "별도 운전자본 변동에 따른 현금 소요",
+        "exact_quote": "영업활동으로 인한 자산부채의 변동 (주24)\n(25,543,731)\n(1,973,975)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "별도 운전자본 현금 유출은 모회사 이익의 현금 전환을 제한하는 직접 반대 증거다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "separate_operating_assets_liabilities_cash_movement",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 별도 영업활동 자산부채 변동을 보고했다",
+        "predicate_family": "separate_working_capital_cash_movement",
+        "primitive_tags": [
+          "cash_conversion"
+        ],
+        "product_family": "운전자본",
+        "question_family_id": "separate_working_capital_cash_movement",
+        "question_family_tags": [
+          "working_capital",
+          "separate_financials"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 별도회사",
+        "subject_id": "005930_separate",
+        "unit": "KRW million",
+        "value": -25543731
+      },
+      {
+        "business_segment": "별도 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-0ef42c4edd3dc855b908e1cf",
+        "economic_mechanism": "별도 유형자산 취득 현금지출",
+        "exact_quote": "유형자산의 취득\n(14,521,344)\n(9,898,585)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "별도 유형자산 취득 현금지출은 모회사 FCF 부담을 보여주되 메모리 CAPA로 오귀속하지 않는다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "separate_ppe_acquisition_cash_outflow",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 별도 유형자산 취득 현금지출을 보고했다",
+        "predicate_family": "separate_capex_cash_actual",
+        "primitive_tags": [
+          "capital_allocation"
+        ],
+        "product_family": "유형자산",
+        "question_family_id": "separate_capex_cash_actual",
+        "question_family_tags": [
+          "capital_expenditure",
+          "separate_financials"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 별도회사",
+        "subject_id": "005930_separate",
+        "unit": "KRW million",
+        "value": -14521344
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "economic_mechanism": "희석 주당순이익 실제치",
+        "exact_quote": "희석주당순이익(단위 : 원)\n7,056\n6,603\n4,950",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "공식 희석 EPS는 주식보상·잠재주식 효과를 반영한 주당 실적 기준이며 메모리 EPS로 귀속하지 않는다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:INFORMATION_QUALITY",
+        "normalized_object": "diluted_earnings_per_share",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 희석주당순이익을 보고했다",
+        "predicate_family": "diluted_eps_actual",
+        "primitive_tags": [
+          "information_quality"
+        ],
+        "product_family": "보통주",
+        "question_family_id": "diluted_eps_actual",
+        "question_family_tags": [
+          "eps_actual",
+          "dilution"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결회사 보통주",
+        "subject_id": "005930_consolidated",
+        "unit": "KRW per share",
+        "value": 7056
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "economic_mechanism": "무형자산 취득 현금지출",
+        "exact_quote": "무형자산의 취득\n(1,049,952)\n(1,257,544)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "무형자산 취득 현금지출은 유형자산 CAPEX 외 추가 FCF 소요를 보여준다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "consolidated_intangible_asset_acquisition_cash_outflow",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 연결 무형자산 취득 현금지출을 보고했다",
+        "predicate_family": "intangible_asset_acquisition_cash_actual",
+        "primitive_tags": [
+          "capital_allocation"
+        ],
+        "product_family": "무형자산",
+        "question_family_id": "intangible_asset_acquisition_cash_actual",
+        "question_family_tags": [
+          "capital_expenditure",
+          "intangible_assets"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결회사",
+        "subject_id": "005930_consolidated",
+        "unit": "KRW million",
+        "value": -1049952
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "economic_mechanism": "정부보조금 현금 유입",
+        "exact_quote": "정부보조금의 수취\n1,586,919\n0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "정부보조금 수취는 투자현금흐름을 보완한 실제 현금 유입이며 특정 사업부 지원으로 추론하지 않는다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "government_grant_cash_inflow",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 정부보조금 수취액을 보고했다",
+        "predicate_family": "government_grant_cash_receipt",
+        "primitive_tags": [
+          "capital_allocation"
+        ],
+        "product_family": "정부보조금",
+        "question_family_id": "government_grant_cash_receipt",
+        "question_family_tags": [
+          "cash_inflow",
+          "government_grant"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결회사",
+        "subject_id": "005930_consolidated",
+        "unit": "KRW million",
+        "value": 1586919
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "economic_mechanism": "이자 지급 현금 유출",
+        "exact_quote": "이자의 지급\n(148,289)\n(112,541)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "이자 지급은 부채 조달에 따른 실제 현금 비용을 보여준다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "interest_paid_cash_outflow",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 이자 지급액을 보고했다",
+        "predicate_family": "interest_paid_cash_actual",
+        "primitive_tags": [
+          "capital_allocation"
+        ],
+        "product_family": "이자 지급",
+        "question_family_id": "interest_paid_cash_actual",
+        "question_family_tags": [
+          "interest_cash_cost",
+          "funding"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결회사",
+        "subject_id": "005930_consolidated",
+        "unit": "KRW million",
+        "value": -148289
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "economic_mechanism": "법인세 납부 현금 유출",
+        "exact_quote": "법인세 납부액\n(1,476,288)\n(1,431,846)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "법인세 납부는 영업현금흐름에 반영된 실제 현금 소요다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "income_tax_paid_cash_outflow",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "2026년 1분기 법인세 납부액을 보고했다",
+        "predicate_family": "income_tax_paid_cash_actual",
+        "primitive_tags": [
+          "capital_allocation"
+        ],
+        "product_family": "법인세 지급",
+        "question_family_id": "income_tax_paid_cash_actual",
+        "question_family_tags": [
+          "tax_cash_cost",
+          "cash_conversion"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결회사",
+        "subject_id": "005930_consolidated",
+        "unit": "KRW million",
+        "value": -1476288
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-3b6cc7f69973bfe8b33016e8",
+        "economic_mechanism": "연결 단기차입금 잔액",
+        "exact_quote": "단기차입금\n19,191,094\n355,221\n19,546,315",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "연결 단기차입금 잔액은 유동성 및 단기 재무부담을 직접 보여준다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "consolidated_short_term_borrowings",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "2026년 1분기말 연결 단기차입금 합계를 보고했다",
+        "predicate_family": "short_term_borrowing_balance_actual",
+        "primitive_tags": [
+          "capital_allocation"
+        ],
+        "product_family": "단기차입금",
+        "question_family_id": "short_term_borrowing_balance_actual",
+        "question_family_tags": [
+          "short_term_debt",
+          "liquidity"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결회사",
+        "subject_id": "005930_consolidated",
+        "unit": "KRW million",
+        "value": 19546315
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-3b6cc7f69973bfe8b33016e8",
+        "economic_mechanism": "연결 장기차입금 잔액",
+        "exact_quote": "장기차입금\n3,606,066\n0\n3,787,730\n7,393,796",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "연결 장기차입금 잔액은 장기 재무부담과 투자 여력을 평가하는 공식 기준점이다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "consolidated_long_term_borrowings",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "2026년 1분기말 연결 장기차입금 합계를 보고했다",
+        "predicate_family": "long_term_borrowing_balance_actual",
+        "primitive_tags": [
+          "capital_allocation"
+        ],
+        "product_family": "장기차입금",
+        "question_family_id": "long_term_borrowing_balance_actual",
+        "question_family_tags": [
+          "long_term_debt",
+          "funding"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결회사",
+        "subject_id": "005930_consolidated",
+        "unit": "KRW million",
+        "value": 7393796
+      },
+      {
+        "business_segment": "별도 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-0ef42c4edd3dc855b908e1cf",
+        "economic_mechanism": "별도 분기말 현금 유동성",
+        "exact_quote": "분기말의 현금및현금성자산\n26,711,904\n3,288,472",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "별도 분기말 현금 잔액은 모회사 투자·환원 여력을 보여주며 연결 현금 잔액과 회계 범위를 구분한다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_ALLOCATION",
+        "normalized_object": "separate_ending_cash_and_cash_equivalents",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31",
+        "predicate": "2026년 1분기말 별도 현금및현금성자산을 보고했다",
+        "predicate_family": "separate_ending_cash_balance_actual",
+        "primitive_tags": [
+          "capital_allocation"
+        ],
+        "product_family": "현금및현금성자산",
+        "question_family_id": "separate_ending_cash_balance_actual",
+        "question_family_tags": [
+          "liquidity",
+          "separate_financials"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 별도회사",
+        "subject_id": "005930_separate",
+        "unit": "KRW million",
+        "value": 26711904
+      }
+    ],
+    "unresolved_document_ids": [
+      "OFFICIALDOC-0ef42c4edd3dc855b908e1cf",
+      "OFFICIALDOC-29c2bfab5c362378d394f6da",
+      "OFFICIALDOC-3b6cc7f69973bfe8b33016e8"
+    ],
+    "unresolved_research_notes": [
+      "page3도 12-fact cap에 도달했다. 별도 분기말 유동성, 연결 재무활동 현금흐름, 연결 유형·무형자산 잔액의 distinct remainder를 prior36과 중복 제거해 다음 페이지에서 최종 감사한다."
+    ]
+  },
+  "payload_hash": "d4ec250eb2fb0f0fc1e3c22d6694b7451dafe6da6eee78bf1a663680d99a5b1a",
+  "production_score_authority": false,
+  "prompt_hash": "5d3c084d3c8678c2054eaa5b3550f19608593507548a211e4441d51bb0c21cda",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-99d7fc6927b283a70786e4ea6ae4c4d8b98253dc034ca4203fb47f5d6510af5a",
+  "response_id": "COLLABRESP-4e1da8b49370273e75fd83e01da380181b9cd048f139da6f3a0cfe8ef07760a7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

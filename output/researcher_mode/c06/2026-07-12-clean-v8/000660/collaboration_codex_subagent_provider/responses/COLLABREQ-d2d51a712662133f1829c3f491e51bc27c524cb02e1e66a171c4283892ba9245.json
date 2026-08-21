@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "9cb388d1034d818abe76988d85b94d8b4a8f6e0321a8d339be3b6d3fcdfb9cf8",
+  "payload": {
+    "allowed_range": [
+      9.8,
+      12.0
+    ],
+    "anchor_comparisons": [
+      "positive ordinal anchor CANCH-5eb80a11ed23fc1102335092의 11.95~14.05점은 DRAM actual 성장과 HBM 실행에는 가깝지만 장기 계약형 가시성을 요구하기에는 증거가 부족하다.",
+      "counter ordinal anchor CANCH-1aa76cb8e89d85cd78d325f4의 9.95~12.05점은 월·분기 재협상, 고객 집중과 재고 위험을 반영하므로 현재 증거에 더 가깝다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c07ed486e6d67134d19d6951",
+      "EFACT-c418009dc8a6493dd0a098b4"
+    ],
+    "disagreements": [
+      "메모리 전체 100% 가동을 HBM 전용 backlog 또는 customer allocation으로 해석하지 않는다.",
+      "제품 실행과 ASIC 협업을 취소불가 장기계약의 증거로 보지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-5eb80a11ed23fc1102335092",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 10.9,
+    "rationale": "메모리 100% 가동, DRAM actual 증가, HBM 가격 주도와 제품·ASIC 협업은 단기 실행 가시성을 높인다. 반면 물량·가격은 월별 또는 분기별 합의이며 장기 공급계약, 확정 물량·가격, 선수금·취소조건이 없다. 복수 10% 초과 고객 집중과 재고평가·재공품 손실 위험도 지속성을 제한하므로 counter anchor 중심의 범위가 적절하다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "HBM별 계약기간·주문량·가격·취소조건·선수금·RPO가 없고 고객 집중 및 재고 손실 위험이 남는다.",
+    "why_not_lower": "DRAM actual 확대, 메모리 완전가동, HBM 가격 주도와 제품·고객 실행은 단순 개발 계획보다 높은 현재 실행도를 보여준다."
+  },
+  "payload_hash": "63e439ffc92e50e6061a806a26171a89ea03a6677f80ab900b8a498a39ba9ce9",
+  "production_score_authority": false,
+  "prompt_hash": "0573a630febd2cea05515e5fa0308050840ffbcabb2f0a7cc552e5f1a071f362",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d2d51a712662133f1829c3f491e51bc27c524cb02e1e66a171c4283892ba9245",
+  "response_id": "COLLABRESP-fa05e4beba800a844bf4c518df242d51797bce09188d05ae74fc25459e35fdf1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

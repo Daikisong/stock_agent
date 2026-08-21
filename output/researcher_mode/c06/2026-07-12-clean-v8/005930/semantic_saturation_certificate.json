@@ -1,0 +1,29 @@
+{
+  "certificate_id": "SATCERT-2435692c840cf2e8ea869979",
+  "checkpoint_id": "REPOCH-8ec952ce1e989652f9b5b31a",
+  "fixed_round_completion_used": false,
+  "gold_critical_fact_miss_count": null,
+  "gold_evaluation_status": "NOT_RUN_POST_RUN_ONLY",
+  "pending_reasons": [],
+  "provider_backed_reviews_required": true,
+  "provider_prompt_hashes": [
+    "a853038cd8c2abaac9896f56982414b072a5b3a8d6d957c70e914671821b7b84",
+    "e82e048f8626634af56c72a2157366d6740585d28692237200d085aa8b3bbbe1",
+    "ff4d17a31dc8c159bd2fc7055e31ffb70dbd14937dfb815be8af076dd002fbce"
+  ],
+  "review_ids": [
+    "SATREVIEW-493103830b74b0a5e6e51edf",
+    "SATREVIEW-7767b8102f30212988e95487",
+    "SATREVIEW-8062485ad708477687072dcc"
+  ],
+  "reviewer_roles": [
+    "INDEPENDENT_COMPLETENESS_REVIEWER",
+    "RESEARCH_SUPERVISOR_A",
+    "RESEARCH_SUPERVISOR_B"
+  ],
+  "schema_version": "e2r_semantic_saturation_certificate_v3",
+  "semantic_saturation_certified": true,
+  "status": "CERTIFIED",
+  "transport_budget_treated_as_saturation": false,
+  "zero_search_result_treated_as_saturation": false
+}

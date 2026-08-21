@@ -1,0 +1,207 @@
+{
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "allowed_range": {
+        "items": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "anchor_comparisons": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "counter_fact_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "disagreements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "nearest_anchor_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "proposed_points": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "rationale": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "support_fact_ids": {
+        "items": {
+          "enum": [
+            "EFACT-0ea4c7a5b342855d104d1848",
+            "EFACT-2b58fcb0afdbec4f074e5aab",
+            "EFACT-3dcbb46fd5653fb3dc5dcd2e",
+            "EFACT-4d0e0f24a3a1645c5962f1b3",
+            "EFACT-4d6a7fe870806b29408cc3a5",
+            "EFACT-6e7cdee571c7ae305a860ce6",
+            "EFACT-7f9fca669110a7e761e6264d",
+            "EFACT-9d94cbc4213d1d3bc1129615",
+            "EFACT-b6ff1b966b93b843dd6bcd04",
+            "EFACT-b7565fd844a544809e1ca148",
+            "EFACT-cbd2e7a3a3670eba7a113d19",
+            "EFACT-ccffdfd9c63b55091b78702d",
+            "EFACT-eea88d392c237374ec65f4b0",
+            "EFACT-f295131e6dc092d197e8eb93"
+          ],
+          "type": "string"
+        },
+        "maxItems": 14,
+        "minItems": 14,
+        "prefixItems": [
+          {
+            "enum": [
+              "EFACT-0ea4c7a5b342855d104d1848"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-2b58fcb0afdbec4f074e5aab"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-3dcbb46fd5653fb3dc5dcd2e"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-4d0e0f24a3a1645c5962f1b3"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-4d6a7fe870806b29408cc3a5"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-6e7cdee571c7ae305a860ce6"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-7f9fca669110a7e761e6264d"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-9d94cbc4213d1d3bc1129615"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-b6ff1b966b93b843dd6bcd04"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-b7565fd844a544809e1ca148"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-cbd2e7a3a3670eba7a113d19"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-ccffdfd9c63b55091b78702d"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-eea88d392c237374ec65f4b0"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-f295131e6dc092d197e8eb93"
+            ],
+            "type": "string"
+          }
+        ],
+        "type": "array"
+      },
+      "why_not_higher": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "why_not_lower": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "anchor_comparisons",
+      "proposed_points",
+      "allowed_range",
+      "rationale",
+      "disagreements",
+      "support_fact_ids",
+      "counter_fact_ids",
+      "nearest_anchor_ids",
+      "why_not_higher",
+      "why_not_lower"
+    ],
+    "type": "object"
+  },
+  "output_schema_hash": "74f772c170ff4c96f9af791d5f0bb59ed80a27950cce08d0c9ba761a878b9c2c",
+  "pass_name": "COMPONENT_ANALYST_JUDGE",
+  "production_score_authority": false,
+  "prompt": "You are an independent E2R 2.0 research analyst.\nUse only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.\nRead the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.\nFor loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.\nDecode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.\nWhen the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.\nCite only ids present in the input. Do not invent facts, sources, metrics, or anchors.\nNever output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.\nFirst decode every evidence_fact_projection.facts row positionally with evidence_fact_projection.fact_fields. Each row preserves one exact fact_id and its economic meaning. Resolve source_independence_group_index through source_independence_group_dictionary. The count/hash rosters account only for repeated lineage; they are not omitted research, a top-N selection, or permission to skip rows. Review all fact_count rows. Act as the independent positive analyst for exactly one broad component. Derive proposed component points and an allowed range from current support facts, economic strength, duration, and cash conversion. Account for every supplied positive component fact and compare the case with at least one nearest blind historical anchor. Explain both why the score is not higher and why it is not lower.\nReturn exactly one JSON object matching the supplied schema.\n{\"allowed_counter_fact_ids\": [\"EFACT-432ffed78641a7fa3eb2aaf1\"], \"allowed_nearest_anchor_ids\": [\"CANCH-5eb80a11ed23fc1102335092\", \"CANCH-1aa76cb8e89d85cd78d325f4\"], \"allowed_support_fact_ids\": [\"EFACT-0ea4c7a5b342855d104d1848\", \"EFACT-2b58fcb0afdbec4f074e5aab\", \"EFACT-3dcbb46fd5653fb3dc5dcd2e\", \"EFACT-4d0e0f24a3a1645c5962f1b3\", \"EFACT-4d6a7fe870806b29408cc3a5\", \"EFACT-6e7cdee571c7ae305a860ce6\", \"EFACT-7f9fca669110a7e761e6264d\", \"EFACT-9d94cbc4213d1d3bc1129615\", \"EFACT-b6ff1b966b93b843dd6bcd04\", \"EFACT-b7565fd844a544809e1ca148\", \"EFACT-cbd2e7a3a3670eba7a113d19\", \"EFACT-ccffdfd9c63b55091b78702d\", \"EFACT-eea88d392c237374ec65f4b0\", \"EFACT-f295131e6dc092d197e8eb93\"], \"component_id\": \"earnings_visibility\", \"component_max_points\": 21.0, \"component_research_memo\": {\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"earnings_visibility\", \"component_max_points\": 21.0, \"counter_case\": \"행 18은 NVIDIA HBM4가 아직 협의 중임을 명시한다. 행 40·61의 OpenAI 지원 계획과 월간 수요 전망, 행 52의 다수 고객 공급 확대 계획은 signed 구매의무·가격·확정 물량·배정기간·취소조건·backlog/RPO를 제공하지 않는다. 행 16의 메모리 100% 가동과 행 67·73의 메모리 actual도 HBM-only 계약경제로 승격하지 않는다. CUSTOMER_OFFICIAL material 0은 이 계약 부재를 입증하지 않는다.\", \"counter_fact_ids\": [\"EFACT-432ffed78641a7fa3eb2aaf1\"], \"historical_anchor_ids\": [\"CANCH-5eb80a11ed23fc1102335092\", \"CANCH-1aa76cb8e89d85cd78d325f4\"], \"memo_id\": \"CRMEMO-571d8c5860f2b41df5b5bd74\", \"nearest_counter_anchor_ids\": [\"CANCH-1aa76cb8e89d85cd78d325f4\"], \"nearest_positive_anchor_ids\": [\"CANCH-5eb80a11ed23fc1102335092\"], \"positive_case\": \"행 36 HBM4 양산 출하와 행 10 HBM4E 고객 샘플은 제품 실행을, 행 66·67·73은 서버향 판매 확대와 메모리 매출·ASP actual을 확인한다. 행 3·23·74는 AMD CUSTOMER_OFFICIAL에서 HBM3E 공급 이력과 HBM4 제품 정렬·기술협력을 독립 확인한다. 다만 행 23은 MOU 기반 forward alignment이고, 행 25·62의 수요·공급 환경도 계약 물량이 아니다.\", \"positive_fact_ids\": [\"EFACT-0ea4c7a5b342855d104d1848\", \"EFACT-2b58fcb0afdbec4f074e5aab\", \"EFACT-3dcbb46fd5653fb3dc5dcd2e\", \"EFACT-4d0e0f24a3a1645c5962f1b3\", \"EFACT-4d6a7fe870806b29408cc3a5\", \"EFACT-6e7cdee571c7ae305a860ce6\", \"EFACT-7f9fca669110a7e761e6264d\", \"EFACT-9d94cbc4213d1d3bc1129615\", \"EFACT-b6ff1b966b93b843dd6bcd04\", \"EFACT-b7565fd844a544809e1ca148\", \"EFACT-cbd2e7a3a3670eba7a113d19\", \"EFACT-ccffdfd9c63b55091b78702d\", \"EFACT-eea88d392c237374ec65f4b0\", \"EFACT-f295131e6dc092d197e8eb93\"], \"research_complete\": true, \"researcher_role\": \"EarningsVisibilityResearcher\", \"researcher_summary\": \"HBM4 양산 출하, HBM4E 고객 샘플, 서버향 판매, 메모리 매출·ASP는 현재 실행과 단기 수익 전환을 지지한다. AMD 공식 자료는 HBM3E 공급 이력과 HBM4 공급 정렬 및 기술협력을 독립 확인하지만 MOU·기술관계는 signed 구매계약이 아니다. NVIDIA는 HBM4 협의 중이고 OpenAI는 공급 지원 계획과 잠재 수요 전망뿐이다. CUSTOMER_OFFICIAL 검색의 material 0은 NVIDIA·OpenAI 계약 부재나 source absence 증명이 아니므로, 계획·MOU·협의와 확정 가격·물량·배정·기간을 분리한 중간 범위를 유지한다.\", \"resolution_fact_ids\": [], \"source_coverage\": [\"COMPANYGUIDE\", \"CUSTOMER_OFFICIAL\", \"ISSUER_NEWSROOM\", \"OPENDART\"], \"structured_metrics\": {\"FORWARD_REVISION\": {\"every_record_accounted_by_hash_and_series_count\": true, \"evidence_role\": \"FORWARD_REVISION\", \"fixed_top_n_used\": false, \"metadata_projection\": {\"full_metadata_persisted_outside_prompt\": true, \"metadata_boolean_field_count\": 557, \"metadata_boolean_state_hash\": \"fed68362596abd9edc360fa7bd43db2c6c6e210ea184e11879c6328e90a13785\", \"metadata_distinct_field_count\": 14, \"metadata_field_observation_count\": 1543, \"metadata_field_roster_hash\": \"3b38f4679d4d4185e8b4081568701324d7ad6b19eecd571efe224ccbe360c89b\", \"metadata_record_count\": 312, \"metadata_roster_hash\": \"cd54aadf87ddb5d8645e4897d39617cdd2f99cfb0b69d9ba0d8a948a68b5d626\", \"metadata_value_type_counts\": {\"bool\": 557, \"float\": 50, \"int\": 21, \"str\": 915}}, \"prompt_projection_is_research_cap\": false, \"record_count\": 312, \"record_roster_hash\": \"a9a58ed04a06a022993c78b790790dfbb7f77c5523baf529b262acdd27dc3147\", \"schema_version\": \"e2r_v5_structured_prompt_projection_v2\", \"score_authority\": false, \"semantic_series\": [{\"dataset\": \"CONSENSUS_REVISION\", \"earliest_record\": {\"available_at\": \"2026-02-24\", \"confidence\": 0.9, \"input_record_id_roster\": {\"count\": 262, \"roster_hash\": \"e84e87e7d1842172ca1c88954b271f0f655772c14fc88ef5ac5adeeec36e9ddd\"}, \"observed_at\": \"2026-02-24\", \"period\": \"FY2026E\", \"provenance\": \"DERIVED\", \"value\": 27}, \"evidence_roles\": [\"CONSENSUS_HISTORY\"], \"latest_record\": {\"available_at\": \"2026-07-08\", \"confidence\": 0.9, \"input_record_id_roster\": {\"count\": 262, \"roster_hash\": \"e84e87e7d1842172ca1c88954b271f0f655772c14fc88ef5ac5adeeec36e9ddd\"}, \"observed_at\": \"2026-07-08\", \"period\": \"FY2026E\", \"provenance\": \"DERIVED\", \"value\": 180}, \"metric_id\": \"consensus_history_span_days\", \"numeric_distribution\": {\"count\": 21, \"maximum\": 180.0, \"median\": 159.0, \"minimum\": 27.0}, \"record_count\": 21, \"record_kind\": \"CONSENSUS_HISTORY\", \"record_roster_hash\": \"d7f5c00ce255c8c6a0d873818b0f14ce1398cc2cb95311ff14ce345c4b23ea74\", \"source_id_roster\": {\"count\": 3, \"roster_hash\": \"c055e5066c65048f62f3159c704522ed155a434c8f1c429bf1073112834ffd11\"}, \"source_route\": \"COMPANYGUIDE\", \"unit\": \"DAYS\"}, {\"categorical_value_projection\": {\"distinct_value_roster\": {\"count\": 3, \"roster_hash\": \"836125f231cefe7965770a1aae4919bdb0d69e0d6950f6ae4eb896ff7ae099d7\"}, \"full_categorical_values_persisted_outside_prompt\": true, \"observation_count\": 260, \"observation_roster_hash\": \"16c1a34c936e6708a597f99b2c6f1fb386589c97699fe372f7c1e6f7dbf43ed6\"}, \"dataset\": \"CONSENSUS_REVISION\", \"earliest_record\": {\"available_at\": \"2026-01-08\", \"confidence\": 0.82, \"observed_at\": \"2026-01-08\", \"period\": \"2026-01-08\", \"provenance\": \"STRUCTURED_EXTRACTED\", \"value\": \"UNCHANGED\"}, \"evidence_roles\": [\"EPS_REVISION\"], \"latest_record\": {\"available_at\": \"2026-07-08\", \"confidence\": 0.82, \"observed_at\": \"2026-07-08\", \"period\": \"2026-07-08\", \"provenance\": \"STRUCTURED_EXTRACTED\", \"value\": \"DOWN\"}, \"metric_id\": \"eps_revision_direction\", \"record_count\": 260, \"record_kind\": \"STRUCTURED_BROKER_REPORT_DIRECTION\", \"record_roster_hash\": \"5bc458dc8894686d7d669497183ada4835c29fdad289115e104801382456adce\", \"source_id_roster\": {\"count\": 3, \"roster_hash\": \"c055e5066c65048f62f3159c704522ed155a434c8f1c429bf1073112834ffd11\"}, \"source_route\": \"COMPANYGUIDE\", \"unit\": \"DIRECTION\"}, {\"dataset\": \"CONSENSUS_REVISION\", \"earliest_record\": {\"available_at\": \"2026-02-24\", \"confidence\": 0.9, \"input_record_id_roster\": {\"count\": 262, \"roster_hash\": \"e84e87e7d1842172ca1c88954b271f0f655772c14fc88ef5ac5adeeec36e9ddd\"}, \"observed_at\": \"2026-02-24\", \"period\": \"FY2026E\", \"provenance\": \"DERIVED\", \"value\": 11.467067}, \"evidence_roles\": [\"CONSENSUS_HISTORY\", \"EPS_REVISION\"], \"latest_record\": {\"available_at\": \"2026-07-08\", \"confidence\": 0.9, \"input_record_id_roster\": {\"count\": 262, \"roster_hash\": \"e84e87e7d1842172ca1c88954b271f0f655772c14fc88ef5ac5adeeec36e9ddd\"}, \"observed_at\": \"2026-07-08\", \"period\": \"FY2026E\", \"provenance\": \"DERIVED\", \"value\": 177.077545}, \"metric_id\": \"eps_revision_history_pct\", \"numeric_distribution\": {\"count\": 25, \"maximum\": 246.203589, \"median\": 157.465344, \"minimum\": 11.467067}, \"record_count\": 25, \"record_kind\": \"EARNINGS_REVISION\", \"record_roster_hash\": \"af9343696acac9543ce9e07759be0360f0249a861d8c9c56ab6915af010a62c0\", \"source_id_roster\": {\"count\": 3, \"roster_hash\": \"c055e5066c65048f62f3159c704522ed155a434c8f1c429bf1073112834ffd11\"}, \"source_route\": \"COMPANYGUIDE\", \"unit\": \"PERCENT\"}, {\"categorical_value_projection\": {\"distinct_value_roster\": {\"count\": 1, \"roster_hash\": \"49deafa8adeb731f8c2542e890ff41694f7a06456df1a6cfaf389078aba494eb\"}, \"full_categorical_values_persisted_outside_prompt\": true, \"observation_count\": 6, \"observation_roster_hash\": \"e8fc34516fd51477d2f99a0e46ec78fa3eebd4e49ff05119dcf8de6f3f348b62\"}, \"dataset\": \"CONSENSUS_REVISION\", \"earliest_record\": {\"available_at\": \"2026-02-23\", \"confidence\": 0.82, \"observed_at\": \"2026-02-23\", \"period\": \"2026-02-23\", \"provenance\": \"STRUCTURED_EXTRACTED\", \"value\": \"UP\"}, \"evidence_roles\": [\"OPERATING_PROFIT_REVISION\"], \"latest_record\": {\"available_at\": \"2026-07-03\", \"confidence\": 0.82, \"observed_at\": \"2026-07-03\", \"period\": \"2026-07-03\", \"provenance\": \"STRUCTURED_EXTRACTED\", \"value\": \"UP\"}, \"metric_id\": \"operating_profit_revision_direction\", \"record_count\": 6, \"record_kind\": \"STRUCTURED_BROKER_REPORT_DIRECTION\", \"record_roster_hash\": \"fe73bf3e34caed06188dc42a68a06faec4e46643c1863ab816ecc330759ae6c4\", \"source_id_roster\": {\"count\": 2, \"roster_hash\": \"618f19ca1dce8e0ac4d7572c5bb678358912a5db17378edd7af5c35435877ff8\"}, \"source_route\": \"COMPANYGUIDE\", \"unit\": \"DIRECTION\"}], \"semantic_series_count\": 4, \"source_pending\": false}}, \"target_id\": \"005930\", \"uncertainties\": [\"NVIDIA·OpenAI CUSTOMER_OFFICIAL 검색 material 0은 source absence나 계약 부재 증명이 아니다.\", \"AMD HBM4 supply alignment는 MOU이며 가격·물량·기간·취소조건이 공개되지 않았다.\", \"HBM4E 샘플 출하는 고객 평가 진입이지 qualification 완료·주문·매출이 아니다.\", \"메모리 전사 actual은 HBM-only durable visibility로 귀속할 수 없다.\"]}, \"conditional_judge_rules\": {\"empty_support_plane\": {\"condition\": \"allowed_support_fact_ids is empty\", \"required_allowed_range\": [0, 0], \"required_proposed_points\": 0, \"required_support_fact_ids\": []}, \"positive_points_require_support\": \"proposed_points greater than zero requires at least one exact id from allowed_support_fact_ids in support_fact_ids\"}, \"evidence_fact_projection\": {\"advisory_tags_are_not_score_gates\": true, \"allowed_component_coverage\": {\"bottleneck_pricing\": 15, \"capital_allocation\": 15, \"earnings_visibility\": 15, \"eps_fcf_explosion\": 15, \"information_confidence\": 15, \"market_mispricing\": 15, \"valuation_rerating\": 15}, \"as_of_date_coverage\": {\"2026-07-12\": 15}, \"claim_id_roster\": {\"count\": 15, \"roster_hash\": \"ef19cd671873f7b58cf3783e5c3c7e09101a7ed0934772955a24ec22cdfde5a3\"}, \"corroborating_independence_group_roster\": {\"count\": 3, \"roster_hash\": \"35130e5c00909d96e0338cc2a098567f6ea4438d0318b560fc283b2ec0803dd7\"}, \"every_fact_id_preserved\": true, \"every_fact_lineage_accounted_by_count_and_hash\": true, \"fact_count\": 15, \"fact_fields\": [\"fact_row_index\", \"fact_id\", \"subject\", \"business_segment\", \"product_family\", \"economic_mechanism\", \"predicate\", \"value\", \"unit\", \"period\", \"direction\", \"current_lifecycle\", \"confidence\", \"structured_evidence_roles\", \"source_independence_group_index\", \"corroborating_independence_group_count\"], \"fact_roster_hash\": \"34cd15e3d8ffd4839de6941640eb3d1c02cc326085c6b736e14d4eb1ed90f59c\", \"facts\": [[0, \"EFACT-0ea4c7a5b342855d104d1848\", \"삼성전자의 AMD Instinct MI350X·MI355X용 primary HBM3E partner 이력\", \"DS 메모리\", \"HBM3E\", \"AMD 공식 뉴스룸은 삼성전자가 AMD의 primary HBM3E partner로서 Instinct MI350X와 MI355X 가속기를 지원해 왔다고 독립적으로 확인한다. 이는 실현된 고객·제품 공급 이력의 corroboration이지만 가격, 물량, 기간, HBM-only 매출은 공개하지 않는다.\", \"AMD_OFFICIAL_CONFIRMED_SAMSUNG_AS_PRIMARY_HBM3E_PARTNER_FOR_MI350X_MI355X\", \"primary HBM3E partner to AMD powering Instinct MI350X and MI355X\", \"status\", \"nearly two decades of collaboration through 2026-03-18; HBM3E partner history current at publication\", \"POSITIVE\", \"CURRENT\", 0.99, [], 0, 1], [1, \"EFACT-2b58fcb0afdbec4f074e5aab\", \"삼성전자 HBM4E 12단 샘플\", \"DS 메모리\", \"HBM4E\", \"HBM4E 12단 샘플을 주요 글로벌 고객에게 실제 출하해 차세대 제품이 고객 평가 단계로 진입했다.\", \"COMMENCED_HBM4E_12_LAYER_SAMPLE_SHIPMENTS_TO_MAJOR_GLOBAL_CUSTOMERS\", \"industry-first 12-layer HBM4E samples shipped to major global customers\", \"status\", \"2026-05-29\", \"POSITIVE\", \"CURRENT\", 0.99, [], 1, 1], [2, \"EFACT-3dcbb46fd5653fb3dc5dcd2e\", \"삼성전자 메모리 가동률\", \"DS 메모리\", \"메모리\", \"메모리 생산라인의 100% 가동은 해당 분기의 유휴 공급 여력이 없었음을 보여준다.\", \"MEMORY_LINES_OPERATED_AT_FULL_UTILIZATION\", 100, \"%\", \"2026Q1\", \"POSITIVE\", \"CURRENT\", 1.0, [], 2, 1], [3, \"EFACT-432ffed78641a7fa3eb2aaf1\", \"삼성전자와 엔비디아의 HBM 공급 협의 상태\", \"DS 메모리\", \"HBM3E·HBM4\", \"삼성전자는 엔비디아에 HBM3E와 HBM4를 공급할 계획이라고 밝혔지만 HBM4 공급은 아직 긴밀히 협의 중이다. 이는 명명 고객과의 공급 논의를 확인하되 서명 계약·확정 배정·물량·가격을 확인하지 못하는 가시성 counter다.\", \"엔비디아 대상 HBM3E·HBM4 공급은 issuer plan이며 HBM4 공급은 2025-10-31 현재 협의 중이다.\", \"HBM3E·HBM4 공급 계획; HBM4 공급 협의 중\", null, \"2025-10-31 현재 및 이후\", \"COUNTER\", \"OPEN\", 0.99, [], 1, 1], [4, \"EFACT-4d0e0f24a3a1645c5962f1b3\", \"삼성전자 HBM4의 AMD Instinct MI455X용 primary supply alignment\", \"DS 메모리\", \"HBM4\", \"AMD 공식 뉴스룸은 MOU 아래 양사가 차세대 AMD Instinct MI455X용 primary HBM4 supply에 맞춰 협력한다고 확인한다. 명명 고객·제품의 미래 공급 가시성을 독립적으로 보강하지만 MOU 기반 정렬이므로 확정 구매계약, 물량, 가격, 기간 또는 취소조건으로 승격하지 않는다.\", \"AMD_OFFICIAL_CONFIRMED_PRIMARY_HBM4_SUPPLY_ALIGNMENT_FOR_MI455X\", \"primary HBM4 supply alignment under MOU for AMD Instinct MI455X\", \"status\", \"2026-03-18 announcement; future AMD Instinct MI455X supply alignment\", \"POSITIVE\", \"OPEN\", 0.98, [\"DURABLE_VISIBILITY\"], 0, 1], [5, \"EFACT-4d6a7fe870806b29408cc3a5\", \"삼성전자 메모리 시장 수요\", \"DS 메모리\", \"메모리\", \"2026년 1분기 데이터센터 AI 인프라 CAPEX 확대와 Agentic AI 초기 수요가 서버향 메모리 수요 강세를 만들었다는 회사의 시장 평가는 수급 우호성을 설명한다.\", \"SERVER_MEMORY_DEMAND_STRENGTHENED_WITH_AI_INFRASTRUCTURE_CAPEX\", \"서버향 중심 수요 강세가 한층 더 확연\", \"assessment\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 0.97, [], 2, 1], [6, \"EFACT-6e7cdee571c7ae305a860ce6\", \"삼성전자 HBM4\", \"DS 메모리\", \"HBM4\", \"2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.\", \"COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS\", \"HBM4 양산 출하\", \"status\", \"2026-02\", \"POSITIVE\", \"CURRENT\", 0.99, [], 2, 1], [7, \"EFACT-7f9fca669110a7e761e6264d\", \"삼성전자의 OpenAI 스타게이트 메모리 공급 지원 계획\", \"DS 메모리\", \"고성능·저전력 메모리 솔루션\", \"OpenAI 스타게이트 수요에 삼성전자 메모리 사업이 대응하려는 issuer 계획으로 고객 접점과 잠재 공급 기회를 보여준다. 그러나 계획 문구만으로 체결된 구매계약, 확정 배정량·가격, 취소 조건 또는 매출을 인정하지 않는다.\", \"삼성전자는 OpenAI가 스타게이트 프로젝트에 필요한 고성능·저전력 메모리를 원활히 공급받도록 지원할 계획이라고 밝혔다.\", \"고성능·저전력 메모리 공급 지원 계획\", \"계획\", \"2025-10-01 발표 이후\", \"POSITIVE\", \"OPEN\", 0.98, [], 1, 1], [8, \"EFACT-9d94cbc4213d1d3bc1129615\", \"삼성전자 HBM4\", \"DS 메모리\", \"HBM4\", \"삼성전자는 다수의 주요 고객사로 HBM4 공급을 확대할 예정이라고 밝혔다. 고객명·확정물량·가격·계약조건은 제시되지 않은 계획이다.\", \"PLANS_TO_EXPAND_HBM4_SUPPLY_TO_MULTIPLE_MAJOR_CUSTOMERS\", \"다수 주요 고객사 대상 HBM4 공급 확대 계획\", \"issuer_plan\", \"2026-Q2 onward\", \"POSITIVE\", \"OPEN\", 0.99, [], 2, 1], [9, \"EFACT-b6ff1b966b93b843dd6bcd04\", \"OpenAI 고성능 DRAM 월간 수요 전망과 삼성전자 협력 맥락\", \"DS 메모리\", \"고성능 DRAM\", \"전략 파트너인 OpenAI의 고성능 DRAM 잠재 수요 규모를 제시해 삼성전자 메모리 기회의 상단을 보여준다. 이 숫자는 OpenAI 전체 필요 전망이지 삼성전자에 확정된 공급 물량, HBM 물량, 매출 또는 issuer guidance가 아니다.\", \"OpenAI는 웨이퍼 기준 월 90만 매의 고성능 DRAM이 필요할 것으로 전망됐지만 삼성전자 공급 몫은 제시되지 않았다.\", \"월 900,000\", \"웨이퍼 매/월(전망 수요, 삼성전자 배정량 아님)\", \"2025-10-01 발표 기준 미래 수요 전망\", \"POSITIVE\", \"OPEN\", 0.98, [], 1, 1], [10, \"EFACT-b7565fd844a544809e1ca148\", \"삼성전자 메모리 공급\", \"DS 메모리\", \"메모리\", \"삼성전자는 2026년 2분기 공급 계획을 설명하면서 메모리 공급 가용량이 제한되어 있다고 명시했다.\", \"REPORTS_LIMITED_MEMORY_SUPPLY_AVAILABILITY\", \"제한된 공급 가용량\", \"issuer_commentary\", \"2026-Q2 outlook\", \"POSITIVE\", \"OPEN\", 0.99, [], 2, 1], [11, \"EFACT-cbd2e7a3a3670eba7a113d19\", \"삼성전자 서버 메모리\", \"DS 메모리\", \"서버 메모리\", \"2026년 1분기 메모리 사업은 AI 수요 강세 아래 서버향 제품 판매 확대에 주력했다.\", \"FOCUSED_ON_EXPANDING_SERVER_MEMORY_PRODUCT_SALES\", \"서버향 제품 중심 판매 확대에 주력\", \"issuer_actual_commentary\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 0.99, [], 2, 1], [12, \"EFACT-ccffdfd9c63b55091b78702d\", \"삼성전자 메모리 제품\", \"DS 메모리\", \"메모리\", \"메모리 제품 매출의 실제 수익 전환\", \"2026년 1분기 메모리 제품 매출액을 보고했다\", 74779980, \"KRW million\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 0.99, [], 2, 1], [13, \"EFACT-eea88d392c237374ec65f4b0\", \"삼성전자 메모리 평균판매가격\", \"DS 메모리\", \"메모리\", \"메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다.\", \"MEMORY_ASP_INCREASED_VERSUS_PRIOR_YEAR_AVERAGE\", 146, \"%\", \"2026Q1 vs 2025 annual average\", \"POSITIVE\", \"CURRENT\", 1.0, [], 2, 1], [14, \"EFACT-f295131e6dc092d197e8eb93\", \"삼성 메모리와 AMD Instinct·EPYC·rack-scale 플랫폼 기술협력\", \"DS 메모리\", \"AI 메모리\", \"AMD CEO는 AMD 공식 뉴스룸에서 삼성의 advanced memory와 AMD Instinct GPU, EPYC CPU, rack-scale platform을 결합하는 협력 확대를 직접 확인했다. 이는 기술 참여의 독립 counterparty corroboration이며 구매의무나 매출을 의미하지 않는다.\", \"AMD_CEO_CONFIRMED_SAMSUNG_MEMORY_PLATFORM_COLLABORATION_ON_AMD_OFFICIAL_SOURCE\", \"Samsung advanced memory collaboration with AMD Instinct GPUs, EPYC CPUs and rack-scale platforms\", \"counterparty_statement\", \"2026-03-18\", \"POSITIVE\", \"CURRENT\", 0.99, [], 0, 1]], \"fixed_top_n_used\": false, \"full_fact_records_persisted_outside_prompt\": true, \"primitive_tag_roster_hash\": \"ba96035f6e317e87f110012ba10176da730f734e50035c5fcd96723eac181920\", \"prompt_projection_is_research_cap\": false, \"question_family_tag_roster_hash\": \"e481e0519cd7383e62bd33a5fd531f2ec255fcfe7a919b33ef36599712716d72\", \"quote_id_roster\": {\"count\": 15, \"roster_hash\": \"b765a26e51d71528a91aa5b5b0072761d542733241b9d8e3349b19f612f2e6f0\"}, \"repeated_lineage_arrays_omitted_from_semantic_rows\": true, \"schema_version\": \"e2r_v5_citable_fact_prompt_projection_v3\", \"score_authority\": false, \"source_id_roster\": {\"count\": 8, \"roster_hash\": \"9767408927e19bee2774d36b29e09f1317b4d88320280bf672d40d3e3dad45c4\"}, \"source_independence_group_dictionary\": [\"CUSTOMER_OFFICIAL:amd.com\", \"ISSUER_NEWSROOM:news.samsung.com\", \"OPENDART:opendart\"], \"target_id_coverage\": {\"005930\": 15}}, \"historical_component_anchors\": [{\"anchor_id\": \"CANCH-5eb80a11ed23fc1102335092\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"earnings_visibility\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"public_event_or_disclosure_proxy\", \"capacity_or_volume_route_proxy\", \"relative_strength_or_recovery_signal\", \"source_proxy_only_dart_ir_public_hbm_capacity_osat_material_supply_chain_context_url_repair_required\"], \"max_points\": 21.0, \"points_lower\": 11.95, \"points_mid\": 13.0, \"points_upper\": 14.05, \"role\": \"POSITIVE\", \"score_band\": \"MEDIUM\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"CANCH-1aa76cb8e89d85cd78d325f4\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"earnings_visibility\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"price_label_spike\", \"customer_lock_missing_or_delayed\", \"margin_bridge_missing_or_faded\"], \"max_points\": 21.0, \"points_lower\": 9.95, \"points_mid\": 11.0, \"points_upper\": 12.05, \"role\": \"COUNTER\", \"score_band\": \"MEDIUM\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}], \"independent_role_mandate\": [\"CURRENT_ECONOMIC_STRENGTH\", \"POSITIVE_THESIS\", \"DURATION_AND_CASH_CONVERSION\"], \"judge_pass_name\": \"COMPONENT_ANALYST_JUDGE\", \"judge_role\": \"ANALYST\", \"required_judge_output_fields\": [\"allowed_range\", \"anchor_comparisons\", \"counter_fact_ids\", \"disagreements\", \"nearest_anchor_ids\", \"proposed_points\", \"rationale\", \"support_fact_ids\", \"why_not_higher\", \"why_not_lower\"]}",
+  "prompt_hash": "514ae7ef7079f2f0321900a35dc48898a0eb7b5795ac15746695f602e7ce33a5",
+  "provider_identity": {
+    "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+    "direct_score_or_stage_authority": false,
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+    "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1e67b7fc4f2f31584acaa198e254ba72872a8b4f79f8b029f34803ba19b38f91",
+  "request_identity": {
+    "output_schema_hash": "74f772c170ff4c96f9af791d5f0bb59ed80a27950cce08d0c9ba761a878b9c2c",
+    "pass_name": "COMPONENT_ANALYST_JUDGE",
+    "prompt_hash": "514ae7ef7079f2f0321900a35dc48898a0eb7b5795ac15746695f602e7ce33a5",
+    "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898"
+  },
+  "response_import_required": true,
+  "schema_name": "e2r_v5_component_analyst_judge",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_request_v1",
+  "score_or_stage_authority": false
+}

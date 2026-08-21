@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-083a0a242c0d5ed4db567fb0",
+        "rationale": "prior pages에서 배당·주식보상·R&D를 포함한 누적 5개 fact가 수용되었고, full-document final audit에서 추가 distinct material fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-09916b5452a9727d9ec4985e",
+        "rationale": "제품 카탈로그의 HBM 표기는 디스플레이 High Brightness Mode로 C06 메모리/HBM 사실이 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-0ef42c4edd3dc855b908e1cf",
+        "rationale": "prior pages에서 메모리 매출·자기주식·별도 재무 actual을 포함한 누적 13개 fact가 수용되었고, 추가 distinct material remainder가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-1b13101bcc9b1662d45a6e40",
+        "rationale": "가전·모바일 제품 카탈로그로 허용된 MEMORY/HBM 목적에 직접 귀속되는 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-29c2bfab5c362378d394f6da",
+        "rationale": "prior pages에서 연결 손익·현금흐름·유동성·재무활동을 포함한 누적 19개 fact가 수용되었고, 추가 distinct material remainder가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-345071554d2634bef8ce21d3",
+        "rationale": "종속기업 명부 중심으로 현재 C06 경제 메커니즘에 직접 기여하는 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-3b6cc7f69973bfe8b33016e8",
+        "rationale": "prior pages에서 D&A·재고·투자·약정·차입·자산잔액을 포함한 누적 11개 fact가 수용되었고, 추가 distinct material remainder가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-3d4d1d527e40e45ee2b60ecd",
+        "rationale": "인력·임원 약력의 메모리 표기는 경력명에 불과해 현재 목적의 경제적 사실이 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "4d7e9220a9e1d927cee1776a319bbd87f0f8f959b687bc06ac4f7c61544f03f2",
+  "production_score_authority": false,
+  "prompt_hash": "e2d3f5132bcaa0d6ad67af0779decf9360f228063d96f2f984ca590d439dcc42",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-86f796bd2ff673a1c888ffd165e6c65284d0046cfeac6b2d5b9e87c2109e6826",
+  "response_id": "COLLABRESP-15e49ac93b770c14f4abc0ac1b46e4c06b4d81baa12c5348e441ea2bd3b8dce4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

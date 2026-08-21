@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-3092a017f6a80c051d6c73eb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "coolenjoy.net의 '삼성, OpenAI와 함께 차세대 AI 데이터센터 혁신 주도 &gt; 뉴스/신제품'은 NVIDIA/OpenAI CUSTOMER_OFFICIAL original·official landing 자료가 아니다. 제3자 글·타기관 문서·broker 자료·issuer 공시를 named counterparty 공식 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-63d650ec3018c7748cbb1c93",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "contents.premium.naver.com의 '5월 5일  해외 뉴스'은 NVIDIA/OpenAI CUSTOMER_OFFICIAL original·official landing 자료가 아니다. 제3자 글·타기관 문서·broker 자료·issuer 공시를 named counterparty 공식 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-24afb2cff97168c685d2f165",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "kau.ac.kr의 '산학협력단 결산서'은 NVIDIA/OpenAI CUSTOMER_OFFICIAL original·official landing 자료가 아니다. 제3자 글·타기관 문서·broker 자료·issuer 공시를 named counterparty 공식 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-bc3e86c4a46de244d28c6a4f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "velog.io의 '삼성전자(005930 KS) 투자 리포트'은 NVIDIA/OpenAI CUSTOMER_OFFICIAL original·official landing 자료가 아니다. 제3자 글·타기관 문서·broker 자료·issuer 공시를 named counterparty 공식 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-73dd6aba53d5dff83ee3a03f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.kistep.re.kr의 '국가전략기술 국제협력 전략 수립 연구'은 NVIDIA/OpenAI CUSTOMER_OFFICIAL original·official landing 자료가 아니다. 제3자 글·타기관 문서·broker 자료·issuer 공시를 named counterparty 공식 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b98b82d4d9adef78e406df93",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "contents.premium.naver.com의 '샘 알트만과 오라클 CEO가 말한 AI의 미래. [주식 투자 자료]'은 NVIDIA/OpenAI CUSTOMER_OFFICIAL original·official landing 자료가 아니다. 제3자 글·타기관 문서·broker 자료·issuer 공시를 named counterparty 공식 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-218fe1e2bcf3ab3b6730131e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "kind.krx.co.kr의 '분 기 보 고 서'은 NVIDIA/OpenAI CUSTOMER_OFFICIAL original·official landing 자료가 아니다. 제3자 글·타기관 문서·broker 자료·issuer 공시를 named counterparty 공식 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-576e3d710703b3e7de313759",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.nst.re.kr의 '기관평가보고서 - 국가과학기술연구회'은 NVIDIA/OpenAI CUSTOMER_OFFICIAL original·official landing 자료가 아니다. 제3자 글·타기관 문서·broker 자료·issuer 공시를 named counterparty 공식 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f356f056eafc6d0dad51e335",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.bobaedream.co.kr의 'OpenAI가 HBM 90만개/월 주문은 가짜 뉴스입니다.'은 NVIDIA/OpenAI CUSTOMER_OFFICIAL original·official landing 자료가 아니다. 제3자 글·타기관 문서·broker 자료·issuer 공시를 named counterparty 공식 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-10552b2170335ff95e81b087",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.hanaw.com의 '불빛을 - 하나증권'은 NVIDIA/OpenAI CUSTOMER_OFFICIAL original·official landing 자료가 아니다. 제3자 글·타기관 문서·broker 자료·issuer 공시를 named counterparty 공식 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-6e15f4e713fac561e8393f94",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "securities.miraeasset.com의 '20251110_Mirae Asset Minutes (25년 21호).pdf'은 NVIDIA/OpenAI CUSTOMER_OFFICIAL original·official landing 자료가 아니다. 제3자 글·타기관 문서·broker 자료·issuer 공시를 named counterparty 공식 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-303f4b74cc707a6649304390",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.hanaw.com의 '눈앞의 AI - 하나증권'은 NVIDIA/OpenAI CUSTOMER_OFFICIAL original·official landing 자료가 아니다. 제3자 글·타기관 문서·broker 자료·issuer 공시를 named counterparty 공식 증거로 승격하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "12개 후보를 전수 검토했으나 NVIDIA/OpenAI official owner의 product/newsroom/filing/event 원문 route는 없었다. Local material 0은 source absence나 관계·계약 부재 증명이 아니다."
+    ]
+  },
+  "payload_hash": "aa4c6b546e8a82c41d4f14ea367662b4dc7ea71e37204f82088f9e6bea419885",
+  "production_score_authority": false,
+  "prompt_hash": "1660cf32aff3dbcec068ee6d0699fb7d9b1409cec67e3dcf1dc13bdc0e625dd9",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-69d1b54c9f6b2d6bf4d1a854a6ad37766a946c8416c7130c1af50a3e2698fbb0",
+  "response_id": "COLLABRESP-d7c802c0a895d006405ece0b437f24ddcdeccafdfdaf3ed474f93fc965f67ef3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

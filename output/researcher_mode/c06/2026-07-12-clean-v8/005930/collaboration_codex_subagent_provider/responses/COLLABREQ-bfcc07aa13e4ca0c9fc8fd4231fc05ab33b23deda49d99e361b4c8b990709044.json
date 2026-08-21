@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-84ffb4584ade9728122c6a5c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 또는 발견 경로이나 일반 제품·지원·행사·내비게이션 페이지에 머물러 현재 HBM·메모리 경제 메커니즘의 양면 근거를 검증할 full document가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-851ecccc0dd105d859069f34",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 제품·서비스 페이지지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 범위라 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-85c418dca2f0b7e450fc5cc0",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "로그인·개인정보·태그·파트너 탐색 등 기능성 페이지로 대상 기업의 현재 경제 메커니즘을 검증하는 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-86a657a3ae69440e4eaa67d9",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 제품·서비스 페이지지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 범위라 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-86ef4d4b25ed80ddf707e384",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "로그인·개인정보·태그·파트너 탐색 등 기능성 페이지로 대상 기업의 현재 경제 메커니즘을 검증하는 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-879887534e42f179980c8366",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "로그인·개인정보·태그·파트너 탐색 등 기능성 페이지로 대상 기업의 현재 경제 메커니즘을 검증하는 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-88799afe035273b40ac9248a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 공유 또는 단축 링크라 원문 전체 문서가 아니며, HBM·메모리 실적·계약·CAPA·수익성의 검증 가능한 경로를 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8a4bfa1d05e666baa97f96ac",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 제품·서비스 페이지지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 범위라 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-8ab370a82a43d2cf35977765",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 공유 또는 단축 링크라 원문 전체 문서가 아니며, HBM·메모리 실적·계약·CAPA·수익성의 검증 가능한 경로를 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8ed9ee4b45a5b4aaeabff993",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 공유 또는 단축 링크라 원문 전체 문서가 아니며, HBM·메모리 실적·계약·CAPA·수익성의 검증 가능한 경로를 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8f1d106bceddb5f1367c7ba8",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "공식 사이트의 홈·미디어 라이브러리·선택 화면 같은 탐색 페이지이며 특정 날짜의 원문 기사나 보고서로 직접 이어지는 full-fetch route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-90ebc4a72c7dbfd9355207a3",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 제품·서비스 페이지지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 범위라 objective를 해소하지 못한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "681d26a8e727ca20beb0a7b31d335d22a21f596865a0971ab68320556218d845",
+  "production_score_authority": false,
+  "prompt_hash": "f031e8f588b2013ae0b1572d73afe6609313a6f4430c429d5ea780430da2622e",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bfcc07aa13e4ca0c9fc8fd4231fc05ab33b23deda49d99e361b4c8b990709044",
+  "response_id": "COLLABRESP-72a624a058ce2bb47ab966d4785060f8550f74ded5be4dddf6ba3a814b6f9cb6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

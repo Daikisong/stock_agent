@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5c7fa95dfd761094a4e47d0c",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA XGBoost 교육 세션으로 Samsung HBM relationship scope와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-d9db798d4bc71b91e1efde87",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA A100 architecture 공식 원문은 HBM2 사양을 설명하지만 Samsung 공급자 또는 current HBM3E/HBM4 관계를 명시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-bf012558084a91565a739610",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA GTC 여행·행사장 안내로 Samsung 또는 HBM 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-4b34acf2a9817559c45777d7",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA corporate overview 원문이지만 일반 기업 소개이며 Samsung HBM qualification·supply 관계를 확인하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-1933aa28316b194e4c94aa34",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Graph RAG 교육 세션으로 Samsung HBM relationship과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-d6a95c44ab4c2a1075ac452f",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.05,
+        "rationale": "NVIDIA GTC 2026 session catalog landing이지만 supplied metadata에 Samsung 또는 HBM 관련 특정 session이 없어 target relationship full-source 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-dc2b0e6abd3081f59c4126ea",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Jetson embedded systems 공식 페이지로 Samsung HBM3E/HBM4 관계와 다른 제품이다."
+      },
+      {
+        "candidate_id": "SGCAND-a50661acce7cf9c582aea8bd",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA GTC code-of-conduct 문서로 Samsung HBM 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-1ce72101fca9327a528d8f33",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.05,
+        "rationale": "NVIDIA 한국어 GTC session catalog landing이지만 Samsung HBM qualification·platform·supply를 명시한 개별 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8af43ad5eef53ee164960276",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA A100 공식 datasheet는 HBM2e 사양 자료이며 Samsung 공급자 귀속 또는 current HBM 관계를 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-90a55a5e315e8bb9f765eb20",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA H100 NVL 공식 문서는 환경·제품 사양이며 Samsung HBM supplier·qualification 상태를 명시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ec5391ebf2eb717178ccb498",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Jetson Thor 교육 세션으로 Samsung HBM relationship scope와 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "NVIDIA 공식 도메인이라는 provenance만으로 generic product·session을 Samsung HBM relationship evidence로 승격하지 않았다. material 0은 이 partition의 결과일 뿐 absence가 아니다."
+    ]
+  },
+  "payload_hash": "2163a842ecdfd4124f9556b22e44ea324304ba9e2d15d091d01800e32f78f20d",
+  "production_score_authority": false,
+  "prompt_hash": "97bd5802edfa1573846b09f12fc7a714360bf7967fa6ac9eeee74cdfdca77493",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0c652c8a8a5bbf614f4799d9db57b06808506ab99c439ed6eb17cad316520fd1",
+  "response_id": "COLLABRESP-4d4a8371a79ef75d05ecaab2f6bc58cfc53c82dbbb2dedb639d0e92c6516e373",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

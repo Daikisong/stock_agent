@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-c8203469551358df6f25ee07",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "WiseReport summary landing page이며 snippet의 기업 roster가 000660이 아닌 다른 종목을 가리킨다. Broker 원문 PDF도 아니고 target의 expectation·valuation bridge를 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-647c4e16998780e81faa1ce0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Naver Premium의 제3자 모닝리포트 재정리 페이지다. 2025년 일반 종목 목록일 뿐 SK하이닉스 broker 원문·PDF 또는 current market-expectation 사실의 원본 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-53c95d65c9602cf1e75151db",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "제3자 모닝리포트 재정리이고 제목·URL상 2026-07-14로 as_of_date 이후다. 미래누수이며 PUBLIC_BROKER_PDF 원본도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6e22643ea68f78414c8b72f0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "증권사 리포트 AI 위클리라는 제3자 요약 콘텐츠로 target-specific 원문 보고서가 아니다. snippet도 다른 산업의 일반 추정 난이도만 언급한다."
+      },
+      {
+        "candidate_id": "SGCAND-4f3f277a0f04c8c2ec5eb738",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "WiseReport의 타 종목 summary 목록이며 000660의 broker full report identity나 objective-bound valuation·revision 근거가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-8727ab8e78c9c47d70d4abdf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Naver Premium 제3자 모닝리포트로 SK하이닉스를 제목에 포함하지만 broker 원문/PDF가 아니다. portal 요약은 requested PUBLIC_BROKER_PDF family를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-776054afa864f89ba021b89e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "반도체 주가 급락을 다룬 일반 뉴스이며 broker full report가 아니다. target expectation revision이나 valuation denominator를 원문으로 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-1997b103b269ec1eaae1d1e6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "HBM·펀더멘털 괴리를 언급하지만 Naver Premium의 제3자 모닝리포트 재정리다. PUBLIC_BROKER_PDF 원본 또는 원문 landing route로 검증되지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-6ed78b2f5132ad0f9ae1fde6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "WiseReport summary landing의 타 종목 보고서 목록이며 SK하이닉스 current valuation objective에 묶인 full broker document가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-82b90d379d6b592d65140b0c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "제3자 모닝리포트 재정리이고 제목·URL상 2026-07-23로 cutoff 이후다. target broker 원문도 아니므로 미래누수와 family mismatch가 모두 존재한다."
+      },
+      {
+        "candidate_id": "SGCAND-e04ff3719ea063628ee1ac42",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "WiseReport summary snippet이 기아 실적을 다루는 wrong-subject 결과다. SK하이닉스의 expectation 또는 valuation gap과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-7aff54b8c8b67f0b3ab73abc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "SK하이닉스를 제목에 포함하지만 Naver Premium 제3자 모닝리포트다. broker 원문 PDF나 검증된 same-host child reference가 아니어서 requested family의 full-source route가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 12개 transport roster에서는 objective-bound PUBLIC_BROKER_PDF 원문 또는 검증된 원문 landing route가 확인되지 않았다. 이는 broader source absence나 research completion을 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "aa8426575884a80b593dcb337207ee87e47b76c3190b4e624f6ad5937818cc7c",
+  "production_score_authority": false,
+  "prompt_hash": "350613bd6d1308a56793c6db6c2f27e6a51538c26c609120296943b19ad73050",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-24a143af1d8c0d73a77c96053a1c3202e1c9fb62b9043bbf807f00410344bf00",
+  "response_id": "COLLABRESP-59c9152b31d0f5e66afcaa8716999603c0bd3da3597247ebc36d57c9ecba26c7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

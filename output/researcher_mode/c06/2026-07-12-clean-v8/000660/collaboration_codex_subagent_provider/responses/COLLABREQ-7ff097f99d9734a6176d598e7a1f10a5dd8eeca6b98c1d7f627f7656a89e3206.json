@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "09e6883df75a193dc7ea146a98d62802447bc6cc59de736cd3248b0d2a1f4eb9",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-ae42ada490ad300f3bd31070",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "SSD 제품 페이지로 투자·현금흐름 발표자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-fb9461b25640c2b6a4915d45",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "ESG PRISM 소개는 요청된 IR 발표자료나 현금흐름 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-893a87cc69e2ba28f88dfd1d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "협력사 채용박람회 페이지로 연구 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-41f57ae6d00c854fb38cf4c5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "작업중지 접수 로그인으로 요청 문서군과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-800300cd51dd82c3e2ed9470",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "이사회 구성은 지배구조 정보지만 HBM CAPEX·FCF 발표자료 또는 현금흐름 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f875ec3bd5723a74137570d1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "뉴스룸 홈은 이번 자본배분 query의 요청 문서군과 다르고 특정 원문 식별자도 없다."
+      },
+      {
+        "candidate_id": "SGCAND-980f61f297f081fb129b0ce8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "협력사 포털 공지 팝업으로 발행사 투자자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5a3c39bea0ba24a0060d3845",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "협력사 관리 절차로 요청된 경제적 원문과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-1183708cea1ec2dd899db66c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "SSD 제품 사양 페이지로 자본배분 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-203d83b3fe2efa3bb740889c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "기술 연구 블로그 홈은 IR 발표자료·현금흐름 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-79622cf618f1bf3fa2394b4a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "SSD 소비자 제품 페이지로 연구 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-e4f212c04e03c441d6846e2f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "청년 인재양성 프로그램으로 요청 문서군과 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 파티션에는 requested family와 목적을 동시에 충족하는 full-fetch 원문 경로가 없다."
+    ]
+  },
+  "payload_hash": "9c665017ef55524409901da63e182808de7a7a66f90049ba6f8ea4dd5a9de950",
+  "production_score_authority": false,
+  "prompt_hash": "1212c203e27257ae3ae9ed58e326a5195458908c9ca73e6757d9de7ad3605f14",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7ff097f99d9734a6176d598e7a1f10a5dd8eeca6b98c1d7f627f7656a89e3206",
+  "response_id": "COLLABRESP-7f1e0c98c97bcddfeae0f20b29099666e913df8ee5b3a00c159c13e378eba033",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

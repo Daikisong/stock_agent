@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-0a8231f92a7cef706aee9be7",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.05,
+        "rationale": "NVIDIA FY2025 Sustainability Report는 공식 full PDF지만 supplied title·snippet에 Samsung HBM supplier, qualification 또는 supply status가 없어 target relationship route로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-0d54635285fe8a159cfb824f",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA A100 한국어 공식 제품 페이지로 과거 Ampere GPU이며 Samsung HBM3E/HBM4 relationship을 명시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2d0e04553e04df4f98a8029a",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA GTC contact 안내로 Samsung HBM 관련 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-92b8b442448345abf6273766",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA recommendation-model 세션으로 Samsung HBM relationship과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-046f8498b0d475bebeb5df12",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA RTX rendering design guide로 visualization server 자료이며 Samsung HBM 관계가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-641d0d868a34efcc391ad85d",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA AI infrastructure training landing으로 Samsung supplier·qualification 정보를 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-844a2edfc20e75f25e6ae638",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Fleet Command 제품 페이지로 edge management 자료이며 Samsung HBM 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-e44c0f107c09b350aa1ccade",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA-owned DLSS 4/5 뉴스이지만 게임 그래픽 내용이며 Samsung HBM3E/HBM4 관계를 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b2c1659810ceed476fcb9782",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA CFD digital-twin 세션으로 target relationship과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-8bf920a8ab6f5424ae88bc56",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA GeForce RTX 공식 landing으로 gaming platform이며 Samsung HBM 관계가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-eadf419d646714cf941e6965",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA RTX 3050 공식 뉴스로 graphics-card partners 일반 설명이며 Samsung HBM relationship을 명시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-bf1d026475b13b5e7cabb60b",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA RTX 50 Series 공식 페이지로 consumer GPU이며 Samsung HBM 관계 범위가 없다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "NVIDIA 공식 full PDF를 포함한 12건을 검토했으나 supplied discovery metadata가 Samsung HBM relationship을 가리키지 않았다. material 0은 source absence나 연구 완료가 아니다."
+    ]
+  },
+  "payload_hash": "2f9a3b6a3095cf34aabbe9aa180a4dcf93f0cb354cd3dd5865f021770ae97cba",
+  "production_score_authority": false,
+  "prompt_hash": "12946b5e9aafdc68b9e9b98f73618455d0aba18702e9e48b7d002c6dda83a5d8",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-57e446b6f56fc27cf7ac06cd70f46f2b22f070dcadd8173cf79163be9aa89635",
+  "response_id": "COLLABRESP-259222ded48a170a1e31000e757db21f73442d358e2a94d53bd49b6f27260342",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

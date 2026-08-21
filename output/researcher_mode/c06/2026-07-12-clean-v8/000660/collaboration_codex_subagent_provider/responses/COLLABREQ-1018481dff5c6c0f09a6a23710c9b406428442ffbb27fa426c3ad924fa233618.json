@@ -1,0 +1,142 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-a7ba1123e55006eaa89d2da6는 연결 순이익·영업현금과 DRAM actual, HBM 가격 기여를 HBM-only EPS·FCF 귀속 공백 및 CAPEX·재고·재공품 손실과 함께 반영한다. Raw judge range는 prompt에 없어 intersection은 NOT_EMBEDDED/NOT_INFERRED지만 deterministic material_disagreement_component_ids=[]와 score_valid=true를 그대로 존중하며 이 투영 한계로 memo를 재개방하지 않는다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-94a0b0951207cd91b0a3504c는 DRAM actual·메모리 100% 가동·HBM 실행과 월·분기 재협의, 고객 집중, signed 장기계약·RPO 공백을 같은 evidence snapshot에서 균형 있게 다룬다. Judge intersection은 NOT_EMBEDDED/NOT_INFERRED이며 deterministic summary에는 material disagreement가 없다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-2249911cddf154b56adcb60c는 메모리 100% 가동과 HBM 가격상승 기여를 HBM-only locked CAPA·장기 sold-out·고정가격으로 확대하지 않고 재고·재공품·고객 집중 counter를 보존한다. Judge range 미내장은 insufficiency가 아니고 deterministic disagreement roster는 비어 있다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-d3b966cef94684f224f000f9는 actual operating delta와 시장 기대·mispricing 직접 증명의 경계를 명시하고 current valuation·revision을 비교면으로만 사용한다. 남은 한계는 score band의 counterweight이며 prompt에 이를 바꿀 distinct untried route나 material disagreement가 없다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-bd1ae968a0ff283334124565는 HBM actual execution, demand·capacity 방향, signed economics·HBM-only denominator 공백과 상충하는 valuation metrics를 함께 구조화한다. Prompt의 257 broker rows는 metadata discovery hints일 뿐이며 어느 candidate도 기존 PUBLIC_BROKER_PDF 실패와 구별되는 미시도 full-report route lineage로 확인되지 않는다. Candidate 존재 자체를 새 gap으로 만들지 않고 judge summary material_disagreement=[]를 유지한다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-d59a4c0b36f44562d19c1762는 전사 순현금·부채축소·배당·자기주식 소각과 CAPEX·R&D·운전자본·희석 부담을 대칭적으로 반영하고 HBM-only realized ROIC를 발명하지 않는다. Raw judge 미내장은 insufficiency가 아니다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-80cb0de6b0599152dc281125는 감사된 OPENDART actual의 신뢰성과 issuer HBM 실행·협업의 독립 corroboration 한계를 분리하며 빈 corroboration count를 source absence로 만들지 않는다. Prompt에는 명명된 미시도 counterparty-official identity가 없고 raw judge 미내장은 insufficiency가 아니다."
+      }
+    ],
+    "component_memos_sufficient": true,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-1a14a205b1ca37e2a0a08185",
+        "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED 문서 거절 1건은 source absence가 아니며 SOURCE_GRAPH_OBJECTIVE_RESOLUTION으로 해소된 과거 fetch 제약이다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-76c6261978c1e313b9c615cf",
+        "rationale": "PUBLIC_BROKER_PDF 요청에서 accepted claim/fact lineage가 없었던 1건은 source absence가 아니다. Prompt에는 기존 실패와 구별되는 미시도 candidate-route lineage가 없으므로 같은 family나 metadata 후보를 새 route로 재포장하지 않고 current transport 결과 재검증만 남긴다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-976e77a75db8ea1311b1326c",
+        "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED query failure 1건은 objective resolution으로 해소됐고 source absence를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-9f189ef4313bb76da9d0c2eb",
+        "rationale": "As-of date 뒤 문서 6건은 full fetch 뒤 정당하게 배제된 미래자료이며 재시도·source absence·completion의 근거가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-b5e3b8331dcb08b996ec83cf",
+        "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure 6건은 cutoff 위반으로 배제됐으며 current source 부재를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY 1건은 당시 distinct valid query가 없었다는 뜻일 뿐 saturation 또는 source absence proof가 아니다. Prompt에 없는 후발 결과도 선반영하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-d1a59dacea6d2435835d08a2",
+        "rationale": "QUERY_PROVIDER_ERROR 18건은 query transport/provider 실패이지 자료 부재의 증명이 아니다. 후발 c48b response를 사용하지 않고 current snapshot에서는 결과 소비·재검증 전 transport blocker로만 분류한다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-d5ae73aeae8a077698c8758a",
+        "rationale": "SEARCH_NO_RESULT_NOT_SATURATION 6건은 zero-result-only이며 자료 부재나 완료를 증명하지 않는다. 동시에 같은 empty route를 새 positive route로 반복할 근거도 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [],
+    "new_source_family_directions": [],
+    "next_actions": [
+      "Immutable snapshot 뒤에 도착하는 현재 query-generation transport response를 production runner가 정식 소비한 뒤 source/failure snapshot을 재검증한다. 이 review에서는 c48b 결과를 선반영하지 않는다.",
+      "재검증 시 accepted full-document claim/fact lineage가 실제 생긴 경우에만 관련 memo와 judges·Red Team·Synthesis를 갱신하고, provider error나 no-result만 남으면 evidence·source absence·completion으로 승격하지 않는다."
+    ],
+    "query_direction_briefs": [],
+    "rationale": "Immutable prompt의 current memo 7개, RTMEMO-8ed934301d7aeb07d694beae, SYNMEMO-7e62fcb75ef8db2fa237e384, structured 1,669 records, 7-objective counter proof와 8 failure groups/40 members를 전수 감사했다. Raw judge decision/range는 내장되지 않아 intersections를 NOT_EMBEDDED/NOT_INFERRED로 fail-close하지만, deterministic material_disagreement_component_ids=[]와 score_valid=true는 현재 runner의 직접 summary이므로 무효화하지 않는다. 모든 memo는 current evidence와 한계를 함께 담고 structured·counter gates도 complete다. Broker candidate rows는 metadata-only이고, prompt에는 기존 PUBLIC_BROKER_PDF 실패와 구별되는 미시도 route lineage가 없어 새 gap·direction·brief를 만들지 않는다. 다만 unresolved provider/no-result/source-family transport failures가 있는 immutable snapshot이라 ready는 false이며, 이는 source absence나 새 research route 주장이 아니라 current transport response 소비 후 재검증 대기다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": false,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "29abd2b12547fef445d5fc3d0b94778f404e19f6bbd1760c44cf2d9670ffbaf7",
+  "production_score_authority": false,
+  "prompt_hash": "d0ee97e055377477e71d15091761301f356e1f729a6d88f2901f1f6fb4bbd501",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1018481dff5c6c0f09a6a23710c9b406428442ffbb27fa426c3ad924fa233618",
+  "response_id": "COLLABRESP-f599cb884c1fc9a3b5f68b8ccf4df2c82bae2aadaa4eb539ce69902f4b5b5b7b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

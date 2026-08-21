@@ -1,0 +1,551 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "rationale": "The issuer KIND filing was reviewed in full. This page captures twelve distinct capital-allocation atoms covering the ADR equity-financing structure, facility-use and price uncertainty, and the Yongin, P&T7, and EUV investment plans without attributing them to HBM-only economics. Additional distinct offering mechanics, already-invested amounts, delivery timing, and estimate-risk atoms remain for continuation.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Corporate-wide capital allocation",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "The issuer approved an ADR-backed equity issuance whose disclosed common-share quantity is an upper-bound input to capital raising and dilution.",
+        "exact_quote": "1. 신주의 종류와 수\n보통주식 (주)\n17,790,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The disclosed issuance size is a direct capital-allocation and dilution input, while later text makes clear that the final quantity remains subject to bookbuilding.",
+        "mechanism_scope_id": "MSCOPE-000660-CORPORATE-CAPITAL-ALLOCATION",
+        "normalized_object": "maximum disclosed common shares for ADR issuance",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "board decision 2026-06-24",
+        "predicate": "set disclosed common-share issuance quantity at 17,790,000 shares",
+        "predicate_family": "ADR_MAX_COMMON_SHARES",
+        "primitive_tags": [
+          "common_shares",
+          "ADR"
+        ],
+        "product_family": "Issuer-wide financing",
+        "question_family_id": "skh_adr_max_common_shares_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "equity_financing"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix ADR-backed common-share issuance",
+        "subject_id": "000660:ADR:MAX_COMMON_SHARES:20260624",
+        "unit": "shares",
+        "value": 17790000
+      },
+      {
+        "business_segment": "Corporate-wide capital allocation",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "The filing states a facility-funding purpose amount for the equity issuance, subject to the later offering-size qualifications in the same filing.",
+        "exact_quote": "4. 자금조달의 목적\n시설자금 (원)\n45,453,450,000,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The amount directly frames the scale of proposed facility financing, but it is not treated as finalized proceeds because the filing separately says the offering total will be determined later.",
+        "mechanism_scope_id": "MSCOPE-000660-CORPORATE-CAPITAL-ALLOCATION",
+        "normalized_object": "stated facility-funding purpose amount for ADR issuance",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "filing dated 2026-06-24",
+        "predicate": "stated facility-funding purpose amount of KRW 45,453,450,000,000",
+        "predicate_family": "ADR_STATED_FACILITY_FUNDING_PURPOSE",
+        "primitive_tags": [
+          "equity_proceeds",
+          "facilities"
+        ],
+        "product_family": "Issuer-wide semiconductor facilities",
+        "question_family_id": "skh_adr_stated_facility_funding_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "facility_funding"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix stated ADR facility-funding purpose",
+        "subject_id": "000660:ADR:FACILITY_FUNDS:20260624",
+        "unit": "KRW",
+        "value": 45453450000000
+      },
+      {
+        "business_segment": "Corporate-wide capital allocation",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "The financing is structured as a third-party allotted capital increase supporting the ADR issuance.",
+        "exact_quote": "5. 증자방식\n제3자배정증자",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The transaction method is directly relevant to the issuer's financing structure but does not itself quantify operating economics.",
+        "mechanism_scope_id": "MSCOPE-000660-CORPORATE-CAPITAL-ALLOCATION",
+        "normalized_object": "third-party allotted capital-increase method",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "board decision 2026-06-24",
+        "predicate": "selected third-party allotted capital increase",
+        "predicate_family": "ADR_THIRD_PARTY_ALLOCATION_METHOD",
+        "primitive_tags": [
+          "third_party_allotment"
+        ],
+        "product_family": "Issuer-wide financing",
+        "question_family_id": "skh_adr_third_party_allocation_method_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "equity_financing"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix ADR equity issuance method",
+        "subject_id": "000660:ADR:THIRD_PARTY_ALLOCATION:20260624",
+        "unit": "",
+        "value": "제3자배정증자"
+      },
+      {
+        "business_segment": "Corporate-wide capital allocation",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "The issuer converted prior uncertainty into a formal decision to conduct an ADR public offering and seek a Nasdaq listing.",
+        "exact_quote": "* 확정사항: 당사의 신주 발행을 통한 미국 주식예탁증서(ADR) 공모 및 미국 나스닥 증권거래소 상장 결정",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The formal financing and listing decision changes the issuer's capital-raising state from undecided to decided.",
+        "mechanism_scope_id": "MSCOPE-000660-CORPORATE-CAPITAL-ALLOCATION",
+        "normalized_object": "ADR public offering and Nasdaq listing decision",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "decision disclosed 2026-06-24",
+        "predicate": "decided ADR public offering and Nasdaq listing",
+        "predicate_family": "ADR_NASDAQ_OFFERING_DECISION",
+        "primitive_tags": [
+          "public_offering",
+          "Nasdaq"
+        ],
+        "product_family": "Issuer-wide financing",
+        "question_family_id": "skh_adr_nasdaq_offering_decision_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR_listing"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix ADR public offering and Nasdaq listing",
+        "subject_id": "000660:ADR:NASDAQ_DECISION:20260624",
+        "unit": "",
+        "value": "결정"
+      },
+      {
+        "business_segment": "Corporate-wide capital allocation",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "New shares will serve as the underlying shares for an ADR offering to overseas investors, defining the funding channel without implying a precommitted investor or price.",
+        "exact_quote": "당사는, 금번 발행되는 신주를 원주로 하여 국내 거주자를 제외한, 해외 투자자들을 대상으로 ADR 발행을 통해 자금을 조달할 계획입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The official filing identifies the intended investor base and funding instrument, but it does not establish final proceeds or investor commitments.",
+        "mechanism_scope_id": "MSCOPE-000660-CORPORATE-CAPITAL-ALLOCATION",
+        "normalized_object": "overseas-investor ADR fundraising channel",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "offering plan disclosed 2026-06-24",
+        "predicate": "planned fundraising through ADR issuance to overseas investors",
+        "predicate_family": "ADR_OVERSEAS_INVESTOR_FUNDRAISING_PLAN",
+        "primitive_tags": [
+          "ADR",
+          "overseas_investors"
+        ],
+        "product_family": "Issuer-wide financing",
+        "question_family_id": "skh_adr_overseas_fundraising_plan_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "funding_channel"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix overseas ADR fundraising plan",
+        "subject_id": "000660:ADR:OVERSEAS_FUNDRAISING:20260624",
+        "unit": "",
+        "value": "해외 투자자 대상 ADR 발행"
+      },
+      {
+        "business_segment": "Corporate-wide capital allocation",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "All eventual ADR proceeds are designated for facilities, while the actual amount remains unresolved until the offering total is fixed.",
+        "exact_quote": "본건 신주(ADR)의 발행을 통해 조달한 자금 전액을 시설자금으로 사용될 예정이며, 금액은 본건 신주의 모집총액이 추후 확정된 이후 결정 예정될 예정입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The use of proceeds is explicit, but the same issuer sentence prevents treating the stated amount as finalized funding.",
+        "mechanism_scope_id": "MSCOPE-000660-CORPORATE-CAPITAL-ALLOCATION",
+        "normalized_object": "all ADR proceeds allocated to facilities with final amount pending",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "as of filing 2026-06-24",
+        "predicate": "designated all ADR proceeds for facilities while leaving amount pending",
+        "predicate_family": "ADR_FACILITY_USE_AND_AMOUNT_UNCERTAINTY",
+        "primitive_tags": [
+          "facility_funding",
+          "amount_pending"
+        ],
+        "product_family": "Issuer-wide semiconductor facilities",
+        "question_family_id": "skh_adr_facility_use_amount_pending_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "proceeds_uncertainty"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix ADR proceeds use and amount uncertainty",
+        "subject_id": "000660:ADR:PROCEEDS_USE_UNCERTAINTY:20260624",
+        "unit": "",
+        "value": "전액 시설자금; 금액 추후 결정"
+      },
+      {
+        "business_segment": "Corporate-wide capital allocation",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "The disclosed KRW 2,555,000 figure is only the prior close used as a reference and explicitly is not the actual issuance price.",
+        "exact_quote": "'6. 신주의 발행가액'에 기재된 금액은 당사의 이사회결의일 전일(2026년 6월 23일)의 당사 보통주 종가인 금 2,555,000원을 단지 참고적으로 기재한 것에 불과하며 실제 발행가액을 의미하는 것은 아닙니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This explicit limitation prevents a preliminary reference price from being misread as final funding economics.",
+        "mechanism_scope_id": "MSCOPE-000660-CORPORATE-CAPITAL-ALLOCATION",
+        "normalized_object": "reference common-share price that is not actual issue price",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "reference close 2026-06-23",
+        "predicate": "classified KRW 2,555,000 as reference rather than actual issuance price",
+        "predicate_family": "ADR_REFERENCE_PRICE_NOT_ACTUAL",
+        "primitive_tags": [
+          "reference_price",
+          "not_actual_price"
+        ],
+        "product_family": "Issuer-wide financing",
+        "question_family_id": "skh_adr_reference_price_not_actual_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "pricing_uncertainty"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix ADR share-price reference limitation",
+        "subject_id": "000660:ADR:REFERENCE_PRICE_LIMITATION:20260624",
+        "unit": "KRW per common share",
+        "value": 2555000
+      },
+      {
+        "business_segment": "Corporate-wide semiconductor facilities",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "The issuer disclosed a multi-year construction investment plan for the first Yongin semiconductor-cluster fab without attributing the facility to HBM-only output.",
+        "exact_quote": "용인 반도체클러스터 1기 팹\n(건설투자) (주1)\n2024년 8월~\n2030년 12월\n31,019,600",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The official numeric multi-year facility plan is a direct issuer capital-allocation commitment, but the quote does not support HBM-only capacity attribution.",
+        "mechanism_scope_id": "MSCOPE-000660-CORPORATE-CAPITAL-ALLOCATION",
+        "normalized_object": "Yongin semiconductor-cluster first-fab construction investment plan",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-08 through 2030-12",
+        "predicate": "planned KRW 31,019,600 million Yongin first-fab construction investment",
+        "predicate_family": "YONGIN_FAB_INVESTMENT_PLAN",
+        "primitive_tags": [
+          "Yongin",
+          "construction_investment"
+        ],
+        "product_family": "Yongin semiconductor fab",
+        "question_family_id": "skh_yongin_fab_investment_plan_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "fab_investment"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "SK hynix Yongin semiconductor cluster first fab",
+        "subject_id": "000660:YONGIN_FAB:INVESTMENT_PLAN:2024_2030",
+        "unit": "KRW million",
+        "value": 31019600
+      },
+      {
+        "business_segment": "Corporate-wide semiconductor facilities",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "The issuer disclosed a multi-year construction, equipment, and ancillary-cost investment plan for a Cheongju advanced-packaging fab without stating HBM-only economics.",
+        "exact_quote": "청주 P&T7 어드밴스드 패키징 팹\n(건설, 장비 및 부대비용 포함) (주1)\n2026년 4월~\n2030년 12월\n19,000,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The official numeric future facility plan directly informs capital allocation, while the source does not identify the economics as HBM-only.",
+        "mechanism_scope_id": "MSCOPE-000660-CORPORATE-CAPITAL-ALLOCATION",
+        "normalized_object": "Cheongju P&T7 advanced-packaging fab investment plan",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-04 through 2030-12",
+        "predicate": "planned KRW 19,000,000 million P&T7 advanced-packaging fab investment",
+        "predicate_family": "PT7_PACKAGING_FAB_INVESTMENT_PLAN",
+        "primitive_tags": [
+          "P&T7",
+          "packaging_fab"
+        ],
+        "product_family": "Advanced-packaging fab",
+        "question_family_id": "skh_pt7_packaging_fab_investment_plan_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "advanced_packaging"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "SK hynix Cheongju P&T7 advanced-packaging fab",
+        "subject_id": "000660:PT7_FAB:INVESTMENT_PLAN:2026_2030",
+        "unit": "KRW million",
+        "value": 19000000
+      },
+      {
+        "business_segment": "Corporate-wide semiconductor facilities",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "The issuer disclosed a numeric multi-year EUV scanner acquisition plan for next-generation process production, without HBM-only attribution.",
+        "exact_quote": "기계장치 취득\n- EUV(Extreme Ultraviolet) Scanner\n(주2)\n2026년 3월~\n2027년 12월\n11,949,674",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The official numeric future equipment plan is material to issuer capital allocation, while it does not establish HBM capacity or contract economics.",
+        "mechanism_scope_id": "MSCOPE-000660-CORPORATE-CAPITAL-ALLOCATION",
+        "normalized_object": "EUV scanner acquisition investment plan",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03 through 2027-12",
+        "predicate": "planned KRW 11,949,674 million EUV scanner acquisition",
+        "predicate_family": "EUV_SCANNER_ACQUISITION_PLAN",
+        "primitive_tags": [
+          "EUV",
+          "scanner"
+        ],
+        "product_family": "EUV scanner",
+        "question_family_id": "skh_euv_scanner_investment_plan_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "equipment_investment"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "SK hynix EUV scanner acquisition",
+        "subject_id": "000660:EUV_SCANNER:INVESTMENT_PLAN:2026_2027",
+        "unit": "KRW million",
+        "value": 11949674
+      },
+      {
+        "business_segment": "Corporate-wide semiconductor facilities",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "The filing identifies the euro contract amount used to translate the planned equipment cost but explicitly warns that the actual acquisition amount can change.",
+        "exact_quote": "취득금액은 계약금액 6,913.4백만 유로를 상기 기계장치 취득을 결의한 이사회 결의일 전일인 2026년 3월 23일 하나은행이 최초 고시한 매매기준율(1,728.48원/EUR)로 환산한 금액으로서, 실제 취득가액은 변동될 수 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact contract amount is material, and the same sentence prevents the translated KRW plan from being treated as a fixed final acquisition cost.",
+        "mechanism_scope_id": "MSCOPE-000660-CORPORATE-CAPITAL-ALLOCATION",
+        "normalized_object": "EUV scanner contract amount subject to actual acquisition-price variation",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "equipment acquisition plan through 2027-12",
+        "predicate": "disclosed EUR 6,913.4 million EUV contract amount with variable actual cost",
+        "predicate_family": "EUV_SCANNER_CONTRACT_AMOUNT_UNCERTAINTY",
+        "primitive_tags": [
+          "EUV_contract",
+          "FX_translation"
+        ],
+        "product_family": "EUV scanner",
+        "question_family_id": "skh_euv_contract_amount_uncertainty_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "cost_uncertainty"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix EUV scanner acquisition contract amount",
+        "subject_id": "000660:EUV_SCANNER:CONTRACT_AMOUNT:20260324",
+        "unit": "EUR million",
+        "value": 6913.4
+      },
+      {
+        "business_segment": "Corporate-wide capital allocation",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR proceeds fund only part of planned investment, and remaining requirements are expected to be met by operating cash flow, borrowing, and other internal resources.",
+        "exact_quote": "본건 유상증자로 조달한 자금은 상기 총 투자예정금액의 일부 재원으로 충당되며, 잔여 소요액은 영업활동 현금흐름, 차입 및 그 밖의 자체 재원으로 충당할 예정입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The official funding mix is necessary to distinguish ADR proceeds from the total facility commitments and highlights future cash-flow and leverage dependence.",
+        "mechanism_scope_id": "MSCOPE-000660-CORPORATE-CAPITAL-ALLOCATION",
+        "normalized_object": "residual facility-investment funding mix",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "investment plans through 2030-12",
+        "predicate": "planned residual investment funding from operating cash flow, borrowing, and internal resources",
+        "predicate_family": "CAPEX_RESIDUAL_FUNDING_MIX",
+        "primitive_tags": [
+          "operating_cash_flow",
+          "borrowing"
+        ],
+        "product_family": "Issuer-wide semiconductor facilities",
+        "question_family_id": "skh_capex_residual_funding_mix_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "funding_mix"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix residual facility-investment funding",
+        "subject_id": "000660:CAPEX:RESIDUAL_FUNDING_MIX:20260624",
+        "unit": "",
+        "value": "영업활동 현금흐름, 차입 및 그 밖의 자체 재원"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-a496f2fff2b891528afafbfd"
+    ],
+    "unresolved_research_notes": [
+      "Continue the same document after these twelve facts to audit the remaining allocation mechanics, previously invested facility amounts, delivery and payment schedule, and estimate or schedule-change limitations without repeating accepted economic identities."
+    ]
+  },
+  "payload_hash": "224adedd7d07053b45db917c6f339b26b7a7ba8bb5c859719f03305f97c7353e",
+  "production_score_authority": false,
+  "prompt_hash": "32ff58904ca6c548dc43504a9ec50eb41596ac01b23bca036239d335a5609fb2",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8732a7406b965a82a4b0c4d1f490255e9eb02894fdf371f30af862c7363b5ae6",
+  "response_id": "COLLABRESP-141d9f1ebe4991a9105412ba80c897a9e504601755256b9346342e11fc4f951c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

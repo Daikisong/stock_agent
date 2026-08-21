@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9af25c64adc7754c0e0876b8",
+        "rationale": "Independent full-document coverage review found no additional distinct target-wide current-objective fact beyond the four previously accepted CUSTOMER_OFFICIAL facts. The DDR5 and EPYC/Helios passages restate the already accepted advanced-DRAM and platform-collaboration meaning; the HBM4 performance language is product marketing rather than incremental customer commitment; the foundry discussion is outside the allowed MEMORY segment; and the generic forward-looking caution does not establish purchase price, committed volume, allocation, duration, cancellation rights, a signed purchase contract, or realized HBM revenue. Cumulative accepted fact count remains four.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "277cc2edfddd3b8cf9e30fc8da985fedb8af20b90ab029532f6f060c431d70cf",
+  "production_score_authority": false,
+  "prompt_hash": "0a9a0ca3fb62fb6ee6400236b1efbdee7d39b04fb338e83fcd73b63b22fa7110",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2c340a221dc18ad32bca1b7020498dd272790038b92592a1d901857caf6fa4b0",
+  "response_id": "COLLABRESP-910e72c438a7e9ad47d9bdf758478b754bd9f98d625a890c3c892a78870c57ac",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "rationale": "Coverage audit round1에서 literal chunk1/2 전체와 target alias의 모든 문맥을 prior43 및 current725에 대해 재대조했다. M15X/HBM CAPA·Nvidia 공급·CAPEX·HBM4 가격·분리 가치와 Top Pick 성장률/PER/PBR/ROE/DPS는 prior43에 모두 포함됐다. 남은 FY2025 과거 증설공간 서술과 과거 CAPA chart는 current objective의 superseded history이고, 산업 합산·다른 발행사·장비업체 SKH향 매출은 target-direct 사실이 아니다. 따라서 omitted distinct material atom은 0개이며 cumulative accepted count 43으로 종료한다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "64920a1ecda69c3161afc20545c509e10c978a2da13be45240a7cab127d1f49e",
+  "production_score_authority": false,
+  "prompt_hash": "6cd5cbe1a9b2037e6ad05909a5fabc05a7fd968223a597d51ee6027c3bfb609e",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fac242372ae70131c8ec954be7739e4565b53c47417a2391b28af693da2afa6a",
+  "response_id": "COLLABRESP-72a7a8ed5c0fd5b9cbb2db7c3fb2787aacf560a1e5919b83a42008290bc679dc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

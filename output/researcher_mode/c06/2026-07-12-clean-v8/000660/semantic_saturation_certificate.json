@@ -1,0 +1,8 @@
+{
+  "checkpoint_id": "REPOCH-513bc0aa9c4de1af69535808",
+  "pending_reasons": [
+    "SUPERVISOR_SYNTHESIS_LINEAGE_PENDING:CURRENT_SYNTHESIS_NOT_COMPLETE"
+  ],
+  "semantic_saturation_certified": false,
+  "status": "PENDING"
+}

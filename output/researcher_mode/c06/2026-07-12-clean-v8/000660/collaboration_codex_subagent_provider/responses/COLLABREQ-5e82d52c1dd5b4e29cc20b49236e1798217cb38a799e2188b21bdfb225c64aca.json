@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "rationale": "Independent start-to-finish coverage audit of literal transport chunk 1/2 found no omitted target-direct fact for a current open objective. SK hynix/000660 appears only in recommendation and target-price-change appendix rows, which do not establish HBM or DRAM economics, earnings or cash conversion, durable visibility, a valuation denominator, or capital-allocation evidence. All remaining material concerns other issuers or industries. This chunk result does not prove source absence for the canonical parent document.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "8e2ddf8915ea9401630eb255265cb94630bb73d6b614bfc71948bd54a69c7139",
+  "production_score_authority": false,
+  "prompt_hash": "ff5f02544915c11145592e0494c2f10d1c16b7ac1a8ce48445bb7302c8dcb37e",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5e82d52c1dd5b4e29cc20b49236e1798217cb38a799e2188b21bdfb225c64aca",
+  "response_id": "COLLABRESP-e67e761ac866c7cfa5852686aba0cd9ebcdd675e96de2cf75e8a38bf3b8e328b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

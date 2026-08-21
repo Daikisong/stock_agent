@@ -1,0 +1,24 @@
+{
+  "decisions": [
+    {
+      "candidate_id": "SGCAND-b5b1441b0102f431635c58cf",
+      "material_relevance": false,
+      "priority": 0.0,
+      "objective_ids": ["SGOBJ-7f61ec3a6e8e8409f1c536a0"],
+      "matched_requested_source_family": "NONE",
+      "rationale": "Naver blog attachment list is not a broker-original target research document and provides no target-specific HBM customer relationship."
+    },
+    {
+      "candidate_id": "SGCAND-2fbb5b5f023c94f3c65673c1",
+      "material_relevance": false,
+      "priority": 0.2,
+      "objective_ids": ["SGOBJ-7f61ec3a6e8e8409f1c536a0"],
+      "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+      "rationale": "MyAsset broker PDF discusses memory pricing and process assumptions, but the supplied metadata has no Microsoft, Nvidia, named platform, qualification or deployment linkage."
+    }
+  ],
+  "ranking_complete": true,
+  "unresolved_notes": [
+    "Neither candidate in this partition provides a bounded named-customer corroboration route."
+  ]
+}

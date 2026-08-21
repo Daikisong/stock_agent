@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-78ffc2e2fee404f7a370039e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "화학·배터리 관련 Telegram 게시물로 wrong target이고 requested original PUBLIC_BROKER_PDF full-source route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8672865e28744605b455e57a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "은행 업종 Telegram 게시물로 wrong target이며 original PUBLIC_BROKER_PDF provenance가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3f9732804fceaec427a35879",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Micron 관련 third-party Telegram 요약으로 000660 target-direct original broker source route가 아니다. snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a2d7373d6682e640647726c7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "유한양행 관련 Telegram 게시물로 wrong target이고 requested original broker PDF route가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "4개 suffix 후보를 supplied order로 exact-once 분류했으며 material route는 없었다. 이는 local ranking 완료일 뿐 source absence나 broader research completion을 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "fde17aff6468d907d97dc029a20e33fe8e756b29ffc1833b1ac6a365891b0c8c",
+  "production_score_authority": false,
+  "prompt_hash": "9fd3478475dda704cbe04433f2d96a66d7d0ce88efdffab1f39744422fad9abc",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cbc9505cc1e981763257ec999024959a867897313e7696a0a7bf2deec88048b1",
+  "response_id": "COLLABRESP-f83dd57037b0dd8f9a55197a2c2232ebf2eb5b86baedb79e1a6901a260d76136",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

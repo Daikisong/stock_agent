@@ -1,0 +1,65 @@
+{
+  "output_schema_hash": "072b9db1988c101edb0a4199516d6e6aa32bfc4d93428ed9c7649f08c23e8b93",
+  "payload": {
+    "allowed_range": [
+      9.8,
+      12.4
+    ],
+    "anchor_comparisons": [
+      "CANCH-1aa76cb8e89d85cd78d325f4의 customer lock·margin bridge 부재 band(9.95~12.05)가 가장 가까우며, NVIDIA 협의 중·AMD MOU·OpenAI 계획이라는 현재 counter가 그 구조와 유사하다.",
+      "CANCH-5eb80a11ed23fc1102335092의 positive band(11.95~14.05)는 HBM4 출하와 actual을 반영할 상단 기준이지만 signed allocation과 HBM-only 현금 bridge가 없어 중단 이상을 기본값으로 삼기 어렵다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1"
+    ],
+    "disagreements": [
+      "HBM4 양산 출하와 AMD의 HBM3E partner 이력은 제품 실행을 입증하지만, 미래 고객 lock의 지속성이나 수익 조건을 입증하지 않는다.",
+      "OpenAI 월 90만 웨이퍼 수요 전망은 전체 잠재 수요이지 삼성전자 배정량이 아니며, material 0 검색도 반대 사실의 부재 증명이 아니다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-5eb80a11ed23fc1102335092",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 11.2,
+    "rationale": "현재 단기 execution은 강하지만 durable visibility의 핵심인 signed 구매의무·확정 배정·가격·물량·기간·취소조건·backlog/RPO가 없다. NVIDIA HBM4는 협의 중이고 AMD HBM4는 MOU, OpenAI와 다수 고객은 계획이다. 100% 가동, 메모리 매출과 ASP actual은 전사 메모리 범위여서 HBM-only 계약경제로 전이할 수 없다. 따라서 customer-lock counter anchor 부근이 보수적으로 타당하다.",
+    "support_fact_ids": [
+      "EFACT-0ea4c7a5b342855d104d1848",
+      "EFACT-2b58fcb0afdbec4f074e5aab",
+      "EFACT-3dcbb46fd5653fb3dc5dcd2e",
+      "EFACT-4d0e0f24a3a1645c5962f1b3",
+      "EFACT-4d6a7fe870806b29408cc3a5",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-7f9fca669110a7e761e6264d",
+      "EFACT-9d94cbc4213d1d3bc1129615",
+      "EFACT-b6ff1b966b93b843dd6bcd04",
+      "EFACT-b7565fd844a544809e1ca148",
+      "EFACT-cbd2e7a3a3670eba7a113d19",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0",
+      "EFACT-f295131e6dc092d197e8eb93"
+    ],
+    "why_not_higher": "현재 고객별 signed 계약경제와 HBM-only 매출·마진·FCF bridge가 없고, 명명 고객 신호의 상당 부분이 협의·MOU·지원 계획·잠재 수요에 머문다.",
+    "why_not_lower": "HBM4 양산 출하, HBM4E 샘플, 100% 메모리 가동, 메모리 매출·ASP actual과 AMD 공식 HBM3E 공급 이력은 제품 실행 자체가 단순 계획 이상임을 확인한다."
+  },
+  "payload_hash": "166ff51ad68ce800d45332d87a359873de039bf635a86fee433f86acf5d2dcd7",
+  "production_score_authority": false,
+  "prompt_hash": "9169d4d9b226cae96e14cf3d66b1f036bf674b941cbf195c797c1fa78aadbe48",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-903a5dd6a58f4a21ece56b3fc4a839baa920ec434350649ad5109078e9a6e5a9",
+  "response_id": "COLLABRESP-74355c7014fb70e61f1287d1471398dc99c26deedbdd1404bc265119c8eca46c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

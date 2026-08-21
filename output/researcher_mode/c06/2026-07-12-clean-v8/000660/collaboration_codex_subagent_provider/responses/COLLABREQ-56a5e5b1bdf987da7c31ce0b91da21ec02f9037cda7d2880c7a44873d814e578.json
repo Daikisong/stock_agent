@@ -1,0 +1,159 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The current memo is source-backed and research-complete, but Analyst 14.5-16.8, Skeptic 12.4-15.3 and Calibration 15.8-18.2 have no common range. This is a same-evidence attribution and counterweight disagreement: consolidated and DRAM actuals cannot be promoted to HBM-only EPS/FCF, and CAPEX, inventory valuation and work-in-process loss risks need one consistent weighting. Rewrite the memo and rerun fresh independent judges; no new source query is required merely to reconcile these bands."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The memo accounts for actual DRAM growth, memory utilization, HBM pricing and execution, plus monthly or quarterly volume and price agreement, customer concentration and inventory risks. The three judge ranges intersect at 11.7-12.0. Missing long-term contract terms remain an explicit limitation rather than a source-absence claim."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "Analyst 6.4-8.3, Skeptic 4.8-6.8 and Calibration 11.6-14.4 do not intersect. The semantic disagreement is whether memory-wide 100% utilization and HBM price leadership can support a high range without evidence of HBM-only locked capacity, long-term allocation or fixed-price backlog. Rewrite on the same evidence and rerun fresh judges without opening a query only to move a score."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The memo treats current valuation and revisions as comparison planes rather than proof of mispricing, preserves operating positives and customer, inventory and work-in-process counters, and the judge ranges intersect at 5.7-5.8. The missing direct HBM surprise-to-price bridge remains an upper-bound limitation."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "Exact-quote-verified pre-cutoff full-report evidence connecting period-defined HBM earnings, ASP, technology or customer-duration assumptions to a target multiple, with the denominator and normalization bridge stated rather than inferred from metadata."
+        ],
+        "rationale": "The memo and judges correctly treat peer bands and derived target valuation as contextual and their ranges intersect at 3.9-4.4. Separately, structured output is SOURCE_PENDING because valuation_rerating lacks DURABLE_VISIBILITY. The newly executed KB PDF query produced another NO_RESULT_NOT_SATURATION: valuation PDF attempts now number three, fetch records still contain no broker PDF, PUBLIC_BROKER_REPORT accepted zero records and no structured role was created. Query existence is not evidence, so one different candidate-bound full-report route remains."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "Analyst 1.0-1.4, Skeptic 0.6-1.2 and Calibration 2.1-3.2 do not intersect. The conflict is how to weigh issuer-wide net cash, debt reduction, dividends and share retirement against CAPEX, R&D, receivables, inventory and dilution without treating issuer-wide facts as HBM investment ROIC. A same-evidence rewrite and fresh judges are required."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "Analyst 1.65-2.15, Skeptic 1.4-2.0 and Calibration 2.3-3.4 do not intersect. Official actuals and the audit opinion must be weighted consistently against the single OPENDART independence group, limited interim MD&A, customer concentration, warranty, inventory and work-in-process risks. The fetched issuer-newsroom document is issuer-affiliated and does not itself establish independent corroboration. No named counterparty-official executable route appears in this prompt, so the immediate remedy is a same-evidence rewrite and fresh judges."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-8e2f5359f99e65e6f4fac7b2",
+        "rationale": "The seven grouped QUERY_PROVIDER_ERROR records are provider or transport failures. They do not prove source absence and are retryable only through a bounded, objective-bound route.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-9f189ef4313bb76da9d0c2eb",
+        "rationale": "Six full-fetched documents were after the 2026-07-12 cutoff and were correctly rejected. They are nonretryable for this as-of date and do not support a source-absence claim.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-b5e3b8331dcb08b996ec83cf",
+        "rationale": "The six corresponding full-document query failures arose from future-dated documents. They must remain excluded and cannot be used as evidence of completion or source absence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY records one generation turn without a novel legal query. It is not saturation or source absence; one different candidate-bound route is supplied below.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-d877bed56df546671aaa4e99",
+        "rationale": "All three valuation PDF searches, including the executed KB PDF query, are SEARCH_NO_RESULT_NOT_SATURATION and zero-result-only. No broker PDF entered the fetch, fact or structured rosters, so the group remains retryable but cannot support source absence.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "valuation_rerating",
+        "direction": "POSITIVE",
+        "fact_need": "A different pre-cutoff full broker report must provide exact quoted, period-defined HBM earnings, ASP, technology or customer-duration assumptions and show how they bridge to the stated target multiple; metadata summaries and preview numbers are not fact authority.",
+        "why_material": "Valuation_rerating remains the only component with missing structured DURABLE_VISIBILITY. Without a source-backed HBM durability and earnings-to-multiple bridge, current and peer valuation planes do not establish a sustainable rerating mechanism."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": false,
+        "direction": "Resolve the non-KB pre-cutoff full report identified by STRUCTCAND-dd271cdb3c5c93d51fc8e631 (LS, 2026-06-29, provider_report_id 1108519, file 1F04720260629_000660_a.pdf), then extract only exact-quote HBM assumptions, period, denominator and earnings-to-target-multiple bridge.",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "This different candidate's metadata identifies HBM ASP, HBM4E delivery and an HBM target P/E rerating, which could answer the open valuation durability bridge if the full report is actually fetched and validated. Metadata is not evidence and its English duplicate must not be double counted.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      }
+    ],
+    "next_actions": [
+      "Rewrite eps_fcf_explosion on the same evidence with explicit consolidated, DRAM and HBM attribution boundaries, then run fresh independent Analyst, Skeptic and Calibration judges.",
+      "Rewrite bottleneck_pricing on the same evidence with memory-wide utilization separated from HBM-only capacity, yield, allocation and lock duration, then run fresh independent judges.",
+      "Rewrite capital_allocation on the same evidence with issuer-wide capital actions separated from HBM investment ROIC, then run fresh independent judges.",
+      "Rewrite information_confidence on the same evidence with formal reporting quality separated from source independence and HBM-specific disclosure, then run fresh independent judges.",
+      "Send the different LS candidate identity to the LLM query planner for one bounded full-PDF resolution; only a fetched, pre-cutoff, exact-quote-verified report may create a fact or structured DURABLE_VISIBILITY record."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "Do not repeat the three zero-result valuation PDF searches, including the KB route.",
+          "Do not treat STRUCTCAND-f75216b3b5dd1ef2b5b5f64f, the English duplicate, as independent evidence.",
+          "Do not use CompanyGuide metadata, preview numbers, target price or search-result existence as evidence.",
+          "Do not use documents published after 2026-07-12."
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "research_need": "Use exact candidate STRUCTCAND-dd271cdb3c5c93d51fc8e631 / provider report 1108519 to resolve the pre-cutoff LS full PDF and verify whether its body contains period-defined HBM ASP or technology assumptions plus a complete HBM earnings-to-target-P/E bridge. Return no fact when only metadata, a summary or a target price is available."
+      }
+    ],
+    "rationale": "All seven current memos, 21 memo-bound judges, RTMEMO-6e4f02d70848620a3682d91f, SYNMEMO-6c2635811123db98988f65b5, the seven-objective counter proof, structured projection and five failure groups were reviewed. Counter and supersession coverage is complete independently of search outcomes. Four components have material same-evidence judge-band disagreements and need semantic rewrites plus fresh judges. Separately, the executed KB PDF query produced no result, no broker full fetch, no accepted fact and no structured DURABLE_VISIBILITY; query existence therefore does not close valuation. One different exact pre-cutoff candidate-bound route remains. Zero/no-result, provider errors, fixed rounds and missing accepted PDFs are not treated as source absence or completion.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": false,
+    "unresolved_material_questions": [
+      "Can the same current evidence support one common EPS/FCF range after consolidated and DRAM actuals are separated from HBM-only attribution and CAPEX, inventory and work-in-process risks are weighted consistently?",
+      "Can the same current evidence support one common bottleneck-pricing range without converting memory-wide 100% utilization and HBM price leadership into HBM-only locked capacity or long-term allocation?",
+      "Can the same current evidence support one common capital-allocation range after issuer-wide net cash and shareholder returns are separated from HBM investment ROIC and weighed against CAPEX, R&D, working capital and dilution?",
+      "Can the same current evidence support one common information-confidence range after formal official reporting quality is separated from independent corroboration and HBM-specific disclosure completeness?",
+      "Does the exact pre-cutoff LS full report supply a quote-verified, period-defined HBM durability and normalized earnings-to-target-multiple bridge that can populate valuation_rerating DURABLE_VISIBILITY?"
+    ]
+  },
+  "payload_hash": "e0d984bccbd97dc354336301d5bba8366476511317a5393aaa05eb25e42f1559",
+  "production_score_authority": false,
+  "prompt_hash": "224da6cf638265b32f3eccb3306ff962e2d1e2693e9ef5fa080d0dbf5092e148",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-56a5e5b1bdf987da7c31ce0b91da21ec02f9037cda7d2880c7a44873d814e578",
+  "response_id": "COLLABRESP-38c8dfb47643cd13f17dd4ae1b1c013bd85aa15f8629da938df3f2636b475224",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

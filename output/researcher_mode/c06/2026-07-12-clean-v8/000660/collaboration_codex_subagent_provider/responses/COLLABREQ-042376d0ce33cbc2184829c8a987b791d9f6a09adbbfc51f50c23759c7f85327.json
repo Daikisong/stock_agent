@@ -1,0 +1,130 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-833d5d1ddd0a5eed83c7f3df",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "언론/목록/영상 route로 original broker PDF가 아니며, 노출 metadata만으로 현재 target earnings mechanism을 검증할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-bd6ad0fa470ff3f9d53232e8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "ETF/분석 플랫폼의 해설 route로 original PUBLIC_BROKER_PDF가 아니며, 계약·CAPA·earnings 사실을 snippet에서 확정할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-b03c03b93e87e169eaa01cf6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "언론/목록/영상 route로 original broker PDF가 아니며, 노출 metadata만으로 현재 target earnings mechanism을 검증할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-fe50c6a5aa9559972557a213",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "언론/목록/영상 route로 original broker PDF가 아니며, 노출 metadata만으로 현재 target earnings mechanism을 검증할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-cf223f2936e3d4ebbbd18266",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "공공·협회 자료이지만 requested broker family와 target-direct subject가 아니어서 현재 objective의 full-source route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-94b20238043f986545978052",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "언론/목록/영상 route로 original broker PDF가 아니며, 노출 metadata만으로 현재 target earnings mechanism을 검증할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-8e2b9a452f63a7070cdf0c92",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 유료 콘텐츠의 리포트 요약·재서술로 original PUBLIC_BROKER_PDF route가 아니며 snippet을 evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-05c8d1ba4742eda346e0d768",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 유료 콘텐츠의 리포트 요약·재서술로 original PUBLIC_BROKER_PDF route가 아니며 snippet을 evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-254608acc81c326e8a054ca1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 유료 콘텐츠의 리포트 요약·재서술로 original PUBLIC_BROKER_PDF route가 아니며 snippet을 evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-7231432732ac31347e8b5145",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.12,
+        "rationale": "하나증권 공식 daily PDF이나 노출된 경제·통상 요약은 target의 현재 HBM earnings_visibility를 직접 해소하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-336eb71784a02a1a9805ecc6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 유료 콘텐츠의 리포트 요약·재서술로 original PUBLIC_BROKER_PDF route가 아니며 snippet을 evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-934d16c0f97e2194f6ab4238",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.9,
+        "rationale": "하나증권 공식 도메인의 2026 Research Forum 원문 PDF이며 SK하이닉스의 2026 추정치 표가 노출되어, current earnings/valuation visibility와 그 반대 근거를 원문에서 검증할 수 있는 full-fetch route다. snippet은 증거로 사용하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 분류는 discovery provenance와 full-fetch 가능성을 판정한 것이며, 선정 route도 원문 fetch·날짜·target 귀속·quote 검증 전에는 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "40722f33a140f1a5c14b310392ad1b46eec1e577247ed395f4b900ca756e3d31",
+  "production_score_authority": false,
+  "prompt_hash": "02653ba1e4145dec8ff9a867e90407b0efe9a89e28978bd47528035c87eb2d5b",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-042376d0ce33cbc2184829c8a987b791d9f6a09adbbfc51f50c23759c7f85327",
+  "response_id": "COLLABRESP-a6ef2a13d3ca326b5be65a01fa3f76a47cf1f052b74606fe6a5ee9cf3d03297e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

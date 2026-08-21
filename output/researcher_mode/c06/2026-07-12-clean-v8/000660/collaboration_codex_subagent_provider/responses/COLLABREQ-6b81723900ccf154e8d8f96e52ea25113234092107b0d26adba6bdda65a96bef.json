@@ -1,0 +1,581 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "Previously accepted target-direct facts remain dispositioned for this continuation batch; this page adds no duplicate rows from this document.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "Previously accepted target-direct facts remain dispositioned for this continuation batch; this page adds no duplicate rows from this document.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "Previously accepted target-direct facts remain dispositioned for this continuation batch; this page adds no duplicate rows from this document.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "This continuation adds twelve distinct historical broker revision facts in source order after strict exact and semantic deduplication; further target-direct facts remain.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "연결 전사 브로커 전망",
+        "confidence": 0.96,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 브로커가 2Q24F 연결 영업이익 QoQ 성장률 전망을 33.7%에서 48.9%로 15.2%p 높였으나 현재 시점에는 대체된 역사적 전망이다.",
+        "exact_quote": "QoQ/YoY 33.7 TTB 46.6 48.9 TTB 23.9 15.2 - -22.6",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The old/new/rate row records a historical earnings-expectation change, but it is stale broker evidence and does not establish current HBM-only economics.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_OP_GROWTH_REVISION",
+        "normalized_object": "Historical 2Q24F consolidated operating-profit QoQ growth revised to 48.9% from 33.7%, up 15.2 percentage points",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F revision; report published 2024-05-16",
+        "predicate": "revised_historical_consolidated_operating_profit_qoq_growth_to",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_OPERATING_PROFIT_GROWTH_REVISION",
+        "primitive_tags": [
+          "historical_broker_revision",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_OPERATING_PROFIT_GROWTH_REVISION",
+        "question_family_tags": [
+          "HISTORICAL_CONSOLIDATED_OPERATING_PROFIT_GROWTH_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 연결 영업이익 성장률 브로커 전망",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_GROWTH_REVISION:2Q24F:MIRAE_2024-05-16",
+        "unit": "% QoQ",
+        "value": 48.9
+      },
+      {
+        "business_segment": "연결 전사 브로커 전망",
+        "confidence": 0.96,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 브로커가 FY2025F 연결 영업이익 YoY 성장률 전망을 46.6%에서 23.9%로 22.6%p 낮췄으나 현재 시점에는 대체된 역사적 전망이다.",
+        "exact_quote": "QoQ/YoY 33.7 TTB 46.6 48.9 TTB 23.9 15.2 - -22.6",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The lower historical growth revision is counterevidence to a uniformly rising earnings path, while remaining stale and non-HBM-specific.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_OP_GROWTH_REVISION",
+        "normalized_object": "Historical FY2025F consolidated operating-profit YoY growth revised to 23.9% from 46.6%, down 22.6 percentage points",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F revision; report published 2024-05-16",
+        "predicate": "revised_historical_consolidated_operating_profit_yoy_growth_to",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_OPERATING_PROFIT_GROWTH_REVISION",
+        "primitive_tags": [
+          "historical_broker_revision",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_OPERATING_PROFIT_GROWTH_REVISION",
+        "question_family_tags": [
+          "HISTORICAL_CONSOLIDATED_OPERATING_PROFIT_GROWTH_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 영업이익 성장률 브로커 전망",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_GROWTH_REVISION:FY2025F:MIRAE_2024-05-16",
+        "unit": "% YoY",
+        "value": 23.9
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 브로커가 2Q24F DRAM 영업이익 전망을 3,557십억원에서 3,995십억원으로 12.3% 높였지만 HBM-only 이익이 아니며 현재 시점에는 대체됐다.",
+        "exact_quote": "DRAM 3,557 15,459 23,147 3,995 18,665 23,395 12.3 20.7 1.1",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated full broker row explicitly contains old, revised, and revision-rate DRAM operating-profit values, but it is stale and cannot be attributed to HBM alone.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_DRAM_OPERATING_PROFIT_REVISION",
+        "normalized_object": "Historical 2Q24F DRAM operating profit revised to KRW 3,995 billion from KRW 3,557 billion, up 12.3%",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F revision; report published 2024-05-16",
+        "predicate": "revised_historical_dram_operating_profit_to",
+        "predicate_family": "HISTORICAL_DRAM_OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "historical_broker_revision",
+          "dram_not_hbm_only"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "HISTORICAL_DRAM_OPERATING_PROFIT_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스 DRAM 영업이익 브로커 전망",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT_REVISION:2Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 3995
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 브로커가 FY2025F DRAM 영업이익 전망을 23,147십억원에서 23,395십억원으로 1.1% 높였지만 HBM-only 이익이 아니며 현재 시점에는 대체됐다.",
+        "exact_quote": "DRAM 3,557 15,459 23,147 3,995 18,665 23,395 12.3 20.7 1.1",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated full broker row explicitly contains old, revised, and revision-rate DRAM operating-profit values, but it is stale and cannot be attributed to HBM alone.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_DRAM_OPERATING_PROFIT_REVISION",
+        "normalized_object": "Historical FY2025F DRAM operating profit revised to KRW 23,395 billion from KRW 23,147 billion, up 1.1%",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F revision; report published 2024-05-16",
+        "predicate": "revised_historical_dram_operating_profit_to",
+        "predicate_family": "HISTORICAL_DRAM_OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "historical_broker_revision",
+          "dram_not_hbm_only"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "HISTORICAL_DRAM_OPERATING_PROFIT_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK하이닉스 DRAM 영업이익 브로커 전망",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT_REVISION:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 23395
+      },
+      {
+        "business_segment": "연결 전사 브로커 전망",
+        "confidence": 0.95,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 브로커가 2Q24F 연결 EBITDA 성장률 전망을 17.3%에서 24.5%로 7.2%p 높였지만 현재 시점에는 대체됐다.",
+        "exact_quote": "QoQ/YoY 17.3 400.9 26.9 24.5 455.3 15.2 7.2 54.4 -11.7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The exact old/new/rate EBITDA-growth revision informs historical valuation denominators but is stale and not an HBM-only earnings bridge.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EBITDA_GROWTH_REVISION",
+        "normalized_object": "Historical 2Q24F consolidated EBITDA QoQ growth revised to 24.5% from 17.3%, up 7.2 percentage points",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F revision; report published 2024-05-16",
+        "predicate": "revised_historical_consolidated_ebitda_qoq_growth_to",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_REVISION",
+        "primitive_tags": [
+          "historical_broker_revision",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_REVISION",
+        "question_family_tags": [
+          "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 EBITDA 성장률 브로커 전망",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_GROWTH_REVISION:2Q24F:MIRAE_2024-05-16",
+        "unit": "% QoQ",
+        "value": 24.5
+      },
+      {
+        "business_segment": "연결 전사 브로커 전망",
+        "confidence": 0.95,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 브로커가 FY2024F 연결 EBITDA YoY 성장률 전망을 400.9%에서 455.3%로 54.4%p 높였지만 현재 시점에는 대체됐다.",
+        "exact_quote": "QoQ/YoY 17.3 400.9 26.9 24.5 455.3 15.2 7.2 54.4 -11.7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The exact old/new/rate EBITDA-growth revision informs historical valuation denominators but is stale and not an HBM-only earnings bridge.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EBITDA_GROWTH_REVISION",
+        "normalized_object": "Historical FY2024F consolidated EBITDA YoY growth revised to 455.3% from 400.9%, up 54.4 percentage points",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F revision; report published 2024-05-16",
+        "predicate": "revised_historical_consolidated_ebitda_yoy_growth_to",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_REVISION",
+        "primitive_tags": [
+          "historical_broker_revision",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_REVISION",
+        "question_family_tags": [
+          "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 EBITDA 성장률 브로커 전망",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_GROWTH_REVISION:FY2024F:MIRAE_2024-05-16",
+        "unit": "% YoY",
+        "value": 455.3
+      },
+      {
+        "business_segment": "연결 전사 브로커 전망",
+        "confidence": 0.95,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 브로커가 FY2025F 연결 EBITDA YoY 성장률 전망을 26.9%에서 15.2%로 11.7%p 낮췄지만 현재 시점에는 대체됐다.",
+        "exact_quote": "QoQ/YoY 17.3 400.9 26.9 24.5 455.3 15.2 7.2 54.4 -11.7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The downward historical growth revision is counterevidence to a uniformly expanding EBITDA path, while remaining stale and consolidated rather than HBM-only.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EBITDA_GROWTH_REVISION",
+        "normalized_object": "Historical FY2025F consolidated EBITDA YoY growth revised to 15.2% from 26.9%, down 11.7 percentage points",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F revision; report published 2024-05-16",
+        "predicate": "revised_historical_consolidated_ebitda_yoy_growth_to",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_REVISION",
+        "primitive_tags": [
+          "historical_broker_revision",
+          "consolidated_not_hbm_only"
+        ],
+        "product_family": "연결 전사",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_REVISION",
+        "question_family_tags": [
+          "HISTORICAL_CONSOLIDATED_EBITDA_GROWTH_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 EBITDA 성장률 브로커 전망",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_GROWTH_REVISION:FY2025F:MIRAE_2024-05-16",
+        "unit": "% YoY",
+        "value": 15.2
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2Q24F commodity DRAM bit shipment 전망은 19,629 billion Gb로 변경되지 않았으며 HBM 전용 출하량이 아니다.",
+        "exact_quote": "Bit shipments(Bil Gb) 19,629 80,799 95,586 19,629 80,799 95,586 0.0 0.0 0.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The no-change revision is historical volume-expectation context; commodity DRAM volume must not be relabelled as HBM allocation or contracted supply.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_DRAM_BIT_SHIPMENT_REVISION",
+        "normalized_object": "Historical 2Q24F commodity DRAM bit-shipment forecast remained unchanged at 19,629 billion Gb, a 0.0% revision",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F revision; report published 2024-05-16",
+        "predicate": "kept_historical_dram_bit_shipment_forecast_unchanged_at",
+        "predicate_family": "HISTORICAL_DRAM_BIT_SHIPMENT_REVISION",
+        "primitive_tags": [
+          "historical_broker_revision",
+          "commodity_dram_not_hbm"
+        ],
+        "product_family": "commodity DRAM",
+        "question_family_id": "HISTORICAL_DRAM_BIT_SHIPMENT_REVISION",
+        "question_family_tags": [
+          "HISTORICAL_DRAM_BIT_SHIPMENT_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 commodity DRAM bit shipment 브로커 전망",
+        "subject_id": "000660:DRAM_BIT_SHIPMENT_REVISION:2Q24F:MIRAE_2024-05-16",
+        "unit": "billion Gb",
+        "value": 19629
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2024F commodity DRAM bit shipment 전망은 80,799 billion Gb로 변경되지 않았으며 HBM 전용 출하량이 아니다.",
+        "exact_quote": "Bit shipments(Bil Gb) 19,629 80,799 95,586 19,629 80,799 95,586 0.0 0.0 0.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The no-change revision is historical volume-expectation context; commodity DRAM volume must not be relabelled as HBM allocation or contracted supply.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_DRAM_BIT_SHIPMENT_REVISION",
+        "normalized_object": "Historical FY2024F commodity DRAM bit-shipment forecast remained unchanged at 80,799 billion Gb, a 0.0% revision",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F revision; report published 2024-05-16",
+        "predicate": "kept_historical_dram_bit_shipment_forecast_unchanged_at",
+        "predicate_family": "HISTORICAL_DRAM_BIT_SHIPMENT_REVISION",
+        "primitive_tags": [
+          "historical_broker_revision",
+          "commodity_dram_not_hbm"
+        ],
+        "product_family": "commodity DRAM",
+        "question_family_id": "HISTORICAL_DRAM_BIT_SHIPMENT_REVISION",
+        "question_family_tags": [
+          "HISTORICAL_DRAM_BIT_SHIPMENT_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 commodity DRAM bit shipment 브로커 전망",
+        "subject_id": "000660:DRAM_BIT_SHIPMENT_REVISION:FY2024F:MIRAE_2024-05-16",
+        "unit": "billion Gb",
+        "value": 80799
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2025F commodity DRAM bit shipment 전망은 95,586 billion Gb로 변경되지 않았으며 HBM 전용 출하량이 아니다.",
+        "exact_quote": "Bit shipments(Bil Gb) 19,629 80,799 95,586 19,629 80,799 95,586 0.0 0.0 0.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The no-change revision is historical volume-expectation context; commodity DRAM volume must not be relabelled as HBM allocation or contracted supply.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_DRAM_BIT_SHIPMENT_REVISION",
+        "normalized_object": "Historical FY2025F commodity DRAM bit-shipment forecast remained unchanged at 95,586 billion Gb, a 0.0% revision",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F revision; report published 2024-05-16",
+        "predicate": "kept_historical_dram_bit_shipment_forecast_unchanged_at",
+        "predicate_family": "HISTORICAL_DRAM_BIT_SHIPMENT_REVISION",
+        "primitive_tags": [
+          "historical_broker_revision",
+          "commodity_dram_not_hbm"
+        ],
+        "product_family": "commodity DRAM",
+        "question_family_id": "HISTORICAL_DRAM_BIT_SHIPMENT_REVISION",
+        "question_family_tags": [
+          "HISTORICAL_DRAM_BIT_SHIPMENT_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 commodity DRAM bit shipment 브로커 전망",
+        "subject_id": "000660:DRAM_BIT_SHIPMENT_REVISION:FY2025F:MIRAE_2024-05-16",
+        "unit": "billion Gb",
+        "value": 95586
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2Q24F commodity DRAM bit shipment QoQ 성장률 전망은 15.2%로 변경되지 않았으며 HBM 전용 성장률이 아니다.",
+        "exact_quote": "Bit growth 15.2 17.6 18.3 15.2 17.6 18.3 0.0 0.0 0.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The unchanged historical growth estimate is a stale demand-volume reference; it does not identify HBM shipments or contracted allocation.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_DRAM_BIT_GROWTH_REVISION",
+        "normalized_object": "Historical 2Q24F commodity DRAM bit-shipment QoQ growth remained unchanged at 15.2%, a 0.0-point revision",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F revision; report published 2024-05-16",
+        "predicate": "kept_historical_dram_bit_shipment_qoq_growth_unchanged_at",
+        "predicate_family": "HISTORICAL_DRAM_BIT_GROWTH_REVISION",
+        "primitive_tags": [
+          "historical_broker_revision",
+          "commodity_dram_not_hbm"
+        ],
+        "product_family": "commodity DRAM",
+        "question_family_id": "HISTORICAL_DRAM_BIT_GROWTH_REVISION",
+        "question_family_tags": [
+          "HISTORICAL_DRAM_BIT_GROWTH_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 commodity DRAM bit shipment 성장률 브로커 전망",
+        "subject_id": "000660:DRAM_BIT_GROWTH_REVISION:2Q24F:MIRAE_2024-05-16",
+        "unit": "% QoQ",
+        "value": 15.2
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "FY2024F commodity DRAM bit shipment YoY 성장률 전망은 17.6%로 변경되지 않았으며 HBM 전용 성장률이 아니다.",
+        "exact_quote": "Bit growth 15.2 17.6 18.3 15.2 17.6 18.3 0.0 0.0 0.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The unchanged historical growth estimate is a stale demand-volume reference; it does not identify HBM shipments or contracted allocation.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_DRAM_BIT_GROWTH_REVISION",
+        "normalized_object": "Historical FY2024F commodity DRAM bit-shipment annual growth remained unchanged at 17.6%, a 0.0-point revision",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F revision; report published 2024-05-16",
+        "predicate": "kept_historical_dram_bit_shipment_yoy_growth_unchanged_at",
+        "predicate_family": "HISTORICAL_DRAM_BIT_GROWTH_REVISION",
+        "primitive_tags": [
+          "historical_broker_revision",
+          "commodity_dram_not_hbm"
+        ],
+        "product_family": "commodity DRAM",
+        "question_family_id": "HISTORICAL_DRAM_BIT_GROWTH_REVISION",
+        "question_family_tags": [
+          "HISTORICAL_DRAM_BIT_GROWTH_REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 commodity DRAM bit shipment 성장률 브로커 전망",
+        "subject_id": "000660:DRAM_BIT_GROWTH_REVISION:FY2024F:MIRAE_2024-05-16",
+        "unit": "% YoY",
+        "value": 17.6
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "The page limit is an upper bound and was reached after twelve genuine omitted revision atoms. FY2025F unchanged commodity-DRAM bit-growth revision and later distinct target-direct model facts remain for the next continuation."
+    ]
+  },
+  "payload_hash": "c857a927daf0edbe4e28b29ffc2a491b3bb00132c23079c2156095020860f946",
+  "production_score_authority": false,
+  "prompt_hash": "b8957307748540d189374c7139bbe9aeb0d8ed5a958079c07dfb534ede18875a",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6b81723900ccf154e8d8f96e52ea25113234092107b0d26adba6bdda65a96bef",
+  "response_id": "COLLABRESP-421b3eccde6bf31193049208eaef6f781efb6bd3f82ad29a149990438260995d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

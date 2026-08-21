@@ -1,0 +1,613 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-a2a8ca683447d0f2c86f94e7",
+        "rationale": "임원 명단과 경력·직책 수록분으로, 메모리 직책은 존재하지만 계약·제품·CAPA·실적의 경제 사실을 직접 입증하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-a74dd284269075ccdf7ae43f",
+        "rationale": "장기공급계약 수주거래의 제한된 명시적 부재, 매출채권 연령 구조, 재고가격 위험회피 정책 3건을 추출했고 나머지 금융표는 current70과 중복되거나 일반 회계정책이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "rationale": "HBM4 양산 출하와 공정·성능·용량·공급 인프라 5건을 추출했다. 12개 페이지 경계로 1c DRAM 생산성 등 distinct remainder는 다음 페이지에서 재검토한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "rationale": "연결 경상 연구개발 총지출 1건을 추출했다. 배당·EPS·현금흐름·운전자본·감가상각·현금·부채 actual은 current70과 의미 중복이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-ca7b0fc3f6068b34ed598f6e",
+        "rationale": "메모리 수요 강세, 공급 부족 전망, DRAM 점유율 3건을 추출했다. HBM4 고객 공급 확대와 제한 공급가용량 대응 등 distinct remainder는 페이지 경계 후 계속 검토한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-d47b15dea563431b627b50fc",
+        "rationale": "임원 명단과 경력·직책 수록분으로 메모리 관련 직책만으로 계약·공급·실적 사실을 만들 수 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-a74dd284269075ccdf7ae43f",
+        "economic_mechanism": "2026년 1분기말 재무제표에 중요한 영향을 미치는 장기공급계약 수주거래가 없다는 제한된 공시는 계약 기반 가시성을 제약하지만 다른 계약의 부재로 확대할 수 없다.",
+        "exact_quote": "2026년 1분기말 현재 당사 재무제표에 중요한 영향을 미치는 장기공급계약 수주거래는 없습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "계약형 수주가 재무제표에 중요하게 존재하는지 직접 제한하므로 현금·가시성 판단에 중요하며, 공시가 명시한 거래 범위 밖의 부재는 뜻하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "NO_MATERIAL_LONG_TERM_SUPPLY_ORDER_TRANSACTION_AS_OF_2026Q1",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "NO_MATERIAL_LONG_TERM_SUPPLY_ORDER_TRANSACTION_REPORTED",
+        "predicate_family": "CONTRACT_DISCLOSURE_LIMITATION",
+        "primitive_tags": [
+          "long_term_supply_contract",
+          "explicit_scoped_absence"
+        ],
+        "product_family": "장기공급계약",
+        "question_family_id": "C06_CUSTOMER_CONTRACT_VISIBILITY",
+        "question_family_tags": [
+          "contract_quality",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 중요 장기공급계약 수주거래",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "재무제표에 중요한 영향을 미치는 장기공급계약 수주거래 없음"
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-a74dd284269075ccdf7ae43f",
+        "economic_mechanism": "연결 매출채권 83,469,986백만원 가운데 99.6%가 6개월 이하로 분류되어 채권의 연령 구조와 현금회수 품질을 점검할 수 있다.",
+        "exact_quote": "(4) 경과기간별 매출채권 잔액 현황\n(기준일 :\n2026년 3월 31일\n)\n(단위 : 백만원, %)\n구 분\n6월 이하\n6월 초과1년 이하\n1년 초과3년 이하\n3년 초과\n계\n금 액\n83,184,391\n42,066\n82,981\n160,548\n83,469,986\n구성비율\n99.6%\n0.1%\n0.1%\n0.2%\n100.0%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "기존 손실충당률과 다른 채권 연령 실제치로서 현금전환 품질과 신용위험 해석을 보완한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "RECEIVABLES_AGED_SIX_MONTHS_OR_LESS_SHARE",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31",
+        "predicate": "REPORTED_RECEIVABLE_AGE_CONCENTRATION_WITHIN_SIX_MONTHS",
+        "predicate_family": "RECEIVABLE_QUALITY",
+        "primitive_tags": [
+          "receivables",
+          "aging"
+        ],
+        "product_family": "매출채권",
+        "question_family_id": "C06_CASH_CONVERSION_QUALITY",
+        "question_family_tags": [
+          "cash_conversion",
+          "receivable_quality"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 매출채권 연령",
+        "subject_id": "005930",
+        "unit": "%",
+        "value": 99.6
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-a74dd284269075ccdf7ae43f",
+        "economic_mechanism": "재고자산 가격 변동 위험에 현금흐름 위험회피회계를 적용한다는 정책은 가격 위험 일부가 파생상품과 회계상 위험회피로 관리됨을 보여준다.",
+        "exact_quote": "당사는 재고자산의 가격 변동 위험 등을 회피하기 위한 현금흐름 위험회피회계를 적용하고 있습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "가격과 재고 위험이 현금흐름으로 전이되는 경로를 평가할 때 실제 위험관리 정책이 중요하다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "INVENTORY_PRICE_RISK_CASH_FLOW_HEDGE_POLICY",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1 report date",
+        "predicate": "APPLIES_CASH_FLOW_HEDGE_ACCOUNTING_TO_INVENTORY_PRICE_RISK",
+        "predicate_family": "INVENTORY_PRICE_RISK_MANAGEMENT",
+        "primitive_tags": [
+          "hedge",
+          "inventory_price"
+        ],
+        "product_family": "재고자산",
+        "question_family_id": "C06_PRICING_AND_INVENTORY_RISK",
+        "question_family_tags": [
+          "inventory_risk",
+          "cash_conversion"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 재고가격 변동 위험회피",
+        "subject_id": "005930",
+        "unit": "policy",
+        "value": "현금흐름 위험회피회계 적용"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.",
+        "exact_quote": "□ 세계 최초 업계 최고 성능의 HBM4 양산 출하 (2026.02.)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4의 실제 양산 출하는 제품 상용화와 향후 매출전환 가능성의 핵심 실행 이정표다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4_MASS_PRODUCTION_SHIPMENT_COMMENCED",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae",
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-02",
+        "predicate": "COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS",
+        "predicate_family": "HBM_COMMERCIALIZATION",
+        "primitive_tags": [
+          "HBM4",
+          "mass_production_shipment"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "C06_HBM_PRODUCT_COMMERCIALIZATION",
+        "question_family_tags": [
+          "hbm_shipment",
+          "commercialization"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "HBM4 양산 출하"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "HBM4가 1c D램과 4나노 베이스 다이를 적용했다는 실제 제품 구성은 성능·원가·양산 난이도의 기술 기반을 특정한다.",
+        "exact_quote": "- 최선단 공정 1c D램(10나노급 6세대) 및 4나노 베이스 다이 적용",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4 상용제품의 공정 조합은 경쟁력과 실행 수준을 구체화한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4_1C_DRAM_4NM_BASE_DIE_CONFIGURATION",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-02",
+        "predicate": "HBM4_USES_1C_DRAM_AND_4NM_BASE_DIE",
+        "predicate_family": "HBM_PRODUCT_ARCHITECTURE",
+        "primitive_tags": [
+          "HBM4",
+          "1c_DRAM",
+          "4nm_base_die"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "C06_HBM_PRODUCT_COMMERCIALIZATION",
+        "question_family_tags": [
+          "hbm_product",
+          "technology_execution"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 공정 구성",
+        "subject_id": "005930",
+        "unit": "configuration",
+        "value": "1c D램 및 4나노 베이스 다이"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "HBM4의 11.7Gbps 동작 성능과 최대 13Gbps는 JEDEC 8Gbps 표준을 상회해 고성능 제품의 차별화 근거를 제공한다.",
+        "exact_quote": "- JEDEC 표준(8Gbps) 상회하는 11.7Gbps(최대 13Gbps) 동작성능 확보",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "표준 대비 실제 제품 성능은 HBM 경쟁력과 프리미엄 가능성을 직접 뒷받침한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4_OPERATING_SPEED_ABOVE_JEDEC_STANDARD",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-02",
+        "predicate": "HBM4_PERFORMANCE_EXCEEDS_JEDEC_STANDARD",
+        "predicate_family": "HBM_PERFORMANCE_DIFFERENTIATION",
+        "primitive_tags": [
+          "HBM4",
+          "JEDEC",
+          "Gbps"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "C06_HBM_PRODUCT_COMMERCIALIZATION",
+        "question_family_tags": [
+          "hbm_performance",
+          "pricing_power"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 동작 성능",
+        "subject_id": "005930",
+        "unit": "Gbps",
+        "value": "11.7Gbps, 최대 13Gbps; JEDEC 8Gbps 상회"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "HBM4가 8단 24GB부터 16단 48GB까지 제공하고 저전력 설계로 전력효율과 발열을 다룬다는 제품 범위는 AI 고객 적용성과 제품 믹스를 구체화한다.",
+        "exact_quote": "- 24GB(8H)~48GB(16H) 용량 제공, 저전력 설계 등 전력효율 및 발열 해결",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "용량 범위와 전력·발열 설계는 HBM4 고객 효용과 제품 경쟁력의 직접 근거다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4_CAPACITY_RANGE_AND_POWER_THERMAL_DESIGN",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-02",
+        "predicate": "HBM4_OFFERS_24GB_TO_48GB_WITH_LOW_POWER_THERMAL_DESIGN",
+        "predicate_family": "HBM_CAPACITY_AND_EFFICIENCY",
+        "primitive_tags": [
+          "HBM4",
+          "capacity",
+          "power_efficiency",
+          "thermal"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "C06_HBM_PRODUCT_COMMERCIALIZATION",
+        "question_family_tags": [
+          "hbm_capacity",
+          "product_efficiency"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 용량·전력·발열",
+        "subject_id": "005930",
+        "unit": "GB",
+        "value": "24GB(8H)~48GB(16H)"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "로직·메모리·파운드리·패키징의 원스톱 솔루션과 선제 인프라 투자로 공급 안정성을 확보했다는 설명은 HBM4 공급 실행 기반을 제시하지만 계약 물량을 뜻하지 않는다.",
+        "exact_quote": "- 로직 - 메모리 - 파운드리 - 패키징을 아우르는 '원스톱 솔루션',\n선제적 인프라 투자로 공급 안정성 확보",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4의 공급 대응 능력과 투자 실행을 직접 설명하지만 고객 약정·물량·가격으로 확대하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4_INTEGRATED_SUPPLY_AND_INFRASTRUCTURE_STABILITY",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-02",
+        "predicate": "SECURED_HBM4_SUPPLY_STABILITY_WITH_INTEGRATED_SOLUTION_AND_INFRASTRUCTURE",
+        "predicate_family": "HBM_SUPPLY_EXECUTION",
+        "primitive_tags": [
+          "HBM4",
+          "infrastructure",
+          "supply_stability"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "C06_HBM_CAPACITY_SUPPLY",
+        "question_family_tags": [
+          "hbm_supply",
+          "capacity_execution"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 공급 안정성",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "원스톱 솔루션 및 선제적 인프라 투자로 공급 안정성 확보"
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "2026년 1분기 연결 판매비와관리비에 포함된 경상 연구개발 총지출 11,336,713백만원은 기술 투자 강도와 당기 비용·현금전환 부담을 동시에 보여준다.",
+        "exact_quote": "경상연구개발비-연구개발 총지출액\n11,336,713",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기존 별도 연구개발 지출과 구분되는 연결 실제치로서 자본배분과 현금전환 평가에 중요하다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "CONSOLIDATED_CURRENT_RD_TOTAL_EXPENDITURE",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_CONSOLIDATED_CURRENT_RESEARCH_AND_DEVELOPMENT_EXPENDITURE",
+        "predicate_family": "RESEARCH_AND_DEVELOPMENT_SPEND",
+        "primitive_tags": [
+          "R&D",
+          "consolidated_expense"
+        ],
+        "product_family": "연구개발",
+        "question_family_id": "C06_CAPITAL_ALLOCATION_CASH_CONVERSION",
+        "question_family_tags": [
+          "research_and_development",
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 경상연구개발비",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 11336713
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-ca7b0fc3f6068b34ed598f6e",
+        "economic_mechanism": "2026년 1분기 데이터센터 AI 인프라 CAPEX 확대와 Agentic AI 초기 수요가 서버향 메모리 수요 강세를 만들었다는 회사의 시장 평가는 수급 우호성을 설명한다.",
+        "exact_quote": "2026년 1분기 메모리 시장은 데이터센터 업체들의 AI 인프라 확보를 위한 CAPEX 확대 및 Agentic AI 초기 수요에 힘입어 서버향 중심의 수요 강세가 한층 더 확연해졌습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 수요 강세의 원인과 응용처를 분명히 해 bottleneck과 가격 지속성 판단을 지원한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Q1_2026_SERVER_MEMORY_DEMAND_STRENGTH",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "SERVER_MEMORY_DEMAND_STRENGTHENED_WITH_AI_INFRASTRUCTURE_CAPEX",
+        "predicate_family": "MEMORY_DEMAND_CONDITION",
+        "primitive_tags": [
+          "server_memory",
+          "CAPEX",
+          "Agentic_AI"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "C06_MEMORY_DEMAND_SUPPLY",
+        "question_family_tags": [
+          "memory_demand",
+          "AI_infrastructure"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 시장 수요",
+        "subject_id": "005930",
+        "unit": "assessment",
+        "value": "서버향 중심 수요 강세가 한층 더 확연"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-ca7b0fc3f6068b34ed598f6e",
+        "economic_mechanism": "PC·모바일 수요 부담에도 공급사들이 서버 중심으로 공급을 대응하면서 전반적 메모리 공급 부족이 지속될 것이라는 전망은 가격·수급의 지속성을 뒷받침하되 실현된 사실과 구분해야 한다.",
+        "exact_quote": "다만, PC/모바일은 주요 부품 가격 상승에 따른 Set 가격 인상 및 메모리 탑재량 변화로 일부 수요 영향이 예상되나, 공급사들의 서버 중심 공급 대응 영향으로 전반적인 공급 부족 현상은 지속될 전망입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공급 부족 지속 전망은 가격·가동률·고객배분 메커니즘에 중요하지만 issuer 전망이며 확정 계약이나 실제 실적으로 보지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "MEMORY_SUPPLY_SHORTAGE_PERSISTENCE_OUTLOOK",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 onward from Q1 report",
+        "predicate": "EXPECTS_MEMORY_SUPPLY_SHORTAGE_TO_PERSIST_WITH_SERVER_FOCUSED_SUPPLY",
+        "predicate_family": "MEMORY_SUPPLY_OUTLOOK",
+        "primitive_tags": [
+          "server_allocation",
+          "supply_shortage"
+        ],
+        "product_family": "메모리",
+        "question_family_id": "C06_MEMORY_DEMAND_SUPPLY",
+        "question_family_tags": [
+          "supply_shortage",
+          "memory_outlook"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 시장 공급 부족",
+        "subject_id": "005930",
+        "unit": "outlook",
+        "value": "전반적인 공급 부족 현상 지속 전망"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-ca7b0fc3f6068b34ed598f6e",
+        "economic_mechanism": "삼성전자의 2026년 1분기 추정 DRAM 금액 기준 점유율 38.4%는 2025년 34.0%보다 높지만 2024년 41.5%에는 미달해 경쟁지위 회복과 잔여 격차를 함께 보여준다.",
+        "exact_quote": "<\nDRAM 시장점유율 추이 >\n제 품\n2026년 1분기\n2025년\n2024년\nDRAM\n38.4%\n34.0%\n41.5%\n※ 시장점유율은 외부조사기관인 DRAMeXchange의 세계시장점유율 자료(금액 기준)를 활용하였으며, 2026년 1분기 시장점유율은 당사 추정치입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 금액 점유율 추세는 메모리 경쟁지위와 시장 기대 평가에 중요하며 2026년 수치는 회사 추정치로 명확히 유지한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "DRAM_VALUE_MARKET_SHARE_TREND",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 vs 2025 and 2024",
+        "predicate": "ESTIMATED_DRAM_MARKET_SHARE_RECOVERED_YEAR_ON_YEAR_BUT_BELOW_2024",
+        "predicate_family": "DRAM_MARKET_POSITION",
+        "primitive_tags": [
+          "DRAM",
+          "market_share",
+          "company_estimate"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "C06_MARKET_SHARE_AND_MISPRICING",
+        "question_family_tags": [
+          "DRAM_share",
+          "market_position"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 DRAM 시장점유율",
+        "subject_id": "005930",
+        "unit": "%",
+        "value": "38.4% vs 34.0% in 2025 and 41.5% in 2024"
+      }
+    ],
+    "unresolved_document_ids": [
+      "OFFICIALDOC-a81018f6be785d671e0b26f0",
+      "OFFICIALDOC-ca7b0fc3f6068b34ed598f6e"
+    ],
+    "unresolved_research_notes": [
+      "12-fact page boundary reached; continue only distinct a810 1c DRAM productivity and ca7 HBM/customer/supply-plan remainder after exact semantic dedup."
+    ]
+  },
+  "payload_hash": "0d11b21326ec6b1b68cb91e94280088d9f6aa47549054bd3856d51d9b61048b4",
+  "production_score_authority": false,
+  "prompt_hash": "b9effce10388d4f49035094aab0fe11576b0e29ac7a4b5653789fa83d8249b85",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-910b83c4ea7f0db7f987efc91d7faa22506aec27f4a225fac02837254d54871c",
+  "response_id": "COLLABRESP-36ee1f5545cc96211d186998b2f2210666a25c0ded612763b3066bfe6b02a5b6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-9090dbe7d62ea6f7e55994e5 is complete and separates consolidated and memory actuals from HBM-specific attribution while preserving capital-intensity counterevidence and a nonempty current three-role interval."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-e33d24eb53e54f8b0079b89d is complete and separates actual HBM4 shipment from plans, LOIs, MOUs, negotiations, and undisclosed contract economics, with a nonempty current three-role interval."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-c989e641c46cb2589aaef403 is complete and keeps memory-wide utilization and ASP evidence distinct from HBM-only locked capacity, yield, allocation, and binding contract terms; memo sufficiency does not cure the missing objective-scoped counter-route proof."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-ef70ee03faa19d8789cfb3f2 is complete, preserves mixed valuation and revision signals, and does not assert direct unpriced HBM value; memo sufficiency does not substitute for the missing objective-scoped counter-route proof."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-a8ea1b713155d07973355ec3 is complete, labels forward valuation as derived, treats peers as context, and preserves the missing direct HBM earnings bridge; memo sufficiency does not substitute for the missing objective-scoped counter-route proof."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-49d146bc643b60c9fe57efe2 is complete and separates actual returns and cash generation from CAPEX, working capital, dilution, and unverified HBM investment ROIC or cash recovery."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-6268597ffc9811550a086087 is complete and combines formal reporting and customer-official corroboration while retaining plan-versus-actual and contract-specificity limits; provider failures are not source-absence proof."
+      }
+    ],
+    "component_memos_sufficient": true,
+    "counter_and_supersession_checked": false,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-11f05de07efa5852c6e71412",
+        "rationale": "Four query failure members reached full documents dated after the as-of boundary and were correctly excluded; the resolved group is nonretryable and does not prove source absence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-828cb4bb9fe49e835dfadd21",
+        "rationale": "The LLM returned no new valid nonduplicate query. This closes only that executable query lane and is neither source-absence proof nor a reason to invent a synonym query.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-8ce8e0d17715285b367c314b",
+        "rationale": "One fully fetched document lacked a verifiable publication date, so as-of eligibility could not be established. The resolved exclusion is not source-absence evidence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-93582c8d3e4a290b445687a0",
+        "rationale": "The corresponding query member failed full-document publication-date validation. It is resolved for this epoch and cannot support source absence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-944cf2283ff44162e1cf00f0",
+        "rationale": "Four document rejections were future-dated relative to 2026-07-12 and correctly excluded. They are resolved nonretryable exclusions, not source-absence evidence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-b111a10918c8fead4510bb44",
+        "rationale": "Five query attempts recorded provider errors, but the group is resolved and no exact prompt evidence licenses a source-absence claim.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [],
+    "new_source_family_directions": [],
+    "next_actions": [
+      "Rebuild and validate loss-accounted counter/supersession route lineage for the three uncovered objectives from already accepted current facts, documents, structured records, and current Red Team lineage before requesting another Supervisor review; do not invent a query or claim source absence."
+    ],
+    "query_direction_briefs": [],
+    "rationale": "All seven exact current memos are complete and sufficient, their current judge intervals have nonempty intersections, the structured projection is complete, and RTMEMO-3499364b218fc0685b419e3c plus SYNMEMO-d78c309d16b8dbda91c3148f are current. However, the immutable proof projection contains only four objective-scoped counter routes: eps_fcf_explosion, earnings_visibility, capital_allocation, and information_confidence. It omits bottleneck_pricing, market_mispricing, and valuation_rerating. Red Team prose cannot substitute for deterministic route lineage, so counter completion and readiness are fail-closed. All six failure groups are accounted exactly once without source-absence claims, and no new positive source/query route is asserted.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": false,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "The deterministic counter/supersession proof covers four of seven required objective-scoped routes and is incomplete for bottleneck_pricing, market_mispricing, and valuation_rerating."
+    ]
+  },
+  "payload_hash": "63ff8981e0b6934c6123de7582fbf653f801982a06b9cee0ffbb730902ed0622",
+  "production_score_authority": false,
+  "prompt_hash": "35ab2037346740fc036562a341152444a3105da497e1eebf25c1977dc7c2765b",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2cce5eff706986262541d01fbe0d63846eb892cd1a30d475c376a75b2561626d",
+  "response_id": "COLLABRESP-284ad0611c0ab72d0aef458f3b8d8c396af18508681f94d14a7c84eb02436389",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

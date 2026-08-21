@@ -1,0 +1,64 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a3eb29fe68c29abf16bf2603",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Naver 인플루언서 홈으로 objective-bound 고객 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5810f55f47f748285e055d84",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Naver 해외뉴스 요약으로 고객사 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3b06e641cbc410883b8fac30",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "2023년 삼성 개발자 행사 제3자 기사로 현재 HBM 고객 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-90830c6bd35b460d423b2bbb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Naver 해외뉴스 요약이며 고객사 공식 full-source가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "최종 partition의 material0은 source absence 또는 연구 완료를 의미하지 않는다."
+    ]
+  },
+  "payload_hash": "41f47251183da07f044d87b2c9873496c3dabfc8137c2f642e25e279d1eeacd5",
+  "production_score_authority": false,
+  "prompt_hash": "ef3f30935b8bc5b358513de688c8ceae9f75c14c72d8f9c53b38d77a581d39b2",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2317dd6c577d924ca6e938552f9f6792eefbfb2a83567b12f529b7a05cda8320",
+  "response_id": "COLLABRESP-19c9e259c7abb9faa0cff18c4ba22c454c01760cfc8f6b5a69acff7396927bfc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

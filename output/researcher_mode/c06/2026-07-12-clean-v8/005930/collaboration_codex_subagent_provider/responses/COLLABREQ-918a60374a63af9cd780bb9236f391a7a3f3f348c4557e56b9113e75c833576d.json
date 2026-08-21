@@ -1,0 +1,132 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "연결 이익·영업현금흐름과 DS 메모리 actual, HBM4 출하를 긍정 근거로 쓰면서 큰 CAPEX와 HBM 단독 손익·FCF bridge 부재를 counterweight로 명시했다. 공개 경로로 검증된 현재 자료에서 이 범위를 바꿀 새 실행 가능 사실 경로는 확인되지 않아 남은 항목은 모니터링 한계다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "HBM4 양산과 AMD customer-official 기술 corroboration을 actual 관계 근거로 반영하되 MOU·협의·기술관계를 구매의무·가격·물량·기간이 있는 계약으로 승격하지 않았다. 계약 조건 부재는 범위에 반영된 제한이며 현재 prompt에는 이를 해소할 새 verified identity가 없다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "메모리 100% 가동, 제한 공급과 ASP 상승을 지지 근거로 두고 HBM 전용 CAPA 잠김 기간·고객 allocation·계약가격 부재를 명확히 분리했다. 이 귀속 한계는 점수 범위에 반영됐고 새 구체 경로가 없어 material research gap으로 재개방하지 않는다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "실적·ASP·가동률 개선과 현재 valuation/revision structured records를 사용하면서 동일 시점·동일 분모 기대치와의 비교 한계를 보존했다. 현재 structured gate가 충족되고 judge material disagreement roster도 비어 있어 추가 source 없이 memo가 충분하다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Forward equity 지표의 조건부 상단과 trailing·enterprise·cash 지표의 하단을 기간·분모별로 분리하고 HBM standalone bridge 부재를 counter로 반영했다. Structured valuation roles는 충족됐으며 metadata-only broker 후보는 그 자체로 새 material fact gap이 아니다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "자기주식·소각·배당 actual과 OCF를 긍정으로, CAPEX·자본약정·매출채권 운전자본 유출을 반대 근거로 함께 반영했다. DS/HBM 귀속 ROIC 부재는 공개 범위 한계로 남지만 현재 판단을 바꿀 새 실행 가능 경로는 없다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "AMD CUSTOMER_OFFICIAL 자료가 HBM3E 공급 이력과 HBM4 기술 정렬을 독립적으로 corroborate한다. 다만 이것은 signed 구매조건이나 HBM 단독 economics의 증명이 아니며, 그 구분이 memo와 Red Team에 반영됐다. NVIDIA·OpenAI 계획성 표현도 계약으로 승격하지 않아 현재 memo는 충분하다."
+      }
+    ],
+    "component_memos_sufficient": true,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-11f05de07efa5852c6e71412",
+        "rationale": "네 건은 full fetch 뒤 as_of_date 이후 문서로 판정되어 배제된 query failures다. 해당 earnings objective는 다른 current evidence로 resolved됐고 alternate route도 요구되지 않으므로 재시도나 source absence 근거가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-828cb4bb9fe49e835dfadd21",
+        "rationale": "LLM이 prior queries와 failures를 본 뒤 새 유효 query를 만들지 못한 기록이다. 이는 새 distinct route가 없다는 query-generation 상태이지 source absence 증명이 아니며 모든 objective는 다른 계보로 resolved됐다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-8ce8e0d17715285b367c314b",
+        "rationale": "한 문서는 full fetch 후 published date를 확정할 수 없어 evidence로 거절됐다. 날짜 검증 실패는 문서 부재가 아니고 해당 objective가 별도 계보로 resolved됐으므로 retryable material blocker가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-93582c8d3e4a290b445687a0",
+        "rationale": "한 query는 full-document fetch 단계에서 publication date를 검증하지 못해 종료됐다. alternate_route_required=false이고 objective가 resolved됐으므로 재시도나 source absence로 해석하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-944cf2283ff44162e1cf00f0",
+        "rationale": "네 rejected documents는 full fetch 후 미래 문서임이 확인되어 cutoff 규칙에 따라 제외됐다. 이는 올바른 미래누수 차단이며 현재 source 부재나 parser 실패를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-ae9bd8c7e122eaecfd5e3c57",
+        "rationale": "한 검색의 zero result는 saturation이나 source absence를 증명하지 않는다. 다만 해당 valuation objective는 다른 source-backed 계보로 resolved됐고 새 concrete route가 없어 이 실패 자체를 재실행할 material 근거도 없다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-ff4b69c29ce262d40861a274",
+        "rationale": "열두 건은 query provider transport 오류다. 기술적으로 재시도 가능한 실패 유형이지만 모든 objective가 별도 source-backed 계보로 resolved되어 현재 readiness를 막지 않으며 source absence를 뜻하지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [],
+    "new_source_family_directions": [],
+    "next_actions": [],
+    "query_direction_briefs": [],
+    "rationale": "Immutable prompt의 7개 complete memo, 7-objective counter route proof, complete Red Team, complete structured roles와 resolved source graph를 함께 감사했다. Synthesis의 judge artifact 미내장 표시는 외부 judge를 추론하지 않았다는 transport 한계이며 required roster의 material disagreement는 비어 있어 memo를 재개방하지 않는다. AMD customer-official 기술 corroboration은 독립 관계 확인으로 인정하되 signed 구매조건·가격·물량·allocation·HBM 단독 economics로 확대하지 않았다. 이 제한들은 이미 component 범위와 Red Team counter에 반영된 모니터링 항목이다. 7개 failure group은 전부 exact-once 분류했으며 미래문서, 날짜검증 실패, provider 오류, no-result 어느 것도 source absence로 사용하지 않았다. 새 verified identity나 concrete material fact route가 없어 gaps, directions, query briefs, unresolved questions와 next actions를 비우고 independent saturation review 준비 상태로 판정한다.",
+    "ready_for_independent_saturation_review": true,
+    "reasonable_positive_routes_remaining": false,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "88b649035116947fe7a09411e868655fafd55957e92372ab9cc10857dcc8e6fc",
+  "production_score_authority": false,
+  "prompt_hash": "aa98d90b19417b5095c68d3a8246407edcac48b77c748e2b5de66452f8b5489b",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-918a60374a63af9cd780bb9236f391a7a3f3f348c4557e56b9113e75c833576d",
+  "response_id": "COLLABRESP-412c4cce8cdde707fd8b95ae8e0bf766906d04389f821d1c9626095abee214e8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

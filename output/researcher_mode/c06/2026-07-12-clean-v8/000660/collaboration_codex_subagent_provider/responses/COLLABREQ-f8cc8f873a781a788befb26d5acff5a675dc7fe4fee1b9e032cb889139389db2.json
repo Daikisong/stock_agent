@@ -1,0 +1,52 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "Coverage audit found no distinct omitted objective-linked fact beyond the 10 previously accepted KIND disclosure facts.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "Coverage audit found no distinct omitted objective-linked fact beyond the 71 previously accepted current broker facts.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "Coverage audit found no distinct omitted objective-linked fact beyond the 22 previously accepted final KIND filing facts.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Coverage audit found no distinct omitted target-direct fact beyond the 410 previously accepted historical broker facts; current target-price rows are already semantically represented, while Samsung rows and generic methodology remain non-target or non-material.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "ba68b8de97ffb5e0fe7d2de52676baf66d04d8a89220ab3b5c3ac6e8654c6285",
+  "production_score_authority": false,
+  "prompt_hash": "2b570c32851c20e4906d098b0ba55a8ca4a39ecabbdc887ae6001d4a6529ca69",
+  "provenance": {
+    "agent_id": "/root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/direct_fact_review",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f8cc8f873a781a788befb26d5acff5a675dc7fe4fee1b9e032cb889139389db2",
+  "response_id": "COLLABRESP-579efe2de4a452c02041d7e1b6839aa4f1fb2f82d5d903e1dbddae2e16ecfd6e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

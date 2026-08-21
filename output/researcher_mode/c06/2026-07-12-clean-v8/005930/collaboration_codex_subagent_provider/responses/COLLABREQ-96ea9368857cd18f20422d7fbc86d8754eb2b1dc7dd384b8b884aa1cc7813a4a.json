@@ -1,0 +1,43 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-d7726ac74c5b4f6ad1e0a6d2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner와 제목 metadata는 고려대학교 법학 논문 다운로드 경로를 가리켜 요청된 PUBLIC_BROKER_PDF provenance 및 005930의 HBM·memory expectation/revision/valuation objective와 모두 무관하다. 따라서 family=NONE, nonmaterial이며 제공 snippet은 discovery-only로 유지하고 evidence로 승격하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "roster 1개를 exact-once 분류했지만 target-specific PUBLIC_BROKER_PDF full-source route는 이번 후보에서 확인되지 않았다.",
+      "material 0은 적격 source의 부재나 research completion을 뜻하지 않으며 no-result·metadata·snippet을 absence proof로 사용하지 않았다."
+    ]
+  },
+  "payload_hash": "c602b2497671382c33151ffb03ef11f9454f2ea41d30bcf6ccdaf6284d09ea6c",
+  "production_score_authority": false,
+  "prompt_hash": "d8d43f8a57fc345b92aa62240e8d7e8d9c58fb8c4d423dd651463b1579fb37dc",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-96ea9368857cd18f20422d7fbc86d8754eb2b1dc7dd384b8b884aa1cc7813a4a",
+  "response_id": "COLLABRESP-5814ab1f945725abbdd472fd4b823824de65fa44043b783e75cd32fe964deebf",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

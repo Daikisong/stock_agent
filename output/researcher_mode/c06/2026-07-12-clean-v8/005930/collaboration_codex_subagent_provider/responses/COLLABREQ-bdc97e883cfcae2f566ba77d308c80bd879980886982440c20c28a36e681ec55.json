@@ -1,0 +1,66 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      2.0,
+      2.9
+    ],
+    "anchor_comparisons": [
+      "POSITIVE anchor ORDTRANSFER-09ab...의 1.75~2.25는 제한적이지만 확인 가능한 정보 기반에 가깝다. 재작성·감사 강조사항 부재, HBM4 actual, AMD 공급 이력과 CEO 확인 때문에 상단을 조금 넘을 수 있다.",
+      "COUNTER anchor ORDTRANSFER-90c2...의 1.50~2.00은 경제성 bridge와 독립 검증 공백에 가깝다. 엔비디아 협의, 제한된 계약공시, 회사 전체 고객집중도와 추정 불확실성을 반영하되 규제공시·AMD corroboration 때문에 그 상단보다 높게 둔다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1",
+      "EFACT-6868a3fa0d1462e2b1dfd4f2",
+      "EFACT-6a317a6c41253b0fafc79d56",
+      "EFACT-7f35f23f1f02e6327c9a1268"
+    ],
+    "disagreements": [
+      "규제공시의 형식적 신뢰도를 HBM 고객·계약·qualification·마진의 충분한 투명성과 동일시하지 않는다.",
+      "AMD corroboration은 공급 이력과 관계를 확인하지만 HBM4 구매의무·물량·가격·기간을 확인하지 않는다.",
+      "회사 전체 고객집중도와 제한된 계약 공시를 모든 HBM 계약의 부재로 확대하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 2.4,
+    "rationale": "규제공시 재작성·감사 맥락과 HBM4 actual, AMD 공급 이력·CEO 확인은 기본 신뢰도와 일부 독립 corroboration을 제공한다. 반면 OpenAI·엔비디아·AMD HBM4 관계의 다수 행은 LOI·MOU·plan·negotiation이며 네 counter facts는 계약·고객집중·추정 한계를 보여준다. 형식적 공시 신뢰도와 HBM-specific 투명성을 분리해 2.4로 보정한다.",
+    "support_fact_ids": [
+      "EFACT-1003ee870ca8d68689958b0a",
+      "EFACT-303c70f6fb2e11305c82f77b",
+      "EFACT-3dd3bb8fbe1496797f1cd00c",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-7f9fca669110a7e761e6264d",
+      "EFACT-7fe708d0c29a809416e4b893",
+      "EFACT-9eea79412c9f3395a852d248",
+      "EFACT-b6ff1b966b93b843dd6bcd04",
+      "EFACT-d0b79e6c2a1c2bef63f9cb34",
+      "EFACT-e7acbf35eec720d3412bca19",
+      "EFACT-f8487df03aa235fb70883193"
+    ],
+    "why_not_higher": "HBM-specific 계약조건·allocation·qualification·품질·마진과 OpenAI·엔비디아 signed terms의 독립 검증이 없다.",
+    "why_not_lower": "재작성·감사 강조사항 부재, HBM4 actual 출하, AMD HBM3E 공급 이력과 CEO corroboration이 존재한다."
+  },
+  "payload_hash": "7c97b1b5689ee285632668a7adc774c43be7d1bd81ef6e11170b015e026f405c",
+  "production_score_authority": false,
+  "prompt_hash": "a9a3646786a7fdd543a1f28251b5d8f3acde87a8d143c1b81af8c5b929b01f02",
+  "provenance": {
+    "agent_id": "phase105-profile-response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bdc97e883cfcae2f566ba77d308c80bd879980886982440c20c28a36e681ec55",
+  "response_id": "COLLABRESP-79c24b12788d1e95ce82c8e7f1a5d95a8afcb7c9c141cfbfe44011c06f35c853",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,598 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "The June KIND document has ten previously accepted issuer-financing facts and no additional distinct current-objective atom remains in this continuation audit.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "Seven new company-wide broker net-income and net-margin revision atoms are proposed; further distinct current-objective forecast atoms remain after the page cap.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "The final KIND filing has twenty-two previously accepted issuer-wide financing and CAPEX facts and no additional distinct current-objective atom remains in this continuation audit.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Five new target-direct historical consolidated earnings and EPS atoms are proposed and explicitly marked SUPERSEDED; additional distinct target rows remain after the page cap.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "SK증권은 2Q26E 연결 지배순이익률을 60%에서 61%로 1%p 상향했다. 이는 브로커의 회사 전체 전망이며 issuer actual이나 HBM-only 마진이 아니다.",
+        "exact_quote": "지배순이익 48,895 59,029 65,703 46,931 55,995 62,302 4% 5% 5%\n지배순이익률 61% 61% 61% 60% 61% 60% 1%p 0%p 1%p",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit company-wide net-margin revision changes the earnings bridge while preserving the non-HBM scope.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_BROKER_NET_MARGIN_REVISION:SKS_2026-05-07",
+        "normalized_object": "2Q26E controlling net margin of 61 percent, revised from 60 percent by plus 1 percentage point",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E; report published 2026-05-07",
+        "predicate": "2Q26E controlling net margin estimate revised upward",
+        "predicate_family": "BROKER_CONTROLLING_NET_MARGIN_REVISION",
+        "primitive_tags": [
+          "NET_MARGIN",
+          "ESTIMATE_REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_CONTROLLING_NET_MARGIN_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_MARGIN",
+          "BROKER_REVISION",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2Q26E 연결 지배순이익률 전망",
+        "subject_id": "000660:CONTROLLING_NET_MARGIN_REVISION:2Q26E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 61
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "SK증권은 3Q26E 연결 지배순이익률 61%를 유지해 종전 전망과 차이가 없다고 제시했다. 이는 브로커의 회사 전체 전망이며 issuer actual이나 HBM-only 마진이 아니다.",
+        "exact_quote": "지배순이익 48,895 59,029 65,703 46,931 55,995 62,302 4% 5% 5%\n지배순이익률 61% 61% 61% 60% 61% 60% 1%p 0%p 1%p",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The unchanged period-specific company-wide margin is a neutral counterweight in the revision roster.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_BROKER_NET_MARGIN_REVISION:SKS_2026-05-07",
+        "normalized_object": "3Q26E controlling net margin of 61 percent, unchanged from the prior 61 percent estimate",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E; report published 2026-05-07",
+        "predicate": "3Q26E controlling net margin estimate unchanged",
+        "predicate_family": "BROKER_CONTROLLING_NET_MARGIN_REVISION",
+        "primitive_tags": [
+          "NET_MARGIN",
+          "ESTIMATE_REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_CONTROLLING_NET_MARGIN_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_MARGIN",
+          "BROKER_REVISION",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q26E 연결 지배순이익률 전망",
+        "subject_id": "000660:CONTROLLING_NET_MARGIN_REVISION:3Q26E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 61
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "SK증권은 4Q26E 연결 지배순이익률을 60%에서 61%로 1%p 상향했다. 이는 브로커의 회사 전체 전망이며 issuer actual이나 HBM-only 마진이 아니다.",
+        "exact_quote": "지배순이익 48,895 59,029 65,703 46,931 55,995 62,302 4% 5% 5%\n지배순이익률 61% 61% 61% 60% 61% 60% 1%p 0%p 1%p",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit company-wide net-margin revision changes the earnings bridge while preserving the non-HBM scope.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_BROKER_NET_MARGIN_REVISION:SKS_2026-05-07",
+        "normalized_object": "4Q26E controlling net margin of 61 percent, revised from 60 percent by plus 1 percentage point",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q26E; report published 2026-05-07",
+        "predicate": "4Q26E controlling net margin estimate revised upward",
+        "predicate_family": "BROKER_CONTROLLING_NET_MARGIN_REVISION",
+        "primitive_tags": [
+          "NET_MARGIN",
+          "ESTIMATE_REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_CONTROLLING_NET_MARGIN_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_MARGIN",
+          "BROKER_REVISION",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q26E 연결 지배순이익률 전망",
+        "subject_id": "000660:CONTROLLING_NET_MARGIN_REVISION:4Q26E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 61
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "SK증권은 FY2026E 연결 지배순이익을 196,214십억원에서 213,613십억원으로 9% 상향했다. 이는 브로커 전망이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "지배순이익 213,613 289,450 196,214 252,361 9% 15%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The annual controlling-net-income revision directly affects the consolidated earnings bridge without HBM attribution.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_BROKER_NET_INCOME_REVISION:SKS_2026-05-07",
+        "normalized_object": "FY2026E controlling net income of KRW 213,613 billion, revised from KRW 196,214 billion by 9 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E; report published 2026-05-07",
+        "predicate": "FY2026E controlling net income estimate revised upward",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "primitive_tags": [
+          "NET_INCOME",
+          "ESTIMATE_REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME",
+          "BROKER_REVISION",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026E 연결 지배순이익 전망",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_REVISION:FY2026E:SKS_2026-05-07",
+        "unit": "KRW billion",
+        "value": 213613
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "SK증권은 FY2027E 연결 지배순이익을 252,361십억원에서 289,450십억원으로 15% 상향했다. 이는 브로커 전망이며 issuer actual 또는 HBM-only 이익이 아니다.",
+        "exact_quote": "지배순이익 213,613 289,450 196,214 252,361 9% 15%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The annual controlling-net-income revision directly affects the consolidated earnings bridge without HBM attribution.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_BROKER_NET_INCOME_REVISION:SKS_2026-05-07",
+        "normalized_object": "FY2027E controlling net income of KRW 289,450 billion, revised from KRW 252,361 billion by 15 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E; report published 2026-05-07",
+        "predicate": "FY2027E controlling net income estimate revised upward",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "primitive_tags": [
+          "NET_INCOME",
+          "ESTIMATE_REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME",
+          "BROKER_REVISION",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2027E 연결 지배순이익 전망",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_REVISION:FY2027E:SKS_2026-05-07",
+        "unit": "KRW billion",
+        "value": 289450
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "SK증권은 FY2026E 연결 지배순이익률을 60%에서 63%로 상향하고 차이를 6%p로 표기했다. 이는 브로커 회사 전체 전망이며 HBM-only 마진이 아니다.",
+        "exact_quote": "지배순이익 213,613 289,450 196,214 252,361 9% 15%\n지배순이익률 63% 62% 60% 60% 6%p 3%p",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit annual net-margin revision is a material company-wide earnings input but carries no HBM-only attribution.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_BROKER_NET_MARGIN_REVISION:SKS_2026-05-07",
+        "normalized_object": "FY2026E controlling net margin of 63 percent, revised from 60 percent and reported as plus 6 percentage points",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E; report published 2026-05-07",
+        "predicate": "FY2026E controlling net margin estimate revised upward",
+        "predicate_family": "BROKER_CONTROLLING_NET_MARGIN_REVISION",
+        "primitive_tags": [
+          "NET_MARGIN",
+          "ESTIMATE_REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_CONTROLLING_NET_MARGIN_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_MARGIN",
+          "BROKER_REVISION",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026E 연결 지배순이익률 전망",
+        "subject_id": "000660:CONTROLLING_NET_MARGIN_REVISION:FY2026E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 63
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "SK증권은 FY2027E 연결 지배순이익률을 60%에서 62%로 상향하고 차이를 3%p로 표기했다. 이는 브로커 회사 전체 전망이며 HBM-only 마진이 아니다.",
+        "exact_quote": "지배순이익 213,613 289,450 196,214 252,361 9% 15%\n지배순이익률 63% 62% 60% 60% 6%p 3%p",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit annual net-margin revision is a material company-wide earnings input but carries no HBM-only attribution.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_BROKER_NET_MARGIN_REVISION:SKS_2026-05-07",
+        "normalized_object": "FY2027E controlling net margin of 62 percent, revised from 60 percent and reported as plus 3 percentage points",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E; report published 2026-05-07",
+        "predicate": "FY2027E controlling net margin estimate revised upward",
+        "predicate_family": "BROKER_CONTROLLING_NET_MARGIN_REVISION",
+        "primitive_tags": [
+          "NET_MARGIN",
+          "ESTIMATE_REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_CONTROLLING_NET_MARGIN_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_MARGIN",
+          "BROKER_REVISION",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2027E 연결 지배순이익률 전망",
+        "subject_id": "000660:CONTROLLING_NET_MARGIN_REVISION:FY2027E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 62
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 연결 추정표는 FY2024F 지배주주 귀속 순이익 14,347십억원을 제시했다. 오래된 브로커 전망으로 SUPERSEDED이며 issuer actual·HBM-only 이익이 아니다.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2\n순이익 (십억원) 2,230 -9,112 14,347 18,265 20,282",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is a period-specific historical earnings estimate retained only as superseded calibration.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F controlling net income forecast of KRW 14,347 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "Historical FY2024F controlling net income forecast",
+        "predicate_family": "HISTORICAL_CONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "CONTROLLING_NET_INCOME",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONTROLLING_NET_INCOME_FORECAST",
+        "question_family_tags": [
+          "NET_INCOME",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2024F 연결 지배주주 순이익 전망",
+        "subject_id": "000660:CONTROLLING_NET_INCOME:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 14347
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 연결 추정표는 FY2025F 지배주주 귀속 순이익 18,265십억원을 제시했다. 오래된 브로커 전망으로 SUPERSEDED이며 issuer actual·HBM-only 이익이 아니다.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2\n순이익 (십억원) 2,230 -9,112 14,347 18,265 20,282",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is a period-specific historical earnings estimate retained only as superseded calibration.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F controlling net income forecast of KRW 18,265 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "Historical FY2025F controlling net income forecast",
+        "predicate_family": "HISTORICAL_CONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "CONTROLLING_NET_INCOME",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONTROLLING_NET_INCOME_FORECAST",
+        "question_family_tags": [
+          "NET_INCOME",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025F 연결 지배주주 순이익 전망",
+        "subject_id": "000660:CONTROLLING_NET_INCOME:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 18265
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 연결 추정표는 FY2026F 지배주주 귀속 순이익 20,282십억원을 제시했다. 오래된 브로커 전망으로 SUPERSEDED이며 issuer actual·HBM-only 이익이 아니다.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2\n순이익 (십억원) 2,230 -9,112 14,347 18,265 20,282",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is a period-specific historical earnings estimate retained only as superseded calibration.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EARNINGS:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2026F controlling net income forecast of KRW 20,282 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F; report published 2024-05-16",
+        "predicate": "Historical FY2026F controlling net income forecast",
+        "predicate_family": "HISTORICAL_CONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "CONTROLLING_NET_INCOME",
+          "FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONTROLLING_NET_INCOME_FORECAST",
+        "question_family_tags": [
+          "NET_INCOME",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026F 연결 지배주주 순이익 전망",
+        "subject_id": "000660:CONTROLLING_NET_INCOME:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 20282
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 연결 추정표는 FY2024F EPS 19,707원을 제시했다. 오래된 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only EPS가 아니다.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2\n순이익 (십억원) 2,230 -9,112 14,347 18,265 20,282\nEPS (원) 3,063 -12,517 19,707 25,090 27,860",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical EPS forecast is a period-specific valuation denominator but cannot drive the current score.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EPS:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F consolidated EPS forecast of KRW 19,707",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "Historical FY2024F EPS forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EPS_FORECAST",
+        "primitive_tags": [
+          "EPS_FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EPS_FORECAST",
+        "question_family_tags": [
+          "EPS",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2024F 연결 EPS 전망",
+        "subject_id": "000660:EPS:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW per share",
+        "value": 19707
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 연결 추정표는 FY2025F EPS 25,090원을 제시했다. 오래된 브로커 전망으로 SUPERSEDED이며 issuer actual 또는 HBM-only EPS가 아니다.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2\n순이익 (십억원) 2,230 -9,112 14,347 18,265 20,282\nEPS (원) 3,063 -12,517 19,707 25,090 27,860",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical EPS forecast is a period-specific valuation denominator but cannot drive the current score.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_CONSOLIDATED_EPS:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F consolidated EPS forecast of KRW 25,090",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "Historical FY2025F EPS forecast",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_EPS_FORECAST",
+        "primitive_tags": [
+          "EPS_FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_EPS_FORECAST",
+        "question_family_tags": [
+          "EPS",
+          "HISTORICAL_BROKER",
+          "CONSOLIDATED"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025F 연결 EPS 전망",
+        "subject_id": "000660:EPS:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW per share",
+        "value": 25090
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-cec48c4b300fe56a6ba42cb7",
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact transport-page upper bound was reached after strict source-order deduplication. Further distinct target-wide current-objective atoms remain only in the current and historical broker documents."
+    ]
+  },
+  "payload_hash": "7160b19c605e130f2cd7a249b08fe061923aa7067fd6eae80c627122a96c323e",
+  "production_score_authority": false,
+  "prompt_hash": "8fb42abb0456392021b5d5d85b228487e960995c5e70c3225f24a8012423f27b",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b01423178dea081de16f34c427179eee7ae39adf9bcfdd9edb819d5adf103689",
+  "response_id": "COLLABRESP-d08d0ddb4452978a516e49b577d812a8087eaf5ee2b9e4730b9c3d3da139059d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

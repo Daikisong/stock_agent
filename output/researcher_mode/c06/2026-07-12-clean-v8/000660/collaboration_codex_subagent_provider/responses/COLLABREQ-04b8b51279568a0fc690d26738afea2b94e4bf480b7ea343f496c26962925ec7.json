@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "703e2f06337de4af61b475b7dc59dff87c297535ed91eef1e9716dada5a480c1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-cff6fc85324c3b5bef2ba653",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.03,
+        "rationale": "Trading analysis is not an OPENDART original/full filing route."
+      },
+      {
+        "candidate_id": "SGCAND-9caaef453871ad58ac092cc7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.05,
+        "rationale": "Bloter opinion column is third-party media, not OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-b7f98683d10456279f5d93fc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "NewsTomato filing explainer is not the original OPENDART disclosure route."
+      },
+      {
+        "candidate_id": "SGCAND-b7c090cbb970c16f8a92176f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial schedule guide is not OPENDART original material."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No matching original OPENDART/full filing route appears in this final roster; snippets and explainers remain non-evidentiary."
+    ]
+  },
+  "payload_hash": "7ddea72636bbd3fccc94aa1f2e30e411019a867199740810d577758c0bcae09b",
+  "production_score_authority": false,
+  "prompt_hash": "d3cf5d302ce941902efd128999fff8199b9d758e349c9c0b6ef19da08c1b3162",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-04b8b51279568a0fc690d26738afea2b94e4bf480b7ea343f496c26962925ec7",
+  "response_id": "COLLABRESP-9670c954c179de3b9fb4d56714f6e51b98aca50f44205643fc38cfd5ebec0045",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

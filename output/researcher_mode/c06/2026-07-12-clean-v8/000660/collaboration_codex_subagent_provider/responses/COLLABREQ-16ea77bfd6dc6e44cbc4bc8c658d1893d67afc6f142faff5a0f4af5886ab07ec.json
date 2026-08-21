@@ -1,0 +1,625 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "No additional distinct fact remains after the prior accepted issuer-wide ADR decision atoms; no HBM, signed-customer, or durable-visibility upgrade is inferred.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "No additional objective-local fact remains after the current broker estimates and historical target-price calibration rows were accounted; none is promoted to issuer guidance or HBM-only economics.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "No additional distinct fact remains after the prior accepted official ADR and issuer-wide capital atoms; none is promoted to HBM-only economics or customer visibility.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Twelve next source-order historical broker atoms were extracted after strict semantic dedup: BPS two, receivables working-capital changes three, DPS three, inventory working-capital changes three, and FY2024 payout ratio one. Stock, flow/change, sign, ratio, annual-period, and issuer-wide versus HBM-only boundaries remain explicit; all facts are SUPERSEDED.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2025 year-end consolidated book value per share of KRW 119,143. This is a per-share balance-sheet stock denominator, not earnings, cash flow, or HBM-only value.",
+        "exact_quote": "영업활동으로인한자산및부채의변동 794 -6,702 -1,874 -1,668 BPS (원) 76,616 95,189 119,143 145,868",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact forward period, per-share unit, and book-value denominator support the forward book-value role while remaining a superseded historical forecast.",
+        "mechanism_scope_id": "000660:BOOK_VALUE_PER_SHARE:FY2025F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F consolidated book value per share forecast of KRW 119,143",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F year-end per-share stock; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at year-end at",
+        "predicate_family": "HISTORICAL_BOOK_VALUE_PER_SHARE_FORECAST",
+        "primitive_tags": [
+          "FY2025F year-end",
+          "SUPERSEDED",
+          "PER_SHARE_STOCK"
+        ],
+        "product_family": "Issuer-wide memory book value per share forecast",
+        "question_family_id": "HISTORICAL_BOOK_VALUE_PER_SHARE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_BOOK_VALUE_PER_SHARE_FORECAST",
+          "PER_SHARE_STOCK",
+          "HISTORICAL_FORECAST",
+          "BOOK_VALUE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK hynix FY2025 year-end book value per share forecast",
+        "subject_id": "000660:BOOK_VALUE_PER_SHARE:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW per share",
+        "value": 119143
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2026 year-end consolidated book value per share of KRW 145,868. This is a per-share balance-sheet stock denominator, not earnings, cash flow, or HBM-only value.",
+        "exact_quote": "영업활동으로인한자산및부채의변동 794 -6,702 -1,874 -1,668 BPS (원) 76,616 95,189 119,143 145,868",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact forward period, per-share unit, and book-value denominator support the forward book-value role while remaining a superseded historical forecast.",
+        "mechanism_scope_id": "000660:BOOK_VALUE_PER_SHARE:FY2026F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2026F consolidated book value per share forecast of KRW 145,868",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F year-end per-share stock; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at year-end at",
+        "predicate_family": "HISTORICAL_BOOK_VALUE_PER_SHARE_FORECAST",
+        "primitive_tags": [
+          "FY2026F year-end",
+          "SUPERSEDED",
+          "PER_SHARE_STOCK"
+        ],
+        "product_family": "Issuer-wide memory book value per share forecast",
+        "question_family_id": "HISTORICAL_BOOK_VALUE_PER_SHARE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_BOOK_VALUE_PER_SHARE_FORECAST",
+          "PER_SHARE_STOCK",
+          "HISTORICAL_FORECAST",
+          "BOOK_VALUE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK hynix FY2026 year-end book value per share forecast",
+        "subject_id": "000660:BOOK_VALUE_PER_SHARE:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW per share",
+        "value": 145868
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2024 receivables and other receivables decrease/(increase) of KRW -3,711 billion in operating cash flow. The negative sign denotes an increase/use of cash, not a negative year-end receivables balance.",
+        "exact_quote": "매출채권 및 기타채권의 감소(증가) -1,406 -3,711 -1,263 -1,905 DPS (원) 1,200 1,200 1,200 1,200",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact negative cash-flow change preserves the decrease/(increase) sign convention and remains distinct from the receivables balance-sheet stock.",
+        "mechanism_scope_id": "000660:RECEIVABLES_CHANGE:FY2024F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F consolidated receivables decrease/(increase) cash-flow change forecast of KRW -3,711 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F flow/change; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a cash-flow change of",
+        "predicate_family": "HISTORICAL_RECEIVABLES_CHANGE_FORECAST",
+        "primitive_tags": [
+          "FY2024F flow",
+          "SUPERSEDED",
+          "NEGATIVE_CHANGE"
+        ],
+        "product_family": "Issuer-wide memory receivables working-capital change forecast",
+        "question_family_id": "HISTORICAL_RECEIVABLES_CHANGE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_RECEIVABLES_CHANGE_FORECAST",
+          "WORKING_CAPITAL_CHANGE",
+          "HISTORICAL_FORECAST",
+          "FLOW_METRIC"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 receivables working-capital change forecast",
+        "subject_id": "000660:RECEIVABLES_CHANGE:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": -3711
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2025 receivables and other receivables decrease/(increase) of KRW -1,263 billion in operating cash flow. The negative sign denotes an increase/use of cash, not a negative year-end receivables balance.",
+        "exact_quote": "매출채권 및 기타채권의 감소(증가) -1,406 -3,711 -1,263 -1,905 DPS (원) 1,200 1,200 1,200 1,200",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact negative cash-flow change preserves the decrease/(increase) sign convention and remains distinct from the receivables balance-sheet stock.",
+        "mechanism_scope_id": "000660:RECEIVABLES_CHANGE:FY2025F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F consolidated receivables decrease/(increase) cash-flow change forecast of KRW -1,263 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F flow/change; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a cash-flow change of",
+        "predicate_family": "HISTORICAL_RECEIVABLES_CHANGE_FORECAST",
+        "primitive_tags": [
+          "FY2025F flow",
+          "SUPERSEDED",
+          "NEGATIVE_CHANGE"
+        ],
+        "product_family": "Issuer-wide memory receivables working-capital change forecast",
+        "question_family_id": "HISTORICAL_RECEIVABLES_CHANGE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_RECEIVABLES_CHANGE_FORECAST",
+          "WORKING_CAPITAL_CHANGE",
+          "HISTORICAL_FORECAST",
+          "FLOW_METRIC"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 receivables working-capital change forecast",
+        "subject_id": "000660:RECEIVABLES_CHANGE:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": -1263
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2026 receivables and other receivables decrease/(increase) of KRW -1,905 billion in operating cash flow. The negative sign denotes an increase/use of cash, not a negative year-end receivables balance.",
+        "exact_quote": "매출채권 및 기타채권의 감소(증가) -1,406 -3,711 -1,263 -1,905 DPS (원) 1,200 1,200 1,200 1,200",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact negative cash-flow change preserves the decrease/(increase) sign convention and remains distinct from the receivables balance-sheet stock.",
+        "mechanism_scope_id": "000660:RECEIVABLES_CHANGE:FY2026F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2026F consolidated receivables decrease/(increase) cash-flow change forecast of KRW -1,905 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F flow/change; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a cash-flow change of",
+        "predicate_family": "HISTORICAL_RECEIVABLES_CHANGE_FORECAST",
+        "primitive_tags": [
+          "FY2026F flow",
+          "SUPERSEDED",
+          "NEGATIVE_CHANGE"
+        ],
+        "product_family": "Issuer-wide memory receivables working-capital change forecast",
+        "question_family_id": "HISTORICAL_RECEIVABLES_CHANGE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_RECEIVABLES_CHANGE_FORECAST",
+          "WORKING_CAPITAL_CHANGE",
+          "HISTORICAL_FORECAST",
+          "FLOW_METRIC"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026 receivables working-capital change forecast",
+        "subject_id": "000660:RECEIVABLES_CHANGE:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": -1905
+      },
+      {
+        "business_segment": "Issuer-wide historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2024 dividend per share of KRW 1,200. It is an annual per-share distribution forecast, not a quarterly payment, payout ratio, or HBM-only allocation.",
+        "exact_quote": "매출채권 및 기타채권의 감소(증가) -1,406 -3,711 -1,263 -1,905 DPS (원) 1,200 1,200 1,200 1,200",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact annual period and per-share unit preserve DPS meaning rather than inferring a quarterly distribution or payout ratio.",
+        "mechanism_scope_id": "000660:DIVIDEND_PER_SHARE:FY2024F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F dividend per share forecast of KRW 1,200",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F annual per-share distribution; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker for the year at",
+        "predicate_family": "HISTORICAL_DIVIDEND_PER_SHARE_FORECAST",
+        "primitive_tags": [
+          "FY2024F annual",
+          "SUPERSEDED",
+          "PER_SHARE"
+        ],
+        "product_family": "Issuer-wide dividend per share forecast",
+        "question_family_id": "HISTORICAL_DIVIDEND_PER_SHARE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_DIVIDEND_PER_SHARE_FORECAST",
+          "PER_SHARE_DISTRIBUTION",
+          "HISTORICAL_FORECAST",
+          "CAPITAL_ALLOCATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 dividend per share forecast",
+        "subject_id": "000660:DIVIDEND_PER_SHARE:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW per share",
+        "value": 1200
+      },
+      {
+        "business_segment": "Issuer-wide historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2025 dividend per share of KRW 1,200. It is an annual per-share distribution forecast, not a quarterly payment, payout ratio, or HBM-only allocation.",
+        "exact_quote": "매출채권 및 기타채권의 감소(증가) -1,406 -3,711 -1,263 -1,905 DPS (원) 1,200 1,200 1,200 1,200",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact annual period and per-share unit preserve DPS meaning rather than inferring a quarterly distribution or payout ratio.",
+        "mechanism_scope_id": "000660:DIVIDEND_PER_SHARE:FY2025F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F dividend per share forecast of KRW 1,200",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F annual per-share distribution; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker for the year at",
+        "predicate_family": "HISTORICAL_DIVIDEND_PER_SHARE_FORECAST",
+        "primitive_tags": [
+          "FY2025F annual",
+          "SUPERSEDED",
+          "PER_SHARE"
+        ],
+        "product_family": "Issuer-wide dividend per share forecast",
+        "question_family_id": "HISTORICAL_DIVIDEND_PER_SHARE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_DIVIDEND_PER_SHARE_FORECAST",
+          "PER_SHARE_DISTRIBUTION",
+          "HISTORICAL_FORECAST",
+          "CAPITAL_ALLOCATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 dividend per share forecast",
+        "subject_id": "000660:DIVIDEND_PER_SHARE:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW per share",
+        "value": 1200
+      },
+      {
+        "business_segment": "Issuer-wide historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2026 dividend per share of KRW 1,200. It is an annual per-share distribution forecast, not a quarterly payment, payout ratio, or HBM-only allocation.",
+        "exact_quote": "매출채권 및 기타채권의 감소(증가) -1,406 -3,711 -1,263 -1,905 DPS (원) 1,200 1,200 1,200 1,200",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact annual period and per-share unit preserve DPS meaning rather than inferring a quarterly distribution or payout ratio.",
+        "mechanism_scope_id": "000660:DIVIDEND_PER_SHARE:FY2026F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2026F dividend per share forecast of KRW 1,200",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F annual per-share distribution; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker for the year at",
+        "predicate_family": "HISTORICAL_DIVIDEND_PER_SHARE_FORECAST",
+        "primitive_tags": [
+          "FY2026F annual",
+          "SUPERSEDED",
+          "PER_SHARE"
+        ],
+        "product_family": "Issuer-wide dividend per share forecast",
+        "question_family_id": "HISTORICAL_DIVIDEND_PER_SHARE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_DIVIDEND_PER_SHARE_FORECAST",
+          "PER_SHARE_DISTRIBUTION",
+          "HISTORICAL_FORECAST",
+          "CAPITAL_ALLOCATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026 dividend per share forecast",
+        "subject_id": "000660:DIVIDEND_PER_SHARE:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW per share",
+        "value": 1200
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2024 inventory decrease/(increase) of KRW -10,715 billion in operating cash flow. The negative sign denotes inventory build/use of cash, not a negative year-end inventory balance.",
+        "exact_quote": "재고자산 감소(증가) 2,288 -10,715 -2,963 -2,744 배당성향 (%) -9.0 5.7 4.5 4.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact negative cash-flow change preserves the decrease/(increase) sign convention and remains distinct from the year-end inventory stock.",
+        "mechanism_scope_id": "000660:INVENTORY_CHANGE:FY2024F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F consolidated inventory decrease/(increase) cash-flow change forecast of KRW -10,715 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F flow/change; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a cash-flow change of",
+        "predicate_family": "HISTORICAL_INVENTORY_CHANGE_FORECAST",
+        "primitive_tags": [
+          "FY2024F flow",
+          "SUPERSEDED",
+          "NEGATIVE_CHANGE"
+        ],
+        "product_family": "Issuer-wide memory inventory working-capital change forecast",
+        "question_family_id": "HISTORICAL_INVENTORY_CHANGE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_INVENTORY_CHANGE_FORECAST",
+          "WORKING_CAPITAL_CHANGE",
+          "HISTORICAL_FORECAST",
+          "FLOW_METRIC"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 inventory working-capital change forecast",
+        "subject_id": "000660:INVENTORY_CHANGE:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": -10715
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2025 inventory decrease/(increase) of KRW -2,963 billion in operating cash flow. The negative sign denotes inventory build/use of cash, not a negative year-end inventory balance.",
+        "exact_quote": "재고자산 감소(증가) 2,288 -10,715 -2,963 -2,744 배당성향 (%) -9.0 5.7 4.5 4.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact negative cash-flow change preserves the decrease/(increase) sign convention and remains distinct from the year-end inventory stock.",
+        "mechanism_scope_id": "000660:INVENTORY_CHANGE:FY2025F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F consolidated inventory decrease/(increase) cash-flow change forecast of KRW -2,963 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F flow/change; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a cash-flow change of",
+        "predicate_family": "HISTORICAL_INVENTORY_CHANGE_FORECAST",
+        "primitive_tags": [
+          "FY2025F flow",
+          "SUPERSEDED",
+          "NEGATIVE_CHANGE"
+        ],
+        "product_family": "Issuer-wide memory inventory working-capital change forecast",
+        "question_family_id": "HISTORICAL_INVENTORY_CHANGE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_INVENTORY_CHANGE_FORECAST",
+          "WORKING_CAPITAL_CHANGE",
+          "HISTORICAL_FORECAST",
+          "FLOW_METRIC"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 inventory working-capital change forecast",
+        "subject_id": "000660:INVENTORY_CHANGE:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": -2963
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2026 inventory decrease/(increase) of KRW -2,744 billion in operating cash flow. The negative sign denotes inventory build/use of cash, not a negative year-end inventory balance.",
+        "exact_quote": "재고자산 감소(증가) 2,288 -10,715 -2,963 -2,744 배당성향 (%) -9.0 5.7 4.5 4.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact negative cash-flow change preserves the decrease/(increase) sign convention and remains distinct from the year-end inventory stock.",
+        "mechanism_scope_id": "000660:INVENTORY_CHANGE:FY2026F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2026F consolidated inventory decrease/(increase) cash-flow change forecast of KRW -2,744 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F flow/change; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a cash-flow change of",
+        "predicate_family": "HISTORICAL_INVENTORY_CHANGE_FORECAST",
+        "primitive_tags": [
+          "FY2026F flow",
+          "SUPERSEDED",
+          "NEGATIVE_CHANGE"
+        ],
+        "product_family": "Issuer-wide memory inventory working-capital change forecast",
+        "question_family_id": "HISTORICAL_INVENTORY_CHANGE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_INVENTORY_CHANGE_FORECAST",
+          "WORKING_CAPITAL_CHANGE",
+          "HISTORICAL_FORECAST",
+          "FLOW_METRIC"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026 inventory working-capital change forecast",
+        "subject_id": "000660:INVENTORY_CHANGE:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": -2744
+      },
+      {
+        "business_segment": "Issuer-wide historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2024 dividend payout ratio of 5.7 percent. This is a ratio of dividends to earnings, not DPS, dividend yield, or HBM-only capital allocation.",
+        "exact_quote": "재고자산 감소(증가) 2,288 -10,715 -2,963 -2,744 배당성향 (%) -9.0 5.7 4.5 4.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact ratio and annual period preserve payout-ratio meaning without substituting DPS or dividend yield.",
+        "mechanism_scope_id": "000660:DIVIDEND_PAYOUT_RATIO:FY2024F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F dividend payout ratio forecast of 5.7 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker for the year at",
+        "predicate_family": "HISTORICAL_DIVIDEND_PAYOUT_RATIO_FORECAST",
+        "primitive_tags": [
+          "FY2024F ratio",
+          "SUPERSEDED",
+          "RATIO"
+        ],
+        "product_family": "Issuer-wide dividend payout ratio forecast",
+        "question_family_id": "HISTORICAL_DIVIDEND_PAYOUT_RATIO_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_DIVIDEND_PAYOUT_RATIO_FORECAST",
+          "PAYOUT_RATIO",
+          "HISTORICAL_FORECAST",
+          "CAPITAL_ALLOCATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 dividend payout ratio forecast",
+        "subject_id": "000660:DIVIDEND_PAYOUT_RATIO:FY2024F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 5.7
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "FY2025-FY2026 dividend payout ratios and further payable working-capital changes, cash-tax payments, investment and financing cash flows, per-share, profitability, turnover, and leverage forecast atoms remain in SGDOC-f87582d14c66af24ff78d6d8."
+    ]
+  },
+  "payload_hash": "55e9f73fada145e931cf0354a35a6c7196f825bf044f15d353316b1746e6970b",
+  "production_score_authority": false,
+  "prompt_hash": "215282348b4c13436092b96b2506f248cc393c15338f225e7c3fbfeeda36fb30",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-16ea77bfd6dc6e44cbc4bc8c658d1893d67afc6f142faff5a0f4af5886ab07ec",
+  "response_id": "COLLABRESP-97041693b00affbf1928d377663da04dcfe8c2e9ecc8ec49e25741fdfa64a6c7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

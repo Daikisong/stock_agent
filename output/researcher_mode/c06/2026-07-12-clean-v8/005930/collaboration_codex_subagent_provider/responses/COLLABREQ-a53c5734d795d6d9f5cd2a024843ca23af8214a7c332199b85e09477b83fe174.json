@@ -1,0 +1,53 @@
+{
+  "output_schema_hash": "97d785ed7e5a0ff4180325be98919ccec88397e36d7842ac48cf64dc3b68a320",
+  "payload": {
+    "allowed_range": [
+      3.1,
+      4.7
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b는 LOW-confidence ordinal counter anchor로 2.828571~4.028571의 WEAK 구간이다. 실제 HBM4 양산 출하와 메모리 매출·ASP 실현 증거가 있으므로 그 중간값 3.428571보다 높게 보되, 제시점 3.8은 구간 상단을 넘지 않는다.",
+      "ORDTRANSFER-c54e0c02076da1642b64c8df는 LOW-confidence ordinal positive anchor로 4.32~5.52의 MEDIUM 구간이다. HBM 단독 정상 이익·FCF 브리지와 독립 고객 확인이 없고 현재 valuation 지표가 혼재하므로 제시점은 이 anchor 하단보다 낮게 두며, 불확실성을 반영한 허용범위 상단만 4.7까지 겹치게 둔다."
+    ],
+    "counter_fact_ids": [],
+    "disagreements": [
+      "forward PE 5.587687배 하나만으로 현재 valuation이 싸고 추가 rerating 여력이 크다고 확정하는 데 동의하지 않는다.",
+      "메모리 전체 매출과 ASP 실적을 HBM4 단독 정상 이익 또는 FCF로 직접 연결하는 데 동의하지 않는다.",
+      "명시적인 고객 집중 counterfact가 없다는 이유만으로 고객·제품 집중 불확실성이 해소됐다고 보는 데 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 3.8,
+    "rationale": "사업 단계는 개발 기대가 아니라 2026년 2월 HBM4 양산 출하로 상용화가 확인됐고, 2026년 1분기 메모리 매출 74,779,980백만원과 메모리 ASP 146% 상승도 실제 운영 강도를 지지한다. 그러나 매출·ASP는 HBM4 단독이 아닌 메모리 전체 수치이고 세 support fact가 모두 같은 OPENDART 독립성 그룹이라 고객별 수요와 제품 집중도를 독립적으로 해소하지 못한다. valuation도 forward PE 5.587687배만 낮고 forward EV/EBITDA 18.882197배, forward PB 2.988821배, forward FCF yield 1.989313%, trailing parent PE 21.864975배와 PB 3.844357배가 혼재한다. 특히 forward 지표 일부는 추정·파생치이며 현재 가격에 반영된 HBM4 기대와 HBM 단독 정상 이익·현금흐름이 확인되지 않아, 실제 상용화 증거는 인정하되 rerating 확신은 WEAK 상단 수준인 3.8/12로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "현재 valuation이 지표별로 싸고 비싼 신호가 섞여 있고, HBM4 출하와 메모리 전체 실적을 HBM 단독 정상 이익·FCF로 연결하는 브리지 및 독립 고객 corroboration이 없다. 세 지지 사실도 하나의 OPENDART 독립성 그룹에 집중돼 상단 신뢰도를 제한한다.",
+    "why_not_lower": "HBM4가 실제 양산 출하 단계에 들어갔고 메모리 매출 74,779,980백만원과 ASP 146% 상승이 실현됐으므로, 단순 기대 또는 개발 단계만 있는 WEAK 하단보다 높은 점수는 정당하다."
+  },
+  "payload_hash": "eb1042e1a450f31fde36244cdae0d64106bcf0c65646a4a0628bd9d3e8fa9134",
+  "production_score_authority": false,
+  "prompt_hash": "6edba45546aa6b905bd64f2e5be2a574d0a39ef91188ad98d871b360346df43c",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a53c5734d795d6d9f5cd2a024843ca23af8214a7c332199b85e09477b83fe174",
+  "response_id": "COLLABRESP-de3430e0c8fcbf478859948c8b6da6aa6accf3b88490acfd1fd27084221013b0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

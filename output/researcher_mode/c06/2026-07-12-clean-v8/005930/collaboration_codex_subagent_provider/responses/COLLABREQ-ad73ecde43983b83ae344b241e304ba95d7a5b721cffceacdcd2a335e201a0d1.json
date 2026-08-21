@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "be4fc22602ead9392f16fe20f367c2ae8a1e531fd7c97f513c6e6de10bffe8b7",
+  "payload": {
+    "allowed_range": [
+      3.2,
+      4.4
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b의 2.83~4.03 약한 counter 밴드와 비교하면, 엔비디아 HBM4가 아직 협의 중이고 AMD HBM4도 MOU alignment여서 가시성 할인은 크다. 다만 실제 매출·ASP·양산 출하가 있어 이 밴드 중간보다는 조금 높다.",
+      "ORDTRANSFER-c54e0c02076da1642b64c8df의 4.32~5.52 중간 positive 밴드에 안정적으로 들어가려면 HBM-only 정상 이익·FCF 분모와 signed customer economics가 필요하다. 현재 근거는 그 문턱에 미달한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1"
+    ],
+    "disagreements": [
+      "AMD의 primary HBM4 supply alignment를 확정 수주나 장기 고객 잠금으로 해석해서는 안 된다. prompt는 물량·가격·기간·취소조건을 제공하지 않는다.",
+      "메모리 ASP 146% 상승과 전사 forward PE 5.59배를 결합해 HBM-only 저평가를 추론하는 것은 segment와 denominator가 일치하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b",
+      "ORDTRANSFER-c54e0c02076da1642b64c8df"
+    ],
+    "proposed_points": 3.8,
+    "rationale": "실현된 메모리 매출·ASP 상승과 HBM4 출하, AMD의 HBM3E 공급 이력은 긍정적이다. 그러나 유일한 직접 counter인 EFACT-432ffed78641a7fa3eb2aaf1은 엔비디아 HBM4 공급이 아직 협의 중임을 보여준다. AMD HBM4도 확정 구매계약이 아닌 MOU alignment이고, forward PE 5.59배·PB 2.99배와 trailing PE 21.86배·PB 3.84배는 모두 전사 분모다. HBM 단독 매출·마진·FCF와 period-matched normal-earnings bridge가 없어 재평가의 지속성과 크기를 낮게 본다.",
+    "support_fact_ids": [
+      "EFACT-0ea4c7a5b342855d104d1848",
+      "EFACT-4d0e0f24a3a1645c5962f1b3",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "명명 고객 근거가 있어도 AMD HBM4는 MOU 단계이고 엔비디아 HBM4는 협의 중이다. signed economics, 고객 집중도, HBM-only 정상 이익과 cash conversion, 완전한 period-matched valuation bridge가 없다.",
+    "why_not_lower": "2026-Q1 메모리 매출과 ASP 상승은 실제 수치이고, HBM4는 양산 출하 단계다. AMD 공식 자료도 MI350X·MI355X HBM3E 공급 이력을 독립 확인하므로 단순 계획이나 제3자 추정만 있는 경우보다는 강하다."
+  },
+  "payload_hash": "547c3ad41b14c5b310845debb0481bd3a60ebcfa032487711eaef031f090023c",
+  "production_score_authority": false,
+  "prompt_hash": "b5eed364347c044ccce7487c40f3c7bd91730fd7c01db2b313efbd9f56120869",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ad73ecde43983b83ae344b241e304ba95d7a5b721cffceacdcd2a335e201a0d1",
+  "response_id": "COLLABRESP-03981f162f018f3a4ffb794e05693ca759b444a983bf879abd4395be02cc1695",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

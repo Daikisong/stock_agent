@@ -1,0 +1,155 @@
+{
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "as_of_date": "2026-07-12",
+  "audit": {
+    "complete_judge_memo_count": 0,
+    "component_count": 7,
+    "component_max_points": {
+      "bottleneck_pricing": null,
+      "capital_allocation": null,
+      "earnings_visibility": null,
+      "eps_fcf_explosion": null,
+      "information_confidence": null,
+      "market_mispricing": null,
+      "valuation_rerating": null
+    },
+    "critical_count_sum": 21,
+    "critical_counts": {
+      "duplicate_component_research_result_count": 0,
+      "incomplete_component_scoring_memo_count": 7,
+      "judge_bound_explanation_missing_count": 0,
+      "judge_call_id_missing_count": 0,
+      "judge_component_max_violation_count": 0,
+      "judge_nearest_anchor_missing_count": 0,
+      "judge_prompt_hash_missing_count": 0,
+      "judge_response_hash_missing_count": 0,
+      "judge_result_roster_mismatch_count": 7,
+      "llm_stage_authority_count": 0,
+      "llm_total_score_authority_count": 0,
+      "missing_component_research_result_count": 7,
+      "pending_judge_result_count": 0,
+      "unexpected_component_research_result_count": 0,
+      "within_component_duplicate_judge_call_id_count": 0,
+      "within_component_duplicate_prompt_hash_count": 0
+    },
+    "independent_role_prompt_hashes_required": true,
+    "judge_memo_count": 0,
+    "prior_component_score_band_exposed_to_judges": false,
+    "production_stage_authority": false,
+    "production_total_score_authority": false,
+    "required_judge_roles": [
+      "ANALYST",
+      "SKEPTIC",
+      "CALIBRATION_JUDGE"
+    ],
+    "schema_version": "e2r_component_scoring_memo_audit_v1",
+    "status": "COMPONENT_SCORING_MEMO_AUDIT_FAIL",
+    "tiny_impact_cap_multiplication_used": false
+  },
+  "component_memos": [
+    {
+      "component_id": "eps_fcf_explosion",
+      "component_max_points": null,
+      "component_research_memo_id": null,
+      "judge_results": [],
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_RESULT_MISSING"
+      ],
+      "production_stage_authority": false,
+      "production_total_score_authority": false,
+      "ready_for_deterministic_aggregation": false,
+      "schema_version": "e2r_component_scoring_memo_v1",
+      "status": "PENDING"
+    },
+    {
+      "component_id": "earnings_visibility",
+      "component_max_points": null,
+      "component_research_memo_id": null,
+      "judge_results": [],
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_RESULT_MISSING"
+      ],
+      "production_stage_authority": false,
+      "production_total_score_authority": false,
+      "ready_for_deterministic_aggregation": false,
+      "schema_version": "e2r_component_scoring_memo_v1",
+      "status": "PENDING"
+    },
+    {
+      "component_id": "bottleneck_pricing",
+      "component_max_points": null,
+      "component_research_memo_id": null,
+      "judge_results": [],
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_RESULT_MISSING"
+      ],
+      "production_stage_authority": false,
+      "production_total_score_authority": false,
+      "ready_for_deterministic_aggregation": false,
+      "schema_version": "e2r_component_scoring_memo_v1",
+      "status": "PENDING"
+    },
+    {
+      "component_id": "market_mispricing",
+      "component_max_points": null,
+      "component_research_memo_id": null,
+      "judge_results": [],
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_RESULT_MISSING"
+      ],
+      "production_stage_authority": false,
+      "production_total_score_authority": false,
+      "ready_for_deterministic_aggregation": false,
+      "schema_version": "e2r_component_scoring_memo_v1",
+      "status": "PENDING"
+    },
+    {
+      "component_id": "valuation_rerating",
+      "component_max_points": null,
+      "component_research_memo_id": null,
+      "judge_results": [],
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_RESULT_MISSING"
+      ],
+      "production_stage_authority": false,
+      "production_total_score_authority": false,
+      "ready_for_deterministic_aggregation": false,
+      "schema_version": "e2r_component_scoring_memo_v1",
+      "status": "PENDING"
+    },
+    {
+      "component_id": "capital_allocation",
+      "component_max_points": null,
+      "component_research_memo_id": null,
+      "judge_results": [],
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_RESULT_MISSING"
+      ],
+      "production_stage_authority": false,
+      "production_total_score_authority": false,
+      "ready_for_deterministic_aggregation": false,
+      "schema_version": "e2r_component_scoring_memo_v1",
+      "status": "PENDING"
+    },
+    {
+      "component_id": "information_confidence",
+      "component_max_points": null,
+      "component_research_memo_id": null,
+      "judge_results": [],
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_RESULT_MISSING"
+      ],
+      "production_stage_authority": false,
+      "production_total_score_authority": false,
+      "ready_for_deterministic_aggregation": false,
+      "schema_version": "e2r_component_scoring_memo_v1",
+      "status": "PENDING"
+    }
+  ],
+  "production_stage_authority": false,
+  "production_total_score_authority": false,
+  "ready_for_deterministic_aggregation": false,
+  "schema_version": "e2r_component_scoring_memo_run_v1",
+  "status": "COMPONENT_SCORING_MEMOS_PENDING",
+  "target_id": "000660"
+}

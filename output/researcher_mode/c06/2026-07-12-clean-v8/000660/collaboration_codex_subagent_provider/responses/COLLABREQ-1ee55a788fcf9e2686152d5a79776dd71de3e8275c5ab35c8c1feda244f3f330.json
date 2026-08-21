@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-fc5ac8b046db3d8d83052b28",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "2026-08-10 게시된 후발 네이버 콘텐츠로 as_of_date 이후이며 broker PDF 원문도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f84423498f36dede2853c22f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.03,
+        "rationale": "네이버 프리미엄콘텐츠 분석글로 PUBLIC_BROKER_PDF 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9491e700bbde035521a3a27e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.08,
+        "rationale": "네이버 프리미엄콘텐츠가 여러 리포트를 요약한 글이다. HBM 공급계약 snippet은 원문 broker PDF가 아니어서 full-source route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8f75ca7851eeba410b3c59df",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "네이버 종목 토론글이며 구체 원문 경로나 내용이 없다."
+      },
+      {
+        "candidate_id": "SGCAND-91b34d6e7e05e75bbb54ac9f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "가격 범위만 적은 네이버 종목 토론글로 목적과 family에 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-d9c7fa8528202d3c8dac28b7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "증권사 이름 한 단어뿐인 네이버 토론글이며 원문 PDF가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f2fafb291424b7c5e34faf11",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "2026-08-18 후발 뉴스모음으로 as_of_date 이후이며 원 broker PDF가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f8b6de87dd2c3ca5bacf1f79",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "네이버 종목 토론글로 연구자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-85dfa2be29c3a3dff3d029cf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "금투세 청원 관련 네이버 토론글로 대상 HBM 병목과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-8c73e65348fc9648e882d8d9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "삼성전자 취업용 심층분석 페이지로 target과 source family가 모두 틀리다."
+      },
+      {
+        "candidate_id": "SGCAND-9e83884a421b0423ef57f481",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "정치적 단문 네이버 토론글로 연구 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-b2bc808b6edc65b38b88ca78",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "수급 단문 네이버 토론글로 broker full report가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 roster에는 as_of_date 내 목적에 맞는 원본 PUBLIC_BROKER_PDF full-source route가 없다. 이는 원문 또는 경제적 증거의 부재를 뜻하지 않는다.",
+      "후발 날짜 후보와 재전·토론·요약 페이지를 evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "4ad884b5e6ee16543464fc06f10bc6cfb2e38fd92cd1901f48796f6e5e12d3a1",
+  "production_score_authority": false,
+  "prompt_hash": "ef3a9b43e77218b37f8d06421ee2ef8291843117d89a3f0cc53eb2e1c2ea7722",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1ee55a788fcf9e2686152d5a79776dd71de3e8275c5ab35c8c1feda244f3f330",
+  "response_id": "COLLABRESP-1d99e247d285d6f51474197680f440eb558a4bd2082d217a06af85c34f0c469b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

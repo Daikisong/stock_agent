@@ -1,0 +1,64 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5e798baddc1bc21f52a7d445",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "target의 bullish·bearish broker view를 요약하지만 Naver Premium 제3자 모닝리포트다. original PUBLIC_BROKER_PDF 또는 verified source landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-05549b579d80f83967d5d8df",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "증권사 목표가 dispersion과 AI 투자 지속성 논쟁은 objective와 의미상 관련되지만 media retelling이다. requested PUBLIC_BROKER_PDF 원문을 충족하지 않아 이 roster에서는 material full-source route로 분류하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-031bad9ea611b3c83321b034",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2023년 WiseReport wrong-subject summary listing으로 000660과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-d7d0a118845fe8aece62e448",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "조선업 타 종목 WiseReport summary 목록이며 target·objective·source family 모두 불일치한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "broker 의견 분산을 다룬 media 결과는 후보 힌트일 뿐 원문 PDF가 아니다. 이 roster의 material 0은 broker 원문이나 market expectation 사실의 부재를 증명하지 않는다."
+    ]
+  },
+  "payload_hash": "60226ed7bb092d3b0c960f7c4033f332ab03535cdb5b4114f979ce4e5a125d4b",
+  "production_score_authority": false,
+  "prompt_hash": "b9dc24459c4fbac40f1a3524135b347cb93f4dc313ee89effb20609b89d5b46a",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-26ac445c49a964717906367ebe76a48a3af0bda21406878616c71ba3ce59c0e6",
+  "response_id": "COLLABRESP-c5bec9eedc5d73d2fcf74f2e16d60b3e7907d669f638c72547cddd63b5b41f9e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

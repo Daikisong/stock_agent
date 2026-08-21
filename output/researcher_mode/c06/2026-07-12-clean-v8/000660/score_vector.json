@@ -1,0 +1,16 @@
+{
+  "as_of_date": "2026-07-12",
+  "component_score_vector": null,
+  "max_points": null,
+  "pending_reasons": [
+    "EXACT_SEVEN_COMPONENT_DECISIONS_REQUIRED:MISSING=bottleneck_pricing,capital_allocation,earnings_visibility,eps_fcf_explosion,information_confidence,market_mispricing,valuation_rerating:EXTRA=NONE"
+  ],
+  "production_stage_authority": false,
+  "schema_version": "e2r_v5_canary_score_vector_v1",
+  "score_valid": false,
+  "source_artifact": "deterministic_total_score.json",
+  "source_sha256": "362d93f6298df3c27dc86d01766d4653ce99c8866ac57b810eccbaa28b7d787f",
+  "status": "RESEARCH_REQUIRED",
+  "target_id": "000660",
+  "total_points": null
+}

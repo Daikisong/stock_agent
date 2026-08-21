@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-d6a21dd246c549d73cdd00db",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "contents.premium.naver.com의 '[데일리 자료] 26.08.19 아침에 읽는 주식뉴스모음'은 제3자·broker·정책/연구 자료이며 NVIDIA/OpenAI CUSTOMER_OFFICIAL original/official landing이 아니다. 또한 cutoff 이후 후보라 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-db901c8ead3851c58e2065e4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "t.me의 '루팡 – Telegram'은 제3자·broker·정책/연구 자료이며 NVIDIA/OpenAI CUSTOMER_OFFICIAL original/official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8fc0de00f3405e124d6ac4f1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.nst.re.kr의 '연구사업계획서 - 국가과학기술연구회'은 제3자·broker·정책/연구 자료이며 NVIDIA/OpenAI CUSTOMER_OFFICIAL original/official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9cb857818a47cc805cdfe05b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.kisdi.re.kr의 'AI 기술주권과 국가경쟁력 제고 방안 연구'은 제3자·broker·정책/연구 자료이며 NVIDIA/OpenAI CUSTOMER_OFFICIAL original/official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-142a7e13eabdf571599f6cb9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.kistep.re.kr의 '중국 첨단기술 자립 전략 분석과 대응방안 연구'은 제3자·broker·정책/연구 자료이며 NVIDIA/OpenAI CUSTOMER_OFFICIAL original/official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e553a489946d3dffa2149f77",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.eugenefn.com의 'Vol.1. May 2023'은 제3자·broker·정책/연구 자료이며 NVIDIA/OpenAI CUSTOMER_OFFICIAL original/official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-acb7c8da4f913925158f4cd9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.stepi.re.kr의 '국내 AI 반도체 기업의 성장요인 분석을 통한 지원·육성 방안 연구'은 제3자·broker·정책/연구 자료이며 NVIDIA/OpenAI CUSTOMER_OFFICIAL original/official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-641cb27ab5d51cd16c0e6650",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "securities.miraeasset.com의 'AI Weekly 인공지능의 특이점은 이미 달성됐다'은 제3자·broker·정책/연구 자료이며 NVIDIA/OpenAI CUSTOMER_OFFICIAL original/official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-29f4aee9f32c297b99c76894",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.kdi.re.kr의 'GLOBAL ISSUE BRIEF'은 제3자·broker·정책/연구 자료이며 NVIDIA/OpenAI CUSTOMER_OFFICIAL original/official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-822ad0abe7b052388d39bcad",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "dl.kotra.or.kr의 '미국 진출전략 - KOTRA 무역자료실'은 제3자·broker·정책/연구 자료이며 NVIDIA/OpenAI CUSTOMER_OFFICIAL original/official landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7f6e4a10c50fcce4db1c3c0e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "gameboy.kr의 'IT·AI·컴퓨팅 데일리 — 2026년 8월 10일 (월) | GAMEBOY.KR'은 제3자·broker·정책/연구 자료이며 NVIDIA/OpenAI CUSTOMER_OFFICIAL original/official landing이 아니다. 또한 cutoff 이후 후보라 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-5815c06ff17b1fa568f7fe79",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.oic.co.kr의 '기술_시장 자료 반도체 산업·업계 아웃룩 백서 2026년판 - OIC 기술_시장 자료'은 제3자·broker·정책/연구 자료이며 NVIDIA/OpenAI CUSTOMER_OFFICIAL original/official landing이 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "12개 roster에서 named counterparty가 소유한 pre-cutoff official full-source route는 확인되지 않았다. Local material 0은 source absence 또는 관계·계약 부재 증명이 아니다."
+    ]
+  },
+  "payload_hash": "acfe6df85c70ac52a17f6256194a28251391d83a5a95b993d311a2d64d8a3e95",
+  "production_score_authority": false,
+  "prompt_hash": "82f2b8bfb8f0a119ebddc0e3c75260dede1f3e60e72f6c65091a83edd7b7040b",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fbeae35fef41cabc117b9d15d3c8ca706f91476d79c9d3f94c0f2fdc50e9a183",
+  "response_id": "COLLABRESP-21a4223778d798c02e47d8dfd755b64d195df3c0f3719ff91327af53ce6f1f09",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

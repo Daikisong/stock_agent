@@ -1,0 +1,44 @@
+{
+  "completion_based_on_round_count": false,
+  "component_findings": [],
+  "component_memos_sufficient": false,
+  "component_status": {
+    "bottleneck_pricing": "NOT_RESEARCHED",
+    "capital_allocation": "NOT_RESEARCHED",
+    "earnings_visibility": "NOT_RESEARCHED",
+    "eps_fcf_explosion": "NOT_RESEARCHED",
+    "information_confidence": "NOT_RESEARCHED",
+    "market_mispricing": "NOT_RESEARCHED",
+    "valuation_rerating": "NOT_RESEARCHED"
+  },
+  "counter_and_supersession_checked": false,
+  "epoch": 73,
+  "failure_assessments": [],
+  "llm_direction_generation_used": false,
+  "missing_material_facts": [],
+  "new_source_family_directions": [],
+  "next_actions": [
+    "retry LLM Research Supervisor with failure context"
+  ],
+  "parser_or_extractor_failures": [],
+  "prior_review_prompt_projection": null,
+  "prompt_hash": null,
+  "provider_name": "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE",
+  "query_direction_briefs": [],
+  "rationale": "SUPERVISOR_SYNTHESIS_LINEAGE_PENDING:CURRENT_SYNTHESIS_NOT_COMPLETE",
+  "ready_for_independent_saturation_review": false,
+  "reasonable_positive_routes_remaining": true,
+  "review_id": "RSUP-PENDING-8a7c657aea2a702e8b962893",
+  "reviewer_role": "RESEARCH_SUPERVISOR_A",
+  "schema_version": "e2r_research_supervisor_review_v3",
+  "search_zero_result_treated_as_saturation": false,
+  "source_family_gaps": [],
+  "status": "NEXT_RESEARCH_REQUIRED",
+  "structured_data_complete": false,
+  "synthesis_memo_hash": null,
+  "synthesis_memo_id": null,
+  "transport_budget_treated_as_completion": false,
+  "unresolved_material_questions": [
+    "SUPERVISOR_SYNTHESIS_LINEAGE_PENDING:CURRENT_SYNTHESIS_NOT_COMPLETE"
+  ]
+}

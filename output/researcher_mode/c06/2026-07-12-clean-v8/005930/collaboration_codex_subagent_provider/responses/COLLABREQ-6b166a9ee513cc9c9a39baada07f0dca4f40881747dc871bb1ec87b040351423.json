@@ -1,0 +1,40 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-23661159d88e2d01db25b4ee",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "STEPI 공식 호스트의 양자컴퓨팅·양자통신 보고서 PDF route로, 삼성전자 HBM 고객의 CUSTOMER_OFFICIAL 원문이 아니며 target·product·earnings_visibility subject도 다르다. Naver snippet은 discovery metadata일 뿐 evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 roster의 단일 후보는 requested CUSTOMER_OFFICIAL provenance와 target scope를 충족하지 않으며, 이 local nonmaterial 판정은 source 또는 계약 부재를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "c125dd054dc17abb978515876cdc11b9bccca62ab10e408f0bdb45aaf6069659",
+  "production_score_authority": false,
+  "prompt_hash": "8208bf1ad59f7886e71eff1a864d4337590ce0c5bf5b2839ebdee3d5f3573543",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6b166a9ee513cc9c9a39baada07f0dca4f40881747dc871bb1ec87b040351423",
+  "response_id": "COLLABRESP-43aee9fdd44f27348737b9dd3f555971bce7834cbf99ff3778d59ef428185c27",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

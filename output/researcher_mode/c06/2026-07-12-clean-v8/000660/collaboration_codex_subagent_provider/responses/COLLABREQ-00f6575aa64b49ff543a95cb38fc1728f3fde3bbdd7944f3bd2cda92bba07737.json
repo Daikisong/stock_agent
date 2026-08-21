@@ -1,0 +1,44 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "Prompt에 명시된 exact CompanyGuide provider_index 20260630.049296을 사용해 Shinhan 2026-06-30 보고서의 landing/detail full-fetch route를 한정 복구한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "CompanyGuide SK하이닉스 신한 20260630.049296",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "기존 NO_RESULT query가 report id 1108975와 file name 1F00320260630_000660.pdf를 사용한 것과 달리, immutable prompt에 별도로 검증된 CompanyGuide provider_index 20260630.049296을 통해 같은 exact report의 landing/detail route를 찾는 bounded alternate transport다. Full document가 확보될 때만 forward earnings 기간·분모, HBM 귀속 bridge와 peer valuation 논리를 검토한다. Provider metadata와 summary는 경로 식별용일 뿐 evidence 또는 issuer DURABLE_VISIBILITY가 아니다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "이 alternate provider-index route도 full PDF와 exact quote 기반 claim-fact lineage가 생성되기 전에는 source 확보나 내용 확인을 뜻하지 않는다.",
+      "Broker 문서가 확보되더라도 issuer-official 고객계약, HBM 전용 CAPA 잠김 또는 장기 DURABLE_VISIBILITY를 대체하지 않는다."
+    ]
+  },
+  "payload_hash": "4a30d2ddf56a4ac47afff8454ad399ecd8e8fdf70a520415e3b327c0a880791d",
+  "production_score_authority": false,
+  "prompt_hash": "3eca1723b6326493bd733b05de293dcb9ada4b50bc1a0c7618d6cdb17a1cc5d6",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-00f6575aa64b49ff543a95cb38fc1728f3fde3bbdd7944f3bd2cda92bba07737",
+  "response_id": "COLLABRESP-7f57702aa19a26e7aa96f36108e228387c3436826c6b3bd6e248a10768133041",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

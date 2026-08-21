@@ -1,0 +1,42 @@
+{
+  "cache_value_hash": "00197b40561e5c2f9f70be8cc6d416d7a529b0657b10c98d116469753cfa5958",
+  "canonical_url": "https://opendart.fss.or.kr/api/list.json",
+  "content_hash": "66112fa41641172e31cfb51a3e0dd46a26a37a6f7a20b39ce1f250e6002f6fcc",
+  "payload": {
+    "list": [
+      {
+        "corp_cls": "Y",
+        "corp_code": "00164779",
+        "corp_name": "SK하이닉스",
+        "flr_nm": "이동근",
+        "rcept_dt": "20260515",
+        "rcept_no": "20260515002407",
+        "report_nm": "임원ㆍ주요주주특정증권등소유상황보고서",
+        "rm": "",
+        "stock_code": "000660"
+      },
+      {
+        "corp_cls": "Y",
+        "corp_code": "00164779",
+        "corp_name": "SK하이닉스",
+        "flr_nm": "SK하이닉스",
+        "rcept_dt": "20260515",
+        "rcept_no": "20260515002287",
+        "report_nm": "분기보고서 (2026.03)",
+        "rm": "",
+        "stock_code": "000660"
+      }
+    ],
+    "message": "정상",
+    "page_count": 100,
+    "page_no": 1,
+    "status": "000",
+    "total_count": 2,
+    "total_page": 1
+  },
+  "provider_request_id": "HTTP-66112fa41641172e31cf",
+  "request_fingerprint": "9d885459f732decb6d79a0b64bb1eb7a959e718b56ee3a5a2e453009a5b663d4",
+  "schema_version": "e2r_v5_current_structured_cache_v2",
+  "status_code": 200,
+  "text": null
+}

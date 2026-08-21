@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-b08dc0e03654a20aafa932dd",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성증권 PDF 다운로드 경로라 family는 맞지만 주간 투자전략/거시시장 자료이며 SK하이닉스 HBM 병목 분석이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-541239fd1c0a34baf71ee249",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "2026-07-30 작성된 재전 콘텐츠로 as_of_date 이후이며 원 PUBLIC_BROKER_PDF도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-aa996047d465dbcd33bae33f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.04,
+        "rationale": "연합뉴스 리포트 색인/기사 페이지로 하나증권 원 PDF가 아니다. 목표주가 재전은 병목 full source를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7af5c7f4632be8865535419b",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.68,
+        "rationale": "SK증권 도메인의 IT Hardware 원문 PDF로 HBM 핵심 공급자와 forward valuation을 다룬다. 2024년 자료라는 현재성 한계 아래 병목·시장인식 메커니즘을 검토할 full-source route다."
+      },
+      {
+        "candidate_id": "SGCAND-06cf212441036f2539886938",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "네이버 종목 토론글로 PUBLIC_BROKER_PDF가 아니며 '가격인상' 한 줄은 evidence route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-891f4794e96e74bde9cfcdf0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "네이버 증권 토론/navigation 페이지로 full broker report가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b8fefca51e631bf9621e2309",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.98,
+        "rationale": "IBK투자증권 모바일 도메인의 보고서 다운로드 경로이며 HBM 공급과잉 프레임, 구조 변화, 2026 흐름과 HBM3E 가격 압력을 직접 다룬다. positive/counter를 함께 확인할 핵심 full-source route다."
+      },
+      {
+        "candidate_id": "SGCAND-5077842bedde00f8dd671e9c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.05,
+        "rationale": "커뮤니티 재전 글이며 IM증권 원 PDF가 아니다. ASP/공급 부족 snippet은 발견 단서일 뿐 요청 family full source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-348fef5b23f4f767fb80daa9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0,
+        "rationale": "SK Inc. 사업보고서 PDF로 SK하이닉스 broker report가 아니며 subject/source family가 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ca388efbe56003db065a4ecb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.05,
+        "rationale": "Business Post 뉴스 기사로 PUBLIC_BROKER_PDF 원문이 아니다. 일반 메모리 공급 부족 기사만으로 회사별 HBM 병목 full source를 대체할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-3b8c642d8ec7ab5c0746a74d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.02,
+        "rationale": "에너지경제신문 지면 PDF로 증권사 원문 PUBLIC_BROKER_PDF가 아니다. 2024년 기사 재전은 현재 broker 분석 route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c3295393afb0e8f0b8bab486",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "priority": 0.06,
+        "rationale": "네이버 프리미엄콘텐츠가 UBS 및 장기공급계약 협상 내용을 요약한 글로 원 증권사 PDF가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "두 broker PDF 후보는 원문 fetch·parse와 content hash 검증 전에는 evidence가 아니며 2024년 자료의 현재성도 별도 검토해야 한다.",
+      "material0은 공급/계약 증거 부재 판정이 아니라 supplied candidate의 family·subject·시점 부적합 판정이다."
+    ]
+  },
+  "payload_hash": "0bb97d712af2b060d3244283d22dc9fc8eb1f222223b447b3344d391df281494",
+  "production_score_authority": false,
+  "prompt_hash": "f0c59ef00127be4aa02936b9257639eb9beff4b860e4f5d052b8d6850d572c8e",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1e8f7e67034be96eda93ec54195c4afef851cdb77ec52b61c1dfdff8daccdc0a",
+  "response_id": "COLLABRESP-e9674d9bde58cbb699c6cd2a41f1c855ded32271088837a07d9df22f8fe2cb11",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

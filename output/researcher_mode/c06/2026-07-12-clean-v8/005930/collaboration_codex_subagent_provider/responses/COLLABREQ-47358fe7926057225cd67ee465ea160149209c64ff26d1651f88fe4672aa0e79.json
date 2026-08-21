@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-30d13d15e64297112aacbe5f",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA molecule-generation 세션으로 Samsung HBM 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-bebda7e3a22529467c79cc04",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA GTC training landing이며 Samsung HBM 관련 특정 session 또는 full source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-523089351f173f7f99af17e2",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA humanoid robotics 세션으로 Samsung HBM qualification·supply 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-f820ab650f102d1a6377f3e7",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA RTX 2080 Ti 사용자 안내서로 소비자 GPU 자료이며 Samsung HBM 관계가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-5230d1eed6b7636a9de70655",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA DisplayPort firmware tool 페이지로 target relationship과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-8c1a2034311f2f40870e3542",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA GA102 architecture 공식 원문으로 GeForce GPU 자료이며 Samsung HBM3E/HBM4 공급 상태를 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-905ef2e586086509e5197d39",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA RTX 4090 공식 제품 페이지로 소비자 GPU이며 Samsung HBM 관계가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-f37ca2a5874b9d9299cac6cf",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA DGX A100 architecture 원문은 HBM2 시스템 사양이지만 Samsung 공급자 또는 current HBM 관계를 명시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a47ef6ea9f525afecbbe9dbe",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA V100 virtualization 공식 자료로 HBM2 과거 제품이며 Samsung HBM3E/HBM4 관계와 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-f8094b13ceb9b47111d1dd38",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA GTC Washington training landing으로 Samsung HBM 관련 개별 원문을 제시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ce06abc8b39119a2a492849c",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.1,
+        "rationale": "NVIDIA GA102 원문이 Samsung 8nm foundry 공정을 명시하지만 이는 Foundry 관계이며 요청된 HBM3E/HBM4 memory qualification·supply 관계로 오귀속할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-054edddfd244230abc0f40fc",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA HGX 공식 landing이지만 Samsung memory supplier 또는 HBM relationship을 명시하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Samsung 명칭이 나온 GA102 문서도 foundry 8nm 관계일 뿐 HBM 관계가 아니다. 이 partition의 material 0은 공식 HBM 관계 자료의 부재를 의미하지 않는다."
+    ]
+  },
+  "payload_hash": "8338c048dc92fef6f725277086ef73ee1b0d612ab46af730c601176371782712",
+  "production_score_authority": false,
+  "prompt_hash": "9d305b6895ea56afe67da10125816efa16d84b60b522a4a0000667742a2ce39e",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-47358fe7926057225cd67ee465ea160149209c64ff26d1651f88fe4672aa0e79",
+  "response_id": "COLLABRESP-65fef5906950983f3fc8da14c74dcc58835947c414d83793c394c52eed54133f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

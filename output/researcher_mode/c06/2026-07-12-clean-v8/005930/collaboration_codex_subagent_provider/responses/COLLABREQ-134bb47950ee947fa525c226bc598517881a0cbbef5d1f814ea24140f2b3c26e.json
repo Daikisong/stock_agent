@@ -1,0 +1,55 @@
+{
+  "output_schema_hash": "d90961d82e70a5a22c20cf54b0ede4b39bec38b2b7c897fc2ce93f7aac1a6d5e",
+  "payload": {
+    "allowed_range": [
+      10.0,
+      12.8
+    ],
+    "anchor_comparisons": [
+      "CANCH-fe4be151b6e34320ddc5f6a7의 강한 14.28~16.38 구간보다 고객별 확정물량·가격·취소조건이 약하다.",
+      "CANCH-1aa76cb8e89d85cd78d325f4의 9.95~12.05 구간과 고객 lock 및 margin bridge 누락이 유사하고, 실제 HBM4 출하와 메모리 매출·ASP가 있어 그 중상단을 택한다."
+    ],
+    "counter_fact_ids": [],
+    "disagreements": [
+      "공급 확대 계획을 확정 계약이나 수주잔고로 간주하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-fe4be151b6e34320ddc5f6a7",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 11.4,
+    "rationale": "HBM4 양산 출하, 서버향 판매 확대, 메모리 매출과 ASP는 실현된 가시성 기반이다. 반면 다수 고객 공급 확대와 제한된 공급 가용량은 계획·전망이고 고객별 backlog, 장기계약, 확정 가격·물량·취소조건이 없어 지속 가시성을 중간 수준으로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-4d6a7fe870806b29408cc3a5",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-9d94cbc4213d1d3bc1129615",
+      "EFACT-b7565fd844a544809e1ca148",
+      "EFACT-cbd2e7a3a3670eba7a113d19",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "고객별 확정 계약, HBM 매출 비중, 가격·물량·취소조건 및 backlog가 공개되지 않았다.",
+    "why_not_lower": "HBM4가 실제 양산 출하됐고 서버향 판매 확대, 메모리 매출 및 ASP 상승이 실현됐다."
+  },
+  "payload_hash": "bbe810a7738e41d64f849c1338b7af1b99b23d155f8cbc482fd13b6db4792b16",
+  "production_score_authority": false,
+  "prompt_hash": "13b712d57e26f0b76ac3f4574baf5d0849928e683e070f96a27c968f8c3314a3",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-134bb47950ee947fa525c226bc598517881a0cbbef5d1f814ea24140f2b3c26e",
+  "response_id": "COLLABRESP-44e0bfebad3b22aed0b81a95cba8580c574cb05857c3c188ac1489b1a43af465",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

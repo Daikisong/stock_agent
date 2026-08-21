@@ -1,0 +1,196 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "기존 exact report ID 검색 대신 보고서 제목·브로커·핵심 주장 어휘를 나눠 PUBLIC_BROKER_PDF 원문을 재발견하고, 낙관과 하방 후보를 함께 수집한다.",
+      "ADR 자본행위는 KIND_KRX와 OPENDART에서 각각 신주·권리·일정·자금 사용을 확인해 보도 기사와 공식 의사결정을 분리한다.",
+      "정보 신뢰도는 broker full report에서 상대방·플랫폼 이름을 발견한 뒤 CUSTOMER_OFFICIAL 기술 자료로 독립 확인하는 2단계 경로로 진행한다.",
+      "모든 경로는 2026-07-12 cutoff를 적용하고, 최신 2Q26/FY2026·FY2027 전망이 이전 추정치를 실제로 supersede하는지 기준일과 분모를 기록한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 상상인증권 2Q26 프리뷰 HBM 영업이익 EPS 리포트",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "STRUCTCAND-c7a37 계열의 전체 보고서를 발견해 2026년 2분기 HBM 귀속 영업이익과 EPS 추정치가 실제로 제시되는지 확인한다. 2026-07-12 이전 자료만 사용하고 연결 실적·DRAM·HBM 수치를 서로 분리한다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 2026년 HBM 이익 기여 CAPEX FCF 브리지 증권사 보고서",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "HBM 매출 또는 이익 기여가 설비투자·운전자본·세금·FCF로 이어지는 full-report 브리지를 찾는다. 회사 전체 현금흐름을 HBM 단독 현금흐름으로 승격하지 않고 추정 기간과 분모를 확인한다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 HBM 장기공급계약 LTA 계약 기간 취소 조건 증권사 보고서",
+        "objective_id": "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+        "rationale": "STRUCTCAND-02cf와 STRUCTCAND-341c가 가리키는 LTA 주장을 파일 ID 없이 자연어로 재발견한다. 대상·기간·취소 조건이 원문에 있는지 보고, 산업 전망이나 고객 요청을 서명 계약으로 바꾸지 않는다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 HBM 고객 공급계약 가격 하방 물량 의무 리포트",
+        "objective_id": "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+        "rationale": "장기 가시성이 실제 의무 물량·가격 하방·기간으로 뒷받침되는지, 또는 비구속적 공급 논의에 그치는지 반대 증거까지 찾는다. 선수금·RPO·backlog는 원문에 있을 때만 채택한다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 HBM ASP 협상 2026년 가격 인상 증권사 보고서",
+        "objective_id": "SGOBJ-96e6fadd695c6b292e28d22e",
+        "rationale": "STRUCTCAND-dd271이 시사한 HBM ASP 경로를 완화된 검색어로 재발견해 실현 가격과 예상 가격, 협상 시점을 구분한다. 기존 exact-ID 검색 실패를 반복하지 않는다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 HBM 전용 CAPA 공급부족 sold out 고객 배정 리포트",
+        "objective_id": "SGOBJ-96e6fadd695c6b292e28d22e",
+        "rationale": "HBM 전용 CAPA·sold-out·고객 배정의 기간과 제품 귀속을 찾는다. 메모리 평균 가동률 100%나 산업 공급부족을 HBM 고객 allocation으로 전이하지 않고 STRUCTCAND-b590 계열의 반대·연장 시나리오도 확인한다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 2026년 2분기 컨센서스 상회 전망 추정치 변경 보고서",
+        "objective_id": "SGOBJ-ec638d635428191a67369c54",
+        "rationale": "2Q26 및 FY2026 추정치 상향의 수치·기준일·HBM 기여를 확인해 시장 기대 대비 서프라이즈가 실제로 존재하는지 검증한다. 프리뷰를 실현 실적으로 승격하지 않는다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 AI 인프라 투자 둔화 실적 하방 증권사 리포트",
+        "objective_id": "SGOBJ-ec638d635428191a67369c54",
+        "rationale": "STRUCTCAND-614be 계열처럼 모멘텀 둔화나 AI 투자 하방을 제시하는 보고서를 찾아 낙관적 HBM 시나리오를 반증한다. 대상 회사와 적용 연도를 확인한다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 2026 2027 HBM 실적 추정치 상향 하향 비교 리포트",
+        "objective_id": "SGOBJ-ec638d635428191a67369c54",
+        "rationale": "KB·BNK·상상인·IBK 후보군의 FY2026/FY2027 상충 추정치를 같은 기간과 단위로 비교할 full report를 찾는다. 목표주가 방향만으로 시장 오가격을 판단하지 않는다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 HBM 목표 PER 멀티플 변경 2026 증권사 보고서",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "STRUCTCAND-958e와 LS·BNK 후보의 full report에서 적용 PER, 이익 기간, HBM 브리지를 찾는다. 목표주가만 있는 자료는 배제하고 멀티플 변경 이유와 분모를 확인한다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 EV EBITDA PBR FCF yield 밸류에이션 하방 리포트",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "PER 외 EV/EBITDA·PBR·FCF yield의 기준 연도와 하방 시나리오를 찾는다. 서로 다른 분모의 배수를 섞지 않고 HBM 전용 가치와 연결 회사 가치를 분리한다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 ADR 유상증자 주요사항보고서 2026",
+        "objective_id": "SGOBJ-fb7995224e0c3fac0a347e8c",
+        "rationale": "STRUCTCAND-c56fd와 STRUCTCAND-2cadd가 시사한 ADR 자본행위를 KIND/KRX 공시에서 확인한다. 신주 수·권리·일정·자금 사용이 공시됐는지 보고 보도 전망과 실제 의결을 분리한다.",
+        "source_families": [
+          "KIND_KRX"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 ADR 신주 발행 상장 자금 사용 주식 희석 공시",
+        "objective_id": "SGOBJ-fb7995224e0c3fac0a347e8c",
+        "rationale": "DART에서 ADR 신주 발행·상장·자금 사용과 기존 주주 희석 조건을 독립 확인한다. 배당·자사주와 상쇄된다고 추정하지 않고 현재 공시의 발행 구조만 검증한다.",
+        "source_families": [
+          "OPENDART"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 HBM4E 핵심 고객 기술 파트너십 증권사 보고서",
+        "objective_id": "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+        "rationale": "STRUCTCAND-b961 계열의 full report에서 익명 고객의 이름·플랫폼·제품 세대를 먼저 발견한다. broker 서술은 고객 공식 검증을 위한 discovery hint일 뿐 계약 또는 매출 증거로 쓰지 않는다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 Custom HBM ASIC 고객 다변화 플랫폼 리포트 2026",
+        "objective_id": "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+        "rationale": "STRUCTCAND-b2b7 계열에서 Custom HBM·ASIC 플랫폼과 명시된 상대방 후보를 찾는다. hyperscaler 산업 수요를 SK하이닉스 고객 관계로 간주하지 않고 이름이 원문에 있을 때만 후속 고객 공식 경로를 연다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK hynix HBM4 ASIC collaboration official technical session",
+        "objective_id": "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+        "rationale": "사전 고객 ID 없이 고객·플랫폼의 공식 기술 세션이나 제품 자료에서 SK hynix HBM4 참여를 독립 발견한다. 기술 상호운용성은 계약 물량·가격·기간과 분리하고 2026-07-12 이전 공개 자료만 사용한다.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK hynix HBM4E custom HBM platform integration official newsroom",
+        "objective_id": "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+        "rationale": "고객 또는 플랫폼 운영자의 공식 newsroom·제품 카탈로그에서 HBM4E 또는 Custom HBM 기술 통합을 발견한다. 단순 행사 동석이나 산업 전망은 독립 corroboration으로 채택하지 않는다.",
+        "source_families": [
+          "CUSTOMER_OFFICIAL"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "HBM 귀속 EPS·마진·FCF는 연결 회사 또는 DRAM 전체 수치와 분리된 full-report 브리지가 확인될 때까지 미해결이다.",
+      "LTA나 장기 공급 논의는 대상·기간·물량 의무·가격 하방·취소 조건이 원문에 없으면 signed contract evidence가 아니다.",
+      "메모리 평균 가동률 100%는 HBM 전용 CAPA 잠김이나 특정 고객 allocation을 자동으로 뜻하지 않는다.",
+      "2Q26 preview와 FY2026/FY2027 broker estimate는 actual realization과 분리하고 상충 추정치의 기준일을 맞춰야 한다.",
+      "valuation은 적용 이익 기간과 denominator가 없는 목표주가만으로는 rerating 또는 downside를 검증할 수 없다.",
+      "ADR 기사 메타데이터는 발행 규모·희석·자금 사용의 공식 증거가 아니므로 KIND_KRX 또는 OPENDART 원문이 필요하다.",
+      "고객 공식 기술 corroboration은 구매계약·고정 물량·가격·기간을 증명하지 않으며, 익명 고객을 임의의 회사명으로 치환하지 않는다."
+    ]
+  },
+  "payload_hash": "38d69cdb36438e34cdb538991a2e55fcd2af94468d7d91b8cf0572c20325b738",
+  "production_score_authority": false,
+  "prompt_hash": "1a3185e821ff52dce6493328703a561f93c3ec72880b94815fba16b1b7bded10",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f6e56616b4e27c025a86dc4c76bd011dd89a335c39f8011e11c8eab50c331632",
+  "response_id": "COLLABRESP-ab5f0fb85c26a1da51fe702bc719a93ceec09bc575ba883fbd7cb60a49af52e9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

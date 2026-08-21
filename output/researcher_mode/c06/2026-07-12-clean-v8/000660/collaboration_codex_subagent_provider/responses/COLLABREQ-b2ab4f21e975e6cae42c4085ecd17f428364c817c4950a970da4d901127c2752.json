@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "Reviewer A로서 immutable current prompt의 seven component memos, 159 current facts, RTMEMO-8ed934301d7aeb07d694beae, structured records, latest Supervisor RSUP-4dc5e16c77b03984446fb60b 및 current Source Graph binding SGCHECK-b3abe664d8f3de61bc0a78c3를 독립 감사했다. Seven memos는 모두 COMPLETE이며 actual·forward·memory/DRAM/HBM·contract·valuation-denominator 경계를 명시한다. Material-positive routes는 current operating, cash, HBM execution, demand/capacity 및 valuation evidence를 포함해 검토했고, 7-component Red Team은 positive claims와 counter/supersession을 모두 challenge했다. Structured missing roles는 0이고 Supervisor directions와 query briefs는 모두 비어 있다. Source Graph는 STOPPED_ON_RESOLUTION이며 seven objectives가 전부 resolved됐고 16개 full evidence documents가 있어 zero-result-only 상태가 아니다. PUBLIC_BROKER_PDF·ISSUER_PRESENTATION 무결과, historical provider errors, future-document exclusions 및 fixed rounds를 approval이나 source absence 근거로 사용하지 않았다. HBM-only margin·FCF·contract terms·capacity allocation·independent customer corroboration의 한계는 memos의 score-band counterweights와 향후 monitoring 항목으로 남지만, prompt에는 named new candidate, untried distinct official route 또는 current material unresolved question이 없다. 따라서 reasonable executable route와 unresolved material question은 0이며 semantic gates에 따라 approve=true다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "292f7d94a68c6894a7818c4251c28fcde89d20a52b0b6327e5dcfed781035af3",
+  "production_score_authority": false,
+  "prompt_hash": "959f4f59e786adaf6557dcd135ee8820b33632e594456cebae980f76dafe51f5",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b2ab4f21e975e6cae42c4085ecd17f428364c817c4950a970da4d901127c2752",
+  "response_id": "COLLABRESP-12642714b10c60adc7e88acff87c2f7033f1e98320bbd71d961610d79920e413",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-6466e76e0ac81664901bc8ab",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 수주 요약은 broker 원문/PDF가 아니고 005930 HBM 계약·valuation의 target-specific full-source route도 특정하지 않는다. snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-fc8872f13cdb12ebce202b3c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "메모리 업황을 다룬 third-party 기사로 requested PUBLIC_BROKER_PDF original provenance가 없다. 삼성·SK 합산 전망은 005930 HBM-only 계약·earnings bridge가 아니므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-5840cd2790e1c76071cc7e5e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "LG에너지솔루션 대상 third-party report page로 wrong target이며 broker 원문 provenance도 없다. 005930 objective와 무관해 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-02ab3c133601efb04f0508ba",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.1,
+        "rationale": "신한투자증권 landing route라 family provenance는 맞지만 generic Daily 페이지이고 005930 target report·attachment·valuation denominator를 특정하지 않는다. discovery metadata도 as_of 이후 8월 19일을 가리켜 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-36e74465a20bbd7cbeb94be8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram의 타 종목 broker 요약 모음으로 original report URL과 005930 subject가 없다. family=NONE, nonmaterial이며 목표가 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c168570e0e769ab78649ff2d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "타 종목 report를 재가공한 third-party summary로 wrong target이고 broker 원문/PDF 경로가 아니다. nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-dfb1bb86390f9193cdedde91",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.1,
+        "rationale": "public broker research PDF route 형식은 맞지만 2025년 8월 시장전략 자료로, 005930 HBM 계약·revision·valuation full report가 아니다. subject mismatch로 nonmaterial이며 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ff7d523045036994c89f20a9",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "public broker PDF provenance는 맞지만 파일명·metadata가 2026-07-30 미국 증시 전망으로 as_of 2026-07-12 이후이며 target도 005930이 아니다. future/wrong-target라 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-d0341bad8017a718059c397b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 산업·뉴스 모음은 requested broker original route가 아니고 snippet도 Boeing 등 wrong subject다. family=NONE, nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-f6eb64a148852bbf77fe3a28",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 종목 등락 요약은 broker 원문/PDF가 아니며 005930 HBM economics를 확인할 full-source identity가 없다. nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-39a4f0b29bd2e55e00871f33",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.1,
+        "rationale": "신한투자증권 landing route라 family provenance는 맞지만 generic Daily 페이지이고 target report·PDF attachment가 없다. discovery metadata는 as_of 이후 8월 19일이라 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-509e1a977c852e1137b0b343",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 개인 코멘트·타 산업 요약으로 original broker source와 005930 target mechanism이 없다. family=NONE, nonmaterial이며 snippet은 evidence가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P6 roster 12개를 exact-once 분류했으나 005930 target-specific HBM 계약·revision·valuation full-source route는 확인되지 않았다.",
+      "material 0은 source absence나 research completion이 아니며 metadata·snippet은 evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "e22560a7028cc4c6b5defa652cc9d237dfd43f60e76c66ed9520d1efdb4899f7",
+  "production_score_authority": false,
+  "prompt_hash": "cdc6fac260eb2278b77d0e7012665c0d6155645838c387c8895e1f02c3aa7324",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-05c9e4bb2e02e4eeb322724503f75a1c250aaa9bfb678b85b48c74186d4fa40c",
+  "response_id": "COLLABRESP-9d6d04d98647ee8857cf227afdd286f12c54cf0d6b9b90abc6b5df74d1359013",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "8e4342f430e7c7141d6b6d33d540a7cf176da01e65d48af20694db72ddcb3695",
+  "payload": {
+    "allowed_range": [
+      1.8,
+      2.9
+    ],
+    "anchor_comparisons": [
+      "Relative to ORDTRANSFER-09ab96433f8087166845bf25 (low-confidence ordinal midpoint 2.0), the current evidence deserves some uplift because it contains named AMD products and an official counterparty statement rather than an unsupported component score.",
+      "Relative to ORDTRANSFER-90c2b7d4695e62e277703a64 (low-confidence ordinal midpoint 1.75), the present record retains the same material execution-to-cash weakness: no supplied fact gives purchase price, committed volume, duration, cancellation protection, backlog, HBM-only margin, or cash conversion."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1",
+      "EFACT-6a317a6c41253b0fafc79d56"
+    ],
+    "disagreements": [
+      "Technical corroboration should not be weighted as if it resolved customer concentration or contract quality.",
+      "HBM4 mass-production shipment confirms execution, but it does not identify the customer economics or establish that AMD's MOU alignment has converted into a binding order."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 2.3,
+    "rationale": "The customer-official AMD evidence is genuine and prevents a weak score, but it is concentrated in one counterparty independence group and mainly proves technical participation. The MI455X HBM4 item is an MOU-based future alignment, not a signed purchase obligation. NVIDIA HBM4 supply is still being discussed, and the limited filing counterfact provides no financially material long-term supply-order transaction. Consequently information confidence is moderate for technology and execution but weak for durable customer lock, contract economics, concentration, and cash conversion.",
+    "support_fact_ids": [
+      "EFACT-0ea4c7a5b342855d104d1848",
+      "EFACT-4d0e0f24a3a1645c5962f1b3",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-f295131e6dc092d197e8eb93"
+    ],
+    "why_not_higher": "The record lacks signed purchase terms, price, committed quantity, allocation duration, cancellation penalties, backlog, HBM-only margin, and cash conversion, and the strongest future AMD item remains an MOU alignment.",
+    "why_not_lower": "AMD independently names Samsung's realized MI350X/MI355X HBM3E role and broader platform collaboration, and actual HBM4 shipment execution is source-backed; these facts are materially stronger than issuer aspiration alone."
+  },
+  "payload_hash": "1b9485cb1934c80ba8e4f6a78d15b4294979d25c94f20e25335d6d71ae9f52e2",
+  "production_score_authority": false,
+  "prompt_hash": "8ee2254a02e0ca1ddf7814e282b6d90e15ca630dcd016fce9818b76292389e4c",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-57fc4c394d6fbb35060e78f00997e2f0ce067e9cadfb794e632242841c12f78b",
+  "response_id": "COLLABRESP-43da9ca18ad1db2af9a3892372858aedeb0401f5774b5471de3b00923cd8585c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

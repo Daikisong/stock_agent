@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-eb0f77571a06b68716b34155",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.samsungpop.com의 'Earnings Tracker'은 broker·미디어·제3자/기관 자료로, NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f39b597eeb4cc5fe9eab0858",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "tgstat.com의 '\"하나 중국/신흥국 전략 김경환\" — @HANAchina Telegram-kanali — TGStat'은 broker·미디어·제3자/기관 자료로, NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6cc8289bb8a9635c367e2943",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "contents.premium.naver.com의 'AI 사이클의 모든 것을 담은 게빈 베이커 인터뷰 : 버블의 역사는 반복되지 않지....'은 broker·미디어·제3자/기관 자료로, NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6ab9255f0903d1f2c5e1bd19",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "contents.premium.naver.com의 '삼성전자,SK하이닉스 :: 외국인의 대량 매도를 부정적으로 보지않는 이유 / 피지....'은 broker·미디어·제3자/기관 자료로, NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ff03c2b21597433195a73223",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "themiilk.com의 '④ 스타게이트 코리아는 없다... 오픈AI-한국 파트너십의 이면 - 더밀크 | The Miilk'은 broker·미디어·제3자/기관 자료로, NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b3b1be3c79b9218d41cf4d2d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "money2.daishin.com의 'AI의 심장에 빛을 심다 CPO, 빛으로 잇는 AI 혁명'은 broker·미디어·제3자/기관 자료로, NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e14143f8172ae8205249f838",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "csf.kiep.go.kr의 '대만 ‘반도체+IT 산업’과 ‘AI 생태계’ 전망 --글로벌 생태계를 중심으로--1'은 broker·미디어·제3자/기관 자료로, NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2fe257a84f395b3f7b896a33",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.seoul.co.kr:8888의 '글로벌 반도체 제조업체 - 서울신문'은 broker·미디어·제3자/기관 자료로, NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e1392d1a92b8522203f11a24",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.pwc.com의 'AI는 보이는 것보다 크다'은 broker·미디어·제3자/기관 자료로, NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6fb5534b2a3860e63c8a9385",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "namu.wiki의 '테슬라 오토파일럿'은 broker·미디어·제3자/기관 자료로, NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-447ec1c7f7b61b9e44d709c6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "dream.kotra.or.kr의 '미국의 AI 반도체 시장, 단일 독주에서 다극 경쟁 구도로'은 broker·미디어·제3자/기관 자료로, NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a23c88ef3c22e5cce8b36e0f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "www.mss.go.kr의 '초격차 대 분야 현장 안내서'은 broker·미디어·제3자/기관 자료로, NVIDIA/OpenAI CUSTOMER_OFFICIAL original 또는 official landing route가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "전체 12개 후보에 NVIDIA/OpenAI가 소유한 공식 product/newsroom/filing/event route가 없다. Material 0은 source absence나 관계·계약 부재 증명이 아니다."
+    ]
+  },
+  "payload_hash": "dda788b0f17fa1706349d616cc3987b249f8ce31707da04818536e771ce51184",
+  "production_score_authority": false,
+  "prompt_hash": "1a95d167ffc1f9dd1eb09ec64d16cbfe2642f3150550915752103a014bfcd947",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-05b691527a181c89050f884081f633d1bb65401e6630087e46779df285fe9303",
+  "response_id": "COLLABRESP-ae2b72bbd3564f8264b81e476f7fd6ed60500aeefb4072e14bd8e1d8aa5944bc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

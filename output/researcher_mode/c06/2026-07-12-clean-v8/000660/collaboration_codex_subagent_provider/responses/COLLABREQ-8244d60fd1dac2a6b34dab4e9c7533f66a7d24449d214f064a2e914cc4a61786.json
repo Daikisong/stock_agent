@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "rationale": "Independent start-to-finish coverage audit of supplied transport chunk 0 of 2 found no distinct target-wide current-objective fact or counterfact omitted from the 95 previously accepted facts in this immutable context. The SK hynix section's forecast earnings, DRAM pricing/volume/profit, valuation denominators, cash-flow, balance-sheet and capital-allocation meanings are already atomically represented. Remaining numeric cells are mechanically derivable or lower-level repetitions of accepted amounts, while the rest of the chunk concerns general industry background or other issuers. Industry-wide long-term-contract commentary is not target-direct evidence of signed SK hynix HBM price, volume, allocation, cancellation, prepayment, backlog or RPO terms. FACTS_EXTRACTED reflects the prior accepted facts for this supplied chunk; this audit adds none. Chunk-level coverage is complete, but deterministic parent-document aggregation must still review chunk 1 of 2 separately.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "ef98f1b84a10329ab856cbdadba0e1753db7c8af9460109975a8be51ca45b4de",
+  "production_score_authority": false,
+  "prompt_hash": "f33ea932d50a108480b37465305cb29a9c691c810fbb3d6d9b535cfb239ba286",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8244d60fd1dac2a6b34dab4e9c7533f66a7d24449d214f064a2e914cc4a61786",
+  "response_id": "COLLABRESP-2542618afae64b65fa36a55f8c5893a7ef35c72860d3302ecafb95c01c7950cf",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

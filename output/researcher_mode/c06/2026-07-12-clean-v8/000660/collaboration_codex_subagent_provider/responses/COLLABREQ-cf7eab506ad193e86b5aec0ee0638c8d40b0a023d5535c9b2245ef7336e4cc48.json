@@ -1,0 +1,112 @@
+{
+  "output_schema_hash": "ac59062b5e36a2816c62ae50a12b696421c65d3251977171a8f220354f488748",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f7ce0cfe7e8861b7e2732883",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "미국주식 Telegram navigation/discovery page로 000660 target과 requested original PUBLIC_BROKER_PDF provenance를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-04762c5e210f521c1060c254",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Amazon 관련 Naver blog로 wrong target이며 original broker full-source route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-fd7069f754a4369fa509dff4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Naver blog이며 게시일 2026-08-13은 as_of_date 2026-07-12 이후다. requested broker provenance도 없어 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-2fbb5b5f023c94f3c65673c1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.2,
+        "rationale": "myasset broker-hosted full PDF와 target semiconductor 내용은 확인 가능한 route지만 2025-10 자료의 1H26 전망으로, 2026-07-12 현재 valuation gap을 해소할 current report가 아니어서 nonmaterial이다. 기존 full document id가 있어도 metadata/snippet 자체는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-934d16c0f97e2194f6ab4238",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.2,
+        "rationale": "하나증권 공식 full PDF route와 target 언급은 있으나 2025-11 발간된 광범위한 2026 forum 자료다. 최신 2026-07 target valuation denominator를 직접 해소하지 못해 nonmaterial이며 snippet 수치는 evidence로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-1341ec17b541e925068050a2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 generic issuer homepage이며 requested KIND_KRX source가 아니다. 특정 공시 원문이나 attachment를 식별하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-56e6265c7a1179142a3f0d30",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.05,
+        "rationale": "KIND 공식 도메인 provenance는 맞지만 docpath가 빈 generic document endpoint여서 특정 target 공시나 full attachment로 resolve할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-8c374979e0e11aaf77a1557f",
+        "matched_requested_source_family": "KIND_KRX",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.05,
+        "rationale": "KIND official-domain route이지만 generic noToc navigation page라 특정 target disclosure나 full-source attachment를 식별하지 못해 nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Checkpoint roster 8개를 supplied order로 exact-once 분류했다. Material route 0은 이 roster에서 현재 objective를 해소할 eligible full-fetch route가 없다는 local 판정일 뿐 source absence나 broader research completion을 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "10d4f3a2580fe689da53ade1f3f1ca955c4f95c63312a57670dbbade5031e15c",
+  "production_score_authority": false,
+  "prompt_hash": "9afb4c770c9fcbf88b8ea297754749e380b786734172b8fe3d30d26809d68452",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cf7eab506ad193e86b5aec0ee0638c8d40b0a023d5535c9b2245ef7336e4cc48",
+  "response_id": "COLLABRESP-c176e22dddd5895cd6b0fa8ac59cecc7984ee0429b43413b83151c28172fc3ce",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

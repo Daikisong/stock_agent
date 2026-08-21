@@ -1,0 +1,582 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Continuation page 17 adds 12 distinct consolidated broker-model atoms after strict dedup of 192 prior accepted facts. Signed losses, expense flows, annual margins, and consolidated versus HBM scope are preserved.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated selling and administrative expense, an earnings cost without HBM-only attribution.",
+        "exact_quote": "판매비와 관리비 6,542 8,818 7,197 12,615 15,091",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The cost forecast is objective-local historical earnings counterevidence but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_EARNINGS_MODEL",
+        "normalized_object": "SK hynix FY2024 selling and administrative expense KRW 12,615 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker_forecast_selling_and_administrative_expense",
+        "predicate_family": "BROKER_CONSOLIDATED_SGA_EXPENSE_FORECAST",
+        "primitive_tags": [
+          "OPERATING_EXPENSE",
+          "COST",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_SGA_EXPENSE_FORECAST",
+        "question_family_tags": [
+          "SGA",
+          "EARNINGS_MODEL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated selling and administrative expense broker forecast",
+        "subject_id": "000660:CONSOLIDATED_SGA_EXPENSE:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 12615
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated selling and administrative expense, an earnings cost without HBM-only attribution.",
+        "exact_quote": "판매비와 관리비 6,542 8,818 7,197 12,615 15,091",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The cost forecast is objective-local historical earnings counterevidence but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_EARNINGS_MODEL",
+        "normalized_object": "SK hynix FY2025 selling and administrative expense KRW 15,091 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker_forecast_selling_and_administrative_expense",
+        "predicate_family": "BROKER_CONSOLIDATED_SGA_EXPENSE_FORECAST",
+        "primitive_tags": [
+          "OPERATING_EXPENSE",
+          "COST",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_SGA_EXPENSE_FORECAST",
+        "question_family_tags": [
+          "SGA",
+          "EARNINGS_MODEL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated selling and administrative expense broker forecast",
+        "subject_id": "000660:CONSOLIDATED_SGA_EXPENSE:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 15091
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of annual consolidated operating margin, without HBM-only attribution or issuer guidance.",
+        "exact_quote": "영업이익률(%) 28.9 15.3 -23.6 19.2 27.9",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The annual margin forecast is objective-local earnings history but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_MARGIN_FORECAST",
+        "normalized_object": "SK hynix FY2024 consolidated operating margin 19.2 percent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker_forecast_annual_consolidated_operating_margin",
+        "predicate_family": "BROKER_CONSOLIDATED_ANNUAL_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "CONSOLIDATED_MARGIN",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory margin estimate",
+        "question_family_id": "CONSOLIDATED_ANNUAL_OPERATING_MARGIN_FORECAST",
+        "question_family_tags": [
+          "OPERATING_MARGIN",
+          "ANNUAL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated operating-margin broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:FY2024E:SKSEC_20240314",
+        "unit": "%",
+        "value": 19.2
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of annual consolidated operating margin, without HBM-only attribution or issuer guidance.",
+        "exact_quote": "영업이익률(%) 28.9 15.3 -23.6 19.2 27.9",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The annual margin forecast is objective-local earnings history but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_MARGIN_FORECAST",
+        "normalized_object": "SK hynix FY2025 consolidated operating margin 27.9 percent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker_forecast_annual_consolidated_operating_margin",
+        "predicate_family": "BROKER_CONSOLIDATED_ANNUAL_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "CONSOLIDATED_MARGIN",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory margin estimate",
+        "question_family_id": "CONSOLIDATED_ANNUAL_OPERATING_MARGIN_FORECAST",
+        "question_family_tags": [
+          "OPERATING_MARGIN",
+          "ANNUAL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated operating-margin broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:FY2025E:SKSEC_20240314",
+        "unit": "%",
+        "value": 27.9
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of a consolidated non-operating loss, preserving the signed flow and without HBM-only attribution.",
+        "exact_quote": "비영업손익 1,006 -2,807 -3,928 -2,058 -2,122",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed non-operating loss is historical earnings counterevidence but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_NONOPERATING_EARNINGS_MODEL",
+        "normalized_object": "SK hynix FY2024 non-operating loss KRW 2,058 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker_forecast_nonoperating_result",
+        "predicate_family": "BROKER_CONSOLIDATED_NONOPERATING_RESULT_FORECAST",
+        "primitive_tags": [
+          "NONOPERATING_LOSS",
+          "SIGNED_FLOW",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_NONOPERATING_RESULT_FORECAST",
+        "question_family_tags": [
+          "NONOPERATING_RESULT",
+          "EARNINGS_MODEL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated non-operating result broker forecast",
+        "subject_id": "000660:CONSOLIDATED_NONOPERATING_RESULT:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -2058
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of a consolidated non-operating loss, preserving the signed flow and without HBM-only attribution.",
+        "exact_quote": "비영업손익 1,006 -2,807 -3,928 -2,058 -2,122",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed non-operating loss is historical earnings counterevidence but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_NONOPERATING_EARNINGS_MODEL",
+        "normalized_object": "SK hynix FY2025 non-operating loss KRW 2,122 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker_forecast_nonoperating_result",
+        "predicate_family": "BROKER_CONSOLIDATED_NONOPERATING_RESULT_FORECAST",
+        "primitive_tags": [
+          "NONOPERATING_LOSS",
+          "SIGNED_FLOW",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_NONOPERATING_RESULT_FORECAST",
+        "question_family_tags": [
+          "NONOPERATING_RESULT",
+          "EARNINGS_MODEL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated non-operating result broker forecast",
+        "subject_id": "000660:CONSOLIDATED_NONOPERATING_RESULT:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -2122
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of a consolidated net financial loss, preserving the signed flow and without HBM-only attribution.",
+        "exact_quote": "순금융손익 -238 -444 -1,252 -1,247 -849",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed financial loss is historical earnings counterevidence but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_NONOPERATING_EARNINGS_MODEL",
+        "normalized_object": "SK hynix FY2024 net financial loss KRW 1,247 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker_forecast_net_financial_result",
+        "predicate_family": "BROKER_CONSOLIDATED_NET_FINANCIAL_RESULT_FORECAST",
+        "primitive_tags": [
+          "NET_FINANCIAL_LOSS",
+          "SIGNED_FLOW",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_NET_FINANCIAL_RESULT_FORECAST",
+        "question_family_tags": [
+          "FINANCIAL_RESULT",
+          "EARNINGS_MODEL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated net financial result broker forecast",
+        "subject_id": "000660:CONSOLIDATED_NET_FINANCIAL_RESULT:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -1247
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of a consolidated net financial loss, preserving the signed flow and without HBM-only attribution.",
+        "exact_quote": "순금융손익 -238 -444 -1,252 -1,247 -849",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed financial loss is historical earnings counterevidence but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_NONOPERATING_EARNINGS_MODEL",
+        "normalized_object": "SK hynix FY2025 net financial loss KRW 849 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker_forecast_net_financial_result",
+        "predicate_family": "BROKER_CONSOLIDATED_NET_FINANCIAL_RESULT_FORECAST",
+        "primitive_tags": [
+          "NET_FINANCIAL_LOSS",
+          "SIGNED_FLOW",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_NET_FINANCIAL_RESULT_FORECAST",
+        "question_family_tags": [
+          "FINANCIAL_RESULT",
+          "EARNINGS_MODEL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated net financial result broker forecast",
+        "subject_id": "000660:CONSOLIDATED_NET_FINANCIAL_RESULT:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -849
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of a consolidated foreign-exchange loss, preserving the signed flow and without HBM-only attribution.",
+        "exact_quote": "외환관련손익 489 -405 -319 -714 -888",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed FX loss is historical earnings counterevidence but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_NONOPERATING_EARNINGS_MODEL",
+        "normalized_object": "SK hynix FY2024 foreign-exchange loss KRW 714 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker_forecast_foreign_exchange_result",
+        "predicate_family": "BROKER_CONSOLIDATED_FX_RESULT_FORECAST",
+        "primitive_tags": [
+          "FOREIGN_EXCHANGE_LOSS",
+          "SIGNED_FLOW",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_FX_RESULT_FORECAST",
+        "question_family_tags": [
+          "FX_RESULT",
+          "EARNINGS_MODEL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated foreign-exchange result broker forecast",
+        "subject_id": "000660:CONSOLIDATED_FX_RESULT:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -714
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of a consolidated foreign-exchange loss, preserving the signed flow and without HBM-only attribution.",
+        "exact_quote": "외환관련손익 489 -405 -319 -714 -888",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The signed FX loss is historical earnings counterevidence but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_NONOPERATING_EARNINGS_MODEL",
+        "normalized_object": "SK hynix FY2025 foreign-exchange loss KRW 888 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker_forecast_foreign_exchange_result",
+        "predicate_family": "BROKER_CONSOLIDATED_FX_RESULT_FORECAST",
+        "primitive_tags": [
+          "FOREIGN_EXCHANGE_LOSS",
+          "SIGNED_FLOW",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_FX_RESULT_FORECAST",
+        "question_family_tags": [
+          "FX_RESULT",
+          "EARNINGS_MODEL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated foreign-exchange result broker forecast",
+        "subject_id": "000660:CONSOLIDATED_FX_RESULT:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": -888
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated profit from associates and other investments, without HBM-only attribution.",
+        "exact_quote": "관계기업등 투자손익 162 131 15 103 59",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The investment profit is objective-local historical earnings context but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_NONOPERATING_EARNINGS_MODEL",
+        "normalized_object": "SK hynix FY2024 associates and investment profit KRW 103 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker_forecast_associate_investment_result",
+        "predicate_family": "BROKER_CONSOLIDATED_ASSOCIATE_INVESTMENT_RESULT_FORECAST",
+        "primitive_tags": [
+          "ASSOCIATE_PROFIT",
+          "SIGNED_FLOW",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_ASSOCIATE_INVESTMENT_RESULT_FORECAST",
+        "question_family_tags": [
+          "ASSOCIATE_INVESTMENT_RESULT",
+          "EARNINGS_MODEL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated associate-investment result broker forecast",
+        "subject_id": "000660:CONSOLIDATED_ASSOCIATE_INVESTMENT_RESULT:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 103
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated profit from associates and other investments, without HBM-only attribution.",
+        "exact_quote": "관계기업등 투자손익 162 131 15 103 59",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The investment profit is objective-local historical earnings context but superseded and not HBM-only.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_NONOPERATING_EARNINGS_MODEL",
+        "normalized_object": "SK hynix FY2025 associates and investment profit KRW 59 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker_forecast_associate_investment_result",
+        "predicate_family": "BROKER_CONSOLIDATED_ASSOCIATE_INVESTMENT_RESULT_FORECAST",
+        "primitive_tags": [
+          "ASSOCIATE_PROFIT",
+          "SIGNED_FLOW",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_ASSOCIATE_INVESTMENT_RESULT_FORECAST",
+        "question_family_tags": [
+          "ASSOCIATE_INVESTMENT_RESULT",
+          "EARNINGS_MODEL",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated associate-investment result broker forecast",
+        "subject_id": "000660:CONSOLIDATED_ASSOCIATE_INVESTMENT_RESULT:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 59
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "The page cap was reached. Continue source order with pretax income and margin, tax expense, total versus controlling net income and margins, EBITDA, earnings growth, profitability, leverage, per-share, and valuation model atoms that remain semantically distinct. Preserve period, denominator, sign, consolidated scope, and historical broker lifecycle."
+    ]
+  },
+  "payload_hash": "88816cb5c7d8f969dee8444b904d6994f91fa868f0aa21d162792b445217e5ac",
+  "production_score_authority": false,
+  "prompt_hash": "2a691b1a3702e97c98da2b287d470edd8672add9a42ce356dd332b2538da50c5",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0a523766e637be6116fbdaadf4192fdb565fd642eaf471b9aa469bac80d01ac2",
+  "response_id": "COLLABRESP-7b62f87db4ee9a954667d5c70573ba9c50f37adccfb21a3243ff9722b68b024e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

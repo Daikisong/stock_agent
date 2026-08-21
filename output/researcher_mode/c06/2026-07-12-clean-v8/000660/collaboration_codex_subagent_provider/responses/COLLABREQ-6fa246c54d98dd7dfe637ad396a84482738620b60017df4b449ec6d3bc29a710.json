@@ -1,0 +1,552 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "rationale": "The official KIND filing was reviewed in source order with all 12 prior accepted facts strictly deduplicated. This continuation returns the next 12 distinct issuer-wide ADR capital-structure, regulatory, allocation, pricing, timing, and governance facts. The page cap is reached and later distinct official facility-investment and deposit-agreement facts remain, so this page is honestly incomplete rather than treating the cap as a quota or claiming source absence. Proposed, authorized, delegated, and scheduled items remain distinct from final issuance, realized funding, signed customer contracts, or HBM-only economics.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR dilution denominator",
+        "exact_quote": "3. 증자전\n발행주식총수 (주)\n보통주식 (주)\n712,702,365",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The issuer-reported pre-issue share count is the direct denominator needed to interpret the maximum proposed ADR share issuance and potential dilution; it does not assert that the maximum shares were finally issued.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "common shares outstanding before the proposed ADR capital increase",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "immediately before board decision 2026-06-24",
+        "predicate": "reported pre-issuance common shares outstanding",
+        "predicate_family": "ADR_PRE_ISSUE_COMMON_SHARES",
+        "primitive_tags": [
+          "ADR_PRE_ISSUE_SHARE_BASE"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_adr_pre_issue_common_shares_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "dilution"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide ADR capital structure",
+        "subject_id": "000660:ADR:PRE_ISSUE_COMMON_SHARES:20260624",
+        "unit": "shares",
+        "value": 712702365
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR issuance timing",
+        "exact_quote": "9. 납입일\n2026.07.14\n10. 신주의 배당기산일\n2026.01.01\n11. 신주권교부예정일\n2026.07.15\n12. 신주의 상장 예정일\n2026.07.29",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The official filing supplies the transaction's provisional execution timetable, relevant to when dilution and funding could occur; later filing text explicitly says these are reference dates, so they are not treated as final actual dates.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "reference ADR payment, dividend-base, new-share certificate, and listing dates",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-01-01 through 2026-07-29 reference schedule",
+        "predicate": "disclosed reference payment, dividend-base, certificate, and listing dates",
+        "predicate_family": "ADR_REFERENCE_SCHEDULE",
+        "primitive_tags": [
+          "ADR_REFERENCE_TIMELINE"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_adr_reference_schedule_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "schedule"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix proposed ADR issuance schedule",
+        "subject_id": "000660:ADR:REFERENCE_SCHEDULE:20260624",
+        "unit": "dates",
+        "value": "2026-07-14 / 2026-01-01 / 2026-07-15 / 2026-07-29"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR regulatory execution",
+        "exact_quote": "16. 증권신고서 제출대상 여부\n예",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The issuer's official filing identifies a regulatory execution gate for the proposed financing; it is evidence of a requirement, not proof that every registration step was completed.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Korean securities registration requirement for the proposed ADR issuance",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "filing dated 2026-06-24",
+        "predicate": "marked securities registration statement as required",
+        "predicate_family": "ADR_SECURITIES_REGISTRATION_REQUIRED",
+        "primitive_tags": [
+          "ADR_REGISTRATION_GATE"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_adr_securities_registration_required_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "regulatory_process"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix ADR regulatory process",
+        "subject_id": "000660:ADR:SECURITIES_REGISTRATION:20260624",
+        "unit": "",
+        "value": "YES"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR bookbuilding allocation",
+        "exact_quote": "ADR이나 본건 신주에 대해서는 특정한 개인 또는 기관 배정이 사전에 예정되어 있지 아니합니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The statement distinguishes an open overseas bookbuilding from a prearranged strategic placement, which changes the capital-allocation and counterparty interpretation without proving final demand or allocation.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "absence of a prearranged specific ADR investor allocation before bookbuilding",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "filing dated 2026-06-24 before bookbuilding",
+        "predicate": "stated that no individual or institution was preassigned",
+        "predicate_family": "ADR_NO_PREASSIGNED_INVESTOR",
+        "primitive_tags": [
+          "ADR_NO_PREALLOCATION"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_adr_no_preassigned_investor_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix proposed ADR investor allocation",
+        "subject_id": "000660:ADR:INVESTOR_ALLOCATION:20260624",
+        "unit": "",
+        "value": "NO_PREASSIGNED_PERSON_OR_INSTITUTION"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR depositary and custody structure",
+        "exact_quote": "원주는 발행과 동시에 곧바로 해외 예탁기관인 Citibank, N.A.(이하 \"해외 예탁기관\")에 예탁되는 바, 실제로 원주는 국내 보관기관(Custodian)인 한국예탁결제원이 해외 예탁기관을 대신하여 보관하게 됩니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The official transaction structure identifies the depositary and custodian roles, but the future-tense wording is preserved and is not relabelled as a completed deposit or signed purchase contract.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "planned Citibank depositary and Korea Securities Depository custody structure for original ADR shares",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "upon proposed ADR issuance after 2026-06-24",
+        "predicate": "planned deposit of original shares with Citibank and domestic custody by KSD",
+        "predicate_family": "ADR_DEPOSITARY_CUSTODY_STRUCTURE",
+        "primitive_tags": [
+          "ADR_DEPOSITARY_STRUCTURE"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_adr_depositary_custody_structure_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "depositary"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix proposed ADR depositary structure",
+        "subject_id": "000660:ADR:DEPOSITARY_CUSTODY:20260624",
+        "unit": "",
+        "value": "CITIBANK_NA_DEPOSITARY; KSD_DOMESTIC_CUSTODIAN"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "U.S. ADR regulatory execution",
+        "exact_quote": "본건 ADR은 미국에서 미국 증권거래위원회(Securities and Exchange Commission, 이하 \"SEC\")에 Form F-1 등록 신고서(registration statement)를 제출하고 발행될 것입니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The filing identifies a concrete U.S. registration route for the proposed offering, while future tense prevents treating Form F-1 submission or issuance as already completed.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "planned SEC Form F-1 registration for the ADR issuance",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "proposed U.S. issuance after 2026-06-24",
+        "predicate": "planned SEC Form F-1 registration statement filing",
+        "predicate_family": "ADR_SEC_FORM_F1_PLAN",
+        "primitive_tags": [
+          "ADR_FORM_F1_PLAN"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_adr_sec_form_f1_plan_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "regulatory_process"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix proposed U.S. ADR registration",
+        "subject_id": "000660:ADR:SEC_FORM_F1:20260624",
+        "unit": "",
+        "value": "FORM_F-1_PLANNED"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR offering eligibility",
+        "exact_quote": "본건 신주 및 본건 ADR에 관하여 국내에서의, 그리고 국내 거주자를 대상으로 한 모집이 예정되어 있지 아니하며, 국내 거주자는 본건 ADR의 모집 절차에 참여할 수 없습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The offering-scope restriction clarifies the intended investor market and execution structure; it does not establish final investor demand, price, or allocation.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "proposed ADR offering restricted against Korean resident participation",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "proposed ADR offering after 2026-06-24",
+        "predicate": "excluded Korean residents from the proposed ADR offering process",
+        "predicate_family": "ADR_DOMESTIC_RESIDENT_EXCLUSION",
+        "primitive_tags": [
+          "ADR_OVERSEAS_OFFERING_SCOPE"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_adr_domestic_resident_exclusion_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "investor_eligibility"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix proposed ADR investor eligibility",
+        "subject_id": "000660:ADR:OFFERING_ELIGIBILITY:20260624",
+        "unit": "",
+        "value": "KOREAN_RESIDENTS_EXCLUDED"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR dilution uncertainty",
+        "exact_quote": "상기 '1. 신주의 종류와 수'의 신주 수량은 본건 신주의 최대 모집 한도 수량으로서 이는 어디까지나 참고적인 수치에 불과하며, 확정적인 수량은 위 한도 수량 범위 내에서 추후 본건 ADR의 상장 공모 절차에서의 수요예측(bookbuilding) 결과를 반영하여 결정될 본건 ADR 수량에 따라 확정할 예정입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is the explicit counter to treating the 17.79 million maximum as final dilution: the actual quantity remained contingent on bookbuilding as of the filing date.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "final ADR-linked common-share quantity remains below the maximum and pending bookbuilding",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "after 2026-06-24 through ADR bookbuilding",
+        "predicate": "stated that the disclosed share count was a maximum and final quantity depended on bookbuilding",
+        "predicate_family": "ADR_FINAL_QUANTITY_BOOKBUILDING_DEPENDENT",
+        "primitive_tags": [
+          "ADR_QUANTITY_UNCERTAINTY"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_adr_final_quantity_bookbuilding_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "dilution",
+          "bookbuilding"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix proposed ADR issuance quantity",
+        "subject_id": "000660:ADR:FINAL_QUANTITY:20260624",
+        "unit": "shares",
+        "value": "MAXIMUM_ONLY; FINAL_QUANTITY_PENDING_BOOKBUILDING"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR issue-price protection and conversion",
+        "exact_quote": "본건 ADR의 발행가액은 본건 ADR의 상장 공모 절차에서의 수요예측 결과를 반영하여 결정하되, 위와 같이 본건 신주의 발행공시규정 제5-18조 제1항에 따른 발행가액 하한(기준가액에 10%의 할인율을 적용한 금액)을 (i) 본건 신주 대 본건 ADR의 비율(1 : 10)과 (ii) 미국시간 기준 본건 ADR 가격결정일(Pricing Date)인 2026년 7월 9일자의 서울외국환중개㈜가 최초 고시하는 원/달러(USD) 매매기준율을 곱하여 산정한 본건 ADR 발행가액 하한을 준수하여 결정할 예정입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The official formula bounds proposed pricing and establishes the ADR conversion ratio, but it remains a plan dependent on bookbuilding and FX rather than a final realized issue price.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "proposed ADR issue-price lower-bound formula and common-share conversion ratio",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "planned pricing date 2026-07-09",
+        "predicate": "defined bookbuilding price subject to a 10 percent floor discount, 1-to-10 ratio, and pricing-date FX",
+        "predicate_family": "ADR_PRICE_FLOOR_RATIO_FX_FORMULA",
+        "primitive_tags": [
+          "ADR_PRICE_FLOOR",
+          "ADR_CONVERSION_RATIO"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_adr_price_floor_ratio_fx_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "pricing",
+          "dilution"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix proposed ADR issue-price formula",
+        "subject_id": "000660:ADR:PRICE_FLOOR_FORMULA:20260624",
+        "unit": "formula",
+        "value": "10% maximum floor discount; 1:10 common-share-to-ADR ratio; 2026-07-09 KRW/USD reference FX"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR execution timing uncertainty",
+        "exact_quote": "본건 ADR의 공모가격을 확정하는 가격결정일은 시장상황에 따라 변동될 수 있는 바, 그에 따라 후속일정인 청약일, 납입일, 신주권교부예정일 및 신주의 상장예정일도 변동될 수 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This directly qualifies the reference schedule and prevents planned dates from being treated as completed or fixed transaction milestones.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "ADR pricing, subscription, payment, certificate, and listing schedule remains variable",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "after filing 2026-06-24 until bookbuilding completion",
+        "predicate": "stated that pricing and downstream issuance dates could change with market conditions",
+        "predicate_family": "ADR_SCHEDULE_MARKET_DEPENDENT",
+        "primitive_tags": [
+          "ADR_SCHEDULE_UNCERTAINTY"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_adr_schedule_market_dependent_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "schedule",
+          "uncertainty"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix proposed ADR execution schedule",
+        "subject_id": "000660:ADR:SCHEDULE_UNCERTAINTY:20260624",
+        "unit": "",
+        "value": "PRICING_AND_FOLLOW_ON_DATES_VARIABLE"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR final-terms governance",
+        "exact_quote": "(i) 상기 이사회가 결의한 본건 신주의 최대 모집 한도 수량(17,790,000주)의 범위 내에서, 본건 ADR의 상장 공모 절차에서의 수요예측 결과를 반영하여 본건 신주 및 본건 ADR의 발행수량, 본건 신주 및 본건 ADR의 주당 발행가액 등 본건 신주발행 및 본건 ADR 발행의 세부적인 조건과 일정을 결정ㆍ변경할 권한",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The board delegation shows that final terms were not fixed in the filing and identifies who could set them after bookbuilding; it is governance authority, not evidence of finalized issuance terms.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "management authority to finalize ADR quantity, price, conditions, and schedule after bookbuilding",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "board resolution 2026-06-24 through offering execution",
+        "predicate": "delegated final quantity, issue price, terms, and schedule within the maximum to management",
+        "predicate_family": "ADR_FINAL_TERMS_DELEGATED",
+        "primitive_tags": [
+          "ADR_FINAL_TERMS_PENDING"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_adr_final_terms_delegation_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "governance",
+          "bookbuilding"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix ADR issuance governance",
+        "subject_id": "000660:ADR:FINAL_TERMS_DELEGATION:20260624",
+        "unit": "shares maximum",
+        "value": "DELEGATED_WITHIN_17790000_SHARE_MAXIMUM"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR contract execution authority",
+        "exact_quote": "(iii) 본건 신주발행, 본건 ADR 발행 및 국내외 상장과 관련하여 체결하는 인수계약(Underwriting Agreement), 예탁계약(Deposit Agreement)를 포함한 제반 계약 및 서류의 준비, 작성, 협상, 조건결정, 서명, 체결 및 교부 권한",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The resolution delegates authority for prospective transaction contracts. It must not be read as proof that an underwriting or deposit agreement was already signed, nor as an HBM customer contract.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "delegated authority over prospective ADR underwriting and deposit agreements",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "board resolution 2026-06-24 through offering execution",
+        "predicate": "delegated authority to prepare, negotiate, set terms for, and execute underwriting and deposit agreements",
+        "predicate_family": "ADR_CONTRACT_EXECUTION_AUTHORITY",
+        "primitive_tags": [
+          "ADR_CONTRACT_AUTHORITY_NOT_EXECUTION"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_adr_contract_execution_authority_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "governance",
+          "contract_boundary"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix ADR contract governance",
+        "subject_id": "000660:ADR:CONTRACT_AUTHORITY:20260624",
+        "unit": "",
+        "value": "UNDERWRITING_AND_DEPOSIT_AGREEMENT_AUTHORITY_DELEGATED"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-a496f2fff2b891528afafbfd"
+    ],
+    "unresolved_research_notes": [
+      "Continuation page 2 reached the 12-fact transport cap. Continue SGDOC-a496f2fff2b891528afafbfd in source order for remaining distinct facility-investment, equipment-purpose/payment, and deposit-agreement facts; do not repeat the prior 12 or this page's 12, and do not treat plans or delegated authority as final actual execution."
+    ]
+  },
+  "payload_hash": "82dd88d09491381868018596d0fd91f3fabfcf2ff91ca46f7c4f4a56898c769f",
+  "production_score_authority": false,
+  "prompt_hash": "d2070bcce86a1ee2ff363cd409f3b58e8d86fad2289d7dce2cd38686d81e4f79",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6fa246c54d98dd7dfe637ad396a84482738620b60017df4b449ec6d3bc29a710",
+  "response_id": "COLLABRESP-27f9f439f35226c74f8cd9c33d20a119aab6b9355635453804f37d69769be701",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

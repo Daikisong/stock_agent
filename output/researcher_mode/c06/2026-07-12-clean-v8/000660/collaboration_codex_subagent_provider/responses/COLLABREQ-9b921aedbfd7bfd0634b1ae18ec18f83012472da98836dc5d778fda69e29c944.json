@@ -1,0 +1,385 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "rationale": "Together with the twelve previously accepted facts, this final full-document remainder adds eight distinct facts covering forward HBM/server-DRAM demand, DRAM product execution, annual shareholder return, treasury-share cancellation, and the explicit preliminary-results uncertainty. No further distinct current-objective fact remains.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer forecasts continued demand expansion for HBM and server DRAM as AI shifts toward inference and distributed architectures; the outlook is qualitative and does not establish booked volume, allocation, price, duration, or a purchase contract.",
+        "exact_quote": "회사는 AI 시장이 학습에서 추론 중심으로 전환하며 분산형 아키텍처 수요가 확대되어 메모리의 역할이 더욱 중요해질 것으로 내다봤다. 이에 따라 HBM과 같은 고성능 메모리뿐 아니라 서버용 D램과 낸드 등 전반적인 메모리의 수요도 지속 확대될 것으로 전망했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This issuer-official forward demand statement is directly relevant to HBM and server DRAM, while the mixed quote is not used to create a NAND fact or binding customer economics.",
+        "mechanism_scope_id": "000660:memory:ai_memory:demand_outlook",
+        "normalized_object": "HBM and server-DRAM demand outlook",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward outlook from 2026-01-28",
+        "predicate": "expects continued demand expansion",
+        "predicate_family": "AI_MEMORY_DEMAND_OUTLOOK",
+        "primitive_tags": [
+          "demand_visibility",
+          "ai_inference"
+        ],
+        "product_family": "HBM and server DRAM",
+        "question_family_id": "HBM_SERVER_DRAM_DEMAND_OUTLOOK",
+        "question_family_tags": [
+          "hbm_demand",
+          "server_dram_demand",
+          "issuer_outlook"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "SK하이닉스 HBM 및 서버용 D램",
+        "subject_id": "000660:MEMORY:HBM_SERVER_DRAM",
+        "unit": "",
+        "value": "continued demand expansion for HBM and server DRAM"
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer says its sixth-generation 10-nanometer-class DDR5 entered full-scale mass production, establishing realized conventional-DRAM commercialization without attributing the product to HBM revenue or customer allocation.",
+        "exact_quote": "일반 D램도 10나노급 6세대(1c 나노) DDR5의 본격 양산에 돌입하고, 10나노급 5세대(1b 나노) 32Gb 기반 업계 최대 용량 256GB DDR5 RDIMM 개발을 통해 서버용 모듈 분야 리더십을 입증했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a distinct issuer-confirmed DRAM commercialization event and is kept separate from the HBM facts accepted on page one.",
+        "mechanism_scope_id": "000660:memory:dram:1c_ddr5_commercialization",
+        "normalized_object": "1c-nanometer DDR5 mass-production status",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025",
+        "predicate": "entered full-scale mass production",
+        "predicate_family": "DRAM_MASS_PRODUCTION",
+        "primitive_tags": [
+          "mass_production",
+          "1c_nano"
+        ],
+        "product_family": "DDR5",
+        "question_family_id": "DDR5_1C_MASS_PRODUCTION",
+        "question_family_tags": [
+          "dram_commercialization",
+          "ddr5"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1c 나노 DDR5",
+        "subject_id": "000660:DRAM:1C_DDR5",
+        "unit": "",
+        "value": "full-scale mass production commenced"
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer reports development of a 256GB DDR5 RDIMM based on 1b-nanometer 32Gb DRAM, a distinct server-module product-development milestone that does not establish qualification, shipment, or contracted revenue.",
+        "exact_quote": "일반 D램도 10나노급 6세대(1c 나노) DDR5의 본격 양산에 돌입하고, 10나노급 5세대(1b 나노) 32Gb 기반 업계 최대 용량 256GB DDR5 RDIMM 개발을 통해 서버용 모듈 분야 리더십을 입증했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The developed module is a separate economic product milestone from the DDR5 mass-production event, but the quote does not prove customer qualification or sales.",
+        "mechanism_scope_id": "000660:memory:dram:256gb_ddr5_rdimm",
+        "normalized_object": "1b-nanometer 32Gb-based 256GB DDR5 RDIMM development",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025",
+        "predicate": "developed server-memory module",
+        "predicate_family": "DRAM_PRODUCT_DEVELOPMENT",
+        "primitive_tags": [
+          "product_development",
+          "256gb_rdimm"
+        ],
+        "product_family": "DDR5 RDIMM",
+        "question_family_id": "DDR5_RDIMM_256GB_DEVELOPMENT",
+        "question_family_tags": [
+          "dram_product",
+          "server_memory_module"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 256GB DDR5 RDIMM",
+        "subject_id": "000660:DRAM:256GB_DDR5_RDIMM",
+        "unit": "",
+        "value": "256GB DDR5 RDIMM developed"
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer plans to accelerate the 1c-nanometer transition and expand its AI-memory portfolio with SOCAMM2 and GDDR7; this is a portfolio plan, not proof of shipment, customer qualification, committed volume, or revenue.",
+        "exact_quote": "아울러, 일반 D램은 1c 나노 전환을 가속해 SOCAMM2와 GDDR7 등 AI 메모리 제품 포트폴리오를 확대할 방침이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The source provides an issuer-owned AI-memory product plan, bounded as a plan and not promoted to commercial performance.",
+        "mechanism_scope_id": "000660:memory:dram:ai_memory_portfolio",
+        "normalized_object": "DRAM AI-memory portfolio expansion plan",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward plan announced 2026-01-28",
+        "predicate": "plans process transition and AI-memory portfolio expansion",
+        "predicate_family": "DRAM_AI_MEMORY_PRODUCT_PLAN",
+        "primitive_tags": [
+          "1c_transition",
+          "socamm2",
+          "gddr7"
+        ],
+        "product_family": "SOCAMM2 and GDDR7",
+        "question_family_id": "DRAM_AI_MEMORY_PORTFOLIO_PLAN",
+        "question_family_tags": [
+          "dram_plan",
+          "ai_memory_portfolio"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 일반 D램 AI 메모리 포트폴리오",
+        "subject_id": "000660:DRAM:AI_MEMORY_PORTFOLIO",
+        "unit": "",
+        "value": "accelerate 1c transition and expand SOCAMM2 and GDDR7 portfolio"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer states total FY2025 dividends of KRW 3,000 per share, a complete annual shareholder-return amount distinct from the KRW 1,500 additional dividend already accepted.",
+        "exact_quote": "그 결과 2025 회계연도 주당 배당금은 3,000원으로, 회사는 총 2.1조 원 규모를 주주들에게 환원하게 된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The annual per-share return is a distinct capital-allocation measure from the separately reported incremental dividend.",
+        "mechanism_scope_id": "000660:corporate:shareholder_return",
+        "normalized_object": "FY2025 total dividend per share",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025",
+        "predicate": "reported total annual dividend per share",
+        "predicate_family": "ANNUAL_DIVIDEND_PER_SHARE",
+        "primitive_tags": [
+          "dividend_per_share"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "FY2025_TOTAL_DIVIDEND_PER_SHARE",
+        "question_family_tags": [
+          "capital_allocation",
+          "annual_dividend"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CAPITAL_ALLOCATION",
+        "unit": "KRW per share",
+        "value": 3000
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer states a total FY2025 dividend return of KRW 2.1 trillion, a total capital-distribution amount separate from the per-share measure.",
+        "exact_quote": "그 결과 2025 회계연도 주당 배당금은 3,000원으로, 회사는 총 2.1조 원 규모를 주주들에게 환원하게 된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The total distributed amount is a distinct capital-allocation atom from dividend per share and the incremental KRW 1 trillion action.",
+        "mechanism_scope_id": "000660:corporate:shareholder_return",
+        "normalized_object": "FY2025 total dividend return",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025",
+        "predicate": "reported total annual dividend amount",
+        "predicate_family": "ANNUAL_DIVIDEND_TOTAL",
+        "primitive_tags": [
+          "total_dividend_amount"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "FY2025_TOTAL_DIVIDEND_AMOUNT",
+        "question_family_tags": [
+          "capital_allocation",
+          "annual_dividend"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CAPITAL_ALLOCATION",
+        "unit": "KRW million",
+        "value": 2100000
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer announced cancellation of all 15.3 million treasury shares, representing 2.1% ownership and approximately KRW 12.2 trillion at the January 27 share price; this is an issuer-wide per-share capital action, not memory-segment investment.",
+        "exact_quote": "아울러 회사는 지분율 2.1%에 해당하는 1,530만 주(27일 주가 기준 약 12.2조 원)의 보유 자기주식을 전부 소각해 주당 가치를 높이는 동시에 주주가치를 제고하겠다는 장기적인 의지도 표명했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The complete treasury-share cancellation is a distinct issuer-wide capital-allocation action with explicit share count and ownership percentage.",
+        "mechanism_scope_id": "000660:corporate:shareholder_return",
+        "normalized_object": "treasury shares to be cancelled",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "announced 2026-01-28",
+        "predicate": "announced cancellation of all treasury shares held",
+        "predicate_family": "TREASURY_SHARE_CANCELLATION",
+        "primitive_tags": [
+          "share_cancellation",
+          "per_share_value"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "TREASURY_SHARE_CANCELLATION",
+        "question_family_tags": [
+          "capital_allocation",
+          "treasury_share_cancellation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CAPITAL_ALLOCATION",
+        "unit": "shares",
+        "value": 15300000
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer explicitly states that the results release was prepared before completion of the external auditor's accounting review and may change during review, limiting certainty of the reported figures without implying that any figure is false.",
+        "exact_quote": "※ 同 실적 발표자료는 외부 감사인의 회계검토가 완료되지 않은 상태에서 작성되었으며, 회계 검토 과정에서 달라질 수 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This explicit issuer caveat is a material information-confidence counterfact that bounds the certainty of the reported results.",
+        "mechanism_scope_id": "000660:corporate:information_quality",
+        "normalized_object": "2025 results accounting-review uncertainty",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025 results released 2026-01-28",
+        "predicate": "is subject to incomplete external review and possible change",
+        "predicate_family": "PRELIMINARY_RESULTS_UNCERTAINTY",
+        "primitive_tags": [
+          "external_review_incomplete",
+          "figures_may_change"
+        ],
+        "product_family": "Issuer-wide information quality",
+        "question_family_id": "PRELIMINARY_RESULTS_REVIEW_RISK",
+        "question_family_tags": [
+          "information_quality",
+          "preliminary_results"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2025 실적 발표자료",
+        "subject_id": "000660:INFORMATION_QUALITY",
+        "unit": "",
+        "value": "external auditor review incomplete; figures may change"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "8c93b21a0ca7c4d1fe72be847b36ddaa89b819ac6d55a3d27de12e8e2b946259",
+  "production_score_authority": false,
+  "prompt_hash": "70e05767ea2e4b70532a1c9290c56bcf5226ded1779ff16c95a1a58eaedd143a",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9b921aedbfd7bfd0634b1ae18ec18f83012472da98836dc5d778fda69e29c944",
+  "response_id": "COLLABRESP-1b9111eb7630512857a27d3c326bfea9a8ec832357c181fb7817ac28d0452380",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

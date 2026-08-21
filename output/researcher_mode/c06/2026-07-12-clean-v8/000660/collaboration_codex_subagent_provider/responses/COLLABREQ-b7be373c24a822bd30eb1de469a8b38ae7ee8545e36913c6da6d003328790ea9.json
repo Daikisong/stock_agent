@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "d10e59b1c3d217fd2175a9c0d5a9e1214edfcfdac711552321ad54eb4793b073",
+  "payload": {
+    "allowed_range": [
+      5.0,
+      6.6
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-e743368708b3aee88a83287c의 5.7~7.2점 구간과 비교하면 actual 실적과 HBM 실행은 재평가 여지를 지지하지만 직접 밸류에이션·HBM 이익 브리지가 없어 하단 쪽이다.",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89의 4.25~5.75점보다는 이익·가동률·제품·고객 실행이 강하지만, 시장 기대 대비 오해를 직접 검증한 증거는 제한적이다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c07ed486e6d67134d19d6951",
+      "EFACT-c418009dc8a6493dd0a098b4"
+    ],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "proposed_points": 5.9,
+    "rationale": "연결 actual 이익·현금흐름과 DRAM/HBM 제품·가격·고객 실행은 사업 질 개선을 보여 재평가 가능성을 지지한다. 다만 현재 밸류에이션 스냅샷, 기대치 대비 괴리, HBM 단독 이익 브리지가 없어 확정적인 시장 오가격보다는 운영 개선의 재평가 여지로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "현재 가격·멀티플·컨센서스 기대치와 HBM 단독 이익 기여가 없어 시장이 무엇을 얼마나 잘못 가격화했는지 직접 측정할 수 없다.",
+    "why_not_lower": "actual 이익·현금흐름, 높은 가동률과 HBM 제품·가격·고객 실행은 운영 개선이 실재한다는 근거를 제공한다."
+  },
+  "payload_hash": "e3b2aeba44dafeb507db1347acf0d0af612fa9cc9478772a0a4dacfcceb48fc3",
+  "production_score_authority": false,
+  "prompt_hash": "e75d36aaadf15b9d91bf24af55be13855a0307cfea1b74dcf34c49bee6f49f06",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b7be373c24a822bd30eb1de469a8b38ae7ee8545e36913c6da6d003328790ea9",
+  "response_id": "COLLABRESP-e4075e44aefd7c48a451a0b182053643541a09b2ec4abdb00650177866927d0a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

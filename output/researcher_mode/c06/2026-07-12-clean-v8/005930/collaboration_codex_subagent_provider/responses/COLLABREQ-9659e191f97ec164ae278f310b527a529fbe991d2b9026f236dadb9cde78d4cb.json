@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      2.1,
+      2.9
+    ],
+    "anchor_comparisons": [
+      "양의 ORDTRANSFER-b21b177481b9b2eea2f1c13e(1.0~1.4)보다 환원 실행이 강하지만 ORDTRANSFER-c1052e06818f90d4a44560f0(3.8~4.0)의 최상단에는 못 미친다.",
+      "반증 ORDTRANSFER-0508f71bf609ed09f47c3acc(0.6~1.0)보다 재무 완충력이 강하고, ORDTRANSFER-7497c053a0ea965e06b50c88(3.8~4.0)보다 자본약정·운전자본 부담이 크다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-6d299e0ff8bd67e55eb14f6d",
+      "EFACT-7393f87e629482ca368f8b2e",
+      "EFACT-ae0bcd1bc9e0500e2182f1c8"
+    ],
+    "disagreements": [
+      "전사 주주환원과 조달 접근성을 HBM 투자수익률 또는 HBM 전용 현금흐름으로 귀속하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "proposed_points": 2.5,
+    "rationale": "자기주식 프로그램·소각·배당과 투자등급 조달 접근성은 긍정적이지만, 낮은 분기 배당성향, 큰 향후 자본약정과 매출채권 운전자본 유출이 현금배분의 부담이다. 전사 수준의 상충을 균형 반영한다.",
+    "support_fact_ids": [
+      "EFACT-4c24af7fb383929b7af6bf38",
+      "EFACT-5220bd8edddda66abc7eeaf4",
+      "EFACT-8cc5989dd1a4e4bba6ad75b9",
+      "EFACT-97e077b865db632ec6f81cd2",
+      "EFACT-c050a5335289c9806cf802ef"
+    ],
+    "why_not_higher": "자본약정·매출채권 유출과 낮은 분기 배당성향 때문에 3점 이상을 허용하지 않는다.",
+    "why_not_lower": "실제 자기주식 소각·배당 및 비희석적 조달 접근성이 있어 2점 초반 아래로 낮추지 않는다."
+  },
+  "payload_hash": "528029bdb134abb2c3dce852cbadb94151fe484b06b85d44e198f1f4783e907e",
+  "production_score_authority": false,
+  "prompt_hash": "8787926a3ea58ab81af0e366d13ce65051d0c7276b20acaa345fd20f569dc230",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9659e191f97ec164ae278f310b527a529fbe991d2b9026f236dadb9cde78d4cb",
+  "response_id": "COLLABRESP-bb45302b05cf45bdf4640755d1ae805fda2929df21af9104c8b1ecff8dded6a7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

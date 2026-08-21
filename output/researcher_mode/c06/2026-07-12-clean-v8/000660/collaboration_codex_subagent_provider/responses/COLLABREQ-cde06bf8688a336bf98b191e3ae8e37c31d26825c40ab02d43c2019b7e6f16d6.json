@@ -1,0 +1,597 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Full literal-document audit found target-direct broker evidence on Custom HBM contracting expectations, HBM product leadership and mix, valuation bridges, and 2024 operating/DRAM estimates. Repeated PDF renderings, other issuers, equipment beneficiaries, industry-generic claims without SK hynix attribution, and NAND-only rows were excluded. This first page reaches the 12-fact transport limit; distinct target-direct revision and financial-table facts remain for continuation. All forecasts are preserved as broker estimates, not issuer guidance, actuals, signed contract terms, or durable visibility.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "메모리",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 AI 플랫폼 업체가 SK하이닉스 등에 직접 칩 제작을 주문하고 Custom HBM 형태의 대규모 장기 공급계약이 나타날 것으로 전망했다. 이는 broker forecast이며 target-specific signed volume, price, cancellation, allocation, or prepayment terms는 아니다.",
+        "exact_quote": "향후 AI 플랫폼 업체들이 엔비디아나 AMD 를 통하지 않고, 자체적으로 반도체를\n설계하여 직접 TSMC, 삼성전자, SK하이닉스에게 칩 제작을 주문하는 형태가 전개\n될 것으로 예상한다. 이 과정에서 경쟁적으로 대규모 장기 공급 계약이 Custom\nHBM 형태로 나타날 전망이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Target을 명시한 broker contract-model forecast는 earnings visibility와 information-confidence 조사에 중요하지만 official contract economics를 대체하지 않는다.",
+        "mechanism_scope_id": "000660:HBM:CUSTOM_DIRECT_ORDER_BROKER_FORECAST:2024-03-14",
+        "normalized_object": "Broker forecast of direct Custom HBM orders involving SK hynix",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forecast published 2024-03-14",
+        "predicate": "AI 플랫폼의 직접 주문과 Custom HBM 장기 공급계약 모델이 전개될 것으로 전망했다",
+        "predicate_family": "BROKER_CUSTOM_HBM_DIRECT_ORDER_FORECAST",
+        "primitive_tags": [
+          "AI_platform",
+          "direct_order",
+          "long_term_supply_contract"
+        ],
+        "product_family": "Custom HBM",
+        "question_family_id": "CUSTOM_HBM_DIRECT_ORDER_MODEL",
+        "question_family_tags": [
+          "custom_hbm",
+          "direct_order_model",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 Custom HBM 제조·공급 모델",
+        "subject_id": "000660:CUSTOM_HBM:DIRECT_ORDER_MODEL:2024-03-14",
+        "unit": "forecast statement",
+        "value": "direct custom-HBM long-term supply-contract model forecast"
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 2024-03-14 보고서에서 SK하이닉스를 HBM3의 핵심 공급자로 분류했다. 공급자 지위에 관한 broker characterization이며 customer allocation이나 signed contract terms를 입증하지 않는다.",
+        "exact_quote": "2023 년 대비 GPU 시장\n의 최강자인 NVIDIA 의 시가총액은 496% 상승했으며, HBM3 의 핵심 공급자인\nSK하이닉스의 12m Fwd. P/B는 이전 사이클의 상단을 돌파했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Historical independent broker evidence of product position informs bottleneck and information-confidence lineage but is not current customer-official corroboration.",
+        "mechanism_scope_id": "000660:HBM3:CORE_SUPPLIER_BROKER_CHARACTERIZATION:2024-03-14",
+        "normalized_object": "Broker-characterized HBM3 core-supplier position",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "reported 2024-03-14",
+        "predicate": "HBM3 핵심 공급자로 분류됐다",
+        "predicate_family": "BROKER_HBM3_SUPPLIER_POSITION",
+        "primitive_tags": [
+          "HBM3",
+          "core_supplier"
+        ],
+        "product_family": "HBM3",
+        "question_family_id": "HBM3_SUPPLIER_POSITION",
+        "question_family_tags": [
+          "hbm3",
+          "supplier_position",
+          "broker_characterization"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM3 공급자 지위",
+        "subject_id": "000660:HBM3:CORE_SUPPLIER:2024-03-14",
+        "unit": "classification",
+        "value": "core supplier"
+      },
+      {
+        "business_segment": "메모리 전사",
+        "confidence": 0.88,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "보고서 시점 SK하이닉스 12개월 선행 P/B가 이전 메모리 사이클 상단을 돌파했다는 broker valuation observation이다. Numeric multiple point와 denominator는 이 인용문에 제시되지 않는다.",
+        "exact_quote": "2023 년 대비 GPU 시장\n의 최강자인 NVIDIA 의 시가총액은 496% 상승했으며, HBM3 의 핵심 공급자인\nSK하이닉스의 12m Fwd. P/B는 이전 사이클의 상단을 돌파했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Point-in-time broker valuation context is relevant to rerating and mispricing but is historical and lacks an exact multiple denominator value.",
+        "mechanism_scope_id": "000660:12M_FORWARD_PB:CYCLE_TOP_BREAKOUT:2024-03-14",
+        "normalized_object": "12m forward P/B above prior memory-cycle upper bound",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-03-14 observation",
+        "predicate": "12개월 선행 P/B가 이전 사이클 상단을 돌파했다",
+        "predicate_family": "FORWARD_PB_CYCLE_POSITION",
+        "primitive_tags": [
+          "12m_forward_pb",
+          "prior_cycle_upper_bound"
+        ],
+        "product_family": "HBM 기여 전사 valuation",
+        "question_family_id": "FORWARD_PB_CYCLE_POSITION",
+        "question_family_tags": [
+          "forward_pb",
+          "cycle_position",
+          "historical_valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.88,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 12개월 선행 P/B",
+        "subject_id": "000660:12M_FORWARD_PB:CYCLE_BREAKOUT:2024-03-14",
+        "unit": "relative valuation position",
+        "value": "above prior-cycle upper bound"
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.93,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 HBM 매출 비중을 2024년 하반기 30% 이상, 2025년 약 40%로 전망했다. 이는 broker estimate이며 realized segment revenue actual이 아니다.",
+        "exact_quote": "HBM 에 의한 압도적인 ROIC 상승은 ROE 상승에 의한 P/B 상승 논리로 연결된\n다. SK 하이닉스 기준 HBM 매출 비중은 2024 년 하반기 기준 30% 이상, 2025\n년 기준 약 40%를 차지할 것으로 예상한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Product-attributed revenue mix is a direct HBM earnings bridge, while its old forecast status prevents treatment as current actual evidence.",
+        "mechanism_scope_id": "000660:HBM:REVENUE_MIX_FORECAST:2H2024_FY2025",
+        "normalized_object": "Broker HBM revenue-mix forecast trajectory",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2H2024F and FY2025F",
+        "predicate": "HBM 매출 비중이 2024년 하반기 30% 이상, 2025년 약 40%가 될 것으로 전망됐다",
+        "predicate_family": "HBM_REVENUE_MIX_BROKER_FORECAST",
+        "primitive_tags": [
+          "2H2024",
+          "FY2025",
+          "revenue_mix"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_REVENUE_MIX_FORECAST",
+        "question_family_tags": [
+          "hbm_revenue_mix",
+          "segment_contribution",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK하이닉스 HBM 매출 비중",
+        "subject_id": "000660:HBM:REVENUE_MIX:2H2024_FY2025_FORECAST",
+        "unit": "% of SK hynix revenue",
+        "value": "2H2024 >30%; FY2025 ~40%"
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.84,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 HBM ROIC 상승이 ROE 개선과 P/B 상승 논리로 연결된다고 분석했다. Broker valuation thesis이며 issuer-reported ROIC or realized cash return이 아니다.",
+        "exact_quote": "HBM 에 의한 압도적인 ROIC 상승은 ROE 상승에 의한 P/B 상승 논리로 연결된\n다. SK 하이닉스 기준 HBM 매출 비중은 2024 년 하반기 기준 30% 이상, 2025\n년 기준 약 40%를 차지할 것으로 예상한다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The product-specific broker mechanism informs valuation rerating but does not independently establish realized ROIC, ROE, or FCF.",
+        "mechanism_scope_id": "000660:HBM:ROIC_TO_ROE_PB_BROKER_BRIDGE:2024-03-14",
+        "normalized_object": "Broker HBM profitability-to-valuation bridge",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "reported 2024-03-14",
+        "predicate": "HBM ROIC 상승을 ROE 및 P/B 상승 논리로 연결했다",
+        "predicate_family": "HBM_ROIC_ROE_PB_BROKER_BRIDGE",
+        "primitive_tags": [
+          "ROIC",
+          "ROE",
+          "P_B"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_ROIC_TO_PB_BRIDGE",
+        "question_family_tags": [
+          "hbm_roic",
+          "roe_bridge",
+          "pb_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.84,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 수익성·P/B 연결",
+        "subject_id": "000660:HBM:ROIC_ROE_PB_BRIDGE:2024-03-14",
+        "unit": "mechanism statement",
+        "value": "ROIC-to-ROE-to-P/B bridge"
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.78,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 Custom HBM 계약구조가 장기 공급계약 기반으로 바뀌면 foundry-like valuation rerating 여지가 있다고 전망했다. Industry contract-model thesis이며 SK하이닉스의 체결 계약이나 구속력 있는 조건을 확인한 것은 아니다.",
+        "exact_quote": "또한 Custom HBM 시대로 진입하면, 메모리 산업의 계약 구조는 Foundry와 마찬\n가지로 장기 공급 계약 기반이 될 전망이다. Foundry 시장의 주도자 TSMC의 높은\nP/B 를 감안하면, ROE 개선 효과에 더해 추가적으로 밸류에이션 Re-rating 요소\n가 더 남아 있다는 것을 의미한다고 판단한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The broker thesis directly links contract structure to valuation, but its non-target-specific and non-official character must remain explicit.",
+        "mechanism_scope_id": "000660:CUSTOM_HBM:LONG_TERM_CONTRACT_RERATING_THESIS:2024-03-14",
+        "normalized_object": "Broker Custom HBM contract-model valuation thesis",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward structural thesis reported 2024-03-14",
+        "predicate": "Custom HBM 장기 공급계약 구조를 추가 valuation rerating 요소로 분석했다",
+        "predicate_family": "CUSTOM_HBM_LONG_TERM_CONTRACT_RERATING_THESIS",
+        "primitive_tags": [
+          "long_term_supply_contract",
+          "foundry_analogy",
+          "rerating"
+        ],
+        "product_family": "Custom HBM",
+        "question_family_id": "CUSTOM_HBM_CONTRACT_VALUATION_MODEL",
+        "question_family_tags": [
+          "custom_hbm",
+          "long_term_contract_model",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.78,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 Custom HBM 계약구조 valuation thesis",
+        "subject_id": "000660:CUSTOM_HBM:CONTRACT_VALUATION_MODEL:2024-03-14",
+        "unit": "mechanism statement",
+        "value": "foundry-like long-term contract rerating thesis"
+      },
+      {
+        "business_segment": "메모리 전사",
+        "confidence": 0.96,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권의 FY2025 operating-profit sensitivity table maps 16-28조원 operating-profit scenarios to BPS 93,794-116,576원. It is a broker scenario range, not issuer guidance or a single consensus point.",
+        "exact_quote": "SK하이닉스 2025년 영업이익, BPS, Target P/B별 목표주가 시나리오\n25E OP (조원) 16 18 20 22 24 28\n25E BPS (원) 93,794 97,591 101,388 105,185 108,982 116,576",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This exact broker sensitivity table preserves the forward book-value denominator and its OP dependency, while current lifecycle marks the old scenario as superseded.",
+        "mechanism_scope_id": "000660:FY2025E:OP_TO_BPS_SCENARIO_RANGE:2024-03-14",
+        "normalized_object": "FY2025E BPS range across 16-28 trillion won OP scenarios",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E scenario",
+        "predicate": "FY2025 영업이익 시나리오 16-28조원에 대응하는 BPS 범위를 제시했다",
+        "predicate_family": "BROKER_FORWARD_BOOK_VALUE_SCENARIO",
+        "primitive_tags": [
+          "FY2025E",
+          "BPS",
+          "operating_profit_scenario"
+        ],
+        "product_family": "HBM 기여 전사 valuation",
+        "question_family_id": "FORWARD_BOOK_VALUE_SCENARIO",
+        "question_family_tags": [
+          "forward_book_value",
+          "op_sensitivity",
+          "valuation_denominator"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK하이닉스 FY2025 BPS 시나리오",
+        "subject_id": "000660:FY2025E:BPS_SCENARIO_RANGE:2024-03-14",
+        "unit": "KRW per share",
+        "value": "93,794-116,576"
+      },
+      {
+        "business_segment": "메모리 전사",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "보고서 시점 SK하이닉스 12개월 선행 P/E는 약 14배였고, 과거 주가 정체 구간의 3-6배보다 높았다. Historical point-in-time broker comparison이며 current multiple이 아니다.",
+        "exact_quote": "그런데 현재 SK 하이닉스 기준 12m Fwd. P/E 는\n약 14X 로, 여전히 고 P/E 이면서, 실적 급증 구간이다. 과거 SK 하이닉스의 주가\n정체 구간의 12m Fwd. P/E는 3-6X 수준이었다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The exact period and historical comparison preserve valuation context; the old point cannot substitute for current valuation evidence.",
+        "mechanism_scope_id": "000660:12M_FORWARD_PE:14X_VS_3_6X:2024-03-14",
+        "normalized_object": "12m forward P/E about 14x versus historical stagnation band 3-6x",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-03-14 observation",
+        "predicate": "12개월 선행 P/E가 약 14배로 과거 정체 구간 3-6배보다 높았다",
+        "predicate_family": "FORWARD_PE_HISTORICAL_CYCLE_COMPARISON",
+        "primitive_tags": [
+          "12m_forward_pe",
+          "14x",
+          "3_6x_band"
+        ],
+        "product_family": "HBM 기여 전사 valuation",
+        "question_family_id": "FORWARD_PE_CYCLE_COMPARISON",
+        "question_family_tags": [
+          "forward_pe",
+          "cycle_comparison",
+          "historical_valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 12개월 선행 P/E",
+        "subject_id": "000660:12M_FORWARD_PE:CYCLE_COMPARISON:2024-03-14",
+        "unit": "x",
+        "value": 14
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.9,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 2024년 HBM3·HBM3E 시장에서 SK하이닉스 우세가 이어질 것으로 전망했고, 8Hi에서 TC-NCF 진영이 MR-MUF 생산성을 따라잡기 어렵다는 판단을 근거로 제시했다. Broker forecast이며 realized share actual이 아니다.",
+        "exact_quote": "SK증권은 2024년 HBM3, 3e 시장 내 SK하이닉스의 우세 지속 전망을 유지한다.\n2024 년은 DRAM 3 사 모두 시장에 진입하겠지만, 8Hi 에서 TC-NCF 진영의\nMR-MUF 생산성 Catch-up은 쉽지 않다고 판단하기 때문이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Product-specific competitive reasoning is target-direct but historical and broker-owned, so it cannot establish current qualification, capacity, or customer allocation.",
+        "mechanism_scope_id": "000660:HBM3_HBM3E:2024_LEADERSHIP_BROKER_FORECAST",
+        "normalized_object": "2024 HBM3/HBM3E leadership forecast based on MR-MUF productivity",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024 forecast",
+        "predicate": "2024년 HBM3·HBM3E 시장 우세 지속을 전망했다",
+        "predicate_family": "HBM3E_COMPETITIVE_POSITION_BROKER_FORECAST",
+        "primitive_tags": [
+          "HBM3",
+          "HBM3E",
+          "MR_MUF",
+          "TC_NCF"
+        ],
+        "product_family": "HBM3·HBM3E",
+        "question_family_id": "HBM3E_COMPETITIVE_POSITION_FORECAST",
+        "question_family_tags": [
+          "hbm3e",
+          "competitive_position",
+          "muf_productivity"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM3·HBM3E 경쟁 지위",
+        "subject_id": "000660:HBM3_HBM3E:2024_COMPETITIVE_POSITION_FORECAST",
+        "unit": "forecast statement",
+        "value": "leadership expected to persist"
+      },
+      {
+        "business_segment": "메모리 전사",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 1Q24 operating profit을 1.6조원, +368% QoQ로 예상해 당시 market consensus 1.1조원을 상회할 것으로 봤다. Broker estimate이며 reported actual이 아니다.",
+        "exact_quote": "SK 하이닉스의 1Q24 영업이익은 1.6 조원 (+368% QoQ)으로 시장컨센서스 1.1 조\n목표주가: 220,000 원(상향)\n원을 상회할 것으로 예상된다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The exact broker expectation gap and QoQ point preserve historical revision lineage without being promoted to issuer actual or current forecast.",
+        "mechanism_scope_id": "000660:1Q2024E:OP_1_6T_VS_CONSENSUS_1_1T",
+        "normalized_object": "1Q24E OP 1.6 trillion won versus 1.1 trillion won consensus, +368% QoQ",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E",
+        "predicate": "1Q24 영업이익을 1.6조원 및 +368% QoQ로 전망해 컨센서스 1.1조원 상회를 예상했다",
+        "predicate_family": "BROKER_OPERATING_PROFIT_EXPECTATION_GAP",
+        "primitive_tags": [
+          "1Q24E",
+          "1_6_trillion",
+          "consensus_1_1_trillion",
+          "368_percent_qoq"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "OPERATING_PROFIT_EXPECTATION_GAP",
+        "question_family_tags": [
+          "operating_profit",
+          "expectation_gap",
+          "qoq_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 1Q24 영업이익 전망",
+        "subject_id": "000660:1Q2024E:OPERATING_PROFIT_EXPECTATION_GAP",
+        "unit": "% QoQ",
+        "value": 368
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.96,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 1Q24 DRAM shipment -13% QoQ와 blended ASP +16% QoQ를 전망했다. Forecast pricing and shipment assumptions이며 realized price actual이나 HBM-only ASP가 아니다.",
+        "exact_quote": "SK 하이닉스의 1Q24 영업이익은 1.6 조원 (+368% QoQ)으로 시장컨센서스 1.1 조\n목표주가: 220,000 원(상향)\n원을 상회할 것으로 예상된다. 가격 반등을 위한 보수적 출하 정책 지속으로 DRAM,\n현재주가: 163,600 원\nNAND Blended ASP 반등 폭이 기존 예상을 상회할 것으로 판단하기 때문이다. 출하\n상승여력: 34.5%\n는 DRAM -13% QoQ, NAND -4% QoQ로 DRAM은 가이던스 수준, NAND는\n가이던스를 하회할 것으로 보이나, 가격은 DRAM +16% QoQ, NAND +18% QoQ\n수준을 기록할 것으로 예상한다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The target-specific DRAM price/volume bridge is explicit, but it is a historical broker estimate and must not be attributed to HBM realized pricing.",
+        "mechanism_scope_id": "000660:DRAM:1Q2024E:SHIPMENT_MINUS13_ASP_PLUS16",
+        "normalized_object": "1Q24E DRAM ASP +16% QoQ with shipment -13% QoQ",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E",
+        "predicate": "1Q24 DRAM ASP가 16% QoQ 상승하고 출하가 13% QoQ 감소할 것으로 전망했다",
+        "predicate_family": "BROKER_DRAM_ASP_SHIPMENT_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "ASP",
+          "shipment",
+          "1Q24E"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_ASP_SHIPMENT_FORECAST",
+        "question_family_tags": [
+          "dram_asp",
+          "shipment",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 1Q24 DRAM 출하·ASP 전망",
+        "subject_id": "000660:DRAM:1Q2024E:ASP_SHIPMENT_FORECAST",
+        "unit": "% QoQ ASP",
+        "value": 16
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.86,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 MR-MUF의 8Hi 생산성이 2025년 HBM 물량에 대한 선제적 수주 가시성을 높일 것으로 전망했다. Broker forecast이며 issuer/customer official backlog, allocated volume, signed term, or prepayment evidence가 아니다.",
+        "exact_quote": "SK증권은 SK하이닉스의 목표주가를 기존 190,000원에서 220,000원으로 16%\n상향한다. AI 강세에 따른 HBM 의 높은 성장성과 SK 하이닉스의 시장 주도적 위치는\n최소한 2025 년까지 유지될 것으로 전망한다. 경쟁자들의 시장 진입이 예정되어 있으\n나, 8Hi에서 MR-MUF의 높은 생산성은 2025년 물량에 대한 선제적 수주 가시성을\nAnalyst\n한동희 높이고, 수익성 측면에서 차별화 된 모습을 시현할 것으로 예상한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is target-specific broker evidence about order visibility, but the old forecast cannot be tagged DURABLE_VISIBILITY or treated as official committed backlog.",
+        "mechanism_scope_id": "000660:HBM:2025_PREORDER_VISIBILITY_BROKER_FORECAST",
+        "normalized_object": "Broker-forecast 2025 HBM preorder visibility from MR-MUF productivity",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025 forecast",
+        "predicate": "MR-MUF 생산성이 2025년 HBM 물량의 선제적 수주 가시성을 높일 것으로 전망됐다",
+        "predicate_family": "BROKER_HBM_PREORDER_VISIBILITY_FORECAST",
+        "primitive_tags": [
+          "MR_MUF",
+          "8Hi",
+          "FY2025",
+          "preorder_visibility"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_PREORDER_VISIBILITY_FORECAST",
+        "question_family_tags": [
+          "hbm_preorder",
+          "volume_visibility",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.86,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 2025 물량 수주 가시성",
+        "subject_id": "000660:HBM:2025_PREORDER_VISIBILITY:MR_MUF",
+        "unit": "forecast statement",
+        "value": "2025 volume preorder visibility forecast"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "The literal document contains additional distinct target-direct broker revision tables and financial/valuation rows after this 12-fact page; continuation is required."
+    ]
+  },
+  "payload_hash": "45f74dc53cc230c32d32b13eff8cf09a1b0ad381ceed8e8dfde8d6bd46e7a789",
+  "production_score_authority": false,
+  "prompt_hash": "d3dbebbbaf243b6ad1ebe8ccb8d7fd0792da695ff0a0897cdb7b525ac8fa0a93",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cde06bf8688a336bf98b191e3ae8e37c31d26825c40ab02d43c2019b7e6f16d6",
+  "response_id": "COLLABRESP-625af05d6c8194b097b7ec436699f4fe411e49b868b8668dabe5e7a01e6d4463",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

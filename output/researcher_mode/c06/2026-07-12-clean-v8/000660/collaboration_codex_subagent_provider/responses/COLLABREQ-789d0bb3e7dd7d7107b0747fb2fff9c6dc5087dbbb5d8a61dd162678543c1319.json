@@ -1,0 +1,420 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "rationale": "The supplied official KIND filing was audited in full against all 24 embedded prior facts using strict quote and semantic deduplication. This page returns the nine remaining distinct current-objective facts in source order: the bounded but unsettled payment window, facility-plan estimate uncertainty, two issuer-reported invested-to-date amounts, EUV purpose and payment/delivery limitations, and the depositary related-party and planned-agreement boundaries. No additional target-direct material atom remains in the supplied document after these rows. Proposed, estimated, expected, and planned items remain separate from final actual issuance, signed agreements, and HBM-only attribution.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR execution timing uncertainty",
+        "exact_quote": "이에 당사는 가격결정일의 변동가능성을 고려하여, 청약일 및 납입일을 2026년 7월 13일부터 2026년 7월 20일까지의 기간 중의 일자로 정하고자 합니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The bounded window refines the reference schedule while confirming that no single payment date was final as of the filing; it is a proposed range, not completed funding.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "planned but not finalized ADR subscription and payment-date window",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-07-13 through 2026-07-20",
+        "predicate": "planned to choose the subscription and payment date within a bounded July window",
+        "predicate_family": "ADR_SUBSCRIPTION_PAYMENT_WINDOW",
+        "primitive_tags": [
+          "ADR_PAYMENT_WINDOW_PENDING"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_adr_subscription_payment_window_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "schedule",
+          "uncertainty"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix proposed ADR subscription and payment timing",
+        "subject_id": "000660:ADR:PAYMENT_WINDOW:20260624",
+        "unit": "date range",
+        "value": "2026-07-13 through 2026-07-20"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "facility investment estimate uncertainty",
+        "exact_quote": "상기 금액은 추정치이며, 향후 시장 환경 및 공정 사양 변경 등에 따라 변동될 수 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This official limitation prevents the Yongin and P&T7 plan amounts from being treated as final actual CAPEX, fixed HBM allocation, or a signed supply commitment.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Yongin and P&T7 planned investment amounts remain estimates rather than final spending",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "plans disclosed 2026-06-24 through their future investment periods",
+        "predicate": "qualified disclosed facility investment amounts as estimates subject to change",
+        "predicate_family": "FACILITY_PLAN_COST_ESTIMATE_UNCERTAINTY",
+        "primitive_tags": [
+          "FACILITY_PLAN_AMOUNT_UNCERTAINTY"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_facility_plan_cost_uncertainty_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "facility_investment",
+          "estimate_boundary"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix disclosed facility investment plans",
+        "subject_id": "000660:FACILITY_PLAN:COST_UNCERTAINTY:20260624",
+        "unit": "",
+        "value": "ESTIMATES_SUBJECT_TO_MARKET_AND_PROCESS_SPECIFICATION_CHANGES"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "facility investment execution",
+        "exact_quote": "상기 금액 중 용인 반도체클러스터 1기 팹의 기 투자금액은\n4,383,200백만원",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The filing separates KRW 4,383,200 million already invested from the larger future estimate. It evidences issuer facility execution but does not identify the amount as HBM-only CAPEX.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "investment already made in the Yongin semiconductor-cluster first fab",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "cumulative through filing dated 2026-06-24",
+        "predicate": "reported investment already made in the Yongin first fab",
+        "predicate_family": "YONGIN_FAB_INVESTED_TO_DATE",
+        "primitive_tags": [
+          "YONGIN_FAB_INVESTED_ACTUAL"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_yongin_fab_invested_to_date_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "facility_investment",
+          "actual_execution"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix Yongin semiconductor-cluster first fab",
+        "subject_id": "000660:YONGIN_FAB:INVESTED_TO_DATE:20260624",
+        "unit": "KRW million",
+        "value": 4383200
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "facility investment execution",
+        "exact_quote": "청주 P&T7 어드밴스드 패키징 팹의 기\n투자금액은 53,473\n백만원 입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The filing separates KRW 53,473 million already invested from the future P&T7 estimate. It is target-direct execution evidence, but the text does not attribute this amount exclusively to HBM.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "investment already made in the Cheongju P&T7 advanced-packaging fab",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "cumulative through filing dated 2026-06-24",
+        "predicate": "reported investment already made in the P&T7 advanced-packaging fab",
+        "predicate_family": "PT7_FAB_INVESTED_TO_DATE",
+        "primitive_tags": [
+          "PT7_FAB_INVESTED_ACTUAL"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_pt7_invested_to_date_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "facility_investment",
+          "actual_execution"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix Cheongju P&T7 advanced-packaging fab",
+        "subject_id": "000660:PT7:INVESTED_TO_DATE:20260624",
+        "unit": "KRW million",
+        "value": 53473
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "production-equipment investment purpose",
+        "exact_quote": "취득 목적은 차세대 공정 양산 대응을 위한 EUV 장비 확보입니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The issuer identifies a concrete production-equipment purpose, but the quote does not say HBM-only, name a customer, or prove completed installation or production.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "EUV scanner acquisition intended to support next-generation process mass production",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "acquisition plan from 2026-03 through 2027-12",
+        "predicate": "stated next-generation process mass-production readiness as the EUV acquisition purpose",
+        "predicate_family": "EUV_NEXT_GENERATION_PROCESS_PURPOSE",
+        "primitive_tags": [
+          "EUV_PROCESS_READINESS_PLAN"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_euv_next_generation_process_purpose_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "equipment_investment",
+          "production_plan"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix EUV scanner acquisition plan",
+        "subject_id": "000660:EUV:ACQUISITION_PURPOSE:20260624",
+        "unit": "",
+        "value": "NEXT_GENERATION_PROCESS_MASS_PRODUCTION_READINESS"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "equipment cash-payment timing",
+        "exact_quote": "대금은 개별 장비의 인도 시 분할하여 지급할 예정이며, 장비 공급사와의 협의에 따라 인도 시점이 변경될 수 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The statement defines prospective cash-payment timing and its supplier-dependent uncertainty; it is not a record of paid CAPEX, final delivery, or HBM-only allocation.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "EUV equipment cash outflows planned in delivery-linked installments with variable delivery timing",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "planned equipment deliveries through 2027-12",
+        "predicate": "planned installment payments upon equipment delivery with delivery timing subject to supplier discussion",
+        "predicate_family": "EUV_DELIVERY_LINKED_INSTALLMENTS",
+        "primitive_tags": [
+          "EUV_DELIVERY_LINKED_CASHFLOW"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_euv_delivery_linked_installments_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "equipment_investment",
+          "cashflow_timing",
+          "uncertainty"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix EUV scanner acquisition payment plan",
+        "subject_id": "000660:EUV:PAYMENT_AND_DELIVERY:20260624",
+        "unit": "",
+        "value": "INSTALLMENTS_ON_DELIVERY; DELIVERY_TIMING_VARIABLE"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "equipment delivery schedule uncertainty",
+        "exact_quote": "또한 장비 공급사와의 계약 관계상 구체적인 인도 및 대금 지급 시점을 특정하기 어려우며, 최종 기계장치의 예상 인도일은 2027년 12월 31일입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The issuer provides an expected endpoint but explicitly says detailed timing is not determinable. The expected date is therefore not treated as a completed delivery or fixed cash-flow schedule.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "expected final EUV delivery date with contract-based inability to specify individual timing",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "expected final delivery 2027-12-31",
+        "predicate": "reported an expected final delivery date while stating that specific delivery and payment timing could not be fixed",
+        "predicate_family": "EUV_EXPECTED_FINAL_DELIVERY_UNCERTAINTY",
+        "primitive_tags": [
+          "EUV_EXPECTED_DELIVERY_NOT_ACTUAL"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_euv_final_expected_delivery_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "equipment_investment",
+          "delivery_schedule",
+          "uncertainty"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix EUV scanner acquisition delivery schedule",
+        "subject_id": "000660:EUV:EXPECTED_FINAL_DELIVERY:20260624",
+        "unit": "date",
+        "value": "2027-12-31 expected final delivery"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR counterparty governance",
+        "exact_quote": "본건 유상증자의 배정대상자인 해외 예탁기관은 당사 및 당사 최대주주와 「자본시장과 금융투자업에 관한 법률」 시행령 제2조 제4호에 따른 특수관계인에 해당하지 아니하며",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The official related-party status is relevant to transaction governance and allocation interpretation; it is not evidence that the ADR was issued or that any HBM customer contract exists.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Citibank N.A. reported as non-related to SK hynix and its controlling shareholder",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "filing dated 2026-06-24",
+        "predicate": "stated that the overseas depositary was not a related party of the issuer or controlling shareholder",
+        "predicate_family": "ADR_DEPOSITARY_NON_RELATED_PARTY",
+        "primitive_tags": [
+          "ADR_DEPOSITARY_NON_RELATED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_citibank_non_related_party_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "counterparty_governance"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "Citibank N.A. as proposed SK hynix ADR depositary",
+        "subject_id": "000660:ADR:CITIBANK_RELATED_PARTY_STATUS:20260624",
+        "unit": "",
+        "value": "NOT_RELATED_PARTY"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-a496f2fff2b891528afafbfd",
+        "economic_mechanism": "ADR deposit agreement plan",
+        "exact_quote": "당사는 해외 예탁기관과 본건 신주의 예탁 및 본건 ADR의 발행에 관한 예탁계약(Deposit Agreement, 이하 \"예탁계약\")을 체결할 예정입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is a concrete planned transaction agreement with the named depositary, but future tense is preserved: it is not a signed agreement, completed issuance, customer purchase contract, or HBM economics fact.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "planned deposit agreement covering original shares and ADR issuance",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "after filing dated 2026-06-24",
+        "predicate": "planned to enter a deposit agreement with the overseas depositary",
+        "predicate_family": "ADR_DEPOSIT_AGREEMENT_PLAN",
+        "primitive_tags": [
+          "ADR_DEPOSIT_AGREEMENT_PLANNED_NOT_SIGNED"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "skh_citibank_deposit_agreement_plan_20260624",
+        "question_family_tags": [
+          "capital_allocation",
+          "ADR",
+          "deposit_agreement",
+          "plan_contract_boundary"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix proposed ADR deposit agreement with Citibank N.A.",
+        "subject_id": "000660:ADR:CITIBANK_DEPOSIT_AGREEMENT:20260624",
+        "unit": "",
+        "value": "DEPOSIT_AGREEMENT_PLANNED"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "f89c74dc971ef516c9dfc16c9f45ee4e4c7d8b9485a0528a7d2c1c4976d88255",
+  "production_score_authority": false,
+  "prompt_hash": "a38f65b3254bf8cdc814116da38280cbd68d9c3088e18f75415c80b40caf5bb0",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-789d0bb3e7dd7d7107b0747fb2fff9c6dc5087dbbb5d8a61dd162678543c1319",
+  "response_id": "COLLABRESP-55c888ad59593ee602b18f4c263c3cb9586dbdefcd75af4bdc2cd5e2d7d604d3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

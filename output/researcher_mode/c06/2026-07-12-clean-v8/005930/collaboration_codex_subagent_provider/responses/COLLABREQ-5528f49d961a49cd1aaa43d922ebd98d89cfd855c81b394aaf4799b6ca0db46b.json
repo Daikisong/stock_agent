@@ -1,0 +1,1206 @@
+{
+  "output_schema_hash": "ad4d25b790fe2c8abd116bb10960f5d5b0adb8d8603f04cf4d29c5c2e255f113",
+  "payload": {
+    "fact_dispositions": [
+      {
+        "fact_row_index": 0,
+        "rationale": "qualification_state/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 1,
+        "rationale": "margin_fcf_conversion/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 2,
+        "rationale": "shipment_or_revenue_mix/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 3,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 별도 단기차입금 순증가 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 4,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 진행 중인 소송·조사의 현금 유출액과 시기가 불확실해 현금흐름 전망에 잔여 우발위험이 있다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 5,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 연결 부채비율 상승은 대규모 메모리 투자와 주주환원 이후의 재무여력 해석에 제약을 준다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 6,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 연결 기준 2026년 1분기말 판매보증·기술사용료·장기성과급·기타 충당부채 합계는 13,541,897백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 7,
+        "rationale": "actual_earnings_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 8,
+        "rationale": "customer_preorder_or_allocation/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 9,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 차량용 LPDDR4X가 영하 40도부터 영상 105도까지 안정적으로 작동한다는 제품 신뢰성 범위를 제시한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 10,
+        "rationale": "customer_preorder_or_allocation/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 11,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2025년 6월 최선단 10나노급 6세대 DRAM 양산은 HBM4에도 쓰이는 1c DRAM 공정의 상용 생산 실행을 확인한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 12,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 13,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 별도 현금 순증가 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 14,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 2026년부터 적용한 K-IFRS 1109·1107 금융상품 개정이 재무제표에 중요한 영향을 주지 않았다고 명시했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 15,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 협상 중인 기술사용계약의 예상 기술사용료를 충당부채로 인식했지만 실제 지급시기와 금액은 협상결과에 따라 달라진다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 16,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 이자 지급 현금 유출 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 17,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 관측 불가능한 투입변수로 평가하는 연결 Level 3 금융자산의 2026년 1분기말 잔액은 4,446,356백만원이다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 18,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: IFRS 18 적용은 당기순이익과 순자산을 바꾸지 않지만 새 영업이익 중간합계는 현재 표시 영업이익과 달라져 시계열 비교 기준이 변경된다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 19,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 Xealth 지분 100%를 인수해 디지털 헬스케어 사업에 자본을 배분했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 20,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: GDDR7의 최대 42.5Gbps 속도는 AI·그래픽 환경의 고성능 제품 차별화를 뒷받침한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 21,
+        "rationale": "actual_earnings_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 22,
+        "rationale": "capacity_supply_response/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 23,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 2026년 1분기 관계사와 생산설비 증설·효율화 목적의 기계장치 매각·매입을 집행했으며 SCS 거래액은 19,865백만원, 처분손익은 5,867백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 24,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기 투자활동 순현금유출은 16,838,578백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 25,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 연결 기준 2026년 1분기 현금흐름표상 배당금 지급은 13,824백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 26,
+        "rationale": "qualification_state/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 27,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 28,
+        "rationale": "capacity_supply_response/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 29,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 엔비디아 그래픽카드용 D램 공급에서 시작해 25년 이상 기술 협력을 이어왔다고 밝혔다. 이는 named-counterparty 관계를 확인하지만 현재 HBM 계약·배정·수량·가격 증거는 아니다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 30,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 부채비율 제한·담보제공·차입금 회수 같은 제약이 없는 금융계약을 위주로 체결하고, 예외는 별도 승인한다고 공시했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 31,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2025년 장기성과인센티브 일부는 이미 주식으로 지급됐지만 미지급 수량은 2026년 7월 양도제한 없는 주식으로 지급하기로 약정됐다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 32,
+        "rationale": "actual_earnings_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 33,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 보유 상장주식 가격이 1% 변할 때 별도 기타포괄손익의 세전 민감도는 43,593백만원으로 전분기 23,906백만원보다 커졌다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 34,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 차세대 메모리 기술과 중장기 수요 대응 투자는 향후 공급경쟁력 확보를 위한 실행 방향이다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 35,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 레인보우로보틱스 지분 20.3% 인수 절차를 2025년 3월 완료해 비메모리 성장자산에 자본을 배분했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 36,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기 유형자산 일반취득 및 자본적지출은 8,786,010백만원으로, 현금흐름표상 취득 지출과 구분되는 장부상 자산 증가액이다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 37,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 보고기간 후 종속기업 차입금 상환은 현금을 사용하면서 차입 부담을 낮춘다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 38,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 부채비율은 2025년 말 41.1%에서 2026년 3월 말 42.2%로 상승했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 39,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 별도 무형자산 취득 현금지출 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 40,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 미디어텍 최신 플래그십 모바일 AP에서 LPDDR5X 동작 검증을 완료해 고객 플랫폼 기반 상용화 실행 근거를 확보했다. 이는 검증 사실이며 공급계약이나 확정 물량을 의미하지 않는다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 41,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 연결 기준 2026년 1분기 이자 수취 현금은 931,109백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 42,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 메모리 생산라인의 100% 가동은 해당 분기의 유휴 공급 여력이 없었음을 보여준다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 43,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 분기보고서는 재무제표 재작성 해당사항이 없다고 명시해 보고 수치가 과거 오류 정정으로 다시 작성된 사례가 아님을 확인한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 44,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기 재무활동 순현금유출은 5,040,972백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 45,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2025년 12월 LPDDR 기반 서버용 SOCAMM2 개발은 HBM 외 AI 서버 메모리 제품군의 실행된 확장을 확인한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 46,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기말 담보부 단기차입금은 17,444,393백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 47,
+        "rationale": "contract_visibility/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 48,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 49,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: GDDR7의 총 1.92TB/s 대역폭은 최대 속도와 구분되는 시스템 처리량 경쟁력을 보여준다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 50,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 51,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 2026년 2분기에도 AI 제품 중심으로 메모리 공급을 운영할 계획이라고 밝혔다. 이는 정성 계획이며 실현 실적이 아니다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 52,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 연결 장기차입금 잔액 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 53,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: IFRS 18 적용 후 경영진 정의 성과측정치(MPM)는 한 개 주석에 구체적으로 공시해야 하며 실제 MPM은 2027년 공개 커뮤니케이션을 토대로 정해진다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 54,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 주식기준 보상을 위한 자기주식 취득은 현금 사용과 주식보상 재원을 동시에 확정한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 55,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 별도 장기차입금 조달 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 56,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 권역별 Cash Pooling, 해외 종속기업 차입한도, Moody's Aa2와 S&P AA- 신용등급은 대규모 유동성 필요 시 내부자금 공유와 자본시장 조달 접근성을 뒷받침한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 57,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기 무형자산 개별취득은 387,383백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 58,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 IFRS 18을 2027년부터 적용하지만 조기 적용하지 않았고, 실제 적용 영향은 통제 설계 미완료와 향후 회계정책 변경 가능성 때문에 아직 확정되지 않았다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 59,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: AMD 공식 뉴스룸은 MOU 아래 양사가 차세대 AMD Instinct MI455X용 primary HBM4 supply에 맞춰 협력한다고 확인한다. 명명 고객·제품의 미래 공급 가시성을 독립적으로 보강하지만 MOU 기반 정렬이므로 확정 구매계약, 물량, 가격, 기간 또는 취소조건으로 승격하지 않는다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 60,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 61,
+        "rationale": "margin_fcf_conversion/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 62,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 연결회사는 성과연동주식보상제도와 관련해 2026년 1분기 265,248백만원의 비용을 인식했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 63,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2026년 1분기 데이터센터 AI 인프라 CAPEX 확대와 Agentic AI 초기 수요가 서버향 메모리 수요 강세를 만들었다는 회사의 시장 평가는 수급 우호성을 설명한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 64,
+        "rationale": "actual_earnings_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 65,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기 종속·관계·공동기업 투자 취득액은 178,355백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 66,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 미국 반도체 보조금 관련 채무소멸 시까지의 모회사 지급보증은 보조금 계약 불이행 시 발생 가능한 우발 현금부담이다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 67,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자가 해외종속기업 자금조달을 위해 제공한 채무보증 한도 합계는 12,255,276백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 68,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 공시대상기간 중 신규 지분증권 발행이 없어 해당 기간의 발행 희석은 발생하지 않았다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 69,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자가 해외종속기업 계약이행을 위해 제공한 지급보증 한도는 623,153백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 70,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 연결 현금 순증가 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 71,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 FlaktGroup 지분 100%를 인수해 중앙공조 사업에 자본을 배분했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 72,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2026년 1분기 삼성전자 별도 기준 SSI 및 SSS와의 반도체 매출입 등 관계사 영업거래액은 각각 39,492,155백만원과 19,842,655백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 73,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 74,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: Level 3 기타 금융자산의 가격변동성 가정을 합리적으로 바꾸면 세전 당기손익이 13,536백만원 증가하거나 13,469백만원 감소할 수 있다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 75,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 별도 유형자산 취득 현금지출 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 76,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기말 판매보증·기술사용료·장기성과급·기타 충당부채 합계는 10,840,759백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 77,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: PC·모바일 수요 부담에도 공급사들이 서버 중심으로 공급을 대응하면서 전반적 메모리 공급 부족이 지속될 것이라는 전망은 가격·수급의 지속성을 뒷받침하되 실현된 사실과 구분해야 한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 78,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: SOCAMM2의 분리형·수평 장착 구조는 서버 메모리의 공간 활용도와 냉각 효율을 높이는 제품 실행 특성이다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 79,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 자본변동표는 2026년 1분기 배당으로 이익잉여금이 3,753,484백만원 감소했다고 보고했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 80,
+        "rationale": "qualification_state/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 81,
+        "rationale": "cash_or_revision_conversion/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 82,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 법인세 납부 현금 유출 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 83,
+        "rationale": "actual_earnings_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 84,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자와 Qualcomm이 차량용 반도체 분야에서 첫 협력을 시작해 LPDDR4X를 Snapdragon Digital Chassis에 공급했다는 실제 고객·제품 귀속을 확인한다. 물량·가격·취소조건은 제시되지 않았다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 85,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 전사 연구개발 지출 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 86,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 분기말 미발생 유형·무형자산 취득 약정액은 18,278,614백만원으로, 향후 현금투입 의무를 나타낸다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 87,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 88,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 초기 샘플 출하 후 고객 일정에 맞춰 HBM4E 양산을 시작할 계획이지만 확정 물량·가격·계약조건은 제시되지 않았다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 89,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 1c DRAM이 5세대 DRAM보다 생산성을 30% 이상 높였다는 실제 제품 특성은 동일 설비의 공급 대응력과 원가 효율을 개선한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 90,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 91,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 92,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 분기 연결재무제표에는 경영진의 추정과 가정이 포함되며 실제 결과가 달라질 수 있어 보고 수치의 추정 불확실성을 남긴다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 93,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 연결 종속기업 Harman은 Sound United 지분 100%를 인수해 오디오 사업에 자본을 배분했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 94,
+        "rationale": "revenue_visibility_contract/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 95,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 장기간 연속된 분기·결산배당 이력은 과거 자본환원 집행의 반복성을 보여주지만 미래 배당 의무를 뜻하지는 않는다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 96,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 순이익 급증기에 현금배당성향이 5.2%로 낮아져 이익 증가가 같은 비율의 현금환원으로 전환되지는 않았다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 97,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 주식기준보상 목적 자기주식 취득 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 98,
+        "rationale": "shipment_or_revenue_mix/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 99,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: AMD 공식 뉴스룸은 삼성전자와 AMD가 차세대 AI 메모리·컴퓨팅 기술의 전략적 협력을 확대하는 MOU를 체결했다고 독립적으로 확인한다. 이는 기술·전략 관계의 CUSTOMER_OFFICIAL corroboration이며 구매계약이나 확정 공급조건을 뜻하지 않는다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 100,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 분기말 연결 현금 유동성 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 101,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 고열전도성 신소재로 GDDR7 패키지 열저항을 11% 개선해 고성능 환경의 신뢰성을 높였다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 102,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 단기차입금 순증가를 통한 재무현금 조달 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 103,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 예상 배당재원을 반영한 추가 배당은 정규배당 외 잉여자본 환원의 실제 집행을 보여준다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 104,
+        "rationale": "margin_fcf_conversion/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 105,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 연결 기준 2026년 1분기 배당금 수입 현금은 28,211백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 106,
+        "rationale": "cash_or_revision_conversion/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 107,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 108,
+        "rationale": "margin_fcf_conversion/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 109,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 개정 현금흐름표에서는 이자수취·배당수입이 영업에서 투자로, 이자지급이 영업에서 재무로 재분류되어 향후 영업현금흐름의 기간 비교가 달라진다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 110,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 상위 5대 고객이 전체 매출의 약 23%를 차지해 회사 전체 매출의 고객 집중 위험이 존재하지만 이를 메모리/HBM 고객 집중도로 해석할 수는 없다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 111,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 자기주식 소각을 통한 자본구조 조정 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 112,
+        "rationale": "cash_or_revision_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 113,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: OpenAI 스타게이트 수요에 삼성전자 메모리 사업이 대응하려는 issuer 계획으로 고객 접점과 잠재 공급 기회를 보여준다. 그러나 계획 문구만으로 체결된 구매계약, 확정 배정량·가격, 취소 조건 또는 매출을 인정하지 않는다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 114,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 메모리 실제 생산량은 수요에 대응해 공급된 물량 기반을 확인한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 115,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자와 AMD가 차세대 AI 메모리·컴퓨팅 협력 확대 MOU를 체결했지만 MOU를 확정 구매계약으로 확대하지 않는다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 116,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 공시된 메모리 생산능력은 공급 가능한 물량 기반과 후속 증설 필요성을 정량화한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 117,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: IFRS 18 이후 간접법 영업현금흐름의 출발점은 당기순이익에서 새 영업이익으로 바뀌어 조정항목과 시계열 비교가 달라진다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 118,
+        "rationale": "actual_earnings_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 119,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기 배당금 수입 현금은 251,636백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 120,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 사채 및 장기차입금 상환 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 121,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 성과연동주식보상 비용 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 122,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2026년 3월 말 공모 회사채 미상환 잔액은 151.34억원이며 1년 이하와 1~2년 만기에 절반씩 분포한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 123,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2026년 1분기 주식기준보상 약정의 희석성 잠재효과가 62,715,049주로 전분기 845,000주보다 크게 늘어 주당가치 희석 모니터링 필요성을 높인다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 124,
+        "rationale": "qualification_state/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 125,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 126,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기말 재고자산 평가충당금은 3,418,640백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 127,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 128,
+        "rationale": "cash_or_revision_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 129,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 발표한 10조원 자기주식 매입 프로그램을 3조원 소각과 추가 7조원 취득으로 집행했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 130,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 131,
+        "rationale": "cash_or_revision_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 132,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2026년 3월 말 삼성전자 별도 기준 해외 채무보증의 보증부 채무금액은 112,415천달러였고 보증한도는 8,037,843천달러였다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 133,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기 장기차입금 상환 현금유출은 76,476백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 134,
+        "rationale": "medium_term_revision_visibility/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 135,
+        "rationale": "cash_or_revision_conversion/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 136,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2026년 1분기 연결 현금흐름에서 장단기충당부채 증가가 2,693,921백만원의 영업현금 유입 요인이었지만, 동시에 향후 이행할 충당부채가 늘어난 반대 근거다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 137,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 연결 재고자산의 운전자본 부담 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 138,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 보고기간 후 자기주식 소각은 이미 매입한 주식을 제거하여 주식 수와 투입 자본을 줄인 자본환원 실행이다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 139,
+        "rationale": "cash_or_revision_conversion/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 140,
+        "rationale": "capacity_supply_response/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 141,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 Agentic AI 확산으로 범용 서버 역할이 커져 서버향 DRAM 추가 수요가 예상보다 가파르게 증가할 것으로 전망했다. 함께 언급된 SSD 수요는 이 DRAM 행에 귀속하지 않는다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 142,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 다수의 주요 고객사로 HBM4 공급을 확대할 예정이라고 밝혔다. 고객명·확정물량·가격·계약조건은 제시되지 않은 계획이다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 143,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기 종속·관계·공동기업 투자 처분액은 8,370백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 144,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2026년 1분기 감사보고서 표에는 강조사항과 핵심감사사항이 모두 해당 없음으로 표시됐다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 145,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기 이자 수취 현금은 80,297백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 146,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: IFRS 18은 재무정보 통합·세분화 원칙을 강화하며 삼성전자는 현재 '기타' 항목을 검토해 더 유용한 명칭으로 바꿀 예정이다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 147,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 2026년 하반기 신규 CPU·GPU 출시에 따른 초기 메모리 수요에 대응할 계획이라고 밝혔다. 이는 수요 대응 계획이지 확정 주문이 아니다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 148,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 보고기간말 연결 상장지분상품 가격이 1% 변동하면 세전 당기손익은 1,324백만원, 기타포괄손익은 189,802백만원씩 변동한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 149,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2027년부터 고객 요구에 맞춘 Custom HBM 샘플링을 순차 시작할 계획이며 실제 출하·인증·계약과는 구분한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 150,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 결산·분기배당 모두 배당액 결정 뒤 기준일 지정이 불가능하고 개선 계획도 검토 중이어서 절차상 예측가능성이 제한된다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 151,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 2026년 1분기 보통주에 지급할 배당금 2,154,834백만원을 공시했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 152,
+        "rationale": "hbm_product_profile/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 153,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: SOCAMM2가 기존 RDIMM보다 전력 소비를 55% 이상 낮춰 AI 서버의 전력·냉각 부담을 줄일 수 있다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 154,
+        "rationale": "cash_or_revision_conversion/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 155,
+        "rationale": "actual_earnings_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 156,
+        "rationale": "actual_earnings_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 157,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: SOCAMM2가 기존 RDIMM 대비 2배 이상의 대역폭을 제공해 AI 서버 워크로드의 성능 요구에 대응한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 158,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 인력 유지 목적 주식보상 약정 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 159,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 연결 장기차입금 조달 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 160,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 글로벌 완성차·부품 업체 고객에게 LPDDR4X를 장기 공급할 계획이라고 밝혔다. 이는 발행사 계획이며 계약기간·확정물량·가격은 제시되지 않았다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 161,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 2026년 1분기 SOCAMM2 첫 양산 제품 출하를 개시했다. 같은 문장의 HBM4 출하는 prior fact와 중복되어 이 행에 재포함하지 않았다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 162,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 전략 파트너인 OpenAI의 고성능 DRAM 잠재 수요 규모를 제시해 삼성전자 메모리 기회의 상단을 보여준다. 이 숫자는 OpenAI 전체 필요 전망이지 삼성전자에 확정된 공급 물량, HBM 물량, 매출 또는 issuer guidance가 아니다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 163,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 2026년 2분기 공급 계획을 설명하면서 메모리 공급 가용량이 제한되어 있다고 명시했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 164,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2025년 1월 24Gb GDDR7 양산은 AI·그래픽용 고성능 DRAM의 상용화 실행을 확인한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 165,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기말 재고자산 장부금액은 30,889,508백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 166,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: PSU는 성과 가득조건을 충족할 경우 2028년부터 3년에 걸쳐 분할 지급하기로 약정돼 장기간에 걸친 조건부 주식보상 의무를 만든다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 167,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2026년 1분기 현금배당은 선언된 주주환원 정책의 실제 집행 규모를 확인한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 168,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기 법인세 납부 현금은 137,485백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 169,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 분기 배당을 통한 자본 환원 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 170,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 회사는 2024~2026년 FCF의 50%를 재원으로 연 9.8조원 정규배당과 잔여 재원 추가 환원을 계획했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 171,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 정부보조금 현금 유입 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 172,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: Level 3 금융자산의 관측 불가능한 가정을 합리적으로 바꾸면 세전 기타포괄손익이 271,310백만원 증가하거나 173,859백만원 감소할 수 있다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 173,
+        "rationale": "shipment_or_revenue_mix/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 174,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: GDDR7이 그래픽 DRAM 최고 용량 24Gb를 구현해 고용량 그래픽 카드 수요에 대응한다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 175,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2026년 1분기말 연결 해외 채무보증의 채무금액은 483,262천달러로, 특정 보조금 보증 한도와 별개인 실제 보증부 채무 노출을 보여준다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 176,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 연결 기준 2026년 1분기 재무활동 순현금유출은 5,455,268백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 177,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2026년 1분기 메모리 사업은 AI 수요 강세 아래 서버향 제품 판매 확대에 주력했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 178,
+        "rationale": "actual_earnings_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 179,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기 이자 지급 현금은 271,964백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 180,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 2026년 1분기 우선주에 지급할 배당금 298,482백만원을 공시했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 181,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 연결 채무보증에는 만기와 일반 신용조건을 반영한 수수료가 부과되며, 2025년 청구한 삼성전자 1,199천달러와 삼성디스플레이 2,841천달러를 2026년에 수취했다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 182,
+        "rationale": "actual_earnings_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 183,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: AMD CEO가 삼성 메모리 기술과 AMD GPU·CPU·랙 플랫폼의 결합을 직접 언급해 기술 협력 범위를 확인했지만 구매의무는 아니다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 184,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 별도 분기말 현금 유동성 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 185,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 연결 단기차입금 잔액 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 186,
+        "rationale": "cash_or_revision_conversion/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 187,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자는 고성능·고용량 DDR5와 SOCAMM2 등 AI 관련 제품의 비중을 계속 높일 계획이라고 밝혔다. 이는 제품 믹스 계획이며 실제 매출 비중은 제시되지 않았다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 188,
+        "rationale": "capacity_supply_response/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 189,
+        "rationale": "margin_fcf_conversion/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 190,
+        "rationale": "cash_or_revision_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 191,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기말 장기차입금 합계는 24,189,761백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 192,
+        "rationale": "margin_fcf_conversion/COUNTER에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 193,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자 별도 기준 2026년 1분기 장기금융상품 취득 현금유출은 700,000백만원이었다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 194,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: AMD AI 가속기용 HBM4 우선 공급업체 지정과 MI455X 탑재 계획은 named customer 공급 가시성을 직접 제공하지만 물량·가격·기간은 비공개다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 195,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 2026년 1분기 퇴직금 지급이 연결 영업현금흐름에서 813,729백만원의 현금 유출로 반영됐다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 196,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 1c DRAM의 저전력 특성이 5세대보다 약 10% 개선되어 AI 메모리 고객의 전력 효율 요구 대응력을 높인다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 197,
+        "rationale": "memory_price_increase_mentioned/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      },
+      {
+        "fact_row_index": 198,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: AI 경쟁력 확보를 위한 연구개발·시설투자 지속 방침은 공급 역량을 뒷받침할 수 있지만, 금액·회수기간·사업별 배분이 없어 현금소요와 실현 ROIC가 열려 있다. HBM 전용 CAPEX 또는 이미 집행된 actual로 귀속하지 않는다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 199,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: AMD CEO는 AMD 공식 뉴스룸에서 삼성의 advanced memory와 AMD Instinct GPU, EPYC CPU, rack-scale platform을 결합하는 협력 확대를 직접 확인했다. 이는 기술 참여의 독립 counterparty corroboration이며 구매의무나 매출을 의미하지 않는다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 200,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 연결 재고자산 평가충당금 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 201,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 양도제한주식 보상 비용과 자본 대체 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 202,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 자기주식 취득에 대한 현금 배분 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 203,
+        "rationale": "허용 primitive와 직접 일치하지 않는다: 삼성전자가 OpenAI의 전략적 파트너 협력 체계에 공식 참여했다는 관계 증거다. 다만 LOI는 의향서이며 삼성전자 메모리 구매계약, 확정 물량·가격, 선수금 또는 매출 actual을 뜻하지 않는다. 전사·DRAM·계획 사실을 HBM 계약·배정·병목으로 전이하지 않고 NO_MATCH 처리했다.",
+        "status": "NO_MATCH"
+      },
+      {
+        "fact_row_index": 204,
+        "rationale": "actual_earnings_conversion/SUPPORT에 직접 포함했으며 다른 mapping에 재사용하지 않았다.",
+        "status": "MAPPED"
+      }
+    ],
+    "mapping_complete": true,
+    "mappings": [
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          8,
+          10
+        ],
+        "primitive_id": "customer_preorder_or_allocation",
+        "semantic_rationale": "AMD 공식 자료가 명명 고객의 HBM3E 실제 공급 이력을 확인한다. 이는 고객별 가격·물량을 뜻하지 않지만 named-customer shipment라는 primitive 의미에는 직접 맞는다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          94
+        ],
+        "primitive_id": "revenue_visibility_contract",
+        "semantic_rationale": "중요한 장기공급계약 수주거래가 없다는 제한적 공시는 다른 계약의 부재를 뜻하지 않지만, 계약 기반 매출 가시성의 직접적인 제약이다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          197
+        ],
+        "primitive_id": "memory_price_increase_mentioned",
+        "semantic_rationale": "메모리 평균판매가격이 전년 평균 대비 실제 상승했다는 수치는 실현 가격 상승 primitive에 직접 대응한다. HBM 단독 판가로 귀속하지 않는다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          134
+        ],
+        "primitive_id": "medium_term_revision_visibility",
+        "semantic_rationale": "발행사가 2026년 HBM 매출을 전년 대비 3배 이상으로 전망한 forward guidance는 중기 실적 가시성에 직접 대응하되 actual로 승격하지 않는다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          0,
+          26,
+          80,
+          124
+        ],
+        "primitive_id": "qualification_state",
+        "semantic_rationale": "HBM 고객 샘플 제공·출하와 양산 준비는 고객 평가 과정의 현재 상태를 직접 보여준다. 인증 통과나 확정 주문으로 확대하지 않는다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          47
+        ],
+        "primitive_id": "contract_visibility",
+        "semantic_rationale": "엔비디아 대상 HBM 공급은 계획·협의 상태이며 서명 계약, 확정 배정, 물량·가격이 없다는 점이 계약 가시성의 직접 counter다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          112,
+          128,
+          131,
+          190
+        ],
+        "primitive_id": "cash_or_revision_conversion",
+        "semantic_rationale": "매입채무·선수금의 운전자본 유입과 별도·연결 영업현금흐름 actual은 전사 현금전환을 직접 확인한다. HBM 단독 현금흐름으로 귀속하지 않는다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          81,
+          106,
+          135,
+          139,
+          154,
+          186
+        ],
+        "primitive_id": "cash_or_revision_conversion",
+        "semantic_rationale": "미지급비용·미지급금·재고·매출채권 및 전체 운전자본 유출은 전사 현금전환을 직접 약화한다. HBM 전용 부담으로 오귀속하지 않는다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          12,
+          27,
+          48,
+          50,
+          60,
+          73,
+          87,
+          90,
+          91,
+          107,
+          125,
+          127,
+          130,
+          152
+        ],
+        "primitive_id": "hbm_product_profile",
+        "semantic_rationale": "HBM 세대의 속도·용량·적층·베이스다이·열·효율·실물 개발 정보는 제품 profile primitive에 직접 대응한다. 계획 사양은 계획으로 유지한다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          2,
+          98,
+          173
+        ],
+        "primitive_id": "shipment_or_revenue_mix",
+        "semantic_rationale": "HBM 판매 확대가 동반된 메모리 실적, HBM4 양산 출하, HBM3E 공급 중이라는 actual은 출하·매출 mix 방향을 직접 지지하되 HBM별 금액은 추정하지 않는다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          7,
+          21,
+          32,
+          64,
+          83,
+          118,
+          155,
+          156,
+          178,
+          182,
+          204
+        ],
+        "primitive_id": "actual_earnings_conversion",
+        "semantic_rationale": "메모리 매출과 연결·별도 매출, 영업이익, 순이익, EPS actual은 실제 earnings conversion을 확인한다. 전사·메모리 수치를 HBM 단독 손익으로 전환하지 않는다."
+      },
+      {
+        "direction": "COUNTER",
+        "fact_row_indices": [
+          1,
+          61,
+          104,
+          108,
+          189,
+          192
+        ],
+        "primitive_id": "margin_fcf_conversion",
+        "semantic_rationale": "유형·무형자산 투자, R&D, 투자활동 현금유출과 미집행 자본약정은 전사 FCF 전환의 직접 부담이다. 해당 금액을 HBM CAPEX로 귀속하지 않는다."
+      },
+      {
+        "direction": "SUPPORT",
+        "fact_row_indices": [
+          22,
+          28,
+          140,
+          188
+        ],
+        "primitive_id": "capacity_supply_response",
+        "semantic_rationale": "HBM 생산거점·클린룸 기반 공급 대응·통합 인프라·선제 설비투자 계획은 HBM 공급 대응 경로에 직접 맞는다. 확정 증설량이나 고객 배정으로 확대하지 않는다."
+      }
+    ],
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "3c4a9f489556e102decde31b1dfc0875ffeeb28727bd8271387e181861ec2194",
+  "production_score_authority": false,
+  "prompt_hash": "e5ce07f9223e5afd133d2c3a1c5816a2bd0e250def6c47e6c5188f388ff830da",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5528f49d961a49cd1aaa43d922ebd98d89cfd855c81b394aaf4799b6ca0db46b",
+  "response_id": "COLLABRESP-adcb5566a8c82c406a50957c5db0537b1d89142d7590d9aa1cdfa5a8feae5d5e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

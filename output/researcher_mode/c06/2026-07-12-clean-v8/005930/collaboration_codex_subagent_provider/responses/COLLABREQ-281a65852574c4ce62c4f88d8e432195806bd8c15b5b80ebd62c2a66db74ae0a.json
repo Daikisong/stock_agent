@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-1b538c41b109ca006f7b82cb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「20250526_Mirae Asset Minutes (25년 10호).pdf」는 securities.miraeasset.com의 PUBLIC_BROKER_PDF 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-e56f999851208142d7b4f613",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「meritz - 한국IR협의회」는 w3.kirs.or.kr의 PUBLIC_BROKER_PDF 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-0a27566847766d456276e540",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「지원정책 지피지기」는 www.hanaw.com의 PUBLIC_BROKER_PDF 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-27db58c8d3efe3306579bc64",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「IT 하드웨어(반도체/디스플레이/부품)김운호 - Статистика та аналітика....」는 telemetr.io의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-51d7fddc4dcfa3edc615e9e9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「2025 하반기전망」는 www.hanaw.com의 PUBLIC_BROKER_PDF 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-70b3affe143e8e2897708320",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「252026북미진출전략.pdf」는 dl.kotra.or.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-805d810e6129152db2c4f096",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「[데일리 자료] 26.01.02 아침에 읽는 주식뉴스모음」는 contents.premium.naver.com의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-b65849a36e18f328b4703a33",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「20240507190252806K_02.pdf 파일 다운로드」는 home.imeritz.com의 PUBLIC_BROKER_PDF 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-143db905428d41b0d3ff281e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「20250414_Mirae Asset Minutes (25년 07호).pdf」는 securities.miraeasset.com의 PUBLIC_BROKER_PDF 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-6077d110221aedc8930e922e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「20230118_B_swlee6591_770.pdf」는 www.eugenefn.com의 PUBLIC_BROKER_PDF 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-9840d25775243f9b36f0ed93",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「사 업 보 고 서」는 kind.krx.co.kr의 KIND_KRX 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-275a1c18a6c18875082a9df4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「글로벌 전략기술 인텔리전스체계 구축사업 (1차년도)」는 www.stepi.re.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P6의 supplied candidate 12개를 모두 exact-once 검토했으며 NVIDIA/OpenAI 소유 CUSTOMER_OFFICIAL full route는 없었다.",
+      "Snippet과 metadata는 discovery-only이며, 제3자·broker·issuer·navigation 경로는 이 counterparty-official objective의 evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "64f7d7dd3ae6890191eec4e3da536986981dafab8dd7f60a21b94a07f54de20f",
+  "production_score_authority": false,
+  "prompt_hash": "a1f6023f74ba4e4eab8d05da7a2a28c327251f43ccd1de6a7a27f7177fa2bf46",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-281a65852574c4ce62c4f88d8e432195806bd8c15b5b80ebd62c2a66db74ae0a",
+  "response_id": "COLLABRESP-88df0bf692902bf19ed89295bd9a297514ebaa33d98590f787edc6281edf7742",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

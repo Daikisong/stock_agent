@@ -1,0 +1,61 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      11.7,
+      14.1
+    ],
+    "anchor_comparisons": [
+      "CANCH-5eb80a11ed23fc1102335092는 POSITIVE ordinal anchor로 [11.95, 14.05] 범위를 제시한다. 현재 사실과 정확한 기업·기간 대응은 아니므로 점수 scale 경계로만 사용한다.",
+      "CANCH-1aa76cb8e89d85cd78d325f4는 COUNTER ordinal anchor로 [9.95, 12.05] 범위를 제시한다. 현재 사실과 정확한 기업·기간 대응은 아니므로 점수 scale 경계로만 사용한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c07ed486e6d67134d19d6951",
+      "EFACT-c418009dc8a6493dd0a098b4"
+    ],
+    "disagreements": [
+      "제품 실행과 고객 협업을 취소불가 장기계약 또는 HBM 전용 backlog로 승격하는 해석에는 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-5eb80a11ed23fc1102335092",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 12.9,
+    "rationale": "DRAM actual 성장, 메모리 100% 가동과 HBM 가격·제품·ASIC 협업은 가시성을 높인다. 그러나 월/분기 물량·가격 합의, 고객 집중과 재고·재공품 위험, 장기 계약·선수금·RPO 부재 때문에 medium band인 12.9점으로 보정한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "HBM 장기 계약, 확정 물량·가격, 선수금·취소조건 및 HBM 전용 capacity lock이 없다.",
+    "why_not_lower": "DRAM actual 확대, 메모리 100% 가동, HBM 가격 주도와 제품·고객 실행 및 구조화 revision plane이 존재한다."
+  },
+  "payload_hash": "ce2e264ab5e61ed60cfb1aa787a862a583c9472b993524fff7373af0cfb23ada",
+  "production_score_authority": false,
+  "prompt_hash": "bf872afd2b30206141b1ea03b31bfff7265328bf4701ee1d6d37f33d58d2bac0",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1b46ebddf2293db009dfb6d33b0c33b8e76df8bfd9aa19e9a2a51bb175c91f67",
+  "response_id": "COLLABRESP-63f1c9508f09a3c7fadb4850cac2a74d98bc57c4522c38e4570dd5ae215e4b23",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

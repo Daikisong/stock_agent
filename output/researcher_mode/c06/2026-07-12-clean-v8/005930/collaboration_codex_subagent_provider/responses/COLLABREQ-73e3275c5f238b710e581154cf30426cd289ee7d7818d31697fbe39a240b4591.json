@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-6886110c9020fac22ffd006b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Bondweb broker download landing이며 OpenAI CUSTOMER_OFFICIAL original/full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d2e978e63ba6b64325945614",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Naver 인플루언서 홈으로 objective-bound 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9840d25775243f9b36f0ed93",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "다른 회사의 KIND 사업보고서로 OpenAI와 삼성의 관계를 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-501b44576f12f02b136ff652",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "NIA AI 가치사슬 보고서로 OpenAI 공식 partnership 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ec84f8c894228de5aefe23f9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "미래에셋 리서치 PDF로 요청된 CUSTOMER_OFFICIAL family와 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-d13f6854bccb2e1d72080e6c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "다른 회사의 KIND 분기보고서이며 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-5ec3ad7debaa1e1c2adf34cf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "Perplexity discovery page로 OpenAI 고객 공식 original source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-402e003a7e18ce5efd52247c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "다른 회사의 KIND 사업보고서로 대상 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-98f35ead937727fa03d50c2a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "커뮤니티 게시글이며 NVIDIA 또는 OpenAI 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b9e49ea9efdb809dedfc0a22",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "Naver 제3자 모닝리포트로 CUSTOMER_OFFICIAL source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-01864bf99eaca992da71775c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "다른 회사의 KIND 반기보고서이며 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-e2c59fb09676b5927779a27f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "Naver 제3자 모닝리포트로 OpenAI 공식 full-source가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition에는 OpenAI CUSTOMER_OFFICIAL original/full-source route가 없다. material0과 검색 스니펫은 evidence, source absence 또는 completion을 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "87399e43becca8ff21c091616d1c97f6649c165af251474edc9e76eaed4b52ef",
+  "production_score_authority": false,
+  "prompt_hash": "56b1eb9ded332dbbb7ae2ade8bcf9c3097f21a743e178589a98332174e7b9d5c",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-73e3275c5f238b710e581154cf30426cd289ee7d7818d31697fbe39a240b4591",
+  "response_id": "COLLABRESP-5a871aa437593068a5aa0044e096f31c5d5910726e5b9e68e228884e41ddf77f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "output_schema_hash": "4e89d8d29eae4c86eec520d955746a10c5e7218e6276ba1eb6d5bae882989080",
+  "payload": {
+    "allowed_range": [
+      3.9,
+      5.6
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-cf3c9742b856a43c5c18a073 (POSITIVE WEAK, 0.00~0.96): 실제 HBM 매출 2배 이상 성장, HBM4 고객요청 수량 양산, HBM 가격상승·상용화 실행과 메모리 100% 가동이 있어 단순 약한 긍정보다 분명히 강하다. 이 앵커는 low-confidence ordinal-only이므로 점수 템플릿으로 쓰지 않았다.",
+      "ORDTRANSFER-c54e0c02076da1642b64c8df (POSITIVE MEDIUM, 4.32~5.52): actual HBM 실행과 현재 valuation 관측치는 있으나 HBM-only 이익·FCF 분모와 보호된 계약조건이 없는 현재 상태에 가장 가까운 긍정 앵커다.",
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a (POSITIVE STRONG, 11.40~12.00): 숫자로 잠긴 CAPA, 고객별 예약물량, signed price·volume·duration, HBM-only cash conversion이 없어 strong rerating 조건과는 큰 차이가 있다.",
+      "ORDTRANSFER-a99b35934948524825bcefbe (COUNTER ZERO, 0.00~0.60): 실제 HBM 매출·양산·가격 실행과 current/forward/trailing valuation 자료가 있어 증거가 거의 없는 zero 상태보다 강하다.",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b (COUNTER WEAK, 2.83~4.03): 재고·WIP·계약손실과 고객 집중, 혼합 valuation 신호는 이 약한 반대 앵커의 상단과 겹치지만 actual HBM execution 때문에 중심점은 그보다 높다.",
+      "ORDTRANSFER-75306723611a10615f950fec (COUNTER STRONG, 11.40~12.00): 반대 증거가 현금전환과 상단을 제약하지만 실제 HBM 사업전환을 전면 부정하는 strong-counter 상태는 아니다. 역시 ordinal 방향 비교에만 사용했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-c07ed486e6d67134d19d6951"
+    ],
+    "disagreements": [
+      "forward PE 6.13배 하나만으로 저평가를 확정하지 않는다. forward EV/EBITDA·PB, trailing PE·PB와 FCF yield를 함께 보면 valuation 신호가 혼합돼 있다.",
+      "고객요청 수량 양산과 ASIC 협업을 signed purchase obligation으로 해석하지 않는다. 기술·생산 실행과 계약으로 보호된 durable visibility는 서로 다른 증거 층이다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 4.8,
+    "rationale": "긍정 plane은 2026년 1분기 메모리 생산 11,465,147백만원과 평균가동률 100%, 별도 DRAM 매출 39,758,279백만원, HBM이 가격상승 주도 제품군과 고부가 판매 basket에 포함된 실제, HBM Time-to-Market 실행, FY2025 HBM 매출 2배 이상 성장, 고객 ASIC 협업 및 HBM4 고객요청 수량 양산으로 구성된다. 또한 HBM·서버 DRAM 수요 확대와 메모리 수요가 공급역량을 웃돈다는 issuer outlook, M15X·용인 확장, P&T7·Indiana 패키징, M15X·용인·EUV 투자 계획은 forward direction을 보강한다. Current valuation도 2026-07-10 주가·시가총액과 forward PE 6.13배, EV/EBITDA 27.21배, FCF yield 1.78%, forward PB 6.91배, trailing PE 20.68배, trailing PB 9.46배로 관측 가능하다. 그러나 낮은 forward PE와 높은 EV/EBITDA·PB 및 낮은 FCF yield가 충돌하고 일부 분모가 derived scenario다. Durable visibility도 주로 memory-wide issuer plan이며, HBM-only revenue mix·margin·EPS·CAPEX·working capital·FCF와 named customer의 signed price·volume·duration·cancellation·allocation protection이 없다. Counter plane의 고객 A/B 집중, 재고평가충당금 411,714백만원, WIP 9,627,923백만원, 중국 생산 재공품 계약손실충당부채 162,582백만원은 현금전환과 multiple 상단을 제약한다. 따라서 실제 HBM execution과 valuation 관측성을 인정하되 HBM-only denominator bridge와 보호된 수요 가시성 부재를 보존하여 4.8점, 3.9~5.6점으로 판단한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-65b0834b92258006acfacf85",
+      "EFACT-793b1cbbdc783d3329b6d6c8",
+      "EFACT-9657d8948101c516333a456b",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-ba66b6dd060612b4ef02b2c0",
+      "EFACT-bb91ecbbd8d864664f4994f5",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-e7b5a6f6472ae963fe820932",
+      "EFACT-fbebe9bd766d3ccabf23232b",
+      "EFACT-fd7995c7d059c87c9d390d9b",
+      "EFACT-fe3de19254ddabef098a6b03"
+    ],
+    "why_not_higher": "HBM-only 매출비중·margin·EPS·CAPEX·working capital·FCF bridge와 signed 고객 price·volume·duration·취소보호·allocation이 없다. Durable visibility는 memory-wide issuer plan이고, 높은 EV/EBITDA·PB·trailing multiples와 낮은 FCF yield, 고객집중·재고·계약손실 위험이 상단을 막는다.",
+    "why_not_lower": "HBM 매출 2배 이상 성장, HBM4 고객요청 수량 양산, HBM Time-to-Market과 가격상승 기여, 메모리 100% 가동 및 demand-over-capacity, 관측 가능한 current/forward/trailing valuation이 있어 단순 기대나 무증거 상태보다 강하다."
+  },
+  "payload_hash": "cef4b9c34773445e6c38f2c697a45b2311fd0837387a7df84f3f8864c1012de5",
+  "production_score_authority": false,
+  "prompt_hash": "3ac6454f40ebd3284ecb2dbfc4fa9404736ba9ba0b98c42cf6e2e3f84f60f60a",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9a5b29f938a8cb5ca2929b8dcf045c13408747c034880e7d80ddc540a521b0e5",
+  "response_id": "COLLABRESP-5aa61de5b8be7fd2a74c57e0556f6ee70ae53037426794e571a99f696c379c0f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

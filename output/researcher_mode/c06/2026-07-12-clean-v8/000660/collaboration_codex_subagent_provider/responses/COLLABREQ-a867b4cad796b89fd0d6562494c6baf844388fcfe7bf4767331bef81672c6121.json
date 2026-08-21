@@ -1,0 +1,44 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "LS provider report 1108519 / 1F04720260629_000660_a.pdf의 공식 원문 또는 원문으로 해소되는 상세 페이지를 bounded source-repair 대상으로 삼고, 2026-07-12 cutoff와 target 귀속을 full-fetch 뒤 검증한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": false,
+        "literal_query": "SK하이닉스 LS 1108519 1F04720260629_000660_a.pdf \"아직 한발 남았다\"",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "Supervisor가 지정한 pre-cutoff structured candidate STRUCTCAND-dd271cdb3c5c93d51fc8e631의 report ID와 파일명을 그대로 사용해 원문 PDF 또는 공식 상세 페이지를 복구한다. 원문에서만 HBM ASP·HBM4E 실행과 valuation bridge의 기간·귀속을 검증하며 metadata 요약은 증거로 사용하지 않는다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "현재 candidate title·summary·파일명은 discovery identity일 뿐 evidence가 아니다. Full PDF의 실제 발행일, 본문, target 귀속, HBM 가격·제품 실행의 기간과 valuation 연결을 확인해야 한다.",
+      "브로커 전망은 issuer/customer official DURABLE_VISIBILITY를 자동 대체하지 않는다. 원문이 회수돼도 해당 structured role의 source-family 및 exact-quote 계약 충족 여부는 후속 fact/structured validator가 별도로 판단해야 한다."
+    ]
+  },
+  "payload_hash": "278363f63fda50c4cc07ff8b1673eef9dd1cf8d8297fb7a8ca9ff2214bf260b0",
+  "production_score_authority": false,
+  "prompt_hash": "854bca299b28f300712f90f46966ad36490d5530714a2c723ce8fbe04ae51002",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a867b4cad796b89fd0d6562494c6baf844388fcfe7bf4767331bef81672c6121",
+  "response_id": "COLLABRESP-06a715984036152e93184d4f70ae6cd87ae87d089d59794e234e70135761a2bd",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

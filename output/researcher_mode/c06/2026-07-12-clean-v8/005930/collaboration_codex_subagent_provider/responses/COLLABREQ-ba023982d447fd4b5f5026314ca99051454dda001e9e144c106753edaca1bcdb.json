@@ -1,0 +1,66 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-9090dbe7d62ea6f7e55994e5",
+      "CRMEMO-e33d24eb53e54f8b0079b89d",
+      "CRMEMO-c989e641c46cb2589aaef403",
+      "CRMEMO-ef70ee03faa19d8789cfb3f2",
+      "CRMEMO-a8ea1b713155d07973355ec3",
+      "CRMEMO-49d146bc643b60c9fe57efe2",
+      "CRMEMO-8589aa70c0cb9ef26d49d75c"
+    ],
+    "confidence": 0.88,
+    "cross_component_support": [
+      "HBM4 양산 출하, DS 메모리 매출 74,779,980백만원, 메모리 ASP 상승과 높은 가동률이 함께 확인돼 제품 실행이 매출·가격·생산으로 연결되는 현재 operating evidence가 있다.",
+      "AMD CUSTOMER_OFFICIAL 자료는 MI350X·MI355X HBM3E 공급 이력, MI455X용 HBM4 공급 정렬, 차세대 AI 메모리 MOU와 플랫폼 기술협력을 독립 corroborate하여 고객·기술 관계의 실재를 보강한다.",
+      "연결 영업이익과 영업현금흐름 actual은 전사 현금창출 기반을 확인하고, DS 메모리 매출·ASP actual은 메모리 수익 전환을 별도로 지지한다.",
+      "메모리 100% 가동, 제한된 공급 가용량과 서버 메모리 수요 강세는 bottleneck/pricing 논리를 지지하며 HBM4 출하는 공급 실행이 실제로 진행됐음을 보여 준다.",
+      "실제 자기주식 매입·소각과 배당, 투자등급 조달 접근성은 주주환원 및 성장투자 병행 능력의 현재 근거다.",
+      "공식 재무제표·감사·재작성 공시와 issuer/customer-official 자료가 함께 존재해 전사 actual, 메모리 실행 및 고객 기술관계를 서로 다른 출처 계층에서 확인할 수 있다.",
+      "현재 valuation 자료는 forward PE, EV/EBITDA, PB, FCF yield를 함께 제공해 단일 배수에 의존하지 않는 valuation 검토 기반을 제공한다."
+    ],
+    "cross_component_tensions": [
+      "강한 연결 실적·OCF와 DS 메모리 매출·ASP가 존재하지만 이를 HBM 단독 매출·마진·CAPEX·운전자본·FCF로 연결하는 공식 bridge는 없다.",
+      "AMD 공식 corroboration은 기술·관계 및 과거 HBM3E 공급 이력을 확인하지만 HBM4 MOU·primary supply alignment를 구매의무, 가격, 물량, 배정기간, 취소조건 또는 backlog로 바꾸지는 않는다.",
+      "메모리 전체 100% 가동·ASP 상승·공급제약은 강하지만 HBM 전용 CAPA 잠김, 고객별 장기계약과 HBM 계약가격이 없어 구조적 병목의 지속성을 확정할 수 없다.",
+      "낮은 forward PE 신호와 높은 forward EV/EBITDA, PB 및 낮은 FCF yield가 공존하고 peer 사업 믹스도 달라 market mispricing과 rerating 여력이 일관된 방향을 보이지 않는다.",
+      "자사주·배당 actual과 동시에 큰 자본약정, R&D·설비투자, 재고·매출채권 현금흡수와 낮은 분기 배당성향이 존재해 주주환원과 성장투자의 현금 우선순위가 긴장 관계다.",
+      "Information memo에는 AMD CUSTOMER_OFFICIAL 부재라는 이전 snapshot 문구가 남아 있지만, 현재 embedded Red Team은 AMD 공식 corroboration을 기술·관계 범위에서만 해소했다. 이 해소를 계약 경제성 해소로 확대해서는 안 된다.",
+      "NVIDIA 공급 협의, OpenAI LOI·수요 전망, AMD MOU와 회사 가이던스는 방향성을 제공하지만 actual shipment, signed contract 및 실현 매출과 시간·법적 강도가 다르다.",
+      "회사 전체 상위 고객 집중도와 중요 장기수주 공시는 HBM 고객 집중도 또는 모든 HBM 계약의 존재·부재로 일반화할 수 없다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "현재 embedded 자료는 HBM4 실제 출하, 강한 DS 메모리 매출·ASP·가동률, 연결 이익·OCF와 AMD의 독립 기술 corroboration을 함께 확인한다. 동시에 전사·DS 메모리·HBM 귀속, actual·가이던스·MOU/LOI/협상, 기술관계·서명 계약을 엄격히 분리해야 한다. Embedded component memo 범위는 EPS/FCF 13.0~15.0, earnings visibility 11.8~13.8, bottleneck/pricing 14.2~16.6, market mispricing 5.4~7.0, valuation rerating 4.1~5.5, capital allocation 2.2~3.0, information confidence 2.0~2.8이다. 이 immutable request에는 A/S/C judge 결정이 포함되지 않았으므로 tri-role 교집합을 외부 산출물에서 가져오거나 새로 추정하지 않는다. synthesis_complete는 7개 memo와 현재 Red Team의 지지·긴장·미해결 질문을 빠짐없이 검토했다는 뜻이며 경제적 공백이 모두 해소됐다는 뜻이 아니다.",
+    "unresolved_material_questions": [
+      "HBM별 매출·영업이익·마진과 HBM 귀속 CAPEX·운전자본·FCF를 연결하는 공식 segment/product bridge는 무엇인가?",
+      "AMD MI455X HBM4 및 다른 주요 고객의 signed 구매물량, 가격, 배정기간, 취소·위약 조건, backlog/RPO 또는 선수금은 존재하는가?",
+      "고객별 HBM4 qualification 완료, 실제 allocation, 반복 주문, 양산 수율과 품질 이력은 어떻게 확인되는가?",
+      "메모리 전체 가동률·ASP·공급부족 중 HBM 전용 CAPA 잠김과 계약가격에 귀속되는 부분은 얼마이며 얼마나 지속되는가?",
+      "현재 시장 기대와 valuation에 HBM4 출하·ASP 상승이 얼마나 반영됐고, 기간·분모가 일치하는 target/peer 비교와 HBM 정상 이익 bridge는 무엇인가?",
+      "대규모 R&D·설비투자와 운전자본 현금수요 중 HBM 귀속액, 회수기간과 ROIC는 얼마이며 주주환원과 어떤 우선순위를 갖는가?",
+      "AMD 독립 기술 corroboration 이후에도 남는 HBM 고객별 concentration, 계약경제성, 마진·현금전환과 qualification·품질 공백을 어떤 공식 자료가 해소하는가?"
+    ]
+  },
+  "payload_hash": "0b38edad405ec4a9ea4e6edbcbcc1544e98d9a0e690212e6339b6f30a057c1b4",
+  "production_score_authority": false,
+  "prompt_hash": "a36648f2eb7f87727d23ef407208a3c32ede73ba03644b0043b90614c29c09b1",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ba023982d447fd4b5f5026314ca99051454dda001e9e144c106753edaca1bcdb",
+  "response_id": "COLLABRESP-d5171d4a3258e41f78f00744c6075552ec9c0d8aca1da336821f8c200573556a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

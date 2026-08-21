@@ -1,0 +1,19 @@
+{
+  "suggested_queries": [
+    {
+      "objective_id": "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+      "literal_query": "SK하이닉스 유진투자증권 \"여전히 추정치 상향 사이클\" HBM4E 핵심 고객 기술 파트너십 2026-06-17 PDF",
+      "source_families": [
+        "PUBLIC_BROKER_PDF"
+      ],
+      "rationale": "Supervisor가 이미 식별한 STRUCTCAND-b961987f610abc3024ba64a0 원문 하나만 정확히 찾아 named counterparty 또는 primary-source trail이 실제로 있는지 확인한다. 없다면 고객 독립 corroboration 공백을 확정하고 추가 검색을 종료한다.",
+      "counter_or_supersession_search": true
+    }
+  ],
+  "new_source_directions": [
+    "이미 식별된 2026-06-17 유진투자증권 원문 한 건으로 범위를 고정하고, 고객 실명·플랫폼·공식 출처 trail이 본문에 없으면 정보 신뢰도 공백으로 남긴다."
+  ],
+  "unresolved_research_notes": [
+    "고객 실명 또는 공식 corroboration이 발견되지 않아도 부재를 사실로 승격하지 않고, 확인되지 않은 공백으로 점수에 반영한다."
+  ]
+}

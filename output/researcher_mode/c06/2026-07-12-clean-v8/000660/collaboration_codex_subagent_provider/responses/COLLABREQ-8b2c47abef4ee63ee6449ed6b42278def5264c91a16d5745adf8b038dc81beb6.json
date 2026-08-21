@@ -1,0 +1,310 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "rationale": "Coverage continuation page 2 re-audited literal transport chunk 1 of 2 (characters 215997-344806) from start to finish and strictly deduplicated the 12 previously accepted target-history calibration atoms. It emits the six remaining distinct average and extreme realized-price gap atoms for the completed 2025-10-22, 2025-10-14, and 2024-10-25 KRW target rows. These remain period-specific historical broker-calibration counters, not current target-price duplication, issuer actuals or guidance, HBM-only economics, customer allocation, or signed contract terms. The current 2026-04-09 KRW 1,800,000 row has no realized gap in the table and is not duplicated. All other chunk text concerns other issuers, unrelated sectors, general commentary, or boilerplate. The exact chunk-local coverage remainder is exhausted, but the transport contract requires all 2 chunks before canonical parent-document completion, so the parent remains unresolved for its separate remaining chunk.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The broker's recommendation-history table reports that its 2025-10-22 SK hynix target price of KRW 570,000 had an average-price gap of negative 10.33% during the stated target horizon. This is an ex-post historical broker-calibration counterfact, not a current target price, issuer guidance, operating performance, HBM-only economics, or contract evidence.",
+        "exact_quote": "2025-10-22 BUY 570,000 1년 -10.33 -6.14",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The completed historical average-price gap directly calibrates broker information confidence and prevents a target-price series from being treated as self-validating valuation evidence.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_TARGET_AVERAGE_GAP_20251022",
+        "normalized_object": "Average realized-price gap of -10.33% versus Yuanta's 2025-10-22 KRW 570,000 target",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-10-22 recommendation evaluation window",
+        "predicate": "broker_history_reports_negative_average_price_gap_to_target",
+        "predicate_family": "BROKER_TARGET_PRICE_AVERAGE_GAP_CALIBRATION",
+        "primitive_tags": [
+          "AVERAGE_PRICE_GAP",
+          "BROKER_FORECAST_CALIBRATION"
+        ],
+        "product_family": "Issuer-wide memory valuation signal",
+        "question_family_id": "broker_target_price_average_gap_calibration",
+        "question_family_tags": [
+          "broker_calibration",
+          "target_price_gap",
+          "historical_market_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "Yuanta historical SK hynix target-price calibration",
+        "subject_id": "000660:YUANTA_TARGET_CALIBRATION:20251022",
+        "unit": "% versus target price",
+        "value": -10.33
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "For the same 2025-10-22 KRW 570,000 target, the table reports a highest-or-lowest-price gap of negative 6.14%. This is a distinct realized-extreme historical calibration metric, not a current target price or evidence about SK hynix operations, HBM supply, or contracts.",
+        "exact_quote": "2025-10-22 BUY 570,000 1년 -10.33 -6.14",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The realized extreme-price gap is a separate calibration leg for information confidence and target-price interpretation.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_TARGET_EXTREME_GAP_20251022",
+        "normalized_object": "Highest-or-lowest realized-price gap of -6.14% versus Yuanta's 2025-10-22 KRW 570,000 target",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-10-22 recommendation evaluation window",
+        "predicate": "broker_history_reports_negative_extreme_price_gap_to_target",
+        "predicate_family": "BROKER_TARGET_PRICE_EXTREME_GAP_CALIBRATION",
+        "primitive_tags": [
+          "EXTREME_PRICE_GAP",
+          "BROKER_FORECAST_CALIBRATION"
+        ],
+        "product_family": "Issuer-wide memory valuation signal",
+        "question_family_id": "broker_target_price_extreme_gap_calibration",
+        "question_family_tags": [
+          "broker_calibration",
+          "target_price_extreme_gap",
+          "historical_market_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "Yuanta historical SK hynix target-price calibration",
+        "subject_id": "000660:YUANTA_TARGET_CALIBRATION:20251022",
+        "unit": "% versus target price",
+        "value": -6.14
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The recommendation-history table reports an average-price gap of negative 9.61% versus Yuanta's 2025-10-14 SK hynix target of KRW 510,000. It is an ex-post historical broker-calibration observation, not a current target price, issuer guidance, HBM-only valuation, or contract evidence.",
+        "exact_quote": "2025-10-14 BUY 510,000 1년 -9.61 -4.80",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This completed average-price gap materially calibrates the reliability of the broker's historical valuation signals.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_TARGET_AVERAGE_GAP_20251014",
+        "normalized_object": "Average realized-price gap of -9.61% versus Yuanta's 2025-10-14 KRW 510,000 target",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-10-14 recommendation evaluation window",
+        "predicate": "broker_history_reports_negative_average_price_gap_to_target",
+        "predicate_family": "BROKER_TARGET_PRICE_AVERAGE_GAP_CALIBRATION",
+        "primitive_tags": [
+          "AVERAGE_PRICE_GAP",
+          "BROKER_FORECAST_CALIBRATION"
+        ],
+        "product_family": "Issuer-wide memory valuation signal",
+        "question_family_id": "broker_target_price_average_gap_calibration",
+        "question_family_tags": [
+          "broker_calibration",
+          "target_price_gap",
+          "historical_market_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "Yuanta historical SK hynix target-price calibration",
+        "subject_id": "000660:YUANTA_TARGET_CALIBRATION:20251014",
+        "unit": "% versus target price",
+        "value": -9.61
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The same 2025-10-14 target row reports a highest-or-lowest-price gap of negative 4.80%, a distinct ex-post historical calibration measure rather than current target, operating, HBM-only, or contract evidence.",
+        "exact_quote": "2025-10-14 BUY 510,000 1년 -9.61 -4.80",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The extreme-price gap is a non-duplicative calibration leg for information confidence in the broker's historical target series.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_TARGET_EXTREME_GAP_20251014",
+        "normalized_object": "Highest-or-lowest realized-price gap of -4.80% versus Yuanta's 2025-10-14 KRW 510,000 target",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-10-14 recommendation evaluation window",
+        "predicate": "broker_history_reports_negative_extreme_price_gap_to_target",
+        "predicate_family": "BROKER_TARGET_PRICE_EXTREME_GAP_CALIBRATION",
+        "primitive_tags": [
+          "EXTREME_PRICE_GAP",
+          "BROKER_FORECAST_CALIBRATION"
+        ],
+        "product_family": "Issuer-wide memory valuation signal",
+        "question_family_id": "broker_target_price_extreme_gap_calibration",
+        "question_family_tags": [
+          "broker_calibration",
+          "target_price_extreme_gap",
+          "historical_market_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "Yuanta historical SK hynix target-price calibration",
+        "subject_id": "000660:YUANTA_TARGET_CALIBRATION:20251014",
+        "unit": "% versus target price",
+        "value": -4.8
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The recommendation-history table reports an average-price gap of negative 21.49% versus Yuanta's 2024-10-25 SK hynix target of KRW 260,000. This is an ex-post historical broker-calibration counterfact, not a current target price or issuer operating, HBM-only, guidance, or contract evidence.",
+        "exact_quote": "2024-10-25 BUY 260,000 1년 -21.49 15.38",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The completed historical average-price gap directly informs source calibration for broker valuation signals.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_TARGET_AVERAGE_GAP_20241025",
+        "normalized_object": "Average realized-price gap of -21.49% versus Yuanta's 2024-10-25 KRW 260,000 target",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-10-25 recommendation evaluation window",
+        "predicate": "broker_history_reports_negative_average_price_gap_to_target",
+        "predicate_family": "BROKER_TARGET_PRICE_AVERAGE_GAP_CALIBRATION",
+        "primitive_tags": [
+          "AVERAGE_PRICE_GAP",
+          "BROKER_FORECAST_CALIBRATION"
+        ],
+        "product_family": "Issuer-wide memory valuation signal",
+        "question_family_id": "broker_target_price_average_gap_calibration",
+        "question_family_tags": [
+          "broker_calibration",
+          "target_price_gap",
+          "historical_market_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "Yuanta historical SK hynix target-price calibration",
+        "subject_id": "000660:YUANTA_TARGET_CALIBRATION:20241025",
+        "unit": "% versus target price",
+        "value": -21.49
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4ad58a46779d88509f7896e6",
+        "economic_mechanism": "The same 2024-10-25 target row reports a highest-or-lowest-price gap of positive 15.38%. The sign differs from the average gap, but it remains a distinct ex-post historical calibration counterfact showing target-versus-realized-price deviation, not a current target price or issuer/HBM contract evidence.",
+        "exact_quote": "2024-10-25 BUY 260,000 1년 -21.49 15.38",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The positive realized extreme-price gap is a distinct calibration error leg and counterweight to treating the historical target series as self-validating.",
+        "mechanism_scope_id": "000660:MEMORY:YUANTA_TARGET_EXTREME_GAP_20241025",
+        "normalized_object": "Highest-or-lowest realized-price gap of +15.38% versus Yuanta's 2024-10-25 KRW 260,000 target",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-10-25 recommendation evaluation window",
+        "predicate": "broker_history_reports_positive_extreme_price_gap_to_target",
+        "predicate_family": "BROKER_TARGET_PRICE_EXTREME_GAP_CALIBRATION",
+        "primitive_tags": [
+          "EXTREME_PRICE_GAP",
+          "BROKER_FORECAST_CALIBRATION"
+        ],
+        "product_family": "Issuer-wide memory valuation signal",
+        "question_family_id": "broker_target_price_extreme_gap_calibration",
+        "question_family_tags": [
+          "broker_calibration",
+          "target_price_extreme_gap",
+          "historical_market_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "Yuanta historical SK hynix target-price calibration",
+        "subject_id": "000660:YUANTA_TARGET_CALIBRATION:20241025",
+        "unit": "% versus target price",
+        "value": 15.38
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-4ad58a46779d88509f7896e6"
+    ],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "3807163520681fca89a27aed468f18bce8633157cad2e0182809bb6b38d9008a",
+  "production_score_authority": false,
+  "prompt_hash": "c3d75e97c74fe2cef8967fa5f689d122e13c08056807401536929a464d529609",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8b2c47abef4ee63ee6449ed6b42278def5264c91a16d5745adf8b038dc81beb6",
+  "response_id": "COLLABRESP-710ccbb8479336688cbbdcf6785a8feeb9d16462e1c584e809609d33ceace6c3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

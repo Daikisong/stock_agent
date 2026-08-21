@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "091edf02106cf9d0337aaf756f132bd7ec9dac14dc610dfbc4e5bec60f20ee8d",
+  "payload": {
+    "allowed_range": [
+      10.8,
+      12.8
+    ],
+    "anchor_comparisons": [
+      "CANCH-1aa76cb8e89d85cd78d325f4의 counter 중심 11.0과 상단 12.05 부근이 가장 가깝다. 엔비디아 HBM4 공급이 아직 협의 중이고 signed 물량·가격·기간·취소조건이 없기 때문이다.",
+      "CANCH-5eb80a11ed23fc1102335092의 positive 구간 11.95~14.05와는 하단에서 겹친다. HBM4 양산 출하, 서버향 판매 확대, 메모리 매출·ASP actual, AMD 우선공급업체 지정이 단순 가격 신호보다 강한 실행 증거이기 때문이다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1"
+    ],
+    "disagreements": [
+      "positive fact roster 안의 HBM4 actual 출하·메모리 매출·ASP와 OpenAI 전망·MOU·공급 계획을 같은 무게로 더하면 가시성을 과대평가한다. 계획·전망은 계약조건이 확인된 actual보다 낮게 가중한다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-5eb80a11ed23fc1102335092",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 11.8,
+    "rationale": "HBM4 양산 출하와 서버향 판매 확대는 이미 실현됐고, 메모리 매출 74,779,980백만원과 ASP 146% 상승은 단기 수익 전환을 확인한다. AMD의 기술 협력 확인과 HBM4 우선공급업체 지정은 named customer 가시성을 보강한다. 반면 엔비디아 HBM4는 협의 중이며 OpenAI 지원 계획·월 90만 wafer 잠재 수요, AMD MOU, 다수 고객 공급 확대 계획은 구매의무나 삼성전자 확정 배정량이 아니다. 따라서 actual 실행과 미계약 계획을 분리해 11.8점으로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-4d6a7fe870806b29408cc3a5",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-7f9fca669110a7e761e6264d",
+      "EFACT-7fe708d0c29a809416e4b893",
+      "EFACT-9d94cbc4213d1d3bc1129615",
+      "EFACT-b6ff1b966b93b843dd6bcd04",
+      "EFACT-b7565fd844a544809e1ca148",
+      "EFACT-cbd2e7a3a3670eba7a113d19",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-d0b79e6c2a1c2bef63f9cb34",
+      "EFACT-e7acbf35eec720d3412bca19",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "엔비디아 HBM4 공급은 협의 중이고, OpenAI·AMD·다수 고객 관련 문구에는 signed 물량·가격·기간·취소조건·backlog·RPO 또는 삼성전자 HBM 매출 actual이 없다.",
+    "why_not_lower": "HBM4 양산 출하, 서버향 실제 판매 확대, 메모리 매출·ASP actual과 AMD HBM4 우선공급업체 지정은 고객·제품 실행이 단순 기대에만 머물지 않았음을 보여준다."
+  },
+  "payload_hash": "6703199a08f3fd196fcfe3457e5df50bd5c53f9df77fe5d5db9b1e06a8bbb546",
+  "production_score_authority": false,
+  "prompt_hash": "8df588479dad7ea975c9ac340e965e8b603d6a7bd5f7523cc32e2c4e9d12e9d9",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1333d4ac4f7fbcbf46aa0727d1dac0c819f7ac0ee5e3206d7bd65b721561c1cc",
+  "response_id": "COLLABRESP-fa21d5cc05143af30de63706f5852972a789e18810c8ea8994c1c02ee935efea",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

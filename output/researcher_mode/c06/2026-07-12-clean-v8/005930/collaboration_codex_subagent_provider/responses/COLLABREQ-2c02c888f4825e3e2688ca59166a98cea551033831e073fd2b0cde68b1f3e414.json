@@ -1,0 +1,120 @@
+{
+  "output_schema_hash": "c868b7984783713b2e3740f6cd04e782db23cbf2a2dc528af1d966a1aa3d96b4",
+  "payload": {
+    "confidence": 0.78,
+    "counter_case": "DRAM 점유율은 2024년 수준에 미달하고, 현재 valuation 지표는 저평가와 고평가 신호가 섞여 있다. 최근 EPS revision 방향도 하향이어서 운영 개선이 아직 시장 기대보다 과소평가됐다는 직접 증거는 부족하다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c"
+    ],
+    "positive_case": "실제 HBM4 출하와 서버향 판매 확대, 메모리 매출·ASP 개선은 시장 기대가 추적해야 할 운영 delta다. 2026년 1분기 DRAM 점유율은 2025년보다 회복돼 실행 개선도 보인다.",
+    "prior_fact_dispositions": [],
+    "proposed_score_lower": 5.4,
+    "proposed_score_mid": 6.2,
+    "proposed_score_upper": 7.0,
+    "research_complete": true,
+    "researcher_summary": "HBM4 양산 출하, 서버향 판매 확대, 메모리 매출 74,779,980백만원과 ASP 146% 상승은 운영 개선을 확인한다. 그러나 운영 개선은 곧바로 시장의 오해를 뜻하지 않는다. 현재 가격·멀티플과 전망 revision은 구조화 맥락으로 검토했으며, forward PE 5.59배와 달리 forward EV/EBITDA 18.88배·FCF yield 1.99%·forward PB 2.99배가 혼재해 일방적 저평가를 단정하지 않는다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "실제 운영 delta로 시장 기대가 추적할 사실이지만 그 자체를 mispricing 증거로 바꾸지 않는다.",
+        "fact_row_index": 18,
+        "source_economic_mechanism": "2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.",
+        "source_period_json": "\"2026-02\"",
+        "source_predicate": "COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS",
+        "source_value_json": "\"HBM4 양산 출하\""
+      },
+      {
+        "component_interpretation": "운영 변화의 비교 맥락으로만 사용하며 시장의 오해나 저평가를 직접 증명하는 사실로 보지 않는다.",
+        "fact_row_index": 23,
+        "source_economic_mechanism": "메모리 제품 매출의 전년 비교 기준",
+        "source_period_json": "\"2025-Q1\"",
+        "source_predicate": "2025년 1분기 메모리 제품 매출액을 비교표에 보고했다",
+        "source_value_json": "19069038"
+      },
+      {
+        "component_interpretation": "운영 변화의 비교 맥락으로만 사용하며 시장의 오해나 저평가를 직접 증명하는 사실로 보지 않는다.",
+        "fact_row_index": 32,
+        "source_economic_mechanism": "삼성전자의 2026년 1분기 추정 DRAM 금액 기준 점유율 38.4%는 2025년 34.0%보다 높지만 2024년 41.5%에는 미달해 경쟁지위 회복과 잔여 격차를 함께 보여준다.",
+        "source_period_json": "\"2026-Q1 vs 2025 and 2024\"",
+        "source_predicate": "ESTIMATED_DRAM_MARKET_SHARE_RECOVERED_YEAR_ON_YEAR_BUT_BELOW_2024",
+        "source_value_json": "\"38.4% vs 34.0% in 2025 and 41.5% in 2024\""
+      },
+      {
+        "component_interpretation": "실제 운영 delta로 시장 기대가 추적할 사실이지만 그 자체를 mispricing 증거로 바꾸지 않는다.",
+        "fact_row_index": 38,
+        "source_economic_mechanism": "2026년 1분기 메모리 사업은 AI 수요 강세 아래 서버향 제품 판매 확대에 주력했다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "FOCUSED_ON_EXPANDING_SERVER_MEMORY_PRODUCT_SALES",
+        "source_value_json": "\"서버향 제품 중심 판매 확대에 주력\""
+      },
+      {
+        "component_interpretation": "실제 운영 delta로 시장 기대가 추적할 사실이지만 그 자체를 mispricing 증거로 바꾸지 않는다.",
+        "fact_row_index": 39,
+        "source_economic_mechanism": "메모리 제품 매출의 실제 수익 전환",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 메모리 제품 매출액을 보고했다",
+        "source_value_json": "74779980"
+      },
+      {
+        "component_interpretation": "실제 운영 delta로 시장 기대가 추적할 사실이지만 그 자체를 mispricing 증거로 바꾸지 않는다.",
+        "fact_row_index": 42,
+        "source_economic_mechanism": "메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다.",
+        "source_period_json": "\"2026Q1 vs 2025 annual average\"",
+        "source_predicate": "MEMORY_ASP_INCREASED_VERSUS_PRIOR_YEAR_AVERAGE",
+        "source_value_json": "146"
+      }
+    ],
+    "selected_fact_row_indices": [
+      18,
+      23,
+      32,
+      38,
+      39,
+      42
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "COMPANYGUIDE",
+      "KRX_PRICE_MARKET_CAP",
+      "TARGET_OFFICIAL_TRAILING_VALUATION"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "구조화 valuation 지표 간 신호가 일관되지 않는다.",
+      "시장 컨센서스가 HBM4 출하와 메모리 ASP 상승을 얼마나 이미 반영했는지 직접 측정되지 않는다.",
+      "DRAM 점유율은 추정치이며 HBM 점유율이 아니다."
+    ],
+    "why_not_higher": "운영 delta는 강하지만 실제 시장 기대와의 격차 및 일관된 저평가 신호가 없어 강한 mispricing 앵커에는 미달한다.",
+    "why_not_lower": "실제 HBM4 출하·서버 판매·메모리 매출과 ASP 개선이 있어 운영 변화가 전혀 없는 낮은 앵커보다는 높다."
+  },
+  "payload_hash": "ecc25f6fda51d1a67ff4371a0b786b6ea492024fc06a4e6dbf69ed002fbfd4f3",
+  "production_score_authority": false,
+  "prompt_hash": "4eb4fc103893e9a3e63915f79fbe1d2fa77672d1d5ff7518b5cbc3762079e286",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2c02c888f4825e3e2688ca59166a98cea551033831e073fd2b0cde68b1f3e414",
+  "response_id": "COLLABRESP-b0000afc60b68f29cf89027e06bef190a01856f60cf25b7d8c0e1730aeb6371a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

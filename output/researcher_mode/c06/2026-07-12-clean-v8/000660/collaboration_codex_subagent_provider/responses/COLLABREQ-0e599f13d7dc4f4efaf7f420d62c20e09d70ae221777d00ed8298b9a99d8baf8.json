@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "703e2f06337de4af61b475b7dc59dff87c297535ed91eef1e9716dada5a480c1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-df12bce36892b262637c5618",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "Hankook Ilbo article is third-party media, not the requested OPENDART original route."
+      },
+      {
+        "candidate_id": "SGCAND-b1ee072e54cec7fb3d6b2a47",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "Joseilbo article is not OPENDART original material."
+      },
+      {
+        "candidate_id": "SGCAND-f2e459dddc1d929b61b36b30",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Third-party issue article does not match OPENDART provenance."
+      },
+      {
+        "candidate_id": "SGCAND-3f80acb25de8da754e7989ac",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "TechM retelling is not the original OPENDART filing route."
+      },
+      {
+        "candidate_id": "SGCAND-989125e8f94aa1fd3f67dcdd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Broadcast news is third-party media and does not match OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-7998e1e7df94c7debc4eaa16",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "TechM news article is not an OPENDART original/full filing route."
+      },
+      {
+        "candidate_id": "SGCAND-f451abb1aa680b2edaabfa32",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.03,
+        "rationale": "Unofficial schedule guide is neither OPENDART nor an original source route."
+      },
+      {
+        "candidate_id": "SGCAND-21e47616fa86eb8c8213da9f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Third-party news article does not match requested OPENDART provenance."
+      },
+      {
+        "candidate_id": "SGCAND-a80451ed4ad2112c59fefd01",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "News1 analysis is not the original disclosure route."
+      },
+      {
+        "candidate_id": "SGCAND-4255658b859fe2d1e3eb445c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial explanatory blog does not match OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-80c578dcc3238688a1191a5c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "News1 industry report is a third-party retelling, not OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-83db3def4af52427e37148a6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Third-party media report does not match requested OPENDART source family."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No original OPENDART/full filing route appears in this roster; snippets and third-party retellings cannot establish evidence or absence."
+    ]
+  },
+  "payload_hash": "56f9fe07c8587d394fd9aba48e1e16d1f86a68b50ced27b13eb8bc4815ed00ec",
+  "production_score_authority": false,
+  "prompt_hash": "6453673f1f04ced65a9be7d3dd735cdb09356154519e3accc5ae1e782a6d77f9",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0e599f13d7dc4f4efaf7f420d62c20e09d70ae221777d00ed8298b9a99d8baf8",
+  "response_id": "COLLABRESP-d4c5a9dcc28c55887c0236f77e6346390d1f9ee45392ee288f587a5c7c647af0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

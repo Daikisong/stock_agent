@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-b62d35a05d2e1dd56e4a9a53",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Naver Premium의 제3자 모닝리포트 요약이며 original broker PDF가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a9d41c56f7d51b5c576210ea",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "SK하이닉스 목표가 상향을 언급하지만 제3자 모닝리포트 재정리다. Citi 원문 report 또는 검증된 원문 landing이 아니어서 requested family를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7fcb2fd184e187d26ef309e6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "WiseReport의 타 종목 summary 목록으로 000660 current objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-ec565578344938918999d769",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "삼성전기 wrong-subject 분석 페이지이며 broker 원문 PDF도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f13f559613f02b6f39f9840d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "HL만도·KT&G 등 wrong-subject WiseReport summary 목록이다."
+      },
+      {
+        "candidate_id": "SGCAND-cdb780ee6a54541adc73d397",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "target HBM·rerating을 다루지만 개인 블로그 해설이며 original broker report가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b5f22f82fb464cfae307e82c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "cutoff 이전 market news지만 requested PUBLIC_BROKER_PDF가 아니며 broker quote만으로 full expectation-revision bridge를 제공하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-067d5045e4e5a3bce7a460bd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "기아·삼성전기 등 wrong-subject WiseReport summary 목록이다."
+      },
+      {
+        "candidate_id": "SGCAND-16a32c61cbbd8f0d9bef7f6a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "두산·LG전자 등 다른 종목을 나열하는 summary landing으로 000660 broker full report route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2cfa71e0b1d6135d02c792f8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2023년 타 종목 WiseReport summary 목록이며 target·currentness·source-family 모두 불일치한다."
+      },
+      {
+        "candidate_id": "SGCAND-cefe8ac9bbccd52ac5f8dff4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "메모리 broker 제목을 포함하지만 WiseReport summary landing일 뿐 개별 original full PDF나 검증된 child route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1a1f20b740c733320a50a1e4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "제3자 daily report로 SK하이닉스 실적을 후공정 종목 재료로 언급할 뿐 target broker full report가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 12개 roster에는 original PUBLIC_BROKER_PDF 또는 검증된 full-source landing이 없다. material 0은 broader source absence를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "bc3a04bbfdc03c6a1b0e075f5c745b1b6ffa9200e78d7ad914b2ec2d32a8f6ed",
+  "production_score_authority": false,
+  "prompt_hash": "7f9d9c8e8aab77645ab1a92c6aa6a9a41ecf1494169faf22afa551e03dc858ea",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ed3e5f778b0983f02cbaa30f0a6df97d2bb40559290923b35f88b83f9bbfe2cc",
+  "response_id": "COLLABRESP-d9256b255c5f2f410bf79c1712d308dc6d2cf76a03a95556c20996d284db1d92",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

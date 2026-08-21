@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-b2345bb04bc4a7f7a0649be8",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b273ffca47971c4baa93105d",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 제품·지원·사업 페이지이지만 현재 HBM·메모리 earnings visibility의 날짜 있는 실적·계약·CAPA 원문이 아니거나 사업 범위가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-b2a7bf3a38dd38ef2ea5d2fb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 공유·영상 채널·단축 링크로 canonical 기사 본문이 아니며, target-direct 경제 claim을 검증할 full 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b324c8008968b71f37cfba7f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 홈·목록·IR·미디어 탐색 페이지로 개별 기간과 claim이 고정된 full document가 아니어서 이 단계의 material 원문으로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b4737a2c532cf53d111ccad6",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 제품·지원·사업 페이지이지만 현재 HBM·메모리 earnings visibility의 날짜 있는 실적·계약·CAPA 원문이 아니거나 사업 범위가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-b59a22d2759c0595a6335f0e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "법률·쿠키·윤리·지속가능성 안내 페이지로 HBM·메모리 실적, 고객 약정, CAPA나 수익성의 현재 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b5fc3d9a7b0107b54486f482",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 제품·지원·사업 페이지이지만 현재 HBM·메모리 earnings visibility의 날짜 있는 실적·계약·CAPA 원문이 아니거나 사업 범위가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-b60f36e7c61f1f947fdbb5b7",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b7966a20d644f83c38f54933",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 제품·지원·사업 페이지이지만 현재 HBM·메모리 earnings visibility의 날짜 있는 실적·계약·CAPA 원문이 아니거나 사업 범위가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-b89e6832cb86e9bebdaec366",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 제품·지원·사업 페이지이지만 현재 HBM·메모리 earnings visibility의 날짜 있는 실적·계약·CAPA 원문이 아니거나 사업 범위가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-b9b1ded6931a6892d9432277",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.94,
+        "rationale": "삼성전자 공식 뉴스룸의 개별 기사 canonical URL이며 NVIDIA와의 반도체 협력 내용을 full-fetch해 HBM 고객·공급·qualification 가시성을 검증할 수 있는 target-direct 원문 경로다. 기사 날짜와 구체 claim은 fetch 단계에서 확인해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-badfb4fa4e7affa3944569b7",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 제품·지원·사업 페이지이지만 현재 HBM·메모리 earnings visibility의 날짜 있는 실적·계약·CAPA 원문이 아니거나 사업 범위가 다르다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "6260cba445768eda4194f82aa506f4df03f67c97e2288a4cea8622aa9a3aca49",
+  "production_score_authority": false,
+  "prompt_hash": "f144a12cc24d96ef4fb69fa712d2f73fd2fa18c2d62f2750085ddeb368db211c",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5242bf3d4e040fca5f8001921253601a3188216e9c7b5d827be9de740e6e3c23",
+  "response_id": "COLLABRESP-7deb56b4a9034ed9a9092b5a8a271d32db8e181a7975ee823b08814d35bfb456",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

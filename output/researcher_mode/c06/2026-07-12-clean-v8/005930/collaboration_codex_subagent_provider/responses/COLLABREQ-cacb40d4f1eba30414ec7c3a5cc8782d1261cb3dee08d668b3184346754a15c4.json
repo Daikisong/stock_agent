@@ -1,0 +1,158 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-9090dbe7d62ea6f7e55994e5 is complete, preserves positive and counter evidence and attribution boundaries, and no current material judge disagreement or executable component-specific gap is supplied."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-e33d24eb53e54f8b0079b89d is complete, preserves positive and counter evidence and attribution boundaries, and no current material judge disagreement or executable component-specific gap is supplied."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-c989e641c46cb2589aaef403 is complete, preserves positive and counter evidence and attribution boundaries, and no current material judge disagreement or executable component-specific gap is supplied."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-ef70ee03faa19d8789cfb3f2 is complete, preserves positive and counter evidence and attribution boundaries, and no current material judge disagreement or executable component-specific gap is supplied."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-a8ea1b713155d07973355ec3 is complete, preserves positive and counter evidence and attribution boundaries, and no current material judge disagreement or executable component-specific gap is supplied."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-49d146bc643b60c9fe57efe2 is complete, preserves positive and counter evidence and attribution boundaries, and no current material judge disagreement or executable component-specific gap is supplied."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "Independent AMD-official technical corroboration of the named Samsung HBM3E/HBM4 supply or platform relationship, without inferring purchase terms."
+        ],
+        "rationale": "Current memo CRMEMO-6268597ffc9811550a086087 preserves plan-versus-contract limits, but all 15 projected relationship facts lack an explicit independent corroborating group and no CUSTOMER_OFFICIAL route was tried. The remaining gap is technical relationship corroboration, not contract economics."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-11f05de07efa5852c6e71412",
+        "rationale": "Four full-fetched future-dated query members were correctly excluded, resolved, and do not prove source absence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-828cb4bb9fe49e835dfadd21",
+        "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY closes only the prior query lane; it is resolved and is not source-absence or saturation proof.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-8ce8e0d17715285b367c314b",
+        "rationale": "One document lacked a verifiable publication date after full fetch; the resolved exclusion is not source-absence evidence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-93582c8d3e4a290b445687a0",
+        "rationale": "The matching query member failed publication-date validation after full fetch; it is resolved without an absence claim.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-944cf2283ff44162e1cf00f0",
+        "rationale": "Four post-cutoff documents were correctly rejected after full fetch; this resolved boundary enforcement is not absence proof.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-b111a10918c8fead4510bb44",
+        "rationale": "Five provider-error members are resolved in the supplied graph, but provider failure itself is never evidence of source absence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "information_confidence",
+        "direction": "POSITIVE",
+        "fact_need": "An AMD-official product, platform, filing, or newsroom statement that independently confirms Samsung's technical HBM3E supply or preferred HBM4 relationship for named AMD accelerators, without requiring price, volume, duration, or purchase obligations.",
+        "why_material": "The current issuer-family relationship facts have zero explicit independent corroborating groups. Counterparty-official technical confirmation would change source-independence confidence while remaining distinct from contract economics."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": false,
+        "direction": "Review AMD official product, platform, filing, or newsroom material available by the cutoff for independent confirmation of Samsung's named HBM3E/HBM4 technical role.",
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "rationale": "AMD is a named counterparty in the current facts, while the supplied source graph contains issuer and filing families but no attempted or accepted CUSTOMER_OFFICIAL route. Technical corroboration is material to information confidence and need not disclose procurement terms.",
+        "source_family": "CUSTOMER_OFFICIAL"
+      }
+    ],
+    "next_actions": [
+      "Have the query-generation LLM produce one bounded AMD CUSTOMER_OFFICIAL semantic query for the information-confidence objective and execute it under the normal source budget.",
+      "If an eligible full source is accepted, extract only the independently corroborated technical relationship and refresh information-confidence, its judges, Red Team, and Synthesis; otherwise preserve the limitation without a source-absence claim."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "Do not repeat Samsung issuer-newsroom or OPENDART routes.",
+          "Do not seek or infer price, volume, allocation, duration, cancellation terms, or a signed purchase contract.",
+          "Do not treat absence of an AMD statement as source absence."
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "research_need": "Find pre-cutoff AMD-official evidence that names or technically corroborates Samsung's HBM participation in MI350X/MI355 or the preferred HBM4 relationship for MI455X; verify only the technical relationship."
+      }
+    ],
+    "rationale": "The exact prompt has seven complete memos, no current material judge disagreement, complete structured roles, a verified seven-objective counter proof, and six resolved failure groups. Those facts keep six component memos sufficient and preserve counter and structured gates. However, the information-confidence corroboration projection shows that all 15 named current relationship facts lack an explicit independent group, and CUSTOMER_OFFICIAL was neither an executed query family nor an accepted evidence family. A bounded AMD-official technical route therefore remains for the named HBM3E/HBM4 relationship. This is not a request for purchase terms, a signed contract, or allocation economics. It is also not based on zero results, fixed rounds, provider failure, or source absence. The review remains NEXT_RESEARCH_REQUIRED and has no score or Stage authority.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "Can an AMD-official source independently corroborate Samsung's named HBM3E/HBM4 technical relationship without implying undisclosed purchase terms?"
+    ]
+  },
+  "payload_hash": "4e195010f4db0d758970b607be8e291236fcbe3f475b3ba4f8180e82f89855b0",
+  "production_score_authority": false,
+  "prompt_hash": "151e15e416a8b7f7a59160e0b63e456793d22923f57ba7d08f7b956a91ec330f",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cacb40d4f1eba30414ec7c3a5cc8782d1261cb3dee08d668b3184346754a15c4",
+  "response_id": "COLLABRESP-0a2a0a051a0fd8d1e7947fa2ba1d66de4794c8575e03e660c5446d66037426f3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

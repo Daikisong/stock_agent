@@ -1,0 +1,133 @@
+{
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "allowed_range": {
+        "items": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "anchor_comparisons": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "counter_fact_ids": {
+        "items": {
+          "enum": [
+            "EFACT-0acf42f2a7b3a54791c685ca",
+            "EFACT-77cefacbebfbafb1aa209ddb",
+            "EFACT-7c51dbf39047c0fb2e983332"
+          ],
+          "type": "string"
+        },
+        "maxItems": 3,
+        "minItems": 3,
+        "prefixItems": [
+          {
+            "enum": [
+              "EFACT-0acf42f2a7b3a54791c685ca"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-77cefacbebfbafb1aa209ddb"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-7c51dbf39047c0fb2e983332"
+            ],
+            "type": "string"
+          }
+        ],
+        "type": "array"
+      },
+      "disagreements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "nearest_anchor_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "proposed_points": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "rationale": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "support_fact_ids": {
+        "items": {
+          "enum": [
+            "EFACT-1c3831e5ef2401b6cfabbd74",
+            "EFACT-acae6dd071cb2075b264bc92"
+          ],
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "why_not_higher": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "why_not_lower": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "anchor_comparisons",
+      "proposed_points",
+      "allowed_range",
+      "rationale",
+      "disagreements",
+      "support_fact_ids",
+      "counter_fact_ids",
+      "nearest_anchor_ids",
+      "why_not_higher",
+      "why_not_lower"
+    ],
+    "type": "object"
+  },
+  "output_schema_hash": "25e309ff6329f6239482001ece1ab42e08c9c1a6432e036d5c668ba6e15bc598",
+  "pass_name": "COMPONENT_SKEPTIC_JUDGE",
+  "production_score_authority": false,
+  "prompt": "You are an independent E2R 2.0 research analyst.\nUse only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.\nRead the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.\nFor loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.\nDecode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.\nWhen the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.\nCite only ids present in the input. Do not invent facts, sources, metrics, or anchors.\nNever output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.\nFirst decode every evidence_fact_projection.facts row positionally with evidence_fact_projection.fact_fields. Each row preserves one exact fact_id and its economic meaning. Resolve source_independence_group_index through source_independence_group_dictionary. The count/hash rosters account only for repeated lineage; they are not omitted research, a top-N selection, or permission to skip rows. Review all fact_count rows. Act as the independent skeptic for exactly one broad component. Review every supplied counterfact and explicitly reflect business phase, valuation, customer or supplier concentration, and uncertainty in proposed component points and the allowed range. Compare with a nearest blind anchor and explain both bounds.\nReturn exactly one JSON object matching the supplied schema.\n{\"allowed_counter_fact_ids\": [\"EFACT-0acf42f2a7b3a54791c685ca\", \"EFACT-77cefacbebfbafb1aa209ddb\", \"EFACT-7c51dbf39047c0fb2e983332\"], \"allowed_nearest_anchor_ids\": [\"ORDTRANSFER-5aadf9d29303975e658a6c23\", \"ORDTRANSFER-9205e8ab347aff38184b148a\"], \"allowed_support_fact_ids\": [\"EFACT-1c3831e5ef2401b6cfabbd74\", \"EFACT-acae6dd071cb2075b264bc92\"], \"component_id\": \"bottleneck_pricing\", \"component_max_points\": 19.0, \"component_research_memo\": {\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"component_max_points\": 19.0, \"counter_case\": \"가동률과 CAPA는 HBM 전용이 아니며 물량·가격은 월·분기 단위 합의라 장기 고정가격·장기 sold-out을 확인하지 못한다. 재고평가충당금과 재공품 계약손실, 대형 고객 집중도는 가격·수요 지속성과 협상력에 반대 근거를 제공한다.\", \"counter_fact_ids\": [\"EFACT-0acf42f2a7b3a54791c685ca\", \"EFACT-77cefacbebfbafb1aa209ddb\", \"EFACT-7c51dbf39047c0fb2e983332\"], \"historical_anchor_ids\": [\"ORDTRANSFER-5aadf9d29303975e658a6c23\", \"ORDTRANSFER-9205e8ab347aff38184b148a\"], \"memo_id\": \"CRMEMO-2249911cddf154b56adcb60c\", \"nearest_counter_anchor_ids\": [\"ORDTRANSFER-9205e8ab347aff38184b148a\"], \"nearest_positive_anchor_ids\": [\"ORDTRANSFER-5aadf9d29303975e658a6c23\"], \"positive_case\": \"2026년 1분기 메모리 생산설비가 평균 100% 가동됐고 HBM이 가격 상승을 주도한 제품군으로 직접 언급됐다. 이는 당기 공급 여유가 제한되고 HBM이 가격 강도에 기여했다는 중간 수준의 병목·가격 근거다.\", \"positive_fact_ids\": [\"EFACT-1c3831e5ef2401b6cfabbd74\", \"EFACT-acae6dd071cb2075b264bc92\"], \"research_complete\": true, \"researcher_role\": \"BottleneckPricingResearcher\", \"researcher_summary\": \"메모리 전반 평균가동률 100%와 제한된 공급 환경에서 HBM이 가격 상승 주도 제품군에 포함됐다는 사실은 당기 병목·가격 방향을 지지한다. 그러나 생산능력과 가동률은 메모리 전체 범위이고, 고객 물량·가격은 월별 또는 분기별 합의로 정해져 HBM 전용 장기 locked capacity, 장기간 sold-out 또는 고정 계약가격을 증명하지 않는다. 재고평가충당금과 재공품 계약손실 및 고객 집중은 지속성에 counterweight를 준다.\", \"resolution_fact_ids\": [], \"source_coverage\": [\"OPENDART\", \"ISSUER_NEWSROOM\"], \"structured_metrics\": {}, \"target_id\": \"000660\", \"uncertainties\": [\"HBM 전용 가동률·CAPA·고객별 배정 물량이 공개되지 않았다.\", \"장기 고정가격, 취소불가 물량, 선수금, RPO 또는 sold-out 기간이 확인되지 않았다.\", \"HBM의 실제 ASP 상승률과 기간별 계약가격이 공개되지 않았다.\", \"재고·재공품 위험과 고객 집중도가 HBM에 얼마나 귀속되는지 알 수 없다.\"]}, \"conditional_judge_rules\": {\"empty_support_plane\": {\"condition\": \"allowed_support_fact_ids is empty\", \"required_allowed_range\": [0, 0], \"required_proposed_points\": 0, \"required_support_fact_ids\": []}, \"positive_points_require_support\": \"proposed_points greater than zero requires at least one exact id from allowed_support_fact_ids in support_fact_ids\"}, \"evidence_fact_projection\": {\"advisory_tags_are_not_score_gates\": true, \"allowed_component_coverage\": {\"bottleneck_pricing\": 5, \"capital_allocation\": 5, \"earnings_visibility\": 5, \"eps_fcf_explosion\": 5, \"information_confidence\": 5, \"market_mispricing\": 5, \"valuation_rerating\": 5}, \"as_of_date_coverage\": {\"2026-07-12\": 5}, \"claim_id_roster\": {\"count\": 5, \"roster_hash\": \"6d31f99950bcb8024e8952087dc5eb44c51e4b81b0b39ed876288538127f7659\"}, \"corroborating_independence_group_roster\": {\"count\": 1, \"roster_hash\": \"f92624313baa0aaca744d69e2eb15bdf7e807a1a80c07fe08f13d2d9613c97c9\"}, \"every_fact_id_preserved\": true, \"every_fact_lineage_accounted_by_count_and_hash\": true, \"fact_count\": 5, \"fact_fields\": [\"fact_row_index\", \"fact_id\", \"subject\", \"business_segment\", \"product_family\", \"economic_mechanism\", \"predicate\", \"value\", \"unit\", \"period\", \"direction\", \"current_lifecycle\", \"confidence\", \"structured_evidence_roles\", \"source_independence_group_index\", \"corroborating_independence_group_count\"], \"fact_roster_hash\": \"11313e0d5943ffff80ee47773d4ebf563f51748f45ecb17ab6bbb57f75715a55\", \"facts\": [[0, \"EFACT-0acf42f2a7b3a54791c685ca\", \"SK하이닉스 연결 주요 고객 매출 집중도 변화\", \"Memory\", \"Memory products\", \"고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.\", \"고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.\", \"7,780,590 and 6,536,458 vs 4,786,233\", \"백만원\", \"2026-Q1 vs 2025-Q1\", \"COUNTER\", \"CURRENT\", 0.98, [], 0, 1], [1, \"EFACT-1c3831e5ef2401b6cfabbd74\", \"SK하이닉스 반도체 생산설비\", \"메모리 반도체\", \"메모리 제품\", \"2026년 1분기 반도체 생산실적은 11,465,147백만원이며 생산설비 평균가동률은 100%였다. 이는 메모리 전반의 현재 설비 활용도를 보여주지만 HBM 전용 가동률이나 장기 예약 물량을 뜻하지 않는다.\", \"OPERATED_MEMORY_PRODUCTION_FACILITIES_AT_FULL_UTILIZATION\", \"production output KRW 11,465,147 million; average utilization 100%\", \"KRW million; percent\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 0.98, [], 0, 1], [2, \"EFACT-77cefacbebfbafb1aa209ddb\", \"SK하이닉스 반도체 재고자산\", \"반도체\", \"메모리 재고\", \"2026년 1분기말 재고 취득원가 16,385,847백만원에 평가충당금 411,714백만원을 반영해 장부잔액을 15,974,133백만원으로 낮췄다.\", \"REPORTS_INVENTORY_VALUATION_ALLOWANCE\", 411714, \"KRW million\", \"2026-03-31\", \"COUNTER\", \"CURRENT\", 0.99, [], 0, 1], [3, \"EFACT-7c51dbf39047c0fb2e983332\", \"SK하이닉스 중국 생산 재공품\", \"메모리\", \"메모리 웨이퍼 재공품\", \"2026년 1분기말 중국 종속기업 생산 재공품의 구매·추가가공·판매에서 예상되는 손실을 반영한 계약손실충당부채가 162,582백만원으로 전기초 153,267백만원보다 늘었다.\", \"REPORTS_CONTRACT_LOSS_PROVISION_FOR_WAFER_WORK_IN_PROCESS\", 162582, \"KRW million\", \"2026-03-31\", \"COUNTER\", \"CURRENT\", 0.98, [], 0, 1], [4, \"EFACT-acae6dd071cb2075b264bc92\", \"SK하이닉스 HBM\", \"메모리\", \"HBM\", \"제한된 공급 환경에서 HBM이 가격 상승을 주도한 제품군에 포함돼 2026년 1분기 실적과 수익률 전환을 지지했다.\", \"HBM_INCLUDED_AMONG_PRODUCTS_LEADING_PRICE_INCREASES\", \"가격 상승 주도 제품군에 포함\", \"status\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 0.95, [], 0, 1]], \"fixed_top_n_used\": false, \"full_fact_records_persisted_outside_prompt\": true, \"primitive_tag_roster_hash\": \"3638b59ce6466c2aeb7995baad26687f63a95b203bdf07c68e184201b3eee51f\", \"prompt_projection_is_research_cap\": false, \"question_family_tag_roster_hash\": \"913b6a2862c0d2c1b024b4a74d1561dcb40e57f69a25e510a6de944c750d5961\", \"quote_id_roster\": {\"count\": 5, \"roster_hash\": \"c1c61bffacaab68602c3cfb91c7e6f899c995f4e2d15062ee2f8961a089b6050\"}, \"repeated_lineage_arrays_omitted_from_semantic_rows\": true, \"schema_version\": \"e2r_v5_citable_fact_prompt_projection_v3\", \"score_authority\": false, \"source_id_roster\": {\"count\": 4, \"roster_hash\": \"22ab306a92d7dd6a7d3ade43f7bb3e068e1f2dbb1236121d14acf01a4965d739\"}, \"source_independence_group_dictionary\": [\"OPENDART:opendart\"], \"target_id_coverage\": {\"000660\": 5}}, \"historical_component_anchors\": [{\"anchor_id\": \"ORDTRANSFER-5aadf9d29303975e658a6c23\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"c27_game_movie_kids_ip_liveops_retained_economics_leaf_v3\", \"songdaiki_stock_web\"], \"max_points\": 19.0, \"points_lower\": 6.84, \"points_mid\": 7.79, \"points_upper\": 8.74, \"role\": \"POSITIVE\", \"score_band\": \"MEDIUM\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-9205e8ab347aff38184b148a\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 19.0, \"points_lower\": 4.478571, \"points_mid\": 5.428571, \"points_upper\": 6.378571, \"role\": \"COUNTER\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}], \"independent_role_mandate\": [\"COUNTEREVIDENCE\", \"BUSINESS_PHASE\", \"VALUATION\", \"CONCENTRATION\", \"UNCERTAINTY\"], \"judge_pass_name\": \"COMPONENT_SKEPTIC_JUDGE\", \"judge_role\": \"SKEPTIC\", \"required_judge_output_fields\": [\"allowed_range\", \"anchor_comparisons\", \"counter_fact_ids\", \"disagreements\", \"nearest_anchor_ids\", \"proposed_points\", \"rationale\", \"support_fact_ids\", \"why_not_higher\", \"why_not_lower\"]}",
+  "prompt_hash": "1f570adf121489fd6ded0f06b1fd6decdea20e1e519cbd6dd566f3b44f3cda78",
+  "provider_identity": {
+    "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+    "direct_score_or_stage_authority": false,
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+    "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bbdc62e0089dd6b92e3b0b0b8c58527e63bf9761371518e647b5de7aec26a1ce",
+  "request_identity": {
+    "output_schema_hash": "25e309ff6329f6239482001ece1ab42e08c9c1a6432e036d5c668ba6e15bc598",
+    "pass_name": "COMPONENT_SKEPTIC_JUDGE",
+    "prompt_hash": "1f570adf121489fd6ded0f06b1fd6decdea20e1e519cbd6dd566f3b44f3cda78",
+    "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898"
+  },
+  "response_import_required": true,
+  "schema_name": "e2r_v5_component_skeptic_judge",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_request_v1",
+  "score_or_stage_authority": false
+}

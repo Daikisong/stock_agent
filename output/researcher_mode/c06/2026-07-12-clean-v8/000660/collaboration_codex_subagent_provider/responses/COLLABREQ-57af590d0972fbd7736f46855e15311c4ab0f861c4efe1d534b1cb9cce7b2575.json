@@ -1,0 +1,574 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "rationale": "The supplied PUBLIC_BROKER_PDF transport chunk 0/2 was reviewed in full and the 12 embedded prior facts were strictly deduplicated. This continuation returns the next 12 distinct target-direct table atoms in source order, retaining each FY2025-FY2027 broker forecast and its exact total-versus-controlling income lineage. Outer-year declines are separate counters rather than overwrites. The 12-fact transport cap is reached while additional target-direct EPS, valuation, operating-assumption, quarterly earnings, and margin atoms remain in this chunk, so extraction remains incomplete. All rows remain Daishin forecasts, never issuer guidance, realized HBM-only actuals, signed contracts, or DURABLE_VISIBILITY. Other issuers and industry-only rows are excluded.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "broker consolidated revenue forecast and earnings bridge",
+        "exact_quote": "(십억원, 원, %) 2023A 2024A 2025F 2026F 2027F\n매출액 32,766 66,193 93,366 142,659 134,573",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The full broker table forecasts FY2027 consolidated revenue at KRW 134,573 billion, below its FY2026 forecast of KRW 142,659 billion. This distinct outer-year counter preserves the table lineage and is not issuer guidance or HBM-only revenue.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SK hynix FY2027 consolidated revenue Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2027F",
+        "predicate": "forecast consolidated revenue",
+        "predicate_family": "BROKER_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "BROKER_REVENUE_FORECAST_COUNTER"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "daishin_skh_consolidated_revenue_fy2027f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "broker_forecast",
+          "revenue"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated company forecast by Daishin Securities",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:FY2027F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 134573
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "broker consolidated operating-profit forecast and earnings bridge",
+        "exact_quote": "영업이익 -7,730 23,467 43,251 80,665 35,893",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The broker forecasts FY2026 consolidated operating profit of KRW 80,665 billion. It is a third-party estimate, not issuer guidance, realized profit, or an HBM-only earnings amount.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SK hynix FY2026 consolidated operating-profit Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "forecast consolidated operating profit",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "BROKER_OPERATING_PROFIT_FORECAST"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "daishin_skh_consolidated_operating_profit_fy2026f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "broker_forecast",
+          "operating_profit"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated company forecast by Daishin Securities",
+        "subject_id": "000660:CONSOLIDATED_OP:FY2026F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 80665
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "broker consolidated operating-profit forecast and earnings counter",
+        "exact_quote": "영업이익 -7,730 23,467 43,251 80,665 35,893",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The same broker table forecasts FY2027 operating profit falling to KRW 35,893 billion from KRW 80,665 billion in FY2026. The decline is preserved as a separate counter rather than overwriting the FY2026 estimate, and it is not HBM-only economics.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SK hynix FY2027 consolidated operating-profit Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2027F",
+        "predicate": "forecast consolidated operating profit",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "BROKER_OPERATING_PROFIT_FORECAST_COUNTER"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "daishin_skh_consolidated_operating_profit_fy2027f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "broker_forecast",
+          "operating_profit",
+          "counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated company forecast by Daishin Securities",
+        "subject_id": "000660:CONSOLIDATED_OP:FY2027F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 35893
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "broker consolidated pretax-income forecast and earnings bridge",
+        "exact_quote": "세전순이익 -11,658 23,885 48,133 82,744 38,491",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The table provides a dated full-report FY2025 consolidated pretax-income estimate. It remains a broker forecast and is not issuer actual or guidance.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SK hynix FY2025 consolidated pretax-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "forecast consolidated pretax income",
+        "predicate_family": "BROKER_CONSOLIDATED_PRETAX_INCOME_FORECAST",
+        "primitive_tags": [
+          "BROKER_PRETAX_INCOME_FORECAST"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "daishin_skh_consolidated_pretax_income_fy2025f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "broker_forecast",
+          "pretax_income"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated company forecast by Daishin Securities",
+        "subject_id": "000660:CONSOLIDATED_PRETAX_INCOME:FY2025F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 48133
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "broker consolidated pretax-income forecast and earnings bridge",
+        "exact_quote": "세전순이익 -11,658 23,885 48,133 82,744 38,491",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The table provides a dated full-report FY2026 consolidated pretax-income estimate. It remains a broker forecast rather than issuer guidance or a realized HBM-only amount.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SK hynix FY2026 consolidated pretax-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "forecast consolidated pretax income",
+        "predicate_family": "BROKER_CONSOLIDATED_PRETAX_INCOME_FORECAST",
+        "primitive_tags": [
+          "BROKER_PRETAX_INCOME_FORECAST"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "daishin_skh_consolidated_pretax_income_fy2026f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "broker_forecast",
+          "pretax_income"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated company forecast by Daishin Securities",
+        "subject_id": "000660:CONSOLIDATED_PRETAX_INCOME:FY2026F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 82744
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "broker consolidated pretax-income forecast and earnings counter",
+        "exact_quote": "세전순이익 -11,658 23,885 48,133 82,744 38,491",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2027 pretax-income estimate falls materially from the FY2026 value in the same broker row. This is retained as a separate outer-year counter and not treated as issuer guidance or HBM-only economics.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SK hynix FY2027 consolidated pretax-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2027F",
+        "predicate": "forecast consolidated pretax income",
+        "predicate_family": "BROKER_CONSOLIDATED_PRETAX_INCOME_FORECAST",
+        "primitive_tags": [
+          "BROKER_PRETAX_INCOME_FORECAST_COUNTER"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "daishin_skh_consolidated_pretax_income_fy2027f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "broker_forecast",
+          "pretax_income",
+          "counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated company forecast by Daishin Securities",
+        "subject_id": "000660:CONSOLIDATED_PRETAX_INCOME:FY2027F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 38491
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "broker consolidated total-net-income forecast and earnings bridge",
+        "exact_quote": "총당기순이익 -9,138 19,797 39,346 62,886 28,483",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The full broker table identifies FY2025 total net income separately from controlling-shareholder net income. It is a third-party estimate and is not issuer actual or HBM-only profit.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SK hynix FY2025 consolidated total-net-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "forecast consolidated total net income",
+        "predicate_family": "BROKER_CONSOLIDATED_TOTAL_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "BROKER_TOTAL_NET_INCOME_FORECAST"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "daishin_skh_consolidated_total_net_income_fy2025f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "broker_forecast",
+          "total_net_income"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated company forecast by Daishin Securities",
+        "subject_id": "000660:CONSOLIDATED_TOTAL_NET_INCOME:FY2025F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 39346
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "broker consolidated total-net-income forecast and earnings bridge",
+        "exact_quote": "총당기순이익 -9,138 19,797 39,346 62,886 28,483",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The broker forecasts FY2026 consolidated total net income of KRW 62,886 billion, distinct from controlling-shareholder income. It is neither issuer guidance nor HBM-only profit.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SK hynix FY2026 consolidated total-net-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "forecast consolidated total net income",
+        "predicate_family": "BROKER_CONSOLIDATED_TOTAL_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "BROKER_TOTAL_NET_INCOME_FORECAST"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "daishin_skh_consolidated_total_net_income_fy2026f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "broker_forecast",
+          "total_net_income"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated company forecast by Daishin Securities",
+        "subject_id": "000660:CONSOLIDATED_TOTAL_NET_INCOME:FY2026F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 62886
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "broker consolidated total-net-income forecast and earnings counter",
+        "exact_quote": "총당기순이익 -9,138 19,797 39,346 62,886 28,483",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The table forecasts FY2027 total net income falling from FY2026, a distinct outer-year counter retained without overwriting the FY2026 value. It is a broker estimate, not issuer guidance or HBM-only profit.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SK hynix FY2027 consolidated total-net-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2027F",
+        "predicate": "forecast consolidated total net income",
+        "predicate_family": "BROKER_CONSOLIDATED_TOTAL_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "BROKER_TOTAL_NET_INCOME_FORECAST_COUNTER"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "daishin_skh_consolidated_total_net_income_fy2027f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "broker_forecast",
+          "total_net_income",
+          "counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated company forecast by Daishin Securities",
+        "subject_id": "000660:CONSOLIDATED_TOTAL_NET_INCOME:FY2027F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 28483
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "broker controlling-shareholder net-income forecast and per-share earnings bridge",
+        "exact_quote": "지배지분순이익 -9,112 19,789 39,345 62,885 28,480",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The broker row explicitly separates controlling-shareholder income, the denominator basis later used for EPS, from total net income. It remains a forecast rather than issuer actual or HBM-only earnings.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SK hynix FY2025 controlling-shareholder net-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "forecast controlling-shareholder net income",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "BROKER_CONTROLLING_NET_INCOME_FORECAST"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "daishin_skh_controlling_net_income_fy2025f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "broker_forecast",
+          "controlling_net_income"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix controlling-shareholder income forecast by Daishin Securities",
+        "subject_id": "000660:CONTROLLING_NET_INCOME:FY2025F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 39345
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "broker controlling-shareholder net-income forecast and per-share earnings bridge",
+        "exact_quote": "지배지분순이익 -9,112 19,789 39,345 62,885 28,480",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The broker forecasts FY2026 controlling-shareholder net income of KRW 62,885 billion, preserving the ownership denominator separately from total net income. It is not issuer guidance or HBM-only profit.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SK hynix FY2026 controlling-shareholder net-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "forecast controlling-shareholder net income",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "BROKER_CONTROLLING_NET_INCOME_FORECAST"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "daishin_skh_controlling_net_income_fy2026f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "broker_forecast",
+          "controlling_net_income"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix controlling-shareholder income forecast by Daishin Securities",
+        "subject_id": "000660:CONTROLLING_NET_INCOME:FY2026F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 62885
+      },
+      {
+        "business_segment": "CONSOLIDATED_COMPANY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "broker controlling-shareholder net-income forecast and per-share earnings counter",
+        "exact_quote": "지배지분순이익 -9,112 19,789 39,345 62,885 28,480",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2027 controlling-shareholder income forecast falls sharply from FY2026 in the same row. It is preserved as a distinct counter for the per-share bridge, not used to overwrite another period and not attributed to HBM-only economics.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SK hynix FY2027 controlling-shareholder net-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2027F",
+        "predicate": "forecast controlling-shareholder net income",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "BROKER_CONTROLLING_NET_INCOME_FORECAST_COUNTER"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "daishin_skh_controlling_net_income_fy2027f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "broker_forecast",
+          "controlling_net_income",
+          "counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix controlling-shareholder income forecast by Daishin Securities",
+        "subject_id": "000660:CONTROLLING_NET_INCOME:FY2027F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 28480
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-b06350879c518ec49fa8cd5c"
+    ],
+    "unresolved_research_notes": [
+      "Continuation page 2 reached the 12-fact upper bound. Continue SGDOC-b06350879c518ec49fa8cd5c in source order for remaining target-direct EPS, valuation multiple/book-value, DRAM assumption, quarterly consolidated and DRAM earnings, and margin forecast atoms; preserve each broker-table period and denominator without converting forecasts into issuer guidance, HBM-only actuals, signed contracts, or durable visibility."
+    ]
+  },
+  "payload_hash": "4ae97aa287ff5e841c9ef2fbef22f2f0e24389d1f4b2a89b02d546e72613126e",
+  "production_score_authority": false,
+  "prompt_hash": "71d9f5343365aa47b1496abb0e67da1dcf62430127063c344658a3653dc471d3",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-57af590d0972fbd7736f46855e15311c4ab0f861c4efe1d534b1cb9cce7b2575",
+  "response_id": "COLLABRESP-24ba5fc81d0728864e12102608178013bbc003316840505e35539c2ee2d493de",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

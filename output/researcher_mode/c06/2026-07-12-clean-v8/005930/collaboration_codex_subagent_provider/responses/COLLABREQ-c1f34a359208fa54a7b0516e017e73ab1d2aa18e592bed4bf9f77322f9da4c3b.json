@@ -1,0 +1,215 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9af25c64adc7754c0e0876b8",
+        "rationale": "Full AMD newsroom transport reviewed. Four distinct CUSTOMER_OFFICIAL corroboration facts were extracted for the Samsung-AMD AI-memory MOU, named MI455X HBM4 supply alignment, AMD CEO technical-platform confirmation, and historical MI350X/MI355X HBM3E partnership. Foundry discussion, general boilerplate, duplicate page headers, product marketing, and unsupported purchase price, volume, duration, allocation, cancellation, contract, or HBM-only revenue claims were excluded.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9af25c64adc7754c0e0876b8",
+        "economic_mechanism": "AMD 공식 뉴스룸은 삼성전자와 AMD가 차세대 AI 메모리·컴퓨팅 기술의 전략적 협력을 확대하는 MOU를 체결했다고 독립적으로 확인한다. 이는 기술·전략 관계의 CUSTOMER_OFFICIAL corroboration이며 구매계약이나 확정 공급조건을 뜻하지 않는다.",
+        "exact_quote": "Samsung Electronics Co., Ltd. today announced it has signed a memorandum of understanding (MOU) with AMD to expand their strategic collaboration on next-generation AI memory and computing technologies.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The current information-confidence gap specifically asks for AMD-official corroboration of Samsung's named AI-memory relationship. This customer-official MOU confirmation changes source independence without adding purchase economics.",
+        "mechanism_scope_id": "005930:MEMORY:AI_MEMORY:AMD_CUSTOMER_OFFICIAL_MOU",
+        "normalized_object": "AMD-official confirmation of Samsung-AMD next-generation AI memory strategic collaboration MOU",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-18",
+        "predicate": "AMD_OFFICIAL_CONFIRMED_SAMSUNG_AMD_AI_MEMORY_MOU",
+        "predicate_family": "CUSTOMER_OFFICIAL_STRATEGIC_COLLABORATION",
+        "primitive_tags": [
+          "AMD",
+          "AI_MEMORY",
+          "MOU"
+        ],
+        "product_family": "차세대 AI 메모리",
+        "question_family_id": "customer_official_ai_memory_strategic_collaboration",
+        "question_family_tags": [
+          "information_confidence",
+          "customer_official_corroboration"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자와 AMD의 차세대 AI 메모리 전략적 협력 MOU",
+        "subject_id": "005930:memory:amd_ai_memory_mou",
+        "unit": "status",
+        "value": "MOU signed to expand strategic collaboration on next-generation AI memory and computing technologies"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9af25c64adc7754c0e0876b8",
+        "economic_mechanism": "AMD 공식 뉴스룸은 MOU 아래 양사가 차세대 AMD Instinct MI455X용 primary HBM4 supply에 맞춰 협력한다고 확인한다. 명명 고객·제품의 미래 공급 가시성을 독립적으로 보강하지만 MOU 기반 정렬이므로 확정 구매계약, 물량, 가격, 기간 또는 취소조건으로 승격하지 않는다.",
+        "exact_quote": "Under the MOU, Samsung and AMD will align on primary HBM4 supply for the next-generation AMD AI accelerator, the AMD Instinct MI455X GPU, as well as advanced DRAM solutions for 6th Gen AMD EPYC CPUs, codenamed “Venice.”",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is the requested customer-official confirmation of Samsung's named HBM4 role. It is material to information confidence and future visibility while remaining explicitly non-quantified and non-binding beyond the MOU language.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:AMD_MI455X_PRIMARY_SUPPLY_ALIGNMENT",
+        "normalized_object": "AMD-official MOU-based primary HBM4 supply alignment for MI455X with commercial terms undisclosed",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-18 announcement; future AMD Instinct MI455X supply alignment",
+        "predicate": "AMD_OFFICIAL_CONFIRMED_PRIMARY_HBM4_SUPPLY_ALIGNMENT_FOR_MI455X",
+        "predicate_family": "CUSTOMER_OFFICIAL_NAMED_HBM_SUPPLY_VISIBILITY",
+        "primitive_tags": [
+          "AMD",
+          "HBM4",
+          "MI455X"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "customer_official_named_hbm4_supply_visibility",
+        "question_family_tags": [
+          "information_confidence",
+          "customer_official_corroboration",
+          "hbm_supply_visibility"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "삼성전자 HBM4의 AMD Instinct MI455X용 primary supply alignment",
+        "subject_id": "005930:memory:amd_mi455x_hbm4_primary_supply",
+        "unit": "status",
+        "value": "primary HBM4 supply alignment under MOU for AMD Instinct MI455X"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9af25c64adc7754c0e0876b8",
+        "economic_mechanism": "AMD CEO는 AMD 공식 뉴스룸에서 삼성의 advanced memory와 AMD Instinct GPU, EPYC CPU, rack-scale platform을 결합하는 협력 확대를 직접 확인했다. 이는 기술 참여의 독립 counterparty corroboration이며 구매의무나 매출을 의미하지 않는다.",
+        "exact_quote": "We are thrilled to expand our work with Samsung, bringing together their leadership in advanced memory with our Instinct GPUs, EPYC CPUs and rack-scale platforms.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact supervisor gap sought an AMD product, platform, or newsroom statement independently confirming Samsung's technical memory participation. This quote directly supplies that corroboration without commercial-term inference.",
+        "mechanism_scope_id": "005930:MEMORY:AI_MEMORY:AMD_PLATFORM_TECHNICAL_CORROBORATION",
+        "normalized_object": "AMD CEO customer-official confirmation of Samsung advanced-memory participation across AMD compute platforms",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-18",
+        "predicate": "AMD_CEO_CONFIRMED_SAMSUNG_MEMORY_PLATFORM_COLLABORATION_ON_AMD_OFFICIAL_SOURCE",
+        "predicate_family": "CUSTOMER_OFFICIAL_TECHNICAL_CORROBORATION",
+        "primitive_tags": [
+          "AMD",
+          "AI_MEMORY",
+          "TECHNICAL_COLLABORATION"
+        ],
+        "product_family": "AI 메모리",
+        "question_family_id": "customer_official_technical_platform_corroboration",
+        "question_family_tags": [
+          "information_confidence",
+          "customer_official_corroboration"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성 메모리와 AMD Instinct·EPYC·rack-scale 플랫폼 기술협력",
+        "subject_id": "005930:memory:amd_platform_technical_collaboration",
+        "unit": "counterparty_statement",
+        "value": "Samsung advanced memory collaboration with AMD Instinct GPUs, EPYC CPUs and rack-scale platforms"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9af25c64adc7754c0e0876b8",
+        "economic_mechanism": "AMD 공식 뉴스룸은 삼성전자가 AMD의 primary HBM3E partner로서 Instinct MI350X와 MI355X 가속기를 지원해 왔다고 독립적으로 확인한다. 이는 실현된 고객·제품 공급 이력의 corroboration이지만 가격, 물량, 기간, HBM-only 매출은 공개하지 않는다.",
+        "exact_quote": "Samsung and AMD have collaborated for nearly two decades across graphics, mobile and computing technologies, including Samsung serving as the primary HBM3E partner to AMD, powering the latest AMD Instinct MI350X and MI355X AI accelerators.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The current fact graph has issuer-family HBM3E supply history but no independent AMD source group. This AMD-official sentence materially corroborates the named product relationship while adding no unreported commercial terms.",
+        "mechanism_scope_id": "005930:MEMORY:HBM:AMD_MI350X_MI355X_HBM3E_SUPPLY_HISTORY",
+        "normalized_object": "AMD-official confirmation of Samsung primary HBM3E partner history for MI350X and MI355X",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "nearly two decades of collaboration through 2026-03-18; HBM3E partner history current at publication",
+        "predicate": "AMD_OFFICIAL_CONFIRMED_SAMSUNG_AS_PRIMARY_HBM3E_PARTNER_FOR_MI350X_MI355X",
+        "predicate_family": "CUSTOMER_OFFICIAL_HBM_SUPPLY_HISTORY",
+        "primitive_tags": [
+          "AMD",
+          "HBM3E",
+          "MI350X",
+          "MI355X"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "customer_official_hbm3e_supply_history",
+        "question_family_tags": [
+          "information_confidence",
+          "customer_official_corroboration",
+          "hbm_supply_history"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자의 AMD Instinct MI350X·MI355X용 primary HBM3E partner 이력",
+        "subject_id": "005930:memory:amd_mi350x_mi355x_hbm3e_supply_history",
+        "unit": "status",
+        "value": "primary HBM3E partner to AMD powering Instinct MI350X and MI355X"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "c0c723c6f8d231635b4aa43b26321f71bf4db6e0bc4c74bd216739443b241c4d",
+  "production_score_authority": false,
+  "prompt_hash": "8e4226c5cf908c2f2a3286a5a5fa654c5768b4e3c5755d2f873431abf856dfcf",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c1f34a359208fa54a7b0516e017e73ab1d2aa18e592bed4bf9f77322f9da4c3b",
+  "response_id": "COLLABRESP-68cc315b3c1cde7f156e68ae5a498c00ab056ffb2feecd269db39afcf8fb480b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

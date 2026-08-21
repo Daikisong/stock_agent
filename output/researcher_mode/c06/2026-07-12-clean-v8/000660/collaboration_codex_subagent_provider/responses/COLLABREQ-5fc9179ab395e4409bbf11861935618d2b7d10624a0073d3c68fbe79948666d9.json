@@ -1,0 +1,275 @@
+{
+  "output_schema_hash": "2d4bcfb217ea837b9498e86ad338bf1086b96a763a7e46d84aa9039c1e524499",
+  "payload": {
+    "confidence": 0.85,
+    "counter_case": "HBM 계약·고객·품질·마진·현금전환은 독립 source로 corroborate되지 않았다. 고객은 익명이고 계약부채를 HBM backlog로 볼 수 없으며, MD&A와 분기 위험공시 범위도 제한된다. 보증·재고·재공품 충당금은 audited actual이지만 HBM 귀속은 없다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25"
+    ],
+    "positive_case": "독립 감사인의 적정의견과 규제공시 actual은 DRAM 매출, 수익 인식, 계약부채 및 위험 충당금의 신뢰 가능한 기초를 제공한다. HBM Time to Market과 고객 ASIC 협업도 issuer가 설명한 제품 실행·상용화 경로를 확인한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 4,
+        "reason": "짧은 물량·가격 합의 주기를 계약 가시성 문맥으로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 5,
+        "reason": "감사된 고객 집중 actual과 익명·HBM 비귀속 한계를 함께 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 6,
+        "reason": "별도 계약부채는 연결 계약부채 row 79와 중복되어 연결 범위로 통일한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 13,
+        "reason": "메모리 전반 가동률은 정보 신뢰도나 독립 corroboration을 직접 높이지 않아 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 27,
+        "reason": "감사된 DRAM 매출 actual을 유지하되 HBM 단독 귀속을 금지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 33,
+        "reason": "분기 MD&A 미기재를 서술형 정보 범위의 counter로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 35,
+        "reason": "독립 감사 적정의견을 재무 actual 신뢰도 근거로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 46,
+        "reason": "채권 만기 분류는 회수 정보의 보조 사실이나 HBM 계약·품질·마진 corroboration과 직접 연결되지 않아 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 49,
+        "reason": "판매보증충당부채 actual을 유지하되 HBM 품질 문제로 귀속하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 52,
+        "reason": "재고평가충당금을 audited counter로 유지하되 HBM별 금액으로 보지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 55,
+        "reason": "재공품 계약손실 actual을 유지하되 HBM 귀속을 금지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 69,
+        "reason": "중간 공시의 위험정보 범위 제한을 counter로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 76,
+        "reason": "수익 인식 시점 분해를 제품 판매 구조의 문맥으로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 78,
+        "reason": "고객 A 집중은 두 고객 변화를 함께 제공하는 row 5와 중복되어 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 79,
+        "reason": "연결 계약부채를 유지하되 HBM 수주·약정으로 확대하지 않는다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 82,
+        "reason": "고객 B 집중은 두 고객 변화를 함께 제공하는 row 5와 중복되어 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 96,
+        "reason": "HBM 제품 실행 설명을 유지하되 issuer 단일 source와 독립 검증 한계를 보존한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 97,
+        "reason": "판매보증충당부채의 경제적 성격은 row 49와 동일 사건이므로 중복을 피한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 108,
+        "reason": "고객 ASIC 협업을 개발 경로로 유지하되 익명·단일 source와 계약경제 공백을 보존한다."
+      }
+    ],
+    "proposed_score_lower": 1.6,
+    "proposed_score_mid": 2.0,
+    "proposed_score_upper": 2.4,
+    "research_complete": true,
+    "researcher_summary": "OPENDART actual과 독립 감사 적정의견은 DRAM 매출, 고객 집중, 계약부채, 수익인식, 재고·보증·재공품 위험을 규제공시 기반으로 확인한다. 그러나 HBM 제품 실행과 고객 ASIC 협업은 issuer 단일 independence group에 머물며 고객명·계약조건·품질·마진·현금전환의 독립 corroboration이 없다. 빈 corroboration count는 source absence가 아니고, prompt에 명명된 실행 가능한 counterparty route도 없으므로 새 query를 억지로 만들지 않는다. 감사된 actual의 신뢰도와 HBM 세부 공백을 함께 반영한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "가격·물량 확인 주기가 짧아 장기 계약경제의 정보 가시성이 제한된다는 문맥이며 계약 부재로 확대하지 않는다.",
+        "fact_row_index": 4,
+        "source_economic_mechanism": "주요 고객 공급 물량과 가격이 월별 또는 분기별 상호 합의로 정해져 계약 가시성의 확인 주기가 짧다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "SUPPLY_VOLUME_AND_PRICE_SET_BY_MONTHLY_OR_QUARTERLY_MUTUAL_AGREEMENT",
+        "source_value_json": "\"월별/분기별 상호 합의\""
+      },
+      {
+        "component_interpretation": "감사된 고객 집중 actual은 정보 신뢰도를 높이면서도 고객명·HBM별 계약조건이 없는 counter를 남긴다.",
+        "fact_row_index": 5,
+        "source_economic_mechanism": "고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.",
+        "source_value_json": "\"7,780,590 and 6,536,458 vs 4,786,233\""
+      },
+      {
+        "component_interpretation": "규제공시 DRAM 매출 actual은 신뢰 가능한 실적 기반이지만 HBM 단독 매출·마진·현금으로 재분류하지 않는다.",
+        "fact_row_index": 27,
+        "source_economic_mechanism": "SK하이닉스 별도 기준 2026년 1분기 DRAM 매출 실제치는 39,758,279백만원이었다. HBM 단독 매출로 재분류하지 않는다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_Q1_2026_DRAM_REVENUE",
+        "source_value_json": "39758279"
+      },
+      {
+        "component_interpretation": "분기 형식상 MD&A가 없어 유동성·전망·부외거래의 서술형 확인 범위가 제한되는 counter다.",
+        "fact_row_index": 33,
+        "source_economic_mechanism": "분기보고서 형식상 예측정보, 영업실적, 유동성·자금조달, 부외거래에 대한 경영진 분석이 기재되지 않아 서술형 가시성 확인 범위가 제한된다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "기업공시서식 기준 때문에 분기보고서의 경영진단 및 분석의견 하위 항목들이 기재되지 않았다.",
+        "source_value_json": "\"Management discussion sections not provided in quarterly filing format\""
+      },
+      {
+        "component_interpretation": "독립 감사인의 적정의견은 재무 actual 신뢰도를 지지하지만 HBM 계약·품질·마진·현금을 독립 검증하지 않는다.",
+        "fact_row_index": 35,
+        "source_economic_mechanism": "삼정회계법인의 적정의견과 의견변형·계속기업 불확실성·강조사항·핵심감사사항 없음은 규제 공시 actual의 재무보고 신뢰도를 지지한다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 감사보고서와 연결감사보고서는 삼정회계법인의 적정의견이며 표상 추가 제한사항은 모두 해당사항 없음이다.",
+        "source_value_json": "\"Unmodified opinion; no listed modification or uncertainty\""
+      },
+      {
+        "component_interpretation": "판매보증충당부채는 품질 비용의 actual counter지만 제품명이 없어 HBM 품질 문제로 귀속하지 않는다.",
+        "fact_row_index": 49,
+        "source_economic_mechanism": "2026년 1분기말 연결 판매보증충당부채는 178,142백만원이며 품질보증수리·현금보상·제품교환 예상액을 반영한다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_CONSOLIDATED_SALES_WARRANTY_PROVISION",
+        "source_value_json": "178142"
+      },
+      {
+        "component_interpretation": "감사된 재고평가충당금은 재고가치 위험을 확인하지만 HBM별 금액은 아니다.",
+        "fact_row_index": 52,
+        "source_economic_mechanism": "2026년 1분기말 재고 취득원가 16,385,847백만원에 평가충당금 411,714백만원을 반영해 장부잔액을 15,974,133백만원으로 낮췄다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_INVENTORY_VALUATION_ALLOWANCE",
+        "source_value_json": "411714"
+      },
+      {
+        "component_interpretation": "재공품 계약손실 actual은 비용·현금 위험을 확인하지만 HBM 귀속은 불명확하다.",
+        "fact_row_index": 55,
+        "source_economic_mechanism": "2026년 1분기말 중국 종속기업 생산 재공품의 구매·추가가공·판매에서 예상되는 손실을 반영한 계약손실충당부채가 162,582백만원으로 전기초 153,267백만원보다 늘었다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_CONTRACT_LOSS_PROVISION_FOR_WAFER_WORK_IN_PROCESS",
+        "source_value_json": "162582"
+      },
+      {
+        "component_interpretation": "분기 공시가 연차 수준의 모든 위험 정보를 담지 않아 현재 정보 범위를 제한하는 counter다.",
+        "fact_row_index": 69,
+        "source_economic_mechanism": "분기 연결재무제표가 연차 보고서의 모든 재무위험 공시를 포함하지 않아 리스크 정보의 현재 범위가 제한된다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "중간 연결재무제표에는 연차 연결재무제표가 요구하는 모든 재무위험관리 및 공시사항이 포함되지 않는다.",
+        "source_value_json": "\"Not all annual financial risk disclosures are included\""
+      },
+      {
+        "component_interpretation": "수익 인식 시점의 분해는 제품 판매 중심 구조를 확인하는 문맥이지만 HBM 계약 지속기간이나 backlog를 뜻하지 않는다.",
+        "fact_row_index": 76,
+        "source_economic_mechanism": "2026년 1분기 별도 고객계약 수익 48,058,588백만원 중 48,019,464백만원이 한 시점에 인식되고 39,124백만원만 기간에 걸쳐 인식돼 수익 인식 구조가 제품 판매 중심임을 보여준다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "별도 고객계약 수익은 한 시점 인식 48,019,464백만원, 기간 인식 39,124백만원이었다.",
+        "source_value_json": "\"48,019,464 point-in-time; 39,124 over-time\""
+      },
+      {
+        "component_interpretation": "연결 계약부채 actual은 존재하지만 HBM 수주잔고·선수금·고객 약정으로 재분류하지 않는다.",
+        "fact_row_index": 79,
+        "source_economic_mechanism": "2026년 1분기말 연결 계약부채는 483,957백만원으로 전기말 474,185백만원보다 늘었지만 이를 HBM 수주·고객 약정으로 확대할 근거는 없다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_CONSOLIDATED_CONTRACT_LIABILITY_BALANCE",
+        "source_value_json": "483957"
+      },
+      {
+        "component_interpretation": "issuer의 HBM 제품 실행 설명은 상용화 정보를 제공하지만 독립 품질 검증이나 고객 계약경제를 대신하지 않는다.",
+        "fact_row_index": 96,
+        "source_economic_mechanism": "회사는 HBM의 Time to Market 실현과 대역폭·밀도·Core Die 적층 단수 향상, 성능·품질을 제품 실행 기반으로 설명했다. 같은 문장의 기존 고객 ASIC 협업 사실과 구별되는 제품 상용화 실행력이다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "REPORTS_HBM_TIME_TO_MARKET_AND_PERFORMANCE_EXECUTION",
+        "source_value_json": "\"HBM Time to Market realized with higher bandwidth, density and Core Die stacking\""
+      },
+      {
+        "component_interpretation": "고객 협업은 관계·개발 경로를 확인하지만 익명·issuer 단일 source이고 계약·마진·현금 corroboration이 아니다.",
+        "fact_row_index": 108,
+        "source_economic_mechanism": "HBM 성능·품질을 기반으로 고객과 ASIC 개발 협업을 진행해 고객 요구가 제품 개발에 연결되는 상용화 경로를 형성한다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "COLLABORATING_WITH_CUSTOMERS_ON_ASIC_DEVELOPMENT_FOR_HBM",
+        "source_value_json": "\"고객들과 ASIC 개발 협력\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      4,
+      5,
+      27,
+      33,
+      35,
+      49,
+      52,
+      55,
+      69,
+      76,
+      79,
+      96,
+      108
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "ISSUER_NEWSROOM"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "HBM 고객별 계약가격·물량·기간·취소조건·backlog가 공개되지 않았다.",
+      "HBM 제품 품질·마진·현금전환에 대한 독립 고객사 corroboration이 없다.",
+      "Issuer HBM 실행·협업 설명은 단일 source independence group이며 source absence를 뜻하지 않는다.",
+      "계약부채·보증·재고·재공품 수치를 HBM에 귀속할 근거가 없다."
+    ],
+    "why_not_higher": "감사된 전사·DRAM actual은 강하지만 HBM 계약·품질·마진·현금전환의 독립 corroboration과 고객별 세부가 없다.",
+    "why_not_lower": "독립 감사 적정의견과 상세 OPENDART actual이 존재하고 HBM 제품 실행·고객 협업도 공시되어 정보 기반이 전혀 없는 상태는 아니다."
+  },
+  "payload_hash": "5e8d4a3005c204e8ae5153ebd73a61594de377ab796930118340dfed5785f189",
+  "production_score_authority": false,
+  "prompt_hash": "335a9a5fe2d36aa68c24c834f6d9d0bc1f6d3c4d4203d4f31936601163c98e6b",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5fc9179ab395e4409bbf11861935618d2b7d10624a0073d3c68fbe79948666d9",
+  "response_id": "COLLABRESP-d7485062970710d7da45770bf58fa9340fa340ec8e047f9ff74d7c3f52f6adc5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

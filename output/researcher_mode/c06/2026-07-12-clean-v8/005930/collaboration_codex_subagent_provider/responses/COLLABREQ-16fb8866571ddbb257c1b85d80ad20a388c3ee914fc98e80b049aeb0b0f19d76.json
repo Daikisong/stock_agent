@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "e15a57f978827a24f1d29cc46a25e3423a042c141545f8c63a5bfd0be29dc268",
+  "payload": {
+    "allowed_range": [
+      1.6,
+      2.5
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-09ab96433f8087166845bf25의 1.75~2.25 중간 positive와 규제공시·감사 신뢰도는 유사하다.",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64의 1.5~2.0 약한 counter처럼 HBM 고객·계약·현금 bridge가 비공개여서 강한 4.75~5.0 구간에는 미달한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-6868a3fa0d1462e2b1dfd4f2",
+      "EFACT-6a317a6c41253b0fafc79d56",
+      "EFACT-7f35f23f1f02e6327c9a1268"
+    ],
+    "disagreements": [
+      "중요 장기공급계약 미보고를 모든 HBM 계약의 부재로 확대하지 않는다.",
+      "회사 전체 상위 고객 비중을 HBM 고객 집중도로 바꾸어 읽지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 2.0,
+    "rationale": "재무제표 재작성 없음, 감사 강조·핵심감사사항 없음, 공식 HBM4 양산 출하는 기본 보고 신뢰도를 지지한다. 반면 추정 불확실성, 중요 장기공급계약 미보고와 회사 전체 상위 5개 고객 23% 집중도를 모두 반영하며, HBM 고객명·qualification·가격·물량·취소조건·마진이 비공개라 중간 수준으로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-3dd3bb8fbe1496797f1cd00c",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-9eea79412c9f3395a852d248"
+    ],
+    "why_not_higher": "HBM별 고객·계약조건·qualification 결과·매출·마진이 공개되지 않고 추정치가 실제와 달라질 수 있다.",
+    "why_not_lower": "규제공시와 감사 맥락이 안정적이고 HBM4 양산 출하가 공식 자료로 직접 확인된다."
+  },
+  "payload_hash": "34ea0a50436342a63fe1c23b76e33aad00ffabdc4ce7ef4fee50bd68a72e54be",
+  "production_score_authority": false,
+  "prompt_hash": "e2aa4be0fe147050e6517530222e1c8c4170b32539db3ab6f5db1feeb414525e",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-16fb8866571ddbb257c1b85d80ad20a388c3ee914fc98e80b049aeb0b0f19d76",
+  "response_id": "COLLABRESP-b9d7f99fee1fd363dc96ac15b5b220b10acfb3d7e247bf864fa33d4033cd7eed",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "rationale": "Independent coverage audit of the supplied literal chunk 0/3 rechecked all target-direct objective-local occurrences against the 159 previously accepted facts. No omitted distinct material atom remains in this chunk after the final FY2025F/FY2026F/FY2027F consolidated broker FCF rows; parent chunks 1/3 and 2/3 are separate deterministic transports.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "c91944cc28653caa7597821d987938fbb1b79496c5d5bd4e2ffb531c259ed9bb",
+  "production_score_authority": false,
+  "prompt_hash": "c42716adcc04dcb082a326af938e8edcbe4f8d8d113d3dc3dbd76b4b7a6ca338",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-29711f615ce57344fc96479e922613c2fd2eec900d1360a7ec0483ef106a0d47",
+  "response_id": "COLLABRESP-1b0866d3758b819d2696ed28c2070d8ec685aa21a2b1ad89baebf6866eb9b5cb",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

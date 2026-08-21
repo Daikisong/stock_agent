@@ -1,0 +1,122 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-8e2bc4372f62dcde9fb23639",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Third-party market-research page, not an official customer source and not a target-specific qualification, deployment, or platform corroboration route."
+      },
+      {
+        "candidate_id": "SGCAND-bf6cd3900ac40fcf63b95a0f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Third-party geographic market report, not a customer-official source and not target-specific corroboration."
+      },
+      {
+        "candidate_id": "SGCAND-0188b8dd2f7ee1e60c604d3e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Personal blog commentary is not customer-official evidence and cannot establish SK hynix qualification, deployment, allocation, or contract economics."
+      },
+      {
+        "candidate_id": "SGCAND-2abe260fac95df78720da78d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "RAND analysis is third-party background, not an official customer source and not a named-customer technical corroboration route."
+      },
+      {
+        "candidate_id": "SGCAND-dc49d7d3dc61f8392e6e47bf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Government copyright-compensation list is unrelated to the target HBM relationship and is not a customer-official semiconductor source."
+      },
+      {
+        "candidate_id": "SGCAND-153571dfdee276a589bc7ff4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Generic trend site is neither customer-official nor a bounded target-specific qualification or deployment route."
+      },
+      {
+        "candidate_id": "SGCAND-d7713b66274525e27660715b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Business-media magazine PDF is not customer-official and its issuer HBM launch headline does not independently corroborate a named customer relationship."
+      },
+      {
+        "candidate_id": "SGCAND-7c376f620bc136a4727730ce",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Generic AI-news landing page provides no target or named-customer technical relationship and is not customer-official."
+      },
+      {
+        "candidate_id": "SGCAND-867e65a4395c85361eae75ea",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Hacker News discussion about a consumer computer is unrelated and not an official customer source."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "None of the nine supplied candidates matches CUSTOMER_OFFICIAL provenance or provides a bounded official route for named-customer qualification, deployment, or platform corroboration; snippets remain discovery-only."
+    ]
+  },
+  "payload_hash": "617c6eaa6e6940ead266c98ce5a7b7c02c499b20c778da1647312118c81344f0",
+  "production_score_authority": false,
+  "prompt_hash": "c6017b7e125bad699ae53de4f05b80237789dd85db2f7c0f4d81c6d7b2e917c9",
+  "provenance": {
+    "agent_id": "/root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/direct_analysis",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d6ce473500ceb53e55f0aadc97f5ffc91a65a221ba3bf1ebcdda1b6b323f37b6",
+  "response_id": "COLLABRESP-bf1fd587063b633e97f86368d23d2bfc31a305a7918117b90eab94765f174e59",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

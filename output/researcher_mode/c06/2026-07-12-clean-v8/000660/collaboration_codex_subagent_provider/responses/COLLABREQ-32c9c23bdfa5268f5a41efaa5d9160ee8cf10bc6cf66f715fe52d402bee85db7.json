@@ -1,0 +1,43 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "미래에셋 1104231의 PUBLIC_BROKER_PDF 전체 보고서만 fetch해 본문·발행일·대상회사와 장기공급계약/고객 다변화 주장의 조건 및 반대 시나리오를 검증한다."
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "SK하이닉스 미래에셋 1104231 1F01420260609_000660_c.pdf",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "2026-06-09 미래에셋의 별도 후보 보고서 STRUCTCAND-02cf8524a3032fcfa567e54a를 전체 문서로 확인하는 단일 경로다. 후보 메타데이터의 장기공급계약 및 2027년 HBM 수요·고객 다변화 논지는 valuation_rerating의 독립 전망과 반대 조건을 검토할 수 있으나, 메타데이터 자체는 증거가 아니며 브로커 전망은 issuer/customer official DURABLE_VISIBILITY를 대체하지 않는다. 과거 실패한 LS 1108519 보고서와 보고서 ID·파일명·발행사가 모두 다르다.",
+        "source_families": [
+          "PUBLIC_BROKER_PDF"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "전체 보고서를 fetch·parse하기 전에는 후보 메타데이터를 사실로 사용할 수 없고, 이 브로커 경로만으로 issuer/customer official DURABLE_VISIBILITY 구조화 역할은 충족되지 않는다."
+    ]
+  },
+  "payload_hash": "44a640c96887747a395346ff90a793259555c8059deed69c85303498557a2036",
+  "production_score_authority": false,
+  "prompt_hash": "55bbb1eb3c03c6f6340edd8f086de852f7dfa3f7bfaa24c9751ec79c30afef44",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-32c9c23bdfa5268f5a41efaa5d9160ee8cf10bc6cf66f715fe52d402bee85db7",
+  "response_id": "COLLABRESP-c2da32c593ce4851a279d062346aad26de9d75902763b7819f6f7fa2f67769a5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

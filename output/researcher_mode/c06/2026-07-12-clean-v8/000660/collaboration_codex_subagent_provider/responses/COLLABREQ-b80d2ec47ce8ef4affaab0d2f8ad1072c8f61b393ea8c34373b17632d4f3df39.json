@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      1.6,
+      2.4
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-09ab96433f8087166845bf25의 1.75~2.25 medium 밴드 중심과 일치한다. 감사받은 actual과 issuer HBM 제품 실행은 정보 기반을 제공하지만 독립 계약·경제성 corroboration은 아니다.",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64의 1.5~2.0 weak counter 밴드 상단보다 소폭 높다. 다만 제한된 공시 범위와 고객 익명성, 충당금의 HBM 비귀속 때문에 medium 밴드 상단을 넘기 어렵다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-4e2037f2e29108c0d4b9e66c",
+      "EFACT-720c15b2be6d3b574ccae715",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-a696155e4f4ed8929c20afd4"
+    ],
+    "disagreements": [
+      "정보 신뢰도는 audited actual과 issuer 실행 설명으로 중간 수준이지만, 독립 HBM 계약·경제성 검증이 완료됐다고 보지는 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 2.0,
+    "rationale": "적정 감사의견과 규제공시 DRAM actual은 기본 정보 신뢰도를 제공하고, HBM Time to Market·성능 실행 및 고객 ASIC 협업은 제품 실행 경로를 보여준다. 반면 독립 고객사의 계약·품질·마진·현금전환 확인이 없고 고객 익명성, 제한된 분기 MD&A·위험 공시, 보증·재고·재공품 충당의 HBM 비귀속이 남는다. 두 ordinal anchor를 함께 보면 2.0점이 균형적이다.",
+    "support_fact_ids": [
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-59fe4fe59aecdedfd2cd7aac",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "HBM 고객별 계약·가격·물량·취소조건과 품질·마진·현금의 독립 corroboration이 없고 분기 공시 범위와 HBM 귀속이 제한되기 때문이다.",
+    "why_not_lower": "감사인의 적정의견과 규제공시 actual, HBM 제품 실행 및 고객 ASIC 협업이라는 네 positive facts가 재무 기초와 제품 실행을 함께 확인하기 때문이다."
+  },
+  "payload_hash": "c362a89d0ce0c5739119cb45eb2e4d28d1c6dd564669c27db790264a14c6b547",
+  "production_score_authority": false,
+  "prompt_hash": "c6ebd45c3c2c8e0b7f206cbe047b45701849315f349811663ec76f6d0e47744d",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b80d2ec47ce8ef4affaab0d2f8ad1072c8f61b393ea8c34373b17632d4f3df39",
+  "response_id": "COLLABRESP-2a6285967580b33861de113da5119af9a42bf6c0e21a7002c4ade20f563db434",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

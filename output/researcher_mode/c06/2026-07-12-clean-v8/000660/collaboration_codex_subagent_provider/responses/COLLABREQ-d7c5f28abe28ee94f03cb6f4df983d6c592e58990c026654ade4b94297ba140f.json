@@ -1,0 +1,82 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "rationale": "Independent full coverage review of transport chunk 1 recovered one omitted target-direct atomic market-price fact: the dated KRW 1,940,000 current-price snapshot in the SK hynix Top Pick line. It is distinct from the already accepted target price and the prior 20 chunk facts. All remaining target table atoms were already accepted; LPDDR, foundry, electrical-component and adjacent-company passages are not target-direct. The EV/EBITDA comparison chart was not emitted because OCR layout does not support lossless company-to-value attribution. No broker statement was promoted into issuer actuals, issuer guidance, signed HBM contracts, or HBM-only economics.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "exact_quote": "SK하이닉스(000660)ⅠBUYⅠTP 2,750,000원ⅠCP(5월21일) 1,940,000원",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated target-specific market-price atom is distinct from the previously accepted broker target price and supplies the denominator needed to interpret the broker valuation gap. It is a broker report price snapshot, not issuer guidance, issuer actual performance, a signed contract, or HBM-only economics.",
+        "mechanism_scope_id": "000660:MEMORY:EQUITY_PRICE_SNAPSHOT_20260521",
+        "normalized_object": "SK hynix current price of KRW 1,940,000 as of 2026-05-21 recorded in the broker Top Pick line",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-05-21 current-price snapshot",
+        "predicate": "broker_report_records_current_share_price_snapshot",
+        "predicate_family": "BROKER_TARGET_CURRENT_PRICE_SNAPSHOT",
+        "primitive_tags": [
+          "MARKET_PRICE_SNAPSHOT",
+          "VALUATION_DENOMINATOR"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "broker_current_price_snapshot",
+        "question_family_tags": [
+          "broker_current_price_snapshot",
+          "dated_market_price_denominator"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix equity market price snapshot in broker report",
+        "subject_id": "000660:BROKER_CURRENT_PRICE_20260521",
+        "unit": "KRW/share",
+        "value": 1940000
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "d25bc49478b6057ebffc569f71e024dd27949a63f507fb532143620fac6297c4",
+  "production_score_authority": false,
+  "prompt_hash": "500a225232260c6532ad7ade45bc50b0a5b821e7b22c8c0316fa00bf0dd82dd2",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d7c5f28abe28ee94f03cb6f4df983d6c592e58990c026654ade4b94297ba140f",
+  "response_id": "COLLABRESP-667c9f973943df5d9b1b4a0bbf89f6248d819cac6ecbee0f500fd2ac45012e3d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,615 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "No additional distinct fact remains after ten prior accepted ADR decision atoms; the issuer-wide provisional terms remain fully accounted without an HBM, signed-customer, or durable-visibility upgrade.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "Six next source-order current broker atoms were extracted: FY2026E-FY2027E DRAM operating-profit revisions, consolidated operating-margin revisions, and DRAM operating-margin revisions. DRAM and consolidated estimates were not relabelled as HBM-only or issuer guidance.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "No additional distinct fact remains after twenty-two prior accepted official ADR and issuer-wide capital atoms; none was promoted to HBM-only economics, customer terms, or durable visibility.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Six next source-order historical broker atoms were extracted: FY2024F-FY2026F consolidated operating-profit forecasts and operating-margin forecasts. All remain SUPERSEDED, issuer-wide, and non-HBM-attributed.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DRAM broker estimate, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The dated broker report revises FY2026 DRAM operating profit from KRW 206,491 billion to KRW 211,774 billion, a 3 percent increase; this remains a broad DRAM estimate rather than HBM-only profit.",
+        "exact_quote": "영업이익 262,422 376,462 253,265 328,199 4% 15%\nDRAM 211,774 304,100 206,491 272,811 3% 11%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The old and revised DRAM profit values preserve the segment earnings bridge while preventing HBM-only attribution.",
+        "mechanism_scope_id": "000660:DRAM:OPERATING_PROFIT_REVISION:FY2026E:SKS",
+        "normalized_object": "FY2026E DRAM operating profit revised to KRW 211,774 billion, up 3 percent from KRW 206,491 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E; revision report published 2026-05-07",
+        "predicate": "was revised upward by the broker from KRW 206,491 billion to",
+        "predicate_family": "BROKER_DRAM_OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "FY2026_FORECAST",
+          "DRAM",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "DRAM segment operating-profit estimate",
+        "question_family_id": "DRAM_OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "DRAM_OPERATING_PROFIT",
+          "FORECAST_REVISION",
+          "SEGMENT_ATTRIBUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK hynix FY2026 DRAM operating-profit revision",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT_REVISION:FY2026E:SKS_2026-05-07",
+        "unit": "KRW billion",
+        "value": 211774
+      },
+      {
+        "business_segment": "DRAM broker estimate, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The dated broker report revises FY2027 DRAM operating profit from KRW 272,811 billion to KRW 304,100 billion, an 11 percent increase; this remains a broad DRAM estimate rather than HBM-only profit.",
+        "exact_quote": "영업이익 262,422 376,462 253,265 328,199 4% 15%\nDRAM 211,774 304,100 206,491 272,811 3% 11%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The old and revised DRAM profit values preserve the segment earnings bridge while preventing HBM-only attribution.",
+        "mechanism_scope_id": "000660:DRAM:OPERATING_PROFIT_REVISION:FY2027E:SKS",
+        "normalized_object": "FY2027E DRAM operating profit revised to KRW 304,100 billion, up 11 percent from KRW 272,811 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E; revision report published 2026-05-07",
+        "predicate": "was revised upward by the broker from KRW 272,811 billion to",
+        "predicate_family": "BROKER_DRAM_OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "FY2027_FORECAST",
+          "DRAM",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "DRAM segment operating-profit estimate",
+        "question_family_id": "DRAM_OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "DRAM_OPERATING_PROFIT",
+          "FORECAST_REVISION",
+          "SEGMENT_ATTRIBUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK hynix FY2027 DRAM operating-profit revision",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT_REVISION:FY2027E:SKS_2026-05-07",
+        "unit": "KRW billion",
+        "value": 304100
+      },
+      {
+        "business_segment": "Consolidated memory issuer estimate, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The broker keeps FY2026 consolidated operating margin at 78 percent, reporting a zero-percentage-point change; the flat margin limits the inference from higher absolute profit and is not an HBM-only margin.",
+        "exact_quote": "영업이익률 78% 80% 78% 78% 0%p 3%p\nDRAM 82% 83% 83% 84% -1%p -1%p",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The unchanged consolidated margin is a current counterweight to the upward profit revisions and retains the correct issuer-wide denominator.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:OPERATING_MARGIN_REVISION:FY2026E:SKS",
+        "normalized_object": "FY2026E consolidated operating margin held at 78 percent, unchanged from the prior estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026E; revision report published 2026-05-07",
+        "predicate": "was kept by the broker at",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "FY2026_FORECAST",
+          "CONSOLIDATED",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "Issuer-wide memory operating-margin estimate",
+        "question_family_id": "CONSOLIDATED_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "OPERATING_MARGIN",
+          "FORECAST_REVISION",
+          "CONSOLIDATED_SCOPE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026 consolidated operating-margin revision",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN_REVISION:FY2026E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 78
+      },
+      {
+        "business_segment": "Consolidated memory issuer estimate, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The broker raises FY2027 consolidated operating margin to 80 percent from 78 percent and reports a three-percentage-point change; this remains issuer-wide and not HBM-only.",
+        "exact_quote": "영업이익률 78% 80% 78% 78% 0%p 3%p\nDRAM 82% 83% 83% 84% -1%p -1%p",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact current and prior consolidated margins preserve the annual earnings denominator without attributing the gain solely to HBM.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:OPERATING_MARGIN_REVISION:FY2027E:SKS",
+        "normalized_object": "FY2027E consolidated operating margin revised to 80 percent from 78 percent, reported as a 3 percentage-point increase",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E; revision report published 2026-05-07",
+        "predicate": "was revised upward by the broker from 78 percent to",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "FY2027_FORECAST",
+          "CONSOLIDATED",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "Issuer-wide memory operating-margin estimate",
+        "question_family_id": "CONSOLIDATED_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "OPERATING_MARGIN",
+          "FORECAST_REVISION",
+          "CONSOLIDATED_SCOPE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2027 consolidated operating-margin revision",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN_REVISION:FY2027E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 80
+      },
+      {
+        "business_segment": "DRAM broker estimate, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The broker cuts FY2026 DRAM operating margin to 82 percent from 83 percent, a one-percentage-point reduction; DRAM is broader than HBM.",
+        "exact_quote": "영업이익률 78% 80% 78% 78% 0%p 3%p\nDRAM 82% 83% 83% 84% -1%p -1%p",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The margin reduction is an explicit segment counterfact and must not be hidden by higher DRAM profit or relabelled as HBM-only economics.",
+        "mechanism_scope_id": "000660:DRAM:OPERATING_MARGIN_REVISION:FY2026E:SKS",
+        "normalized_object": "FY2026E DRAM operating margin revised to 82 percent from 83 percent, down 1 percentage point",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026E; revision report published 2026-05-07",
+        "predicate": "was revised downward by the broker from 83 percent to",
+        "predicate_family": "BROKER_DRAM_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "FY2026_FORECAST",
+          "DRAM",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "DRAM segment operating-margin estimate",
+        "question_family_id": "DRAM_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "DRAM_OPERATING_MARGIN",
+          "FORECAST_REVISION",
+          "SEGMENT_ATTRIBUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026 DRAM operating-margin revision",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN_REVISION:FY2026E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 82
+      },
+      {
+        "business_segment": "DRAM broker estimate, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The broker cuts FY2027 DRAM operating margin to 83 percent from 84 percent, a one-percentage-point reduction; DRAM is broader than HBM.",
+        "exact_quote": "영업이익률 78% 80% 78% 78% 0%p 3%p\nDRAM 82% 83% 83% 84% -1%p -1%p",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The margin reduction is an explicit segment counterfact and must not be hidden by higher DRAM profit or relabelled as HBM-only economics.",
+        "mechanism_scope_id": "000660:DRAM:OPERATING_MARGIN_REVISION:FY2027E:SKS",
+        "normalized_object": "FY2027E DRAM operating margin revised to 83 percent from 84 percent, down 1 percentage point",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2027E; revision report published 2026-05-07",
+        "predicate": "was revised downward by the broker from 84 percent to",
+        "predicate_family": "BROKER_DRAM_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "FY2027_FORECAST",
+          "DRAM",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "DRAM segment operating-margin estimate",
+        "question_family_id": "DRAM_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "DRAM_OPERATING_MARGIN",
+          "FORECAST_REVISION",
+          "SEGMENT_ATTRIBUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2027 DRAM operating-margin revision",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN_REVISION:FY2027E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 83
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The 2024 broker summary forecasts FY2024 consolidated operating profit of KRW 19,665 billion. It is historical, superseded, issuer-wide, and cannot establish current or HBM-only profit.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This period-specific historical forecast is useful only as superseded expectation context and is not current HBM evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:OPERATING_PROFIT:FY2024F:MIRAE",
+        "normalized_object": "Historical FY2024F consolidated operating-profit forecast of KRW 19,665 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "FY2024_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory earnings forecast",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "HISTORICAL_FORECAST",
+          "CONSOLIDATED_SCOPE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated operating-profit forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 19665
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The 2024 broker summary forecasts FY2025 consolidated operating profit of KRW 24,369 billion. It is historical, superseded, issuer-wide, and cannot establish current or HBM-only profit.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This period-specific historical forecast is useful only as superseded expectation context and is not current HBM evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:OPERATING_PROFIT:FY2025F:MIRAE",
+        "normalized_object": "Historical FY2025F consolidated operating-profit forecast of KRW 24,369 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "FY2025_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory earnings forecast",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "HISTORICAL_FORECAST",
+          "CONSOLIDATED_SCOPE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated operating-profit forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 24369
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The 2024 broker summary forecasts FY2026 consolidated operating profit of KRW 26,578 billion. It is historical, superseded, issuer-wide, and cannot establish current or HBM-only profit.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This period-specific historical forecast is useful only as superseded expectation context and is not current HBM evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:OPERATING_PROFIT:FY2026F:MIRAE",
+        "normalized_object": "Historical FY2026F consolidated operating-profit forecast of KRW 26,578 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "FY2026_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory earnings forecast",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "HISTORICAL_FORECAST",
+          "CONSOLIDATED_SCOPE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026 consolidated operating-profit forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 26578
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The 2024 broker summary forecasts FY2024 consolidated operating margin of 30.4 percent. It is historical, superseded, issuer-wide, and cannot establish a current HBM-only margin.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This historical margin preserves its consolidated denominator and superseded lifecycle instead of being promoted to current HBM economics.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:OPERATING_MARGIN:FY2024F:MIRAE",
+        "normalized_object": "Historical FY2024F consolidated operating-margin forecast of 30.4 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "FY2024_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory operating-margin forecast",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "question_family_tags": [
+          "OPERATING_MARGIN",
+          "HISTORICAL_FORECAST",
+          "CONSOLIDATED_SCOPE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024 consolidated operating-margin forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:FY2024F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 30.4
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The 2024 broker summary forecasts FY2025 consolidated operating margin of 30.1 percent. It is historical, superseded, issuer-wide, and cannot establish a current HBM-only margin.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This historical margin preserves its consolidated denominator and superseded lifecycle instead of being promoted to current HBM economics.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:OPERATING_MARGIN:FY2025F:MIRAE",
+        "normalized_object": "Historical FY2025F consolidated operating-margin forecast of 30.1 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "FY2025_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory operating-margin forecast",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "question_family_tags": [
+          "OPERATING_MARGIN",
+          "HISTORICAL_FORECAST",
+          "CONSOLIDATED_SCOPE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 consolidated operating-margin forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:FY2025F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 30.1
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The 2024 broker summary forecasts FY2026 consolidated operating margin of 28.2 percent. It is historical, superseded, issuer-wide, and cannot establish a current HBM-only margin.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This historical margin preserves its consolidated denominator and superseded lifecycle instead of being promoted to current HBM economics.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:OPERATING_MARGIN:FY2026F:MIRAE",
+        "normalized_object": "Historical FY2026F consolidated operating-margin forecast of 28.2 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "FY2026_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory operating-margin forecast",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "question_family_tags": [
+          "OPERATING_MARGIN",
+          "HISTORICAL_FORECAST",
+          "CONSOLIDATED_SCOPE"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026 consolidated operating-margin forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:FY2026F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 28.2
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-cec48c4b300fe56a6ba42cb7",
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "Distinct annual controlling-net-income and net-margin revision atoms remain in SGDOC-cec48c4b300fe56a6ba42cb7 after this page.",
+      "Distinct historical consolidated net-income, EPS, ROE, and detailed cash-flow model atoms remain in SGDOC-f87582d14c66af24ff78d6d8."
+    ]
+  },
+  "payload_hash": "e07bf7e78bf75bad6dba75a1891e3704f3efb4e3818f0b4014d9dc154cf609c5",
+  "production_score_authority": false,
+  "prompt_hash": "43b3b1df3b6a0bc13db02d5f7b95ca22ec306fa58bf62a3abef18d8ab40f6478",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-43b9eae077a876ec9e0946ed7c03fdc505ec6df09f7a5582bf50141a1717cdc2",
+  "response_id": "COLLABRESP-1c333e78865016fef14bd41461d444eed350d8e13666e8fe1de932b629380619",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

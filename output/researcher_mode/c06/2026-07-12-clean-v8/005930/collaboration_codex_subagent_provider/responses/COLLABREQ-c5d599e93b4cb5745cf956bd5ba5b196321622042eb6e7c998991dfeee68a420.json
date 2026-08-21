@@ -1,0 +1,610 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-305a62f7fc77606d9b7e45db",
+        "rationale": "87a97 영문 issuer 원문과 같은 HBM4E 샘플 보도 내용이 중복되어 별도 fact를 만들지 않았다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-31c2bd67085c22e02bf20ca8",
+        "rationale": "2026년 HBM 매출 3배 이상 전망·HBM4 CAPA 확대와 2028년 평택 HBM 거점 계획을 추출했으며 Custom HBM 샘플 계획 등 distinct remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-38a622aebdda762773445e2a",
+        "rationale": "HBM4 샘플 요청 고객 전체에 대한 출하 범위를 추출했고 나머지 분기 실적·HBM3E 내용은 current fact와 중복 검토했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-527c527954e845455d2cf972",
+        "rationale": "31c2 한국어 issuer 보도자료와 동일한 HBM4 양산·성능·공급 계획의 영문 중복이며 current HBM4 사실과도 중복된다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-6411566ad76b267b5516d7ff",
+        "rationale": "2026년 1분기 DS 실적, HBM4 양산·판매 및 HBM4E 샘플 계획은 current fact 또는 이번 배치의 후속 실제 샘플 출하로 중복·대체됐다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-7baff7286b12b21327fbb99f",
+        "rationale": "HBM 해시태그·탐색 페이지로서 독립적인 target objective fact를 포함하지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-87a97cfe72263d55e45db712",
+        "rationale": "HBM4E 고객 샘플 실제 출하, 속도·대역폭·용량·효율과 고객 일정 연계 양산 계획을 추출했으며 공정·양산성 관련 distinct remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-8975b1ff4c89c6739abeefae",
+        "rationale": "HBM4E 실물 공개, 당시 목표 성능 및 HCB 고적층 기술을 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-87a97cfe72263d55e45db712",
+        "economic_mechanism": "HBM4E 12단 샘플을 주요 글로벌 고객에게 실제 출하해 차세대 제품이 고객 평가 단계로 진입했다.",
+        "exact_quote": "Samsung Electronics, a global leader in advanced memory technology, today announced that it has begun shipping the industry’s first 12-layer HBM4E samples to major global customers, further strengthening its leadership in the next-generation HBM market.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객 대상 실제 샘플 출하는 단순 제품 공개보다 진전된 HBM4E 상용화 단계다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4E 12-layer customer sample shipment",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-05-29",
+        "predicate": "COMMENCED_HBM4E_12_LAYER_SAMPLE_SHIPMENTS_TO_MAJOR_GLOBAL_CUSTOMERS",
+        "predicate_family": "PRODUCT_SAMPLE_SHIPMENT",
+        "primitive_tags": [
+          "12_layer",
+          "major_global_customers",
+          "sample_shipment"
+        ],
+        "product_family": "HBM4E",
+        "question_family_id": "C06_HBM_PRODUCT_COMMERCIALIZATION",
+        "question_family_tags": [
+          "HBM4E",
+          "customer_sample",
+          "shipment"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4E 12단 샘플",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "industry-first 12-layer HBM4E samples shipped to major global customers"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-87a97cfe72263d55e45db712",
+        "economic_mechanism": "HBM4E가 안정적 14Gbps와 최대 16Gbps를 제시해 HBM4 대비 성능 상향을 구체화한다.",
+        "exact_quote": "Samsung’s HBM4E delivers a stable pin speed of 14 gigabits-per-second (Gbps), with performance scalable up to 16Gbps to support increasingly intensive data processing requirements. This represents more than a 20% increase over its HBM4, while delivering memory bandwidth of up to 3.6 terabytes-per-second (TB/s) per stack, helping maximize computing performance for large language models (LLMs) and next-generation AI systems.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "제품 사양은 고객 채택 가능성을 보조하지만 계약·매출을 직접 증명하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4E pin speed improvement",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-05 product generation",
+        "predicate": "HBM4E_SUPPORTS_14_TO_16_GBPS_SPEED",
+        "predicate_family": "PRODUCT_PERFORMANCE",
+        "primitive_tags": [
+          "14Gbps",
+          "16Gbps",
+          "20_percent"
+        ],
+        "product_family": "HBM4E",
+        "question_family_id": "C06_HBM_PRODUCT_PERFORMANCE",
+        "question_family_tags": [
+          "HBM4E",
+          "performance",
+          "pin_speed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4E 동작 속도",
+        "subject_id": "005930",
+        "unit": "Gbps",
+        "value": "14Gbps stable, up to 16Gbps; over 20% above HBM4"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-87a97cfe72263d55e45db712",
+        "economic_mechanism": "HBM4E 단일 스택 최대 3.6TB/s 대역폭은 차세대 AI 연산 적용성을 정량화한다.",
+        "exact_quote": "Samsung’s HBM4E delivers a stable pin speed of 14 gigabits-per-second (Gbps), with performance scalable up to 16Gbps to support increasingly intensive data processing requirements. This represents more than a 20% increase over its HBM4, while delivering memory bandwidth of up to 3.6 terabytes-per-second (TB/s) per stack, helping maximize computing performance for large language models (LLMs) and next-generation AI systems.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "대역폭은 제품 경쟁력을 보조하지만 고객 물량이나 가격을 의미하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4E per-stack bandwidth",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-05 product generation",
+        "predicate": "HBM4E_PROVIDES_UP_TO_3_6_TBPS_BANDWIDTH_PER_STACK",
+        "predicate_family": "PRODUCT_PERFORMANCE",
+        "primitive_tags": [
+          "3.6TBps",
+          "per_stack"
+        ],
+        "product_family": "HBM4E",
+        "question_family_id": "C06_HBM_PRODUCT_PERFORMANCE",
+        "question_family_tags": [
+          "HBM4E",
+          "bandwidth",
+          "AI_memory"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4E 대역폭",
+        "subject_id": "005930",
+        "unit": "TB/s",
+        "value": 3.6
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-87a97cfe72263d55e45db712",
+        "economic_mechanism": "12단 HBM4E의 48GB 용량과 전세대 대비 30% 이상 증가는 고용량 AI 메모리 제품 구성을 구체화한다.",
+        "exact_quote": "Samsung’s 12-layer HBM4E is offered in a 48-gigabyte (GB) capacity, representing more than a 30% increase over the previous generation, with plans to expand the lineup to include 32GB (8-layer) and 64GB (16-layer) configurations in accordance with customer requirements.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "고용량 제품 구성은 적용 범위를 넓히지만 공급 계약이나 실현 매출은 아니다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4E 12-layer capacity",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-05 product generation",
+        "predicate": "HBM4E_12_LAYER_CAPACITY_REACHES_48GB",
+        "predicate_family": "PRODUCT_CAPACITY",
+        "primitive_tags": [
+          "48GB",
+          "30_percent"
+        ],
+        "product_family": "HBM4E",
+        "question_family_id": "C06_HBM_PRODUCT_PROFILE",
+        "question_family_tags": [
+          "HBM4E",
+          "capacity",
+          "12_layer"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4E 12단 용량",
+        "subject_id": "005930",
+        "unit": "GB",
+        "value": "48GB; more than 30% above previous generation"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-87a97cfe72263d55e45db712",
+        "economic_mechanism": "저전력·패키징 최적화로 HBM4E 에너지 효율과 열저항 특성을 전세대보다 개선했다.",
+        "exact_quote": "In particular, advanced low-power design technologies and optimized packaging structures improved energy efficiency by 16% and thermal resistance characteristics by more than 14% compared to the previous generation.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "에너지·열 성능은 AI 데이터센터 적용성을 보조하나 현금 전환은 직접 입증하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4E energy and thermal efficiency",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-05 product generation",
+        "predicate": "HBM4E_IMPROVES_ENERGY_EFFICIENCY_AND_THERMAL_RESISTANCE",
+        "predicate_family": "PRODUCT_EFFICIENCY",
+        "primitive_tags": [
+          "16_percent",
+          "14_percent",
+          "packaging"
+        ],
+        "product_family": "HBM4E",
+        "question_family_id": "C06_HBM_PRODUCT_EFFICIENCY",
+        "question_family_tags": [
+          "HBM4E",
+          "energy_efficiency",
+          "thermal"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4E 에너지·열 효율",
+        "subject_id": "005930",
+        "unit": "%",
+        "value": "energy efficiency +16%; thermal resistance improvement >14%"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-87a97cfe72263d55e45db712",
+        "economic_mechanism": "초기 샘플 출하 후 고객 일정에 맞춰 HBM4E 양산을 시작할 계획이지만 확정 물량·가격·계약조건은 제시되지 않았다.",
+        "exact_quote": "Samsung plans to begin mass production for HBM4E aligned with customer schedules, following initial sample shipments and optimization.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "특정 제품의 고객 일정 연계 생산 계획은 후속 공급 가시성을 제공하되 계약으로 확대할 수 없다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4E customer-schedule-aligned mass production plan",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "after 2026-05 initial samples",
+        "predicate": "PLANS_HBM4E_MASS_PRODUCTION_ALIGNED_WITH_CUSTOMER_SCHEDULES",
+        "predicate_family": "FUTURE_PRODUCTION_VISIBILITY",
+        "primitive_tags": [
+          "future_production",
+          "nonbinding",
+          "customer_schedule"
+        ],
+        "product_family": "HBM4E",
+        "question_family_id": "C06_HBM_FUTURE_PRODUCTION_VISIBILITY",
+        "question_family_tags": [
+          "HBM4E",
+          "mass_production_plan",
+          "customer_schedule"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "삼성전자 HBM4E 양산 계획",
+        "subject_id": "005930",
+        "unit": "issuer_plan",
+        "value": "mass production aligned with customer schedules"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-8975b1ff4c89c6739abeefae",
+        "economic_mechanism": "GTC에서 HBM4E 실물 칩과 코어 다이 웨이퍼를 공개해 당시 개발 산출물의 존재를 확인했다.",
+        "exact_quote": "삼성전자는 이번 전시에서 ‘HBM4 Hero Wall’을 마련해 삼성의 HBM 기술 리더십을 가장 먼저 조명할 수 있도록 전시 동선을 구성했다.\n삼성전자는 HBM4 양산을 통해 축적한 1c D램 공정 기반의 기술 경쟁력과 삼성 Foundry 4나노 베이스 다이 설계 역량을 바탕으로 차세대 HBM4E 개발을 가속화하고 있으며, HBM4E 실물 칩과 코어 다이 웨이퍼를 최초로 공개했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "실물 공개는 개발 진행을 보조하지만 고객 인증이나 양산을 뜻하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4E physical development artifact",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-17",
+        "predicate": "UNVEILED_HBM4E_PHYSICAL_CHIP_AND_CORE_DIE_WAFER",
+        "predicate_family": "PRODUCT_DEVELOPMENT",
+        "primitive_tags": [
+          "GTC",
+          "core_die_wafer",
+          "unveiled"
+        ],
+        "product_family": "HBM4E",
+        "question_family_id": "C06_HBM_PRODUCT_DEVELOPMENT",
+        "question_family_tags": [
+          "HBM4E",
+          "development",
+          "physical_chip"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4E 실물 칩·코어 다이 웨이퍼",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "HBM4E physical chip and core die wafer unveiled"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-8975b1ff4c89c6739abeefae",
+        "economic_mechanism": "2026년 3월 공개 당시 HBM4E는 16Gbps와 4.0TB/s 지원 계획으로 제시됐으며 이후 실제 샘플 사양과 구분한다.",
+        "exact_quote": "삼성전자 HBM4E는 메모리, 자체 Foundry와 로직 설계 역량, 그리고 첨단 패키징 기술 등 부문 내 모든 역량을 결집한 최적화 협업을 통해 핀당 16Gbps 속도와 4.0TB/s 대역폭을 지원할 예정이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "성능 목표는 기술 방향을 보이지만 실제 인증·양산 사양과 분리해야 한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4E planned performance target",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-17 product plan",
+        "predicate": "PLANNED_HBM4E_16_GBPS_AND_4_TBPS_PERFORMANCE",
+        "predicate_family": "PRODUCT_PERFORMANCE_PLAN",
+        "primitive_tags": [
+          "16Gbps",
+          "4.0TBps",
+          "issuer_plan"
+        ],
+        "product_family": "HBM4E",
+        "question_family_id": "C06_HBM_PRODUCT_PERFORMANCE_PLAN",
+        "question_family_tags": [
+          "HBM4E",
+          "performance_plan",
+          "bandwidth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4E 목표 성능",
+        "subject_id": "005930",
+        "unit": "Gbps and TB/s",
+        "value": "16Gbps and 4.0TB/s planned support"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-8975b1ff4c89c6739abeefae",
+        "economic_mechanism": "HCB 기술이 TCB 대비 열저항을 20% 이상 개선하고 16단 이상 적층을 지원한다는 제품 기술 설명이다.",
+        "exact_quote": "또한 삼성전자는 영상을 통해 TCB(Thermal Compression Bonding) 대비 열 저항을 20% 이상 개선하고 16단 이상 고적층을 지원하는 HCB(Hybrid Copper Bonding) 기술을 공개하며, 차세대 HBM을 위한 삼성전자의 패키징 기술 경쟁력을 강조했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "패키징 성능은 고적층 HBM 실행 기반을 보조하지만 생산 수율이나 매출을 직접 확정하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM hybrid copper bonding thermal and stacking capability",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-17 technology disclosure",
+        "predicate": "HCB_IMPROVES_THERMAL_RESISTANCE_AND_SUPPORTS_HIGH_STACK_HBM",
+        "predicate_family": "PACKAGING_TECHNOLOGY",
+        "primitive_tags": [
+          "HCB",
+          "20_percent",
+          "16_layer"
+        ],
+        "product_family": "HBM4E",
+        "question_family_id": "C06_HBM_PACKAGING_TECHNOLOGY",
+        "question_family_tags": [
+          "HBM",
+          "packaging",
+          "thermal"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM HCB 패키징",
+        "subject_id": "005930",
+        "unit": "% and layers",
+        "value": "thermal resistance improvement >20%; supports 16+ layers"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-31c2bd67085c22e02bf20ca8",
+        "economic_mechanism": "회사는 2026년 HBM 매출을 2025년의 3배 이상으로 전망하고 HBM4 생산능력을 선제 확대하고 있다.",
+        "exact_quote": "삼성전자는 이러한 시장 흐름 속에서 2026년 당사의 HBM 매출이 2025년 대비 3배 이상 증가할 것으로 보고, HBM4 생산 능력을 선제적으로 확대하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 귀속 숫자형 매출 전망과 생산능력 대응을 함께 제시하지만 실현 매출과는 구분한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM revenue growth guidance with HBM4 capacity expansion",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026",
+        "predicate": "GUIDES_HBM_REVENUE_ABOVE_THREE_TIMES_AND_EXPANDS_HBM4_CAPACITY",
+        "predicate_family": "REVENUE_AND_CAPACITY_GUIDANCE",
+        "primitive_tags": [
+          "3x",
+          "2026",
+          "HBM4_capacity"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "C06_HBM_REVENUE_CAPACITY_GUIDANCE",
+        "question_family_tags": [
+          "HBM",
+          "revenue_guidance",
+          "capacity_expansion"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "삼성전자 2026년 HBM 매출·HBM4 생산능력",
+        "subject_id": "005930",
+        "unit": "x versus 2025",
+        "value": "2026 HBM revenue more than 3x 2025"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-31c2bd67085c22e02bf20ca8",
+        "economic_mechanism": "2028년부터 가동할 평택 2단지 5라인을 HBM 핵심 생산거점으로 사용할 계획이어서 중장기 공급 대응 경로를 특정한다.",
+        "exact_quote": "또한, 2028년부터 본격 가동될 평택사업장 2단지 5라인은 HBM 생산의 핵심 거점으로 활용될 예정이며, AI·데이터센터 중심의 중·장기 수요 확대 국면에서도 안정적인 공급 대응 역량을 지속적으로 확보해 나갈 예정이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "구체적 장소와 가동시점이 있는 HBM 미래 생산거점 계획이지만 확정 고객 물량을 뜻하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "future HBM production capacity hub",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "from 2028",
+        "predicate": "PLANS_PYEONGTAEK_LINE_FIVE_AS_HBM_PRODUCTION_HUB_FROM_2028",
+        "predicate_family": "FUTURE_CAPACITY_PLAN",
+        "primitive_tags": [
+          "2028",
+          "line_5",
+          "production_hub"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "C06_HBM_FUTURE_CAPACITY",
+        "question_family_tags": [
+          "HBM",
+          "capacity",
+          "Pyeongtaek"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "삼성전자 평택 2단지 5라인 HBM 생산 거점",
+        "subject_id": "005930",
+        "unit": "issuer_plan",
+        "value": "Pyeongtaek line 5 as HBM production hub"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-38a622aebdda762773445e2a",
+        "economic_mechanism": "2025년 3분기까지 HBM4 샘플 요청 고객사 전부에 샘플을 출하했지만 인증 결과·계약·확정 물량은 제시되지 않았다.",
+        "exact_quote": "특히 HBM3E는 전 고객 대상으로 양산 판매 중이고, HBM4도 샘플을 요청한 모든 고객사에게 샘플을 출하했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "요청 고객 전체에 샘플을 전달한 범위는 고객 평가 진입을 보여주나 qualification 완료로 승격하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM4 sample shipment customer reach",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "through 2025Q3",
+        "predicate": "SHIPPED_HBM4_SAMPLES_TO_ALL_REQUESTING_CUSTOMERS",
+        "predicate_family": "CUSTOMER_SAMPLE_SHIPMENT",
+        "primitive_tags": [
+          "all_requesting_customers",
+          "sample_shipment",
+          "nonbinding"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "C06_HBM_CUSTOMER_SAMPLE_REACH",
+        "question_family_tags": [
+          "HBM4",
+          "customer_sample",
+          "shipment_reach"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM4 고객 샘플 출하 범위",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "all customers that requested HBM4 samples"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-31c2bd67085c22e02bf20ca8",
+      "SGDOC-87a97cfe72263d55e45db712"
+    ],
+    "unresolved_research_notes": [
+      "12건 page cap에 도달했다. 31c2의 2027 Custom HBM 고객별 샘플 계획과 87a97의 HBM4E 공정·양산성 관련 distinct remainder를 다음 page에서 prior12와 dedup해 감사해야 한다."
+    ]
+  },
+  "payload_hash": "4f14e1cbbd049feaa530172692875b4cac8ac2efb820777ff669a2397d38c044",
+  "production_score_authority": false,
+  "prompt_hash": "5d2730c524d3dacb76f439904e1fc1ad995562c70f295bd2476d57fd2ca83b88",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c5d599e93b4cb5745cf956bd5ba5b196321622042eb6e7c998991dfeee68a420",
+  "response_id": "COLLABRESP-924b7ce1d31750932c4015fe428763ba6587e00ecfa1f9e4929def3027149081",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

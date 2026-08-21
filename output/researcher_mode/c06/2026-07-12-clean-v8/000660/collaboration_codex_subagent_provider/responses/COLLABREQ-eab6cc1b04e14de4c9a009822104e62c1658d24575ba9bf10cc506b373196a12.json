@@ -1,0 +1,572 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "rationale": "Continuation page 4 re-reviewed the complete 120,010-character PUBLIC_BROKER_PDF and strict-deduplicated all 36 prior facts. In source order it adds twelve atomic rows after the prior FY2026E PER estimate: FY2025E and FY2026E ROE, FY2025F dividend yield, FY2025E and FY2026E P/B, FY2025E and FY2026E EV/EBITDA, two dated major-holder stakes, and the one-, six-, and twelve-month relative share-price returns. All valuation and ownership values remain dated broker estimates or snapshots rather than issuer actuals, current regulatory ownership, or HBM-only economics. The twelve-fact cap is reached before later absolute returns, estimate revisions, detailed operating/financial/cash-flow forecasts, target-price construction, and recommendation-history calibration; continuation is required.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.95,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker estimated FY2025 ROE at 41.8%. This is a dated issuer-wide broker estimate, not an issuer-reported actual, HBM-only return, or current as-of-date valuation input.",
+        "exact_quote": "ROE(%) -15.6 31.1 41.8 37.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Forward ROE is a valuation-denominator quality input, while its dated forecast status prevents treatment as an actual or HBM-only return.",
+        "mechanism_scope_id": "000660:MEMORY:EUGENE_ROE_FY2025E",
+        "normalized_object": "Eugene FY2025E SK hynix ROE of 41.8%",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "broker_estimates_fy2025_roe",
+        "predicate_family": "BROKER_FORWARD_ROE_ESTIMATE",
+        "primitive_tags": [
+          "FORWARD_ROE",
+          "VALUATION_EARNINGS_BRIDGE"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_forward_roe_estimate",
+        "question_family_tags": [
+          "roe",
+          "broker_estimate",
+          "valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Eugene SK hynix forward ROE estimate",
+        "subject_id": "000660:EUGENE_ROE:FY2025E",
+        "unit": "% ROE",
+        "value": 41.8
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker estimated FY2026 ROE at 37.2%. This remains an open issuer-wide forecast and is not an issuer actual or an HBM-only return bridge.",
+        "exact_quote": "ROE(%) -15.6 31.1 41.8 37.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The estimate directly informs the forward valuation bridge, with forecast and issuer-wide attribution boundaries retained.",
+        "mechanism_scope_id": "000660:MEMORY:EUGENE_ROE_FY2026E",
+        "normalized_object": "Eugene FY2026E SK hynix ROE of 37.2%",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "broker_estimates_fy2026_roe",
+        "predicate_family": "BROKER_FORWARD_ROE_ESTIMATE",
+        "primitive_tags": [
+          "FORWARD_ROE",
+          "VALUATION_EARNINGS_BRIDGE"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_forward_roe_estimate",
+        "question_family_tags": [
+          "roe",
+          "broker_estimate",
+          "valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Eugene SK hynix forward ROE estimate",
+        "subject_id": "000660:EUGENE_ROE:FY2026E",
+        "unit": "% ROE",
+        "value": 37.2
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.95,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker estimated FY2025 dividend yield at 0.1%. The low dated forecast is a capital-return counterweight, not an issuer-declared dividend or realized yield.",
+        "exact_quote": "배당수익률(2025F) 0.1%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The low forecast yield tempers capital-return support, while remaining a broker estimate rather than an executed distribution.",
+        "mechanism_scope_id": "000660:MEMORY:EUGENE_DIVIDEND_YIELD_FY2025F",
+        "normalized_object": "Eugene FY2025F SK hynix dividend yield of 0.1%",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025F",
+        "predicate": "broker_estimates_fy2025_dividend_yield",
+        "predicate_family": "BROKER_FORWARD_DIVIDEND_YIELD_ESTIMATE",
+        "primitive_tags": [
+          "FORWARD_DIVIDEND_YIELD",
+          "CAPITAL_RETURN_COUNTER"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_forward_dividend_yield_estimate",
+        "question_family_tags": [
+          "dividend_yield",
+          "capital_return",
+          "broker_estimate"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Eugene SK hynix dividend-yield estimate",
+        "subject_id": "000660:EUGENE_DIVIDEND_YIELD:FY2025F",
+        "unit": "% dividend yield",
+        "value": 0.1
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.95,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker estimated FY2025 P/B at 3.3x. It is a dated company-wide market multiple, not an HBM-only valuation or current as-of-date multiple.",
+        "exact_quote": "PBR(배) 1.9 1.7 3.3 2.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit multiple is relevant to rerating headroom but is dated and company-wide.",
+        "mechanism_scope_id": "000660:MEMORY:EUGENE_PBR_FY2025E",
+        "normalized_object": "Eugene FY2025E SK hynix P/B of 3.3x",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E",
+        "predicate": "broker_estimates_fy2025_pbr",
+        "predicate_family": "BROKER_FORWARD_PBR_ESTIMATE",
+        "primitive_tags": [
+          "FORWARD_PBR",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_forward_pbr_estimate",
+        "question_family_tags": [
+          "pbr",
+          "broker_multiple",
+          "valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Eugene SK hynix forward P/B estimate",
+        "subject_id": "000660:EUGENE_PBR:FY2025E",
+        "unit": "x P/B",
+        "value": 3.3
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker estimated FY2026 P/B at 2.2x. It remains an open company-wide forecast and does not provide an HBM-only denominator or current realized multiple.",
+        "exact_quote": "PBR(배) 1.9 1.7 3.3 2.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The forward multiple informs rerating analysis but remains a broker estimate with company-wide attribution.",
+        "mechanism_scope_id": "000660:MEMORY:EUGENE_PBR_FY2026E",
+        "normalized_object": "Eugene FY2026E SK hynix P/B of 2.2x",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "broker_estimates_fy2026_pbr",
+        "predicate_family": "BROKER_FORWARD_PBR_ESTIMATE",
+        "primitive_tags": [
+          "FORWARD_PBR",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_forward_pbr_estimate",
+        "question_family_tags": [
+          "pbr",
+          "broker_multiple",
+          "valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Eugene SK hynix forward P/B estimate",
+        "subject_id": "000660:EUGENE_PBR:FY2026E",
+        "unit": "x P/B",
+        "value": 2.2
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.95,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker estimated FY2025 EV/EBITDA at 3.9x. The dated company-wide multiple is not an HBM-only cash-earnings bridge or current market multiple.",
+        "exact_quote": "EV/EBITDA(배) 21.7 3.9 3.9 2.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The multiple is a distinct valuation atom, with its forecast and consolidated denominator boundaries retained.",
+        "mechanism_scope_id": "000660:MEMORY:EUGENE_EV_EBITDA_FY2025E",
+        "normalized_object": "Eugene FY2025E SK hynix EV/EBITDA of 3.9x",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "broker_estimates_fy2025_ev_ebitda",
+        "predicate_family": "BROKER_FORWARD_EV_EBITDA_ESTIMATE",
+        "primitive_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION_EARNINGS_BRIDGE"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_forward_ev_ebitda_estimate",
+        "question_family_tags": [
+          "ev_ebitda",
+          "broker_multiple",
+          "valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Eugene SK hynix forward EV/EBITDA estimate",
+        "subject_id": "000660:EUGENE_EV_EBITDA:FY2025E",
+        "unit": "x EV/EBITDA",
+        "value": 3.9
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker estimated FY2026 EV/EBITDA at 2.5x. It is an open issuer-wide forecast, not an HBM-only EBITDA bridge or realized current multiple.",
+        "exact_quote": "EV/EBITDA(배) 21.7 3.9 3.9 2.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The forward multiple is material to valuation but remains a broker estimate using company-wide EBITDA.",
+        "mechanism_scope_id": "000660:MEMORY:EUGENE_EV_EBITDA_FY2026E",
+        "normalized_object": "Eugene FY2026E SK hynix EV/EBITDA of 2.5x",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "broker_estimates_fy2026_ev_ebitda",
+        "predicate_family": "BROKER_FORWARD_EV_EBITDA_ESTIMATE",
+        "primitive_tags": [
+          "FORWARD_EV_EBITDA",
+          "VALUATION_EARNINGS_BRIDGE"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_forward_ev_ebitda_estimate",
+        "question_family_tags": [
+          "ev_ebitda",
+          "broker_multiple",
+          "valuation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "Eugene SK hynix forward EV/EBITDA estimate",
+        "subject_id": "000660:EUGENE_EV_EBITDA:FY2026E",
+        "unit": "x EV/EBITDA",
+        "value": 2.5
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.91,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker table reported SK Square's stake at 20.1%. This is a dated broker-reported ownership snapshot, not a current regulatory filing or a capital-allocation action.",
+        "exact_quote": "에스케이스퀘어 20.1%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Major-holder concentration is relevant to issuer-wide capital-allocation and information context, with official-currentness limitations explicit.",
+        "mechanism_scope_id": "000660:CORPORATE:SK_SQUARE_STAKE_20251022",
+        "normalized_object": "Broker-reported SK Square stake of 20.1%",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "snapshot reported 2025-10-22",
+        "predicate": "broker_reports_sk_square_stake",
+        "predicate_family": "BROKER_REPORTED_MAJOR_SHAREHOLDER_STAKE",
+        "primitive_tags": [
+          "OWNERSHIP_STRUCTURE",
+          "INFORMATION_ONLY"
+        ],
+        "product_family": "Issuer-wide ownership",
+        "question_family_id": "broker_reported_major_shareholder_stake",
+        "question_family_tags": [
+          "ownership",
+          "major_shareholder",
+          "broker_snapshot"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix major shareholder structure",
+        "subject_id": "000660:SK_SQUARE_STAKE:20251022",
+        "unit": "% ownership",
+        "value": 20.1
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.91,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker table reported the National Pension Service stake at 7.4%. This is a dated broker-reported ownership snapshot, not current official ownership evidence or an investment action.",
+        "exact_quote": "국민연금공단 7.4%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The ownership snapshot informs capital-allocation context but cannot replace current regulatory ownership data.",
+        "mechanism_scope_id": "000660:CORPORATE:NPS_STAKE_20251022",
+        "normalized_object": "Broker-reported National Pension Service stake of 7.4%",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "snapshot reported 2025-10-22",
+        "predicate": "broker_reports_nps_stake",
+        "predicate_family": "BROKER_REPORTED_MAJOR_SHAREHOLDER_STAKE",
+        "primitive_tags": [
+          "OWNERSHIP_STRUCTURE",
+          "INFORMATION_ONLY"
+        ],
+        "product_family": "Issuer-wide ownership",
+        "question_family_id": "broker_reported_major_shareholder_stake",
+        "question_family_tags": [
+          "ownership",
+          "institutional_holder",
+          "broker_snapshot"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix major shareholder structure",
+        "subject_id": "000660:NPS_STAKE:20251022",
+        "unit": "% ownership",
+        "value": 7.4
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker reported one-month relative share-price performance of +26.8% as of 2025-10-21. The strong prior rerating is a counterweight to an unpriced thesis and is not current as-of-date performance.",
+        "exact_quote": "주가상승(%)- 1M 6M 12M\n12,000 160\n상대기준 26.8 123.8 112.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Prior relative rerating is material to market-mispricing analysis, with the historical cutoff explicit.",
+        "mechanism_scope_id": "000660:MEMORY:RELATIVE_RETURN_1M_20251021",
+        "normalized_object": "SK hynix one-month relative return of +26.8% as of 2025-10-21",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "1 month through 2025-10-21",
+        "predicate": "broker_reports_one_month_relative_return",
+        "predicate_family": "BROKER_RELATIVE_SHARE_PRICE_RETURN",
+        "primitive_tags": [
+          "RELATIVE_RETURN",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_relative_share_price_return",
+        "question_family_tags": [
+          "relative_return",
+          "one_month",
+          "market_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix relative share-price performance",
+        "subject_id": "000660:EUGENE_RELATIVE_RETURN:1M_20251021",
+        "unit": "% relative return",
+        "value": 26.8
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker reported six-month relative share-price performance of +123.8% as of 2025-10-21. This pronounced prior rerating counters an unpriced thesis but is not current as-of-date performance.",
+        "exact_quote": "주가상승(%)- 1M 6M 12M\n12,000 160\n상대기준 26.8 123.8 112.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The six-month relative move is a distinct historical market-response atom relevant to rerating headroom.",
+        "mechanism_scope_id": "000660:MEMORY:RELATIVE_RETURN_6M_20251021",
+        "normalized_object": "SK hynix six-month relative return of +123.8% as of 2025-10-21",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "6 months through 2025-10-21",
+        "predicate": "broker_reports_six_month_relative_return",
+        "predicate_family": "BROKER_RELATIVE_SHARE_PRICE_RETURN",
+        "primitive_tags": [
+          "RELATIVE_RETURN",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_relative_share_price_return",
+        "question_family_tags": [
+          "relative_return",
+          "six_month",
+          "market_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix relative share-price performance",
+        "subject_id": "000660:EUGENE_RELATIVE_RETURN:6M_20251021",
+        "unit": "% relative return",
+        "value": 123.8
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.94,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "The broker reported twelve-month relative share-price performance of +112.1% as of 2025-10-21. The strong historical rerating is a counterweight to an unpriced thesis and is not current as-of-date performance.",
+        "exact_quote": "주가상승(%)- 1M 6M 12M\n12,000 160\n상대기준 26.8 123.8 112.1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The twelve-month relative move is a distinct historical market-response atom relevant to valuation rerating limits.",
+        "mechanism_scope_id": "000660:MEMORY:RELATIVE_RETURN_12M_20251021",
+        "normalized_object": "SK hynix twelve-month relative return of +112.1% as of 2025-10-21",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "12 months through 2025-10-21",
+        "predicate": "broker_reports_twelve_month_relative_return",
+        "predicate_family": "BROKER_RELATIVE_SHARE_PRICE_RETURN",
+        "primitive_tags": [
+          "RELATIVE_RETURN",
+          "MARKET_EXPECTATION_GAP"
+        ],
+        "product_family": "Issuer-wide memory valuation",
+        "question_family_id": "broker_relative_share_price_return",
+        "question_family_tags": [
+          "relative_return",
+          "twelve_month",
+          "market_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix relative share-price performance",
+        "subject_id": "000660:EUGENE_RELATIVE_RETURN:12M_20251021",
+        "unit": "% relative return",
+        "value": 112.1
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-6e405a0dc5bd4f8f2cf7ed5f"
+    ],
+    "unresolved_research_notes": [
+      "Continuation page 4 reached the twelve-fact cap with 48 cumulative accepted facts. Later source-order target rows remain, beginning with absolute one-, six-, and twelve-month returns and dated operating-profit revisions, followed by detailed forecasts, valuation construction, cash-flow estimates, and recommendation-history calibration.",
+      "No broker valuation or shareholder snapshot is promoted to issuer actual, current official ownership, signed customer terms, or HBM-only earnings and cash flow.",
+      "NAND-only material remains excluded from C06 unless a later literal directly supports a permitted current objective without attributing NAND economics to HBM."
+    ]
+  },
+  "payload_hash": "b90359492e80b5d47459ebaf83aa634b09b72f8b9b5fb3e6d5d03bae416c4919",
+  "production_score_authority": false,
+  "prompt_hash": "549561524f43594d93fc5a82a2b1dc9ae0d67775ba6ccfd110cd38bed4c9f155",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-eab6cc1b04e14de4c9a009822104e62c1658d24575ba9bf10cc506b373196a12",
+  "response_id": "COLLABRESP-5fe478ed91713b6e56b588a85a465ac63612b3287c1c42ea51a10ed6a7a048cd",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

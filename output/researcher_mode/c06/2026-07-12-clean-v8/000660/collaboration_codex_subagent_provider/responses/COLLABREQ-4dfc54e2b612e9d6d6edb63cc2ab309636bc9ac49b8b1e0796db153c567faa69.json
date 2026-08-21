@@ -1,0 +1,91 @@
+{
+  "output_schema_hash": "44f0ffbd106d6ef02aafb2674643ad9e311c68a32b75ecbbca9d606387f07c45",
+  "payload": {
+    "business_model_summary": "SK하이닉스의 현재 사업모델은 D램과 HBM을 포함한 메모리 제품 판매가 중심이다. 2026년 1분기 D램 매출 actual과 FY2025 HBM 매출의 두 배 이상 성장, HBM 제품 실행력 및 HBM4 고객요청 물량의 현재 양산이 수익·상용화 경로를 지지한다. 다만 연결 매출·영업이익·영업현금흐름과 메모리 전반의 가동률·CAPEX는 HBM 단독 경제성으로 귀속할 수 없다. HBM4 고객요청 물량 양산은 현재 생산 실행 근거이지 명명 고객의 서명 계약, 고정 물량·가격·기간·allocation 보호를 뜻하지 않는다. HBM·서버 D램 수요 전망, HBM3E/HBM4 공급 역량 강화, M15X·용인 및 패키징 공장 계획은 forward visibility를 보강하지만 각각 issuer outlook 또는 메모리·AI 메모리 범위의 capacity plan이다.",
+    "capacity_and_supply_constraints": [
+      "2026년 1분기 메모리 생산설비 평균가동률 100%는 현재 메모리 전반의 높은 활용도를 보여주지만 HBM 전용 가동률, 장기 예약 물량 또는 고객 allocation을 뜻하지 않는다.",
+      "HBM3E와 HBM4의 동시 안정공급 및 양산 역량 강화 방침과 HBM4 고객요청 물량의 현재 양산은 HBM 공급 실행을 지지하지만 고정 물량·가격·계약기간은 공시되지 않았다.",
+      "M15X 생산력 조기 극대화와 용인 1기 팹의 중장기 생산기반 확충은 고객수요 대응용 메모리 capacity plan이다. 이를 HBM-only CAPA로 좁히거나 확정 고객 allocation으로 바꾸지 않는다.",
+      "청주 P&T7과 인디애나 첨단 패키징 공장 계획은 AI 메모리의 전·후공정 통합 대응력을 확장하지만 수치형 capacity 또는 HBM-only 공급량은 없다.",
+      "HBM·서버 D램 수요의 지속 확대 전망은 forward demand visibility이나 issuer outlook이며, booked backlog나 법적 구매의무와 동일하지 않다."
+    ],
+    "confidence": 0.9,
+    "cost_and_cash_drivers": [
+      "2026년 1분기 연결 영업활동 현금유입은 26,330,119백만원인 반면 유형자산 취득 현금유출은 7,657,403백만원으로, 강한 전사 현금창출과 높은 자본집약도가 동시에 존재한다. 두 수치는 HBM 전용 FCF나 CAPEX가 아니다.",
+      "연결 유형자산 감가상각 3,415,412백만원과 연구개발 총지출 2,297,080백만원은 제조·기술 비용 기반을 보여준다. 연구개발비 대부분은 경상개발비로 처리됐으나 HBM 전용 비용으로 귀속하지 않는다.",
+      "연결 매출채권 및 기타채권과 재고 장부금액이 2026년 1분기에 증가해 매출 성장의 현금 회수와 운전자본 부담을 함께 모니터링해야 한다.",
+      "원재료·인건비·감가상각이 주요 영업비용이며, 연결 현금과 비용 actual에는 DRAM·HBM 외 제품 및 전사 항목이 섞여 있다."
+    ],
+    "customer_and_channel_dependencies": [
+      "HBM4 고객요청 물량을 현재 양산하고 고객과 HBM ASIC 개발을 협업한다는 사실은 고객 요구가 제품 실행에 연결됨을 보여주지만 고객명·수량·가격·기간·취소조건은 확인되지 않는다.",
+      "주요 고객 공급 물량과 가격은 월별 또는 분기별 상호 합의로 정해져 단기 조정성이 크며, 이를 장기 고정가격·고정물량 계약으로 해석하지 않는다.",
+      "2026년 1분기 고객 (가)와 (나)가 각각 연결매출의 10%를 넘어 복수 대형고객 집중 위험이 있다. 익명 고객 매출은 HBM 고객별 매출 또는 allocation으로 귀속하지 않는다.",
+      "Peer-structured 및 valuation band 자료는 비교·가치평가 문맥일 뿐 SK하이닉스의 고객계약, 생산 실행, 제품별 수익성을 증명하는 운영 source로 사용하지 않는다."
+    ],
+    "fact_row_indices": [
+      7,
+      11,
+      13,
+      18,
+      25,
+      35,
+      51,
+      52,
+      56,
+      65,
+      69,
+      73,
+      74,
+      79,
+      82,
+      93,
+      98,
+      100,
+      105,
+      110,
+      115,
+      124,
+      130,
+      137,
+      138,
+      139
+    ],
+    "research_complete": true,
+    "revenue_engines": [
+      "D램 제품 판매가 현재 핵심 매출축이다. 2026년 1분기 별도 D램 매출은 39,758,279백만원이지만 이 전부를 HBM 매출로 재분류하지 않는다.",
+      "HBM 매출은 FY2025에 전년 대비 두 배 이상 성장해 실적에 기여했으며, HBM Time-to-Market·성능 실행과 HBM4 고객요청 물량의 현재 양산이 제품 상용화 경로를 뒷받침한다.",
+      "별도 고객계약 수익의 대부분이 한 시점에 인식돼 제품 판매형 수익구조가 중심이며, 기간형 반복수익이나 HBM 장기 수주잔고로 확대할 근거는 없다.",
+      "2026년 1분기 연결 매출 52,576,287백만원과 영업이익 37,610,283백만원은 전사 actual이다. HBM 매출 성장과 방향은 일치하지만 HBM 단독 이익률·FCF를 산출하지 않는다."
+    ],
+    "uncertainties": [
+      "HBM4 고객요청 물량의 현재 양산은 서명된 장기공급계약, 고정 수량·가격·기간·취소보호 또는 선수금을 증명하지 않는다.",
+      "HBM·서버 D램 demand outlook과 M15X·용인·패키징 capacity plans는 forward statements이며 실제 완료 capacity, 출하량 또는 매출 전환은 아직 확정하지 않는다.",
+      "연결·DRAM actual, 100% 메모리 가동률, CAPEX, 감가상각, 연구개발 및 현금흐름은 HBM-only 수익성·FCF·ROIC로 귀속할 수 없다.",
+      "고객 (가)·(나)의 10% 초과 매출은 집중 위험을 보여주지만 고객명과 제품별 매출이 없어 HBM 고객 집중도로 재분류할 수 없다.",
+      "연결 매출채권과 재고 증가는 운전자본 부담을 만들 수 있고, 판매보증 및 품질 관련 충당 항목에는 제품명이 없어 HBM 위험으로 단정할 수 없다.",
+      "FY2025 issuer 실적자료는 외부 감사인의 회계검토 완료 전 작성되어 수치가 변경될 수 있다.",
+      "Peer 및 valuation context는 시장 비교용이며 issuer 운영경제와 contract quality의 직접 증거가 아니다."
+    ]
+  },
+  "payload_hash": "0f2b4e497782e7f86cf5b248219a7262959265be119ebed394862cd421c3420f",
+  "production_score_authority": false,
+  "prompt_hash": "85a9341f77806be9aa27c47728c221e1fd694c072225292ef0a99cb458d994b4",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4dfc54e2b612e9d6d6edb63cc2ab309636bc9ac49b8b1e0796db153c567faa69",
+  "response_id": "COLLABRESP-51b5d31cde9bb6081daab5488360d2cfc2a8c81303537c9b3048649b544c8a8a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

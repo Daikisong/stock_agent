@@ -1,0 +1,60 @@
+{
+  "output_schema_hash": "2f56ce613168b892269b6303b70011be692fe53149b6de554176972a37b934dd",
+  "payload": {
+    "allowed_range": [
+      11.4,
+      13.3
+    ],
+    "anchor_comparisons": [
+      "CANCH-5eb80a11ed23fc1102335092의 11.95~14.05점 구간과 비교하면 HBM4 양산 출하, 서버향 판매, 메모리 매출·ASP actual과 AMD corroboration은 부합하지만 signed 물량·가격·기간이 없어 중간 수준이다.",
+      "CANCH-1aa76cb8e89d85cd78d325f4의 9.95~12.05점보다 상용 출하와 actual 매출·ASP가 강하지만, 엔비디아 협의와 OpenAI·AMD의 비구속 계획 때문에 격차는 제한된다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1"
+    ],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "CANCH-5eb80a11ed23fc1102335092",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 12.4,
+    "rationale": "HBM4 양산 출하, 서버향 판매 확대, 메모리 매출·ASP actual과 AMD의 독립 확인은 단기 상용화와 수익 전환 가시성을 지지한다. 반면 엔비디아 HBM4는 협의 중이며 OpenAI 지원·수요 전망과 AMD MOU·우선공급은 구매의무, 확정 배정, 가격, 기간, 취소조건 또는 backlog가 아니므로 장기 내구성은 아직 중간 수준이다.",
+    "support_fact_ids": [
+      "EFACT-4d6a7fe870806b29408cc3a5",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-7f9fca669110a7e761e6264d",
+      "EFACT-7fe708d0c29a809416e4b893",
+      "EFACT-9d94cbc4213d1d3bc1129615",
+      "EFACT-b6ff1b966b93b843dd6bcd04",
+      "EFACT-b7565fd844a544809e1ca148",
+      "EFACT-cbd2e7a3a3670eba7a113d19",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-d0b79e6c2a1c2bef63f9cb34",
+      "EFACT-e7acbf35eec720d3412bca19",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "확정 구매량·가격·기간·취소조건·선수금·RPO가 없고 엔비디아 공급은 협의, OpenAI·AMD 경로는 비구속 계획 단계다.",
+    "why_not_lower": "HBM4 actual 양산 출하와 서버향 판매, 메모리 매출·ASP actual, AMD의 공급 이력 확인은 단순 계획보다 강한 현재 증거다."
+  },
+  "payload_hash": "19227c67dd921a2d3fad28b213881376e52f545433af46d8729e90080f56bccc",
+  "production_score_authority": false,
+  "prompt_hash": "4985e5d1e065ea224ca80febc8194c87ab861612d04d1e3e98eba23921b18cd8",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-195c3f7da79d3c6929189bb15bd7d919e966263991157e7df9026f806e61ec82",
+  "response_id": "COLLABRESP-dbd7aba6682e5f083b3e33fb554bc7635d61d4c00dee9cec3d9aa61cbb3f993d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

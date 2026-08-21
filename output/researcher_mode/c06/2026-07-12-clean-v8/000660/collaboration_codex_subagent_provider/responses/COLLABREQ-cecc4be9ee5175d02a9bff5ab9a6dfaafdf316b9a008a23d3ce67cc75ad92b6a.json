@@ -1,0 +1,593 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Continuation page 4 reviewed the literal document in source order after the 36 accepted identities. This page extracts the remaining 2Q24E-4Q24E consolidated revenue levels, explicit 1Q24E-4Q24E revenue QoQ and YoY rates, and the next 1Q24E DRAM revenue row. Every value is a historical SK Securities forecast and is marked SUPERSEDED; none is issuer actual, HBM-only revenue, guidance, or durable visibility. NAND and already accepted annual/1Q24E identities were excluded. Distinct later operating-profit, DRAM, net-income, margin, shipment, ASP, and revision rows remain, so continuation is required.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 2Q24 연결 매출액을 14,976십억원으로 전망했다. 이는 historical broker estimate이며 issuer actual 또는 HBM-only revenue가 아니다.",
+        "exact_quote": "매출액 5,088 7,306 9,066 11,306 12,214 14,976 16,612 17,205 44,622 32,766 61,007",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Exact quarterly broker model point preserves expectation lineage; its period has ended and it is not product-attributed actual evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_REVENUE:2Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 2Q2024 consolidated revenue KRW 14,976 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "2Q24 연결 매출액을 14,976십억원으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "2Q24E",
+          "revenue",
+          "historical_forecast"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "sksec_skh_quarterly_consolidated_revenue_2q2024e",
+        "question_family_tags": [
+          "consolidated_revenue",
+          "quarterly_forecast",
+          "broker_model"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2Q24 연결 매출액 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:2Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 14976
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 3Q24 연결 매출액을 16,612십억원으로 전망했다. Historical broker estimate이며 issuer actual 또는 HBM-only revenue가 아니다.",
+        "exact_quote": "매출액 5,088 7,306 9,066 11,306 12,214 14,976 16,612 17,205 44,622 32,766 61,007",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Exact quarterly broker model point preserves expectation lineage; its period has ended and it is not product-attributed actual evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_REVENUE:3Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 3Q2024 consolidated revenue KRW 16,612 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "3Q24 연결 매출액을 16,612십억원으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "3Q24E",
+          "revenue",
+          "historical_forecast"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "sksec_skh_quarterly_consolidated_revenue_3q2024e",
+        "question_family_tags": [
+          "consolidated_revenue",
+          "quarterly_forecast",
+          "broker_model"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q24 연결 매출액 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:3Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 16612
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 4Q24 연결 매출액을 17,205십억원으로 전망했다. Historical broker estimate이며 issuer actual 또는 HBM-only revenue가 아니다.",
+        "exact_quote": "매출액 5,088 7,306 9,066 11,306 12,214 14,976 16,612 17,205 44,622 32,766 61,007",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Exact quarterly broker model point preserves expectation lineage; its period has ended and it is not product-attributed actual evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_REVENUE:4Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 4Q2024 consolidated revenue KRW 17,205 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "4Q24 연결 매출액을 17,205십억원으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "4Q24E",
+          "revenue",
+          "historical_forecast"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "sksec_skh_quarterly_consolidated_revenue_4q2024e",
+        "question_family_tags": [
+          "consolidated_revenue",
+          "quarterly_forecast",
+          "broker_model"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q24 연결 매출액 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:4Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 17205
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권 모델은 SK하이닉스 1Q24 연결 매출액이 8% QoQ 증가할 것으로 전망했다. Historical broker forecast이며 reported growth actual이 아니다.",
+        "exact_quote": "QoQ % -34% 44% 24% 25% 8% 23% 11% 4% 4% -27% 86%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Explicit quarterly growth formula is preserved as a superseded broker forecast and not as issuer actual.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_REVENUE_QOQ:1Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 1Q2024 consolidated revenue +8% QoQ historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "1Q24 연결 매출액이 8% QoQ 증가할 것으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_QOQ_FORECAST",
+        "primitive_tags": [
+          "1Q24E",
+          "QoQ",
+          "revenue_growth"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "sksec_skh_consolidated_revenue_qoq_1q2024e",
+        "question_family_tags": [
+          "consolidated_revenue",
+          "qoq_growth",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 1Q24 연결 매출 QoQ 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_QOQ:1Q2024E:SKSEC_20240314",
+        "unit": "% QoQ",
+        "value": 8
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권 모델은 SK하이닉스 2Q24 연결 매출액이 23% QoQ 증가할 것으로 전망했다. Historical broker forecast이며 reported growth actual이 아니다.",
+        "exact_quote": "QoQ % -34% 44% 24% 25% 8% 23% 11% 4% 4% -27% 86%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Explicit quarterly growth formula is preserved as a superseded broker forecast and not as issuer actual.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_REVENUE_QOQ:2Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 2Q2024 consolidated revenue +23% QoQ historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "2Q24 연결 매출액이 23% QoQ 증가할 것으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_QOQ_FORECAST",
+        "primitive_tags": [
+          "2Q24E",
+          "QoQ",
+          "revenue_growth"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "sksec_skh_consolidated_revenue_qoq_2q2024e",
+        "question_family_tags": [
+          "consolidated_revenue",
+          "qoq_growth",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 2Q24 연결 매출 QoQ 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_QOQ:2Q2024E:SKSEC_20240314",
+        "unit": "% QoQ",
+        "value": 23
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권 모델은 SK하이닉스 3Q24 연결 매출액이 11% QoQ 증가할 것으로 전망했다. Historical broker forecast이며 reported growth actual이 아니다.",
+        "exact_quote": "QoQ % -34% 44% 24% 25% 8% 23% 11% 4% 4% -27% 86%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Explicit quarterly growth formula is preserved as a superseded broker forecast and not as issuer actual.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_REVENUE_QOQ:3Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 3Q2024 consolidated revenue +11% QoQ historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "3Q24 연결 매출액이 11% QoQ 증가할 것으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_QOQ_FORECAST",
+        "primitive_tags": [
+          "3Q24E",
+          "QoQ",
+          "revenue_growth"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "sksec_skh_consolidated_revenue_qoq_3q2024e",
+        "question_family_tags": [
+          "consolidated_revenue",
+          "qoq_growth",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 3Q24 연결 매출 QoQ 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_QOQ:3Q2024E:SKSEC_20240314",
+        "unit": "% QoQ",
+        "value": 11
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권 모델은 SK하이닉스 4Q24 연결 매출액이 4% QoQ 증가할 것으로 전망했다. Historical broker forecast이며 reported growth actual이 아니다.",
+        "exact_quote": "QoQ % -34% 44% 24% 25% 8% 23% 11% 4% 4% -27% 86%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Explicit quarterly growth formula is preserved as a superseded broker forecast and not as issuer actual.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_REVENUE_QOQ:4Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 4Q2024 consolidated revenue +4% QoQ historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "4Q24 연결 매출액이 4% QoQ 증가할 것으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_QOQ_FORECAST",
+        "primitive_tags": [
+          "4Q24E",
+          "QoQ",
+          "revenue_growth"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "sksec_skh_consolidated_revenue_qoq_4q2024e",
+        "question_family_tags": [
+          "consolidated_revenue",
+          "qoq_growth",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 4Q24 연결 매출 QoQ 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_QOQ:4Q2024E:SKSEC_20240314",
+        "unit": "% QoQ",
+        "value": 4
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권 모델은 SK하이닉스 1Q24 연결 매출액이 140% YoY 증가할 것으로 전망했다. Historical broker forecast이며 reported growth actual이 아니다.",
+        "exact_quote": "YoY % -58% -47% -17% 47% 140% 105% 83% 52%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Explicit YoY formula is preserved as a superseded broker forecast; no QOQ role or actual status is assigned.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_REVENUE_YOY:1Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 1Q2024 consolidated revenue +140% YoY historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "1Q24 연결 매출액이 140% YoY 증가할 것으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_YOY_FORECAST",
+        "primitive_tags": [
+          "1Q24E",
+          "YoY",
+          "revenue_growth"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "sksec_skh_consolidated_revenue_yoy_1q2024e",
+        "question_family_tags": [
+          "consolidated_revenue",
+          "yoy_growth",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1Q24 연결 매출 YoY 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_YOY:1Q2024E:SKSEC_20240314",
+        "unit": "% YoY",
+        "value": 140
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권 모델은 SK하이닉스 2Q24 연결 매출액이 105% YoY 증가할 것으로 전망했다. Historical broker forecast이며 reported growth actual이 아니다.",
+        "exact_quote": "YoY % -58% -47% -17% 47% 140% 105% 83% 52%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Explicit YoY formula is preserved as a superseded broker forecast; no QOQ role or actual status is assigned.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_REVENUE_YOY:2Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 2Q2024 consolidated revenue +105% YoY historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "2Q24 연결 매출액이 105% YoY 증가할 것으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_YOY_FORECAST",
+        "primitive_tags": [
+          "2Q24E",
+          "YoY",
+          "revenue_growth"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "sksec_skh_consolidated_revenue_yoy_2q2024e",
+        "question_family_tags": [
+          "consolidated_revenue",
+          "yoy_growth",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2Q24 연결 매출 YoY 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_YOY:2Q2024E:SKSEC_20240314",
+        "unit": "% YoY",
+        "value": 105
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권 모델은 SK하이닉스 3Q24 연결 매출액이 83% YoY 증가할 것으로 전망했다. Historical broker forecast이며 reported growth actual이 아니다.",
+        "exact_quote": "YoY % -58% -47% -17% 47% 140% 105% 83% 52%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Explicit YoY formula is preserved as a superseded broker forecast; no QOQ role or actual status is assigned.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_REVENUE_YOY:3Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 3Q2024 consolidated revenue +83% YoY historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "3Q24 연결 매출액이 83% YoY 증가할 것으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_YOY_FORECAST",
+        "primitive_tags": [
+          "3Q24E",
+          "YoY",
+          "revenue_growth"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "sksec_skh_consolidated_revenue_yoy_3q2024e",
+        "question_family_tags": [
+          "consolidated_revenue",
+          "yoy_growth",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q24 연결 매출 YoY 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_YOY:3Q2024E:SKSEC_20240314",
+        "unit": "% YoY",
+        "value": 83
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권 모델은 SK하이닉스 4Q24 연결 매출액이 52% YoY 증가할 것으로 전망했다. Historical broker forecast이며 reported growth actual이 아니다.",
+        "exact_quote": "YoY % -58% -47% -17% 47% 140% 105% 83% 52%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Explicit YoY formula is preserved as a superseded broker forecast; no QOQ role or actual status is assigned.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_REVENUE_YOY:4Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 4Q2024 consolidated revenue +52% YoY historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "4Q24 연결 매출액이 52% YoY 증가할 것으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_YOY_FORECAST",
+        "primitive_tags": [
+          "4Q24E",
+          "YoY",
+          "revenue_growth"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "sksec_skh_consolidated_revenue_yoy_4q2024e",
+        "question_family_tags": [
+          "consolidated_revenue",
+          "yoy_growth",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q24 연결 매출 YoY 전망",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_YOY:4Q2024E:SKSEC_20240314",
+        "unit": "% YoY",
+        "value": 52
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권 모델은 SK하이닉스 1Q24 DRAM revenue를 7,557십억원으로 전망했다. Segment-level historical broker forecast이며 actual 또는 HBM-only revenue가 아니다.",
+        "exact_quote": "DRAM 2,927 4,483 6,073 7,261 7,557 9,746 10,964 11,451 28,169 20,744 39,718",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row is explicitly DRAM-segment broker revenue; it is not consolidated, HBM-only, or reported actual evidence.",
+        "mechanism_scope_id": "000660:DRAM_REVENUE:1Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 1Q2024 DRAM revenue KRW 7,557 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "1Q24 DRAM 매출액을 7,557십억원으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "1Q24E",
+          "revenue"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "sksec_skh_dram_revenue_1q2024e",
+        "question_family_tags": [
+          "dram_revenue",
+          "segment_contribution",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK하이닉스 1Q24 DRAM 매출액 전망",
+        "subject_id": "000660:DRAM_REVENUE:1Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 7557
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "Later literal rows still contain distinct target-direct historical broker operating-profit, DRAM, net-income, margin, shipment, ASP, and revision facts; continuation is required."
+    ]
+  },
+  "payload_hash": "1c2565a1d2fd83151c43e8310f11779c5c21c661c2e4582cfc747306e63753d2",
+  "production_score_authority": false,
+  "prompt_hash": "3fcf917575ddfe4fea3b455543e1a7307176c14a741d70ee97623b7020576381",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cecc4be9ee5175d02a9bff5ab9a6dfaafdf316b9a008a23d3ce67cc75ad92b6a",
+  "response_id": "COLLABRESP-fb8dd09b69cca8d3013de131fec1955eddb8a53f579b2fbf9e72277fb52fb7a1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

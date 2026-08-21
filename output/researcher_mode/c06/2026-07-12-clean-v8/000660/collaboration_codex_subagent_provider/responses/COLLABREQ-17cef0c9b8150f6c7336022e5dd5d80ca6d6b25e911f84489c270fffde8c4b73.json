@@ -1,0 +1,54 @@
+{
+  "output_schema_hash": "545fc7b554ed92bec00d5e26d2e1c91d552956a406bcc5e1021f227bc02c83d7",
+  "payload": {
+    "allowed_range": [
+      6.7,
+      8.5
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23의 중간값 7.79와 유사한 밴드다. 메모리 전반 100% 가동과 HBM 가격 상승 주도는 병목·가격의 현재 방향을 지지하지만, HBM 전용 CAPA 잠김이나 장기 예약 물량은 아니다.",
+      "ORDTRANSFER-9205e8ab347aff38184b148a의 중간값 5.43보다 높다. 현재 생산설비 활용과 HBM 가격 기여가 직접 확인되지만, 고객 집중·재고·재공품 손실은 상단 확대를 제한한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332"
+    ],
+    "disagreements": [
+      "100% 가동을 HBM 전용 장기 sold-out으로 해석하거나, HBM 가격 상승 주도를 장기 고정가격 계약으로 확대하는 데에는 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "proposed_points": 7.6,
+    "rationale": "메모리 생산설비 평균가동률 100%와 제한된 공급 환경에서 HBM이 가격 상승을 주도한 사실은 현재 병목과 가격 강도를 함께 보여준다. 다만 가동률은 메모리 전체이고, HBM 전용 CAPA·고객별 배정·장기 고정가격·취소불가 물량은 확인되지 않았다. 고객 집중과 재고평가충당금, 재공품 계약손실까지 함께 반영해 7.6점으로 평가한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-acae6dd071cb2075b264bc92"
+    ],
+    "why_not_higher": "HBM 전용 가동률·CAPA·배정 물량, 장기 고정가격·취소불가 물량·선수금·RPO가 없고 고객 집중과 재고·재공품 손실 반대 근거가 있기 때문이다.",
+    "why_not_lower": "메모리 생산설비 100% 가동이라는 실제치와 HBM이 가격 상승 주도 제품군에 포함됐다는 직접 현재 사실이 함께 있기 때문이다."
+  },
+  "payload_hash": "f63b7f72ac7489cc1f6e83e1d0d2da6a9eeab55fbd4e0e00d5c4f48948ab438c",
+  "production_score_authority": false,
+  "prompt_hash": "d1a489160415a8698352b08d82110b606f831ac0c9158107a9f2dd1e65998735",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-17cef0c9b8150f6c7336022e5dd5d80ca6d6b25e911f84489c270fffde8c4b73",
+  "response_id": "COLLABRESP-dd7530b527487da38ece1b71ee6ce855cbfb233cffa9650d8a627788e18b61ee",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

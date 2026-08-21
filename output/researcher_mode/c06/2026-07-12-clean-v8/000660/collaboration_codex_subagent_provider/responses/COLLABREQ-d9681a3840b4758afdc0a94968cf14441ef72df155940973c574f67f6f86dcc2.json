@@ -1,0 +1,584 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "rationale": "Coverage continuation page 5 adds 12 distinct source-order conventional-DRAM pricing atoms after prior 159: seven quarterly/annual ASP levels and five QoQ ASP rates. Conventional-DRAM ASP YoY rates remain in literal chunk 0/2.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The conventional-DRAM ASP forecast is a broker commodity-pricing assumption; it is not HBM price, issuer guidance, or customer contract economics.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25E 1Q26E 2Q26E 3Q26E 4Q26E 2024 2025E 2026E\n환율(KRW/USD) 1,453 1,404 1,385 1,420 1,400 1,350 1,350 1,350 1,365 1,415 1,363\nDRAM출하량(십억Gb) 18.7 23.4 25.3 26.4 27.5 28.9 29.3 28.8 75.0 93.8 114.4\nQoQ -7 25 8 4 4 5 1 -2\nYoY 16 19 32 31 47 23 16 9 16 25 22\nDRAMASP/Gb(USD) 0.51 0.52 0.54 0.60 0.70 0.75 0.74 0.73 0.43 0.55 0.73\nQoQ 0 1 5 11 16 7 -0 -1\nYoY 51 29 16 18 36 44 38 22 81 26 34\n범용DRAM출하량(십억Gb) 16.0 20.4 22.1 22.7 22.9 24.1 24.8 24.6 68.6 81.2 96.4\nQoQ -8 27 8 3 1 5 3 -1\nYoY 4 10 28 31 43 18 13 8 9 18 19\n범용DRAMASP/Gb(USD) 0.33 0.34 0.37 0.47 0.56 0.61 0.61 0.58 0.34 0.38 0.59",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 4Q25 point begins the forward conventional-DRAM commodity ASP path and is distinct from total DRAM and HBM pricing.",
+        "mechanism_scope_id": "MSCOPE-000660-CONVENTIONAL-DRAM-BROKER-ASP",
+        "normalized_object": "SK hynix 4Q25 conventional DRAM ASP per Gb Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q25E",
+        "predicate": "Daishin forecasts SK hynix conventional DRAM ASP per Gb at USD 0.47 in 4Q25.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_ASP_PER_GB_FORECAST",
+        "primitive_tags": [
+          "commodity_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Conventional DRAM ASP",
+        "question_family_id": "daishin_skh_conventional_dram_asp_4q25e",
+        "question_family_tags": [
+          "conventional_dram",
+          "pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix conventional DRAM ASP per Gb broker forecast",
+        "subject_id": "000660:CONVENTIONAL_DRAM_ASP_PER_GB:4Q25E:DAISHIN_20251128",
+        "unit": "USD per Gb",
+        "value": 0.47
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The conventional-DRAM ASP forecast is a broker commodity-pricing assumption; it is not HBM price, issuer guidance, or customer contract economics.",
+        "exact_quote": "범용DRAMASP/Gb(USD) 0.33 0.34 0.37 0.47 0.56 0.61 0.61 0.58 0.34 0.38 0.59",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 1Q26 point advances the broker's conventional-DRAM pricing path while retaining the commodity denominator.",
+        "mechanism_scope_id": "MSCOPE-000660-CONVENTIONAL-DRAM-BROKER-ASP",
+        "normalized_object": "SK hynix 1Q26 conventional DRAM ASP per Gb Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26E",
+        "predicate": "Daishin forecasts SK hynix conventional DRAM ASP per Gb at USD 0.56 in 1Q26.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_ASP_PER_GB_FORECAST",
+        "primitive_tags": [
+          "commodity_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Conventional DRAM ASP",
+        "question_family_id": "daishin_skh_conventional_dram_asp_1q26e",
+        "question_family_tags": [
+          "conventional_dram",
+          "pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix conventional DRAM ASP per Gb broker forecast",
+        "subject_id": "000660:CONVENTIONAL_DRAM_ASP_PER_GB:1Q26E:DAISHIN_20251128",
+        "unit": "USD per Gb",
+        "value": 0.56
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The conventional-DRAM ASP forecast is a broker commodity-pricing assumption; it is not HBM price, issuer guidance, or customer contract economics.",
+        "exact_quote": "범용DRAMASP/Gb(USD) 0.33 0.34 0.37 0.47 0.56 0.61 0.61 0.58 0.34 0.38 0.59",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 2Q26 point is the first peak-level conventional-DRAM ASP in the broker sequence.",
+        "mechanism_scope_id": "MSCOPE-000660-CONVENTIONAL-DRAM-BROKER-ASP",
+        "normalized_object": "SK hynix 2Q26 conventional DRAM ASP per Gb Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E",
+        "predicate": "Daishin forecasts SK hynix conventional DRAM ASP per Gb at USD 0.61 in 2Q26.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_ASP_PER_GB_FORECAST",
+        "primitive_tags": [
+          "commodity_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Conventional DRAM ASP",
+        "question_family_id": "daishin_skh_conventional_dram_asp_2q26e",
+        "question_family_tags": [
+          "conventional_dram",
+          "pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix conventional DRAM ASP per Gb broker forecast",
+        "subject_id": "000660:CONVENTIONAL_DRAM_ASP_PER_GB:2Q26E:DAISHIN_20251128",
+        "unit": "USD per Gb",
+        "value": 0.61
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The conventional-DRAM ASP forecast is a broker commodity-pricing assumption; it is not HBM price, issuer guidance, or customer contract economics.",
+        "exact_quote": "범용DRAMASP/Gb(USD) 0.33 0.34 0.37 0.47 0.56 0.61 0.61 0.58 0.34 0.38 0.59",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The unchanged 3Q26 point marks a commodity-price plateau and is distinct from continued price growth.",
+        "mechanism_scope_id": "MSCOPE-000660-CONVENTIONAL-DRAM-BROKER-ASP",
+        "normalized_object": "SK hynix 3Q26 conventional DRAM ASP per Gb Daishin broker forecast plateau",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E",
+        "predicate": "Daishin forecasts SK hynix conventional DRAM ASP per Gb at USD 0.61 in 3Q26.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_ASP_PER_GB_FORECAST",
+        "primitive_tags": [
+          "commodity_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Conventional DRAM ASP",
+        "question_family_id": "daishin_skh_conventional_dram_asp_3q26e",
+        "question_family_tags": [
+          "conventional_dram",
+          "pricing",
+          "plateau"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix conventional DRAM ASP per Gb broker forecast",
+        "subject_id": "000660:CONVENTIONAL_DRAM_ASP_PER_GB:3Q26E:DAISHIN_20251128",
+        "unit": "USD per Gb",
+        "value": 0.61
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker forecasts conventional-DRAM ASP to decline from 3Q26, providing commodity-pricing counterevidence without HBM or contract-price attribution.",
+        "exact_quote": "범용DRAMASP/Gb(USD) 0.33 0.34 0.37 0.47 0.56 0.61 0.61 0.58 0.34 0.38 0.59",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit 4Q26 decline is counterevidence to uninterrupted conventional-DRAM commodity-price expansion.",
+        "mechanism_scope_id": "MSCOPE-000660-CONVENTIONAL-DRAM-BROKER-ASP",
+        "normalized_object": "SK hynix 4Q26 conventional DRAM ASP per Gb Daishin broker counter forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q26E",
+        "predicate": "Daishin forecasts SK hynix conventional DRAM ASP per Gb at USD 0.58 in 4Q26, below USD 0.61 in 3Q26.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_ASP_PER_GB_FORECAST",
+        "primitive_tags": [
+          "commodity_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Conventional DRAM ASP",
+        "question_family_id": "daishin_skh_conventional_dram_asp_4q26e",
+        "question_family_tags": [
+          "conventional_dram",
+          "pricing",
+          "counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix conventional DRAM ASP per Gb broker forecast",
+        "subject_id": "000660:CONVENTIONAL_DRAM_ASP_PER_GB:4Q26E:DAISHIN_20251128",
+        "unit": "USD per Gb",
+        "value": 0.58
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The annual conventional-DRAM ASP is a broker commodity-price forecast and cannot be read as HBM pricing or signed contract economics.",
+        "exact_quote": "범용DRAMASP/Gb(USD) 0.33 0.34 0.37 0.47 0.56 0.61 0.61 0.58 0.34 0.38 0.59",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2025 point is a distinct annual commodity-ASP assumption in the broker model.",
+        "mechanism_scope_id": "MSCOPE-000660-CONVENTIONAL-DRAM-BROKER-ASP",
+        "normalized_object": "SK hynix FY2025 conventional DRAM ASP per Gb Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "Daishin forecasts SK hynix conventional DRAM ASP per Gb at USD 0.38 for FY2025.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_ASP_PER_GB_FORECAST",
+        "primitive_tags": [
+          "commodity_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Conventional DRAM ASP",
+        "question_family_id": "daishin_skh_conventional_dram_asp_fy2025e",
+        "question_family_tags": [
+          "conventional_dram",
+          "pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix conventional DRAM annual ASP per Gb broker forecast",
+        "subject_id": "000660:CONVENTIONAL_DRAM_ASP_PER_GB:FY2025E:DAISHIN_20251128",
+        "unit": "USD per Gb",
+        "value": 0.38
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The annual conventional-DRAM ASP is a broker commodity-price forecast and cannot be read as HBM pricing or signed contract economics.",
+        "exact_quote": "범용DRAMASP/Gb(USD) 0.33 0.34 0.37 0.47 0.56 0.61 0.61 0.58 0.34 0.38 0.59",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The FY2026 point is a distinct annual conventional-DRAM commodity-price assumption, not an HBM price.",
+        "mechanism_scope_id": "MSCOPE-000660-CONVENTIONAL-DRAM-BROKER-ASP",
+        "normalized_object": "SK hynix FY2026 conventional DRAM ASP per Gb Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "Daishin forecasts SK hynix conventional DRAM ASP per Gb at USD 0.59 for FY2026.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_ASP_PER_GB_FORECAST",
+        "primitive_tags": [
+          "commodity_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Conventional DRAM ASP",
+        "question_family_id": "daishin_skh_conventional_dram_asp_fy2026e",
+        "question_family_tags": [
+          "conventional_dram",
+          "pricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix conventional DRAM annual ASP per Gb broker forecast",
+        "subject_id": "000660:CONVENTIONAL_DRAM_ASP_PER_GB:FY2026E:DAISHIN_20251128",
+        "unit": "USD per Gb",
+        "value": 0.59
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The conventional-DRAM QoQ ASP change is a broker commodity-pricing formula and is not HBM pricing or issuer guidance.",
+        "exact_quote": "범용DRAMASP/Gb(USD) 0.33 0.34 0.37 0.47 0.56 0.61 0.61 0.58 0.34 0.38 0.59\nQoQ -7 4 10 25 20 8 0 -5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 4Q25 QoQ point directly quantifies the broker's conventional-DRAM price acceleration.",
+        "mechanism_scope_id": "MSCOPE-000660-CONVENTIONAL-DRAM-BROKER-ASP-GROWTH",
+        "normalized_object": "SK hynix 4Q25 conventional DRAM ASP QoQ Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q25E",
+        "predicate": "Daishin forecasts SK hynix conventional DRAM ASP to rise 25% QoQ in 4Q25.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "commodity_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Conventional DRAM ASP",
+        "question_family_id": "daishin_skh_conventional_dram_asp_qoq_4q25e",
+        "question_family_tags": [
+          "conventional_dram",
+          "qoq_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix conventional DRAM ASP QoQ broker forecast",
+        "subject_id": "000660:CONVENTIONAL_DRAM_ASP_QOQ:4Q25E:DAISHIN_20251128",
+        "unit": "percent QoQ",
+        "value": 25
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The conventional-DRAM QoQ ASP change is a broker commodity-pricing formula and is not HBM pricing or issuer guidance.",
+        "exact_quote": "범용DRAMASP/Gb(USD) 0.33 0.34 0.37 0.47 0.56 0.61 0.61 0.58 0.34 0.38 0.59\nQoQ -7 4 10 25 20 8 0 -5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 1Q26 QoQ point maintains strong but decelerating commodity-price growth in the broker model.",
+        "mechanism_scope_id": "MSCOPE-000660-CONVENTIONAL-DRAM-BROKER-ASP-GROWTH",
+        "normalized_object": "SK hynix 1Q26 conventional DRAM ASP QoQ Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26E",
+        "predicate": "Daishin forecasts SK hynix conventional DRAM ASP to rise 20% QoQ in 1Q26.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "commodity_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Conventional DRAM ASP",
+        "question_family_id": "daishin_skh_conventional_dram_asp_qoq_1q26e",
+        "question_family_tags": [
+          "conventional_dram",
+          "qoq_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix conventional DRAM ASP QoQ broker forecast",
+        "subject_id": "000660:CONVENTIONAL_DRAM_ASP_QOQ:1Q26E:DAISHIN_20251128",
+        "unit": "percent QoQ",
+        "value": 20
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The conventional-DRAM QoQ ASP change is a broker commodity-pricing formula and is not HBM pricing or issuer guidance.",
+        "exact_quote": "범용DRAMASP/Gb(USD) 0.33 0.34 0.37 0.47 0.56 0.61 0.61 0.58 0.34 0.38 0.59\nQoQ -7 4 10 25 20 8 0 -5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The 2Q26 QoQ rate is a distinct decelerating but positive commodity-price-growth assumption.",
+        "mechanism_scope_id": "MSCOPE-000660-CONVENTIONAL-DRAM-BROKER-ASP-GROWTH",
+        "normalized_object": "SK hynix 2Q26 conventional DRAM ASP QoQ Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E",
+        "predicate": "Daishin forecasts SK hynix conventional DRAM ASP to rise 8% QoQ in 2Q26.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "commodity_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Conventional DRAM ASP",
+        "question_family_id": "daishin_skh_conventional_dram_asp_qoq_2q26e",
+        "question_family_tags": [
+          "conventional_dram",
+          "qoq_growth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix conventional DRAM ASP QoQ broker forecast",
+        "subject_id": "000660:CONVENTIONAL_DRAM_ASP_QOQ:2Q26E:DAISHIN_20251128",
+        "unit": "percent QoQ",
+        "value": 8
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker models conventional-DRAM ASP as flat QoQ in 3Q26; this commodity plateau is not HBM pricing or a contract term.",
+        "exact_quote": "범용DRAMASP/Gb(USD) 0.33 0.34 0.37 0.47 0.56 0.61 0.61 0.58 0.34 0.38 0.59\nQoQ -7 4 10 25 20 8 0 -5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit zero marks the end of sequential conventional-DRAM price acceleration.",
+        "mechanism_scope_id": "MSCOPE-000660-CONVENTIONAL-DRAM-BROKER-ASP-GROWTH",
+        "normalized_object": "SK hynix 3Q26 conventional DRAM ASP flat QoQ Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E",
+        "predicate": "Daishin forecasts SK hynix conventional DRAM ASP QoQ growth at 0% in 3Q26.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "commodity_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Conventional DRAM ASP",
+        "question_family_id": "daishin_skh_conventional_dram_asp_qoq_3q26e",
+        "question_family_tags": [
+          "conventional_dram",
+          "qoq_growth",
+          "plateau"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix conventional DRAM ASP QoQ broker forecast",
+        "subject_id": "000660:CONVENTIONAL_DRAM_ASP_QOQ:3Q26E:DAISHIN_20251128",
+        "unit": "percent QoQ",
+        "value": 0
+      },
+      {
+        "business_segment": "DRAM broker estimate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker forecasts a conventional-DRAM commodity-price decline in 4Q26, providing counterevidence without HBM or contract-price attribution.",
+        "exact_quote": "범용DRAMASP/Gb(USD) 0.33 0.34 0.37 0.47 0.56 0.61 0.61 0.58 0.34 0.38 0.59\nQoQ -7 4 10 25 20 8 0 -5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The negative 4Q26 rate is explicit counterevidence to uninterrupted conventional-DRAM price growth.",
+        "mechanism_scope_id": "MSCOPE-000660-CONVENTIONAL-DRAM-BROKER-ASP-GROWTH",
+        "normalized_object": "SK hynix 4Q26 conventional DRAM ASP QoQ decline Daishin broker counter forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q26E",
+        "predicate": "Daishin forecasts SK hynix conventional DRAM ASP to decline 5% QoQ in 4Q26.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_ASP_QOQ_FORECAST",
+        "primitive_tags": [
+          "commodity_ASP",
+          "broker_forecast"
+        ],
+        "product_family": "Conventional DRAM ASP",
+        "question_family_id": "daishin_skh_conventional_dram_asp_qoq_4q26e",
+        "question_family_tags": [
+          "conventional_dram",
+          "qoq_growth",
+          "counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix conventional DRAM ASP QoQ broker forecast",
+        "subject_id": "000660:CONVENTIONAL_DRAM_ASP_QOQ:4Q26E:DAISHIN_20251128",
+        "unit": "percent QoQ",
+        "value": -5
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-b06350879c518ec49fa8cd5c"
+    ],
+    "unresolved_research_notes": [
+      "Continue source order for remaining conventional-DRAM ASP YoY rates. Preserve broker lifecycle, commodity versus total DRAM versus HBM-only scope, exact formula and period headers, flat/negative counter direction, and absence of contract-price meaning; canonical parent chunk 1/2 remains separate."
+    ]
+  },
+  "payload_hash": "3db2102ebad768f46171b2d80f445bcc9e21141306f93952592feba298d62441",
+  "production_score_authority": false,
+  "prompt_hash": "7a55566595cb6ce0951ce7ffc306a545138b58575002eb78d6c4ba628d7847d0",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d9681a3840b4758afdc0a94968cf14441ef72df155940973c574f67f6f86dcc2",
+  "response_id": "COLLABRESP-2b9561d3ba7097c1a77ab85c2c63a75de65fbc541ab0240aabf8fa08d5fc7865",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

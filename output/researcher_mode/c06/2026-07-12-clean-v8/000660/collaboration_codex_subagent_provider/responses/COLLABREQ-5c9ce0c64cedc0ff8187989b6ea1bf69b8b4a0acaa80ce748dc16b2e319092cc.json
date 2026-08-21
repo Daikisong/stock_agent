@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-f96e0ad729ad998272b6393d",
+        "rationale": "Independent coverage audit of literal transport chunk 0 of 2 confirms that no distinct objective-linked fact was omitted. The SK hynix material is the already accepted Yuanta 2026-04-09 report lineage under a mirror source identity; the remainder concerns other issuers or sectors. No broker estimate is promoted to issuer guidance, HBM-only economics, customer allocation, or signed-contract terms.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "db7ca58da91df07d33f6653958ef9d7030e818065a4fa8e8dd1ff4da938fbf80",
+  "production_score_authority": false,
+  "prompt_hash": "3d54e29fd75880495edc646bb9e6587892f4c285ed267eb95030160ba4451a57",
+  "provenance": {
+    "agent_id": "/root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/direct_fact_review",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5c9ce0c64cedc0ff8187989b6ea1bf69b8b4a0acaa80ce748dc16b2e319092cc",
+  "response_id": "COLLABRESP-81a153b1a0d575e931fe9709c3e53b6a261aa6d1c332bd2b93d554a7674a79ba",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

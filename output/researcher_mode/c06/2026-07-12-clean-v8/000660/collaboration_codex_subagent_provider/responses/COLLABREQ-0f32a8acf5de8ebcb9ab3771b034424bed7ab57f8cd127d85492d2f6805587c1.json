@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      1.0,
+      1.6
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e의 1.0~1.4 weak positive 밴드 상단에 가깝다. 부채 축소·순상환·현금 우위와 배당·소각 실행이 여러 사실로 확인된다.",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc의 0.6~1.0 counter 밴드보다 높지만, 채권·재고·CAPEX·R&D·교환사채 부담 때문에 큰 격차를 두지 않는다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-6459972ca51023d1d4491408",
+      "EFACT-68380c1d51423fc5e672e63b",
+      "EFACT-6a46eb88222723dffed4cb6d",
+      "EFACT-b15e02831a18564591fe308c",
+      "EFACT-f9fa114a3daa17bcad2e20e9"
+    ],
+    "disagreements": [
+      "전사 재무여력과 환원 실행은 인정하지만 HBM 전용 투자 효율 또는 realized ROIC가 확인됐다고 보지는 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "proposed_points": 1.3,
+    "rationale": "실제 부채 감소와 순상환, 현금 우위, 배당 결의와 자기주식 소각은 자본배분의 positive 실행을 보여준다. 그러나 운전자본 증가, 큰 유형자산·R&D 지출과 교환사채 교환이 현금 및 주당가치 위험을 남기며 HBM 전용 FCF·ROIC는 없다. 두 ordinal anchor 사이에서 positive anchor 상단에 가까운 1.3점이 균형적이다.",
+    "support_fact_ids": [
+      "EFACT-21677a91e8afb32e4876aa8c",
+      "EFACT-84886f3397f7bbc2bee937cd",
+      "EFACT-d9f801f19a001e7214e5af8c",
+      "EFACT-ef16520d0f9ee4210108fc41",
+      "EFACT-f344a6f409575d6f77888831"
+    ],
+    "why_not_higher": "채권·재고 증가와 큰 CAPEX·R&D, 교환사채의 주식 영향이 남고 HBM별 투자회수·FCF·ROIC가 없기 때문이다.",
+    "why_not_lower": "부채 감소·순상환·현금 우위 및 배당·자기주식 소각이 모두 실제 현재 사실로 확인돼 counter-only 밴드에 머물 이유가 없기 때문이다."
+  },
+  "payload_hash": "aa69465bb75b4c5e9ac6025c5a1b2ca3c2f58f48d0fc6886a02dbdf5bba10a6d",
+  "production_score_authority": false,
+  "prompt_hash": "850d65fe2836622a87a7b3ec99dc705736edbc67c6bfe0727dcc835da46d4e15",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0f32a8acf5de8ebcb9ab3771b034424bed7ab57f8cd127d85492d2f6805587c1",
+  "response_id": "COLLABRESP-500071c3fe400ef8a36dc2c211b68db2a3c35f46dc6e70274e3e4df88d86f4bc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

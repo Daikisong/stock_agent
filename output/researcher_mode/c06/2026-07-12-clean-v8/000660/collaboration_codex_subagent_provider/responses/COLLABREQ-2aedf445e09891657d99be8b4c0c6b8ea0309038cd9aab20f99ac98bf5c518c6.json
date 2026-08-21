@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-82c4d529809691327e652074",
+        "rationale": "Coverage audit에서 181,380자 전체를 다시 검토했다. 이전 page가 수용한 NVIDIA와 SK하이닉스 등 메모리 벤더의 3년 계약-duration broker claim 1개가 이 문서의 유일한 target-direct material 의미다. 두 번째 게재본은 동일 quote와 경제 의미의 중복이고, 다른 본문은 타사 재무·산업 일반·전력·냉각 또는 forbidden NAND 범위여서 신규 fact가 아니다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "55724c336a998e4f68abbb4f24f47e99272e7e14cf71407b516f72f1b2c2c38f",
+  "production_score_authority": false,
+  "prompt_hash": "f025d74655795214efa59c546269c168a7d32448afbfd4104e9871c3b0aab2f9",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2aedf445e09891657d99be8b4c0c6b8ea0309038cd9aab20f99ac98bf5c518c6",
+  "response_id": "COLLABRESP-9007a00f22d955d2ee314086703c04c6bf95af63a42abdfb4851e97e9cb38e34",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

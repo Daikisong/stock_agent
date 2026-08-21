@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f1955f8d421c55f6c98fadae",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-8b3fb2eea4f35b27920d2577",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-f2dc841ba30dd5663c530a0b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-801afa99e1c70ad17703bd0d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-db36ead3e12ebc8f5b06d074",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-6a3f592bb6dfcc23200a4a52",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-e0dd84f54e0a11dce290bab1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-60b13205e2ec0c0cb80529e7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-e53bd30e9a3a3be6149fc295",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-09252c7e616a22f0b08e0441",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.1,
+        "rationale": "공개 broker research PDF route라는 provenance는 확인되지만 제목·URL metadata가 005930 target-specific HBM/memory expectation·revision·valuation report를 특정하지 않고 다른 산업·시장·주제를 가리킨다. 원문 형식만 맞고 objective subject가 달라 nonmaterial이며 snippet은 evidence로 쓰지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-de44c17a5271c8c47f8a98d8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      },
+      {
+        "candidate_id": "SGCAND-be899a076c974b2fec6f4f81",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "priority": 0.0,
+        "rationale": "URL owner·제목 metadata가 generic navigation, third-party summary/repost, wrong target 또는 unrelated file로 분류되어 PUBLIC_BROKER_PDF original/full-document provenance와 005930 objective를 연결하지 못한다. family=NONE, nonmaterial이며 snippet은 discovery-only다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 모든 후보를 exact-once 분류했지만 005930 target-specific same-broker estimate/revision/valuation 원문 route는 확인되지 않았다.",
+      "material 0은 적격 source가 존재하지 않는다는 증명이 아니며, snippet·metadata를 evidence 또는 current expectation fact로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "5ff37984ca55462c1d9c35e241113dcf78b1e0f4f8ab0e90400f1c5d07e70471",
+  "production_score_authority": false,
+  "prompt_hash": "a3dd13ee49674e98bd6ff48d632888df3b04626ac0016043ee1af5b72b903ff9",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8dc4aef6e96ecf67c2b131058dec74e266013283dea5b7f773fead1ef79a4a43",
+  "response_id": "COLLABRESP-918a3c01bdb354967a6f45bd33aeda645901127c2ae775fb8070a1a1bf4f3454",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

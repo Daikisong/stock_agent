@@ -1,0 +1,65 @@
+{
+  "output_schema_hash": "ce126a663f8cab509228023ba7c73c8cb5fddf9b6c89da4df9b5774a6e4a9b0f",
+  "payload": {
+    "allowed_range": [
+      12.4,
+      15.3
+    ],
+    "anchor_comparisons": [
+      "강한 positive ordinal anchor CANCH-3d3e727f09221d0fc00e86a6의 16.08~18.48점은 연결 이익·현금흐름과 DRAM actual의 급증에는 부합하지만, HBM 단독 이익·FCF 귀속이 없어 그대로 적용하기 어렵다.",
+      "counter ordinal anchor CANCH-17745cd4887afd21639e9dd6의 10.32~12.72점보다 실제 이익·OCF·DRAM 개선과 HBM 실행 증거가 강하므로 소폭 높게 보되 CAPEX와 재고 위험을 반영한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-22b3c14ea08f7a3f6c58b170",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-9deebb8473a44150b981c991",
+      "EFACT-c07ed486e6d67134d19d6951"
+    ],
+    "disagreements": [
+      "연결 전사 및 DRAM actual의 강도를 HBM 단독 FCF 폭증으로 해석하는 데 동의하지 않는다.",
+      "CompanyGuide revision을 issuer actual 또는 guidance와 같은 확정도로 취급하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-3d3e727f09221d0fc00e86a6",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "proposed_points": 14.0,
+    "rationale": "연결 영업이익·순이익·영업현금흐름과 DRAM 매출이 크게 개선됐고 메모리 100% 가동, HBM 가격 주도·제품 실행이 확인된다. 그러나 연결·DRAM actual을 HBM 단독 EPS·FCF로 재귀속할 수 없고, 유형자산 취득 현금유출 증가·재고평가충당금·중국 재공품 손실충당·큰 재공품 잔액이 현금전환 지속성을 낮춘다. 따라서 strong positive anchor 아래, counter anchor 위의 중간 범위를 허용한다.",
+    "support_fact_ids": [
+      "EFACT-0295af0d92028218f77266f2",
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-74d33983a80ca98f18936f31",
+      "EFACT-802a829867fee39ece0b193c",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-d2e799df4d980691c6707a9e",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "HBM 단독 매출·마진·CAPEX·감가상각·FCF와 확정 고객 물량이 없고, 전사 CAPEX 현금유출과 재고·재공품 손실 위험이 크다.",
+    "why_not_lower": "연결 이익·순이익·OCF, DRAM actual, 메모리 가동률과 HBM 가격·제품 실행이 동시에 확인돼 counter anchor 중앙값만 적용하기에는 실현 개선이 강하다."
+  },
+  "payload_hash": "836f6d8900662bd637ba501e64fa0816c3f4d822f30a30022cec718717a98efc",
+  "production_score_authority": false,
+  "prompt_hash": "4d6113582c518b7f968c7f30eb1dd8f5460d77a626aae047a2ad76b5034bfc5d",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-012e550f0c7ddfb016028f22c16a6a17e9d7782306a39ba62c771932829862fb",
+  "response_id": "COLLABRESP-027130203285cd456b5d61d5bfe7ab63feb5e8fe4ed178c90875c244bbbf9a4d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

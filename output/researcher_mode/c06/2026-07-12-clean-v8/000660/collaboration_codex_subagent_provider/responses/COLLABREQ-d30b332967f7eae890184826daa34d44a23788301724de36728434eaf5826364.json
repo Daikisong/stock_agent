@@ -1,0 +1,138 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "rationale": "Continuation page3에서 prior24 이후 chunk0 remainder를 전수 감사해 2026 DRAM target capacity와 CXMT 상대 capacity counter 2개를 추가했다. VEU 역사표, NAND 점유율, target 비귀속 중국 HBM 일반론은 current objective/segment 요건에서 제외했다. 이 literal chunk의 target-direct distinct remainder는 소진되어 누적26개로 종료한다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권 비교 차트는 SK하이닉스의 FY2026 월 DRAM 생산능력을 약 60만장으로 표시한다. 메모리 전반의 broker capacity estimate이며 HBM 전용 CAPA, customer allocation 또는 issuer investment guidance가 아니다.",
+        "exact_quote": "•글로벌DRAM 생산점유율은'25년약15%으로마이크론에버금가는수준, '26년에는SK/삼성(60만장)의50%까지확대전망\n•올해DDR4 생산중단하고DDR5/HBM에집중, HBM3는1H26양산개시목표로화웨이/협력사에16nm 공정샘플제공한상태\nCXMT 생산능력 CXMT의DRAM 생산능력은마이크론수준까지추격\n(천장/월) (만장/월)\nCXMT 월생산능력 2026년월생산능력전망\n600 70 65\n60\n490 60\n500 x2\n438\n400 50\n400\n338\n300 40 33\n300 250 30\nx5 30\n200\n200\n20\n120\n100 70 10\n40\n0 0\n20 22 23 24 25F 26F 27F 28F 29F 30F 삼성전자 SK하이닉스 마이크론 CXMT\n주: 12인치웨이퍼환산기준 주: 언론보도기준삼성전자는2026년월60만장중반대로전망, 마이크론은월30만장초반대로추정",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2025-11-19 하나증권 full report의 2026 DRAM 생산능력 비교로 000660의 공급기반과 중국 경쟁 증설을 직접 연결한다. 언론보도 기반 broker estimate이며 issuer actual/guidance, HBM-only CAPA 또는 signed 공급계약이 아니다.",
+        "mechanism_scope_id": "000660:HANA_FORUM_20251119:FY2026_DRAM_MONTHLY_CAPACITY:MECHANISM",
+        "normalized_object": "Hana 2025-11-19 2026년 SK하이닉스 DRAM 월 생산능력을 약 60만장으로 전망했다",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 capacity forecast",
+        "predicate": "2026년 SK하이닉스 DRAM 월 생산능력을 약 60만장으로 전망했다",
+        "predicate_family": "BROKER_DRAM_MONTHLY_CAPACITY_FORECAST",
+        "primitive_tags": [
+          "FY2026",
+          "DRAM_CAPACITY",
+          "BROKER_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "broker_dram_monthly_capacity_forecast",
+        "question_family_tags": [
+          "DRAM_CAPACITY",
+          "COMPETITIVE_SUPPLY",
+          "BROKER_SOURCE_BOUNDARY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 DRAM 생산능력",
+        "subject_id": "000660:HANA_FORUM_20251119:FY2026_DRAM_MONTHLY_CAPACITY",
+        "unit": "12-inch wafers per month",
+        "value": 600000
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-74492633cf8cbe35a5220a22",
+        "economic_mechanism": "하나증권은 CXMT의 FY2026 DRAM 생산능력이 SK하이닉스·삼성의 월 60만장 규모 대비 약 50%로 확대될 것으로 전망했다. 중국 경쟁 공급의 확대로서 bottleneck/pricing 지속성에 대한 counter이며, SK하이닉스 HBM 계약 또는 실제 점유율을 뜻하지 않는다.",
+        "exact_quote": "•글로벌DRAM 생산점유율은'25년약15%으로마이크론에버금가는수준, '26년에는SK/삼성(60만장)의50%까지확대전망\n•올해DDR4 생산중단하고DDR5/HBM에집중, HBM3는1H26양산개시목표로화웨이/협력사에16nm 공정샘플제공한상태\nCXMT 생산능력 CXMT의DRAM 생산능력은마이크론수준까지추격\n(천장/월) (만장/월)\nCXMT 월생산능력 2026년월생산능력전망\n600 70 65\n60\n490 60\n500 x2\n438\n400 50\n400\n338\n300 40 33\n300 250 30\nx5 30\n200\n200\n20\n120\n100 70 10\n40\n0 0\n20 22 23 24 25F 26F 27F 28F 29F 30F 삼성전자 SK하이닉스 마이크론 CXMT\n주: 12인치웨이퍼환산기준 주: 언론보도기준삼성전자는2026년월60만장중반대로전망, 마이크론은월30만장초반대로추정",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2025-11-19 하나증권 full report의 2026 DRAM 생산능력 비교로 000660의 공급기반과 중국 경쟁 증설을 직접 연결한다. 언론보도 기반 broker estimate이며 issuer actual/guidance, HBM-only CAPA 또는 signed 공급계약이 아니다.",
+        "mechanism_scope_id": "000660:HANA_FORUM_20251119:FY2026_CXMT_CAPACITY_RATIO_TO_SK_HYNIX:MECHANISM",
+        "normalized_object": "Hana 2025-11-19 CXMT의 2026년 DRAM 생산능력이 SK하이닉스·삼성의 약 50%까지 확대될 것으로 전망했다",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026 capacity forecast",
+        "predicate": "CXMT의 2026년 DRAM 생산능력이 SK하이닉스·삼성의 약 50%까지 확대될 것으로 전망했다",
+        "predicate_family": "BROKER_DRAM_COMPETITOR_CAPACITY_RATIO_FORECAST",
+        "primitive_tags": [
+          "FY2026",
+          "DRAM_CAPACITY",
+          "BROKER_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "broker_dram_competitor_capacity_ratio_forecast",
+        "question_family_tags": [
+          "DRAM_CAPACITY",
+          "COMPETITIVE_SUPPLY",
+          "BROKER_SOURCE_BOUNDARY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 대비 CXMT DRAM 생산능력",
+        "subject_id": "000660:HANA_FORUM_20251119:FY2026_CXMT_CAPACITY_RATIO_TO_SK_HYNIX",
+        "unit": "relative capacity",
+        "value": "approximately 50% of SK hynix/Samsung 600,000-wafer monthly scale"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-74492633cf8cbe35a5220a22"
+    ],
+    "unresolved_research_notes": [
+      "Literal chunk0의 target-direct remainder는 소진했지만 canonical parent transport는 chunk1/2가 아직 공급되지 않아 parent document는 unresolved다."
+    ]
+  },
+  "payload_hash": "7ec29677cbf2de9ed85c86a76128ca212b53e45f5e48b28efcb2dc06bb396fa5",
+  "production_score_authority": false,
+  "prompt_hash": "ec5918c34ad9a6e9c7092e224f047147dfae6f02be38ca896f61e882ef2a354b",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d30b332967f7eae890184826daa34d44a23788301724de36728434eaf5826364",
+  "response_id": "COLLABRESP-a3ed0e6dc90363a0501316eeda9c8fd67c037c12c3f6b38db893311a4f824e70",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

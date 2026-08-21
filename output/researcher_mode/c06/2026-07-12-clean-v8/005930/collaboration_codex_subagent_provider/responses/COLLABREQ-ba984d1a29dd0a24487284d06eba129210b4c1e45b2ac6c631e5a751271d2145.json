@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "8a4c32c394b8d0f113b060b241c01eac808c3467af479b002cc31d3f9a2115c4",
+  "payload": {
+    "allowed_range": [
+      3.7,
+      5.9
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89의 counter midpoint 5.0은 explicit score without fact signature라는 약점이 있으나, valuation 신호가 서로 충돌하는 현재 case의 보수적 중심과 가깝다.",
+      "ORDTRANSFER-e743368708b3aee88a83287c의 positive lower 5.7은 operating delta가 미반영됐을 때의 상단 기준이지만, 현재 가격에 반영됐는지 비교할 same-broker 변화가 없어 기본값으로 채택하지 않는다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1"
+    ],
+    "disagreements": [
+      "forward PE 5.59배와 장기 EPS 상향만 선택하면 trailing PE 21.86배·PB 3.84배·EV/EBITDA 18.88배·FCF yield 1.99%를 누락한다.",
+      "record memory result와 ASP actual은 business improvement이나 market expectation 대비 surprise 또는 mispricing 자체는 아니다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-e743368708b3aee88a83287c",
+      "ORDTRANSFER-2bfdc4a0e53457e592939b89"
+    ],
+    "proposed_points": 4.8,
+    "rationale": "운영 개선은 분명하지만 mispricing은 개선 사실이 아니라 시장 기대 대비 미반영 정도를 요구한다. same-broker·same-denominator estimate change가 없고 latest EPS revision DOWN과 operating-profit UP이 충돌한다. forward PE만 낮은 반면 다른 valuation 및 FCF 지표는 싸지 않다. NVIDIA HBM4도 협의 중이므로 counter midpoint 부근이 적절하다.",
+    "support_fact_ids": [
+      "EFACT-05b30f0f3ba8322c10a60fc3",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-939b29c020b166da3e38d343",
+      "EFACT-cbd2e7a3a3670eba7a113d19",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "price/estimate expectation gap의 직접 증거가 없고 valuation·revision 신호가 혼재하며 HBM-only economics도 분리되지 않았다.",
+    "why_not_lower": "HBM4 양산, record memory performance, 서버향 판매, 매출·ASP actual과 낮은 forward PE가 제한적 재평가 가능성은 남긴다."
+  },
+  "payload_hash": "76862257817a6cd836aa6a9dfffc29cbb671372cd383e5c58ec9b54ea232812b",
+  "production_score_authority": false,
+  "prompt_hash": "3758ee745d543f889c7ace17b1595cf3327d5fc341d57f0041d23f962af77814",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ba984d1a29dd0a24487284d06eba129210b4c1e45b2ac6c631e5a751271d2145",
+  "response_id": "COLLABRESP-b0e1bd4f02861ceae394165c3135e9765c331b532269e046e3a34d75d464f7a1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

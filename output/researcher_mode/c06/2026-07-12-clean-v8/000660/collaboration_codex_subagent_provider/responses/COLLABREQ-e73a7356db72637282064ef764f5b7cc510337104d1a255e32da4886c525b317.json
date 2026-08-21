@@ -1,0 +1,570 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Accepted the next 12 distinct source-order model atoms after strict deduplication against 216 embedded prior facts: controlling net margin, non-controlling net income, total comprehensive income, controlling and non-controlling comprehensive-income attribution, and EBITDA for FY2024E/FY2025E. Metric and ownership attribution remain separate.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of controlling-shareholder net margin, kept distinct from total net margin and HBM-only profitability.",
+        "exact_quote": "지배주주귀속 순이익률(%) 22.3 5.0 -27.8 12.2 19.4",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the controlling-shareholder denominator but is a superseded historical broker forecast, not current or HBM-only margin.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2024 controlling-shareholder net margin 12.2 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker forecast controlling shareholder net margin",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_MARGIN_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "controlling_net_margin",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_controlling_net_margin_fy2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 지배주주 귀속 순이익",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_MARGIN:FY2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 12.2
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of controlling-shareholder net margin, kept distinct from total net margin and HBM-only profitability.",
+        "exact_quote": "지배주주귀속 순이익률(%) 22.3 5.0 -27.8 12.2 19.4",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the outer-year controlling-shareholder denominator but is a superseded historical broker forecast, not current or HBM-only margin.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2025 controlling-shareholder net margin 19.4 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forecast controlling shareholder net margin",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_MARGIN_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "controlling_net_margin",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_controlling_net_margin_fy2025e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 지배주주 귀속 순이익",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_MARGIN:FY2025E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 19.4
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of net income attributable to non-controlling interests, kept separate from controlling and total net income.",
+        "exact_quote": "비지배주주 14 12 -25 3 7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The attribution reconciles total and controlling earnings but is a historical broker forecast and not HBM-specific.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2024 non-controlling net income KRW 3 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker forecast noncontrolling net income",
+        "predicate_family": "BROKER_NONCONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "noncontrolling_net_income",
+          "attribution"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_noncontrolling_net_income_fy2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "information_confidence"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 비지배주주 귀속 순이익",
+        "subject_id": "000660:NONCONTROLLING_NET_INCOME:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 3
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of net income attributable to non-controlling interests, kept separate from controlling and total net income.",
+        "exact_quote": "비지배주주 14 12 -25 3 7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The outer-year attribution reconciles total and controlling earnings but is a historical broker forecast and not HBM-specific.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2025 non-controlling net income KRW 7 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker forecast noncontrolling net income",
+        "predicate_family": "BROKER_NONCONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "noncontrolling_net_income",
+          "attribution"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_noncontrolling_net_income_fy2025e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "information_confidence"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 비지배주주 귀속 순이익",
+        "subject_id": "000660:NONCONTROLLING_NET_INCOME:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 7
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of total comprehensive income, distinct from net income and any HBM-only earnings attribution.",
+        "exact_quote": "총포괄이익 10,688 2,822 -9,037 7,420 15,548",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the broader comprehensive-income measure but is historical, broker-estimated, and non-HBM-specific.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2024 total comprehensive income KRW 7,420 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker forecast total comprehensive income",
+        "predicate_family": "BROKER_TOTAL_COMPREHENSIVE_INCOME_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "comprehensive_income",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_total_comprehensive_income_fy2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:TOTAL_COMPREHENSIVE_INCOME:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 7420
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of total comprehensive income, distinct from net income and any HBM-only earnings attribution.",
+        "exact_quote": "총포괄이익 10,688 2,822 -9,037 7,420 15,548",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the outer-year comprehensive-income measure but is historical, broker-estimated, and non-HBM-specific.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2025 total comprehensive income KRW 15,548 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker forecast total comprehensive income",
+        "predicate_family": "BROKER_TOTAL_COMPREHENSIVE_INCOME_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "comprehensive_income",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_total_comprehensive_income_fy2025e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:TOTAL_COMPREHENSIVE_INCOME:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 15548
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of comprehensive income attributable to controlling shareholders, distinct from total and non-controlling comprehensive income.",
+        "exact_quote": "지배주주 10,669 2,802 -9,015 7,331 15,362",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves controlling-shareholder attribution but is a historical broker forecast without HBM-only scope.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2024 controlling-shareholder comprehensive income KRW 7,331 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker forecast controlling comprehensive income",
+        "predicate_family": "BROKER_CONTROLLING_COMPREHENSIVE_INCOME_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "comprehensive_income",
+          "controlling_attribution"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_controlling_comprehensive_income_fy2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 지배주주 귀속 포괄이익",
+        "subject_id": "000660:CONTROLLING_COMPREHENSIVE_INCOME:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 7331
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of comprehensive income attributable to controlling shareholders, distinct from total and non-controlling comprehensive income.",
+        "exact_quote": "지배주주 10,669 2,802 -9,015 7,331 15,362",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves outer-year controlling-shareholder attribution but is a historical broker forecast without HBM-only scope.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2025 controlling-shareholder comprehensive income KRW 15,362 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker forecast controlling comprehensive income",
+        "predicate_family": "BROKER_CONTROLLING_COMPREHENSIVE_INCOME_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "comprehensive_income",
+          "controlling_attribution"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_controlling_comprehensive_income_fy2025e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 지배주주 귀속 포괄이익",
+        "subject_id": "000660:CONTROLLING_COMPREHENSIVE_INCOME:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 15362
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of comprehensive income attributable to non-controlling interests, kept separate from non-controlling net income.",
+        "exact_quote": "비지배주주 18 20 -22 89 186",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It reconciles comprehensive-income attribution but is historical, broker-estimated, and non-HBM-specific.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2024 non-controlling comprehensive income KRW 89 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker forecast noncontrolling comprehensive income",
+        "predicate_family": "BROKER_NONCONTROLLING_COMPREHENSIVE_INCOME_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "comprehensive_income",
+          "noncontrolling_attribution"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_noncontrolling_comprehensive_income_fy2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "information_confidence"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 비지배주주 귀속 포괄이익",
+        "subject_id": "000660:NONCONTROLLING_COMPREHENSIVE_INCOME:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 89
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of comprehensive income attributable to non-controlling interests, kept separate from non-controlling net income.",
+        "exact_quote": "비지배주주 18 20 -22 89 186",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It reconciles outer-year comprehensive-income attribution but is historical, broker-estimated, and non-HBM-specific.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2025 non-controlling comprehensive income KRW 186 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker forecast noncontrolling comprehensive income",
+        "predicate_family": "BROKER_NONCONTROLLING_COMPREHENSIVE_INCOME_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "comprehensive_income",
+          "noncontrolling_attribution"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_noncontrolling_comprehensive_income_fy2025e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "information_confidence"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 비지배주주 귀속 포괄이익",
+        "subject_id": "000660:NONCONTROLLING_COMPREHENSIVE_INCOME:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 186
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated EBITDA forecast; it is a valuation denominator and cash-proxy input, not HBM-only EBITDA.",
+        "exact_quote": "EBITDA 23,067 20,961 5,943 24,781 35,453",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It supplies a historical consolidated valuation denominator but is superseded and cannot be attributed to HBM.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2024 EBITDA KRW 24,781 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker forecast consolidated EBITDA",
+        "predicate_family": "BROKER_CONSOLIDATED_EBITDA_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "ebitda",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_ebitda_fy2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_EBITDA:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 24781
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker consolidated EBITDA forecast; it is a valuation denominator and cash-proxy input, not HBM-only EBITDA.",
+        "exact_quote": "EBITDA 23,067 20,961 5,943 24,781 35,453",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It supplies a historical outer-year consolidated valuation denominator but is superseded and cannot be attributed to HBM.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2025 EBITDA KRW 35,453 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker forecast consolidated EBITDA",
+        "predicate_family": "BROKER_CONSOLIDATED_EBITDA_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "ebitda",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_ebitda_fy2025e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "valuation_rerating"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_EBITDA:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 35453
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact upper bound was reached. Continue the supplied source in order for remaining distinct growth, profitability, leverage, per-share, valuation, and target-price-history atoms, preserving formula, denominator, period, broker provenance, SUPERSEDED lifecycle, and non-HBM scope."
+    ]
+  },
+  "payload_hash": "d40833378d0e3fd06db1478a583670a92d55b3cb988bd759d9d5f0576b9a6657",
+  "production_score_authority": false,
+  "prompt_hash": "3c9d3e4f2a33b2681f0a73502f0de63001cf214ec602ab8fe4dc816d7420136b",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e73a7356db72637282064ef764f5b7cc510337104d1a255e32da4886c525b317",
+  "response_id": "COLLABRESP-788d97d15708985bbfb459121a8b1503a10606d1f8b3b0d039cc271026975c85",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

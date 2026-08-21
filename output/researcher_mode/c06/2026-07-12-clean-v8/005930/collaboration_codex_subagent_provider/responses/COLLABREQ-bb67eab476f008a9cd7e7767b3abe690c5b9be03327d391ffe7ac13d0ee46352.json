@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-216efafcb7a9cb54115571b4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "하나증권의 2023년 데일리 자료로 CUSTOMER_OFFICIAL 출처가 아니며 현재 삼성 HBM 고객 계약을 확인할 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f8f265f74adbdfdfecee8964",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NIA의 2022 디지털 인사이트 자료로 고객 공식 구매 문서가 아니며 삼성 HBM의 확정 계약 경제성과 직접 관련되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-d6a21dd246c549d73cdd00db",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "제목상 2026-08-19의 후발 제3자 주식뉴스 모음으로 as_of_date 이후이며 CUSTOMER_OFFICIAL 원문도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-db901c8ead3851c58e2065e4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 재전달 페이지로 OpenAI 공식 자료를 언급할 뿐 원문 소유자가 아니고 삼성 HBM 구매가격·물량·배정을 확인하는 full-source 경로도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-98a013df4622a7f3cd2c975a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "네이버 프리미엄의 모닝리포트로 제3자 요약이며 고객 공식 계약·구매 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1504d4000aa6ad152c319532",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "대신증권의 AR/VR 산업 리포트로 주제가 다르고 CUSTOMER_OFFICIAL 출처나 삼성 HBM 계약 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-60311e2f057800b2176af0cf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "유진투자증권의 생성 AI 자료로 고객 공식 출처가 아니며 삼성 HBM 확정 구매조건을 확인할 직접 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-641cb27ab5d51cd16c0e6650",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "미래에셋증권 AI 위클리로 OpenAI 관련 인용이 있어도 고객 공식 원문이 아니며 삼성 HBM 계약 경제성 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-70b3affe143e8e2897708320",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "KOTRA의 북미 진출전략 자료로 CUSTOMER_OFFICIAL이 아니며 삼성 HBM 구매·배정 조건과 직접 관련되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7f6e4a10c50fcce4db1c3c0e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "2026-08-10자 제3자 IT 뉴스로 as_of_date 이후이고 고객 공식 원문 또는 삼성 HBM 계약 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-26f6fea630e5ecc9d00827f0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NIA의 2022 디지털 인사이트 자료로 요청된 고객 공식 출처가 아니며 삼성 HBM 계약 질문과 직접 연결되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-965bdc4edc9bcf4c3dc99b50",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "2026-08-14자 제3자 IT 뉴스로 as_of_date 이후이고 CUSTOMER_OFFICIAL 원문이나 삼성 HBM 확정 구매조건 경로가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 후보 12건은 고객 공식 원문 또는 삼성 HBM의 서명된 가격·물량·배정·기간을 확인할 full-fetch 경로를 제공하지 않는다. material 0은 이 운송 로스터의 분류일 뿐 관련 사실이나 원문의 부재를 증명하지 않는다."
+    ]
+  },
+  "payload_hash": "90b64a7dcec8fa0415d48de45dfaa948e084a726f770726fc57cf6da51ec6415",
+  "production_score_authority": false,
+  "prompt_hash": "e19970395fb6b5d310a39fabddc27c59d71a7bdf7a2c56889e906449c24de5d3",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bb67eab476f008a9cd7e7767b3abe690c5b9be03327d391ffe7ac13d0ee46352",
+  "response_id": "COLLABRESP-08778b7bc163f3fd5498528c27a31f7bfc4e6ef72e91d5a3858f38473c496749",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

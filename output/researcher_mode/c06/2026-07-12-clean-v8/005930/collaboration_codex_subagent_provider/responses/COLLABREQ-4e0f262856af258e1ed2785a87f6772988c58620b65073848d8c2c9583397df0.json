@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      15.6,
+      18.0
+    ],
+    "anchor_comparisons": [
+      "양의 CANCH-3d3e727f09221d0fc00e86a6(16.08~18.48)의 실현 이익·현금 전환 강도와 가장 가깝다.",
+      "반증 CANCH-17745cd4887afd21639e9dd6(10.32~12.72)보다 실제 메모리 매출·ASP·가동률이 강하지만 HBM 단독 FCF 부재 때문에 양의 앵커 상단은 제한한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-4d411fd1aa7f548298fcb09f"
+    ],
+    "disagreements": [
+      "연결 영업이익·영업현금흐름을 HBM 단독 경제성으로 읽는 해석에는 동의하지 않는다.",
+      "구조화 전망의 최근 EPS 하향과 영업이익 상향 신호가 혼재해 단일 방향으로 확정하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-3d3e727f09221d0fc00e86a6",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "proposed_points": 16.8,
+    "rationale": "메모리 매출·ASP·가동률과 연결 영업이익·영업현금흐름은 강하지만, 연결 전체 수치를 HBM 단독 이익·FCF로 귀속할 수 없고 유형자산 취득 현금유출도 크다. 양의 실행과 현금 부담을 함께 반영해 강한 중상단으로 보정한다.",
+    "support_fact_ids": [
+      "EFACT-3dcbb46fd5653fb3dc5dcd2e",
+      "EFACT-aeabc17304171f4fe6cfceb3",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-e20814567df3016b0efadb77",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "HBM별 매출·마진·FCF 브리지와 고객 계약 경제성이 없고 CAPEX 현금유출이 커서 18점 초과를 허용하지 않는다.",
+    "why_not_lower": "실제 메모리 매출·ASP 상승·100% 가동과 양의 연결 OCF가 함께 확인돼 15점대 아래로 낮추지 않는다."
+  },
+  "payload_hash": "004ef0ca1d4ce57732e892135c6f77db42311861d97a3b83735d96f28df33384",
+  "production_score_authority": false,
+  "prompt_hash": "e794fddf8b19b1cb137eba6199971ca82da55edddf3082319b746970c6324384",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4e0f262856af258e1ed2785a87f6772988c58620b65073848d8c2c9583397df0",
+  "response_id": "COLLABRESP-361642ae8555a0990aa38b97958e13c1168dabedc5c8f0363122aaa538259c9f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "8aef83f383b2355d206840fc90ad222a525d09f53d25b575875385e68b902368",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-d98f90216f01194019a5119d",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.1,
+        "rationale": "신한투자증권 공식 전략 landing provenance는 PUBLIC_BROKER_PDF family와 맞지만, generic 시황 페이지이고 005930 target-specific 원문 리포트가 아니다. 제공된 7월 날짜도 as_of 이후여서 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-edf701530f33948acb188b41",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 시장조사·블로그·미디어 경로로 customer-owned 공식 출처가 아니다. family=NONE이며 snippet의 제품 언급은 evidence가 아니므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-4895a9a788b939def69397ab",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 시장조사·블로그·미디어 경로로 customer-owned 공식 출처가 아니다. family=NONE이며 snippet의 제품 언급은 evidence가 아니므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-612f90291e73e10d3281e027",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.1,
+        "rationale": "신한투자증권 공식 전략 landing provenance는 PUBLIC_BROKER_PDF family와 맞지만, generic 시황 페이지이고 005930 target-specific 원문 리포트가 아니다. 제공된 7월 날짜도 as_of 이후여서 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-c914908e109d6eef1fbb2ebf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "블로그·포털·Telegram·제3자 기사이거나 wrong target/future content로 original broker full-source route가 아니다. family=NONE, nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-1ea7fb142ee26f91ecf6cf54",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.1,
+        "rationale": "신한투자증권 공식 전략 landing provenance는 PUBLIC_BROKER_PDF family와 맞지만, generic 시황 페이지이고 005930 target-specific 원문 리포트가 아니다. 제공된 7월 날짜도 as_of 이후여서 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-b1bc46c15d0d799bdfa26010",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "블로그·포털·Telegram·제3자 기사이거나 wrong target/future content로 original broker full-source route가 아니다. family=NONE, nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-3a5c8e8d175b649201177ec7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "블로그·포털·Telegram·제3자 기사이거나 wrong target/future content로 original broker full-source route가 아니다. family=NONE, nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-522ac5e51d51c6bd7daf7547",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "블로그·포털·Telegram·제3자 기사이거나 wrong target/future content로 original broker full-source route가 아니다. family=NONE, nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-465948ee7e7e879f6f9c0c8b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "블로그·포털·Telegram·제3자 기사이거나 wrong target/future content로 original broker full-source route가 아니다. family=NONE, nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-7297ad6831fb107546201ade",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "블로그·포털·Telegram·제3자 기사이거나 wrong target/future content로 original broker full-source route가 아니다. family=NONE, nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-658d29a934f85042a48df530",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "priority": 0.0,
+        "rationale": "블로그·포털·Telegram·제3자 기사이거나 wrong target/future content로 original broker full-source route가 아니다. family=NONE, nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P3 roster 12개를 authoritative global order로 exact-once 분류했으며 target-specific eligible full-source route는 확인되지 않았다.",
+      "material 0은 source absence가 아니며 metadata/snippet은 evidence가 아니다."
+    ]
+  },
+  "payload_hash": "17b665a42a6909e37a821569eca17745a2e355c6f28336a0246223a1aca89d61",
+  "production_score_authority": false,
+  "prompt_hash": "ab68355b30899c4816f2315e7898d6fe88e767c3399259b17eb57b8fceb1c133",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5c0e72702a05445ec45506d2ce236e91ddf969932cecc612f8f62bb160f85750",
+  "response_id": "COLLABRESP-1f5900b25a0eb7a54b6e9affbda50b7d94711a3078f6e849ed6bd7554a14a8a5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

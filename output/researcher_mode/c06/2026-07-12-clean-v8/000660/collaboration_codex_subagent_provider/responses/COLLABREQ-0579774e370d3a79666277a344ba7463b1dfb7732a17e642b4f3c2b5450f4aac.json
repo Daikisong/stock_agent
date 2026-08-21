@@ -1,0 +1,33 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "남은 structured role은 valuation_rerating의 DURABLE_VISIBILITY이며, prompt 계약상 issuer 또는 customer official 원문의 forward period·HBM 귀속이 필요하다. CompanyGuide의 257개 broker metadata 후보는 discovery hint일 뿐 이 역할을 대체할 수 없다.",
+      "기존 실행 query는 공식 실적발표, 발행사 IR presentation·cash flow, 공식 뉴스룸 qualification 경로를 이미 포함한다. exact prompt에는 이들과 의미상 다른 검증된 issuer/customer official 문서 identity가 추가로 제시되지 않았다.",
+      "따라서 suggested_queries를 비워 두지만 이는 source absence 선언이 아니다. 여섯 건의 FUTURE_DOCUMENT_AFTER_FULL_FETCH도 as_of 이후 문서를 재검색할 근거가 아니며, 새 검증 identity가 생길 때까지 해당 역할은 PENDING으로 남아야 한다."
+    ]
+  },
+  "payload_hash": "7fbddf4446aeb7d617f0b279683984c20ff60d4513d35ee58b36afb0e3ae5a3b",
+  "production_score_authority": false,
+  "prompt_hash": "eb05eafe2d351519ea92f597380f2abafa625b0eb52a0d505c2b8a19771fe19e",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0579774e370d3a79666277a344ba7463b1dfb7732a17e642b4f3c2b5450f4aac",
+  "response_id": "COLLABRESP-782a34d53a09de9f04e2a42273253c90c99b213f41b65788b02b74285c1e487b",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

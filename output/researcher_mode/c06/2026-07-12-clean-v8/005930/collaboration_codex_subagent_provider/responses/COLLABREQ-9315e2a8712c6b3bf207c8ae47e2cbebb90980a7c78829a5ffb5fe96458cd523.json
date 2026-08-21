@@ -1,0 +1,622 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-a2a8ca683447d0f2c86f94e7",
+        "rationale": "임원 명단·경력 수록분으로 prior page 이후 objective-local 경제 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-a74dd284269075ccdf7ae43f",
+        "rationale": "prior page에서 3건이 accepted되었고, 나머지 금융표는 current fact와 중복되거나 일반 회계정책으로 추가 distinct 사실이 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "rationale": "prior 5건에 더해 1c DRAM, SOCAMM2, GDDR7, Qualcomm 공급 관련 12개 atomic fact를 추출했다. 페이지 경계 뒤 장기공급 계획 문장 등 잔여를 최종 감사해야 한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "rationale": "prior page의 연결 연구개발비 1건이 accepted되었고 나머지 actual은 current fact와 의미 중복이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-ca7b0fc3f6068b34ed598f6e",
+        "rationale": "prior page 3건이 accepted되었으며, HBM4 고객 공급 확대·제한 공급가용량 대응·AI 제품 믹스 계획 등 distinct remainder는 다음 페이지에서 처리한다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-d47b15dea563431b627b50fc",
+        "rationale": "임원 명단·경력 수록분으로 직책만으로 계약·공급·실적 사실을 만들 수 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "2025년 6월 최선단 10나노급 6세대 DRAM 양산은 HBM4에도 쓰이는 1c DRAM 공정의 상용 생산 실행을 확인한다.",
+        "exact_quote": "□ 업계 최선단 10나노급 6세대 D램 양산 ('25.6월)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "차세대 DRAM 공정의 실제 양산은 HBM 공급 실행과 생산기술 기반에 중요하다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "1C_DRAM_MASS_PRODUCTION_COMMENCED",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae",
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-06",
+        "predicate": "COMMENCED_1C_DRAM_MASS_PRODUCTION",
+        "predicate_family": "DRAM_COMMERCIALIZATION",
+        "primitive_tags": [
+          "1c_DRAM",
+          "mass_production"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "C06_DRAM_PRODUCT_COMMERCIALIZATION",
+        "question_family_tags": [
+          "DRAM",
+          "commercialization"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 1c DRAM",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "10나노급 6세대 DRAM 양산"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "1c DRAM이 5세대 DRAM보다 생산성을 30% 이상 높였다는 실제 제품 특성은 동일 설비의 공급 대응력과 원가 효율을 개선한다.",
+        "exact_quote": "- 10나노급 5세대 D램 대비 생산성 30% 이상 향상, 저전력 특성 약 10% 개선",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "생산성 개선은 공급량과 자본효율의 직접 메커니즘이다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "1C_DRAM_PRODUCTIVITY_IMPROVEMENT_MINIMUM",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-06 product generation",
+        "predicate": "IMPROVED_1C_DRAM_PRODUCTIVITY_VERSUS_FIFTH_GENERATION",
+        "predicate_family": "DRAM_PRODUCTIVITY",
+        "primitive_tags": [
+          "1c_DRAM",
+          "productivity"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "C06_DRAM_SUPPLY_EFFICIENCY",
+        "question_family_tags": [
+          "DRAM_productivity",
+          "supply_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 1c DRAM 생산성",
+        "subject_id": "005930",
+        "unit": "%",
+        "value": 30
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "1c DRAM의 저전력 특성이 5세대보다 약 10% 개선되어 AI 메모리 고객의 전력 효율 요구 대응력을 높인다.",
+        "exact_quote": "- 10나노급 5세대 D램 대비 생산성 30% 이상 향상, 저전력 특성 약 10% 개선",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전력 효율은 AI 메모리 제품경쟁력과 고객 효용의 별도 경제 원자다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "1C_DRAM_LOW_POWER_IMPROVEMENT_APPROXIMATE",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-06 product generation",
+        "predicate": "IMPROVED_1C_DRAM_LOW_POWER_CHARACTERISTICS",
+        "predicate_family": "DRAM_POWER_EFFICIENCY",
+        "primitive_tags": [
+          "1c_DRAM",
+          "low_power"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "C06_DRAM_PRODUCT_EFFICIENCY",
+        "question_family_tags": [
+          "DRAM_efficiency",
+          "product_competitiveness"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 1c DRAM 저전력 특성",
+        "subject_id": "005930",
+        "unit": "%",
+        "value": 10
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "2025년 12월 LPDDR 기반 서버용 SOCAMM2 개발은 HBM 외 AI 서버 메모리 제품군의 실행된 확장을 확인한다.",
+        "exact_quote": "□ LPDDR 기반 서버용 메모리 모듈 SOCAMM2 개발 ('25.12월)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "AI 서버용 메모리 제품군의 실제 개발 완료는 매출원 다변화와 제품 실행을 뒷받침한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "LPDDR_SERVER_SOCAMM2_DEVELOPMENT_COMPLETED",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae",
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-12",
+        "predicate": "DEVELOPED_LPDDR_BASED_SERVER_SOCAMM2",
+        "predicate_family": "AI_MEMORY_PRODUCT_DEVELOPMENT",
+        "primitive_tags": [
+          "LPDDR",
+          "server_memory"
+        ],
+        "product_family": "SOCAMM2",
+        "question_family_id": "C06_AI_MEMORY_PRODUCT_COMMERCIALIZATION",
+        "question_family_tags": [
+          "SOCAMM2",
+          "AI_memory"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 SOCAMM2",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "SOCAMM2 개발"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "SOCAMM2가 기존 RDIMM 대비 2배 이상의 대역폭을 제공해 AI 서버 워크로드의 성능 요구에 대응한다.",
+        "exact_quote": "- LPDDR을 새로운 폼팩터에 구현한 제품으로 기존 RDIMM 대비 2배 이상의 대역폭과\n55% 이상 낮은 전력 소비를 제공",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "대역폭 차별화는 AI 메모리 고객가치와 제품 프리미엄의 직접 근거다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SOCAMM2_BANDWIDTH_MULTIPLE_VERSUS_RDIMM_MINIMUM",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-12 product generation",
+        "predicate": "SOCAMM2_BANDWIDTH_EXCEEDS_RDIMM_BY_AT_LEAST_TWO_TIMES",
+        "predicate_family": "AI_MEMORY_BANDWIDTH",
+        "primitive_tags": [
+          "RDIMM",
+          "bandwidth"
+        ],
+        "product_family": "SOCAMM2",
+        "question_family_id": "C06_AI_MEMORY_PRODUCT_EFFICIENCY",
+        "question_family_tags": [
+          "SOCAMM2",
+          "bandwidth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 SOCAMM2 대역폭",
+        "subject_id": "005930",
+        "unit": "x",
+        "value": 2
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "SOCAMM2가 기존 RDIMM보다 전력 소비를 55% 이상 낮춰 AI 서버의 전력·냉각 부담을 줄일 수 있다.",
+        "exact_quote": "- LPDDR을 새로운 폼팩터에 구현한 제품으로 기존 RDIMM 대비 2배 이상의 대역폭과\n55% 이상 낮은 전력 소비를 제공",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전력 효율은 대역폭과 별개의 AI 서버 고객가치 및 운영비용 메커니즘이다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "SOCAMM2_POWER_CONSUMPTION_REDUCTION_VERSUS_RDIMM_MINIMUM",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-12 product generation",
+        "predicate": "SOCAMM2_POWER_CONSUMPTION_AT_LEAST_FIFTY_FIVE_PERCENT_LOWER_THAN_RDIMM",
+        "predicate_family": "AI_MEMORY_POWER_EFFICIENCY",
+        "primitive_tags": [
+          "RDIMM",
+          "power_consumption"
+        ],
+        "product_family": "SOCAMM2",
+        "question_family_id": "C06_AI_MEMORY_PRODUCT_EFFICIENCY",
+        "question_family_tags": [
+          "SOCAMM2",
+          "power_efficiency"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 SOCAMM2 전력소비",
+        "subject_id": "005930",
+        "unit": "%",
+        "value": 55
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "2025년 1월 24Gb GDDR7 양산은 AI·그래픽용 고성능 DRAM의 상용화 실행을 확인한다.",
+        "exact_quote": "□ 업계 최초 24Gb GDDR7 D램 양산 ('25.1월)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고성능 DRAM 제품의 실제 양산은 AI 메모리 포트폴리오와 매출전환 실행에 중요하다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "24GB_GDDR7_MASS_PRODUCTION_COMMENCED",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae",
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-01",
+        "predicate": "COMMENCED_24GB_GDDR7_MASS_PRODUCTION",
+        "predicate_family": "DRAM_COMMERCIALIZATION",
+        "primitive_tags": [
+          "graphics_DRAM",
+          "mass_production"
+        ],
+        "product_family": "GDDR7",
+        "question_family_id": "C06_DRAM_PRODUCT_COMMERCIALIZATION",
+        "question_family_tags": [
+          "GDDR7",
+          "commercialization"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 24Gb GDDR7",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "24Gb GDDR7 양산"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "GDDR7이 그래픽 DRAM 최고 용량 24Gb를 구현해 고용량 그래픽 카드 수요에 대응한다.",
+        "exact_quote": "- 그래픽 D램 중 최고 용량인 24Gb 구현으로, 고용량 그래픽 카드 수요에 대응 가능한 집적도 확보",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "제품 용량은 고성능 수요 대응과 제품 차별화의 직접 기술 근거다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "GDDR7_PER_DIE_CAPACITY",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-01 product generation",
+        "predicate": "GDDR7_IMPLEMENTED_24GB_CAPACITY",
+        "predicate_family": "DRAM_CAPACITY",
+        "primitive_tags": [
+          "graphics_DRAM",
+          "24Gb"
+        ],
+        "product_family": "GDDR7",
+        "question_family_id": "C06_DRAM_PRODUCT_EFFICIENCY",
+        "question_family_tags": [
+          "GDDR7",
+          "capacity"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 24Gb GDDR7 용량",
+        "subject_id": "005930",
+        "unit": "Gb",
+        "value": 24
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "GDDR7의 최대 42.5Gbps 속도는 AI·그래픽 환경의 고성능 제품 차별화를 뒷받침한다.",
+        "exact_quote": "- 업계 최고 수준인 최대 42.5Gbps 속도 및 총 1.92TB/s 대역폭을 지원하여 차세대 AI 및 그래픽 환경에 최적화",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "최대 속도는 DRAM 제품 성능과 프리미엄의 별도 경제 원자다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "GDDR7_MAXIMUM_DATA_RATE",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-01 product generation",
+        "predicate": "GDDR7_SUPPORTS_MAXIMUM_SPEED",
+        "predicate_family": "DRAM_SPEED",
+        "primitive_tags": [
+          "42.5Gbps",
+          "AI_graphics"
+        ],
+        "product_family": "GDDR7",
+        "question_family_id": "C06_DRAM_PRODUCT_EFFICIENCY",
+        "question_family_tags": [
+          "GDDR7",
+          "speed"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 24Gb GDDR7 속도",
+        "subject_id": "005930",
+        "unit": "Gbps",
+        "value": 42.5
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "GDDR7의 총 1.92TB/s 대역폭은 최대 속도와 구분되는 시스템 처리량 경쟁력을 보여준다.",
+        "exact_quote": "- 업계 최고 수준인 최대 42.5Gbps 속도 및 총 1.92TB/s 대역폭을 지원하여 차세대 AI 및 그래픽 환경에 최적화",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "총 대역폭은 데이터레이트와 별개의 시스템 성능 지표다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "GDDR7_TOTAL_BANDWIDTH",
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-01 product generation",
+        "predicate": "GDDR7_SUPPORTS_TOTAL_BANDWIDTH",
+        "predicate_family": "DRAM_BANDWIDTH",
+        "primitive_tags": [
+          "1.92TB_per_second",
+          "AI_graphics"
+        ],
+        "product_family": "GDDR7",
+        "question_family_id": "C06_DRAM_PRODUCT_EFFICIENCY",
+        "question_family_tags": [
+          "GDDR7",
+          "bandwidth"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 24Gb GDDR7 대역폭",
+        "subject_id": "005930",
+        "unit": "TB/s",
+        "value": 1.92
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "고열전도성 신소재로 GDDR7 패키지 열저항을 11% 개선해 고성능 환경의 신뢰성을 높였다.",
+        "exact_quote": "- 고열전도성 신소재 적용으로 패키지 열저항 특성을 이전 GDDR7 제품 대비 11% 개선, 고성능 동작 환경에서의 신뢰성 강화 - '25.12월 대한민국 기술대상 대통령상 수상",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "열 특성은 고성능 DRAM의 실제 운용 신뢰성과 제품 경쟁력에 중요하다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "GDDR7_PACKAGE_THERMAL_RESISTANCE_IMPROVEMENT",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-01 product generation",
+        "predicate": "IMPROVED_GDDR7_PACKAGE_THERMAL_RESISTANCE",
+        "predicate_family": "DRAM_THERMAL_EFFICIENCY",
+        "primitive_tags": [
+          "thermal_resistance",
+          "package"
+        ],
+        "product_family": "GDDR7",
+        "question_family_id": "C06_DRAM_PRODUCT_EFFICIENCY",
+        "question_family_tags": [
+          "GDDR7",
+          "thermal"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 24Gb GDDR7 열저항",
+        "subject_id": "005930",
+        "unit": "%",
+        "value": 11
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "economic_mechanism": "삼성전자와 Qualcomm이 차량용 반도체 분야에서 첫 협력을 시작해 LPDDR4X를 Snapdragon Digital Chassis에 공급했다는 실제 고객·제품 귀속을 확인한다. 물량·가격·취소조건은 제시되지 않았다.",
+        "exact_quote": "- 삼성전자-퀄컴, 차량용 반도체 분야에서 첫 협력 시작하여 스냅드래곤 디지털 섀시에 공급 및 프리미엄 차량용 인포테인먼트 지원",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공식 고객·제품 공급 귀속은 DRAM 수요처 다변화와 매출전환 근거지만 계약조건을 뜻하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "QUALCOMM_AUTOMOTIVE_LPDDR4X_SUPPLY_RELATIONSHIP",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605",
+          "SGOBJ-e78cfba9e86bfa02e9a943ae",
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-08 onward",
+        "predicate": "SUPPLIES_LPDDR4X_TO_QUALCOMM_AUTOMOTIVE_PLATFORM",
+        "predicate_family": "DRAM_CUSTOMER_SUPPLY",
+        "primitive_tags": [
+          "Qualcomm",
+          "LPDDR4X"
+        ],
+        "product_family": "LPDDR4X",
+        "question_family_id": "C06_DRAM_CUSTOMER_SUPPLY",
+        "question_family_tags": [
+          "customer_supply",
+          "automotive_DRAM"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 Qualcomm 차량용 LPDDR4X 공급",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "Qualcomm Snapdragon Digital Chassis에 LPDDR4X 공급"
+      }
+    ],
+    "unresolved_document_ids": [
+      "OFFICIALDOC-a81018f6be785d671e0b26f0",
+      "OFFICIALDOC-ca7b0fc3f6068b34ed598f6e"
+    ],
+    "unresolved_research_notes": [
+      "12-fact page boundary reached; continue only remaining a810 automotive supply-plan and ca7 HBM4/customer/supply-plan atoms after prior24 semantic dedup."
+    ]
+  },
+  "payload_hash": "ff270c635ae002bc1c4bd20b3b6686d9008c80800c5d5072193b3bcf95596f57",
+  "production_score_authority": false,
+  "prompt_hash": "f581e561198f03d2b9f5d2a6d13c59753ac4b5d5676bcf594fd88fd340cf2434",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9315e2a8712c6b3bf207c8ae47e2cbebb90980a7c78829a5ffb5fe96458cd523",
+  "response_id": "COLLABRESP-36ea21062fedf1f12eeb29a5bb49b93e3fd865c63ce146dbfc793f6a12a38b01",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

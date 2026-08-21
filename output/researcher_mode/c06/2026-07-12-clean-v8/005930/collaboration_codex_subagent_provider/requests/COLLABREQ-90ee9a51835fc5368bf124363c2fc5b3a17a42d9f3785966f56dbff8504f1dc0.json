@@ -1,0 +1,144 @@
+{
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "allowed_range": {
+        "items": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "anchor_comparisons": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "counter_fact_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "disagreements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "nearest_anchor_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "proposed_points": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "rationale": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "support_fact_ids": {
+        "items": {
+          "enum": [
+            "EFACT-4c24af7fb383929b7af6bf38",
+            "EFACT-5220bd8edddda66abc7eeaf4",
+            "EFACT-8cc5989dd1a4e4bba6ad75b9",
+            "EFACT-97e077b865db632ec6f81cd2",
+            "EFACT-c050a5335289c9806cf802ef"
+          ],
+          "type": "string"
+        },
+        "maxItems": 5,
+        "minItems": 5,
+        "prefixItems": [
+          {
+            "enum": [
+              "EFACT-4c24af7fb383929b7af6bf38"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-5220bd8edddda66abc7eeaf4"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-8cc5989dd1a4e4bba6ad75b9"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-97e077b865db632ec6f81cd2"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "EFACT-c050a5335289c9806cf802ef"
+            ],
+            "type": "string"
+          }
+        ],
+        "type": "array"
+      },
+      "why_not_higher": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "why_not_lower": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "anchor_comparisons",
+      "proposed_points",
+      "allowed_range",
+      "rationale",
+      "disagreements",
+      "support_fact_ids",
+      "counter_fact_ids",
+      "nearest_anchor_ids",
+      "why_not_higher",
+      "why_not_lower"
+    ],
+    "type": "object"
+  },
+  "output_schema_hash": "3300b52dbb6ba16d885d3f65d85f89d220bc435f7e256eb015e2998e84cc826c",
+  "pass_name": "COMPONENT_ANALYST_JUDGE",
+  "production_score_authority": false,
+  "prompt": "You are an independent E2R 2.0 research analyst.\nUse only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.\nRead the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.\nFor loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.\nDecode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.\nWhen the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.\nCite only ids present in the input. Do not invent facts, sources, metrics, or anchors.\nNever output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.\nFirst decode every evidence_fact_projection.facts row positionally with evidence_fact_projection.fact_fields. Each row preserves one exact fact_id and its economic meaning. Resolve source_independence_group_index through source_independence_group_dictionary. The count/hash rosters account only for repeated lineage; they are not omitted research, a top-N selection, or permission to skip rows. Review all fact_count rows. Act as the independent positive analyst for exactly one broad component. Derive proposed component points and an allowed range from current support facts, economic strength, duration, and cash conversion. Account for every supplied positive component fact and compare the case with at least one nearest blind historical anchor. Explain both why the score is not higher and why it is not lower.\nReturn exactly one JSON object matching the supplied schema.\n{\"allowed_counter_fact_ids\": [\"EFACT-6d299e0ff8bd67e55eb14f6d\", \"EFACT-7393f87e629482ca368f8b2e\", \"EFACT-ae0bcd1bc9e0500e2182f1c8\"], \"allowed_nearest_anchor_ids\": [\"ORDTRANSFER-b21b177481b9b2eea2f1c13e\", \"ORDTRANSFER-c1052e06818f90d4a44560f0\", \"ORDTRANSFER-0508f71bf609ed09f47c3acc\", \"ORDTRANSFER-7497c053a0ea965e06b50c88\"], \"allowed_support_fact_ids\": [\"EFACT-4c24af7fb383929b7af6bf38\", \"EFACT-5220bd8edddda66abc7eeaf4\", \"EFACT-8cc5989dd1a4e4bba6ad75b9\", \"EFACT-97e077b865db632ec6f81cd2\", \"EFACT-c050a5335289c9806cf802ef\"], \"component_id\": \"capital_allocation\", \"component_max_points\": 4.0, \"component_research_memo\": {\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"capital_allocation\", \"component_max_points\": 4.0, \"counter_case\": \"향후 자본약정과 큰 매출채권 운전자본 유출은 현금수요를 높이고, 분기 배당성향은 5.2%로 낮다. 이 자본배분은 전사 수준이며 HBM 투자수익률이나 HBM 전용 CAPEX 회수기간을 증명하지 않는다.\", \"counter_fact_ids\": [\"EFACT-6d299e0ff8bd67e55eb14f6d\", \"EFACT-7393f87e629482ca368f8b2e\", \"EFACT-ae0bcd1bc9e0500e2182f1c8\"], \"historical_anchor_ids\": [\"ORDTRANSFER-b21b177481b9b2eea2f1c13e\", \"ORDTRANSFER-c1052e06818f90d4a44560f0\", \"ORDTRANSFER-0508f71bf609ed09f47c3acc\", \"ORDTRANSFER-7497c053a0ea965e06b50c88\"], \"memo_id\": \"CRMEMO-49d146bc643b60c9fe57efe2\", \"nearest_counter_anchor_ids\": [\"ORDTRANSFER-0508f71bf609ed09f47c3acc\", \"ORDTRANSFER-7497c053a0ea965e06b50c88\"], \"nearest_positive_anchor_ids\": [\"ORDTRANSFER-b21b177481b9b2eea2f1c13e\", \"ORDTRANSFER-c1052e06818f90d4a44560f0\"], \"positive_case\": \"대규모 자기주식 프로그램과 실제 소각, 분기 배당, 비희석적 지분조달 부재는 주주환원 실행을 보여준다. 투자등급 조달 접근성도 AI 메모리 투자와 환원을 병행할 완충력을 제공한다.\", \"positive_fact_ids\": [\"EFACT-4c24af7fb383929b7af6bf38\", \"EFACT-5220bd8edddda66abc7eeaf4\", \"EFACT-8cc5989dd1a4e4bba6ad75b9\", \"EFACT-97e077b865db632ec6f81cd2\", \"EFACT-c050a5335289c9806cf802ef\"], \"research_complete\": true, \"researcher_role\": \"CapitalAllocationResearcher\", \"researcher_summary\": \"현금 pooling과 투자등급 조달 접근성, 지분증권 미발행, 10조원 자기주식 프로그램과 자기주식 소각, 2026년 1분기 배당금 2,453,316백만원은 주주환원과 재무 접근성을 확인한다. 반면 낮은 분기 배당성향 5.2%, 27,503,020백만원의 향후 유형·무형자산 약정과 28,670,819백만원의 매출채권 운전자본 유출은 현금배분 부담이다.\", \"resolution_fact_ids\": [], \"source_coverage\": [\"OPENDART\", \"DART_ACTUALS_DETERMINISTIC_SCENARIO\"], \"structured_metrics\": {\"CAPEX_SUPPLY_RESPONSE\": {\"every_record_accounted_by_hash_and_series_count\": true, \"evidence_role\": \"CAPEX_SUPPLY_RESPONSE\", \"fixed_top_n_used\": false, \"metadata_projection\": {\"full_metadata_persisted_outside_prompt\": true, \"metadata_boolean_field_count\": 7, \"metadata_boolean_state_hash\": \"1e533846ca8d01c2bc5c62bb680c9c2923e6909a84629b70c3d4ca95cc50f21e\", \"metadata_distinct_field_count\": 7, \"metadata_field_observation_count\": 49, \"metadata_field_roster_hash\": \"fd20d55f3f0c0ef1da1380eca83f710b0ccab7e118f947d6ef0b82f349a876b1\", \"metadata_record_count\": 7, \"metadata_roster_hash\": \"81beac9f2b6727dacbf4a4338fc7ac699f9609d6ae40cb08104e24b414f1ac4e\", \"metadata_value_type_counts\": {\"NoneType\": 3, \"bool\": 7, \"int\": 11, \"str\": 28}}, \"prompt_projection_is_research_cap\": false, \"record_count\": 7, \"record_roster_hash\": \"ffc1370e68739fd80a4776031ca2c5aadf9db243c54e0f86a5cc95a593db322d\", \"schema_version\": \"e2r_v5_structured_prompt_projection_v2\", \"score_authority\": false, \"semantic_series\": [{\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": 60534167000000.0}, \"evidence_roles\": [\"CAPEX\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 18176955000000.0}, \"metric_id\": \"capex\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 60534167000000.0, \"median\": 39393659000000.0, \"minimum\": 12759490000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"ffc1370e68739fd80a4776031ca2c5aadf9db243c54e0f86a5cc95a593db322d\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"bbac85ff5c1cadbe2a0026c1d08721651648d7f04f175bc2e563a2ad3000856d\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}], \"semantic_series_count\": 1, \"source_pending\": false}, \"CASH_CONVERSION\": {\"every_record_accounted_by_hash_and_series_count\": true, \"evidence_role\": \"CASH_CONVERSION\", \"fixed_top_n_used\": false, \"metadata_projection\": {\"full_metadata_persisted_outside_prompt\": true, \"metadata_boolean_field_count\": 21, \"metadata_boolean_state_hash\": \"fd95d9683569a2cb78049f80babfbf648ac251fba76e9a285546ec1b1e7a3e1c\", \"metadata_distinct_field_count\": 7, \"metadata_field_observation_count\": 147, \"metadata_field_roster_hash\": \"2ef5d7be1b4ede2028fa9b8663ca2340a8bfeb3861c9af58b03962250d4b6aed\", \"metadata_record_count\": 21, \"metadata_roster_hash\": \"0a2fe6f94f1b78399d27df826c0eb04034a428aff7de61da6daecbbb96b3a7f4\", \"metadata_value_type_counts\": {\"NoneType\": 9, \"bool\": 21, \"int\": 33, \"str\": 84}}, \"prompt_projection_is_research_cap\": false, \"record_count\": 21, \"record_roster_hash\": \"34be02208dcd4186818113ebb649cea470198943a30093d02f45cdd25e8b79de\", \"schema_version\": \"e2r_v5_structured_prompt_projection_v2\", \"score_authority\": false, \"semantic_series\": [{\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": 60534167000000.0}, \"evidence_roles\": [\"CAPEX\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 18176955000000.0}, \"metric_id\": \"capex\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 60534167000000.0, \"median\": 39393659000000.0, \"minimum\": 12759490000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"ffc1370e68739fd80a4776031ca2c5aadf9db243c54e0f86a5cc95a593db322d\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"bbac85ff5c1cadbe2a0026c1d08721651648d7f04f175bc2e563a2ad3000856d\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}, {\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": -16396740000000.0}, \"evidence_roles\": [\"FREE_CASH_FLOW\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 22097151000000.0}, \"metric_id\": \"free_cash_flow\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 33161999000000.0, \"median\": 17121837000000.0, \"minimum\": -16396740000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"58908e230af9426c0529cee1678c65462bf6328821fce5e2ea2d21b144ecfaa9\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"bbac85ff5c1cadbe2a0026c1d08721651648d7f04f175bc2e563a2ad3000856d\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}, {\"dataset\": \"FINANCIAL\", \"earliest_record\": {\"available_at\": \"2024-04-01T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2024-04-01T00:00:00\", \"period\": \"FY2023\", \"provenance\": \"OBSERVED\", \"value\": 44137427000000.0}, \"evidence_roles\": [\"OPERATING_CASH_FLOW\"], \"latest_record\": {\"available_at\": \"2026-05-16T00:00:00\", \"confidence\": 0.98, \"observed_at\": \"2026-05-16T00:00:00\", \"period\": \"FY2026Q1\", \"provenance\": \"OBSERVED\", \"value\": 40274106000000.0}, \"metric_id\": \"operating_cash_flow\", \"numeric_distribution\": {\"count\": 7, \"maximum\": 85315148000000.0, \"median\": 44137427000000.0, \"minimum\": 16580866000000.0}, \"record_count\": 7, \"record_kind\": \"FINANCIAL_ACTUAL\", \"record_roster_hash\": \"59a64989d8573e4b461a113de9ab1c1365bdd199b6fc47902f2c5dbccacbd305\", \"source_id_roster\": {\"count\": 7, \"roster_hash\": \"bbac85ff5c1cadbe2a0026c1d08721651648d7f04f175bc2e563a2ad3000856d\"}, \"source_route\": \"DART_ACTUALS_DETERMINISTIC_SCENARIO\", \"unit\": \"CURRENCY\"}], \"semantic_series_count\": 3, \"source_pending\": false}}, \"target_id\": \"005930\", \"uncertainties\": [\"향후 자본약정의 DS 메모리·HBM 귀속이 분리되지 않는다.\", \"매출채권 운전자본 유출의 일시성 여부가 불명확하다.\", \"자기주식·배당과 성장투자의 장기 우선순위가 정량적으로 연결되지 않는다.\"]}, \"conditional_judge_rules\": {\"empty_support_plane\": {\"condition\": \"allowed_support_fact_ids is empty\", \"required_allowed_range\": [0, 0], \"required_proposed_points\": 0, \"required_support_fact_ids\": []}, \"positive_points_require_support\": \"proposed_points greater than zero requires at least one exact id from allowed_support_fact_ids in support_fact_ids\"}, \"evidence_fact_projection\": {\"advisory_tags_are_not_score_gates\": true, \"allowed_component_coverage\": {\"capital_allocation\": 8, \"information_confidence\": 8}, \"as_of_date_coverage\": {\"2026-07-12\": 8}, \"claim_id_roster\": {\"count\": 8, \"roster_hash\": \"34ff6adc3f3cd8cb6f8bf006dfa781d87cfe7e0156dabd39a738ca46532e913f\"}, \"corroborating_independence_group_roster\": {\"count\": 1, \"roster_hash\": \"f92624313baa0aaca744d69e2eb15bdf7e807a1a80c07fe08f13d2d9613c97c9\"}, \"every_fact_id_preserved\": true, \"every_fact_lineage_accounted_by_count_and_hash\": true, \"fact_count\": 8, \"fact_fields\": [\"fact_row_index\", \"fact_id\", \"subject\", \"business_segment\", \"product_family\", \"economic_mechanism\", \"predicate\", \"value\", \"unit\", \"period\", \"direction\", \"current_lifecycle\", \"confidence\", \"structured_evidence_roles\", \"source_independence_group_index\", \"corroborating_independence_group_count\"], \"fact_roster_hash\": \"11cc08a911d6b6717dbd51024ec69b8c7a1f1e81424022fe04f9c020b59995f0\", \"facts\": [[0, \"EFACT-4c24af7fb383929b7af6bf38\", \"삼성전자 연결 Cash Pooling·신용등급·조달 접근성\", \"회사 전체\", \"연결 유동성\", \"권역별 Cash Pooling, 해외 종속기업 차입한도, Moody's Aa2와 S&P AA- 신용등급은 대규모 유동성 필요 시 내부자금 공유와 자본시장 조달 접근성을 뒷받침한다.\", \"DISCLOSED_CASH_POOLING_AND_INVESTMENT_GRADE_FUNDING_ACCESS\", \"Cash Pooling; Moody's Aa2; S&P AA-\", \"status\", \"2026-03-31\", \"POSITIVE\", \"CURRENT\", 0.99, [], 0, 1], [1, \"EFACT-5220bd8edddda66abc7eeaf4\", \"삼성전자 지분증권 발행\", \"회사 전체\", \"지분증권\", \"공시대상기간 중 신규 지분증권 발행이 없어 해당 기간의 발행 희석은 발생하지 않았다.\", \"NO_EQUITY_SECURITIES_ISSUED_IN_DISCLOSURE_PERIOD\", \"발행 실적 없음\", null, \"disclosure period through 2026Q1\", \"POSITIVE\", \"CURRENT\", 1.0, [], 0, 1], [2, \"EFACT-6d299e0ff8bd67e55eb14f6d\", \"삼성전자 연결 현금배당성향\", \"회사 전체\", \"현금배당\", \"순이익 급증기에 현금배당성향이 5.2%로 낮아져 이익 증가가 같은 비율의 현금환원으로 전환되지는 않았다.\", \"REPORTED_LOW_QUARTERLY_CASH_DIVIDEND_PAYOUT_RATIO\", 5.2, \"%\", \"2026Q1\", \"COUNTER\", \"CURRENT\", 0.99, [], 0, 1], [3, \"EFACT-7393f87e629482ca368f8b2e\", \"삼성전자 연결회사\", \"연결 전체\", \"유형·무형자산\", \"미집행 유형·무형자산 취득 약정\", \"분기말 미발생 유형·무형자산 취득 약정액을 공시했다\", 27503020, \"KRW million\", \"after 2026-03-31\", \"COUNTER\", \"OPEN\", 1.0, [\"FORWARD_GUIDANCE\"], 0, 1], [4, \"EFACT-8cc5989dd1a4e4bba6ad75b9\", \"삼성전자 10조원 자기주식 매입 프로그램\", \"회사 전체\", \"자기주식\", \"발표한 10조원 자기주식 매입 프로그램을 3조원 소각과 추가 7조원 취득으로 집행했다.\", \"EXECUTED_TEN_TRILLION_WON_TREASURY_SHARE_PROGRAM\", 10, \"조원\", \"2024-11 to 2025-09\", \"POSITIVE\", \"CURRENT\", 0.99, [], 0, 1], [5, \"EFACT-97e077b865db632ec6f81cd2\", \"삼성전자 자기주식 소각\", \"회사 전체\", \"자기주식\", \"보고기간 후 자기주식 소각은 이미 매입한 주식을 제거하여 주식 수와 투입 자본을 줄인 자본환원 실행이다.\", \"CANCELLED_TREASURY_SHARES\", \"보통주 73,359,314주 및 우선주 13,603,461주\", \"주\", \"2026-04-02\", \"POSITIVE\", \"CURRENT\", 0.99, [], 0, 1], [6, \"EFACT-ae0bcd1bc9e0500e2182f1c8\", \"삼성전자 연결 매출채권 현금흐름 변동\", \"회사 전체\", \"연결 운전자본\", \"2026년 1분기 연결 현금흐름에서 매출채권 증가가 28,670,819백만원의 영업현금 감소 요인으로 작용했다.\", \"REPORTED_RECEIVABLES_WORKING_CAPITAL_CASH_OUTFLOW\", -28670819, \"KRW million\", \"2026-Q1\", \"COUNTER\", \"CURRENT\", 0.99, [], 0, 1], [7, \"EFACT-c050a5335289c9806cf802ef\", \"삼성전자\", \"회사 전체\", \"회사 전체\", \"분기 배당을 통한 자본 환원\", \"2026년 1분기 지급될 배당금 합계를 공시했다\", 2453316, \"KRW million\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 1.0, [], 0, 1]], \"fixed_top_n_used\": false, \"full_fact_records_persisted_outside_prompt\": true, \"primitive_tag_roster_hash\": \"170de0a4f8dd2e37cc2380c0e63bc1d8a9d2ebbacdf4f8ce9da92352dfeb2de6\", \"prompt_projection_is_research_cap\": false, \"question_family_tag_roster_hash\": \"abf2369343434611340173930b0fe3e84d56642ad267f9a2eb7f717f7e9d8f30\", \"quote_id_roster\": {\"count\": 8, \"roster_hash\": \"e35c59e2cc78065d78e3ce0c46c4801d5da4a7e711b3c90724969b648d647f7c\"}, \"repeated_lineage_arrays_omitted_from_semantic_rows\": true, \"schema_version\": \"e2r_v5_citable_fact_prompt_projection_v3\", \"score_authority\": false, \"source_id_roster\": {\"count\": 4, \"roster_hash\": \"b1f9a356d392bbfa6fc441ce163ccc22b1a0b26f235242238d38d56ccc155a33\"}, \"source_independence_group_dictionary\": [\"OPENDART:opendart\"], \"target_id_coverage\": {\"005930\": 8}}, \"historical_component_anchors\": [{\"anchor_id\": \"ORDTRANSFER-b21b177481b9b2eea2f1c13e\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"capital_allocation\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"1q24_health_csm_ape_growth_ex_oneoff_profit_growth\"], \"max_points\": 4.0, \"points_lower\": 1.0, \"points_mid\": 1.2, \"points_upper\": 1.4, \"role\": \"POSITIVE\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-c1052e06818f90d4a44560f0\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"capital_allocation\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"songdaiki_stock_web\"], \"max_points\": 4.0, \"points_lower\": 3.8, \"points_mid\": 4.0, \"points_upper\": 4.0, \"role\": \"POSITIVE\", \"score_band\": \"STRONG\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-0508f71bf609ed09f47c3acc\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"capital_allocation\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 4.0, \"points_lower\": 0.6, \"points_mid\": 0.8, \"points_upper\": 1.0, \"role\": \"COUNTER\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-7497c053a0ea965e06b50c88\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"capital_allocation\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"margin_or_backlog_slowdown\", \"thesis_evidence_broken\", \"ev_slowdown_keyword_false_4c_battery_foil_customer_offset\", \"public_event_or_disclosure\", \"customer_or_order_quality\", \"capacity_or_volume_route\", \"repeat_order_or_conversion\", \"financial_visibility\", \"ceo_score_daily\", \"2024_02_07\", \"solus_advanced_materials_two_year_operating_loss_ev_market_slowdown\", \"but_battery_foil_sales_growth_and_2024_customer_requested_supply_expansion_target\", \"songdaiki_stock_web\"], \"max_points\": 4.0, \"points_lower\": 3.8, \"points_mid\": 4.0, \"points_upper\": 4.0, \"role\": \"COUNTER\", \"score_band\": \"STRONG\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}], \"independent_role_mandate\": [\"CURRENT_ECONOMIC_STRENGTH\", \"POSITIVE_THESIS\", \"DURATION_AND_CASH_CONVERSION\"], \"judge_pass_name\": \"COMPONENT_ANALYST_JUDGE\", \"judge_role\": \"ANALYST\", \"required_judge_output_fields\": [\"allowed_range\", \"anchor_comparisons\", \"counter_fact_ids\", \"disagreements\", \"nearest_anchor_ids\", \"proposed_points\", \"rationale\", \"support_fact_ids\", \"why_not_higher\", \"why_not_lower\"]}",
+  "prompt_hash": "031fdce648b611db28309b3a3a9533fd55ce0e06a8b2b9d0419c1029d4d428f6",
+  "provider_identity": {
+    "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+    "direct_score_or_stage_authority": false,
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+    "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-90ee9a51835fc5368bf124363c2fc5b3a17a42d9f3785966f56dbff8504f1dc0",
+  "request_identity": {
+    "output_schema_hash": "3300b52dbb6ba16d885d3f65d85f89d220bc435f7e256eb015e2998e84cc826c",
+    "pass_name": "COMPONENT_ANALYST_JUDGE",
+    "prompt_hash": "031fdce648b611db28309b3a3a9533fd55ce0e06a8b2b9d0419c1029d4d428f6",
+    "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898"
+  },
+  "response_import_required": true,
+  "schema_name": "e2r_v5_component_analyst_judge",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_request_v1",
+  "score_or_stage_authority": false
+}

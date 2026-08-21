@@ -1,0 +1,130 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5b385a318d77279f128a35a0",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.96,
+        "rationale": "OpenAI official domain의 삼성·SK Stargate 협력 원문 landing이다. OpenAI partnership·memory-support scope를 counterparty 관점에서 확인할 full-source route이며, 아직 fetch 전이므로 title 자체를 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-1172bcfb1c463786ddde3d09",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "Korea Times의 제3자 보도이며 OpenAI customer-official source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-449c5230ee66e303598bb543",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "Samsung issuer newsroom이므로 공식 자료이지만 requested CUSTOMER_OFFICIAL provenance를 충족하지 않는다. 내용도 NVIDIA 행사에서의 issuer 발표이지 NVIDIA의 독립 corroboration이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2189c43877be207e3091cee1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "나무위키 일반 페이지로 official counterparty source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3215b1c926582084f4933f6c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "Korea Times 제3자 보도로 OpenAI official 원문을 대신할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-cf31f14c88630c4483efe7c4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Anthropic 투자 관련 media 기사로 NVIDIA/OpenAI 관계 objective와 무관하고 customer official도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-35533572f1cf6fdb1659f90c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "OpenAI deal을 재보도한 Business Korea 기사이며 counterparty official 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-49abbbb35f006cac38a84495",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Gartner 일반 IT landing으로 target relationship과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-1d1d2e7cb553d83973c2807e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "NVIDIA Rubin 공급망을 다룬 media 기사지만 NVIDIA official source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-805ac0ce6850fe8e74c913f4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "OpenAI LOI를 다룬 Korea Herald 제3자 보도이며 customer-official provenance가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9a97c358f78aeae966a88c31",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "cutoff 이전 Korea Times 기사지만 OpenAI official source가 아니며 ChatGPT enterprise customer 관계는 HBM supply corroboration과도 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-4486ad7592a7c71fec0bc522",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "GTC·HBM4를 다룬 media report지만 NVIDIA official full source가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "OpenAI official candidate는 full fetch·date validation·claim extraction 전까지 evidence가 아니다. 다른 11개 nonmaterial 판정도 NVIDIA/OpenAI official source absence를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "807c438f52e1299aba2a51e08c9d20215d06f9152866615cdb420a100c666680",
+  "production_score_authority": false,
+  "prompt_hash": "71acb3e603f632b58394c8277cb3c74e26634bb5c8502ad2680adb5dc9fd3953",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f36ce8d761de8ecacd486411ace1e24ea6056518100c907428d00854d6bb0547",
+  "response_id": "COLLABRESP-b87e163f9a2bd4f5d8061c6b0ad036bb151218ce5c1c61edd63e01e91aa11f33",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

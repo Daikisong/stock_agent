@@ -1,0 +1,563 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "rationale": "The full Q1 2026 issuer article yielded twelve distinct facts after strict dedup against the 141 current facts. Remaining distinct investment-plan and source-uncertainty spans require a continuation page.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Consolidated",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer reported a 72% consolidated operating margin for 2026Q1, a company-level profitability actual that cannot be attributed solely to HBM.",
+        "exact_quote": "SK하이닉스가 올해 1분기 매출액 52조 5,763억 원, 영업이익 37조 6,103억 원(영업이익률 72%), 순이익 40조 3,459억 원(순이익률 77%)의 경영실적을 기록했다고 23일 밝혔다. (K-IFRS 기준)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The operating-margin actual is distinct from the already-recorded operating-profit amount and remains explicitly consolidated rather than HBM-only.",
+        "mechanism_scope_id": "000660:corporate:consolidated_earnings_actual",
+        "normalized_object": "2026Q1 consolidated operating margin",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1",
+        "predicate": "reported consolidated operating margin",
+        "predicate_family": "CONSOLIDATED_OPERATING_MARGIN_ACTUAL",
+        "primitive_tags": [
+          "consolidated_margin"
+        ],
+        "product_family": "Corporate",
+        "question_family_id": "CONSOLIDATED_QUARTERLY_OPERATING_MARGIN_ACTUAL",
+        "question_family_tags": [
+          "quarterly_actual",
+          "operating_margin"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "percent",
+        "value": 72
+      },
+      {
+        "business_segment": "Consolidated",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer reported a 77% consolidated net margin for 2026Q1, a company-level actual that includes non-operating items and is not HBM-only profitability.",
+        "exact_quote": "SK하이닉스가 올해 1분기 매출액 52조 5,763억 원, 영업이익 37조 6,103억 원(영업이익률 72%), 순이익 40조 3,459억 원(순이익률 77%)의 경영실적을 기록했다고 23일 밝혔다. (K-IFRS 기준)",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The net-margin actual is a distinct reported measure while remaining bounded as a consolidated result rather than HBM economics.",
+        "mechanism_scope_id": "000660:corporate:consolidated_earnings_actual",
+        "normalized_object": "2026Q1 consolidated net margin",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1",
+        "predicate": "reported consolidated net margin",
+        "predicate_family": "CONSOLIDATED_NET_MARGIN_ACTUAL",
+        "primitive_tags": [
+          "consolidated_margin"
+        ],
+        "product_family": "Corporate",
+        "question_family_id": "CONSOLIDATED_QUARTERLY_NET_MARGIN_ACTUAL",
+        "question_family_tags": [
+          "quarterly_actual",
+          "net_margin"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_NET_INCOME_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "percent",
+        "value": 77
+      },
+      {
+        "business_segment": "Consolidated",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "Consolidated revenue grew 60% sequentially in 2026Q1, establishing realized company-level acceleration without assigning the growth rate solely to HBM.",
+        "exact_quote": "매출액\n525,763\n328,267\n60%\n176,391\n198%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The comparison table explicitly reports the sequential revenue-growth point and periods.",
+        "mechanism_scope_id": "000660:corporate:consolidated_earnings_actual",
+        "normalized_object": "2026Q1 consolidated revenue sequential growth",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1 vs 2025Q4",
+        "predicate": "grew quarter over quarter",
+        "predicate_family": "QOQ_REVENUE_GROWTH_2026Q1",
+        "primitive_tags": [
+          "qoq_growth"
+        ],
+        "product_family": "Corporate",
+        "question_family_id": "CONSOLIDATED_REVENUE_SEQUENTIAL_GROWTH_2026Q1",
+        "question_family_tags": [
+          "quarterly_growth",
+          "consolidated_revenue"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "percent",
+        "value": 60
+      },
+      {
+        "business_segment": "Consolidated",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "Consolidated operating profit grew 96% sequentially in 2026Q1, a realized company-level change rather than an HBM-only profit-growth rate.",
+        "exact_quote": "영업이익\n376,103\n191,696\n96%\n74,405\n405%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The issuer table explicitly reports the sequential operating-profit growth point.",
+        "mechanism_scope_id": "000660:corporate:consolidated_earnings_actual",
+        "normalized_object": "2026Q1 consolidated operating profit sequential growth",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1 vs 2025Q4",
+        "predicate": "grew quarter over quarter",
+        "predicate_family": "QOQ_OPERATING_PROFIT_GROWTH_2026Q1",
+        "primitive_tags": [
+          "qoq_growth"
+        ],
+        "product_family": "Corporate",
+        "question_family_id": "CONSOLIDATED_OPERATING_PROFIT_SEQUENTIAL_GROWTH_2026Q1",
+        "question_family_tags": [
+          "quarterly_growth",
+          "consolidated_operating_profit"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "percent",
+        "value": 96
+      },
+      {
+        "business_segment": "Consolidated",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "Consolidated net income grew 165% sequentially in 2026Q1, a company-level actual that is not an HBM-only measure.",
+        "exact_quote": "당기순이익\n403,459\n152,460\n165%\n81,082\n398%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The issuer table explicitly reports the sequential net-income growth point and comparison period.",
+        "mechanism_scope_id": "000660:corporate:consolidated_earnings_actual",
+        "normalized_object": "2026Q1 consolidated net income sequential growth",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1 vs 2025Q4",
+        "predicate": "grew quarter over quarter",
+        "predicate_family": "QOQ_NET_INCOME_GROWTH_2026Q1",
+        "primitive_tags": [
+          "qoq_growth"
+        ],
+        "product_family": "Corporate",
+        "question_family_id": "CONSOLIDATED_NET_INCOME_SEQUENTIAL_GROWTH_2026Q1",
+        "question_family_tags": [
+          "quarterly_growth",
+          "consolidated_net_income"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_NET_INCOME_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "percent",
+        "value": 165
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.95,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer says expanded sales of a high-value product basket including HBM supported the 2026Q1 earnings rise; the mixed basket also includes server DRAM modules and eSSD, so no HBM-only revenue, mix, margin, or contribution percentage is inferred.",
+        "exact_quote": "SK하이닉스는 “1분기는 계절적 비수기임에도 AI 인프라 투자 확대로 수요 강세가 이어진 가운데, HBM · 고용량 서버용 D램 모듈 · eSSD 등 고부가가치 제품 판매를 확대하며 실적 상승세를 이어갔다”고 설명했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The issuer directly includes HBM in the sales basket supporting results, while the mixed attribution prevents HBM-only economics.",
+        "mechanism_scope_id": "000660:memory:hbm:revenue_conversion",
+        "normalized_object": "HBM sales-expansion contribution within mixed product basket",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1",
+        "predicate": "was included in expanded high-value product sales supporting results",
+        "predicate_family": "HBM_SALES_EXPANSION_CONTRIBUTION",
+        "primitive_tags": [
+          "mixed_product_attribution"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_HIGH_VALUE_PRODUCT_SALES_EXPANSION",
+        "question_family_tags": [
+          "hbm_revenue",
+          "sales_expansion"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM",
+        "subject_id": "000660:MEMORY:HBM",
+        "unit": "",
+        "value": "HBM included in expanded high-value product sales"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer reports KRW 35 trillion net cash after cash-like assets rose and borrowings fell in 2026Q1, an issuer-wide liquidity position rather than HBM-only cash generation.",
+        "exact_quote": "이 같은 실적 호조에 힘입어 1분기 말 현금성 자산은 전분기 말 대비 19.4조 원 늘어난 54.3조 원을 기록했다. 반면, 차입금은 2.9조 원 감소한 19.3조 원을 기록하며 35조 원의 순현금을 달성했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit net-cash amount is a distinct capital and liquidity fact, preserved as consolidated rather than HBM-attributable cash.",
+        "mechanism_scope_id": "000660:corporate:liquidity",
+        "normalized_object": "2026Q1 consolidated net cash",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31",
+        "predicate": "reported net cash position",
+        "predicate_family": "NET_CASH_POSITION",
+        "primitive_tags": [
+          "net_cash"
+        ],
+        "product_family": "Issuer-wide liquidity",
+        "question_family_id": "CONSOLIDATED_NET_CASH_POSITION_2026Q1",
+        "question_family_tags": [
+          "liquidity",
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CAPITAL_ALLOCATION",
+        "unit": "KRW million",
+        "value": 35000000
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer expects a favorable DRAM pricing environment to continue as memory-efficiency technology expands AI service economics and scale; this is a qualitative outlook, not realized DRAM or HBM ASP and not a contract price.",
+        "exact_quote": "메모리 효율화 기술 확산 역시 AI 서비스의 경제성을 높이고 전체 서비스 규모 확대로 이어져 메모리 수요를 추가로 견인할 것이라고 내다봤다. 이를 바탕으로 D램 · 낸드 모두에서 우호적인 가격 환경이 지속될 것으로 전망했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The quote contains an issuer DRAM price outlook; the fact excludes the forbidden NAND portion and does not promote the outlook to realized ASP.",
+        "mechanism_scope_id": "000660:memory:dram:pricing_outlook",
+        "normalized_object": "DRAM pricing outlook",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward outlook from 2026-04-23",
+        "predicate": "expects favorable pricing environment to continue",
+        "predicate_family": "DRAM_PRICING_OUTLOOK",
+        "primitive_tags": [
+          "qualitative_price_outlook"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_FAVORABLE_PRICING_OUTLOOK",
+        "question_family_tags": [
+          "dram_pricing",
+          "issuer_outlook"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 D램",
+        "subject_id": "000660:MEMORY:DRAM",
+        "unit": "",
+        "value": "favorable pricing environment expected to continue"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer plans to strengthen integrated HBM execution across performance, yield, quality, and supply stability; this is a capability plan without numeric output, customer allocation, contract volume, price, or qualification status.",
+        "exact_quote": "HBM은 성능 · 수율 · 품질 · 공급 안정성을 통합한 종합적인 실행 역량을 더욱 강화한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is a product-specific issuer execution plan, explicitly bounded from contractual or quantified supply economics.",
+        "mechanism_scope_id": "000660:memory:hbm:execution_capability",
+        "normalized_object": "HBM integrated execution-capability plan",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "plan announced 2026-04-23",
+        "predicate": "plans to strengthen integrated execution capability",
+        "predicate_family": "HBM_EXECUTION_CAPABILITY_PLAN",
+        "primitive_tags": [
+          "performance",
+          "yield",
+          "quality",
+          "supply_stability"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_INTEGRATED_EXECUTION_CAPABILITY_PLAN",
+        "question_family_tags": [
+          "hbm_execution",
+          "supply_stability"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM",
+        "subject_id": "000660:MEMORY:HBM",
+        "unit": "",
+        "value": "strengthen performance, yield, quality, and supply stability execution"
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer plans to expand supply of LPDDR6 using its 1c process, a DRAM product-supply plan that does not establish realized shipment, customer qualification, committed volume, or revenue.",
+        "exact_quote": "D램은 세계 최초로 10나노급 6세대(1c) 공정을 적용한 LPDDR6와, 같은 공정을 기반으로 이달 양산을 시작한 192GB SOCAMM2의 공급을 본격화한다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The source states a distinct DRAM supply plan, but does not provide shipment or contract evidence.",
+        "mechanism_scope_id": "000660:memory:dram:lpddr6_supply",
+        "normalized_object": "1c-process LPDDR6 supply plan",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward plan from 2026-04-23",
+        "predicate": "plans to expand product supply",
+        "predicate_family": "LPDDR6_SUPPLY_PLAN",
+        "primitive_tags": [
+          "supply_plan",
+          "1c_process"
+        ],
+        "product_family": "LPDDR6",
+        "question_family_id": "LPDDR6_SUPPLY_RAMP_PLAN",
+        "question_family_tags": [
+          "dram_product",
+          "lpddr6"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1c 공정 LPDDR6",
+        "subject_id": "000660:MEMORY:LPDDR6",
+        "unit": "",
+        "value": "full-scale supply planned"
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer says 192GB SOCAMM2 began mass production in April 2026 and that supply will be expanded; this establishes production commencement but not customer qualification, contracted volume, price, or realized sales.",
+        "exact_quote": "D램은 세계 최초로 10나노급 6세대(1c) 공정을 적용한 LPDDR6와, 같은 공정을 기반으로 이달 양산을 시작한 192GB SOCAMM2의 공급을 본격화한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact issuer statement confirms a specific AI-memory production start while preserving all customer and contract limitations.",
+        "mechanism_scope_id": "000660:memory:ai_memory:socamm2_commercialization",
+        "normalized_object": "192GB SOCAMM2 production and supply status",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "April 2026 onward",
+        "predicate": "began mass production and plans full-scale supply",
+        "predicate_family": "SOCAMM2_MASS_PRODUCTION",
+        "primitive_tags": [
+          "production_start",
+          "supply_ramp"
+        ],
+        "product_family": "SOCAMM2",
+        "question_family_id": "SOCAMM2_MASS_PRODUCTION_AND_SUPPLY",
+        "question_family_tags": [
+          "ai_memory",
+          "socamm2",
+          "mass_production"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 192GB SOCAMM2",
+        "subject_id": "000660:MEMORY:SOCAMM2",
+        "unit": "",
+        "value": "192GB SOCAMM2 mass production commenced"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer states that customer demand continues to exceed its supply capability and that securing capacity for structural AI demand is a key competitive factor; this is memory-wide demand visibility, not HBM-only allocation or a signed customer obligation.",
+        "exact_quote": "한편, SK하이닉스는 고객 수요가 공급 역량을 상회하는 환경이 지속되는 가운데, AI 시대 구조적 수요 성장에 대응할 수 있는 공급 역량 확보가 핵심 경쟁력으로 부각됐다고 강조했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This issuer-official, memory-segment statement directly establishes ongoing demand and capacity visibility while remaining non-contractual and non-HBM-specific.",
+        "mechanism_scope_id": "000660:memory:demand_supply_imbalance",
+        "normalized_object": "memory customer-demand and supply-capability imbalance",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "ongoing from 2026Q1",
+        "predicate": "reports customer demand exceeding supply capability",
+        "predicate_family": "MEMORY_DEMAND_SUPPLY_IMBALANCE",
+        "primitive_tags": [
+          "demand_exceeds_supply",
+          "structural_ai_demand"
+        ],
+        "product_family": "Memory",
+        "question_family_id": "MEMORY_DEMAND_EXCEEDS_SUPPLY_CAPABILITY",
+        "question_family_tags": [
+          "capacity_scarcity",
+          "customer_demand"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "SK하이닉스 메모리 공급 역량",
+        "subject_id": "000660:MEMORY:SUPPLY_DEMAND",
+        "unit": "",
+        "value": "customer demand exceeds supply capability in an ongoing environment"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-e4e768107cc43f617507017f"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact page limit was reached; continue only the remaining distinct investment plan and explicit preliminary or forward-looking uncertainty spans without repeating this page."
+    ]
+  },
+  "payload_hash": "73fe71f558b0bd4aff40959b61459842a823498d9cdb4a3ce4982b8791766f88",
+  "production_score_authority": false,
+  "prompt_hash": "4a978d592d87f5a6254e81a7cd37880fea024db2a495c2c75578a7229650b59d",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c15203cd2959886188f66d0109d6cfd7860725989878d7bc06de8e7f1bf0adc5",
+  "response_id": "COLLABRESP-0ff9f68e773366d74087778923057b08d3fc2640d087ea7d16215db17077cea6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

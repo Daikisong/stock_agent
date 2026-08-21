@@ -1,0 +1,500 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b665107e37d5a8db87dc54c7",
+        "rationale": "current202에 수용된 HBM4E 샘플 출하·성능·용량·효율·양산 계획과 동일한 한국어 issuer 재게시다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-b80a5d9a78206602846a32b7",
+        "rationale": "current HBM4 양산·성능·CAPA·매출 가이던스 및 이전 31c2 issuer 자료와 의미 중복된다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-bb1d1f6939881fd980544eb8",
+        "rationale": "b80a 및 이전 HBM4 issuer 보도자료의 재게시로 새 경제적 사건이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-dc34b428ef86c778c8d41b32",
+        "rationale": "AMD MOU, counterparty 기술 확인, HBM4 우선 공급 지위와 기존 HBM3E 공급 이력 4건을 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f344aed4501502f2c9f473b5",
+        "rationale": "2025Q4 연결 실제치·QoQ, HBM 판매 연계 메모리 기록 및 R&D 투자 6건을 추출했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-dc34b428ef86c778c8d41b32",
+        "economic_mechanism": "삼성전자와 AMD가 차세대 AI 메모리·컴퓨팅 협력 확대 MOU를 체결했지만 MOU를 확정 구매계약으로 확대하지 않는다.",
+        "exact_quote": "삼성전자는 18일 평택사업장에서 미국 AI 반도체 기업 AMD와 차세대 AI 메모리, 컴퓨팅 기술 분야 협력을 확대하는 업무협약(MOU)을 체결했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "실명 고객과의 공식 협력 사건이지만 물량·가격·취소조건을 확정하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "Samsung AMD AI memory cooperation MOU",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-18",
+        "predicate": "SIGNED_MOU_WITH_AMD_TO_EXPAND_AI_MEMORY_COOPERATION",
+        "predicate_family": "NAMED_CUSTOMER_COOPERATION",
+        "primitive_tags": [
+          "named_customer",
+          "cooperation",
+          "nonbinding"
+        ],
+        "product_family": "HBM·차세대 AI 메모리",
+        "question_family_id": "C06_HBM_NAMED_CUSTOMER_COOPERATION",
+        "question_family_tags": [
+          "AMD",
+          "HBM",
+          "MOU"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자·AMD 차세대 AI 메모리 협력 MOU",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "MOU for expanded next-generation AI memory and computing cooperation"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-dc34b428ef86c778c8d41b32",
+        "economic_mechanism": "AMD CEO가 삼성 메모리 기술과 AMD GPU·CPU·랙 플랫폼의 결합을 직접 언급해 기술 협력 범위를 확인했지만 구매의무는 아니다.",
+        "exact_quote": "리사 수 AMD CEO는 “차세대 AI 인프라 구현을 위해서는 업계 전반의 긴밀한 협력이 필수적”이라며 “삼성의 첨단 메모리 기술 리더십과 AMD의 ▲Instinct GPU ▲EPYC CPU ▲랙 스케일 플랫폼을 결합하게 돼 매우 기쁘다”고 말했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "실명 counterparty 발언은 협력 실재성을 보강하지만 계약·allocation을 독립 확정하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "AMD technical corroboration of Samsung memory cooperation",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-18",
+        "predicate": "AMD_CEO_CONFIRMED_TECHNICAL_MEMORY_PLATFORM_COLLABORATION",
+        "predicate_family": "COUNTERPARTY_TECHNICAL_CORROBORATION",
+        "primitive_tags": [
+          "Lisa_Su",
+          "Instinct",
+          "EPYC"
+        ],
+        "product_family": "AI 메모리",
+        "question_family_id": "C06_HBM_COUNTERPARTY_CORROBORATION",
+        "question_family_tags": [
+          "AMD",
+          "counterparty",
+          "AI_memory"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "AMD CEO의 삼성 메모리 기술 협력 확인",
+        "subject_id": "005930",
+        "unit": "counterparty_statement",
+        "value": "Samsung memory technology combined with AMD Instinct GPU, EPYC CPU and rack-scale platform"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-dc34b428ef86c778c8d41b32",
+        "economic_mechanism": "AMD AI 가속기용 HBM4 우선 공급업체 지정과 MI455X 탑재 계획은 named customer 공급 가시성을 직접 제공하지만 물량·가격·기간은 비공개다.",
+        "exact_quote": "삼성전자는 AMD AI 가속기에 탑재되는 HBM4 우선 공급업체로 지정됐다. 이에 따라 삼성전자는 AMD의 차세대 AI 가속기 ‘Instinct MI455X’ GPU에 업계 최고 성능 HBM4를 본격 탑재할 계획이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "실명 고객·제품에 연결된 우선 공급 지위는 구조적 가시성의 핵심이지만 확정 계약조건으로 확대하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "AMD MI455X HBM4 preferred supplier designation",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-18 onward",
+        "predicate": "DESIGNATED_PREFERRED_HBM4_SUPPLIER_FOR_AMD_MI455X",
+        "predicate_family": "NAMED_CUSTOMER_ALLOCATION",
+        "primitive_tags": [
+          "MI455X",
+          "named_customer",
+          "allocation"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "C06_HBM_NAMED_CUSTOMER_ALLOCATION",
+        "question_family_tags": [
+          "AMD",
+          "HBM4",
+          "preferred_supplier"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "삼성전자 AMD HBM4 우선 공급업체 지정",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "preferred HBM4 supplier for AMD AI accelerators; planned MI455X integration"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-dc34b428ef86c778c8d41b32",
+        "economic_mechanism": "삼성전자가 AMD MI350X·MI355용 HBM3E 핵심 공급사 역할을 해온 실제 고객 공급 이력을 확인한다.",
+        "exact_quote": "특히 삼성전자는 AMD의 최신 AI 가속기 MI350X, MI355에 탑재된 HBM3E의 핵심 공급사 역할을 해왔다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "실명 고객 제품에 대한 과거 실제 공급 지위가 후속 HBM4 관계의 실행 기반을 보강한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "AMD HBM3E historical supply placement",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "through 2026-03-18",
+        "predicate": "SERVED_AS_KEY_HBM3E_SUPPLIER_FOR_AMD_MI350X_AND_MI355",
+        "predicate_family": "NAMED_CUSTOMER_SUPPLY_ACTUAL",
+        "primitive_tags": [
+          "MI350X",
+          "MI355",
+          "key_supplier"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "C06_HBM_NAMED_CUSTOMER_SUPPLY_ACTUAL",
+        "question_family_tags": [
+          "AMD",
+          "HBM3E",
+          "supply_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 AMD HBM3E 공급 이력",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "key HBM3E supplier for AMD MI350X and MI355"
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f344aed4501502f2c9f473b5",
+        "economic_mechanism": "2025년 4분기 연결 매출 실제치는 전사 이익 환경을 확인하지만 HBM 단독 매출로 귀속하지 않는다.",
+        "exact_quote": "삼성전자가 연결 기준으로 매출 93.8조원, 영업이익 20.1조원의 2025년 4분기 실적을 발표했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "issuer 연결 매출 실제치이나 HBM 귀속은 별도 증거가 필요하다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "2025Q4 consolidated revenue actual",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025Q4",
+        "predicate": "REPORTED_2025Q4_CONSOLIDATED_REVENUE",
+        "predicate_family": "CONSOLIDATED_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "2025Q4",
+          "93.8_trillion"
+        ],
+        "product_family": "연결 전체",
+        "question_family_id": "C06_CONSOLIDATED_REVENUE_ACTUAL",
+        "question_family_tags": [
+          "consolidated",
+          "revenue",
+          "actual"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결회사",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 93800000
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f344aed4501502f2c9f473b5",
+        "economic_mechanism": "2025년 4분기 연결 영업이익 실제치는 전사 이익 전환을 확인하지만 HBM 단독 이익이 아니다.",
+        "exact_quote": "삼성전자가 연결 기준으로 매출 93.8조원, 영업이익 20.1조원의 2025년 4분기 실적을 발표했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "issuer 연결 영업이익 실제치이나 DS 메모리·HBM 단독 이익으로 승격하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "2025Q4 consolidated operating profit actual",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025Q4",
+        "predicate": "REPORTED_2025Q4_CONSOLIDATED_OPERATING_PROFIT",
+        "predicate_family": "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "primitive_tags": [
+          "2025Q4",
+          "20.1_trillion"
+        ],
+        "product_family": "연결 전체",
+        "question_family_id": "C06_CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "question_family_tags": [
+          "consolidated",
+          "operating_profit",
+          "actual"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결회사",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 20100000
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f344aed4501502f2c9f473b5",
+        "economic_mechanism": "2025년 4분기 연결 매출이 전분기 대비 9% 증가했지만 HBM 단독 성장률은 아니다.",
+        "exact_quote": "전사 매출은 전분기 대비 7.7조원 증가한 93.8조원(9% 증가), 영업이익은 전분기 대비 7.9조원 증가한 20.1조원(65% 증가)을 기록했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "연결 성장률은 전사 추세를 보조하지만 HBM 성장률로 귀속할 수 없다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "2025Q4 consolidated revenue qoq growth",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025Q4 versus 2025Q3",
+        "predicate": "CONSOLIDATED_REVENUE_INCREASED_QOQ_2025Q4",
+        "predicate_family": "QOQ_GROWTH",
+        "primitive_tags": [
+          "9_percent",
+          "2025Q4"
+        ],
+        "product_family": "연결 전체",
+        "question_family_id": "C06_CONSOLIDATED_QOQ_GROWTH",
+        "question_family_tags": [
+          "consolidated",
+          "qoq",
+          "revenue_growth"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "삼성전자 연결 매출 전분기 대비",
+        "subject_id": "005930",
+        "unit": "%",
+        "value": 9
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f344aed4501502f2c9f473b5",
+        "economic_mechanism": "2025년 4분기 연결 영업이익이 전분기 대비 65% 증가했지만 HBM 단독 이익 성장률은 아니다.",
+        "exact_quote": "전사 매출은 전분기 대비 7.7조원 증가한 93.8조원(9% 증가), 영업이익은 전분기 대비 7.9조원 증가한 20.1조원(65% 증가)을 기록했다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "연결 영업이익 성장률은 현금·이익 환경을 보조하지만 HBM 단독 성장률로 해석하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "2025Q4 consolidated operating profit qoq growth",
+        "objective_ids": [
+          "SGOBJ-eb3cecb1e00c95ccf544cac4"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025Q4 versus 2025Q3",
+        "predicate": "CONSOLIDATED_OPERATING_PROFIT_INCREASED_QOQ_2025Q4",
+        "predicate_family": "QOQ_GROWTH",
+        "primitive_tags": [
+          "65_percent",
+          "2025Q4"
+        ],
+        "product_family": "연결 전체",
+        "question_family_id": "C06_CONSOLIDATED_QOQ_GROWTH",
+        "question_family_tags": [
+          "consolidated",
+          "qoq",
+          "operating_profit_growth"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "삼성전자 연결 영업이익 전분기 대비",
+        "subject_id": "005930",
+        "unit": "%",
+        "value": 65
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f344aed4501502f2c9f473b5",
+        "economic_mechanism": "메모리 부문은 HBM 판매 확대와 범용 DRAM 수요 대응으로 사상 최대 분기 매출·영업이익을 기록했지만 HBM별 금액·마진은 공개되지 않았다.",
+        "exact_quote": "메모리는 범용 D램의 수요 강세에 적극 대응하고 HBM 판매도 확대해 사상 최대 분기 매출 및 영업이익을 기록했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM 판매 확대와 메모리 실적 전환을 직접 연결하지만 HBM별 이익을 수치화하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "memory record result with HBM sales expansion",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025Q4",
+        "predicate": "MEMORY_REPORTED_RECORD_QUARTERLY_REVENUE_AND_OPERATING_PROFIT_WITH_HBM_SALES_EXPANSION",
+        "predicate_family": "MEMORY_REVENUE_PROFIT_CONVERSION",
+        "primitive_tags": [
+          "sales_expansion",
+          "record_revenue",
+          "record_profit"
+        ],
+        "product_family": "메모리·HBM",
+        "question_family_id": "C06_MEMORY_HBM_REVENUE_PROFIT_CONVERSION",
+        "question_family_tags": [
+          "HBM",
+          "memory",
+          "record_result"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 메모리 2025년 4분기 실적",
+        "subject_id": "005930",
+        "unit": "issuer_actual_commentary",
+        "value": "record quarterly revenue and operating profit with expanded HBM sales"
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f344aed4501502f2c9f473b5",
+        "economic_mechanism": "2025년 4분기 10.9조원, 연간 37.7조원의 전사 R&D 투자는 기술 투자 강도와 현금 사용을 함께 보여주지만 HBM 전용 금액은 아니다.",
+        "exact_quote": "삼성전자는 4분기 연구개발비에 10.9조원, 2025년 연간으로는 역대 최대인 37.7조원을 투입해 미래 기술 확보를 위한 투자를 이어갔다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "전사 자본배분 맥락을 보강하지만 HBM 전용 투자·ROIC로 귀속하지 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "2025 corporate research and development investment",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025Q4 and FY2025",
+        "predicate": "REPORTED_2025_QUARTERLY_AND_ANNUAL_RESEARCH_DEVELOPMENT_INVESTMENT",
+        "predicate_family": "CORPORATE_R_AND_D_ALLOCATION",
+        "primitive_tags": [
+          "10.9_trillion",
+          "37.7_trillion",
+          "2025"
+        ],
+        "product_family": "연구개발",
+        "question_family_id": "C06_CORPORATE_R_AND_D_ALLOCATION",
+        "question_family_tags": [
+          "capital_allocation",
+          "R_and_D",
+          "investment"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연구개발 투자",
+        "subject_id": "005930",
+        "unit": "KRW trillion",
+        "value": "2025Q4 10.9 trillion; FY2025 37.7 trillion"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "11fea773c973429a47b4d3dcd490fb816d9a75a8601ddee1eb09b72883985d7f",
+  "production_score_authority": false,
+  "prompt_hash": "d3901fb1dcd4477dad45367d96f5a8cb1913e9d457cd94ab3756989c89e7d2a7",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-32b1ac34071ed7b8c0181e4f0671e89c72de108f122a57b59f6dfc3c228b9dcb",
+  "response_id": "COLLABRESP-73ae7b9b5d3db8502c0ebb50228f57104e7d67d2838ae4753d42a8ea000fc49d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

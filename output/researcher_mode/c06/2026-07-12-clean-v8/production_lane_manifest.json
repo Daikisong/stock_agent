@@ -1,0 +1,39 @@
+{
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "as_of_date": "2026-07-12",
+  "comparison_timing": "POST_RUN_ONLY",
+  "completion_based_on_fixed_rounds": false,
+  "exact_completion_gate": "source_graph_checkpoint_ready",
+  "gold_fact_visibility": false,
+  "gold_query_visibility": false,
+  "gold_url_visibility": false,
+  "gold_visibility": false,
+  "pending_target_id": "000660",
+  "production_research_complete": false,
+  "research_provider": {
+    "provider_identity": {
+      "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+      "direct_score_or_stage_authority": false,
+      "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+      "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+      "transport_class": "CollaborationCodexSubagentTransport"
+    },
+    "provider_identity_error": null,
+    "provider_identity_hash": "f95acea216695050b7034ce0f309935093cf3f3b3bda70a086401b2312574cb6",
+    "provider_identity_resolved": true,
+    "provider_name": "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE",
+    "provider_selected_explicitly": true,
+    "score_or_stage_authority": false,
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "schema_version": "e2r_v5_phase94_production_lane_v1",
+  "status": "RESEARCH_CHECKPOINT_PENDING",
+  "target_ids": [
+    "005930",
+    "000660"
+  ],
+  "target_statuses": {
+    "000660": "RESEARCH_CHECKPOINT_PENDING",
+    "005930": "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+  }
+}

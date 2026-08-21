@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "8a99e028b46d82720a78e0d0944d807c7b374d6815bb9d4b70454ce2da574702",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-99ddf096db7bd2e2c595662f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "PwC APEC PDF로 NVIDIA/OpenAI CUSTOMER_OFFICIAL 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-25cd3347643992a958843667",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7ba6c752cb327ae2c989b6dd"
+        ],
+        "priority": 0.0,
+        "rationale": "삼성전자 issuer 반기보고서로 PUBLIC_BROKER_PDF가 아니며 requested broker report route와 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-d5260c1cdce5642568d3b8e3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "Newsway 기사로 CUSTOMER_OFFICIAL 원문·landing이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-88eb839f02c35b01b9b16e80",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "삼성증권 생성AI 산업 리포트로 CUSTOMER_OFFICIAL family가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b18b8729f8c94730ba9687d1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "유진투자증권 PDF로 CUSTOMER_OFFICIAL family가 아니며 named counterparty 공식 상태 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d4992e770d8a73d1ffefd271",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "네이버 프리미엄 제3자 기사로 OpenAI official 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-94585cb675ae8bcb113a1904",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "Tech42의 SK하이닉스 기사로 CUSTOMER_OFFICIAL 요청과 target 관계가 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-76d4ed0179b16ecfa5c66d24",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "미래에셋 회의록 자료로 CUSTOMER_OFFICIAL family가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e50a909b180163d74400cb74",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "Newsway 파업 기사로 NVIDIA/OpenAI customer official status와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-9ba17bd7dea8cbb3d45f28bf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "학생 투자학회 타사 분석 PDF로 CUSTOMER_OFFICIAL이 아니며 subject도 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-08fcff61c21b21a5bf035879",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "2026-07-13 미래 날짜의 제3자 일일 뉴스로 cutoff 이후이며 CUSTOMER_OFFICIAL도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0e0918b6e50c6f8ad6c89923",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram 검색 페이지로 CUSTOMER_OFFICIAL original/full-source route가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "전수 roster에서 requested objective/source family를 충족하는 original·official landing·full document route가 확인되지 않았다. 이 local material 0은 source absence나 NVIDIA/OpenAI 관계·계약 부재 증명이 아니다."
+    ]
+  },
+  "payload_hash": "c6c24fc0e536c24828b6367862b972724c17ab37567fbe4f757e69e59517de49",
+  "production_score_authority": false,
+  "prompt_hash": "bd57bfa533d6e763301b4519db70fbcac79024cc8b743809331d1fea7610e44a",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-159c05456c0469d16a8a5a27b36a9e8c1b44d3b721f9e8b1ddf95316e25a4d21",
+  "response_id": "COLLABRESP-25196f316f15cb40bd900010439a75868c042d0df9c5e8ccc3315d60d035f7b8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

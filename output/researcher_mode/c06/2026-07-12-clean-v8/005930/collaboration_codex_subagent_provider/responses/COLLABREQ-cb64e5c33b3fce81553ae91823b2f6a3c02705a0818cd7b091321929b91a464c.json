@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-ab448c22fb04e3b1d8216c72",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.1,
+        "rationale": "Samsung newsroom의 OpenAI partnership 발표로 issuer 원문이며 OpenAI 소유 CUSTOMER_OFFICIAL 자료가 아니다. 이미 issuer-side 관계를 반복하므로 독립 corroboration 경로로 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-7c778bc2b6a114fd70283eb2",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.1,
+        "rationale": "NVIDIA 소유 Vera Rubin 플랫폼 원문이지만 supplied metadata에는 Samsung 또는 양사 HBM 관계가 없다. 공식 source-family에는 맞아도 target relationship scope를 확인하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-b34bba7604afdeb5626c81ab",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "Mordor Intelligence의 유럽 HBM 시장 제3자 자료로 NVIDIA/OpenAI 공식 원문이 아니며 Samsung 관계를 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ad79b76c9ac0da474afcbb56",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "자동차 AI용 HBM 시장 제3자 보고서로 요청된 CUSTOMER_OFFICIAL 출처가 아니고 Samsung-NVIDIA/OpenAI 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-312ddc6fd4075b31c840833a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "Memory Fabric 시장 제3자 자료로 고객 공식 원문이 아니며 Samsung의 named relationship을 확인하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-34a2e741444d784ab49bdbd2",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 소유 GTC Berlin training 페이지지만 일반 워크숍 안내일 뿐 Samsung, HBM qualification, platform alignment 또는 supply status가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-982a3ade5d98729efe9ef307",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 소유 GTC Taipei landing이지만 일반 행사 소개이며 Samsung HBM 관계를 확인할 session 또는 full source를 제시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-24ec0f463066d4a86ef6cb67",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.05,
+        "rationale": "NVIDIA HGX 공식 product page지만 Samsung 메모리 공급자, qualification 또는 platform alignment를 명시하지 않아 target relationship fact 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d297b686bd103547e1fc4754",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA RTX 5080 공식 제품 페이지로 GDDR7 소비자 GPU 자료이며 Samsung HBM3E/HBM4 관계 범위와 다른 제품이다."
+      },
+      {
+        "candidate_id": "SGCAND-58ad143d86be1f271b6b4b82",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.1,
+        "rationale": "NVIDIA H200 공식 원문이며 HBM3E를 설명하지만 공급사를 Samsung으로 귀속하지 않는다. 제품 기술은 관련 맥락일 뿐 named target relationship을 확인하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-c4e1b4f7e68ed0cfed934287",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA 소유 A100 datasheet 원문이지만 과거 A100 제품 자료이며 Samsung HBM3E/HBM4 qualification·supply 관계를 명시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-14e0bea9ef5ac0a5fbf2670c",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA App 소비자 페이지로 Samsung 또는 HBM 관계와 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "NVIDIA 소유 generic product/event 페이지들은 공식 family에는 속하지만 Samsung HBM relationship을 명시하지 않는다. 이 partition의 material 0은 NVIDIA/OpenAI 공식 관계 자료의 부재를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "eee1970c2e523c49bc0401a9d0999efbc720ba4ac5cddb4a430759dfb5097e8b",
+  "production_score_authority": false,
+  "prompt_hash": "f198b587f90ab3fd56e9c56d4142a659f0c815671e4bf0e3c859e13ad75d1eab",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cb64e5c33b3fce81553ae91823b2f6a3c02705a0818cd7b091321929b91a464c",
+  "response_id": "COLLABRESP-facc565a55209dc95917ab71bae8d025a5e14b7e66b5dbf1ba3f8b699c7742ab",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

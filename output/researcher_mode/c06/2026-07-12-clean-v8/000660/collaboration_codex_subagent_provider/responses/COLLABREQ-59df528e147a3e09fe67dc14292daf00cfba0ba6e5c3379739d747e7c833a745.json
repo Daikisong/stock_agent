@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "703e2f06337de4af61b475b7dc59dff87c297535ed91eef1e9716dada5a480c1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5c36610ae886bfe81a18fd51",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Third-party capital-allocation commentary is not OPENDART original material."
+      },
+      {
+        "candidate_id": "SGCAND-7ed65114b93ef831a120c22b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Third-party media analysis does not match OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-b3c7d84dc96e9f5bc7c370f4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Edaily article is a retelling, not the requested disclosure route."
+      },
+      {
+        "candidate_id": "SGCAND-513243c0a7fbc9f357d2e025",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Third-party media article is not OPENDART original material."
+      },
+      {
+        "candidate_id": "SGCAND-2450ac1578c97e74bdbbfead",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "Third-party news report does not match OPENDART provenance."
+      },
+      {
+        "candidate_id": "SGCAND-86e77817b0065abd6ab122dd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial blog is not an OPENDART source route."
+      },
+      {
+        "candidate_id": "SGCAND-f9802f32c49a633c242fc304",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Asiatime report does not match the requested original filing family."
+      },
+      {
+        "candidate_id": "SGCAND-4c966c75cd8b486b288088b0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Third-party news report is not OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-844e459b28f77660ab0867e0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial pricing guide is not original OPENDART material."
+      },
+      {
+        "candidate_id": "SGCAND-2cb5e044191cc50d79424432",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "Third-party article does not match OPENDART provenance."
+      },
+      {
+        "candidate_id": "SGCAND-6bc4e0c41c122343bbf70262",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "Yonhap report is trusted media but not the requested OPENDART original source."
+      },
+      {
+        "candidate_id": "SGCAND-89109fb3e5540c9f500027d2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.1,
+        "rationale": "Duplicate Yonhap landing variant remains third-party media, not OPENDART."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No matching original OPENDART/full filing route is present; third-party snippets cannot become evidence or absence proof."
+    ]
+  },
+  "payload_hash": "f093550e4bc83e3e12db1e03ffa087961df4f0a4077a0d62946ef9a216e47853",
+  "production_score_authority": false,
+  "prompt_hash": "39f797c0ccbdb2b7afc89e54cb27342e1965fd5a559238f191627068af845b0d",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-59df528e147a3e09fe67dc14292daf00cfba0ba6e5c3379739d747e7c833a745",
+  "response_id": "COLLABRESP-c2f71b32f51fe7a2e8ffdce918bbbecf6136c24801c1253932b596d7f713fb73",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

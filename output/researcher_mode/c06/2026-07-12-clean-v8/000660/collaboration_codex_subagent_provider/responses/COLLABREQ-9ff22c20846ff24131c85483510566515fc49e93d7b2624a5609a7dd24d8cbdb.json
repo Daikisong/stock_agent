@@ -1,0 +1,172 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 메모는 전사 실적·현금전환의 실제치와 메모리·HBM 귀속 한계를 분리했고, 구조화 역할과 counter 계보가 모두 충족된다. 현재 judge roster에도 이 component의 material range disagreement가 없다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 메모는 demand-over-capacity와 투자 계획을 실제 계약·확정 물량과 구분하며 positive와 counter를 함께 설명한다. 남은 계약 세부는 monitoring 한계이지 현재 점수 유효성을 막는 구체 source gap은 아니다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 메모는 memory-wide 가격·공급 제약과 HBM 전용 경제성을 구분하고 current counter를 반영한다. 구조화 요구가 충족되고 현재 judge disagreement roster에도 포함되지 않는다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 메모는 actual operating delta와 시장 기대·forward valuation의 증명 범위를 분리한다. 기대치 분산의 추가 관찰은 monitoring 항목이며 현재 evidence snapshot의 memo sufficiency를 뒤집지 않는다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "HBM 귀속 이익의 기간·분모와 durable visibility를 동일한 forward valuation bridge로 연결하는 독립 full-report 근거"
+        ],
+        "rationale": "현재 structured roles는 완전하고 최신 A[3.8,5.6], S[3.0,5.2], C[4.6,6.0]의 3-way intersection도 [4.6,5.2]로 비어 있지 않다. 다만 exact failure roster는 valuation objective의 ISSUER_PRESENTATION accepted-lineage 미충족을 unresolved·retryable로 남긴다. 같은 family를 반복할 수 없으므로, prompt에 제시된 별도 candidate-bound PUBLIC_BROKER_PDF 중 실제 full report가 HBM-specific forward denominator bridge를 제공하는지 확인해야 memo가 source-complete하다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 메모는 CAPEX 공급 대응과 cash conversion을 실제치·계획으로 분리하고 HBM-only ROIC 부재를 counter로 유지한다. 이 한계는 monitoring으로 보존되며 현재 deterministic gate를 재개방할 구체 신규 route는 아니다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "현재 메모는 issuer 사실, actual·guidance, memory·HBM 귀속 및 독립 corroboration의 범위를 명시한다. 독립 자료 수가 적다는 사실만으로 source absence나 별도 material gap을 만들지 않았고 current judge disagreement도 없다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-9f189ef4313bb76da9d0c2eb",
+        "rationale": "6개 문서는 full fetch 뒤 as_of_date 이후 문서로 판정됐다. 미래 문서는 현재 snapshot에 사용할 수 없으며 이는 source absence가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-1a14a205b1ca37e2a0a08185",
+        "rationale": "snippet-only 자료는 full fetch가 필요했지만 objective resolution으로 이미 해소됐다. snippet을 증거로 승격하지 않으며 재시도 blocker도 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-b5e3b8331dcb08b996ec83cf",
+        "rationale": "6개 query failure는 full-document 단계에서 미래 문서로 배제된 동일 계열이다. as_of 경계를 지킨 결과이며 현재 source absence를 의미하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-976e77a75db8ea1311b1326c",
+        "rationale": "snippet-only full-fetch failure는 source graph objective resolution으로 해소됐다. 현재 재시도나 absence 판정의 근거가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "LLM이 새 valid query를 만들지 못한 1건은 query-lane 실패일 뿐 source 부재 증명이 아니다. 아래의 별도 candidate-bound route 외에 동일·동의어 query를 반복하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-c4ddb574cd4fae020bf05212",
+        "rationale": "13개 provider error는 transport/provider 실패다. 증거가 없다는 뜻이 아니므로 source absence로 전환하지 않고, 현재 지정한 bounded route의 provider execution에서만 재평가한다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-82f77e12f4f22607d865bfc5",
+        "rationale": "valuation objective의 4개 zero-result search는 saturation이나 source absence를 증명하지 않는다. 동일 query를 반복하지 않고 prompt가 제공한 distinct provider-report identity로만 다음 시도를 제한한다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c1481e42075d3a08a837f23e",
+        "rationale": "ISSUER_PRESENTATION family는 accepted claim-fact lineage 없이 종료됐고 full fetch도 되지 않아 unresolved·retryable이다. 하지만 alternate_route_required이므로 같은 objective/family를 반복하지 않고 별도 PUBLIC_BROKER_PDF full-report route를 사용해야 하며 source absence는 주장할 수 없다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "valuation_rerating",
+        "direction": "POSITIVE",
+        "fact_need": "검증된 full broker report에서 HBM 귀속 forward earnings의 기간·분모와 durable demand 또는 capacity visibility를 연결하고, 그 연결이 current/forward valuation multiple에 어떻게 반영되는지 확인하는 source-backed fact",
+        "why_material": "현재 valuation judge ranges는 [4.6,5.2]에서 겹치지만, prompt의 exact source-family coverage failure는 HBM standalone denominator bridge의 accepted claim-fact lineage가 아직 없음을 보여 준다. 이 bridge가 있어야 일반 memory·전사 valuation을 HBM rerating 근거로 과대 귀속하지 않는다."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": false,
+        "direction": "Prompt의 structured candidate STRUCTCAND-4d5911293ef032283e9486d5(provider_report_id 1108975, Shinhan, 2026-06-30)의 exact full report를 대상으로 HBM 귀속 forward earnings 기간·분모와 북미 peer valuation gap 연결을 검증한다.",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "이는 exhausted ISSUER_PRESENTATION family를 반복하지 않는 candidate-bound alternate route다. Metadata summary 자체는 증거가 아니며 full PDF의 accepted claim-fact lineage가 생성될 때만 gap을 해소한다.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      }
+    ],
+    "next_actions": [
+      "SOURCE_QUERY_GENERATION_LLM이 SGOBJ-5fccea4d80fc98e697bd7a0e에 대해 지정된 distinct provider-report identity의 exact full-PDF route만 생성·검증한다.",
+      "Full fetch와 accepted claim-fact lineage가 생긴 뒤 valuation memo를 재검토하고 새 memo-bound judges와 Red Team·Synthesis를 갱신한다."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "FAILGROUP-c1481e42075d3a08a837f23e의 exhausted ISSUER_PRESENTATION objective-family pair",
+          "FAILGROUP-82f77e12f4f22607d865bfc5의 기존 zero-result valuation queries",
+          "동일 candidate의 synonym query 또는 metadata summary를 evidence로 재사용하는 방식"
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "research_need": "STRUCTCAND-4d5911293ef032283e9486d5 / provider_report_id 1108975의 exact PUBLIC_BROKER_PDF full report를 식별·fetch하여 current 또는 forward multiple의 기간·분모, HBM 귀속 earnings bridge, durable demand·capacity 근거가 함께 제시되는지 확인한다."
+      }
+    ],
+    "rationale": "현재 7개 component memo, structured roles, Red Team 및 counter proof는 완전하고 deterministic score는 valid하며 material judge disagreement roster는 비어 있다. 특히 valuation current ranges A[3.8,5.6], S[3.0,5.2], C[4.6,6.0]은 [4.6,5.2]에서 겹친다. 그러나 exact failure roster에는 valuation ISSUER_PRESENTATION accepted-lineage failure와 provider/zero-result failures가 source absence가 아닌 unresolved acquisition state로 남아 있다. 같은 exhausted family를 반복하지 않고 prompt에 포함된 distinct PUBLIC_BROKER_PDF candidate의 full report를 검증할 bounded positive route가 있으므로 valuation memo sufficiency와 readiness는 아직 false다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "검증된 full report가 HBM 귀속 forward earnings의 기간·분모와 durable visibility를 current/forward valuation multiple에 직접 연결하는가?"
+    ]
+  },
+  "payload_hash": "32e7ae69a9ae4ebd083e7392abd269525c2c32a5548784a6de35c14679460d98",
+  "production_score_authority": false,
+  "prompt_hash": "42856cba2b2d0016e3714d5dac1a6e2ea720841dfd2af65b3022a976fd73c9f4",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9ff22c20846ff24131c85483510566515fc49e93d7b2624a5609a7dd24d8cbdb",
+  "response_id": "COLLABRESP-ab4dfaf67b6ac7416435036a401f90e708f7e3b10943085a68bca4df23a473a6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

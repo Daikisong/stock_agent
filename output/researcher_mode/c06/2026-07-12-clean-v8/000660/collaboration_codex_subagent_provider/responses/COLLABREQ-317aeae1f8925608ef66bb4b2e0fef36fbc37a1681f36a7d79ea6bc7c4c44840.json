@@ -1,0 +1,598 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Continuation page 6 resumes after the prior 3Q24 operating-profit YoY identity. It extracts the next 4Q24 operating-profit YoY turn-to-profit, four quarterly DRAM operating-profit rows, four controlling-shareholder net-income rows, and the first three quarterly controlling-net-income growth rows. All values are historical SK Securities forecasts marked SUPERSEDED. Consolidated versus DRAM segment attribution and level versus QoQ/YoY formula are preserved; no row is issuer actual, HBM-only profit, guidance, or durable visibility. NAND and already accepted annual identities were excluded. Later net-income growth, margin, shipment, ASP, and revision rows remain.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권 모델은 SK하이닉스 4Q24 연결 영업이익이 전년 동기 적자에서 흑자로 전환할 것으로 전망했다. Historical broker forecast이며 reported actual이 아니다.",
+        "exact_quote": "YoY % 적전 적전 적전 흑전 흑전 흑전 흑전 1026%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Explicit YoY state preserves the historical expectation path without being promoted to issuer actual or HBM-only profit.",
+        "mechanism_scope_id": "000660:CONSOLIDATED_OP_YOY:4Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 4Q2024 consolidated operating-profit YoY turn-to-profit historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "4Q24 연결 영업이익이 YoY 흑자전환할 것으로 전망했다",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_PROFIT_YOY_FORECAST",
+        "primitive_tags": [
+          "4Q24E",
+          "YoY",
+          "turn_to_profit"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "CONSOLIDATED_OPERATING_PROFIT_YOY_FORECAST",
+        "question_family_tags": [
+          "operating_profit",
+          "yoy_turn_to_profit",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q24 연결 영업이익 YoY 전망",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_YOY:4Q2024E:SKSEC_20240314",
+        "unit": "YoY state",
+        "value": "흑전"
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 1Q24 DRAM 영업이익을 2,265십억원으로 전망했다. Segment broker estimate이며 issuer actual, consolidated profit, or HBM-only profit이 아니다.",
+        "exact_quote": "DRAM (1,339) (44) 610 1,515 2,265 3,296 4,357 4,812 9,090 742 14,731",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row is explicitly DRAM-segment broker profit and is not HBM-only or reported actual evidence.",
+        "mechanism_scope_id": "000660:DRAM_OPERATING_PROFIT:1Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 1Q2024 DRAM operating profit KRW 2,265 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "1Q24 DRAM 영업이익을 2,265십억원으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "1Q24E",
+          "operating_profit"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "dram_operating_profit",
+          "segment_contribution",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK하이닉스 1Q24 DRAM 영업이익 전망",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT:1Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 2265
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 2Q24 DRAM 영업이익을 3,296십억원으로 전망했다. Segment broker estimate이며 issuer actual, consolidated profit, or HBM-only profit이 아니다.",
+        "exact_quote": "DRAM (1,339) (44) 610 1,515 2,265 3,296 4,357 4,812 9,090 742 14,731",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row is explicitly DRAM-segment broker profit and is not HBM-only or reported actual evidence.",
+        "mechanism_scope_id": "000660:DRAM_OPERATING_PROFIT:2Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 2Q2024 DRAM operating profit KRW 3,296 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "2Q24 DRAM 영업이익을 3,296십억원으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "2Q24E",
+          "operating_profit"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "dram_operating_profit",
+          "segment_contribution",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK하이닉스 2Q24 DRAM 영업이익 전망",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT:2Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 3296
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 3Q24 DRAM 영업이익을 4,357십억원으로 전망했다. Segment broker estimate이며 issuer actual, consolidated profit, or HBM-only profit이 아니다.",
+        "exact_quote": "DRAM (1,339) (44) 610 1,515 2,265 3,296 4,357 4,812 9,090 742 14,731",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row is explicitly DRAM-segment broker profit and is not HBM-only or reported actual evidence.",
+        "mechanism_scope_id": "000660:DRAM_OPERATING_PROFIT:3Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 3Q2024 DRAM operating profit KRW 4,357 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "3Q24 DRAM 영업이익을 4,357십억원으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "3Q24E",
+          "operating_profit"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "dram_operating_profit",
+          "segment_contribution",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK하이닉스 3Q24 DRAM 영업이익 전망",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT:3Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 4357
+      },
+      {
+        "business_segment": "메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 4Q24 DRAM 영업이익을 4,812십억원으로 전망했다. Segment broker estimate이며 issuer actual, consolidated profit, or HBM-only profit이 아니다.",
+        "exact_quote": "DRAM (1,339) (44) 610 1,515 2,265 3,296 4,357 4,812 9,090 742 14,731",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The row is explicitly DRAM-segment broker profit and is not HBM-only or reported actual evidence.",
+        "mechanism_scope_id": "000660:DRAM_OPERATING_PROFIT:4Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 4Q2024 DRAM operating profit KRW 4,812 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "4Q24 DRAM 영업이익을 4,812십억원으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "4Q24E",
+          "operating_profit"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "dram_operating_profit",
+          "segment_contribution",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK하이닉스 4Q24 DRAM 영업이익 전망",
+        "subject_id": "000660:DRAM_OPERATING_PROFIT:4Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 4812
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 1Q24 지배주주 순이익을 906십억원으로 전망했다. Controlling-shareholder broker estimate이며 issuer actual 또는 HBM-only profit이 아니다.",
+        "exact_quote": "지배순이익 (2,580) (2,991) (2,184) (138) 906 1,600 2,465 2,446 2,230 (7,298) 7,417",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The metric is controlling-shareholder net income, not total net income, issuer actual, or HBM-only profit.",
+        "mechanism_scope_id": "000660:CONTROLLING_NET_INCOME:1Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 1Q2024 controlling-shareholder net income KRW 906 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "1Q24 지배주주 순이익을 906십억원으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "1Q24E",
+          "controlling_shareholder",
+          "net_income"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "CONTROLLING_NET_INCOME_QUARTERLY_FORECAST",
+        "question_family_tags": [
+          "controlling_net_income",
+          "quarterly_forecast",
+          "broker_model"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1Q24 지배주주 순이익 전망",
+        "subject_id": "000660:CONTROLLING_NET_INCOME:1Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 906
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 2Q24 지배주주 순이익을 1,600십억원으로 전망했다. Controlling-shareholder broker estimate이며 issuer actual 또는 HBM-only profit이 아니다.",
+        "exact_quote": "지배순이익 (2,580) (2,991) (2,184) (138) 906 1,600 2,465 2,446 2,230 (7,298) 7,417",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The metric is controlling-shareholder net income, not total net income, issuer actual, or HBM-only profit.",
+        "mechanism_scope_id": "000660:CONTROLLING_NET_INCOME:2Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 2Q2024 controlling-shareholder net income KRW 1,600 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "2Q24 지배주주 순이익을 1,600십억원으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "2Q24E",
+          "controlling_shareholder",
+          "net_income"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "CONTROLLING_NET_INCOME_QUARTERLY_FORECAST",
+        "question_family_tags": [
+          "controlling_net_income",
+          "quarterly_forecast",
+          "broker_model"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2Q24 지배주주 순이익 전망",
+        "subject_id": "000660:CONTROLLING_NET_INCOME:2Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 1600
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 3Q24 지배주주 순이익을 2,465십억원으로 전망했다. Controlling-shareholder broker estimate이며 issuer actual 또는 HBM-only profit이 아니다.",
+        "exact_quote": "지배순이익 (2,580) (2,991) (2,184) (138) 906 1,600 2,465 2,446 2,230 (7,298) 7,417",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The metric is controlling-shareholder net income, not total net income, issuer actual, or HBM-only profit.",
+        "mechanism_scope_id": "000660:CONTROLLING_NET_INCOME:3Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 3Q2024 controlling-shareholder net income KRW 2,465 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "3Q24 지배주주 순이익을 2,465십억원으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "3Q24E",
+          "controlling_shareholder",
+          "net_income"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "CONTROLLING_NET_INCOME_QUARTERLY_FORECAST",
+        "question_family_tags": [
+          "controlling_net_income",
+          "quarterly_forecast",
+          "broker_model"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q24 지배주주 순이익 전망",
+        "subject_id": "000660:CONTROLLING_NET_INCOME:3Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 2465
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권은 SK하이닉스 4Q24 지배주주 순이익을 2,446십억원으로 전망했다. Controlling-shareholder broker estimate이며 issuer actual 또는 HBM-only profit이 아니다.",
+        "exact_quote": "지배순이익 (2,580) (2,991) (2,184) (138) 906 1,600 2,465 2,446 2,230 (7,298) 7,417",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The metric is controlling-shareholder net income, not total net income, issuer actual, or HBM-only profit.",
+        "mechanism_scope_id": "000660:CONTROLLING_NET_INCOME:4Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 4Q2024 controlling-shareholder net income KRW 2,446 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "4Q24 지배주주 순이익을 2,446십억원으로 전망했다",
+        "predicate_family": "BROKER_QUARTERLY_CONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "4Q24E",
+          "controlling_shareholder",
+          "net_income"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "CONTROLLING_NET_INCOME_QUARTERLY_FORECAST",
+        "question_family_tags": [
+          "controlling_net_income",
+          "quarterly_forecast",
+          "broker_model"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q24 지배주주 순이익 전망",
+        "subject_id": "000660:CONTROLLING_NET_INCOME:4Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 2446
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권 모델은 SK하이닉스 1Q24 지배주주 순이익이 전분기 적자에서 흑자로 전환할 것으로 전망했다. Historical broker forecast이며 issuer actual이 아니다.",
+        "exact_quote": "QoQ % 적지 적지 적지 적지 흑전 77% 54% -1% -77% 적전 흑전",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The explicit state is historical broker expectation, not an actual or numeric QOQ point.",
+        "mechanism_scope_id": "000660:CONTROLLING_NET_INCOME_QOQ:1Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 1Q2024 controlling net-income QoQ turn-to-profit historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "1Q24 지배주주 순이익이 QoQ 흑자전환할 것으로 전망했다",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_QOQ_FORECAST",
+        "primitive_tags": [
+          "1Q24E",
+          "QoQ",
+          "turn_to_profit"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "CONTROLLING_NET_INCOME_QOQ_FORECAST",
+        "question_family_tags": [
+          "controlling_net_income",
+          "qoq_turn_to_profit",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1Q24 지배주주 순이익 QoQ 전망",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_QOQ:1Q2024E:SKSEC_20240314",
+        "unit": "QoQ state",
+        "value": "흑전"
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권 모델은 SK하이닉스 2Q24 지배주주 순이익이 77% QoQ 증가할 것으로 전망했다. Historical broker forecast이며 issuer actual이 아니다.",
+        "exact_quote": "QoQ % 적지 적지 적지 적지 흑전 77% 54% -1% -77% 적전 흑전",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Numeric growth is preserved as a historical broker forecast and not issuer actual.",
+        "mechanism_scope_id": "000660:CONTROLLING_NET_INCOME_QOQ:2Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 2Q2024 controlling net income +77% QoQ historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "2Q24 지배주주 순이익이 77% QoQ 증가할 것으로 전망했다",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_QOQ_FORECAST",
+        "primitive_tags": [
+          "2Q24E",
+          "QoQ",
+          "net_income_growth"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "CONTROLLING_NET_INCOME_QOQ_FORECAST",
+        "question_family_tags": [
+          "controlling_net_income",
+          "qoq_growth",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 2Q24 지배주주 순이익 QoQ 전망",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_QOQ:2Q2024E:SKSEC_20240314",
+        "unit": "% QoQ",
+        "value": 77
+      },
+      {
+        "business_segment": "연결 전사(브로커 추정)",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "SK증권 모델은 SK하이닉스 3Q24 지배주주 순이익이 54% QoQ 증가할 것으로 전망했다. Historical broker forecast이며 issuer actual이 아니다.",
+        "exact_quote": "QoQ % 적지 적지 적지 적지 흑전 77% 54% -1% -77% 적전 흑전",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "Numeric growth is preserved as a historical broker forecast and not issuer actual.",
+        "mechanism_scope_id": "000660:CONTROLLING_NET_INCOME_QOQ:3Q2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix 3Q2024 controlling net income +54% QoQ historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "3Q24 지배주주 순이익이 54% QoQ 증가할 것으로 전망했다",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_QOQ_FORECAST",
+        "primitive_tags": [
+          "3Q24E",
+          "QoQ",
+          "net_income_growth"
+        ],
+        "product_family": "메모리 전사",
+        "question_family_id": "CONTROLLING_NET_INCOME_QOQ_FORECAST",
+        "question_family_tags": [
+          "controlling_net_income",
+          "qoq_growth",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 3Q24 지배주주 순이익 QoQ 전망",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_QOQ:3Q2024E:SKSEC_20240314",
+        "unit": "% QoQ",
+        "value": 54
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "Distinct later controlling-net-income growth, operating-margin, DRAM-margin, shipment, ASP, and revision rows remain in the literal source; continuation is required."
+    ]
+  },
+  "payload_hash": "3adbcb8ae63dc876f7d9e2dfa7f943083a3e0f2c2a4fc28d03b0089f4c941de4",
+  "production_score_authority": false,
+  "prompt_hash": "e98e19bdd733f29e7e45b3f9d28b9982a6cdef5f3f788911e2c900e7ce65a879",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-317aeae1f8925608ef66bb4b2e0fef36fbc37a1681f36a7d79ea6bc7c4c44840",
+  "response_id": "COLLABRESP-e8ec161324965f98ec155fbfefe776f76114c41bf1597f050f61585e417a99a7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

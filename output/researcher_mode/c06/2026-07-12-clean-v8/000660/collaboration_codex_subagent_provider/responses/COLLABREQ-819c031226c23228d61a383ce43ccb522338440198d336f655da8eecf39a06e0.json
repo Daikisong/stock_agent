@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "703e2f06337de4af61b475b7dc59dff87c297535ed91eef1e9716dada5a480c1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a367d36ad7c4a5aeaea8e1a6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Third-party news article is not OPENDART original material."
+      },
+      {
+        "candidate_id": "SGCAND-ef10a55c8ef5f5cd892c2a44",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial blog is not an OPENDART filing route."
+      },
+      {
+        "candidate_id": "SGCAND-99b0afc4faea269ae6673389",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Bloter report is third-party media, not OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-bc23ce9e066b17775a80002c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "NewDaily article is a retelling rather than the requested filing source."
+      },
+      {
+        "candidate_id": "SGCAND-d346047bdb8d418c402ba532",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "Third-party media page does not match OPENDART provenance."
+      },
+      {
+        "candidate_id": "SGCAND-10df31f4c75d0574b99c08fd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.15,
+        "rationale": "Plum SEC is a third-party filing summary/landing page, not the requested original OPENDART domain or document."
+      },
+      {
+        "candidate_id": "SGCAND-18b39f70aa2a62f360995350",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.03,
+        "rationale": "Orangeboard user report is not OPENDART original material."
+      },
+      {
+        "candidate_id": "SGCAND-86d4bdb0c6bfdd8727c6d837",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "Third-party business news does not match OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-479ea67d57f52527ef40fcb5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial disclosure guide is not the original OPENDART route."
+      },
+      {
+        "candidate_id": "SGCAND-4b973e9a94320632b8440a55",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Edaily market article does not match OPENDART provenance."
+      },
+      {
+        "candidate_id": "SGCAND-769bf58e5a8fd8a91b32977f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Khan report is not the requested OPENDART original filing."
+      },
+      {
+        "candidate_id": "SGCAND-b0bfbd120fa100a69c28c26f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.08,
+        "rationale": "Hankook Ilbo article is third-party media and not OPENDART."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "This roster contains no matching original OPENDART/full filing route; metadata and snippets are not evidence or absence proof."
+    ]
+  },
+  "payload_hash": "0ca194fefd99b106d93ae1fd5648b859ab902654d37e67de589c594deccb3d49",
+  "production_score_authority": false,
+  "prompt_hash": "a4624d723f27fd564b802da168c095efb8e65d81264734978694d1e2bc9c1382",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-819c031226c23228d61a383ce43ccb522338440198d336f655da8eecf39a06e0",
+  "response_id": "COLLABRESP-fa3a68c98943a13696dd113c459b78d5252967918b25c38d0c9d5ab29ad26d91",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

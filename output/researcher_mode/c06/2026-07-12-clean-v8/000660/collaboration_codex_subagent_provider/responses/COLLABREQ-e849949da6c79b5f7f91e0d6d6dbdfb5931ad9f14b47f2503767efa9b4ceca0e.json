@@ -1,0 +1,65 @@
+{
+  "output_schema_hash": "ec48160df159738b62c5bc3d61f108a3796760039f57056433c15a77cf72ef97",
+  "payload": {
+    "allowed_range": [
+      1.4,
+      2.0
+    ],
+    "anchor_comparisons": [
+      "positive ordinal anchor ORDTRANSFER-09ab96433f8087166845bf25의 1.75~2.25점은 적정 감사의견과 actual 공시 신뢰도에 부합한다.",
+      "counter ordinal anchor ORDTRANSFER-90c2b7d4695e62e277703a64의 1.5~2.0점은 단일 OPENDART 독립성 그룹, 분기 서술 제한과 HBM 세부 부재를 반영해 현재 증거에 더 가깝다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-4e2037f2e29108c0d4b9e66c",
+      "EFACT-720c15b2be6d3b574ccae715",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-a696155e4f4ed8929c20afd4",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c418009dc8a6493dd0a098b4",
+      "EFACT-e1106fe56703ab347c29ba19"
+    ],
+    "disagreements": [
+      "적정 감사의견이 HBM 고객 계약과 경제성을 독립 검증한다는 해석에 동의하지 않는다.",
+      "제품 실행·ASIC 협업을 계약 물량·가격 또는 realised HBM cash flow로 승격하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 1.7,
+    "rationale": "적정 감사의견, DRAM actual, 메모리 가동률, 단기 매출채권과 HBM 제품·고객 실행은 규제공시의 기본 신뢰도를 높인다. 반면 분기 MD&A와 연차 위험공시 범위가 제한되고, 고객 집중·판매보증·재고평가·재공품 손실 위험이 존재한다. 특히 HBM 계약·물량·가격·매출·이익의 독립 corroboration 없이 13개 문서가 하나의 OPENDART 독립성 그룹이라 counter anchor 중심으로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-59fe4fe59aecdedfd2cd7aac",
+      "EFACT-6da0de1ddbc18e6388a92e8e",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "독립 source family corroboration, HBM 계약·물량·가격·마진·현금흐름과 충분한 분기 위험 설명이 없다.",
+    "why_not_lower": "적정 감사의견과 일관된 actual 재무·운영 공시, HBM 제품·고객 실행이 최소한의 높은 형식적 신뢰도를 제공한다."
+  },
+  "payload_hash": "163e08eac7a737bac439c9a6135b7673d8a54f0d9b46fff75c4f493a4247b3b3",
+  "production_score_authority": false,
+  "prompt_hash": "9220d0af6a0595d0b696d5aa43015d4572061089cdc0134f92b0dce1e6eebc91",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e849949da6c79b5f7f91e0d6d6dbdfb5931ad9f14b47f2503767efa9b4ceca0e",
+  "response_id": "COLLABRESP-ccff66f62e2340ac52c98cd9a2aa80a4684d035d714a55598fa28d3c628eac57",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "767eee505b2b88a895afdccc179a4b8cccde695c34a17702d4e549d09879e171",
+  "payload": {
+    "allowed_range": [
+      2.5,
+      4.2
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b의 counter midpoint 3.43은 valuation bridge가 약한 현재 case의 중심과 가깝다. 현재는 실제 multiple이 있으나 서로 충돌해 상향 근거가 제한된다.",
+      "ORDTRANSFER-c54e0c02076da1642b64c8df의 positive lower 4.32는 rerating foundation의 상단 기준이나 HBM-only cash/earnings bridge와 signed customer economics 부재로 기본점이 되기 어렵다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1"
+    ],
+    "disagreements": [
+      "forward PE 5.59배만으로 저평가를 선언하면 trailing PE·PB, forward EV/EBITDA와 낮은 FCF yield를 선택적으로 배제한다.",
+      "HBM4 양산과 AMD 공급 이력은 operating execution이지 consolidated valuation rerating의 duration·cash conversion을 직접 입증하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 3.3,
+    "rationale": "valuation 지표의 period와 denominator가 정렬되지 않고 forward PE의 저평가 신호가 EV/EBITDA·trailing multiples·FCF yield와 충돌한다. HBM-only earnings/FCF bridge가 없으며 AMD HBM4는 MOU, NVIDIA는 협의 중, HBM 매출 3배는 guidance다. 따라서 operating actual을 인정하되 counter ordinal midpoint 부근으로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-0ea4c7a5b342855d104d1848",
+      "EFACT-4d0e0f24a3a1645c5962f1b3",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-939b29c020b166da3e38d343",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "denominator 정렬, HBM-only earnings·FCF bridge, signed contract economics가 없고 현 valuation 신호가 일관되지 않다.",
+    "why_not_lower": "HBM4 양산, AMD 공식 HBM3E 공급 이력, 메모리 매출·ASP actual과 낮은 forward PE는 rerating 가능성을 완전히 배제하지 못하게 한다."
+  },
+  "payload_hash": "1f86390eb765847b5e53e5992ec550d0a2f1bf831ff657dc25c4a30262e3dece",
+  "production_score_authority": false,
+  "prompt_hash": "0010aca8f7c203be0d7f769d526934dcf56c79ad37932e9e81e80173c33e3fe6",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-23013297b60b285d5ac4220c075a505b75792cf71111a40b224495a31ec1b4e0",
+  "response_id": "COLLABRESP-173bec644127887bfbe52a780addcf6b18ecb66c511a38c91e08266c118b3c9c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

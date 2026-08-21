@@ -1,0 +1,66 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [
+      "검증된 SK하이닉스 공식 뉴스룸의 cutoff 이전 실적발표·프레젠테이션 원문",
+      "검증된 SK하이닉스 공식 뉴스룸의 HBM4 고객 인증·양산·공급 CAPA 원문"
+    ],
+    "suggested_queries": [
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "site:news.skhynix.co.kr SK하이닉스 2026년 1분기 경영실적 HBM 매출 ASP 영업이익 현금흐름 투자",
+        "objective_id": "SGOBJ-db965864e15ed32d6d471762",
+        "rationale": "현재 source coverage가 OPENDART뿐이므로, cutoff 이전 issuer 실적 원문에서 HBM·메모리 가격과 실제 이익·현금흐름 전환을 한 문서 안에서 확인하는 공식 경로다.",
+        "source_families": [
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_PRESENTATION"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "site:news.skhynix.com SK하이닉스 HBM4 customer qualification mass production capacity supply 2026",
+        "objective_id": "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+        "rationale": "검증된 issuer domain에서 HBM4 고객 인증 상태, 양산 전환, 공급·CAPA 가시성을 함께 확인해 단순 제품 사양과 실제 상용 가시성을 구분한다.",
+        "source_families": [
+          "ISSUER_NEWSROOM",
+          "ISSUER_PRESENTATION"
+        ]
+      },
+      {
+        "counter_or_supersession_search": true,
+        "literal_query": "site:news.skhynix.co.kr SK하이닉스 2026 DRAM HBM ASP 공급 수요 재고 CAPA 실적",
+        "objective_id": "SGOBJ-96e6fadd695c6b292e28d22e",
+        "rationale": "공식 실적·발표 자료에서 가격 상승과 공급 제약을 재고·CAPA·수요 counter와 함께 점검해 구조적 병목과 일시적 업황을 구분한다.",
+        "source_families": [
+          "ISSUER_EARNINGS_RELEASE",
+          "ISSUER_PRESENTATION"
+        ]
+      }
+    ],
+    "unresolved_research_notes": [
+      "Prompt에는 특정 고객의 검증된 공식 문서 identity가 없어 고객사 계약·allocation query는 만들지 않았다.",
+      "HBM 단독 이익·FCF attribution과 계약 기간·취소 조건은 제안한 공식 원문을 실제 fetch한 뒤에도 확인되지 않으면 unresolved로 남겨야 한다."
+    ]
+  },
+  "payload_hash": "5f0e95e60148eefa59f31dc053c364ca7be0e7ebc6af2e5acaab0960bce3752c",
+  "production_score_authority": false,
+  "prompt_hash": "0bbb4d7e0b6ba7587e2a6412b630b821e6899665de75df841d4846a5677d012d",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f1ca9375e4425b68c7812d149e5aa8d738a284e406c8a8f9a47e4ff9904a633a",
+  "response_id": "COLLABRESP-8fead341bb4ddba8046138ea674f3a37e12e0c635a55a21246acfd6d9bab6e79",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

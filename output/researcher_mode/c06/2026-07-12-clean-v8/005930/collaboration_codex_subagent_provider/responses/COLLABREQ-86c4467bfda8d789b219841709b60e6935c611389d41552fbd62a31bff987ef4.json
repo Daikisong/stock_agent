@@ -1,0 +1,129 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-9090dbe7d62ea6f7e55994e5 is current and complete. It separates consolidated and memory actuals from HBM-specific attribution, preserves the capital-intensity counter, and the current memo-bound three-role interval intersects at 13.2-13.8; the remaining HBM-specific earnings-to-FCF bridge is an explicit monitoring limitation rather than an unrepresented material research question."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-e33d24eb53e54f8b0079b89d is current and complete. It distinguishes actual HBM4 shipment and issuer/customer technical milestones from plans, LOIs, MOUs, negotiations, and undisclosed contract economics, includes the counter evidence, and the current three-role interval intersects at 11.6-12.8."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-c989e641c46cb2589aaef403 is current and complete. It uses memory-wide utilization, ASP, and supply evidence without upgrading them to HBM-only locked capacity, yield, customer allocation, or binding contract terms; the residual boundary is explicit and the current three-role interval intersects at 13.8-15.8."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-ef70ee03faa19d8789cfb3f2 is current and complete. It preserves mixed structured valuation and revision signals and does not claim that the market has failed to price an unverified HBM bridge; the current three-role interval intersects at 5.1-6.5 with no material disagreement."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-a8ea1b713155d07973355ec3 is current and complete. It labels forward valuation as derived, treats peer data as context, and preserves the absence of a direct HBM earnings bridge and the unknown amount already reflected in price; the current three-role interval intersects at 4.2-4.7."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-49d146bc643b60c9fe57efe2 is current and complete. It separates actual shareholder returns and cash generation from CAPEX, working-capital, dilution, and unverified HBM-investment ROIC or cash recovery, and the current three-role interval intersects at 2.1-2.3."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-6268597ffc9811550a086087 is current and complete. It combines formal issuer reporting and customer-official corroboration while retaining plan-versus-actual, contract-specificity, qualification, and margin limitations; the current three-role interval intersects at 2.0-2.25, and failed public-broker retrieval is not treated as source absence."
+      }
+    ],
+    "component_memos_sufficient": true,
+    "counter_and_supersession_checked": false,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-11f05de07efa5852c6e71412",
+        "rationale": "Four full-fetched documents were dated after the as-of boundary and were correctly excluded. The group is resolved, is not a retryable current route, and says nothing about source absence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-828cb4bb9fe49e835dfadd21",
+        "rationale": "The LLM returned no new valid nonduplicate query after the current evidence and attempted routes were supplied. This closes only the executable query lane; it neither proves that information does not exist nor licenses a source-absence claim.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-8ce8e0d17715285b367c314b",
+        "rationale": "One fully fetched document lacked a verifiable publication date, so as-of eligibility could not be established and the document was excluded. The resolved date-validation failure is not a current retry route and is not source-absence evidence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-93582c8d3e4a290b445687a0",
+        "rationale": "The corresponding query member ended at full-document date validation because the publication date remained unknown. It is resolved for this epoch, is not a current executable retry, and cannot support source absence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-944cf2283ff44162e1cf00f0",
+        "rationale": "The four document-rejection members were future-dated relative to 2026-07-12 and were correctly quarantined from the evidence graph. They are resolved nonretryable exclusions, not evidence that an eligible source is absent.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-b111a10918c8fead4510bb44",
+        "rationale": "Five query attempts recorded provider errors, but the group is resolved, all seven objectives are resolved through the accepted source graph, and no concrete nonduplicate alternate route remains in the prompt. Provider failure is not source absence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [],
+    "new_source_family_directions": [],
+    "next_actions": [
+      "Rebuild and validate loss-accounted counter/supersession route proof for the uncovered bottleneck_pricing, market_mispricing, and valuation_rerating objectives from already accepted current facts, documents, structured records, and Red Team lineage before a new Supervisor review; do not invent a query or claim source absence."
+    ],
+    "query_direction_briefs": [],
+    "rationale": "The retry context is authoritative: structured data is complete, Red Team and Synthesis are current, no material judge disagreement exists, source research is not pending or zero-result-only, but counter_route_proof_complete and counter_completion_may_be_true are false. The projected proof covers eps_fcf_explosion, earnings_visibility, capital_allocation, and information_confidence but not the bottleneck_pricing, market_mispricing, and valuation_rerating objective routes. Red Team prose cannot replace deterministic route lineage. Therefore all seven memos remain sufficient and no new positive source route is asserted, while counter_and_supersession_checked and readiness are fail-closed pending lossless proof reconstruction. All six failure groups are assessed exactly once without source-absence claims.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": false,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "The immutable current counter/supersession route proof covers only four of seven objective-scoped routes and therefore is not deterministically complete."
+    ]
+  },
+  "payload_hash": "fa87f9a256fc4ff42b4e199c45f40319fc83082a70d22daf65771c8ac3642123",
+  "production_score_authority": false,
+  "prompt_hash": "63508cc37c83109c7eff000acb68ba0ef12e0f99c0bc85a1f630b47fbca66845",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-86c4467bfda8d789b219841709b60e6935c611389d41552fbd62a31bff987ef4",
+  "response_id": "COLLABRESP-91ed9b197d3449d73c28b78f23d7fddb3255688330ed316d72c8990353d42b88",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

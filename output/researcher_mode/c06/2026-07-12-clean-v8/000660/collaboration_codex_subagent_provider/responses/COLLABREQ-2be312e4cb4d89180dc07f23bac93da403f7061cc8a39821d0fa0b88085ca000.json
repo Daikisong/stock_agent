@@ -1,0 +1,79 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "국내 상장사 중 DRAM·HBM 메모리의 가격, 제품 전환, 대규모 생산 CAPA와 현금 사이클을 가장 직접적으로 공유하는 peer다. 다만 연결 밸류에이션에는 비메모리 사업이 섞이므로 직접 peer이되 할인·프리미엄 해석에는 사업구성 차이를 반드시 남긴다.",
+        "confidence": 0.95,
+        "material_differences": [
+          "삼성전자는 파운드리·모바일·가전·디스플레이가 함께 있는 다각화 기업이라 메모리 pure-play 비교가 아니다.",
+          "HBM 고객 구성, 제품 세대별 점유율, 패키징 병목과 자본배분 규모가 SK하이닉스와 다르다."
+        ],
+        "peer_name": "삼성전자",
+        "peer_symbol": "005930",
+        "shared_economic_drivers": [
+          "DRAM과 HBM을 포함한 메모리 제품의 ASP·출하량·제품 믹스",
+          "AI 메모리 수요와 고객 qualification에 따른 HBM 매출 전환",
+          "대규모 fab·공정 투자, 가동률과 메모리 사이클에 따른 현금흐름 변동"
+        ]
+      },
+      {
+        "comparability_rationale": "HBM CAPA 증설과 패키징 병목의 수혜 방향을 공유하는 adjacent peer다. SK하이닉스의 메모리 가격·재고 경제와 동일하지 않으므로 직접 valuation peer가 아니라 공급망 투자 강도를 비교하는 보조 축으로만 사용한다.",
+        "confidence": 0.78,
+        "material_differences": [
+          "메모리 칩을 판매하는 회사가 아니라 HBM 패키징 장비 공급사여서 매출은 메모리 ASP·출하량보다 장비 주문과 인도에 좌우된다.",
+          "장비 매출의 주문 변동성, 고객 CAPEX 집중과 자산집약도가 메모리 제조사의 재고·wafer CAPA·가격 사이클과 다르다."
+        ],
+        "peer_name": "한미반도체",
+        "peer_symbol": "042700",
+        "shared_economic_drivers": [
+          "HBM 적층·패키징 투자 확대와 고객 CAPEX 사이클",
+          "AI 메모리 생산능력 증설과 고사양 장비 수요",
+          "HBM 공급망 투자 속도와 고객 집중도에 대한 민감도"
+        ]
+      },
+      {
+        "comparability_rationale": "HBM 생산 확대와 후공정 테스트 투자라는 수요 축은 공유하지만 제품 매출 구조가 다른 adjacent peer다. 구조적 HBM 투자 모멘텀을 교차확인하는 데는 유용하나 target의 trailing 또는 forward valuation을 대신하지 않는다.",
+        "confidence": 0.7,
+        "material_differences": [
+          "장비·테스트 솔루션 매출은 메모리 제조사의 ASP, wafer 출하와 재고평가 경제를 직접 공유하지 않는다.",
+          "프로젝트성 장비 주문·매출 인식과 고객 집중도가 반복적인 메모리 제품 판매 및 대규모 fab 현금흐름과 다르다."
+        ],
+        "peer_name": "테크윙",
+        "peer_symbol": "089030",
+        "shared_economic_drivers": [
+          "메모리 및 HBM 후공정·테스트 투자 사이클",
+          "고대역폭 메모리 생산 확대에 따른 검사·핸들링 장비 수요",
+          "반도체 고객의 CAPEX 집행과 장비 발주 가시성"
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "삼성전자를 메모리 제조 경제를 직접 공유하는 핵심 peer로 두고, 한미반도체와 테크윙을 HBM CAPA·패키징·테스트 투자에 민감한 adjacent peer로 분리했다. target 자체는 제외했고, authoritative KRX roster의 정확한 종목명·6자리 심볼만 사용했으며 PIT valuation 값은 발명하지 않았다.",
+    "unresolved_research_notes": [
+      "2026-07-12 시점 point_in_time_structured_peer_identity_roster는 비어 있어 이 응답은 경제적 peer 방향만 선택한다. PE·PB·시가총액 등 구조화 값은 생성하지 않았으며 deterministic materializer가 각 종목의 PIT 가용성을 별도로 검증해야 한다.",
+      "삼성전자는 direct memory peer지만 사업 다각화 차이가 크고, 한미반도체와 테크윙은 HBM 공급망의 adjacent peer이므로 세 회사를 하나의 동질적 valuation band로 간주하면 안 된다."
+    ]
+  },
+  "payload_hash": "847c4037ac33c266523e105dd5ce9ad9c86eea6d26c72d488adfc01227fdd353",
+  "production_score_authority": false,
+  "prompt_hash": "f09b503496d3a476d803912d8bbaf3dc8bf824fd35107a6c3de867c50d23407a",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2be312e4cb4d89180dc07f23bac93da403f7061cc8a39821d0fa0b88085ca000",
+  "response_id": "COLLABRESP-158b923d2e664bb7d7c55e0e8934d31d2e60dd7f2b26f5f41cf8676d9015abd2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

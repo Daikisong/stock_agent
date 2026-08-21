@@ -1,0 +1,62 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-2b7833d7a2711d45679b22c7",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Quadro GP100 공식 datasheet는 HBM2 과거 제품 사양이며 Samsung 공급자 또는 current HBM3E/HBM4 관계를 명시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-93ea383bc1c44f35cff43ac9",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA geospatial workflow 세션으로 Samsung HBM relationship scope와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-8b88315e629f2504fce02b70",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA A100 80GB 공식 제품문서는 과거 platform 사양이며 Samsung HBM supplier·qualification·supply status를 제공하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "마지막 3개 NVIDIA 공식 후보도 Samsung HBM relationship을 직접 다루지 않았다. 전체 material 0은 이 discovery roster의 결과일 뿐 source absence 또는 완료 증명이 아니다."
+    ]
+  },
+  "payload_hash": "494bfbe993204e0dd655d01e949ea84f047d087e1fca4da1327f83a921a01685",
+  "production_score_authority": false,
+  "prompt_hash": "604e46f98b0ccf58da069d7d3ddc95a18d9af0ae615de386a3d88692531df021",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b158fb00ca8ece9444904e7d6155d5de78231a9beb06f39c03965ea7ee8c5ee2",
+  "response_id": "COLLABRESP-a9223989c2d254f43154317209f99ad70eef642deaac5bb622403bb767a3b8ec",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

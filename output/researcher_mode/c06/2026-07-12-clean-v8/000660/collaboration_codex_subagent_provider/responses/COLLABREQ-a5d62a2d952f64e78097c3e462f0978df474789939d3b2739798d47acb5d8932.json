@@ -1,0 +1,582 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Continuation page 11 adds 12 distinct old/new/rate revision atoms after strict dedup of 120 prior accepted facts: four consolidated operating-margin revisions, four DRAM operating-margin revisions, and four controlling-net-income revisions. NAND-only revisions are excluded and no row is upgraded to issuer guidance or HBM-only economics.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of consolidated operating margin to 13% from 8%, a 5 percentage-point increase; not issuer guidance or HBM-only margin.",
+        "exact_quote": "영업이익률 13% 17% 22% 23% 8% 18% 22% 26% 5%p -1%p 0%p -3%p",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This old/new margin revision is objective-local expectation history, but it is superseded and has no HBM-only attribution.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_MARGIN_REVISION",
+        "normalized_object": "SK hynix 1Q2024 consolidated operating margin revised to 13 percent from 8 percent, up 5 percentage points",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "broker_revised_consolidated_operating_margin",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "CONSOLIDATED_MARGIN_REVISION",
+          "OLD_NEW_RATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory margin estimate",
+        "question_family_id": "CONSOLIDATED_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "OPERATING_MARGIN",
+          "REVISION",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 1Q2024 consolidated operating-margin broker revision",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN_REVISION:1Q2024E:SKSEC_20240314",
+        "unit": "%",
+        "value": 13
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of consolidated operating margin to 17% from 18%, a 1 percentage-point decrease; not issuer guidance or HBM-only margin.",
+        "exact_quote": "영업이익률 13% 17% 22% 23% 8% 18% 22% 26% 5%p -1%p 0%p -3%p",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This old/new margin revision is objective-local expectation counterhistory, but it is superseded and has no HBM-only attribution.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_MARGIN_REVISION",
+        "normalized_object": "SK hynix 2Q2024 consolidated operating margin revised to 17 percent from 18 percent, down 1 percentage point",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "broker_revised_consolidated_operating_margin",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "CONSOLIDATED_MARGIN_REVISION",
+          "OLD_NEW_RATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory margin estimate",
+        "question_family_id": "CONSOLIDATED_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "OPERATING_MARGIN",
+          "REVISION",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 2Q2024 consolidated operating-margin broker revision",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN_REVISION:2Q2024E:SKSEC_20240314",
+        "unit": "%",
+        "value": 17
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision table kept the consolidated operating-margin estimate at 22%; not issuer guidance or HBM-only margin.",
+        "exact_quote": "영업이익률 13% 17% 22% 23% 8% 18% 22% 26% 5%p -1%p 0%p -3%p",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The unchanged old/new estimate is objective-local revision context, but it is superseded and not HBM-only evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_MARGIN_REVISION",
+        "normalized_object": "SK hynix 3Q2024 consolidated operating margin remained 22 percent, reported change 0 percentage points",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "broker_revised_consolidated_operating_margin",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "CONSOLIDATED_MARGIN_REVISION",
+          "OLD_NEW_RATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory margin estimate",
+        "question_family_id": "CONSOLIDATED_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "OPERATING_MARGIN",
+          "REVISION",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 3Q2024 consolidated operating-margin broker revision",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN_REVISION:3Q2024E:SKSEC_20240314",
+        "unit": "%",
+        "value": 22
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of consolidated operating margin to 23% from 26%, a 3 percentage-point decrease; not issuer guidance or HBM-only margin.",
+        "exact_quote": "영업이익률 13% 17% 22% 23% 8% 18% 22% 26% 5%p -1%p 0%p -3%p",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This old/new margin revision is objective-local expectation counterhistory, but it is superseded and has no HBM-only attribution.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_MARGIN_REVISION",
+        "normalized_object": "SK hynix 4Q2024 consolidated operating margin revised to 23 percent from 26 percent, down 3 percentage points",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "broker_revised_consolidated_operating_margin",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "CONSOLIDATED_MARGIN_REVISION",
+          "OLD_NEW_RATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory margin estimate",
+        "question_family_id": "CONSOLIDATED_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "OPERATING_MARGIN",
+          "REVISION",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 4Q2024 consolidated operating-margin broker revision",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN_REVISION:4Q2024E:SKSEC_20240314",
+        "unit": "%",
+        "value": 23
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of DRAM operating margin to 30% from 27%, up 3 percentage points; not HBM-only margin.",
+        "exact_quote": "DRAM 30% 34% 40% 42% 27% 35% 39% 42% 3%p -2%p 1%p 0%p",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The DRAM margin revision is target-direct earnings history but superseded and must not be attributed to HBM.",
+        "mechanism_scope_id": "000660:DRAM:BROKER_OPERATING_MARGIN_REVISION",
+        "normalized_object": "SK hynix DRAM 1Q2024 operating margin revised to 30 percent from 27 percent, up 3 percentage points",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "broker_revised_dram_operating_margin",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "DRAM_MARGIN_REVISION",
+          "OLD_NEW_RATE",
+          "NOT_HBM"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "DRAM",
+          "OPERATING_MARGIN",
+          "REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix DRAM 1Q2024 operating-margin broker revision",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN_REVISION:1Q2024E:SKSEC_20240314",
+        "unit": "%",
+        "value": 30
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of DRAM operating margin to 34% from 35%, down 2 reported percentage points; not HBM-only margin.",
+        "exact_quote": "DRAM 30% 34% 40% 42% 27% 35% 39% 42% 3%p -2%p 1%p 0%p",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The DRAM margin revision is target-direct earnings counterhistory but superseded and must not be attributed to HBM.",
+        "mechanism_scope_id": "000660:DRAM:BROKER_OPERATING_MARGIN_REVISION",
+        "normalized_object": "SK hynix DRAM 2Q2024 operating margin revised to 34 percent from 35 percent, reported down 2 percentage points",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "broker_revised_dram_operating_margin",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "DRAM_MARGIN_REVISION",
+          "OLD_NEW_RATE",
+          "NOT_HBM"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "DRAM",
+          "OPERATING_MARGIN",
+          "REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix DRAM 2Q2024 operating-margin broker revision",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN_REVISION:2Q2024E:SKSEC_20240314",
+        "unit": "%",
+        "value": 34
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of DRAM operating margin to 40% from 39%, up 1 percentage point; not HBM-only margin.",
+        "exact_quote": "DRAM 30% 34% 40% 42% 27% 35% 39% 42% 3%p -2%p 1%p 0%p",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The DRAM margin revision is target-direct earnings history but superseded and must not be attributed to HBM.",
+        "mechanism_scope_id": "000660:DRAM:BROKER_OPERATING_MARGIN_REVISION",
+        "normalized_object": "SK hynix DRAM 3Q2024 operating margin revised to 40 percent from 39 percent, up 1 percentage point",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "broker_revised_dram_operating_margin",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "DRAM_MARGIN_REVISION",
+          "OLD_NEW_RATE",
+          "NOT_HBM"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "DRAM",
+          "OPERATING_MARGIN",
+          "REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix DRAM 3Q2024 operating-margin broker revision",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN_REVISION:3Q2024E:SKSEC_20240314",
+        "unit": "%",
+        "value": 40
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision table kept the DRAM operating-margin estimate at 42%; not HBM-only margin.",
+        "exact_quote": "DRAM 30% 34% 40% 42% 27% 35% 39% 42% 3%p -2%p 1%p 0%p",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The unchanged DRAM margin estimate is target-direct revision context but superseded and not HBM evidence.",
+        "mechanism_scope_id": "000660:DRAM:BROKER_OPERATING_MARGIN_REVISION",
+        "normalized_object": "SK hynix DRAM 4Q2024 operating margin remained 42 percent, reported change 0 percentage points",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "broker_revised_dram_operating_margin",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_OPERATING_MARGIN_REVISION",
+        "primitive_tags": [
+          "DRAM_MARGIN_REVISION",
+          "OLD_NEW_RATE",
+          "NOT_HBM"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_OPERATING_MARGIN_REVISION",
+        "question_family_tags": [
+          "DRAM",
+          "OPERATING_MARGIN",
+          "REVISION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix DRAM 4Q2024 operating-margin broker revision",
+        "subject_id": "000660:DRAM_OPERATING_MARGIN_REVISION:4Q2024E:SKSEC_20240314",
+        "unit": "%",
+        "value": 42
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of controlling-shareholder net income to KRW 906 billion from KRW 515 billion, up 76%; not EPS, issuer guidance, or HBM-only profit.",
+        "exact_quote": "지배순이익 906 1,600 2,465 2,446 515 1,602 2,381 2,952 76% 0% 4% -17%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The old/new net-income revision is objective-local history but superseded and is not an EPS or HBM-only fact.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "normalized_object": "SK hynix 1Q2024 controlling net income revised to KRW 906 billion from KRW 515 billion, up 76 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "broker_revised_controlling_net_income",
+        "predicate_family": "BROKER_QUARTERLY_CONTROLLING_NET_INCOME_REVISION",
+        "primitive_tags": [
+          "NET_INCOME_REVISION",
+          "OLD_NEW_RATE",
+          "NOT_EPS"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONTROLLING_NET_INCOME_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME",
+          "REVISION",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 1Q2024 controlling-net-income broker revision",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_REVISION:1Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 906
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision table reports controlling-shareholder net income at KRW 1,600 billion versus KRW 1,602 billion before, a rounded 0% change; not EPS, issuer guidance, or HBM-only profit.",
+        "exact_quote": "지배순이익 906 1,600 2,465 2,446 515 1,602 2,381 2,952 76% 0% 4% -17%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The rounded-zero old/new net-income revision is objective-local history but superseded and is not an EPS or HBM-only fact.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "normalized_object": "SK hynix 2Q2024 controlling net income revised to KRW 1,600 billion from KRW 1,602 billion, reported 0 percent change",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "broker_revised_controlling_net_income",
+        "predicate_family": "BROKER_QUARTERLY_CONTROLLING_NET_INCOME_REVISION",
+        "primitive_tags": [
+          "NET_INCOME_REVISION",
+          "OLD_NEW_RATE",
+          "NOT_EPS"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONTROLLING_NET_INCOME_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME",
+          "REVISION",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 2Q2024 controlling-net-income broker revision",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_REVISION:2Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 1600
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of controlling-shareholder net income to KRW 2,465 billion from KRW 2,381 billion, up 4%; not EPS, issuer guidance, or HBM-only profit.",
+        "exact_quote": "지배순이익 906 1,600 2,465 2,446 515 1,602 2,381 2,952 76% 0% 4% -17%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The old/new net-income revision is objective-local history but superseded and is not an EPS or HBM-only fact.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "normalized_object": "SK hynix 3Q2024 controlling net income revised to KRW 2,465 billion from KRW 2,381 billion, up 4 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "broker_revised_controlling_net_income",
+        "predicate_family": "BROKER_QUARTERLY_CONTROLLING_NET_INCOME_REVISION",
+        "primitive_tags": [
+          "NET_INCOME_REVISION",
+          "OLD_NEW_RATE",
+          "NOT_EPS"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONTROLLING_NET_INCOME_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME",
+          "REVISION",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 3Q2024 controlling-net-income broker revision",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_REVISION:3Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 2465
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker revision of controlling-shareholder net income to KRW 2,446 billion from KRW 2,952 billion, down 17%; not EPS, issuer guidance, or HBM-only profit.",
+        "exact_quote": "지배순이익 906 1,600 2,465 2,446 515 1,602 2,381 2,952 76% 0% 4% -17%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The old/new net-income revision is objective-local counterhistory but superseded and is not an EPS or HBM-only fact.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_CONTROLLING_NET_INCOME_REVISION",
+        "normalized_object": "SK hynix 4Q2024 controlling net income revised to KRW 2,446 billion from KRW 2,952 billion, down 17 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "broker_revised_controlling_net_income",
+        "predicate_family": "BROKER_QUARTERLY_CONTROLLING_NET_INCOME_REVISION",
+        "primitive_tags": [
+          "NET_INCOME_REVISION",
+          "OLD_NEW_RATE",
+          "NOT_EPS"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONTROLLING_NET_INCOME_REVISION",
+        "question_family_tags": [
+          "CONTROLLING_NET_INCOME",
+          "REVISION",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 4Q2024 controlling-net-income broker revision",
+        "subject_id": "000660:CONTROLLING_NET_INCOME_REVISION:4Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 2446
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "The page cap was reached. Continue source order with controlling-net-income-margin revisions and any still-distinct target-direct valuation/model table atoms. Preserve exact old/new/rate mapping, broker lifecycle, period, formula, and non-HBM boundaries."
+    ]
+  },
+  "payload_hash": "7cf83a030183b12f9e0b1b69c601c008eddb0ef443ba11f1fe5988074aec26d6",
+  "production_score_authority": false,
+  "prompt_hash": "84c75d9678324701c318c838315dcc1df20ee95f469942b1d21d2ded2909acd4",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a5d62a2d952f64e78097c3e462f0978df474789939d3b2739798d47acb5d8932",
+  "response_id": "COLLABRESP-853606869f43027e4b414772aeaea4fa7e9284e4f56722055d39b787ab9ba25c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

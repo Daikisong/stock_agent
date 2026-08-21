@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f8ace10795fb873914c7b152",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "SambaNova 일반 홈페이지로 삼성 메모리·HBM 관계를 다루는 고객사 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-30dce60ebc82010c197c0484",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Telegram 통계 페이지로 신뢰 가능한 고객 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e3e09193aa911918aad21055",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "Naver 유료 제3자 모닝리포트로 요청된 CUSTOMER_OFFICIAL source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-25eabab18f21065a7b8762ee",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.06,
+        "rationale": "제3자 기사이며 NVIDIA 고객 공식 원문이 아니다. 스니펫은 기술·공급 관계 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-76d4ed0179b16ecfa5c66d24",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "미래에셋 증권 PDF로 requested CUSTOMER_OFFICIAL family와 일치하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-cd8493b007aab2fc123da555",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "위키 페이지로 objective-bound 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-65a9447e33bc2e7045c4cd0d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "Naver 제3자 분석글로 AMD 공식 출처가 아니며 스니펫의 채택 주장을 evidence로 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-0536bd058e5a221db951970c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.04,
+        "rationale": "제3자 뉴스 기사로 NVIDIA 고객 공식 source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b7238433e00e83455de5690f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "제3자 과거 기사로 고객 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-213842206bb391bcecb0c48d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "상업 시장조사 페이지로 고객사 공식 관계·계약 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c82ef60bbb8dec9866a58c2d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "유안타 리서치 PDF이며 요청된 CUSTOMER_OFFICIAL family가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d2ff26786c83f87189416015",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Telegram 통계 페이지로 공식·objective-bound full-source가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition에는 직접적인 CUSTOMER_OFFICIAL full-fetch route가 없다. material0은 관계나 계약의 부재 및 research completion을 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "51fb9b7aea0ba7ad656c9ac55a19ffec1702d02ce0f03dc6b31db7223bb99916",
+  "production_score_authority": false,
+  "prompt_hash": "d14a0b91117db82b23087eaec4b359d6a6c2c698588d56f85196d940ce5642e0",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2b62bf153a6bc5d021ed1083eba7e1819277e9c07d35dffd6d3eec440d462393",
+  "response_id": "COLLABRESP-4ca9b44cb4ba674bc825348e4574b51ddb0f530bacf9df66f09de3c5f4c3f7ce",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

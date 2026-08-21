@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "d10e59b1c3d217fd2175a9c0d5a9e1214edfcfdac711552321ad54eb4793b073",
+  "payload": {
+    "allowed_range": [
+      11.4,
+      13.4
+    ],
+    "anchor_comparisons": [
+      "CANCH-5eb80a11ed23fc1102335092의 11.95~14.05점 구간과 비교하면 actual 가동률·DRAM/HBM 실행은 부합하지만 취소 저항성이 있는 장기계약 증거가 없어 중간 수준이다.",
+      "CANCH-1aa76cb8e89d85cd78d325f4의 9.95~12.05점보다 실제 제품·고객 실행과 이익 개선은 강하지만, 선수금·RPO·장기계약 부재 때문에 격차는 제한적이다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c07ed486e6d67134d19d6951",
+      "EFACT-c418009dc8a6493dd0a098b4"
+    ],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "CANCH-5eb80a11ed23fc1102335092",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 12.5,
+    "rationale": "메모리 설비의 높은 가동률, DRAM actual 개선, HBM 가격 주도 및 제품·고객 실행은 가까운 기간의 가시성을 지지한다. 반면 장기 공급기간·해지 조건·선수금·RPO 같은 취소 저항성 증거는 없고 고객 집중, 재고와 계약손실 위험이 남아 지속 가시성은 중간 이상으로 한정한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "수주잔고·RPO·선수금·취소 제한 계약이 없고 고객 집중과 재고·계약손실 위험 때문에 가시성의 장기 지속성을 입증하지 못했다.",
+    "why_not_lower": "실제 가동률과 DRAM/HBM 제품·가격·고객 실행, 최근 이익 개선이 단순 계획이 아니라 현재 운영 지표로 확인된다."
+  },
+  "payload_hash": "df79a19cb643503c211448151c7c441958d73ae5d48b631a9bff09f67fc0e08d",
+  "production_score_authority": false,
+  "prompt_hash": "ed40587adb7cdbbf72106209d14cc8e20933ea1172aa995ec2d34e50f71acecb",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-60d7764d1bd3049fc682236ab2d45a004945c5df4cd927c7500dc0b6370074c0",
+  "response_id": "COLLABRESP-f1c8577321f7657f383388edb3f0174ad5f3b8b1b94bb7b6a0bacdfe29be3f71",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

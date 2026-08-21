@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "703e2f06337de4af61b475b7dc59dff87c297535ed91eef1e9716dada5a480c1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-4bdec56c41b0c028b2373509",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.03,
+        "rationale": "Opinion article is not OPENDART original material."
+      },
+      {
+        "candidate_id": "SGCAND-3485cf7828865432dbcbc5bd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.07,
+        "rationale": "Edaily analysis does not match OPENDART provenance."
+      },
+      {
+        "candidate_id": "SGCAND-2f52fc7e3ef45e7e1ba6acdf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial finance blog is not an original filing route."
+      },
+      {
+        "candidate_id": "SGCAND-2d8c547313d7620cf4b3fe8b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial blog does not match OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-4e3d44eaba538d1cd0f15484",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial article is not OPENDART material."
+      },
+      {
+        "candidate_id": "SGCAND-a11b6d93eae30b3d8f07ffa5",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.03,
+        "rationale": "Educational explainer is not the original OPENDART route."
+      },
+      {
+        "candidate_id": "SGCAND-6039de41a970d2e341cf5a8a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "Third-party issue analysis does not match OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-d66ac45f27eb006533673802",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "Sports Khan retelling is not OPENDART original material."
+      },
+      {
+        "candidate_id": "SGCAND-f2e7b4ccb259ff4605a6d5e4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.02,
+        "rationale": "Unofficial schedule guide is not an OPENDART source route."
+      },
+      {
+        "candidate_id": "SGCAND-4ad65f12f24c85db247dc608",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.01,
+        "rationale": "Third-party article concerns a Solidigm listing and is neither the requested target filing nor OPENDART original material."
+      },
+      {
+        "candidate_id": "SGCAND-48aa3d118aa8bc2a58cf4b6b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.06,
+        "rationale": "Khan report is third-party media, not OPENDART."
+      },
+      {
+        "candidate_id": "SGCAND-c7d0c5605bed3b9d963fbd3f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.07,
+        "rationale": "The Bell analysis is not the requested original filing route."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No original OPENDART/full filing route appears in this roster; wrong-target and third-party pages cannot establish evidence or absence."
+    ]
+  },
+  "payload_hash": "1c397b9c703ca7fcb76df7e67f7b71d96b5a47b6b2168c768346c361f218fff5",
+  "production_score_authority": false,
+  "prompt_hash": "e162dbcf9a0d1e4b2d70305908c44647ed00fc05b3a9dba8659237e7d14ebbf4",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d4cb965683da0ac611bedaad8cb47c00e02be9f5c470cca29a55a17959ad3f3c",
+  "response_id": "COLLABRESP-8cdfe56d60ff02963bfc466a6e9cf8dc18ae220a1a417b1dcb81a9ef45175019",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

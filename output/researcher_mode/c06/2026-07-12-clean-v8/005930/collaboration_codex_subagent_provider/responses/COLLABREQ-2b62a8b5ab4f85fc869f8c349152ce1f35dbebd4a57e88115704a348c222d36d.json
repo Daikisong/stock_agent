@@ -1,0 +1,67 @@
+{
+  "output_schema_hash": "73592ad19af119b0824282778f7924a17f9f6f8f5d68959383518e1f78962511",
+  "payload": {
+    "allowed_range": [
+      1.5,
+      2.1
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-90c2b7d4695e62e277703a64 has a weak ordinal band of 1.50-2.00 and is the closer anchor because the snapshot has useful execution evidence but still lacks an independent source-to-contract-and-cash bridge; the proposed 1.80 sits inside that counter band.",
+      "ORDTRANSFER-09ab96433f8087166845bf25 has a medium ordinal band of 1.75-2.25. Formal filing integrity and actual HBM4 shipment justify overlap with its lower half, but issuer-family concentration and non-binding customer evidence do not support moving toward or above its 2.00 midpoint with high confidence."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1",
+      "EFACT-6868a3fa0d1462e2b1dfd4f2",
+      "EFACT-6a317a6c41253b0fafc79d56",
+      "EFACT-7f35f23f1f02e6327c9a1268"
+    ],
+    "disagreements": [
+      "I place more weight than the memo's positive narrative on source-family concentration: several named relationship facts do not become independent corroboration merely because they quote or describe a counterparty within issuer-family lineage.",
+      "I do not treat the AMD MOU, preferred-supplier designation, OpenAI LOI or demand forecast, or NVIDIA negotiation as contract-quality evidence. They improve relationship visibility but not signed allocation or cash visibility.",
+      "I also do not treat the company-wide no-material-long-term-order statement as proof that every HBM contract is absent, nor the company-wide top-five customer share as an HBM concentration metric; both are valid counters only within their stated scope.",
+      "The business phase is beyond pure development because HBM4 shipment and prior AMD HBM3E supply are actual, but HBM4E qualification, repeat orders, customer acceptance, and HBM-specific economics remain too uncertain for a score near the strong-information range."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 1.8,
+    "rationale": "The information plane is usable but narrow. OPENDART facts establish formal reporting consistency, no restatement, and no audit emphasis or key audit matter, while HBM4 mass-production shipment and historical AMD HBM3E supply show real execution. Named AMD, NVIDIA, and OpenAI relationships add business-phase context, but most relationship facts share issuer-family lineage and remain a supply history, MOU, preferred-supplier designation, negotiation, support plan, demand forecast, or LOI. They do not independently establish signed HBM volume, price, duration, allocation, cancellation terms, qualification outcome, margin, or cash conversion. The company-wide 23% top-five customer share cannot be reassigned to HBM concentration, and the limited long-term-order disclosure cannot prove every HBM contract absent. Mixed valuation and customer economics therefore remain insufficiently corroborated for a higher information-confidence score, even though actual shipment and formal reporting prevent a minimal score.",
+    "support_fact_ids": [
+      "EFACT-1003ee870ca8d68689958b0a",
+      "EFACT-303c70f6fb2e11305c82f77b",
+      "EFACT-3dd3bb8fbe1496797f1cd00c",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-7f9fca669110a7e761e6264d",
+      "EFACT-7fe708d0c29a809416e4b893",
+      "EFACT-9eea79412c9f3395a852d248",
+      "EFACT-b6ff1b966b93b843dd6bcd04",
+      "EFACT-d0b79e6c2a1c2bef63f9cb34",
+      "EFACT-e7acbf35eec720d3412bca19",
+      "EFACT-f8487df03aa235fb70883193"
+    ],
+    "why_not_higher": "The exact snapshot has no accepted independent AMD CUSTOMER_OFFICIAL source group, and the named relationship evidence does not disclose binding HBM economics, qualification outcomes, customer allocation, or cash conversion. Formal issuer and regulatory reporting cannot by itself supply independent customer corroboration or resolve the mixed valuation and contract-quality uncertainty.",
+    "why_not_lower": "OPENDART reporting is current and formally consistent, with no restatement or cited audit emphasis, and HBM4 mass-production shipment plus actual AMD HBM3E supply history demonstrate real execution rather than a purely promotional pre-commercial story."
+  },
+  "payload_hash": "9103f06d1f63b77498cd545caa06a931b9c520ed73b70a9326a8b5cf0934391a",
+  "production_score_authority": false,
+  "prompt_hash": "7729d07293c8c49fcf51aabea7aa329726d72c6d6b39fa7dc6cc48b0d126a34e",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2b62a8b5ab4f85fc869f8c349152ce1f35dbebd4a57e88115704a348c222d36d",
+  "response_id": "COLLABRESP-ee39414729865f2f1d690cf04370a8e79051bc649c83ac35057bb817a503117a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

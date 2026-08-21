@@ -1,0 +1,609 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "The June KIND document has ten previously accepted issuer-financing facts and no additional distinct current-objective atom remains.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "The current broker document has seventy-one previously accepted target facts and is exhausted for additional distinct current-objective atoms.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "The final KIND filing has twenty-two previously accepted issuer-wide financing and CAPEX facts and no additional distinct current-objective atom remains.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Twelve new historical commodity-DRAM shipment-growth, ASP-level, and ASP-change forecasts are proposed and explicitly marked SUPERSEDED; further target-direct rows remain after the page cap.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 FY2024F commodity DRAM bit shipment 증가율을 17.6%로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 HBM 물량이나 issuer guidance가 아니다.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a historical broker commodity-DRAM forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_COMMODITY_DRAM_MODEL:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F commodity DRAM bit-shipment annual growth forecast of 17.6 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "Historical FY2024F DRAM bit-shipment annual growth forecast",
+        "predicate_family": "HISTORICAL_DRAM_BIT_SHIPMENT_ANNUAL_GROWTH",
+        "primitive_tags": [
+          "COMMODITY_DRAM",
+          "BIT_GROWTH",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_BIT_SHIPMENT_ANNUAL_GROWTH",
+        "question_family_tags": [
+          "DRAM",
+          "BIT_SHIPMENT_GROWTH",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2024F commodity DRAM bit shipment 증가율 전망",
+        "subject_id": "000660:DRAM_BIT_SHIPMENT_ANNUAL_GROWTH:FY2024F:MIRAE_2024-05-16",
+        "unit": "percent YoY",
+        "value": 17.6
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 FY2025F commodity DRAM bit shipment 증가율을 18.3%로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 HBM 물량이나 issuer guidance가 아니다.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a historical broker commodity-DRAM forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_COMMODITY_DRAM_MODEL:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F commodity DRAM bit-shipment annual growth forecast of 18.3 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "Historical FY2025F DRAM bit-shipment annual growth forecast",
+        "predicate_family": "HISTORICAL_DRAM_BIT_SHIPMENT_ANNUAL_GROWTH",
+        "primitive_tags": [
+          "COMMODITY_DRAM",
+          "BIT_GROWTH",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_BIT_SHIPMENT_ANNUAL_GROWTH",
+        "question_family_tags": [
+          "DRAM",
+          "BIT_SHIPMENT_GROWTH",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025F commodity DRAM bit shipment 증가율 전망",
+        "subject_id": "000660:DRAM_BIT_SHIPMENT_ANNUAL_GROWTH:FY2025F:MIRAE_2024-05-16",
+        "unit": "percent YoY",
+        "value": 18.3
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 2Q24F commodity DRAM ASP를 Gb당 0.38달러로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 HBM ASP나 issuer actual이 아니다.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3\nASP($/Gb) 0.19 0.21 0.23 0.27 0.33 0.38 0.42 0.44 0.37 0.23 0.40 0.42",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a historical broker commodity-DRAM forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_COMMODITY_DRAM_MODEL:MIRAE_2024-05-16",
+        "normalized_object": "Historical 2Q24F commodity DRAM ASP forecast of USD 0.38 per Gb",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F; report published 2024-05-16",
+        "predicate": "Historical 2Q24F commodity DRAM ASP forecast",
+        "predicate_family": "HISTORICAL_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "COMMODITY_DRAM",
+          "ASP_FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_ASP_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2Q24F commodity DRAM ASP 전망",
+        "subject_id": "000660:DRAM_ASP:2Q24F:MIRAE_2024-05-16",
+        "unit": "USD per Gb",
+        "value": 0.38
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 3Q24F commodity DRAM ASP를 Gb당 0.42달러로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 HBM ASP나 issuer actual이 아니다.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3\nASP($/Gb) 0.19 0.21 0.23 0.27 0.33 0.38 0.42 0.44 0.37 0.23 0.40 0.42",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a historical broker commodity-DRAM forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_COMMODITY_DRAM_MODEL:MIRAE_2024-05-16",
+        "normalized_object": "Historical 3Q24F commodity DRAM ASP forecast of USD 0.42 per Gb",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "3Q24F; report published 2024-05-16",
+        "predicate": "Historical 3Q24F commodity DRAM ASP forecast",
+        "predicate_family": "HISTORICAL_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "COMMODITY_DRAM",
+          "ASP_FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_ASP_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q24F commodity DRAM ASP 전망",
+        "subject_id": "000660:DRAM_ASP:3Q24F:MIRAE_2024-05-16",
+        "unit": "USD per Gb",
+        "value": 0.42
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 4Q24F commodity DRAM ASP를 Gb당 0.44달러로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 HBM ASP나 issuer actual이 아니다.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3\nASP($/Gb) 0.19 0.21 0.23 0.27 0.33 0.38 0.42 0.44 0.37 0.23 0.40 0.42",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a historical broker commodity-DRAM forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_COMMODITY_DRAM_MODEL:MIRAE_2024-05-16",
+        "normalized_object": "Historical 4Q24F commodity DRAM ASP forecast of USD 0.44 per Gb",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "4Q24F; report published 2024-05-16",
+        "predicate": "Historical 4Q24F commodity DRAM ASP forecast",
+        "predicate_family": "HISTORICAL_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "COMMODITY_DRAM",
+          "ASP_FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_ASP_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q24F commodity DRAM ASP 전망",
+        "subject_id": "000660:DRAM_ASP:4Q24F:MIRAE_2024-05-16",
+        "unit": "USD per Gb",
+        "value": 0.44
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 FY2024F commodity DRAM ASP를 Gb당 0.40달러로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 HBM ASP나 issuer actual이 아니다.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3\nASP($/Gb) 0.19 0.21 0.23 0.27 0.33 0.38 0.42 0.44 0.37 0.23 0.40 0.42",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a historical broker commodity-DRAM forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_COMMODITY_DRAM_MODEL:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F commodity DRAM ASP forecast of USD 0.40 per Gb",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "Historical FY2024F commodity DRAM ASP forecast",
+        "predicate_family": "HISTORICAL_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "COMMODITY_DRAM",
+          "ASP_FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_ASP_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2024F commodity DRAM ASP 전망",
+        "subject_id": "000660:DRAM_ASP:FY2024F:MIRAE_2024-05-16",
+        "unit": "USD per Gb",
+        "value": 0.4
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋은 FY2025F commodity DRAM ASP를 Gb당 0.42달러로 전망했다. 과거 브로커 전망으로 SUPERSEDED이며 HBM ASP나 issuer actual이 아니다.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3\nASP($/Gb) 0.19 0.21 0.23 0.27 0.33 0.38 0.42 0.44 0.37 0.23 0.40 0.42",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a historical broker commodity-DRAM forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_COMMODITY_DRAM_MODEL:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F commodity DRAM ASP forecast of USD 0.42 per Gb",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "Historical FY2025F commodity DRAM ASP forecast",
+        "predicate_family": "HISTORICAL_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "COMMODITY_DRAM",
+          "ASP_FORECAST",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_ASP_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025F commodity DRAM ASP 전망",
+        "subject_id": "000660:DRAM_ASP:FY2025F:MIRAE_2024-05-16",
+        "unit": "USD per Gb",
+        "value": 0.42
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 표는 2Q24F commodity DRAM ASP 변화를 12%로 전망했다. 분기는 QoQ, 연간은 YoY이며 과거 브로커 전망으로 SUPERSEDED다.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3\nASP($/Gb) 0.19 0.21 0.23 0.27 0.33 0.38 0.42 0.44 0.37 0.23 0.40 0.42\nASP change -16.4 9.4 11.1 17.7 22.2 12.0 11.5 5.6 -18.7 -37.9 70.8 5.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a historical broker commodity-DRAM forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_COMMODITY_DRAM_MODEL:MIRAE_2024-05-16",
+        "normalized_object": "Historical 2Q24F commodity DRAM ASP change forecast of 12 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F; report published 2024-05-16",
+        "predicate": "Historical 2Q24F commodity DRAM ASP change forecast",
+        "predicate_family": "HISTORICAL_DRAM_ASP_CHANGE_FORECAST",
+        "primitive_tags": [
+          "COMMODITY_DRAM",
+          "ASP_CHANGE",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_ASP_CHANGE_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP_CHANGE",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2Q24F commodity DRAM ASP 증가율 전망",
+        "subject_id": "000660:DRAM_ASP_CHANGE:2Q24F:MIRAE_2024-05-16",
+        "unit": "percent QoQ",
+        "value": 12
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 표는 3Q24F commodity DRAM ASP 변화를 11.5%로 전망했다. 분기는 QoQ, 연간은 YoY이며 과거 브로커 전망으로 SUPERSEDED다.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3\nASP($/Gb) 0.19 0.21 0.23 0.27 0.33 0.38 0.42 0.44 0.37 0.23 0.40 0.42\nASP change -16.4 9.4 11.1 17.7 22.2 12.0 11.5 5.6 -18.7 -37.9 70.8 5.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a historical broker commodity-DRAM forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_COMMODITY_DRAM_MODEL:MIRAE_2024-05-16",
+        "normalized_object": "Historical 3Q24F commodity DRAM ASP change forecast of 11.5 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "3Q24F; report published 2024-05-16",
+        "predicate": "Historical 3Q24F commodity DRAM ASP change forecast",
+        "predicate_family": "HISTORICAL_DRAM_ASP_CHANGE_FORECAST",
+        "primitive_tags": [
+          "COMMODITY_DRAM",
+          "ASP_CHANGE",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_ASP_CHANGE_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP_CHANGE",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 3Q24F commodity DRAM ASP 증가율 전망",
+        "subject_id": "000660:DRAM_ASP_CHANGE:3Q24F:MIRAE_2024-05-16",
+        "unit": "percent QoQ",
+        "value": 11.5
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 표는 4Q24F commodity DRAM ASP 변화를 5.6%로 전망했다. 분기는 QoQ, 연간은 YoY이며 과거 브로커 전망으로 SUPERSEDED다.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3\nASP($/Gb) 0.19 0.21 0.23 0.27 0.33 0.38 0.42 0.44 0.37 0.23 0.40 0.42\nASP change -16.4 9.4 11.1 17.7 22.2 12.0 11.5 5.6 -18.7 -37.9 70.8 5.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a historical broker commodity-DRAM forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_COMMODITY_DRAM_MODEL:MIRAE_2024-05-16",
+        "normalized_object": "Historical 4Q24F commodity DRAM ASP change forecast of 5.6 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "4Q24F; report published 2024-05-16",
+        "predicate": "Historical 4Q24F commodity DRAM ASP change forecast",
+        "predicate_family": "HISTORICAL_DRAM_ASP_CHANGE_FORECAST",
+        "primitive_tags": [
+          "COMMODITY_DRAM",
+          "ASP_CHANGE",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_ASP_CHANGE_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP_CHANGE",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 4Q24F commodity DRAM ASP 증가율 전망",
+        "subject_id": "000660:DRAM_ASP_CHANGE:4Q24F:MIRAE_2024-05-16",
+        "unit": "percent QoQ",
+        "value": 5.6
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 표는 FY2024F commodity DRAM ASP 변화를 70.8%로 전망했다. 분기는 QoQ, 연간은 YoY이며 과거 브로커 전망으로 SUPERSEDED다.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3\nASP($/Gb) 0.19 0.21 0.23 0.27 0.33 0.38 0.42 0.44 0.37 0.23 0.40 0.42\nASP change -16.4 9.4 11.1 17.7 22.2 12.0 11.5 5.6 -18.7 -37.9 70.8 5.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a historical broker commodity-DRAM forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_COMMODITY_DRAM_MODEL:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F commodity DRAM ASP change forecast of 70.8 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "Historical FY2024F commodity DRAM ASP change forecast",
+        "predicate_family": "HISTORICAL_DRAM_ASP_CHANGE_FORECAST",
+        "primitive_tags": [
+          "COMMODITY_DRAM",
+          "ASP_CHANGE",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_ASP_CHANGE_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP_CHANGE",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2024F commodity DRAM ASP 증가율 전망",
+        "subject_id": "000660:DRAM_ASP_CHANGE:FY2024F:MIRAE_2024-05-16",
+        "unit": "percent YoY",
+        "value": 70.8
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "2024년 5월 미래에셋 표는 FY2025F commodity DRAM ASP 변화를 5%로 전망했다. 분기는 QoQ, 연간은 YoY이며 과거 브로커 전망으로 SUPERSEDED다.",
+        "exact_quote": "표 13. SK하이닉스 주요 제품별 추정치\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\nDRAM\nBit shipments(Bil Gb) 12,088 16,440 19,892 20,290 17,044 19,629 21,704 22,422 59,389 68,711 80,799 95,586\nBit growth -18.0 36.0 21.0 2.0 -16.0 15.2 10.6 3.3 1.6 15.7 17.6 18.3\nASP($/Gb) 0.19 0.21 0.23 0.27 0.33 0.38 0.42 0.44 0.37 0.23 0.40 0.42\nASP change -16.4 9.4 11.1 17.7 22.2 12.0 11.5 5.6 -18.7 -37.9 70.8 5.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a historical broker commodity-DRAM forecast retained only as SUPERSEDED calibration; it is neither issuer actual nor HBM-only evidence.",
+        "mechanism_scope_id": "000660:HISTORICAL_BROKER_COMMODITY_DRAM_MODEL:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F commodity DRAM ASP change forecast of 5 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "Historical FY2025F commodity DRAM ASP change forecast",
+        "predicate_family": "HISTORICAL_DRAM_ASP_CHANGE_FORECAST",
+        "primitive_tags": [
+          "COMMODITY_DRAM",
+          "ASP_CHANGE",
+          "SUPERSEDED"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "HISTORICAL_DRAM_ASP_CHANGE_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "ASP_CHANGE",
+          "HISTORICAL_BROKER"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025F commodity DRAM ASP 증가율 전망",
+        "subject_id": "000660:DRAM_ASP_CHANGE:FY2025F:MIRAE_2024-05-16",
+        "unit": "percent YoY",
+        "value": 5
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact transport-page upper bound was reached after strict source-order deduplication. Further distinct target-direct historical broker atoms remain in SGDOC-f87582d14c66af24ff78d6d8."
+    ]
+  },
+  "payload_hash": "10d721df5a5bf7ef008b4acbbc93908219f0d19ae68bd6e6cc228bd0f95183be",
+  "production_score_authority": false,
+  "prompt_hash": "aa6285aec140cbf82f6843d352c1a9de4510d6b8821dd1010719ba4cdbcbcf26",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0b2595de7fdabb0102d350fd479db5d523286523b81486c0e5b0baafffa31fdd",
+  "response_id": "COLLABRESP-fc1faa68efd1576f6b40ff0846f2b0b1a292790aa07de8f5e8e99995ef6b4829",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

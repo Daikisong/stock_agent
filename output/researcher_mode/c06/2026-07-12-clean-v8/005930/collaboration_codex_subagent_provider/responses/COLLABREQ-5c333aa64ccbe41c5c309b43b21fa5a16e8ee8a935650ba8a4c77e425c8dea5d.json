@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "Reviewer A로서 immutable prompt의 현재 226-fact graph, 7개 complete component memo, 7개 component를 모두 검토한 complete Red Team, complete structured roles, latest Supervisor와 STOPPED_ON_RESOLUTION source binding을 독립 감사했다. 긍정 근거는 HBM4 출하, AMD customer-official 기술 corroboration, 메모리 매출·ASP·가동 및 연결 현금창출처럼 source-backed actual에 한정했다. 반대 근거는 HBM standalone 손익·FCF bridge, signed 구매조건, 고객별 가격·물량·allocation, HBM 전용 CAPA와 동일 분모 시장기대 부재가 각 memo 범위와 Red Team에 이미 반영됐는지 확인했다. AMD 기술 corroboration을 계약경제로 확대하지 않았고 issuer 계획도 signed terms로 승격하지 않았다. Latest Supervisor에는 material fact gap, source/query direction, unresolved question과 next action이 없고 current evidence를 바꿀 새 verified executable identity도 없다. 따라서 남은 항목은 향후 실적·계약 공개를 확인할 모니터링 한계이며 현재 material research gap이 아니다. 승인은 zero/no-result, provider 오류, 검색 횟수, 고정 round 또는 source absence를 근거로 하지 않고, 완결된 memo·counter·structured 계보와 구체적인 실행 가능 route 부재에 근거한다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "8d87735dd5afd137d7d9d1d2ce745340df113afd9cb7a12679790e1bb0ebe7c3",
+  "production_score_authority": false,
+  "prompt_hash": "a4801d0fd2ead06882bbb51c2a639a01dbd789a63d4641cba40acc3e360f18b9",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5c333aa64ccbe41c5c309b43b21fa5a16e8ee8a935650ba8a4c77e425c8dea5d",
+  "response_id": "COLLABRESP-eed405f0d0f878e15ac5d4c83b1c2dbb6e774cbefe1570e92628af61f6421308",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

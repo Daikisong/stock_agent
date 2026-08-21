@@ -1,0 +1,303 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "rationale": "Together with the twelve previously accepted facts, the final full-document remainder adds six distinct facts on FY2026 capacity investment and explicit information-quality limitations. All other objective-local content is either already accepted or semantically covered by the 141-fact prior graph.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer expects 2026 investment to rise significantly year over year, centered on M15X ramp-up, Yongin infrastructure preparation, and EUV equipment; this is a qualitative memory-wide investment plan without a numeric amount, HBM-only capacity, customer allocation, or contract commitment.",
+        "exact_quote": "이에 올해 투자 규모는 M15X 램프업, 용인 클러스터를 중심으로 한 인프라 준비와 EUV 등 핵심 장비 확보로 전년 대비 크게 증가할 것이라고 설명했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is an issuer-owned, period-specific capacity-investment plan; its qualitative wording prevents a numeric FORWARD_GUIDANCE tag or HBM-only attribution.",
+        "mechanism_scope_id": "000660:memory:capacity_investment:m15x_yongin_euv",
+        "normalized_object": "FY2026 memory capacity and equipment investment plan",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 vs FY2025",
+        "predicate": "expects annual investment to increase significantly",
+        "predicate_family": "MEMORY_INVESTMENT_SCALE_PLAN",
+        "primitive_tags": [
+          "m15x",
+          "yongin",
+          "euv"
+        ],
+        "product_family": "Memory",
+        "question_family_id": "FY2026_MEMORY_INVESTMENT_SCALE_PLAN",
+        "question_family_tags": [
+          "capacity_investment",
+          "supply_response"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "SK하이닉스 M15X·용인 클러스터·EUV 투자",
+        "subject_id": "000660:MEMORY:M15X_YONGIN_EUV",
+        "unit": "",
+        "value": "significant year-over-year investment increase centered on M15X, Yongin, and EUV"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer plans strategic production-base expansion for mid-to-long-term demand while conditioning investment on demand visibility to balance supply stability and financial soundness; this is an investment policy, not completed capacity, HBM-only allocation, or binding customer demand.",
+        "exact_quote": "SK하이닉스는 “중장기 수요 성장에 선제적으로 대응할 수 있는 생산 기반을 전략적으로 확충하겠다”며, “수요 가시성을 고려한 투자를 통해 공급 안정성과 재무 건전성을 함께 확보하겠다”고 말했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is a distinct forward capacity-discipline statement that explicitly links investment to demand visibility while preserving its nonbinding and memory-wide status.",
+        "mechanism_scope_id": "000660:memory:capacity_investment:demand_conditioned",
+        "normalized_object": "mid-to-long-term demand-conditioned memory capacity plan",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "mid-to-long term from 2026-04-23",
+        "predicate": "plans demand-conditioned strategic production-base expansion",
+        "predicate_family": "DEMAND_CONDITIONED_CAPACITY_PLAN",
+        "primitive_tags": [
+          "production_base",
+          "financial_soundness"
+        ],
+        "product_family": "Memory",
+        "question_family_id": "DEMAND_CONDITIONED_CAPACITY_DISCIPLINE",
+        "question_family_tags": [
+          "capacity_plan",
+          "investment_discipline",
+          "demand_visibility"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "SK하이닉스 메모리 생산기반 투자",
+        "subject_id": "000660:MEMORY:CAPACITY_DISCIPLINE",
+        "unit": "",
+        "value": "expand production base while considering demand visibility and financial soundness"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer states that the Q1 2026 results release was prepared before completion of the external auditor's accounting review and may change during review, limiting certainty without implying that a reported figure is false.",
+        "exact_quote": "※ 同 실적 발표자료는 외부 감사인의 회계검토가 완료되지 않은 상태에서 작성되었으며, 회계 검토 과정에서 달라질 수 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This period-specific explicit caveat is distinct from the previously accepted FY2025-release uncertainty.",
+        "mechanism_scope_id": "000660:corporate:information_quality",
+        "normalized_object": "2026Q1 results accounting-review uncertainty",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026Q1 results released 2026-04-23",
+        "predicate": "is subject to incomplete external review and possible change",
+        "predicate_family": "Q1_2026_PRELIMINARY_RESULTS_UNCERTAINTY",
+        "primitive_tags": [
+          "external_review_incomplete",
+          "figures_may_change"
+        ],
+        "product_family": "Issuer-wide information quality",
+        "question_family_id": "Q1_2026_PRELIMINARY_RESULTS_REVIEW_RISK",
+        "question_family_tags": [
+          "information_quality",
+          "preliminary_results"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 1분기 실적 발표자료",
+        "subject_id": "000660:INFORMATION_QUALITY",
+        "unit": "",
+        "value": "external auditor review incomplete; figures may change"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer discloses that the presentation information did not undergo separate independent verification and provides no representation or warranty regarding fairness, accuracy, or completeness, creating an explicit information-confidence limitation.",
+        "exact_quote": "본 자료는 정보 제공만을 위하여, 당사에 의해 작성된 것으로서, 본 자료에 기재된 정보에 대해서는 별도의 독립적인 확인 과정을 거치지 않았습니다. 본 자료에 포함된 정보의 공정성, 정확성 또는 완결성과 관련해서는 어떠한 진술 및 보장도 제공되지 않으며, 이를 신뢰하여서도 안 됩니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The source explicitly limits independent verification and information assurance; this is not inferred from silence.",
+        "mechanism_scope_id": "000660:corporate:information_quality",
+        "normalized_object": "Q1 2026 presentation independent-verification limitation",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "presentation released 2026-04-23",
+        "predicate": "was not independently verified and carries no accuracy or completeness warranty",
+        "predicate_family": "INDEPENDENT_VERIFICATION_LIMITATION",
+        "primitive_tags": [
+          "no_accuracy_warranty",
+          "no_completeness_warranty"
+        ],
+        "product_family": "Issuer-wide information quality",
+        "question_family_id": "INDEPENDENT_VERIFICATION_LIMITATION",
+        "question_family_tags": [
+          "information_quality",
+          "independent_verification"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 2026년 1분기 실적자료 정보",
+        "subject_id": "000660:INFORMATION_QUALITY",
+        "unit": "",
+        "value": "no separate independent verification or fairness, accuracy, or completeness warranty"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer warns that forecasts, plans, expectations, and other forward-looking information are inherently uncertain and may differ materially from actual future performance, explicitly limiting reliance on the capacity and demand plans.",
+        "exact_quote": "또한, 본 자료는 미래에 대한 예상, 전망, 계획, 기대 등의 ‘예측정보’를 포함하고 있으며 이러한 ‘예측정보’는 그 성격의 불확실성으로 인해 회사의 실제 미래실적과 중대한 차이가 있을 수 있음을 양지하시기 바랍니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This explicit forward-looking caveat directly counters certainty assigned to the issuer's investment, demand, pricing, and capacity plans.",
+        "mechanism_scope_id": "000660:corporate:information_quality",
+        "normalized_object": "Q1 2026 release forward-looking-information uncertainty",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "future periods after 2026-04-23",
+        "predicate": "may differ materially from actual future performance",
+        "predicate_family": "FORWARD_LOOKING_UNCERTAINTY",
+        "primitive_tags": [
+          "actual_results_may_differ"
+        ],
+        "product_family": "Issuer-wide information quality",
+        "question_family_id": "FORWARD_LOOKING_INFORMATION_UNCERTAINTY",
+        "question_family_tags": [
+          "information_quality",
+          "forward_looking_risk"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 예측정보",
+        "subject_id": "000660:INFORMATION_QUALITY",
+        "unit": "",
+        "value": "forward-looking information may differ materially from actual future results"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-e4e768107cc43f617507017f",
+        "economic_mechanism": "The issuer states that all financial-performance information in the presentation is prepared on a consolidated K-IFRS basis, establishing an attribution boundary that prevents treating the reported company figures as HBM-only economics.",
+        "exact_quote": "이 자료에 포함된 회사의 재무성과에 대한 모든 정보는 한국채택국제회계기준(K-IFRS)에 따라 연결 기준으로 작성되었습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This explicit reporting-basis statement is material to preventing segment and HBM-only attribution errors.",
+        "mechanism_scope_id": "000660:corporate:information_quality",
+        "normalized_object": "Q1 2026 presentation financial-performance reporting basis",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026Q1 release",
+        "predicate": "is prepared on a consolidated K-IFRS basis",
+        "predicate_family": "CONSOLIDATED_REPORTING_BASIS",
+        "primitive_tags": [
+          "consolidated_kifrs"
+        ],
+        "product_family": "Issuer-wide information quality",
+        "question_family_id": "CONSOLIDATED_KIFRS_ATTRIBUTION_BOUNDARY",
+        "question_family_tags": [
+          "information_quality",
+          "reporting_basis"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 재무성과 정보",
+        "subject_id": "000660:INFORMATION_QUALITY",
+        "unit": "",
+        "value": "all financial-performance information is consolidated K-IFRS"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "3627a50ba63397de6be1c47e6f4d51e5a03bd308b83464d453431718cdde8960",
+  "production_score_authority": false,
+  "prompt_hash": "6751ee1d2fdb4c30076da5482bcb4d030bc4f89924514d635b77643a4b5a5fde",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-680a0a08a6abe28ce2272c519420e37b06f2b1900804669516eca77c2fdb3cea",
+  "response_id": "COLLABRESP-91ed4337f542e681f1782d8c45eba7a2836ddffea35f3e9c64eb5416ee9f1ec3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

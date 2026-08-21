@@ -1,0 +1,596 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "rationale": "누적 accepted 5건을 보존하고 연결 금융자산·금융부채 변화, 공급자금융 잔액, 금리 헤지·민감도, 순현금 자본구조 6건을 추가했다. 환위험·공정가치·신용위험 세부 remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-1eabc4cd2a0071d58213c4ea",
+        "rationale": "누적 accepted 21건을 보존하며 이번 continuation 신규 fact는 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-20d6db3af3dbec68230dc01c",
+        "rationale": "임원 명단·일반 지배구조 중심으로 누적 및 이번 target-wide current objective 감사에서 material fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-212378f1e30ff1ee72c5ad41",
+        "rationale": "누적 accepted 16건을 보존하며 이번 continuation 신규 fact는 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "rationale": "누적 accepted 12건을 보존하고 연결 기계장치 담보와 판매보증충당부채 경제적 성격 2건을 추가했다. 금융자산·재고·관계기업 세부 remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+        "rationale": "누적 accepted 9건을 보존하고 별도 부채비율 비교와 MMT 특정금전신탁 배분 변화 2건을 추가했다. 별도 공정가치·투자·채권 세부 remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-5b6d91276c1af970b04377e6",
+        "rationale": "SK스퀘어 혼합 구간으로 누적 및 이번 target-wide current objective 감사에서 000660에 귀속할 material fact가 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "rationale": "누적 accepted 16건을 보존하고 별도 매출 인식시점과 기계장치 담보 2건을 추가했다. 연구개발 자산화·금융손익·위험회피 세부 remainder가 남아 있다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "economic_mechanism": "연결 금융자산 범주 합계가 2025년 말 69,804,530백만원에서 2026년 1분기 말 111,742,418백만원으로 증가해 유동성과 금융자산 배분 변화를 보여준다. 이는 HBM 귀속 현금이나 FCF는 아니다.",
+        "exact_quote": "금융자산의 범주별 공시, 합계\n당분기말\n(단위 : 백만원)\n당기손익-공정가치 측정 금융자산\n기타포괄손익-공정가치 측정 금융자산\n상각후원가로 측정하는 금융자산\n기타\n금융자산, 범주 합계\n금융자산\n35,823,059\n1,363,090\n74,522,652\n33,617\n111,742,418\n전기말\n(단위 : 백만원)\n당기손익-공정가치 측정 금융자산\n기타포괄손익-공정가치 측정 금융자산\n상각후원가로 측정하는 금융자산\n기타\n금융자산, 범주 합계\n금융자산\n20,108,429\n1,256,429\n48,243,805\n195,867\n69,804,530",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "issuer 연결 금융자산 배분과 유동성 기반의 변화를 보완하지만 HBM 현금창출이나 자유현금흐름으로 귀속하지 않는다.",
+        "mechanism_scope_id": "000660_CORPORATE_CONSOLIDATED_FINANCIAL_ASSET_BALANCE",
+        "normalized_object": "Q1_2026_CONSOLIDATED_FINANCIAL_ASSET_BALANCE_VS_FY2025",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31 vs 2025-12-31",
+        "predicate": "연결 금융자산 범주 합계는 2026년 1분기 말 111,742,418백만원으로 전기말 69,804,530백만원보다 증가했다.",
+        "predicate_family": "CONSOLIDATED_FINANCIAL_ASSET_BALANCE_COMPARISON",
+        "primitive_tags": [
+          "financial_assets",
+          "balance_change"
+        ],
+        "product_family": "금융자산",
+        "question_family_id": "C06_CONSOLIDATED_FINANCIAL_ASSET_BALANCE_COMPARISON",
+        "question_family_tags": [
+          "LIQUIDITY",
+          "FINANCIAL_ASSETS"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 금융자산 범주 합계",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "111,742,418 vs 69,804,530"
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "economic_mechanism": "연결 금융부채 범주 합계가 2025년 말 40,872,970백만원에서 2026년 1분기 말 36,477,745백만원으로 감소해 재무부담 변화를 보여준다.",
+        "exact_quote": "금융부채의 범주별 공시, 합계\n당분기말\n(단위 : 백만원)\n당기손익-공정가치 측정 금융부채\n상각후원가로 측정하는 금융부채\n기타\n금융부채, 범주 합계\n금융부채\n1,596,942\n34,880,387\n416\n36,477,745\n전기말\n(단위 : 백만원)\n당기손익-공정가치 측정 금융부채\n상각후원가로 측정하는 금융부채\n기타\n금융부채, 범주 합계\n금융부채\n4,911,955\n35,958,189\n2,826\n40,872,970",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "연결 금융부채의 실제 감소는 자본배분 여력을 보완하지만 제품별 이익이나 HBM 부채로 귀속하지 않는다.",
+        "mechanism_scope_id": "000660_CORPORATE_CONSOLIDATED_FINANCIAL_LIABILITY_BALANCE",
+        "normalized_object": "Q1_2026_CONSOLIDATED_FINANCIAL_LIABILITY_BALANCE_VS_FY2025",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31 vs 2025-12-31",
+        "predicate": "연결 금융부채 범주 합계는 2026년 1분기 말 36,477,745백만원으로 전기말 40,872,970백만원보다 감소했다.",
+        "predicate_family": "CONSOLIDATED_FINANCIAL_LIABILITY_BALANCE_COMPARISON",
+        "primitive_tags": [
+          "financial_liabilities",
+          "balance_change"
+        ],
+        "product_family": "금융부채",
+        "question_family_id": "C06_CONSOLIDATED_FINANCIAL_LIABILITY_BALANCE_COMPARISON",
+        "question_family_tags": [
+          "LEVERAGE",
+          "FINANCIAL_LIABILITIES"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 금융부채 범주 합계",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "36,477,745 vs 40,872,970"
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "economic_mechanism": "연결회사는 공급자금융약정에 참여하지만 2026년 1분기 말 해당 약정 관련 단기차입금은 없었다. 약정 존재와 실제 차입잔액 0을 분리한다.",
+        "exact_quote": "공급자금융약정에 대한 설명\n연결회사는 신용장 방식의 수입거래 간 일정 한도 내에서 금융기관이 연결회사의 채무를 공급자에게 지급하고, 추후에 연결회사가 금융기관에 상환하는 공급자금융약정에 참여하고 있습니다. 당분기말 현재 공급자금융약정에 해당되는 단기차입금은 없습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "공급자금융 사용 구조와 분기말 차입잔액 0을 직접 확인해 숨은 단기 조달부담 판단을 보완한다.",
+        "mechanism_scope_id": "000660_CORPORATE_CONSOLIDATED_SUPPLIER_FINANCE_STATUS",
+        "normalized_object": "Q1_2026_CONSOLIDATED_SUPPLIER_FINANCE_SHORT_TERM_BORROWING",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31",
+        "predicate": "공급자금융약정에 참여 중이나 2026년 1분기 말 관련 단기차입금은 없다.",
+        "predicate_family": "CONSOLIDATED_SUPPLIER_FINANCE_SHORT_TERM_BORROWING_STATUS",
+        "primitive_tags": [
+          "supplier_finance_arrangement",
+          "zero_borrowing_balance"
+        ],
+        "product_family": "공급자금융",
+        "question_family_id": "C06_CONSOLIDATED_SUPPLIER_FINANCE_STATUS",
+        "question_family_tags": [
+          "SUPPLIER_FINANCE",
+          "SHORT_TERM_BORROWING"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 공급자금융약정",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "0"
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "economic_mechanism": "연결회사는 변동금리 외화차입금 163,069백만원과 원화차입금 317,400백만원을 스왑으로 고정화해 해당 차입금의 분기 세전이익 금리 변동을 제거했다.",
+        "exact_quote": "변동금리부 외화차입금 163,069백만원에 대해 통화이자율스왑 계약을 체결하고 있으며, 변동금리부 원화차입금 317,400백만원에 대해 이자율스왑계약을 체결하고 있습니다. 따라서, 이자율 변동에 따른 해당 차입금에 대한이자비용 변동으로 인한 당분기 법인세비용차감전순이익은 변동하지 않습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "연결 이자비용 위험의 실제 헤지 범위와 효과를 보여주지만 전체 차입금의 금리위험이 제거됐다고 확대하지 않는다.",
+        "mechanism_scope_id": "000660_CORPORATE_CONSOLIDATED_INTEREST_RATE_SWAP_COVERAGE",
+        "normalized_object": "Q1_2026_CONSOLIDATED_FLOATING_RATE_BORROWINGS_SWAP_HEDGE",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "변동금리 차입금 480,469백만원 상당을 통화이자율·이자율 스왑으로 헤지해 해당 차입금의 분기 세전이익 금리 변동을 없앴다.",
+        "predicate_family": "CONSOLIDATED_INTEREST_RATE_SWAP_COVERAGE",
+        "primitive_tags": [
+          "swap_notional",
+          "pretax_profit_hedge_effect"
+        ],
+        "product_family": "금리위험 헤지",
+        "question_family_id": "C06_CONSOLIDATED_INTEREST_RATE_SWAP_COVERAGE",
+        "question_family_tags": [
+          "INTEREST_RATE_RISK",
+          "HEDGE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 변동금리 차입금 헤지",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "163,069 + 317,400"
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "economic_mechanism": "다른 변동금리 차입금·금융자산에 대해 금리 100bp 변동 시 향후 1년 연결 세전이익 민감도는 10,792백만원으로 추정돼 헤지 후에도 잔여 금리 위험이 있다.",
+        "exact_quote": "향후 1년간 연결회사의 변동금리부 차입금 및 금융자산으로부터의 순이자비용으로 인한 법인세비용차감전순이익은 10,792백만원(전분기: 13,750백만원) 만큼 증가 또는 감소할 것으로 예상됩니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "실제 헤지 뒤에도 남은 금리 민감도를 수치화하는 capital counter이며 회사 전망이나 확정 손실로 분류하지 않는다.",
+        "mechanism_scope_id": "000660_CORPORATE_CONSOLIDATED_INTEREST_RATE_SENSITIVITY",
+        "normalized_object": "Q1_2026_CONSOLIDATED_ONE_YEAR_PRETAX_INTEREST_RATE_SENSITIVITY_100BP",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31 이후 1년",
+        "predicate": "금리 100bp 변동 시 향후 1년 연결 세전이익은 10,792백만원 증가 또는 감소할 것으로 추정된다.",
+        "predicate_family": "CONSOLIDATED_INTEREST_RATE_SENSITIVITY",
+        "primitive_tags": [
+          "100bp_scenario",
+          "pretax_profit_sensitivity"
+        ],
+        "product_family": "금리위험",
+        "question_family_id": "C06_CONSOLIDATED_INTEREST_RATE_SENSITIVITY",
+        "question_family_tags": [
+          "INTEREST_RATE_RISK",
+          "SENSITIVITY"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 잔여 금리 민감도",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "10,792"
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+        "economic_mechanism": "2026년 1분기 말 연결 현금성자산 등이 차입금을 초과했고 부채비율은 35.56%였다. 이는 회사 전체 자본여력이며 HBM별 투자회수나 FCF로 귀속하지 않는다.",
+        "exact_quote": "부채비율 및 순차입금비율에 대한 공시\n당분기말\n(단위 : 백만원)\n공시금액\n부 채 (A)\n58,448,945\n자 본 (B)\n164,379,799\n현금및현금성자산 등 (C)\n54,329,761\n차입금 (D)\n19,317,665\n부채비율 (A/B)\n0.3556\n순차입금비율 (D-C)/B\n0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "연결 순현금과 레버리지 수준을 직접 보여줘 자본배분 여력 판단에 중요하지만 제품별 현금창출로 확대하지 않는다.",
+        "mechanism_scope_id": "000660_CORPORATE_CONSOLIDATED_NET_CASH_CAPITAL_STRUCTURE",
+        "normalized_object": "Q1_2026_CONSOLIDATED_NET_CASH_AND_DEBT_RATIO",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31",
+        "predicate": "연결 현금및현금성자산 등은 54,329,761백만원, 차입금은 19,317,665백만원, 부채비율은 35.56%였고 순차입금비율은 부의 값이라 표시하지 않았다.",
+        "predicate_family": "CONSOLIDATED_NET_CASH_CAPITAL_STRUCTURE",
+        "primitive_tags": [
+          "cash_equivalents",
+          "borrowings",
+          "debt_ratio"
+        ],
+        "product_family": "자본구조",
+        "question_family_id": "C06_CONSOLIDATED_NET_CASH_CAPITAL_STRUCTURE",
+        "question_family_tags": [
+          "NET_CASH",
+          "DEBT_RATIO"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 자본구조와 순현금",
+        "subject_id": "000660",
+        "unit": "백만원; %",
+        "value": "54,329,761 cash vs 19,317,665 debt; debt ratio 35.56%"
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "economic_mechanism": "연결회사의 일부 기계장치 등이 차입금 담보로 제공돼 자산의 자유로운 처분과 자본구조에 제약이 있다. 담보 금액이나 HBM 전용 설비 여부는 공시 문장에 없다.",
+        "exact_quote": "담보로 제공된 유형자산에 대한 기술\n당분기말 현재 연결회사의 일부 기계장치 등은 차입금과 관련하여 담보로 제공되어 있습니다(주석 29 참조).",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "자산 담보 제약을 확인하는 capital counter지만 담보액과 HBM 설비 귀속은 확인되지 않는다.",
+        "mechanism_scope_id": "000660_CORPORATE_CONSOLIDATED_PPE_COLLATERAL",
+        "normalized_object": "Q1_2026_CONSOLIDATED_MACHINERY_COLLATERAL_FOR_BORROWINGS",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "2026년 1분기 말 연결 일부 기계장치 등이 차입금 관련 담보로 제공됐다.",
+        "predicate_family": "CONSOLIDATED_PPE_COLLATERAL_STATUS",
+        "primitive_tags": [
+          "machinery_collateral",
+          "borrowing_security"
+        ],
+        "product_family": "유형자산 담보",
+        "question_family_id": "C06_CONSOLIDATED_PPE_COLLATERAL_STATUS",
+        "question_family_tags": [
+          "COLLATERAL",
+          "CAPITAL_CONSTRAINT"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 기계장치 담보",
+        "subject_id": "000660",
+        "unit": "",
+        "value": "일부 기계장치 등 담보 제공"
+      },
+      {
+        "business_segment": "연결 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-517ee88c46b03a911ecddcca",
+        "economic_mechanism": "연결 판매보증충당부채는 무상수리 예상지출과 과거 특정 제품 품질 저하에 따른 현금보상·제품교환 예상액을 반영한다. 제품명과 HBM 귀속은 확인되지 않는다.",
+        "exact_quote": "충당부채의 성격에 대한 기술\n연결회사는 무상 품질보증수리 등과 관련하여 장래에 지출될 것이 예상되는 금액을 과거 경험율 등을 기초로 추정하여 충당부채를 인식하고 있으며, 과거 특정 제품의 품질 저하 현상과 관련하여 현금 보상, 제품 교환 등 연결회사가 부담할 것으로 예상되는 금액을 별도로 추정하여 충당부채로 계상하고 있습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "기존 충당부채 잔액 fact와 별도로 장래 현금유출의 경제적 성격을 설명하는 counter다. 특정 제품을 HBM으로 추론하지 않는다.",
+        "mechanism_scope_id": "000660_CORPORATE_CONSOLIDATED_WARRANTY_PROVISION_NATURE",
+        "normalized_object": "Q1_2026_CONSOLIDATED_WARRANTY_PROVISION_EXPECTED_OUTFLOW_NATURE",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1 현재",
+        "predicate": "판매보증충당부채는 무상 품질보증수리와 특정 제품 품질 저하 관련 현금보상·제품교환의 예상 지출을 반영한다.",
+        "predicate_family": "CONSOLIDATED_WARRANTY_PROVISION_ECONOMIC_NATURE",
+        "primitive_tags": [
+          "future_outflow",
+          "product_quality_compensation"
+        ],
+        "product_family": "판매보증충당부채",
+        "question_family_id": "C06_CONSOLIDATED_WARRANTY_PROVISION_ECONOMIC_NATURE",
+        "question_family_tags": [
+          "WARRANTY",
+          "QUALITY_RISK"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 판매보증충당부채의 경제적 성격",
+        "subject_id": "000660",
+        "unit": "",
+        "value": "무상수리·현금보상·제품교환 예상지출"
+      },
+      {
+        "business_segment": "별도 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+        "economic_mechanism": "별도 부채비율은 2025년 말 43.97%에서 2026년 1분기 말 33.89%로 낮아졌고 현금성자산 등이 차입금을 초과했다. 기존 순현금 수준과 구별되는 자본구조 비교다.",
+        "exact_quote": "부채비율 및 순차입금비율에 대한 공시\n당분기말\n(단위 : 백만원)\n공시금액\n부 채 (A)\n53,530,383\n자 본 (B)\n157,930,788\n현금및현금성자산 등 (C)\n29,650,237\n차입금 (D)\n17,017,563\n부채비율 (A/B)\n0.3389\n순차입금비율 (D-C)/B\n0.0000\n자본관리를 위한 기업의 목적, 정책 및 절차에 대한 비계량적 정보\n회사의 자본관리 목적은 계속기업으로서 주주 및 이해당사자들에게 이익을 지속적으로 제공할 수 있는 능력을 보호하고 자본비용을 절감하기 위해 최적 자본구조를 유지하는 것입니다.자본구조를 유지 또는 조정하기 위하여 회사는 주주에게 지급되는 배당을 조정하고, 차입금 조달 및 상환, 신주 발행 및 자산 매각 등을 실시하고 있습니다.주요 차입금 계약상 회사는 일정 수준의 부채비율, 담보채무비율 등을 준수해야 하며, 회사는 당분기말 현재 이러한 조건을 준수하였습니다.\n현금및현금성자산 등에 대한 기술\n현금및현금성자산, 단기금융상품 및 단기투자자산의 합계액입니다.\n순차입금비율에 대한 기술\n당분기말 순차입금비율은 부(-)의 비율로 산출되어 표시하지 않았습니다.\n전기말\n(단위 : 백만원)\n공시금액\n부 채 (A)\n51,585,367\n자 본 (B)\n117,318,562\n현금및현금성자산 등 (C)\n18,032,189\n차입금 (D)\n20,160,455\n부채비율 (A/B)\n0.4397\n순차입금비율 (D-C)/B\n0.0181",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "별도 자본구조의 개선 정도를 전기말과 직접 비교하며, HBM별 수익성이나 투자회수로 귀속하지 않는다.",
+        "mechanism_scope_id": "000660_CORPORATE_PARENT_DEBT_RATIO_COMPARISON",
+        "normalized_object": "Q1_2026_PARENT_DEBT_RATIO_VS_FY2025",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31 vs 2025-12-31",
+        "predicate": "별도 부채비율은 43.97%에서 33.89%로 하락했고 2026년 1분기 말 순차입금비율은 부의 값이라 표시하지 않았다.",
+        "predicate_family": "PARENT_DEBT_RATIO_COMPARISON",
+        "primitive_tags": [
+          "debt_ratio_change",
+          "parent_capital_structure"
+        ],
+        "product_family": "자본구조",
+        "question_family_id": "C06_PARENT_DEBT_RATIO_COMPARISON",
+        "question_family_tags": [
+          "DEBT_RATIO",
+          "NET_CASH"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 별도 부채비율 변화",
+        "subject_id": "000660",
+        "unit": "%",
+        "value": "33.89% vs 43.97%"
+      },
+      {
+        "business_segment": "별도 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+        "economic_mechanism": "별도 종속기업투자 중 MMT 특정금전신탁 장부금액이 11,296,700백만원에서 16,846,130백만원으로 증가했고, 분기 중 일부 처분과 신규 취득이 함께 있었다.",
+        "exact_quote": "MMT 특정금전신탁(*2)\n국 내\n특정금전신탁\n100.00\n16,846,130\n100.00\n11,296,700\n합 계\n28,314,135\n22,764,705\n(*1) 당분기 중 종속기업의 종업원 소유 주식 매입으로 지분율이 증가 하였습니다.(*2) 당분기 중 MMT(특정금전신탁)를 일부 처분하고 신규 취득하였습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "현금성 자산 운용과 자본배분의 실제 변화를 보여주지만 HBM CAPA 투자 또는 영업현금흐름으로 분류하지 않는다.",
+        "mechanism_scope_id": "000660_CORPORATE_PARENT_MMT_TRUST_BALANCE_CHANGE",
+        "normalized_object": "Q1_2026_PARENT_MMT_TRUST_BALANCE_VS_FY2025",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31 vs 2025-12-31",
+        "predicate": "MMT 특정금전신탁 장부금액은 2026년 1분기 말 16,846,130백만원으로 전기말 11,296,700백만원보다 증가했다.",
+        "predicate_family": "PARENT_MMT_TRUST_BALANCE_CHANGE",
+        "primitive_tags": [
+          "mmt_trust",
+          "balance_change"
+        ],
+        "product_family": "MMT 특정금전신탁",
+        "question_family_id": "C06_PARENT_MMT_TRUST_BALANCE_CHANGE",
+        "question_family_tags": [
+          "TREASURY_MANAGEMENT",
+          "CAPITAL_ALLOCATION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 별도 MMT 특정금전신탁 배분",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "16,846,130 vs 11,296,700"
+      },
+      {
+        "business_segment": "별도 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "economic_mechanism": "2026년 1분기 별도 고객계약 수익 48,058,588백만원 중 48,019,464백만원이 한 시점에 인식되고 39,124백만원만 기간에 걸쳐 인식돼 수익 인식 구조가 제품 판매 중심임을 보여준다.",
+        "exact_quote": "수행의무에 대한 공시\n당분기\n(단위 : 백만원)\n한 시점에 이행\n기간에 걸쳐 이행\n수행의무 합계\n수익(매출액)\n48,019,464\n39,124\n48,058,588\n전분기\n(단위 : 백만원)\n한 시점에 이행\n기간에 걸쳐 이행\n수행의무 합계\n수익(매출액)\n15,907,748\n37,546\n15,945,294",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "별도 수익의 인식시점과 반복성 해석을 보완하지만 DRAM/HBM 매출로 귀속하지 않고 계약기간·취소조건도 추론하지 않는다.",
+        "mechanism_scope_id": "000660_CORPORATE_PARENT_REVENUE_RECOGNITION_TIMING",
+        "normalized_object": "Q1_2026_PARENT_REVENUE_RECOGNITION_TIMING_SPLIT",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "별도 고객계약 수익은 한 시점 인식 48,019,464백만원, 기간 인식 39,124백만원이었다.",
+        "predicate_family": "PARENT_REVENUE_RECOGNITION_TIMING",
+        "primitive_tags": [
+          "point_in_time_revenue",
+          "over_time_revenue"
+        ],
+        "product_family": "고객계약 수익",
+        "question_family_id": "C06_PARENT_REVENUE_RECOGNITION_TIMING",
+        "question_family_tags": [
+          "REVENUE_RECOGNITION",
+          "INFORMATION_QUALITY"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 별도 고객계약 수익 인식시점",
+        "subject_id": "000660",
+        "unit": "백만원",
+        "value": "48,019,464 point-in-time; 39,124 over-time"
+      },
+      {
+        "business_segment": "별도 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-5d1c1167b9b6798bbb391320",
+        "economic_mechanism": "별도 일부 기계장치가 차입금 담보로 제공돼 자산의 자유로운 처분과 자본구조에 제약이 있다. 담보 금액이나 HBM 설비 여부는 공시되지 않았다.",
+        "exact_quote": "담보로 제공된 유형자산에 대한 기술\n당분기말 현재 회사의 일부 기계장치는 차입금과 관련하여 담보로 제공되어 있습니다(주석 28 참조).",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "별도 자산 담보 제약을 연결 공시와 구분해 확인하지만 담보액과 HBM CAPA 귀속은 확인되지 않는다.",
+        "mechanism_scope_id": "000660_CORPORATE_PARENT_PPE_COLLATERAL",
+        "normalized_object": "Q1_2026_PARENT_MACHINERY_COLLATERAL_FOR_BORROWINGS",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "2026년 1분기 말 별도 일부 기계장치가 차입금 관련 담보로 제공됐다.",
+        "predicate_family": "PARENT_PPE_COLLATERAL_STATUS",
+        "primitive_tags": [
+          "parent_machinery_collateral",
+          "borrowing_security"
+        ],
+        "product_family": "유형자산 담보",
+        "question_family_id": "C06_PARENT_PPE_COLLATERAL_STATUS",
+        "question_family_tags": [
+          "COLLATERAL",
+          "CAPITAL_CONSTRAINT"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 별도 기계장치 담보",
+        "subject_id": "000660",
+        "unit": "",
+        "value": "일부 기계장치 담보 제공"
+      }
+    ],
+    "unresolved_document_ids": [
+      "OFFICIALDOC-15c31fba9ab95bed68a1d7db",
+      "OFFICIALDOC-517ee88c46b03a911ecddcca",
+      "OFFICIALDOC-5ab7b6275ada2bdc0b53d90c",
+      "OFFICIALDOC-5d1c1167b9b6798bbb391320"
+    ],
+    "unresolved_research_notes": [
+      "12개 page cap에 도달했다. 남은 네 문서의 환위험·공정가치·재고·관계기업·연구개발 자산화·금융손익·위험회피 세부가 prior 91건과 의미상 다른지 다음 continuation에서 재검토해야 한다."
+    ]
+  },
+  "payload_hash": "bb0e9e0b3168faf0f8392d0730627f666eea06f6fdc0211597fad77eff8b9ced",
+  "production_score_authority": false,
+  "prompt_hash": "d30ec2883e2f9413d1b9eca716077ddf8e03656a8016a1e90c82421fabbcb1f0",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-62e2fbf051478ee47f23c84f6dbd1e6e4675a5bc57df79845e82acb96e674cc7",
+  "response_id": "COLLABRESP-edbfc891480839ba929f79e48f4f7eb68d59fce3654d650713c9dbe0c579d33a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

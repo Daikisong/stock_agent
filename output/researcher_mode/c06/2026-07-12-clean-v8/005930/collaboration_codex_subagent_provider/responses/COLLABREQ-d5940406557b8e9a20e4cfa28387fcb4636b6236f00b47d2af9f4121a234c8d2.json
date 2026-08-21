@@ -1,0 +1,56 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      2.2,
+      3.3
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-09ab96433f8087166845bf25 is a low-confidence ordinal anchor with a 1.75-2.25 band and no fact signature. The current source-backed AMD product relationship and actual HBM4 shipment evidence justify placing the case above that band, but not near the 5-point ceiling.",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64 is a low-confidence ordinal anchor with a 1.5-2.0 band for a weak execution-to-cash bridge. The current case improves technical verification but still shares the anchor's missing cash and contract bridge, so the calibration uplift must remain bounded."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1",
+      "EFACT-6a317a6c41253b0fafc79d56"
+    ],
+    "disagreements": [
+      "The ordinal anchors do not justify false precision because neither is usable as an exact anchor.",
+      "Neither the AMD MOU alignment nor HBM4 shipment execution can be calibrated as proof of price, quantity, duration, cancellation protection, backlog, or HBM-only cash conversion."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "proposed_points": 2.8,
+    "rationale": "On the 5-point information-confidence scale, the exact facts support a middle score. Customer-official AMD material independently verifies realized HBM3E participation, named-product HBM4 alignment, and platform collaboration, while actual HBM4 shipments verify execution. The two historical anchors are low-confidence ordinal references near 2 points, so they support direction rather than a precise number. A bounded uplift to 2.8 recognizes stronger verification while preserving the unresolved distinction between technical relationship and binding contract economics.",
+    "support_fact_ids": [
+      "EFACT-0ea4c7a5b342855d104d1848",
+      "EFACT-4d0e0f24a3a1645c5962f1b3",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-f295131e6dc092d197e8eb93"
+    ],
+    "why_not_higher": "Upper-band information confidence would require source-backed contract economics or customer-lock evidence that the prompt does not contain; NVIDIA remains in discussion and the AMD HBM4 relationship is MOU-based.",
+    "why_not_lower": "The current record is more informative than the low-confidence ordinal anchors because it includes a customer-official named-product supply history plus actual HBM4 shipment execution."
+  },
+  "payload_hash": "f2db2a0eabaeecb86b56729c36c3fbf7ac5162f233a0af7cd48fc05c9e2f91cc",
+  "production_score_authority": false,
+  "prompt_hash": "57fbbdb35ff3fc7f804951b568375eee7a2d7f825eb0ddc37318a93afdf5fe4d",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d5940406557b8e9a20e4cfa28387fcb4636b6236f00b47d2af9f4121a234c8d2",
+  "response_id": "COLLABRESP-399d0227b1fe8ba152c9b0ee0caf76b8005eb9f1cdaaabce0d32184484dc4291",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

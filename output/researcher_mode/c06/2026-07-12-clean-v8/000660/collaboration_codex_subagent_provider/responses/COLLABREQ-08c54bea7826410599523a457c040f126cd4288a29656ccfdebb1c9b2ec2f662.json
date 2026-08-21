@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "7898fd577667183c98b838d240ce0cf709854afb944fd0eb8422e070ea8a6c59",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-22a6c2d2787fb47c419b11fd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 공식 뉴스룸 URL이지만 제목·URL 메타상 요청된 ISSUER_EARNINGS_RELEASE 원문이 아니라 제품·기술·행사·일반 설명 자료다. 요청 family provenance가 맞지 않아 material evidence route로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-28340cb29ad145cb1a131caf",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.04,
+        "rationale": "SK하이닉스 공식 경영실적 원문 계열이지만 제목·URL이 2024년 이전의 과거 기간을 가리킨다. 현재 2026년 DURABLE_VISIBILITY 및 최신 HBM 경제 메커니즘을 검증하기에는 stale하여 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-9c6dfc91644649261e421937",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 공식 뉴스룸 URL이지만 제목·URL 메타상 요청된 ISSUER_EARNINGS_RELEASE 원문이 아니라 제품·기술·행사·일반 설명 자료다. 요청 family provenance가 맞지 않아 material evidence route로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-7c801733067202f7cdc8223b",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.04,
+        "rationale": "SK하이닉스 공식 경영실적 원문 계열이지만 제목·URL이 2024년 이전의 과거 기간을 가리킨다. 현재 2026년 DURABLE_VISIBILITY 및 최신 HBM 경제 메커니즘을 검증하기에는 stale하여 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-d43247347a59fc7fe2c6964b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 공식 뉴스룸 URL이지만 제목·URL 메타상 요청된 ISSUER_EARNINGS_RELEASE 원문이 아니라 제품·기술·행사·일반 설명 자료다. 요청 family provenance가 맞지 않아 material evidence route로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-c7f96c42204c44d0e8491586",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 공식 뉴스룸 URL이지만 제목·URL 메타상 요청된 ISSUER_EARNINGS_RELEASE 원문이 아니라 제품·기술·행사·일반 설명 자료다. 요청 family provenance가 맞지 않아 material evidence route로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-b61acb2349a93ff939cc2409",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.04,
+        "rationale": "SK하이닉스 공식 경영실적 원문 계열이지만 제목·URL이 2024년 이전의 과거 기간을 가리킨다. 현재 2026년 DURABLE_VISIBILITY 및 최신 HBM 경제 메커니즘을 검증하기에는 stale하여 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-588f2774d8ad3b37316c1d41",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 공식 뉴스룸 URL이지만 제목·URL 메타상 요청된 ISSUER_EARNINGS_RELEASE 원문이 아니라 제품·기술·행사·일반 설명 자료다. 요청 family provenance가 맞지 않아 material evidence route로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-0ae56ead1a37a95f110a3116",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.04,
+        "rationale": "SK하이닉스 공식 경영실적 원문 계열이지만 제목·URL이 2024년 이전의 과거 기간을 가리킨다. 현재 2026년 DURABLE_VISIBILITY 및 최신 HBM 경제 메커니즘을 검증하기에는 stale하여 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-4c4a297b15a022bda07f4fc6",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.04,
+        "rationale": "SK하이닉스 공식 경영실적 원문 계열이지만 제목·URL이 2024년 이전의 과거 기간을 가리킨다. 현재 2026년 DURABLE_VISIBILITY 및 최신 HBM 경제 메커니즘을 검증하기에는 stale하여 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-d920988ee2ed84f31298bc33",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 IR archive landing page로 earnings-release provenance는 있으나 페이지 3의 과거 목록이며 현재 2026년 1분기 실적 원문을 특정하지 않는다. 현재 gap을 해결할 full-document route가 아니므로 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-7b17db8ed61ac285de662167",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 공식 뉴스룸 URL이지만 제목·URL 메타상 요청된 ISSUER_EARNINGS_RELEASE 원문이 아니라 제품·기술·행사·일반 설명 자료다. 요청 family provenance가 맞지 않아 material evidence route로 승격하지 않았다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 transport roster는 전수 분류했으며 snippet은 discovery metadata로만 사용했다. material 후보는 full fetch 후 발행일·원문 내용·as_of 적합성을 다시 검증해야 한다."
+    ]
+  },
+  "payload_hash": "36bbbcd86e46f50b1fea8b72ce8c1a486801679dfcdf3440aa404bec6082b845",
+  "production_score_authority": false,
+  "prompt_hash": "418ed98ee4a9e4955dffb797b89c30133a9bec59d5bf9be4a9beed58359113d5",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-08c54bea7826410599523a457c040f126cd4288a29656ccfdebb1c9b2ec2f662",
+  "response_id": "COLLABRESP-cc71b407da280cf19f3b0f99be2cededa9cc3b0ac0d9b3bc92b5b8583bb046d6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

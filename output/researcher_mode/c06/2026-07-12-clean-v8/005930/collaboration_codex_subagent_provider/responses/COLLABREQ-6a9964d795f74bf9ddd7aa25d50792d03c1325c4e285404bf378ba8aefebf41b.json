@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-2f3a996b6a0afede53cafcf4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「사 업 보 고 서」는 kind.krx.co.kr의 KIND_KRX 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-25cd3347643992a958843667",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「반 기 보 고 서」는 images.samsung.com의 ISSUER_NEWSROOM 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-92c28b4f4367427763274428",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「SK하이닉스(000660 KS) 전문 투자 리포트」는 velog.io의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-724ba1523b1bb0ae82f63be7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「SK하이닉스, NVIDIA Vera CPU용 메모리 공급 확정 - 테크 소식」는 zod.kr의 TRUSTED_BUSINESS_MEDIA 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-30dce60ebc82010c197c0484",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「너쟁이의 성실한 추추생활 - Статистика та аналітика Telegram каналу ....」는 telemetr.io의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-4cf9281021d3f9d0f59099fb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「이슈브리프 AI 추론 효율화를 위한 HBF의 등장 엔비디아 생태계에 대한 업계·규....」는 rd.kdb.co.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-ff1daec17693772d7df18ed0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「AI부품도 병목이다 전기전자 (비중확대/유지)」는 securities.miraeasset.com의 PUBLIC_BROKER_PDF 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-fda370717c51005164e1a4da",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「삼성·ASML, 1兆 투자해 한국에 R&D센터 설립」는 www.todaykorea.co.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-288802c8d7f05c9331ea8488",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「23 June, 2026 Yuanta Research」는 www.myasset.com의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-87b999a238f5d9a3db0b0aad",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「samilpwc_ai-business-use-cases.pdf」는 www.pwc.com의 PUBLIC_BROKER_PDF 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-2c1bdf4fae5a7e079872d35c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「[모닝리포트] 2026년 6월 9일: NAVER, 삼성전자, SK하이닉스, 심텍, 한국전력, LG, 두....」는 contents.premium.naver.com의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      },
+      {
+        "candidate_id": "SGCAND-be2910fb5b08ac2517c3f2fa",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "「AI 인공지능 - 메모리 반도체가 중요한 이유? | 대체 어떻게 작동하길래 SK하이닉....」는 min-inter.co.kr의 GENERAL_WEB_DISCOVERY 경로로, NVIDIA 또는 OpenAI가 소유한 CUSTOMER_OFFICIAL 원문·landing이 아니다. 검색 snippet·metadata만으로 삼성 HBM의 qualification, platform alignment, supply status 또는 committed allocation을 검증할 수 없어 nonmaterial로 분류한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P1의 supplied candidate 12개를 모두 exact-once 검토했으며 NVIDIA/OpenAI 소유 CUSTOMER_OFFICIAL full route는 없었다.",
+      "Snippet과 metadata는 discovery-only이며, 제3자·broker·issuer·navigation 경로는 이 counterparty-official objective의 evidence로 승격하지 않았다."
+    ]
+  },
+  "payload_hash": "0f82562ca809576e7e116589e0f9585ab096c7b51b479e45d4b043bda3d1ff65",
+  "production_score_authority": false,
+  "prompt_hash": "5b730babd200f497af2d1298b3afdbcb3c3cb3d99c1470a96c0be86fd0e6c925",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6a9964d795f74bf9ddd7aa25d50792d03c1325c4e285404bf378ba8aefebf41b",
+  "response_id": "COLLABRESP-a9e4614bf0940b7e10c7aadcb95356429d84478d4b1af0a7bb56296374093071",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

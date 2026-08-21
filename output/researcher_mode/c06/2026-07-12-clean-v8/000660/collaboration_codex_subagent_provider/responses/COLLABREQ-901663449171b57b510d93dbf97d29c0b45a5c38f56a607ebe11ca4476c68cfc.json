@@ -1,0 +1,230 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "rationale": "The complete supplied literal transport chunk 0 of 2 was reviewed in source order and yielded four distinct target-relevant broker outlook or counter facts. Target-price-only material, ETF holdings, non-target macro/industry background, NAND content, and the internally inconsistent OCR mapping of the 2027 operating-margin peak were excluded. The LTA observation is explicitly preserved as broker industry context and not promoted to target-specific signed terms or DURABLE_VISIBILITY. The parent document remains unresolved because its literal chunk 1 of 2 is not part of this request.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권은 SK하이닉스가 2026년 하반기 서버향 DRAM과 모바일향 메모리 가격의 수혜를 받을 것으로 전망했다. 브로커 전망이며 issuer guidance나 확정 가격 조건이 아니다.",
+        "exact_quote": "•삼성전자와마찬가지로서버향DRAM 및모바일향가격수혜전망",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 가격 수혜 전망은 target의 메모리 수익성과 EPS 경로에 직접 연결되지만 브로커 전망으로 한정된다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "Broker 2H2026 DRAM and mobile pricing benefit outlook",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2H2026 outlook",
+        "predicate": "서버향 DRAM 및 모바일향 가격 수혜를 전망했다",
+        "predicate_family": "BROKER_DRAM_MOBILE_PRICING_BENEFIT_OUTLOOK",
+        "primitive_tags": [
+          "SK하이닉스",
+          "DRAM",
+          "server",
+          "mobile",
+          "2H2026"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "dram_pricing_outlook",
+        "question_family_tags": [
+          "dram_pricing",
+          "mobile_memory_pricing",
+          "broker_outlook"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 서버향 DRAM 및 모바일향 가격 수혜 전망",
+        "subject_id": "000660:DRAM_PRICING_BENEFIT_2H2026",
+        "unit": "",
+        "value": "server DRAM and mobile pricing benefit expected"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권은 2026년 하반기 Vera Rubin 출하와 함께 SK하이닉스의 HBM4 수혜를 전망했다. 이는 브로커 전망이며 고객 계약 물량이나 issuer guidance가 아니다.",
+        "exact_quote": "•하반기Vera Rubin 출하와함께HBM4수혜도기대",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM4 수요·출하 경로의 target-local 전망으로 earnings와 bottleneck objective에 직접 관련되며 계약경제로 확대하지 않았다.",
+        "mechanism_scope_id": "000660:MEMORY:HBM:REVENUE_CONVERSION",
+        "normalized_object": "Broker HBM4 benefit outlook linked to Vera Rubin shipment",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2H2026 outlook",
+        "predicate": "하반기 Vera Rubin 출하와 함께 HBM4 수혜를 기대했다",
+        "predicate_family": "BROKER_HBM4_VERA_RUBIN_BENEFIT_OUTLOOK",
+        "primitive_tags": [
+          "SK하이닉스",
+          "HBM4",
+          "Vera Rubin",
+          "2H2026"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "hbm4_vera_rubin_outlook",
+        "question_family_tags": [
+          "hbm4",
+          "vera_rubin",
+          "broker_outlook"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM4 Vera Rubin 출하 수혜 전망",
+        "subject_id": "000660:HBM4_VERA_RUBIN_BENEFIT_2H2026",
+        "unit": "",
+        "value": "HBM4 benefit expected with Vera Rubin shipment"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.82,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권은 메모리 업체들의 장기공급계약 성사가 이어지면서 업종 실적 변동성이 낮아질 가능성이 높다고 전망했다. SK하이닉스 유망기업 문맥의 업종 전망이며 target의 개별 확정 계약·물량·가격을 뜻하지 않는다.",
+        "exact_quote": "•이와함께장기공급계약들도하나하나성사가되면서메모리업체들의실적변동성축소가능성이높아짐",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "메모리 업종의 실적 가시성에 관한 material outlook이지만 target별 계약경제는 확인되지 않아 구조화 역할을 부여하지 않았다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:INFORMATION_ONLY",
+        "normalized_object": "Broker memory-industry earnings volatility outlook from LTA progress",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2H2026 outlook",
+        "predicate": "장기공급계약 성사로 메모리 업체 실적 변동성 축소 가능성이 높다고 전망했다",
+        "predicate_family": "BROKER_MEMORY_INDUSTRY_LTA_VOLATILITY_OUTLOOK",
+        "primitive_tags": [
+          "memory",
+          "long_term_supply_agreement",
+          "earnings_volatility",
+          "broker_outlook"
+        ],
+        "product_family": "Memory products",
+        "question_family_id": "memory_lta_earnings_volatility",
+        "question_family_tags": [
+          "memory_lta",
+          "earnings_volatility",
+          "industry_context"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "메모리 업체 장기공급계약 진전에 따른 실적 변동성 전망",
+        "subject_id": "000660:MEMORY_INDUSTRY_LTA_VOLATILITY_OUTLOOK_2H2026",
+        "unit": "",
+        "value": "earnings volatility reduction considered increasingly likely"
+      },
+      {
+        "business_segment": "Memory market",
+        "confidence": 0.86,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권은 삼성전자와 SK하이닉스 주가 상관성이 1에 근접한 현상을 반도체 후기 사이클과 상승세 균열 가능성의 신호로 해석했다.",
+        "exact_quote": "삼성전자와 SK하이닉스의 상관성이 1에 근접한다는 것은 반도체 후기 사이클을 의미\n•반도체주도주지위소실의시그널은삼성전자와하이닉스의주가차별화\n•삼성전자와SK하이닉스중의우열가리기및롱-숏페어구성등의액션은반도체상승세의균열시작\n•상관계수1은반도체상승동조화가극단적으로수렴했다는의미, 우열논리가생성되는시기는알파투자스킴개시의시그널",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 메모리 주가 사이클과 valuation/market-mispricing risk를 직접 반박하는 브로커 counter signal이다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:RISK_COUNTER",
+        "normalized_object": "Broker late-cycle counter signal from Samsung-Hynix stock correlation",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "current as of 2026-05-22",
+        "predicate": "주가 상관성 1 근접을 반도체 후기 사이클 신호로 해석했다",
+        "predicate_family": "BROKER_MEMORY_STOCK_CORRELATION_LATE_CYCLE_SIGNAL",
+        "primitive_tags": [
+          "SK하이닉스",
+          "삼성전자",
+          "correlation",
+          "late_cycle"
+        ],
+        "product_family": "Issuer-wide memory valuation signal",
+        "question_family_id": "memory_stock_late_cycle_signal",
+        "question_family_tags": [
+          "late_cycle",
+          "stock_correlation",
+          "market_risk"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.86,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스와 삼성전자 주가 동조화의 후기 사이클 신호",
+        "subject_id": "000660:SAMSUNG_HYNIX_CORRELATION_LATE_CYCLE_20260522",
+        "unit": "",
+        "value": "stock correlation approaching 1 interpreted as late-cycle signal"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-3fa5f1bda504b0cb332bde68"
+    ],
+    "unresolved_research_notes": [
+      "SGDOC-3fa5f1bda504b0cb332bde68 parent transport chunk 1 of 2 remains for a deterministic follow-up request."
+    ]
+  },
+  "payload_hash": "c2b4678e0e0d4df7a8634633001148ccf4b19a8b10c1c5367fec30fa8d7b3779",
+  "production_score_authority": false,
+  "prompt_hash": "d9655592bb856e3e873e9beaf3070c227e40ea028e5614b3117277018a6f0d8a",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-901663449171b57b510d93dbf97d29c0b45a5c38f56a607ebe11ca4476c68cfc",
+  "response_id": "COLLABRESP-a582715b75add1459d9fe15ff4598e25becc7acebf6e013233a21ad906d9bed5",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

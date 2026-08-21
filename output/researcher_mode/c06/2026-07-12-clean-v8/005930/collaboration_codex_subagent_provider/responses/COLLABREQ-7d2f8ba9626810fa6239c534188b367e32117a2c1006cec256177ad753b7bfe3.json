@@ -1,0 +1,496 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-51d5e952c5a77567fc8a4164",
+        "rationale": "미등기임원 명단·경력 조각이며 prior12 이후 추가 objective-local 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "rationale": "prior page 5건에 더해 추가배당, 자기주식 프로그램, 배당절차·성향·이력, 무발행, 소송 불확실성, 채권 충당률, 보조금 지급보증 등 9건을 추출해 cumulative accepted 14건으로 잔여를 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-5f26f48e668c6305b4b1de3c",
+        "rationale": "종속회사·회계표시 조각이며 prior12 이후 새 메모리 또는 회사 전체 objective 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-63db1e7e8734e63136032598",
+        "rationale": "주주총회·임원·지배구조 조각이며 current objective에 새로 필요한 직접 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-6601c7fcf9b10b37297bd96d",
+        "rationale": "prior page 7건에 회사 전체 상위 5대 고객 집중도 1건을 추가해 cumulative accepted 8건으로 잔여를 소진했다. 메모리 고객 집중도로는 확대하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-7424cf31cd84e314dd11c2d0",
+        "rationale": "임원 명단상 메모리 직책은 계약·CAPA·실적 사실이 아니며 prior12 이후 추가 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-88c797c630d09c54e9bd7a06",
+        "rationale": "임원·계열사·Foundry·비메모리 내용으로 prior12 이후 MEMORY scope의 새 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-913479eb6002c858cbacb8f3",
+        "rationale": "재무위험 수치는 current facts와 중복되고 DS 혼합부문 수치는 MEMORY에 귀속할 수 없어 추가 사실이 없다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "예상 배당재원을 반영한 추가 배당은 정규배당 외 잉여자본 환원의 실제 집행을 보여준다.",
+        "exact_quote": "2025년 결산배당시 세제개편과 예상 배당재원을 감안하여 1.3조원 규모의 추가 배당을 실시한 바 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "정규배당 외 1.3조원 추가 현금환원은 잔여 재원 배분의 실제 사례다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:SHAREHOLDER_RETURN",
+        "normalized_object": "2025년 결산 추가배당",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025 year-end dividend",
+        "predicate": "PAID_ADDITIONAL_YEAR_END_DIVIDEND",
+        "predicate_family": "CAPITAL_RETURN_EXECUTION",
+        "primitive_tags": [
+          "ADDITIONAL_DIVIDEND",
+          "CAPITAL_RETURN_ACTUAL"
+        ],
+        "product_family": "현금배당",
+        "question_family_id": "C06_CAPITAL_RETURN_EXECUTION",
+        "question_family_tags": [
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 2025년 결산 추가배당",
+        "subject_id": "005930:DIVIDEND_EXECUTION",
+        "unit": "조원",
+        "value": 1.3
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "발표한 10조원 자기주식 매입 프로그램을 3조원 소각과 추가 7조원 취득으로 집행했다.",
+        "exact_quote": "당사는 2024년 11월에 향후 1년간 총 10조원 규모의 자기주식 분할 매입 계획을 발표하고, 이 중 3조원은 주주가치 제고를 목적으로 매입 후 2025년 2월에 소각하였습니다. 또한 2025년 2월과 7월에 주주가치 제고 및 임직원 보상 등 목적으로 약 3조원과 약 4조원 총7조원 규모의 자기주식 취득을 결정하였고, 2025년 9월에 취득을 완료했습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "대규모 프로그램의 계획과 집행 내역은 자본환원 실행력을 직접 확인한다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CAPITAL_RETURN",
+        "normalized_object": "2024~2025 자기주식 분할 매입 프로그램",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-11 to 2025-09",
+        "predicate": "EXECUTED_TEN_TRILLION_WON_TREASURY_SHARE_PROGRAM",
+        "predicate_family": "CAPITAL_RETURN_PROGRAM_EXECUTION",
+        "primitive_tags": [
+          "TREASURY_SHARE_PROGRAM",
+          "BUYBACK_EXECUTION"
+        ],
+        "product_family": "자기주식",
+        "question_family_id": "C06_CAPITAL_RETURN_EXECUTION",
+        "question_family_tags": [
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 10조원 자기주식 매입 프로그램",
+        "subject_id": "005930:CAPITAL_RETURN",
+        "unit": "조원",
+        "value": 10
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "결산·분기배당 모두 배당액 결정 뒤 기준일 지정이 불가능하고 개선 계획도 검토 중이어서 절차상 예측가능성이 제한된다.",
+        "exact_quote": "정관상 배당기준일을 배당액 결정 이후로 정할 수 있는지 여부\nX\nX\n배당절차 개선방안 이행 관련 향후 계획\n검토중\n검토중",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명시된 절차 제한은 배당액 예측가능성에 남은 정보품질 counterfact다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:INFORMATION_QUALITY",
+        "normalized_object": "배당액 결정 후 기준일 지정 가능 여부",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "DIVIDEND_RECORD_DATE_REMAINS_BEFORE_AMOUNT_DECISION",
+        "predicate_family": "DIVIDEND_PROCESS_PREDICTABILITY",
+        "primitive_tags": [
+          "DIVIDEND_PROCESS",
+          "PREDICTABILITY_LIMIT"
+        ],
+        "product_family": "배당절차",
+        "question_family_id": "C06_DIVIDEND_PREDICTABILITY",
+        "question_family_tags": [
+          "information_confidence",
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 배당절차 예측가능성",
+        "subject_id": "005930:DIVIDEND_PROCESS",
+        "unit": "",
+        "value": "결산·분기배당 모두 X, 개선방안 검토중"
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "순이익 급증기에 현금배당성향이 5.2%로 낮아져 이익 증가가 같은 비율의 현금환원으로 전환되지는 않았다.",
+        "exact_quote": "(연결)현금배당성향(%)\n5.2\n25.1\n29.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현금배당 총액과 별도로 이익 대비 환원 비율을 보여주어 자본배분 강도를 제한한다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:SHAREHOLDER_RETURN",
+        "normalized_object": "2026년 1분기 연결 현금배당성향",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026Q1",
+        "predicate": "REPORTED_LOW_QUARTERLY_CASH_DIVIDEND_PAYOUT_RATIO",
+        "predicate_family": "DIVIDEND_PAYOUT_ACTUAL",
+        "primitive_tags": [
+          "DIVIDEND_PAYOUT_RATIO"
+        ],
+        "product_family": "현금배당",
+        "question_family_id": "C06_DIVIDEND_EXECUTION",
+        "question_family_tags": [
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 현금배당성향",
+        "subject_id": "005930:DIVIDEND_EXECUTION",
+        "unit": "%",
+        "value": 5.2
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "장기간 연속된 분기·결산배당 이력은 과거 자본환원 집행의 반복성을 보여주지만 미래 배당 의무를 뜻하지는 않는다.",
+        "exact_quote": "연속 배당횟수\n평균 배당수익률\n분기(중간)배당\n결산배당\n최근 3년간\n최근 5년간\n46\n45\n2.0\n2.1",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "과거 반복 집행은 정책 신뢰도의 보조 증거지만 미래 확약은 아니다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:SHAREHOLDER_RETURN",
+        "normalized_object": "연속 배당 횟수",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "through 2026Q1",
+        "predicate": "MAINTAINED_LONG_CONSECUTIVE_DIVIDEND_HISTORY",
+        "predicate_family": "DIVIDEND_EXECUTION_HISTORY",
+        "primitive_tags": [
+          "DIVIDEND_HISTORY"
+        ],
+        "product_family": "현금배당",
+        "question_family_id": "C06_DIVIDEND_DURABILITY_HISTORY",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연속 배당 이력",
+        "subject_id": "005930:DIVIDEND_HISTORY",
+        "unit": "회",
+        "value": "분기(중간)배당 46회, 결산배당 45회"
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "공시대상기간 중 신규 지분증권 발행이 없어 해당 기간의 발행 희석은 발생하지 않았다.",
+        "exact_quote": "당사는 공시대상기간 중 지분증권의 발행 실적이 없습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "명시적 무발행 공시는 해당 기간의 신규 주식 희석 여부를 닫는다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:EQUITY_DILUTION",
+        "normalized_object": "공시대상기간 지분증권 발행",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "disclosure period through 2026Q1",
+        "predicate": "NO_EQUITY_SECURITIES_ISSUED_IN_DISCLOSURE_PERIOD",
+        "predicate_family": "EQUITY_DILUTION_ACTUAL",
+        "primitive_tags": [
+          "NO_EQUITY_ISSUANCE",
+          "DILUTION"
+        ],
+        "product_family": "지분증권",
+        "question_family_id": "C06_EQUITY_DILUTION",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 지분증권 발행",
+        "subject_id": "005930:EQUITY_ISSUANCE",
+        "unit": "",
+        "value": "발행 실적 없음"
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "진행 중인 소송·조사의 현금 유출액과 시기가 불확실해 현금흐름 전망에 잔여 우발위험이 있다.",
+        "exact_quote": "당사는 다수의 회사 등과 정상적인 영업과정에서 발생한 소송, 분쟁 및 규제기관의 조사 등이 진행 중에 있습니다. 이에 따른 자원의 유출금액 및 시기는 불확실하며 당사의 경영진은 이러한 소송 등의 결과가 당사의 재무상태에 중요한 영향을 미치지 않을 것으로 판단하고 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "경영진의 비중대 판단과 별개로 금액·시기가 미확정인 우발 현금유출은 명시적 counterfact다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CONTINGENT_RISK",
+        "normalized_object": "진행 중 소송·분쟁·규제조사 우발위험",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026Q1 report date",
+        "predicate": "LITIGATION_OUTFLOW_AMOUNT_AND_TIMING_UNCERTAIN",
+        "predicate_family": "CONTINGENT_LIABILITY_UNCERTAINTY",
+        "primitive_tags": [
+          "LITIGATION_RISK",
+          "CASH_OUTFLOW_UNCERTAINTY"
+        ],
+        "product_family": "우발부채",
+        "question_family_id": "C06_CONTINGENT_LIABILITY_UNCERTAINTY",
+        "question_family_tags": [
+          "information_confidence",
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 소송·분쟁·규제조사",
+        "subject_id": "005930:LITIGATION_RISK",
+        "unit": "",
+        "value": "자원 유출금액 및 시기 불확실"
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "대상 채권 97.2조원에 0.7% 손실충당금을 설정해 매출채권 증가에 수반되는 신용위험 완충 수준을 수치화했다.",
+        "exact_quote": "제58기1분기말\n매출채권\n82,930,037\n645,008\n0.8%\n단기대여금\n18,022\n266\n1.5%\n미수금\n6,700,707\n43,452\n0.6%\n선급금\n1,726,301\n6,696\n0.4%\n장기매출채권\n539,949\n825\n0.2%\n장기미수금\n845,341\n1,514\n0.2%\n장기선급금\n4,304,296\n10,082\n0.2%\n장기대여금\n166,012\n886\n0.5%\n합 계\n97,230,665\n708,729\n0.7%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "큰 채권 잔액의 충당률은 운전자본 현금전환과 신용위험의 보조 지표다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:WORKING_CAPITAL_QUALITY",
+        "normalized_object": "2026년 1분기말 채권 손실충당 설정률 합계",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-44161aa1a529ae8101bf12b1"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31",
+        "predicate": "REPORTED_TOTAL_RECEIVABLE_LOSS_ALLOWANCE_RATIO",
+        "predicate_family": "RECEIVABLE_CREDIT_QUALITY_ACTUAL",
+        "primitive_tags": [
+          "RECEIVABLES",
+          "LOSS_ALLOWANCE"
+        ],
+        "product_family": "채권 손실충당금",
+        "question_family_id": "C06_RECEIVABLE_CREDIT_QUALITY",
+        "question_family_tags": [
+          "information_confidence",
+          "capital_allocation"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 채권 손실충당금",
+        "subject_id": "005930:RECEIVABLE_CREDIT_QUALITY",
+        "unit": "%",
+        "value": 0.7
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-56aa9eb670784ed47994f756",
+        "economic_mechanism": "미국 반도체 보조금 관련 채무소멸 시까지의 모회사 지급보증은 보조금 계약 불이행 시 발생 가능한 우발 현금부담이다.",
+        "exact_quote": "SEA\n계열회사\nUS Government\n지급보증\n보조금\n2024-12-20\n채무소멸시\n6,435,000\n6,435,000\n-\n-\n-\n-",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "64.35억달러 한도의 장기 지급보증은 자본·현금흐름에 잠재적 부담을 주는 명시적 우발약정이다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CONTINGENT_GUARANTEE",
+        "normalized_object": "SEA의 US Government 보조금 지급보증 한도",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2024-12-20 until obligation extinguished",
+        "predicate": "GUARANTEED_US_GOVERNMENT_SUBSIDY_OBLIGATION",
+        "predicate_family": "CONTINGENT_GUARANTEE_RISK",
+        "primitive_tags": [
+          "SUBSIDY_GUARANTEE",
+          "CONTINGENT_LIABILITY"
+        ],
+        "product_family": "지급보증",
+        "question_family_id": "C06_CONTINGENT_GUARANTEE_RISK",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 미국 반도체 보조금 반환 지급보증",
+        "subject_id": "005930:US_SUBSIDY_GUARANTEE",
+        "unit": "천US$",
+        "value": 6435000
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-6601c7fcf9b10b37297bd96d",
+        "economic_mechanism": "상위 5대 고객이 전체 매출의 약 23%를 차지해 회사 전체 매출의 고객 집중 위험이 존재하지만 이를 메모리/HBM 고객 집중도로 해석할 수는 없다.",
+        "exact_quote": "당사의 주요 5대 매출처에 대한 매출비중은 전체 매출액 대비 약 23% 수준입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "고객 집중은 매출 안정성의 counterfact지만 공시가 회사 전체 기준이어서 메모리 고객 가시성으로 확대할 수 없다.",
+        "mechanism_scope_id": "005930:CORPORATE_GENERIC:CUSTOMER_CONCENTRATION",
+        "normalized_object": "회사 전체 매출 중 주요 5대 매출처 비중",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026Q1",
+        "predicate": "TOP_FIVE_CUSTOMERS_ACCOUNT_FOR_REVENUE_SHARE",
+        "predicate_family": "COMPANY_WIDE_CUSTOMER_CONCENTRATION",
+        "primitive_tags": [
+          "CUSTOMER_CONCENTRATION",
+          "COMPANY_WIDE_ONLY"
+        ],
+        "product_family": "회사 전체 매출",
+        "question_family_id": "C06_CUSTOMER_CONCENTRATION",
+        "question_family_tags": [
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 회사 전체 5대 매출처 집중도",
+        "subject_id": "005930:COMPANY_CUSTOMER_CONCENTRATION",
+        "unit": "%",
+        "value": 23
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "99d09c8c9c397f33478ce42299ba36364355ad3412afe7b344e18c8e2e3723fd",
+  "production_score_authority": false,
+  "prompt_hash": "499f0c4dc96d2fd544c7a2e26f0fbeb9870a5721f5021ea7006cf2bb7b098b65",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7d2f8ba9626810fa6239c534188b367e32117a2c1006cec256177ad753b7bfe3",
+  "response_id": "COLLABRESP-4406d0e75592c02f957efa42882e661e597348f962644a680da77d658fe16b2c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

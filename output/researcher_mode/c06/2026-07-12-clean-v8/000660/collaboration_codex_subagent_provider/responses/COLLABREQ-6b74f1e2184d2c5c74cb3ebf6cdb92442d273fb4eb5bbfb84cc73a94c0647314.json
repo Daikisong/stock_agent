@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-00a5b6c40dfd76b548beac84",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "cutoff 이전이지만 Naver Premium 제3자 모닝리포트로 original broker PDF가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-146382b64f2df561193720c7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "연합뉴스 market-view landing이며 target-specific original broker research가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-fc5ac8b046db3d8d83052b28",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "제목·URL상 2026-08-10 post-cutoff 제3자 요약으로 미래누수이며 broker 원문도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6cd947a130ab3acd99396cf8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "일반 기술 블로그의 HBM 수혜 해설로 requested broker full-source family와 expectation bridge를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-8196a4b5e1002a4b9ade2407",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2025년 제3자 모닝리포트 재정리이며 original broker identity/PDF가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d11f824001a87781a80cf75e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "제3자 모닝리포트이며 snippet도 다른 종목 문맥이다. target full broker source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-436dd58842bcb576935139ef",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2023년 WiseReport wrong-subject summary listing으로 current target objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-d531facafaebeebb6f503219",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "cutoff 이전 target market news지만 requested PUBLIC_BROKER_PDF가 아니다. 기사 속 broker comment는 full revision source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f0e3220e51454fe3c55b339f",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.15,
+        "rationale": "교보증권 공식 full PDF로 family는 맞지만 K-Tech 소부장/스몰캡 sector report이고 SK하이닉스는 비교 목록에만 나타난다. target-specific forecast revision이나 valuation denominator를 해결하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-f228206669a800f2b8a77bad",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "Naver Premium 제3자 모닝리포트이고 EV·ESS 타 산업 문맥이라 target objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-4fd9df02630b2692dd26e877",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "cutoff 이전 SK하이닉스 BNK target-price summary지만 WiseReport aggregator landing이다. 원문 PDF나 explicit child route가 아니므로 requested family를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-4d1d003c4c18bf1f8d5a624b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2025년 바이오 타 종목 WiseReport summary 목록으로 target과 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "원문 family가 맞는 sector PDF는 target-specific gap과 무관하고 BNK summary는 원문 경로가 아니다. material 0은 broader broker-source absence를 증명하지 않는다."
+    ]
+  },
+  "payload_hash": "c2200c9fba4a3f93329f8c68dedb41dec870b969c625f0990380c4eda34406f2",
+  "production_score_authority": false,
+  "prompt_hash": "a5d14fd6b020d74dad3cee645edf536d06abf1b448cae222f108aa3add001a43",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6b74f1e2184d2c5c74cb3ebf6cdb92442d273fb4eb5bbfb84cc73a94c0647314",
+  "response_id": "COLLABRESP-71f54806ba2a8027569c692dd598ba6d59cbe238c54f5cb318c872da0e39bafe",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

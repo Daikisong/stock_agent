@@ -1,0 +1,163 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "새 source가 아니라 같은 evidence에서 연결·DRAM actual의 HBM 단독 EPS·FCF 귀속 한계와 CAPEX·재고 counterweight를 공통 범위로 재서술해야 한다."
+        ],
+        "rationale": "A[14.5,16.8], S[12.4,15.3], C[15.8,18.2]의 3-way 교집합이 없다. 연결 이익·OCF와 DRAM actual의 개선은 유지하되 이를 HBM 단독 FCF로 옮기는 강도를 낮추고 CAPEX·재고 위험을 동일 evidence 안에서 재조정해야 한다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "A/S/C 교집합 [11.7,12.0]이 존재하고 current memo가 actual 성장, 가격·제품 실행과 장기계약·RPO 부재를 구분한다. HBM 계약 조건은 monitoring limitation이지만 이 snapshot에서 별도 semantic rewrite를 요구하는 material disagreement는 아니다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "새 source가 아니라 같은 evidence에서 메모리 100% 가동을 HBM 전용 CAPA·yield·allocation·장기 lock으로 전이하는 강도를 공통 범위로 재서술해야 한다."
+        ],
+        "rationale": "A[6.4,8.3], S[4.8,6.8], C[11.6,14.4]의 3-way 교집합이 없다. 메모리 전체 가동과 HBM 가격 주도는 positive이나 HBM 전용 병목의 직접 증명과는 구분해 memo와 새 독립 judges를 갱신해야 한다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "A/S/C 교집합 [5.7,5.8]이 존재한다. operating delta와 당시 시장 기대의 direct bridge가 제한적이라는 하방 근거가 이미 memo와 judge 범위에 반영되어 있어 현재 snapshot의 component memo는 충분하다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "삼성 PUBLIC_BROKER_PDF 후보 1043825 전체 본문에서 2026 production sold-out 주장의 제품 범위·기간·상업적 구속력과 반대 조건을 확인해야 한다."
+        ],
+        "rationale": "A/S/C 교집합 [3.9,4.4]은 존재하지만 structured_result에는 valuation_rerating의 DURABLE_VISIBILITY가 빠져 있다. 후보 메타데이터는 증거가 아니므로 exact full report를 fetch·parse하기 전에는 이 별도 source route가 미해결이다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "새 source가 아니라 같은 evidence에서 순현금·배당·소각과 CAPEX·R&D·운전자본·희석 부담의 가중을 공통 범위로 재서술해야 한다."
+        ],
+        "rationale": "A[1.0,1.4], S[0.6,1.2], C[2.1,3.2]의 3-way 교집합이 없다. 실행된 환원과 재무 완충력은 보존하되 투자·운전자본·희석 counterweight를 같은 evidence 기준으로 재조정해야 한다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "새 source가 아니라 같은 evidence에서 official actual·감사의견과 단일 OPENDART 독립성 그룹 및 HBM 계약·품질·마진 공백의 가중을 공통 범위로 재서술해야 한다."
+        ],
+        "rationale": "A[1.65,2.15], S[1.4,2.0], C[2.3,3.4]의 3-way 교집합이 없다. official actual의 신뢰도와 independent corroboration 한계를 같은 snapshot 안에서 재조정한 memo 및 새 judges가 필요하다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-266d384fd856994925ee5321",
+        "rationale": "LS 1108519 exact query의 검색 결과 0건은 그 경로의 미발견일 뿐 saturation이나 source absence가 아니다. 동일 보고서를 반복하지 않고 별도 provider report identity로 이동할 수 있다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-3a7fefb4241f4ad5553ba432",
+        "rationale": "QUERY_PROVIDER_ERROR는 transport/provider 실패이며 source가 없다는 증거가 아니다. 현재 구체 candidate route를 LLM query generation이 소비할 수 있으므로 실패 자체는 재시도 가능하다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-9f189ef4313bb76da9d0c2eb",
+        "rationale": "여섯 문서는 full fetch 뒤 as_of_date 이후 문서로 확인되어 current 판단에서 제외되어야 한다. 해당 문서들은 재사용하지 않으며 이 배제가 current source absence를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-b5e3b8331dcb08b996ec83cf",
+        "rationale": "capital_allocation 경로의 여섯 full-fetch 결과는 cutoff 이후 문서이므로 terminal rejection이 맞다. alternate_route_required=false이며 이 실패를 다른 시점의 source absence로 확대하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY는 한 query-generation 응답의 한계이지 고정된 완료 증명이 아니다. prompt의 distinct structured report candidate를 objective-bound 방향으로 제시할 수 있어 query lane은 재실행 가능하다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "valuation_rerating",
+        "direction": "POSITIVE",
+        "fact_need": "삼성 보고서 1043825의 전체 본문이 2026 production sold-out을 어떤 memory/HBM 제품, 기간, 물량 구속력 및 counter 조건으로 설명하는지 확인한 source-backed 사실",
+        "why_material": "현재 구조화 valuation에는 DURABLE_VISIBILITY가 없고 후보 preview는 discovery metadata일 뿐이다. 전체 보고서가 확인되어야 독립 전망의 범위와 한계를 current valuation mechanism에 연결할 수 있다."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": true,
+        "direction": "삼성 2025-10-30 보고서 1043825, 파일 1F00120251030_000660_d.pdf의 전체 본문을 찾아 2026 production sold-out의 제품·기간·계약 범위와 counter 조건을 검증한다.",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "STRUCTCAND-ec89b61ed786f8601f079029는 cutoff 이전의 별도 provider report identity이며 preview는 증거가 아니다. 실패한 LS 1108519 경로를 반복하지 않고 full report만 fetch해야 한다.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      }
+    ],
+    "next_actions": [
+      "eps_fcf_explosion, bottleneck_pricing, capital_allocation, information_confidence를 current evidence만으로 semantic rewrite하고 각 새 A/S/C judges로 3-way 교집합을 재검증한다.",
+      "valuation_rerating objective에 한해 실패한 LS 1108519를 반복하지 않는 삼성 1043825 PUBLIC_BROKER_PDF query를 LLM이 생성하도록 하고, full fetch·날짜·본문 검증 뒤 structured valuation과 memo를 갱신한다.",
+      "갱신된 memos와 judges에 맞춰 Red Team, Synthesis, Supervisor를 다시 실행한다."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "SK하이닉스 LS 1108519 1F04720260629_000660_a.pdf 아직 한발 남았다",
+          "STRUCTCAND-dd271cdb3c5c93d51fc8e631"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "research_need": "SK하이닉스 삼성 보고서 1043825의 exact PUBLIC_BROKER_PDF 전체 문서를 찾고, 2026 production sold-out 주장의 HBM/일반 DRAM 범위와 상업적 구속력 및 반대 조건을 검증한다."
+      }
+    ],
+    "rationale": "일곱 component와 다섯 failure group을 exact-once 검토했다. EPS/FCF, bottleneck pricing, capital allocation, information confidence는 source 부족과 별개로 A/S/C 교집합이 없어 same-evidence semantic rewrite가 필요하다. earnings visibility와 market mispricing은 current 교집합과 counterweight가 유지된다. valuation은 교집합이 있으나 DURABLE_VISIBILITY 구조화 역할이 빠져 있고 cutoff 이전 삼성 1043825 full-report라는 구체적 미실행 PUBLIC_BROKER_PDF 경로가 남는다. 일곱 objective의 official counter route proof와 complete Red Team으로 counter gate는 충족하지만 structured gate와 memo gate, actionable valuation route가 남으므로 independent saturation review 준비 상태가 아니다. zero result, provider error, future-document rejection 어느 것도 source absence 또는 completion 근거로 사용하지 않았다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": false,
+    "unresolved_material_questions": [
+      "같은 evidence에서 연결·DRAM actual의 HBM 단독 EPS·FCF 귀속과 CAPEX·재고 counterweight를 어떤 공통 범위로 보정해야 하는가?",
+      "같은 evidence에서 메모리 100% 가동을 HBM 전용 CAPA·yield·allocation·장기 lock 공백과 어떻게 함께 가중해야 하는가?",
+      "같은 evidence에서 순현금·환원과 CAPEX·R&D·운전자본·희석 부담을 어떤 공통 자본배분 범위로 조정해야 하는가?",
+      "같은 evidence에서 official actual·감사의견과 단일 source independence 및 HBM 계약·품질·마진 공백을 어떤 공통 정보신뢰 범위로 조정해야 하는가?",
+      "삼성 1043825 full report가 2026 production sold-out을 HBM-specific durable visibility로 뒷받침하는지, 아니면 일반 memory 및 broker 전망에 한정되는가?"
+    ]
+  },
+  "payload_hash": "2372389c644c08480c39d033bded1b19aedfaa8ac15c88c1ef90aa7458b75949",
+  "production_score_authority": false,
+  "prompt_hash": "166bcde9e841769f6fa56316dd620c1c99fef2c51c379668e751d25986780977",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-40fb32f713702fc1ca75f139f12b825b2384ab1500f9ca91610cf3afaaab0089",
+  "response_id": "COLLABRESP-90bf1a1a55d10b98323a272e3434e208f7dc4b11348e8c9ba9921e5c3b318125",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

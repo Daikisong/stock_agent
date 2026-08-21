@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "Immutable current binding을 독립 감사했다. 7개 canonical component memo가 모두 COMPLETE이고 각 memo는 actual·forward, 연결·DS 메모리·HBM 귀속과 positive·counter 범위를 분리한다. Red Team은 7개 component를 모두 검토해 HBM4 양산, 메모리 ASP·가동률, 연결 이익·현금흐름과 AMD customer-official 기술 corroboration을 인정하면서도 MOU·협의·기술관계를 구매의무, 가격, 확정 물량, 기간, 취소조건, backlog/RPO 또는 HBM 단독 수익·FCF로 승격하지 않았다. Structured result는 COMPLETE이며 7개 component의 missing role이 모두 비어 있고 valuation에는 current, trailing 및 durable-visibility 역할이 현 binding에서 채워져 있다. Source graph는 STOPPED_ON_RESOLUTION이고 7개 objective가 resolved됐으며 full-fetch evidence가 존재한다. 검색 no-result, provider 오류, 미래문서 배제나 transport 횟수는 승인 근거로 사용하지 않았다. HBM 단독 손익·CAPEX·FCF, 고객별 계약조건과 allocation의 공개 한계는 memo 범위와 counter에 이미 반영된 모니터링 제한이며, current prompt에는 이를 해결할 새 verified document identity, 미실행 source-family direction 또는 합리적 material route가 없다.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "412788d3c210b01dcd12fc80ea5f7df854724617f06057a2d85b4e3d403b1ae5",
+  "production_score_authority": false,
+  "prompt_hash": "38ed66a3987cb5222718188c0b2fc45cae9c08a1417fbd94903c21420c585d71",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6ba8fa33fd71eaaa1298ee6c306eaadd938fbdb5dd7f6551f0292e0c3db47174",
+  "response_id": "COLLABRESP-df9dc56c9cb43c85fd1022d8e3df39f29d87174e6a4a2b50838716ca856055cb",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

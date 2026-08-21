@@ -1,0 +1,68 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      2.1,
+      3.2
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e는 POSITIVE ordinal anchor로 [1.0, 1.4] 범위를 제시한다. 현재 사실과 정확한 기업·기간 대응은 아니므로 점수 scale 경계로만 사용한다.",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc는 COUNTER ordinal anchor로 [0.6, 1.0] 범위를 제시한다. 현재 사실과 정확한 기업·기간 대응은 아니므로 점수 scale 경계로만 사용한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-62724280ce8a0d4997a36f35",
+      "EFACT-6459972ca51023d1d4491408",
+      "EFACT-68380c1d51423fc5e672e63b",
+      "EFACT-6a46eb88222723dffed4cb6d",
+      "EFACT-9fdeaa2b756caf1fc9e5d690",
+      "EFACT-b15e02831a18564591fe308c",
+      "EFACT-eb7bbf5be9f2d8629eb0c50d",
+      "EFACT-f9fa114a3daa17bcad2e20e9"
+    ],
+    "disagreements": [
+      "전사 순현금과 주주환원만으로 HBM 투자성과 또는 realised ROIC가 입증됐다는 해석에는 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "proposed_points": 2.7,
+    "rationale": "순현금, 금융부채 감소, 약정 준수, 부채 상환, 배당과 자기주식 소각은 강한 positive다. 큰 CAPEX·R&D, 매출채권·재고 증가와 교환사채 희석, HBM 전용 realised ROIC 부재를 함께 반영해 4점 만점 중 2.7점으로 보정한다.",
+    "support_fact_ids": [
+      "EFACT-0b9e70905467d2dbab1b361a",
+      "EFACT-21677a91e8afb32e4876aa8c",
+      "EFACT-2a5c9f33dcc58bbaef146c81",
+      "EFACT-6a5438af79a463ece8fe62b4",
+      "EFACT-84886f3397f7bbc2bee937cd",
+      "EFACT-a88fbe9f73705566b2cb8cdc",
+      "EFACT-c50c5649fa26bea0cfce0e68",
+      "EFACT-d86605614919821796fffc66",
+      "EFACT-d9f801f19a001e7214e5af8c",
+      "EFACT-ef16520d0f9ee4210108fc41",
+      "EFACT-f344a6f409575d6f77888831"
+    ],
+    "why_not_higher": "큰 성장투자·운전자본 부담과 희석 위험이 남고 HBM 전용 투자수익률이 없다.",
+    "why_not_lower": "순현금, 부채 감소·상환, 약정 준수 및 source-backed 주주환원 사실을 무시할 수 없다."
+  },
+  "payload_hash": "332980103aa818ffd80804b97b5b4e04675c5b951d640e7a78d2ac383c5c0b8b",
+  "production_score_authority": false,
+  "prompt_hash": "146374b065adfd941b362fa01ede4a30b1321c973a78cac8d041c1df2e511d1d",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a0224faf34dded886ad70dc803624430ae4506a5c91a359fabdb7c4f68fbf6e1",
+  "response_id": "COLLABRESP-66e7e4e673f54837d74d2eb0e5e6b69de7559715bbaffaf557cbfec2af3b1aab",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

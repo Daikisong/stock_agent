@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "rationale": "This independent coverage audit reviewed the entire supplied literal transport chunk 1 of 3 from start to finish. The chunk contains no target alias, target identifier, HBM, DRAM, or memory statement. Its four generic semiconductor mentions concern aviation freight or broad macro-industry conditions, and the company-specific sections and identifiers belong to other issuers across aviation, refining, chemicals, steel, energy, cosmetics, financials, insurance, securities, and ship engines. Therefore no distinct target-direct, objective-local fact or counterfact was omitted from the primary extraction. This chunk-level disposition does not claim that the unsupplied parent chunks or the market lack relevant evidence.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "691297ec740eff951b1a2dca9c4ca3ea90634cb246a252bc956884ee12725014",
+  "production_score_authority": false,
+  "prompt_hash": "31b472cfb9716ba820c058af6be876fe8a9b59b91e15f708a8bf5a6b419347ab",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-710509e12e11b755601c244222ecd9555c5090a820365e8cd8fa32ac714ae46d",
+  "response_id": "COLLABRESP-a4375b790594be8a0ff83863732e69d66f8e00a44bd06082524441bc5fff7b0c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "as_of_date": "2026-07-12",
+  "authoritative_fact_ledger_available": true,
+  "authoritative_fact_lineage_recovery_required": false,
+  "blocked_downstream_stages": [
+    "structured_peer_materialization",
+    "business_model_research",
+    "component_research",
+    "scoring",
+    "stagecourt"
+  ],
+  "completion_based_on_fixed_rounds": false,
+  "completion_gates": {
+    "fact_extraction_complete": true,
+    "source_graph_checkpoint_ready": false
+  },
+  "document_count": 35,
+  "downstream_pipeline_started": false,
+  "exact_completion_gate": "source_graph_checkpoint_ready",
+  "fact_count": 2190,
+  "fact_extraction_pending_reasons": [],
+  "fact_extraction_status": "FACT_EXTRACTION_COMPLETE",
+  "gold_visibility": false,
+  "pending_fact_projection_epoch_commit_required": false,
+  "pending_new_fact_epoch_commit_required": false,
+  "schema_version": "e2r_v5_current_researcher_mode_v1",
+  "status": "RESEARCH_CHECKPOINT_PENDING",
+  "target_id": "000660"
+}

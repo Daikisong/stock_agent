@@ -1,0 +1,570 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Accepted the next 12 distinct consolidated model atoms after strict deduplication against 144 embedded prior facts: FY2024E/FY2025E long-term financial liabilities, total liabilities, controlling equity, total equity, operating cash flow, and PPE depreciation. Balance stocks, period flows, and controlling-versus-total attribution are kept separate.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of issuer-consolidated long-term financial liabilities; it is a balance-sheet stock and has no HBM-only attribution.",
+        "exact_quote": "장기금융부채 15,971 17,092 22,013 22,907 22,907",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical forecast records a corporate leverage stock but is superseded and cannot establish current debt or HBM economics.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:LONG_TERM_FINANCIAL_LIABILITIES:FY2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 long-term financial liabilities balance KRW 22,907 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E balance; published 2024-03-14",
+        "predicate": "broker forecast long term financial liabilities balance",
+        "predicate_family": "BROKER_CONSOLIDATED_LONG_TERM_FINANCIAL_LIABILITIES_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "long_term_debt",
+          "balance_sheet_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_long_term_financial_liabilities_fy2024e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_LONG_TERM_FINANCIAL_LIABILITIES:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 22907
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of issuer-consolidated long-term financial liabilities; it is a balance-sheet stock and has no HBM-only attribution.",
+        "exact_quote": "장기금융부채 15,971 17,092 22,013 22,907 22,907",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The historical outer-year forecast records a corporate leverage stock but is superseded and cannot establish current debt or HBM economics.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:LONG_TERM_FINANCIAL_LIABILITIES:FY2025E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 long-term financial liabilities balance KRW 22,907 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E balance; published 2024-03-14",
+        "predicate": "broker forecast long term financial liabilities balance",
+        "predicate_family": "BROKER_CONSOLIDATED_LONG_TERM_FINANCIAL_LIABILITIES_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "long_term_debt",
+          "balance_sheet_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_long_term_financial_liabilities_fy2025e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_LONG_TERM_FINANCIAL_LIABILITIES:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 22907
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of total consolidated liabilities; it is a balance-sheet stock, not a cash flow or HBM-only liability.",
+        "exact_quote": "부채총계 34,155 40,581 46,826 67,009 82,526",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It records the historical forecast corporate liability stock without implying present leverage or product attribution.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:TOTAL_LIABILITIES:FY2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 total liabilities KRW 67,009 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E balance; published 2024-03-14",
+        "predicate": "broker forecast total liabilities balance",
+        "predicate_family": "BROKER_CONSOLIDATED_TOTAL_LIABILITIES_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "total_liabilities",
+          "balance_sheet_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_total_liabilities_fy2024e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_TOTAL_LIABILITIES:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 67009
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of total consolidated liabilities; it is a balance-sheet stock, not a cash flow or HBM-only liability.",
+        "exact_quote": "부채총계 34,155 40,581 46,826 67,009 82,526",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It records the historical outer-year forecast corporate liability stock without implying present leverage or product attribution.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:TOTAL_LIABILITIES:FY2025E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 total liabilities KRW 82,526 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E balance; published 2024-03-14",
+        "predicate": "broker forecast total liabilities balance",
+        "predicate_family": "BROKER_CONSOLIDATED_TOTAL_LIABILITIES_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "total_liabilities",
+          "balance_sheet_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_total_liabilities_fy2025e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_TOTAL_LIABILITIES:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 82526
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of controlling-shareholder equity, kept distinct from total equity and HBM economics.",
+        "exact_quote": "지배주주지분 62,157 63,266 53,504 60,095 74,809",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is a historical controlling-equity forecast and must not be substituted for total equity, current book value, or HBM-only value.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CONTROLLING_SHAREHOLDER_EQUITY:FY2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 controlling-shareholder equity KRW 60,095 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E balance; published 2024-03-14",
+        "predicate": "broker forecast controlling shareholder equity balance",
+        "predicate_family": "BROKER_CONTROLLING_SHAREHOLDER_EQUITY_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "controlling_equity",
+          "balance_sheet_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_controlling_equity_fy2024e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 지배주주지분",
+        "subject_id": "000660:CONTROLLING_SHAREHOLDER_EQUITY:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 60095
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of controlling-shareholder equity, kept distinct from total equity and HBM economics.",
+        "exact_quote": "지배주주지분 62,157 63,266 53,504 60,095 74,809",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is a historical outer-year controlling-equity forecast and must not be substituted for total equity, current book value, or HBM-only value.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CONTROLLING_SHAREHOLDER_EQUITY:FY2025E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 controlling-shareholder equity KRW 74,809 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E balance; published 2024-03-14",
+        "predicate": "broker forecast controlling shareholder equity balance",
+        "predicate_family": "BROKER_CONTROLLING_SHAREHOLDER_EQUITY_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "controlling_equity",
+          "balance_sheet_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_controlling_equity_fy2025e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 지배주주지분",
+        "subject_id": "000660:CONTROLLING_SHAREHOLDER_EQUITY:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 74809
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of total equity including non-controlling interests; it is not the controlling-equity denominator or HBM-only value.",
+        "exact_quote": "자본총계 62,191 63,291 53,504 60,098 74,819",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the total-equity denominator separately from controlling equity, while remaining historical and superseded.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:TOTAL_EQUITY:FY2024E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 total equity KRW 60,098 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E balance; published 2024-03-14",
+        "predicate": "broker forecast total equity balance",
+        "predicate_family": "BROKER_CONSOLIDATED_TOTAL_EQUITY_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "total_equity",
+          "balance_sheet_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_total_equity_fy2024e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 총자본",
+        "subject_id": "000660:TOTAL_EQUITY:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 60098
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of total equity including non-controlling interests; it is not the controlling-equity denominator or HBM-only value.",
+        "exact_quote": "자본총계 62,191 63,291 53,504 60,098 74,819",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It preserves the outer-year total-equity denominator separately from controlling equity, while remaining historical and superseded.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:TOTAL_EQUITY:FY2025E:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 total equity KRW 74,819 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E balance; published 2024-03-14",
+        "predicate": "broker forecast total equity balance",
+        "predicate_family": "BROKER_CONSOLIDATED_TOTAL_EQUITY_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "total_equity",
+          "balance_sheet_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_total_equity_fy2025e",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 총자본",
+        "subject_id": "000660:TOTAL_EQUITY:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 74819
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of issuer-consolidated operating cash inflow; it is a period flow and does not isolate HBM cash generation.",
+        "exact_quote": "영업활동현금흐름 19,937 15,105 5,305 29,930 35,315",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is direct historical cash-conversion forecast evidence, but not an issuer actual or HBM-only cash-flow bridge.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2024 operating cash inflow KRW 29,930 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker forecast consolidated operating cash flow",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_CASH_FLOW_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "operating_cash_flow",
+          "period_flow"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_operating_cash_flow_fy2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_CASH_FLOW:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 29930
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of issuer-consolidated operating cash inflow; it is a period flow and does not isolate HBM cash generation.",
+        "exact_quote": "영업활동현금흐름 19,937 15,105 5,305 29,930 35,315",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is direct historical outer-year cash-conversion forecast evidence, but not an issuer actual or HBM-only cash-flow bridge.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2025 operating cash inflow KRW 35,315 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker forecast consolidated operating cash flow",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_CASH_FLOW_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "operating_cash_flow",
+          "period_flow"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_operating_cash_flow_fy2025e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_CASH_FLOW:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 35315
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated property, plant and equipment depreciation; it is a period expense/add-back and not HBM-only depreciation.",
+        "exact_quote": "유형자산감가상각비 9,861 13,372 13,121 12,616 12,706",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is a historical forecast cash-flow add-back and capital-intensity input, not a latest actual or HBM-only depreciation value.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2024 property plant and equipment depreciation KRW 12,616 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E flow; published 2024-03-14",
+        "predicate": "broker forecast property plant and equipment depreciation",
+        "predicate_family": "BROKER_CONSOLIDATED_PPE_DEPRECIATION_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "ppe_depreciation",
+          "period_flow"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_ppe_depreciation_fy2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_PPE_DEPRECIATION:FY2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 12616
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated property, plant and equipment depreciation; it is a period expense/add-back and not HBM-only depreciation.",
+        "exact_quote": "유형자산감가상각비 9,861 13,372 13,121 12,616 12,706",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is a historical outer-year forecast cash-flow add-back and capital-intensity input, not a latest actual or HBM-only depreciation value.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2025 property plant and equipment depreciation KRW 12,706 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E flow; published 2024-03-14",
+        "predicate": "broker forecast property plant and equipment depreciation",
+        "predicate_family": "BROKER_CONSOLIDATED_PPE_DEPRECIATION_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "ppe_depreciation",
+          "period_flow"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_ppe_depreciation_fy2025e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_PPE_DEPRECIATION:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 12706
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact upper bound was reached. Continue the supplied model in source order for remaining distinct working-capital, investing, financing, cash-change, free-cash-flow, earnings, return, and valuation atoms, preserving stock/flow, sign, period, total-versus-controlling attribution, broker provenance, and non-HBM scope."
+    ]
+  },
+  "payload_hash": "4b74c45c42c6aed2a7c9e10801494105cdfc714f8f619aae5f52e8812d07a413",
+  "production_score_authority": false,
+  "prompt_hash": "197f9d5d3d796dd2c81d497f5c3d48bfc47df9ee7b95508362ec5c8225464e50",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f413f106f7376e580645b295de613445ce53915ee3feeaa524aaa86bd70f6b6b",
+  "response_id": "COLLABRESP-ce00c81b37cebfd48a9d12c34670d3f9b5b241f2b175004016b212647c6b84b1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

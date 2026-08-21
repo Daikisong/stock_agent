@@ -1,0 +1,447 @@
+{
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "as_of_date": "2026-07-12",
+  "audit": {
+    "aggregation_config": {
+      "consensus_method": "MEDIAN_WITH_ALLOWED_RANGE_INTERSECTION",
+      "counter_application": "SKEPTIC_CANNOT_CREATE_SUPPORT",
+      "independent_corroboration_affects_points": false,
+      "invalid_proposal_policy": "REMOVE_AND_RECORD",
+      "material_disagreement_absolute_floor": 2.0,
+      "material_disagreement_fraction": 0.2,
+      "material_disagreement_policy": "RESEARCH_REQUIRED",
+      "minimum_finalization_confidence": 0.4,
+      "required_roles": [
+        "ANALYST",
+        "SKEPTIC",
+        "CALIBRATION_JUDGE"
+      ],
+      "source_confidence_affects_points": false,
+      "stage_authority": false,
+      "tiny_impact_cap_multiplication": false,
+      "version": "e2r_v5_component_consensus_v2"
+    },
+    "aggregation_config_hash": "522ff198cef25ef61f1974c7c2889a5bba6f771d927f3c7505bf4d289856f995",
+    "complete_component_count": 0,
+    "component_count": 7,
+    "component_scoring_memo_run_status": "COMPONENT_SCORING_MEMOS_PENDING",
+    "critical_count_sum": 9,
+    "critical_counts": {
+      "component_config_hash_mismatch_count": 0,
+      "component_max_violation_count": 0,
+      "component_research_required_count": 7,
+      "component_roster_mismatch_count": 0,
+      "global_pending_reason_count": 1,
+      "material_disagreement_count": 0,
+      "production_stage_authority_count": 0,
+      "required_component_lineage_missing_count": 0,
+      "source_confidence_points_multiplication_enabled_count": 0,
+      "tiny_impact_cap_multiplication_enabled_count": 0,
+      "total_aggregation_pending_count": 1,
+      "total_reconciliation_error_count": 0
+    },
+    "diagnostic_counts": {
+      "counter_effect_applied_component_count": 0,
+      "independently_corroborated_component_count": 0,
+      "invalid_proposal_removed_count": 0,
+      "valid_proposal_count": 0
+    },
+    "independent_corroboration_affects_confidence_only": true,
+    "production_stage_authority": false,
+    "proposal_validation_count": 0,
+    "research_request_count": 7,
+    "schema_version": "e2r_deterministic_score_aggregation_audit_v1",
+    "source_confidence_affects_points": false,
+    "status": "DETERMINISTIC_SCORE_AGGREGATION_AUDIT_FAIL",
+    "tiny_impact_cap_multiplication_used": false,
+    "total_score_reconciled": true
+  },
+  "component_results": [
+    {
+      "component_id": "eps_fcf_explosion",
+      "consensus_band": null,
+      "decision": null,
+      "invalid_proposal_count": 0,
+      "material_disagreement": false,
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "production_stage_authority": false,
+      "proposal_median": null,
+      "proposal_validations": [],
+      "research_request": {
+        "anchor_ids": [],
+        "component_id": "eps_fcf_explosion",
+        "consensus_band": null,
+        "counter_fact_ids": [],
+        "deterministic_query_synthesis": false,
+        "fact_ids": [],
+        "judge_ids": [],
+        "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "observed_proposal_span": null,
+        "proposal_points": {},
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "reason_codes": [
+          "COMPONENT_RESEARCH_MEMO_MISSING"
+        ],
+        "request_id": "SCORE-RESEARCH-34ab3aeea29a9577384d7c7e",
+        "schema_version": "e2r_component_score_research_request_v1"
+      },
+      "schema_version": "e2r_component_aggregation_result_v2",
+      "source_confidence_affects_points": false,
+      "status": "RESEARCH_REQUIRED"
+    },
+    {
+      "component_id": "earnings_visibility",
+      "consensus_band": null,
+      "decision": null,
+      "invalid_proposal_count": 0,
+      "material_disagreement": false,
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "production_stage_authority": false,
+      "proposal_median": null,
+      "proposal_validations": [],
+      "research_request": {
+        "anchor_ids": [],
+        "component_id": "earnings_visibility",
+        "consensus_band": null,
+        "counter_fact_ids": [],
+        "deterministic_query_synthesis": false,
+        "fact_ids": [],
+        "judge_ids": [],
+        "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "observed_proposal_span": null,
+        "proposal_points": {},
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "reason_codes": [
+          "COMPONENT_RESEARCH_MEMO_MISSING"
+        ],
+        "request_id": "SCORE-RESEARCH-0565831295f73124e3343d7e",
+        "schema_version": "e2r_component_score_research_request_v1"
+      },
+      "schema_version": "e2r_component_aggregation_result_v2",
+      "source_confidence_affects_points": false,
+      "status": "RESEARCH_REQUIRED"
+    },
+    {
+      "component_id": "bottleneck_pricing",
+      "consensus_band": null,
+      "decision": null,
+      "invalid_proposal_count": 0,
+      "material_disagreement": false,
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "production_stage_authority": false,
+      "proposal_median": null,
+      "proposal_validations": [],
+      "research_request": {
+        "anchor_ids": [],
+        "component_id": "bottleneck_pricing",
+        "consensus_band": null,
+        "counter_fact_ids": [],
+        "deterministic_query_synthesis": false,
+        "fact_ids": [],
+        "judge_ids": [],
+        "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "observed_proposal_span": null,
+        "proposal_points": {},
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "reason_codes": [
+          "COMPONENT_RESEARCH_MEMO_MISSING"
+        ],
+        "request_id": "SCORE-RESEARCH-b953fda4eaac6e5ccde76b89",
+        "schema_version": "e2r_component_score_research_request_v1"
+      },
+      "schema_version": "e2r_component_aggregation_result_v2",
+      "source_confidence_affects_points": false,
+      "status": "RESEARCH_REQUIRED"
+    },
+    {
+      "component_id": "market_mispricing",
+      "consensus_band": null,
+      "decision": null,
+      "invalid_proposal_count": 0,
+      "material_disagreement": false,
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "production_stage_authority": false,
+      "proposal_median": null,
+      "proposal_validations": [],
+      "research_request": {
+        "anchor_ids": [],
+        "component_id": "market_mispricing",
+        "consensus_band": null,
+        "counter_fact_ids": [],
+        "deterministic_query_synthesis": false,
+        "fact_ids": [],
+        "judge_ids": [],
+        "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "observed_proposal_span": null,
+        "proposal_points": {},
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "reason_codes": [
+          "COMPONENT_RESEARCH_MEMO_MISSING"
+        ],
+        "request_id": "SCORE-RESEARCH-bb8ac296e0b0cc498bba82e9",
+        "schema_version": "e2r_component_score_research_request_v1"
+      },
+      "schema_version": "e2r_component_aggregation_result_v2",
+      "source_confidence_affects_points": false,
+      "status": "RESEARCH_REQUIRED"
+    },
+    {
+      "component_id": "valuation_rerating",
+      "consensus_band": null,
+      "decision": null,
+      "invalid_proposal_count": 0,
+      "material_disagreement": false,
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "production_stage_authority": false,
+      "proposal_median": null,
+      "proposal_validations": [],
+      "research_request": {
+        "anchor_ids": [],
+        "component_id": "valuation_rerating",
+        "consensus_band": null,
+        "counter_fact_ids": [],
+        "deterministic_query_synthesis": false,
+        "fact_ids": [],
+        "judge_ids": [],
+        "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "observed_proposal_span": null,
+        "proposal_points": {},
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "reason_codes": [
+          "COMPONENT_RESEARCH_MEMO_MISSING"
+        ],
+        "request_id": "SCORE-RESEARCH-4a5d3450cbb31e706841661e",
+        "schema_version": "e2r_component_score_research_request_v1"
+      },
+      "schema_version": "e2r_component_aggregation_result_v2",
+      "source_confidence_affects_points": false,
+      "status": "RESEARCH_REQUIRED"
+    },
+    {
+      "component_id": "capital_allocation",
+      "consensus_band": null,
+      "decision": null,
+      "invalid_proposal_count": 0,
+      "material_disagreement": false,
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "production_stage_authority": false,
+      "proposal_median": null,
+      "proposal_validations": [],
+      "research_request": {
+        "anchor_ids": [],
+        "component_id": "capital_allocation",
+        "consensus_band": null,
+        "counter_fact_ids": [],
+        "deterministic_query_synthesis": false,
+        "fact_ids": [],
+        "judge_ids": [],
+        "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "observed_proposal_span": null,
+        "proposal_points": {},
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "reason_codes": [
+          "COMPONENT_RESEARCH_MEMO_MISSING"
+        ],
+        "request_id": "SCORE-RESEARCH-aff89894c7399c3dfeb27c12",
+        "schema_version": "e2r_component_score_research_request_v1"
+      },
+      "schema_version": "e2r_component_aggregation_result_v2",
+      "source_confidence_affects_points": false,
+      "status": "RESEARCH_REQUIRED"
+    },
+    {
+      "component_id": "information_confidence",
+      "consensus_band": null,
+      "decision": null,
+      "invalid_proposal_count": 0,
+      "material_disagreement": false,
+      "pending_reasons": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "production_stage_authority": false,
+      "proposal_median": null,
+      "proposal_validations": [],
+      "research_request": {
+        "anchor_ids": [],
+        "component_id": "information_confidence",
+        "consensus_band": null,
+        "counter_fact_ids": [],
+        "deterministic_query_synthesis": false,
+        "fact_ids": [],
+        "judge_ids": [],
+        "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "observed_proposal_span": null,
+        "proposal_points": {},
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "reason_codes": [
+          "COMPONENT_RESEARCH_MEMO_MISSING"
+        ],
+        "request_id": "SCORE-RESEARCH-8de0baeea7cc99b106e450ee",
+        "schema_version": "e2r_component_score_research_request_v1"
+      },
+      "schema_version": "e2r_component_aggregation_result_v2",
+      "source_confidence_affects_points": false,
+      "status": "RESEARCH_REQUIRED"
+    }
+  ],
+  "config_hash": "522ff198cef25ef61f1974c7c2889a5bba6f771d927f3c7505bf4d289856f995",
+  "pending_reasons": [
+    "EXACT_SEVEN_COMPONENT_DECISIONS_REQUIRED:MISSING=bottleneck_pricing,capital_allocation,earnings_visibility,eps_fcf_explosion,information_confidence,market_mispricing,valuation_rerating:EXTRA=NONE"
+  ],
+  "production_stage_authority": false,
+  "ready_for_stagecourt": false,
+  "research_requests": [
+    {
+      "anchor_ids": [],
+      "component_id": "eps_fcf_explosion",
+      "consensus_band": null,
+      "counter_fact_ids": [],
+      "deterministic_query_synthesis": false,
+      "fact_ids": [],
+      "judge_ids": [],
+      "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "observed_proposal_span": null,
+      "proposal_points": {},
+      "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "reason_codes": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "request_id": "SCORE-RESEARCH-34ab3aeea29a9577384d7c7e",
+      "schema_version": "e2r_component_score_research_request_v1"
+    },
+    {
+      "anchor_ids": [],
+      "component_id": "earnings_visibility",
+      "consensus_band": null,
+      "counter_fact_ids": [],
+      "deterministic_query_synthesis": false,
+      "fact_ids": [],
+      "judge_ids": [],
+      "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "observed_proposal_span": null,
+      "proposal_points": {},
+      "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "reason_codes": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "request_id": "SCORE-RESEARCH-0565831295f73124e3343d7e",
+      "schema_version": "e2r_component_score_research_request_v1"
+    },
+    {
+      "anchor_ids": [],
+      "component_id": "bottleneck_pricing",
+      "consensus_band": null,
+      "counter_fact_ids": [],
+      "deterministic_query_synthesis": false,
+      "fact_ids": [],
+      "judge_ids": [],
+      "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "observed_proposal_span": null,
+      "proposal_points": {},
+      "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "reason_codes": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "request_id": "SCORE-RESEARCH-b953fda4eaac6e5ccde76b89",
+      "schema_version": "e2r_component_score_research_request_v1"
+    },
+    {
+      "anchor_ids": [],
+      "component_id": "market_mispricing",
+      "consensus_band": null,
+      "counter_fact_ids": [],
+      "deterministic_query_synthesis": false,
+      "fact_ids": [],
+      "judge_ids": [],
+      "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "observed_proposal_span": null,
+      "proposal_points": {},
+      "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "reason_codes": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "request_id": "SCORE-RESEARCH-bb8ac296e0b0cc498bba82e9",
+      "schema_version": "e2r_component_score_research_request_v1"
+    },
+    {
+      "anchor_ids": [],
+      "component_id": "valuation_rerating",
+      "consensus_band": null,
+      "counter_fact_ids": [],
+      "deterministic_query_synthesis": false,
+      "fact_ids": [],
+      "judge_ids": [],
+      "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "observed_proposal_span": null,
+      "proposal_points": {},
+      "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "reason_codes": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "request_id": "SCORE-RESEARCH-4a5d3450cbb31e706841661e",
+      "schema_version": "e2r_component_score_research_request_v1"
+    },
+    {
+      "anchor_ids": [],
+      "component_id": "capital_allocation",
+      "consensus_band": null,
+      "counter_fact_ids": [],
+      "deterministic_query_synthesis": false,
+      "fact_ids": [],
+      "judge_ids": [],
+      "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "observed_proposal_span": null,
+      "proposal_points": {},
+      "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "reason_codes": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "request_id": "SCORE-RESEARCH-aff89894c7399c3dfeb27c12",
+      "schema_version": "e2r_component_score_research_request_v1"
+    },
+    {
+      "anchor_ids": [],
+      "component_id": "information_confidence",
+      "consensus_band": null,
+      "counter_fact_ids": [],
+      "deterministic_query_synthesis": false,
+      "fact_ids": [],
+      "judge_ids": [],
+      "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "observed_proposal_span": null,
+      "proposal_points": {},
+      "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+      "reason_codes": [
+        "COMPONENT_RESEARCH_MEMO_MISSING"
+      ],
+      "request_id": "SCORE-RESEARCH-8de0baeea7cc99b106e450ee",
+      "schema_version": "e2r_component_score_research_request_v1"
+    }
+  ],
+  "schema_version": "e2r_deterministic_score_aggregation_run_v1",
+  "score_valid": false,
+  "source_confidence_affects_points": false,
+  "status": "DETERMINISTIC_SCORE_RESEARCH_REQUIRED",
+  "target_id": "000660",
+  "total_result": {
+    "pending_reasons": [
+      "EXACT_SEVEN_COMPONENT_DECISIONS_REQUIRED:MISSING=bottleneck_pricing,capital_allocation,earnings_visibility,eps_fcf_explosion,information_confidence,market_mispricing,valuation_rerating:EXTRA=NONE"
+    ],
+    "production_stage_authority": false,
+    "schema_version": "e2r_total_aggregation_result_v2",
+    "score": null,
+    "status": "RESEARCH_REQUIRED"
+  }
+}

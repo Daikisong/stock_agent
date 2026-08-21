@@ -1,0 +1,609 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "No additional distinct fact remains after ten prior accepted issuer-wide ADR decision atoms. The prior FACTS_EXTRACTED disposition remains accurate; provisional terms, overseas-only structure, depositary, purpose, date, base shares, and bookbuilding caveat are already represented without inferring HBM economics.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "Four next source-order current broker revisions were extracted: 4Q26E DRAM revenue and 2Q26E-4Q26E consolidated operating profit. NAND rows were excluded under the mechanism scope, and none of these broker estimates is issuer guidance, HBM-only profit, signed terms, or durable visibility.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "Four next source-order official capital terms were extracted: par value, third-party-allotment method, dividend accrual date, and all-proceeds facility use. All are issuer-wide and none establishes HBM-only economics or customer commitments.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Four next source-order historical valuation atoms were extracted: FY2025F-FY2026F P/E and FY2024F-FY2025F P/B. They remain SUPERSEDED broker estimates; the forward P/B role is retained only as historical structured evidence and carries no current score authority.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DRAM broker estimate, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The dated broker report revises 4Q26 DRAM revenue from KRW 79,337 billion to KRW 83,342 billion, a 5 percent increase; this is a broad DRAM estimate and not HBM-only revenue.",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E\n매출액 80,300 96,099 107,613 77,715 92,439 103,372 3% 4% 4%\nDRAM 61,082 73,709 83,342 58,511 70,268 79,337 4% 5% 5%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact segment old/new values preserve attribution for the forward earnings bridge without converting DRAM into HBM-only revenue.",
+        "mechanism_scope_id": "000660:DRAM:REVENUE_REVISION:4Q26E:SKS",
+        "normalized_object": "4Q26E DRAM revenue revised to KRW 83,342 billion, up 5 percent from KRW 79,337 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q26E; revision report published 2026-05-07",
+        "predicate": "was revised upward by the broker from KRW 79,337 billion to",
+        "predicate_family": "BROKER_DRAM_REVENUE_REVISION",
+        "primitive_tags": [
+          "4Q26_FORECAST",
+          "DRAM",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "DRAM segment revenue estimate",
+        "question_family_id": "DRAM_REVENUE_REVISION",
+        "question_family_tags": [
+          "DRAM_REVENUE",
+          "FORECAST_REVISION",
+          "SEGMENT_ATTRIBUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix 4Q26 DRAM revenue revision",
+        "subject_id": "000660:DRAM_REVENUE_REVISION:4Q26E:SKS_2026-05-07",
+        "unit": "KRW billion",
+        "value": 83342
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The dated full broker report revises 2Q26 consolidated operating profit from KRW 60,453 billion to KRW 63,224 billion, a 5 percent increase; the consolidated value is not HBM-only profit.",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E\n매출액 80,300 96,099 107,613 77,715 92,439 103,372 3% 4% 4%\nDRAM 61,082 73,709 83,342 58,511 70,268 79,337 4% 5% 5%\nNAND 18,694 21,929 23,693 18,679 21,711 23,457 0% 1% 1%\n영업이익 63,224 76,484 85,104 60,453 72,440 80,492 5% 6% 6%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old/new quarter estimate establishes the revision while preserving consolidated, non-HBM attribution.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:OPERATING_PROFIT_REVISION:2Q26E:SKS",
+        "normalized_object": "2Q26E consolidated operating profit revised to KRW 63,224 billion, up 5 percent from KRW 60,453 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E; revision report published 2026-05-07",
+        "predicate": "was revised upward by the broker from KRW 60,453 billion to",
+        "predicate_family": "BROKER_OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "2Q26_FORECAST",
+          "CONSOLIDATED",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "OPERATING_PROFIT_REVISION",
+          "CONSOLIDATED_EARNINGS",
+          "BROKER_MODEL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK hynix 2Q26 consolidated operating-profit revision",
+        "subject_id": "000660:CONSOLIDATED_OP_REVISION:2Q26E:SKS_2026-05-07",
+        "unit": "KRW billion",
+        "value": 63224
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The dated full broker report revises 3Q26 consolidated operating profit from KRW 72,440 billion to KRW 76,484 billion, a 6 percent increase; the consolidated value is not HBM-only profit.",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E\n매출액 80,300 96,099 107,613 77,715 92,439 103,372 3% 4% 4%\nDRAM 61,082 73,709 83,342 58,511 70,268 79,337 4% 5% 5%\nNAND 18,694 21,929 23,693 18,679 21,711 23,457 0% 1% 1%\n영업이익 63,224 76,484 85,104 60,453 72,440 80,492 5% 6% 6%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old/new quarter estimate establishes the revision while preserving consolidated, non-HBM attribution.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:OPERATING_PROFIT_REVISION:3Q26E:SKS",
+        "normalized_object": "3Q26E consolidated operating profit revised to KRW 76,484 billion, up 6 percent from KRW 72,440 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E; revision report published 2026-05-07",
+        "predicate": "was revised upward by the broker from KRW 72,440 billion to",
+        "predicate_family": "BROKER_OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "3Q26_FORECAST",
+          "CONSOLIDATED",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "OPERATING_PROFIT_REVISION",
+          "CONSOLIDATED_EARNINGS",
+          "BROKER_MODEL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK hynix 3Q26 consolidated operating-profit revision",
+        "subject_id": "000660:CONSOLIDATED_OP_REVISION:3Q26E:SKS_2026-05-07",
+        "unit": "KRW billion",
+        "value": 76484
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The dated full broker report revises 4Q26 consolidated operating profit from KRW 80,492 billion to KRW 85,104 billion, a 6 percent increase; the consolidated value is not HBM-only profit.",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E 2Q26E 3Q26E 4Q26E\n매출액 80,300 96,099 107,613 77,715 92,439 103,372 3% 4% 4%\nDRAM 61,082 73,709 83,342 58,511 70,268 79,337 4% 5% 5%\nNAND 18,694 21,929 23,693 18,679 21,711 23,457 0% 1% 1%\n영업이익 63,224 76,484 85,104 60,453 72,440 80,492 5% 6% 6%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact old/new quarter estimate establishes the revision while preserving consolidated, non-HBM attribution.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:OPERATING_PROFIT_REVISION:4Q26E:SKS",
+        "normalized_object": "4Q26E consolidated operating profit revised to KRW 85,104 billion, up 6 percent from KRW 80,492 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q26E; revision report published 2026-05-07",
+        "predicate": "was revised upward by the broker from KRW 80,492 billion to",
+        "predicate_family": "BROKER_OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "4Q26_FORECAST",
+          "CONSOLIDATED",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "OPERATING_PROFIT_REVISION",
+          "CONSOLIDATED_EARNINGS",
+          "BROKER_MODEL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK hynix 4Q26 consolidated operating-profit revision",
+        "subject_id": "000660:CONSOLIDATED_OP_REVISION:4Q26E:SKS_2026-05-07",
+        "unit": "KRW billion",
+        "value": 85104
+      },
+      {
+        "business_segment": "Issuer-wide capital structure, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "The final KIND filing states the common-share par value for the ADR underlying-share issuance; it is an issuer-wide legal capital term rather than an HBM product or pricing metric.",
+        "exact_quote": "1. 신주의 종류와 수\n보통주식 (주)\n17,790,000\n기타주식 (주)\n-\n2. 1주당 액면가액 (원)\n5,000",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The par value completes the legal capital terms but does not measure proceeds, dilution premium, or HBM returns.",
+        "mechanism_scope_id": "000660:CORPORATE_EQUITY:PAR_VALUE:2026-07-10",
+        "normalized_object": "Common-share par value of KRW 5,000 in the final ADR financing",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "Final financing terms disclosed 2026-07-10",
+        "predicate": "had a stated par value per common share of",
+        "predicate_family": "ISSUER_COMMON_SHARE_PAR_VALUE",
+        "primitive_tags": [
+          "COMMON_SHARE",
+          "FINAL_TERMS",
+          "ISSUER_WIDE"
+        ],
+        "product_family": "Corporate equity capital",
+        "question_family_id": "ISSUER_EQUITY_FINANCING",
+        "question_family_tags": [
+          "ADR",
+          "PAR_VALUE",
+          "CAPITAL_STRUCTURE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix common-share par value in the final ADR financing",
+        "subject_id": "000660:COMMON_SHARE_PAR_VALUE:2026-07-10",
+        "unit": "KRW per share",
+        "value": 5000
+      },
+      {
+        "business_segment": "Issuer-wide capital structure, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "The final official filing classifies the new-share issuance as a third-party allotment; this describes the legal financing method and is not evidence of a customer or strategic HBM commitment.",
+        "exact_quote": "4. 자금조달의 목적\n시설자금 (원)\n40,023,070,290,000\n영업양수자금 (원)\n-\n운영자금 (원)\n-\n채무상환자금 (원)\n-\n타법인 증권\n취득자금 (원)\n-\n기타자금 (원)\n-\n5. 증자방식\n제3자배정증자",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The legal issuance method is needed to interpret the financing and dilution structure, without implying a commercial counterparty relationship.",
+        "mechanism_scope_id": "000660:CORPORATE_EQUITY:ALLOTMENT_METHOD:2026-07-10",
+        "normalized_object": "Final ADR underlying-share issuance by third-party allotment",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "Final financing terms disclosed 2026-07-10",
+        "predicate": "used the equity-issuance method",
+        "predicate_family": "ISSUER_EQUITY_ALLOTMENT_METHOD",
+        "primitive_tags": [
+          "FINAL_TERMS",
+          "ISSUER_WIDE",
+          "LEGAL_STRUCTURE"
+        ],
+        "product_family": "Corporate equity capital",
+        "question_family_id": "ISSUER_EQUITY_FINANCING",
+        "question_family_tags": [
+          "ADR",
+          "THIRD_PARTY_ALLOTMENT",
+          "EQUITY_FINANCING"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix final ADR underlying-share allotment method",
+        "subject_id": "000660:THIRD_PARTY_ALLOTMENT_METHOD:2026-07-10",
+        "unit": "",
+        "value": "third-party allotment capital increase"
+      },
+      {
+        "business_segment": "Issuer-wide capital structure, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "The final filing states the dividend accrual start date for the new ADR underlying shares; it is an issuer-wide distribution-right term, not an HBM earnings or signed-supply fact.",
+        "exact_quote": "9. 납입일\n2026.07.14\n10. 신주의 배당기산일\n2026.01.01\n11. 신주권교부예정일\n2026.07.15\n12. 신주의 상장 예정일\n2026.07.29",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The date completes distribution-right mechanics but does not independently resolve capital efficiency or product economics.",
+        "mechanism_scope_id": "000660:CORPORATE_EQUITY:DIVIDEND_BASE_DATE:2026-01-01",
+        "normalized_object": "New-share dividend accrual date of 2026-01-01",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "Final terms disclosed 2026-07-10",
+        "predicate": "set the new-share dividend accrual date to",
+        "predicate_family": "ISSUER_NEW_SHARE_DIVIDEND_BASE_DATE",
+        "primitive_tags": [
+          "DIVIDEND_BASE_DATE",
+          "FINAL_TERMS",
+          "ISSUER_WIDE"
+        ],
+        "product_family": "Corporate equity capital",
+        "question_family_id": "ISSUER_EQUITY_FINANCING",
+        "question_family_tags": [
+          "ADR",
+          "DIVIDEND_RIGHTS",
+          "CAPITAL_STRUCTURE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix new-share dividend accrual date",
+        "subject_id": "000660:NEW_SHARE_DIVIDEND_BASE_DATE:2026-01-01",
+        "unit": "date",
+        "value": "2026-01-01"
+      },
+      {
+        "business_segment": "Issuer-wide capital allocation, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "The final official filing states that all proceeds from the new-share ADR issuance will be used for facilities; the use is issuer-wide and does not by itself allocate the full amount to HBM.",
+        "exact_quote": "3) 상기 '4. 자금조달의 목적'과 관련하여, 본건 신주(ADR)의 발행을 통해 조달한 자금 전액을 시설자금으로 사용될 예정입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit all-proceeds use clarifies capital deployment while remaining issuer-wide and non-HBM-specific.",
+        "mechanism_scope_id": "000660:CAPITAL_ALLOCATION:ADR_PROCEEDS_ALL_FACILITIES:2026-07-10",
+        "normalized_object": "All ADR issuance proceeds allocated to facility capital",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "Final financing plan disclosed 2026-07-10",
+        "predicate": "planned to use all ADR issuance proceeds for",
+        "predicate_family": "ISSUER_PROCEEDS_USE",
+        "primitive_tags": [
+          "ALL_PROCEEDS",
+          "ISSUER_OFFICIAL",
+          "NON_HBM_ATTRIBUTED"
+        ],
+        "product_family": "Corporate semiconductor facilities",
+        "question_family_id": "ISSUER_CAPITAL_DEPLOYMENT",
+        "question_family_tags": [
+          "USE_OF_PROCEEDS",
+          "FACILITY_CAPEX",
+          "ADR"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix use of all ADR proceeds for facility capital",
+        "subject_id": "000660:ADR_PROCEEDS_ALL_FACILITY_CAPEX:2026-07-10",
+        "unit": "use-of-proceeds category",
+        "value": "facility capital expenditures"
+      },
+      {
+        "business_segment": "Consolidated broker valuation, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker summary shows FY2025 P/E using a consolidated EPS denominator; the multiple is superseded and cannot represent current valuation or HBM-only earnings.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2\n순이익 (십억원) 2,230 -9,112 14,347 18,265 20,282\nEPS (원) 3,063 -12,517 19,707 25,090 27,860\nROE (%) 3.6 -15.6 23.8 24.1 21.5\nP/E (배) 24.5 - 9.4 7.4 6.7\nP/B (배) 0.8 1.8 1.9 1.6 1.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The period-specific multiple is an auditable historical valuation point but is stale and non-HBM-attributed.",
+        "mechanism_scope_id": "000660:VALUATION:FORWARD_PE:FY2025F:MIRAE",
+        "normalized_object": "Historical FY2025F P/E of 7.4 times",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "was forecast by the broker at",
+        "predicate_family": "BROKER_FORWARD_PE",
+        "primitive_tags": [
+          "FY2025_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation",
+        "question_family_id": "FORWARD_PE",
+        "question_family_tags": [
+          "FORWARD_PE",
+          "VALUATION_MULTIPLE",
+          "BROKER_MODEL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 forward P/E forecast",
+        "subject_id": "000660:FORWARD_PE:FY2025F:MIRAE_2024-05-16",
+        "unit": "x",
+        "value": 7.4
+      },
+      {
+        "business_segment": "Consolidated broker valuation, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker summary shows FY2026 P/E using a consolidated EPS denominator; the multiple is superseded and cannot represent current valuation or HBM-only earnings.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2\n순이익 (십억원) 2,230 -9,112 14,347 18,265 20,282\nEPS (원) 3,063 -12,517 19,707 25,090 27,860\nROE (%) 3.6 -15.6 23.8 24.1 21.5\nP/E (배) 24.5 - 9.4 7.4 6.7\nP/B (배) 0.8 1.8 1.9 1.6 1.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The period-specific multiple is an auditable historical valuation point but is stale and non-HBM-attributed.",
+        "mechanism_scope_id": "000660:VALUATION:FORWARD_PE:FY2026F:MIRAE",
+        "normalized_object": "Historical FY2026F P/E of 6.7 times",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F; report published 2024-05-16",
+        "predicate": "was forecast by the broker at",
+        "predicate_family": "BROKER_FORWARD_PE",
+        "primitive_tags": [
+          "FY2026_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation",
+        "question_family_id": "FORWARD_PE",
+        "question_family_tags": [
+          "FORWARD_PE",
+          "VALUATION_MULTIPLE",
+          "BROKER_MODEL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026 forward P/E forecast",
+        "subject_id": "000660:FORWARD_PE:FY2026F:MIRAE_2024-05-16",
+        "unit": "x",
+        "value": 6.7
+      },
+      {
+        "business_segment": "Consolidated broker valuation, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker summary shows FY2024 P/B on a consolidated book-value denominator; the structured forward multiple is superseded and not current valuation.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2\n순이익 (십억원) 2,230 -9,112 14,347 18,265 20,282\nEPS (원) 3,063 -12,517 19,707 25,090 27,860\nROE (%) 3.6 -15.6 23.8 24.1 21.5\nP/E (배) 24.5 - 9.4 7.4 6.7\nP/B (배) 0.8 1.8 1.9 1.6 1.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact forward multiple is historical structured valuation evidence, but its SUPERSEDED lifecycle prevents current use.",
+        "mechanism_scope_id": "000660:VALUATION:FORWARD_PB:FY2024F:MIRAE",
+        "normalized_object": "Historical FY2024F P/B of 1.9 times",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F; report published 2024-05-16",
+        "predicate": "was forecast by the broker at",
+        "predicate_family": "BROKER_FORWARD_PB",
+        "primitive_tags": [
+          "FY2024_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation",
+        "question_family_id": "FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "VALUATION_MULTIPLE",
+          "BROKER_MODEL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK hynix FY2024 forward P/B forecast",
+        "subject_id": "000660:FORWARD_PB:FY2024F:MIRAE_2024-05-16",
+        "unit": "x",
+        "value": 1.9
+      },
+      {
+        "business_segment": "Consolidated broker valuation, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker summary shows FY2025 P/B on a consolidated book-value denominator; the structured forward multiple is superseded and not current valuation.",
+        "exact_quote": "결산기 (12월) 2022 2023 2024F 2025F 2026F\n매출액 (십억원) 44,622 32,766 64,651 81,029 94,364\n영업이익 (십억원) 6,809 -7,730 19,665 24,369 26,578\n영업이익률 (%) 15.3 -23.6 30.4 30.1 28.2\n순이익 (십억원) 2,230 -9,112 14,347 18,265 20,282\nEPS (원) 3,063 -12,517 19,707 25,090 27,860\nROE (%) 3.6 -15.6 23.8 24.1 21.5\nP/E (배) 24.5 - 9.4 7.4 6.7\nP/B (배) 0.8 1.8 1.9 1.6 1.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact forward multiple is historical structured valuation evidence, but its SUPERSEDED lifecycle prevents current use.",
+        "mechanism_scope_id": "000660:VALUATION:FORWARD_PB:FY2025F:MIRAE",
+        "normalized_object": "Historical FY2025F P/B of 1.6 times",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F; report published 2024-05-16",
+        "predicate": "was forecast by the broker at",
+        "predicate_family": "BROKER_FORWARD_PB",
+        "primitive_tags": [
+          "FY2025_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory equity valuation",
+        "question_family_id": "FORWARD_PB",
+        "question_family_tags": [
+          "FORWARD_PB",
+          "VALUATION_MULTIPLE",
+          "BROKER_MODEL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK hynix FY2025 forward P/B forecast",
+        "subject_id": "000660:FORWARD_PB:FY2025F:MIRAE_2024-05-16",
+        "unit": "x",
+        "value": 1.6
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-cec48c4b300fe56a6ba42cb7",
+      "SGDOC-e387fbf074539d32a618025a",
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "Current DRAM and consolidated broker revision atoms remain in SGDOC-cec48c4b300fe56a6ba42cb7 after this page.",
+      "Distinct official capital-plan amounts, uncertainty limits, and depositary mechanics remain in SGDOC-e387fbf074539d32a618025a.",
+      "Distinct historical forward P/B, earnings, cash-flow, and DRAM model atoms remain in SGDOC-f87582d14c66af24ff78d6d8."
+    ]
+  },
+  "payload_hash": "54cc7b369c6cc116303768b682376993d69d6aefc614aa5c7672008067583d7c",
+  "production_score_authority": false,
+  "prompt_hash": "55a60607a2e40414cbf9f3da4b91d31225b1dd35d0fbe7e36cc606fb59409129",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-bd15e267a8fc6a53331a1c424e16f02206e922bf34a238d1f075a7b5d4b0136c",
+  "response_id": "COLLABRESP-b6fe445bae1383c7b5742fcb176a1399c1f15452501b9ce914952e22eff70cd0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

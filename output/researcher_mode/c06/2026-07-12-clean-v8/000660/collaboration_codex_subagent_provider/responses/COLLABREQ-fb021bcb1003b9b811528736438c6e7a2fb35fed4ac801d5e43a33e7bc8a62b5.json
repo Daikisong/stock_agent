@@ -1,0 +1,609 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "No additional distinct fact remains after ten prior accepted issuer-wide ADR decision atoms; no HBM, signed-customer, or durable-visibility upgrade is inferred.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "No additional objective-local fact remains after the current broker estimates and historical target-price calibration rows were fully accounted; none is promoted to issuer guidance or HBM-only economics.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "No additional distinct fact remains after twenty-two prior accepted official ADR and issuer-wide capital atoms; none is promoted to HBM-only economics or customer visibility.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Twelve next source-order historical broker statement atoms were extracted: FY2026 gross profit one, year-end receivables three, annual selling and administrative expense three, year-end inventory three, and year-end other current assets two. Stock-versus-flow timing was kept explicit and repeated operating-profit forecasts were deduplicated; all facts remain SUPERSEDED.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2026 consolidated gross profit of KRW 43,030 billion for the full year. It is a superseded flow forecast, not a year-end stock or HBM-only profit.",
+        "exact_quote": "매출총이익 -533 31,772 38,814 43,030 매출채권 및 기타채권 6,874 10,785 12,106 14,065",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact period flow is retained as superseded consolidated context with its timing and denominator intact; it is not current HBM-only or issuer evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:GROSS_PROFIT:FY2026F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2026F consolidated gross-profit forecast of KRW 43,030 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F flow; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker for the full year at",
+        "predicate_family": "HISTORICAL_CONSOLIDATED_GROSS_PROFIT_FORECAST",
+        "primitive_tags": [
+          "FY2026F flow",
+          "SUPERSEDED",
+          "FLOW"
+        ],
+        "product_family": "Issuer-wide memory gross-profit forecast",
+        "question_family_id": "HISTORICAL_CONSOLIDATED_GROSS_PROFIT_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_CONSOLIDATED_GROSS_PROFIT_FORECAST",
+          "FLOW_METRIC",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026 consolidated gross-profit forecast",
+        "subject_id": "000660:CONSOLIDATED:GROSS_PROFIT:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 43030
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker balance sheet forecasts FY2024F year-end consolidated receivables and other receivables of KRW 10,785 billion. It is a superseded point-in-time stock, not a period flow or HBM-only metric.",
+        "exact_quote": "매출총이익 -533 31,772 38,814 43,030 매출채권 및 기타채권 6,874 10,785 12,106 14,065",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact year-end stock is retained as superseded consolidated context with its timing and denominator intact; it is not current HBM-only or issuer evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:RECEIVABLES:FY2024F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F year-end consolidated receivables and other receivables forecast of KRW 10,785 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F year-end balance; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a year-end balance of",
+        "predicate_family": "HISTORICAL_RECEIVABLES_BALANCE_FORECAST",
+        "primitive_tags": [
+          "FY2024F year-end balance",
+          "SUPERSEDED",
+          "YEAR_END_STOCK"
+        ],
+        "product_family": "Issuer-wide memory receivables and other receivables forecast",
+        "question_family_id": "HISTORICAL_RECEIVABLES_BALANCE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_RECEIVABLES_BALANCE_FORECAST",
+          "BALANCE_SHEET_STOCK",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024F year-end receivables and other receivables forecast",
+        "subject_id": "000660:CONSOLIDATED:RECEIVABLES:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 10785
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker balance sheet forecasts FY2025F year-end consolidated receivables and other receivables of KRW 12,106 billion. It is a superseded point-in-time stock, not a period flow or HBM-only metric.",
+        "exact_quote": "매출총이익 -533 31,772 38,814 43,030 매출채권 및 기타채권 6,874 10,785 12,106 14,065",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact year-end stock is retained as superseded consolidated context with its timing and denominator intact; it is not current HBM-only or issuer evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:RECEIVABLES:FY2025F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F year-end consolidated receivables and other receivables forecast of KRW 12,106 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F year-end balance; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a year-end balance of",
+        "predicate_family": "HISTORICAL_RECEIVABLES_BALANCE_FORECAST",
+        "primitive_tags": [
+          "FY2025F year-end balance",
+          "SUPERSEDED",
+          "YEAR_END_STOCK"
+        ],
+        "product_family": "Issuer-wide memory receivables and other receivables forecast",
+        "question_family_id": "HISTORICAL_RECEIVABLES_BALANCE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_RECEIVABLES_BALANCE_FORECAST",
+          "BALANCE_SHEET_STOCK",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025F year-end receivables and other receivables forecast",
+        "subject_id": "000660:CONSOLIDATED:RECEIVABLES:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 12106
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker balance sheet forecasts FY2026F year-end consolidated receivables and other receivables of KRW 14,065 billion. It is a superseded point-in-time stock, not a period flow or HBM-only metric.",
+        "exact_quote": "매출총이익 -533 31,772 38,814 43,030 매출채권 및 기타채권 6,874 10,785 12,106 14,065",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact year-end stock is retained as superseded consolidated context with its timing and denominator intact; it is not current HBM-only or issuer evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:RECEIVABLES:FY2026F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2026F year-end consolidated receivables and other receivables forecast of KRW 14,065 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F year-end balance; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a year-end balance of",
+        "predicate_family": "HISTORICAL_RECEIVABLES_BALANCE_FORECAST",
+        "primitive_tags": [
+          "FY2026F year-end balance",
+          "SUPERSEDED",
+          "YEAR_END_STOCK"
+        ],
+        "product_family": "Issuer-wide memory receivables and other receivables forecast",
+        "question_family_id": "HISTORICAL_RECEIVABLES_BALANCE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_RECEIVABLES_BALANCE_FORECAST",
+          "BALANCE_SHEET_STOCK",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026F year-end receivables and other receivables forecast",
+        "subject_id": "000660:CONSOLIDATED:RECEIVABLES:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 14065
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2024F consolidated selling and administrative expense of KRW 12,107 billion for the full year. It is a superseded flow forecast, not a balance-sheet stock or HBM-only cost.",
+        "exact_quote": "판매비와관리비 7,197 12,107 14,445 16,452 재고자산 13,481 24,195 27,159 29,903",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact period flow is retained as superseded consolidated context with its timing and denominator intact; it is not current HBM-only or issuer evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:SGA_EXPENSE:FY2024F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F consolidated selling and administrative expense forecast of KRW 12,107 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F flow; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker for the full year at",
+        "predicate_family": "HISTORICAL_SGA_EXPENSE_FORECAST",
+        "primitive_tags": [
+          "FY2024F flow",
+          "SUPERSEDED",
+          "FLOW"
+        ],
+        "product_family": "Issuer-wide memory selling and administrative expense forecast",
+        "question_family_id": "HISTORICAL_SGA_EXPENSE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_SGA_EXPENSE_FORECAST",
+          "FLOW_METRIC",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024F consolidated selling and administrative expense forecast",
+        "subject_id": "000660:CONSOLIDATED:SGA_EXPENSE:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 12107
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2025F consolidated selling and administrative expense of KRW 14,445 billion for the full year. It is a superseded flow forecast, not a balance-sheet stock or HBM-only cost.",
+        "exact_quote": "판매비와관리비 7,197 12,107 14,445 16,452 재고자산 13,481 24,195 27,159 29,903",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact period flow is retained as superseded consolidated context with its timing and denominator intact; it is not current HBM-only or issuer evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:SGA_EXPENSE:FY2025F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F consolidated selling and administrative expense forecast of KRW 14,445 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F flow; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker for the full year at",
+        "predicate_family": "HISTORICAL_SGA_EXPENSE_FORECAST",
+        "primitive_tags": [
+          "FY2025F flow",
+          "SUPERSEDED",
+          "FLOW"
+        ],
+        "product_family": "Issuer-wide memory selling and administrative expense forecast",
+        "question_family_id": "HISTORICAL_SGA_EXPENSE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_SGA_EXPENSE_FORECAST",
+          "FLOW_METRIC",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025F consolidated selling and administrative expense forecast",
+        "subject_id": "000660:CONSOLIDATED:SGA_EXPENSE:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 14445
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts FY2026F consolidated selling and administrative expense of KRW 16,452 billion for the full year. It is a superseded flow forecast, not a balance-sheet stock or HBM-only cost.",
+        "exact_quote": "판매비와관리비 7,197 12,107 14,445 16,452 재고자산 13,481 24,195 27,159 29,903",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact period flow is retained as superseded consolidated context with its timing and denominator intact; it is not current HBM-only or issuer evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:SGA_EXPENSE:FY2026F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2026F consolidated selling and administrative expense forecast of KRW 16,452 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F flow; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker for the full year at",
+        "predicate_family": "HISTORICAL_SGA_EXPENSE_FORECAST",
+        "primitive_tags": [
+          "FY2026F flow",
+          "SUPERSEDED",
+          "FLOW"
+        ],
+        "product_family": "Issuer-wide memory selling and administrative expense forecast",
+        "question_family_id": "HISTORICAL_SGA_EXPENSE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_SGA_EXPENSE_FORECAST",
+          "FLOW_METRIC",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026F consolidated selling and administrative expense forecast",
+        "subject_id": "000660:CONSOLIDATED:SGA_EXPENSE:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 16452
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker balance sheet forecasts FY2024F year-end consolidated inventory of KRW 24,195 billion. It is a superseded point-in-time stock, not a period flow or HBM-only metric.",
+        "exact_quote": "판매비와관리비 7,197 12,107 14,445 16,452 재고자산 13,481 24,195 27,159 29,903",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact year-end stock is retained as superseded consolidated context with its timing and denominator intact; it is not current HBM-only or issuer evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:INVENTORY:FY2024F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F year-end consolidated inventory forecast of KRW 24,195 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F year-end balance; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a year-end balance of",
+        "predicate_family": "HISTORICAL_INVENTORY_BALANCE_FORECAST",
+        "primitive_tags": [
+          "FY2024F year-end balance",
+          "SUPERSEDED",
+          "YEAR_END_STOCK"
+        ],
+        "product_family": "Issuer-wide memory inventory forecast",
+        "question_family_id": "HISTORICAL_INVENTORY_BALANCE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_INVENTORY_BALANCE_FORECAST",
+          "BALANCE_SHEET_STOCK",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024F year-end inventory forecast",
+        "subject_id": "000660:CONSOLIDATED:INVENTORY:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 24195
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker balance sheet forecasts FY2025F year-end consolidated inventory of KRW 27,159 billion. It is a superseded point-in-time stock, not a period flow or HBM-only metric.",
+        "exact_quote": "판매비와관리비 7,197 12,107 14,445 16,452 재고자산 13,481 24,195 27,159 29,903",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact year-end stock is retained as superseded consolidated context with its timing and denominator intact; it is not current HBM-only or issuer evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:INVENTORY:FY2025F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F year-end consolidated inventory forecast of KRW 27,159 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F year-end balance; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a year-end balance of",
+        "predicate_family": "HISTORICAL_INVENTORY_BALANCE_FORECAST",
+        "primitive_tags": [
+          "FY2025F year-end balance",
+          "SUPERSEDED",
+          "YEAR_END_STOCK"
+        ],
+        "product_family": "Issuer-wide memory inventory forecast",
+        "question_family_id": "HISTORICAL_INVENTORY_BALANCE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_INVENTORY_BALANCE_FORECAST",
+          "BALANCE_SHEET_STOCK",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025F year-end inventory forecast",
+        "subject_id": "000660:CONSOLIDATED:INVENTORY:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 27159
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker balance sheet forecasts FY2026F year-end consolidated inventory of KRW 29,903 billion. It is a superseded point-in-time stock, not a period flow or HBM-only metric.",
+        "exact_quote": "판매비와관리비 7,197 12,107 14,445 16,452 재고자산 13,481 24,195 27,159 29,903",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact year-end stock is retained as superseded consolidated context with its timing and denominator intact; it is not current HBM-only or issuer evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:INVENTORY:FY2026F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2026F year-end consolidated inventory forecast of KRW 29,903 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2026F year-end balance; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a year-end balance of",
+        "predicate_family": "HISTORICAL_INVENTORY_BALANCE_FORECAST",
+        "primitive_tags": [
+          "FY2026F year-end balance",
+          "SUPERSEDED",
+          "YEAR_END_STOCK"
+        ],
+        "product_family": "Issuer-wide memory inventory forecast",
+        "question_family_id": "HISTORICAL_INVENTORY_BALANCE_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_INVENTORY_BALANCE_FORECAST",
+          "BALANCE_SHEET_STOCK",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026F year-end inventory forecast",
+        "subject_id": "000660:CONSOLIDATED:INVENTORY:FY2026F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 29903
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker balance sheet forecasts FY2024F year-end consolidated other current assets of KRW 3,695 billion. It is a superseded point-in-time stock, not a period flow or HBM-only metric.",
+        "exact_quote": "조정영업이익 -7,730 19,665 24,369 26,578 기타유동자산 2,526 3,695 4,041 4,564",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact year-end stock is retained as superseded consolidated context with its timing and denominator intact; it is not current HBM-only or issuer evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:OTHER_CURRENT_ASSETS:FY2024F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2024F year-end consolidated other current assets forecast of KRW 3,695 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2024F year-end balance; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a year-end balance of",
+        "predicate_family": "HISTORICAL_OTHER_CURRENT_ASSETS_FORECAST",
+        "primitive_tags": [
+          "FY2024F year-end balance",
+          "SUPERSEDED",
+          "YEAR_END_STOCK"
+        ],
+        "product_family": "Issuer-wide memory other current assets forecast",
+        "question_family_id": "HISTORICAL_OTHER_CURRENT_ASSETS_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_OTHER_CURRENT_ASSETS_FORECAST",
+          "BALANCE_SHEET_STOCK",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2024F year-end other current assets forecast",
+        "subject_id": "000660:CONSOLIDATED:OTHER_CURRENT_ASSETS:FY2024F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 3695
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker balance sheet forecasts FY2025F year-end consolidated other current assets of KRW 4,041 billion. It is a superseded point-in-time stock, not a period flow or HBM-only metric.",
+        "exact_quote": "조정영업이익 -7,730 19,665 24,369 26,578 기타유동자산 2,526 3,695 4,041 4,564",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact year-end stock is retained as superseded consolidated context with its timing and denominator intact; it is not current HBM-only or issuer evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:OTHER_CURRENT_ASSETS:FY2025F:MIRAE_2024-05-16",
+        "normalized_object": "Historical FY2025F year-end consolidated other current assets forecast of KRW 4,041 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "FY2025F year-end balance; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker as a year-end balance of",
+        "predicate_family": "HISTORICAL_OTHER_CURRENT_ASSETS_FORECAST",
+        "primitive_tags": [
+          "FY2025F year-end balance",
+          "SUPERSEDED",
+          "YEAR_END_STOCK"
+        ],
+        "product_family": "Issuer-wide memory other current assets forecast",
+        "question_family_id": "HISTORICAL_OTHER_CURRENT_ASSETS_FORECAST",
+        "question_family_tags": [
+          "HISTORICAL_OTHER_CURRENT_ASSETS_FORECAST",
+          "BALANCE_SHEET_STOCK",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025F year-end other current assets forecast",
+        "subject_id": "000660:CONSOLIDATED:OTHER_CURRENT_ASSETS:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 4041
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "The FY2026 other-current-assets balance and further non-current asset, liability, earnings, cash-flow, per-share, and leverage forecast atoms remain in SGDOC-f87582d14c66af24ff78d6d8."
+    ]
+  },
+  "payload_hash": "ed0e29170218603e8f8682d780fdf9f95970cceab455f96b040368e5aa79e9fd",
+  "production_score_authority": false,
+  "prompt_hash": "2e76b84088e5e67b722e766c90b72d52129e00f07c854d204f22b2b3a2010c3b",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-fb021bcb1003b9b811528736438c6e7a2fb35fed4ac801d5e43a33e7bc8a62b5",
+  "response_id": "COLLABRESP-5135ae931c0d2e55320822fe55c47474c187854c534f71202a3ea3a17eff9175",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

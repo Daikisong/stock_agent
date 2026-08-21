@@ -1,0 +1,581 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "rationale": "Extracted the first 12 distinct current target-direct atoms in source order after strict comparison with 802 durable facts: 1Cnm/EUV and high-value DRAM outlook plus forward fab-level and total DRAM capacity estimates. Repeated layouts, expired 4Q25/1H26 outlook, other issuers, industry-general statements, and target-price-only text were not upgraded. Further target-direct table and forecast atoms remain.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "유안타증권은 삼성전자와 SK하이닉스의 1Cnm DRAM에서 EUV 적용 레이어가 평균 6~7개로 D1b 대비 약 두 배 늘어날 것으로 파악했다. 양사 공통 브로커 전망이며 issuer actual은 아니다.",
+        "exact_quote": "삼성전자와 SK하이닉스의 경우, 1Cnm 에서 EUV 적용 레이어\n수가 평균 6~7개 수준으로, 전세대(D1b) 대비 두 배 가까이\n증가하는것으로파악.EUV관련장비·소재·부품밸류체인전반의\n투자 모멘텀이 강화될 것으로 예상. [관련 글로벌/국내 소부장\n밸류체인page18~19]",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The target-attributed process-intensity estimate informs the scale of DRAM technology investment, but remains a broker estimate shared with Samsung rather than issuer-confirmed CAPEX.",
+        "mechanism_scope_id": "000660_MEMORY_DRAM_1CNM_EUV_INVESTMENT",
+        "normalized_object": "SK hynix 1Cnm DRAM average EUV-layer count forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 investment outlook",
+        "predicate": "broker estimates average EUV layers at six to seven, nearly double D1b",
+        "predicate_family": "DRAM_EUV_LAYER_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "1Cnm",
+          "EUV",
+          "6~7 layers"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "yuanta_sk_1cnm_euv_layer_forecast",
+        "question_family_tags": [
+          "yuanta_sk_1cnm_euv_layer_forecast",
+          "DRAM_CAPACITY_INVESTMENT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1Cnm DRAM EUV 적용 레이어",
+        "subject_id": "000660:DRAM:1CNM_EUV_LAYERS",
+        "unit": "layers",
+        "value": "6~7, nearly 2x D1b"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.92,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "유안타증권은 SK하이닉스의 1c DRAM을 포함한 고부가 DRAM 경쟁력이 지속될 것으로 전망했다. 브로커의 정성 전망이며 실현된 시장점유율이나 마진 actual은 아니다.",
+        "exact_quote": "동사 1c DRAM을 포함해 고부가 DRAM 시장 내 경쟁력은\n지속될것으로기대된다는점이긍정적이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "This is a target-specific broker view on product competitiveness, preserved as qualitative outlook without inventing share, pricing, or HBM-only earnings.",
+        "mechanism_scope_id": "000660_MEMORY_DRAM_PRODUCT_COMPETITIVENESS",
+        "normalized_object": "SK hynix 1c and high-value DRAM competitiveness outlook",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward outlook published 2025-10-21",
+        "predicate": "broker expects high-value DRAM competitiveness to persist",
+        "predicate_family": "DRAM_COMPETITIVENESS_OUTLOOK",
+        "primitive_tags": [
+          "SK하이닉스",
+          "1c DRAM",
+          "high-value DRAM"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "yuanta_sk_high_value_dram_competitiveness",
+        "question_family_tags": [
+          "yuanta_sk_high_value_dram_competitiveness",
+          "DRAM_PRODUCT_OUTLOOK"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1c 및 고부가 DRAM 경쟁력",
+        "subject_id": "000660:DRAM:HIGH_VALUE_COMPETITIVENESS",
+        "unit": "outlook",
+        "value": "expected to persist"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "유안타증권은 SK하이닉스의 제한적인 신규 DRAM 클린룸 여력과 고용량 conventional DRAM 수요를 근거로 1Cnm 투자규모를 150K로 추정했다. 단위는 보고서의 capacity 문맥상 K wafers/month이며 issuer 계획이나 actual은 아니다.",
+        "exact_quote": "• SK하이닉스의 DRAM 신규 클린룸이 확보 여력이 제한적인이라는 점과 고용량 Conventional DRAM(SOCAMM 포함) 수요 증가율이\n역대급이라는 점을 고려하면 1Cnm 투자규모는 150K 수준일 것으로 추정한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The target-specific capacity estimate is distinct from the existing over-100K FY2025 conversion forecast, while remaining a broker FY2026 estimate rather than issuer CAPEX guidance.",
+        "mechanism_scope_id": "000660_MEMORY_DRAM_1CNM_CAPACITY_INVESTMENT",
+        "normalized_object": "SK hynix 1Cnm DRAM investment scale forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 forecast",
+        "predicate": "broker estimates 1Cnm investment scale",
+        "predicate_family": "DRAM_PROCESS_INVESTMENT_SCALE_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "1Cnm",
+          "150K",
+          "cleanroom"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "yuanta_sk_1cnm_investment_scale",
+        "question_family_tags": [
+          "yuanta_sk_1cnm_investment_scale",
+          "DRAM_CAPACITY_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 1Cnm DRAM 투자규모",
+        "subject_id": "000660:DRAM:1CNM_INVESTMENT_SCALE",
+        "unit": "K wafers/month",
+        "value": 150
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "유안타증권 업계자료 표는 SK하이닉스 M14 DRAM capa를 3Q26F 월 145K wafers로 전망했다. 브로커 capacity 전망이며 실제 생산량·HBM 전용 capacity가 아니다.",
+        "exact_quote": "M14 138 145 160 170 170 170 170 170 165 155 145 135",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This period-specific fab capacity atom bears directly on forward DRAM supply and is not attributed to HBM-only output or issuer guidance.",
+        "mechanism_scope_id": "000660_MEMORY_DRAM_FAB_CAPACITY",
+        "normalized_object": "SK hynix M14 DRAM capacity forecast for 3Q26",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2026F",
+        "predicate": "broker forecasts M14 DRAM capacity",
+        "predicate_family": "DRAM_FAB_CAPACITY_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "M14",
+          "3Q26F",
+          "145K"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "yuanta_sk_m14_dram_capa_3q26",
+        "question_family_tags": [
+          "yuanta_sk_m14_dram_capa_3q26",
+          "DRAM_FAB_CAPACITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 M14 DRAM 생산능력",
+        "subject_id": "000660:M14:DRAM_CAPACITY",
+        "unit": "K wafers/month",
+        "value": 145
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "유안타증권 업계자료 표는 SK하이닉스 M14 DRAM capa를 4Q26F 월 135K wafers로 전망했다. 브로커 capacity 전망이며 실제 생산량·HBM 전용 capacity가 아니다.",
+        "exact_quote": "M14 138 145 160 170 170 170 170 170 165 155 145 135",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This period-specific fab capacity atom bears directly on forward DRAM supply and is not attributed to HBM-only output or issuer guidance.",
+        "mechanism_scope_id": "000660_MEMORY_DRAM_FAB_CAPACITY",
+        "normalized_object": "SK hynix M14 DRAM capacity forecast for 4Q26",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2026F",
+        "predicate": "broker forecasts M14 DRAM capacity",
+        "predicate_family": "DRAM_FAB_CAPACITY_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "M14",
+          "4Q26F",
+          "135K"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "yuanta_sk_m14_dram_capa_4q26",
+        "question_family_tags": [
+          "yuanta_sk_m14_dram_capa_4q26",
+          "DRAM_FAB_CAPACITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 M14 DRAM 생산능력",
+        "subject_id": "000660:M14:DRAM_CAPACITY",
+        "unit": "K wafers/month",
+        "value": 135
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "유안타증권 업계자료 표는 SK하이닉스 M16 DRAM capa를 3Q26F 월 230K wafers로 전망했다. 브로커 capacity 전망이며 실제 생산량·HBM 전용 capacity가 아니다.",
+        "exact_quote": "M16 80 85 110 130 145 160 170 185 200 220 230 240",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This period-specific fab capacity atom bears directly on forward DRAM supply and is not attributed to HBM-only output or issuer guidance.",
+        "mechanism_scope_id": "000660_MEMORY_DRAM_FAB_CAPACITY",
+        "normalized_object": "SK hynix M16 DRAM capacity forecast for 3Q26",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2026F",
+        "predicate": "broker forecasts M16 DRAM capacity",
+        "predicate_family": "DRAM_FAB_CAPACITY_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "M16",
+          "3Q26F",
+          "230K"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "yuanta_sk_m16_dram_capa_3q26",
+        "question_family_tags": [
+          "yuanta_sk_m16_dram_capa_3q26",
+          "DRAM_FAB_CAPACITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 M16 DRAM 생산능력",
+        "subject_id": "000660:M16:DRAM_CAPACITY",
+        "unit": "K wafers/month",
+        "value": 230
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "유안타증권 업계자료 표는 SK하이닉스 M16 DRAM capa를 4Q26F 월 240K wafers로 전망했다. 브로커 capacity 전망이며 실제 생산량·HBM 전용 capacity가 아니다.",
+        "exact_quote": "M16 80 85 110 130 145 160 170 185 200 220 230 240",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This period-specific fab capacity atom bears directly on forward DRAM supply and is not attributed to HBM-only output or issuer guidance.",
+        "mechanism_scope_id": "000660_MEMORY_DRAM_FAB_CAPACITY",
+        "normalized_object": "SK hynix M16 DRAM capacity forecast for 4Q26",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2026F",
+        "predicate": "broker forecasts M16 DRAM capacity",
+        "predicate_family": "DRAM_FAB_CAPACITY_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "M16",
+          "4Q26F",
+          "240K"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "yuanta_sk_m16_dram_capa_4q26",
+        "question_family_tags": [
+          "yuanta_sk_m16_dram_capa_4q26",
+          "DRAM_FAB_CAPACITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 M16 DRAM 생산능력",
+        "subject_id": "000660:M16:DRAM_CAPACITY",
+        "unit": "K wafers/month",
+        "value": 240
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "유안타증권 업계자료 표는 SK하이닉스 M15X DRAM capa를 3Q26F 월 30K wafers로 전망했다. 브로커 capacity 전망이며 실제 생산량·HBM 전용 capacity가 아니다.",
+        "exact_quote": "M15x - - - - - - - - 5 20 30 40",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This period-specific fab capacity atom is distinct from the existing qualitative HBM-dedicated-line estimate and does not convert the DRAM table into HBM-only capacity.",
+        "mechanism_scope_id": "000660_MEMORY_DRAM_FAB_CAPACITY",
+        "normalized_object": "SK hynix M15X DRAM capacity forecast for 3Q26",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2026F",
+        "predicate": "broker forecasts M15X DRAM capacity",
+        "predicate_family": "DRAM_FAB_CAPACITY_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "M15X",
+          "3Q26F",
+          "30K"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "yuanta_sk_m15x_dram_capa_3q26",
+        "question_family_tags": [
+          "yuanta_sk_m15x_dram_capa_3q26",
+          "DRAM_FAB_CAPACITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 M15X DRAM 생산능력",
+        "subject_id": "000660:M15X:DRAM_CAPACITY",
+        "unit": "K wafers/month",
+        "value": 30
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "유안타증권 업계자료 표는 SK하이닉스 M15X DRAM capa를 4Q26F 월 40K wafers로 전망했다. 브로커 capacity 전망이며 실제 생산량·HBM 전용 capacity가 아니다.",
+        "exact_quote": "M15x - - - - - - - - 5 20 30 40",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This period-specific fab capacity atom is distinct from the existing qualitative HBM-dedicated-line estimate and does not convert the DRAM table into HBM-only capacity.",
+        "mechanism_scope_id": "000660_MEMORY_DRAM_FAB_CAPACITY",
+        "normalized_object": "SK hynix M15X DRAM capacity forecast for 4Q26",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2026F",
+        "predicate": "broker forecasts M15X DRAM capacity",
+        "predicate_family": "DRAM_FAB_CAPACITY_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "M15X",
+          "4Q26F",
+          "40K"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "yuanta_sk_m15x_dram_capa_4q26",
+        "question_family_tags": [
+          "yuanta_sk_m15x_dram_capa_4q26",
+          "DRAM_FAB_CAPACITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 M15X DRAM 생산능력",
+        "subject_id": "000660:M15X:DRAM_CAPACITY",
+        "unit": "K wafers/month",
+        "value": 40
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "유안타증권 업계자료 표는 SK하이닉스 Wuxi C2 DRAM capa를 3Q26F 월 190K wafers로 전망했다. 브로커 capacity 전망이며 실제 생산량·HBM 전용 capacity가 아니다.",
+        "exact_quote": "Wuxi (C2) 150 150 165 180 185 185 190 190 190 190 190 190",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This target-fab period atom supports the forward DRAM supply map without inferring product mix, utilization, or contract allocation.",
+        "mechanism_scope_id": "000660_MEMORY_DRAM_FAB_CAPACITY",
+        "normalized_object": "SK hynix Wuxi C2 DRAM capacity forecast for 3Q26",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2026F",
+        "predicate": "broker forecasts Wuxi C2 DRAM capacity",
+        "predicate_family": "DRAM_FAB_CAPACITY_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "Wuxi C2",
+          "3Q26F",
+          "190K"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "yuanta_sk_wuxi_dram_capa_3q26",
+        "question_family_tags": [
+          "yuanta_sk_wuxi_dram_capa_3q26",
+          "DRAM_FAB_CAPACITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 Wuxi C2 DRAM 생산능력",
+        "subject_id": "000660:WUXI_C2:DRAM_CAPACITY",
+        "unit": "K wafers/month",
+        "value": 190
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "유안타증권 업계자료 표는 SK하이닉스 Wuxi C2 DRAM capa를 4Q26F 월 190K wafers로 전망했다. 브로커 capacity 전망이며 실제 생산량·HBM 전용 capacity가 아니다.",
+        "exact_quote": "Wuxi (C2) 150 150 165 180 185 185 190 190 190 190 190 190",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This target-fab period atom supports the forward DRAM supply map without inferring product mix, utilization, or contract allocation.",
+        "mechanism_scope_id": "000660_MEMORY_DRAM_FAB_CAPACITY",
+        "normalized_object": "SK hynix Wuxi C2 DRAM capacity forecast for 4Q26",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2026F",
+        "predicate": "broker forecasts Wuxi C2 DRAM capacity",
+        "predicate_family": "DRAM_FAB_CAPACITY_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "Wuxi C2",
+          "4Q26F",
+          "190K"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "yuanta_sk_wuxi_dram_capa_4q26",
+        "question_family_tags": [
+          "yuanta_sk_wuxi_dram_capa_4q26",
+          "DRAM_FAB_CAPACITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 Wuxi C2 DRAM 생산능력",
+        "subject_id": "000660:WUXI_C2:DRAM_CAPACITY",
+        "unit": "K wafers/month",
+        "value": 190
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "economic_mechanism": "유안타증권 업계자료 표는 SK하이닉스 총 DRAM capa를 3Q26F 월 595K wafers로 전망했다. 브로커 capacity 전망이며 실제 생산량·HBM 전용 capacity가 아니다.",
+        "exact_quote": "SK hynix M10 - - - - - - - - - - - -\nM14 138 145 160 170 170 170 170 170 165 155 145 135\nM16 80 85 110 130 145 160 170 185 200 220 230 240\nM15x - - - - - - - - 5 20 30 40\nWuxi (C2) 150 150 165 180 185 185 190 190 190 190 190 190\n368 380 435 480 500 515 530 545 560 585 595 605",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The issuer-total period atom aggregates the four disclosed DRAM fab rows and is kept separate from actual utilization, shipments, and HBM-only capacity.",
+        "mechanism_scope_id": "000660_MEMORY_DRAM_TOTAL_CAPACITY",
+        "normalized_object": "SK hynix total DRAM capacity forecast for 3Q26",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2026F",
+        "predicate": "broker forecasts total DRAM capacity",
+        "predicate_family": "DRAM_TOTAL_CAPACITY_FORECAST",
+        "primitive_tags": [
+          "SK하이닉스",
+          "total DRAM",
+          "3Q26F",
+          "595K"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "yuanta_sk_total_dram_capa_3q26",
+        "question_family_tags": [
+          "yuanta_sk_total_dram_capa_3q26",
+          "DRAM_TOTAL_CAPACITY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 총 DRAM 생산능력",
+        "subject_id": "000660:TOTAL:DRAM_CAPACITY",
+        "unit": "K wafers/month",
+        "value": 595
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-9e0c9a7ec6ee14acfe77ce2f"
+    ],
+    "unresolved_research_notes": [
+      "SGDOC-9e0c9a7ec6ee14acfe77ce2f retains distinct target-direct source-order remainder after this 12-row page, beginning with the 4Q26 total DRAM capacity forecast and continuing through attributable earnings, DRAM operating model, valuation formula, and cash-flow tables; broker estimates must remain separate from issuer guidance, actuals, signed contracts, and HBM-only economics."
+    ]
+  },
+  "payload_hash": "a735c5a949173e3605e4d338e4525e0aa736156a7bebf2d9c888b34d0f28578e",
+  "production_score_authority": false,
+  "prompt_hash": "84363ae809aec96240fd72f92a00c8e9b689e3193e03ea497598bfc74fc6c92e",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-7c596b43a077c1bab0cabdfb64d69f9ec6adf85c0f46fc75b5e7d8ac288d0c2b",
+  "response_id": "COLLABRESP-d0e192315f8d3d0eaf57840f5e1a93dc89fb5de6b04a4df611d60e93f6e0df71",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

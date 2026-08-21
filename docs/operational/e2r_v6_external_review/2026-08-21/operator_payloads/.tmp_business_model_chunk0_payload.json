@@ -1,0 +1,49 @@
+{
+  "business_model_summary": "SK하이닉스는 DRAM·HBM 중심 메모리 제조사로, AI 서버 수요와 제품 믹스·ASP 상승이 매출과 이익을 확대하고 대규모 팹·첨단 패키징 투자, 수율, 감가상각, 운전자본과 세금이 현금전환을 좌우한다. 고객별 공급 물량·가격은 월별 또는 분기별 협의되고 일부 고객 매출 집중도가 높아, 강한 수요와 공급 제약이 협상력을 높일 수 있지만 signed HBM 물량·가격·취소·선수금·RPO가 공식적으로 확인된 것은 아니다.",
+  "revenue_engines": [
+    "DRAM과 HBM 판매량·제품 믹스 및 ASP 상승",
+    "AI 서버용 HBM·서버 DRAM 수요 확대와 차세대 HBM4 출하",
+    "전사 메모리 매출과 DRAM 부문 이익의 확대"
+  ],
+  "cost_and_cash_drivers": [
+    "HBM의 큰 die와 낮은 수율이 원가·공급량에 미치는 영향",
+    "팹·첨단 패키징·EUV 투자와 이에 따른 감가상각",
+    "영업현금흐름에서 CAPEX·세금·운전자본을 차감한 FCF 전환",
+    "ADR 조달과 현금·차입을 함께 사용하는 시설투자 재원 구조"
+  ],
+  "capacity_and_supply_constraints": [
+    "메모리 전반 설비 가동률과 HBM 패키징·수율 병목",
+    "용인 팹 및 패키징 설비 증설은 장기 공급 기반을 늘리지만 집행기간과 비용이 크다",
+    "브로커의 DRAM·HBM CAPA 전망은 issuer guidance나 고객 예약물량이 아니다"
+  ],
+  "customer_and_channel_dependencies": [
+    "주요 고객과 공급 물량·가격을 월별 또는 분기별 상호 합의한다",
+    "상위 익명 고객 A·B의 연결 매출 비중이 높아 고객 집중 위험이 있다",
+    "Microsoft·Nvidia 관련 관계는 일부 브로커 문서에 있으나 고객 공식 확인과 세부 계약조건은 부족하다"
+  ],
+  "fact_row_indices": [
+    0,
+    3,
+    5,
+    10,
+    14,
+    17,
+    20,
+    27,
+    36,
+    45,
+    49,
+    52,
+    53,
+    599,
+    600
+  ],
+  "uncertainties": [
+    "HBM 전용 realized ASP·CAPA·수율·마진이 전사 또는 DRAM 수치와 분리되지 않은 경우가 많다",
+    "signed HBM 계약의 기간·물량·가격·취소·선수금·backlog/RPO가 공식 자료로 충분히 확인되지 않았다",
+    "전망 수치는 브로커 추정이며 실제 실적과 materially 다를 수 있다",
+    "고객 A·B의 실명과 제품별 매출 귀속이 공개되지 않았다"
+  ],
+  "confidence": 0.9,
+  "research_complete": true
+}

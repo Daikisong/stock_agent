@@ -1,0 +1,109 @@
+{
+  "output_schema_hash": "5345010c983e3143517048287274e45cc585d20f0bafd2091aec5087496f2ffb",
+  "payload": {
+    "confidence": 0.77,
+    "counter_case": "현재 valuation 지표가 일관되게 싸지 않고, 메모리 전체 실적과 HBM4 출하를 HBM 단독 정상 이익으로 연결하는 브리지가 없다. DRAM 점유율도 2024년 수준에 미달한다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df"
+    ],
+    "positive_case": "실제 HBM4 출하, 메모리 매출 확대와 ASP 상승은 향후 이익 추정이 실현될 경우 valuation 재평가의 실물 기반이 된다. 2025년 1분기 메모리 매출 기준과 비교해 2026년 실현 규모가 크게 높다.",
+    "prior_fact_dispositions": [],
+    "proposed_score_lower": 4.1,
+    "proposed_score_mid": 4.8,
+    "proposed_score_upper": 5.5,
+    "research_complete": true,
+    "researcher_summary": "HBM4 양산 출하와 메모리 매출·ASP 상승은 rerating을 지지할 수 있는 운영 실행이다. 다만 구조화 현재 valuation은 forward PE 5.59배와 trailing parent PE 21.86배, forward EV/EBITDA 18.88배, PB 2.99배, FCF yield 1.99%가 혼재한다. 따라서 낮은 forward PE 하나만으로 HBM rerating 여력을 확정하지 않는다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "rerating을 뒷받침할 실제 운영 기반으로 반영하되 현재 멀티플이나 HBM 정상 이익을 이 사실에서 추론하지 않는다.",
+        "fact_row_index": 18,
+        "source_economic_mechanism": "2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.",
+        "source_period_json": "\"2026-02\"",
+        "source_predicate": "COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS",
+        "source_value_json": "\"HBM4 양산 출하\""
+      },
+      {
+        "component_interpretation": "운영 비교 맥락으로만 사용하며 valuation 할인 근거로 직접 사용하지 않는다.",
+        "fact_row_index": 23,
+        "source_economic_mechanism": "메모리 제품 매출의 전년 비교 기준",
+        "source_period_json": "\"2025-Q1\"",
+        "source_predicate": "2025년 1분기 메모리 제품 매출액을 비교표에 보고했다",
+        "source_value_json": "19069038"
+      },
+      {
+        "component_interpretation": "운영 비교 맥락으로만 사용하며 valuation 할인 근거로 직접 사용하지 않는다.",
+        "fact_row_index": 32,
+        "source_economic_mechanism": "삼성전자의 2026년 1분기 추정 DRAM 금액 기준 점유율 38.4%는 2025년 34.0%보다 높지만 2024년 41.5%에는 미달해 경쟁지위 회복과 잔여 격차를 함께 보여준다.",
+        "source_period_json": "\"2026-Q1 vs 2025 and 2024\"",
+        "source_predicate": "ESTIMATED_DRAM_MARKET_SHARE_RECOVERED_YEAR_ON_YEAR_BUT_BELOW_2024",
+        "source_value_json": "\"38.4% vs 34.0% in 2025 and 41.5% in 2024\""
+      },
+      {
+        "component_interpretation": "rerating을 뒷받침할 실제 운영 기반으로 반영하되 현재 멀티플이나 HBM 정상 이익을 이 사실에서 추론하지 않는다.",
+        "fact_row_index": 39,
+        "source_economic_mechanism": "메모리 제품 매출의 실제 수익 전환",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 메모리 제품 매출액을 보고했다",
+        "source_value_json": "74779980"
+      },
+      {
+        "component_interpretation": "rerating을 뒷받침할 실제 운영 기반으로 반영하되 현재 멀티플이나 HBM 정상 이익을 이 사실에서 추론하지 않는다.",
+        "fact_row_index": 42,
+        "source_economic_mechanism": "메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다.",
+        "source_period_json": "\"2026Q1 vs 2025 annual average\"",
+        "source_predicate": "MEMORY_ASP_INCREASED_VERSUS_PRIOR_YEAR_AVERAGE",
+        "source_value_json": "146"
+      }
+    ],
+    "selected_fact_row_indices": [
+      18,
+      23,
+      32,
+      39,
+      42
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "KRX_PRICE_MARKET_CAP",
+      "TARGET_OFFICIAL_TRAILING_VALUATION"
+    ],
+    "structured_metric_row_indices": [
+      0
+    ],
+    "uncertainties": [
+      "forward valuation은 추정 이익에 의존하며 실제 HBM 이익이 아니다.",
+      "현재 가격에 HBM4 기대가 반영된 정도가 직접 확인되지 않는다.",
+      "peer 및 target valuation은 사업 믹스 차이 때문에 단순 비교가 어렵다."
+    ],
+    "why_not_higher": "운영 개선에도 forward EV/EBITDA·PB·FCF yield가 일관된 저평가를 보이지 않고 HBM 정상 이익 브리지가 없어 상단을 제한했다.",
+    "why_not_lower": "HBM4 실제 출하와 강한 메모리 매출·ASP가 rerating의 실물 기반을 제공하므로 무근거 기대 수준으로 낮추지 않았다."
+  },
+  "payload_hash": "6d86e1e7b1b3a65cbd8c50f161d4e5fc0da94428274ef6d4d32525e2c0220d7f",
+  "production_score_authority": false,
+  "prompt_hash": "1d1ce50bfc136a34d972df1e829305f1257b45d1fcdf1bb66f864af65a9d6e5e",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-656d34c3acb387045d02017d8c1271f1c8b2347cbb1abfd45b72b9b7d5edf018",
+  "response_id": "COLLABRESP-bd8660bba8b8816300b644f52f5724c3ae650ca07841dea11f71fadd22161c11",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5252be9ad824d390ede99cb1",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA RTX 5090 공식 제품 페이지지만 GDDR7 소비자 GPU이며 Samsung HBM 관계를 명시하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-9f4160cac312b926884ffd2e",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA T4 공식 datasheet지만 과거 inference GPU 자료로 Samsung HBM3E/HBM4 qualification·supply 관계가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-c868eef8520f71f205c3dceb",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA ConnectX-7 공식 네트워크 adapter 문서로 Samsung 또는 HBM 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-fdc2506c7960397b58e28a1a",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "2026-11-30 이후 GTC 행사 landing으로 as_of_date 뒤 행사이며 Samsung HBM 관계 원문도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-78d32efbff1f78d88455b177",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA forum 보안 공지로 Samsung 및 HBM relationship scope와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-646cd9d460d19742af502f86",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA GTC PhysicsNeMo 교육 세션으로 Samsung HBM qualification·platform alignment를 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-cdd030c7d4755f39c2d0f96b",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA AI Workbench GTC 세션으로 Samsung HBM 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-ee5a25a4a6135cb889a974d6",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Jetson AGX Orin 공식 기술문서로 embedded platform 자료이며 Samsung HBM3E/HBM4 관계가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-d96f66db785ea68a3e5bed94",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA V100 architecture 원문은 HBM2를 설명하지만 과거 제품이며 Samsung HBM3E/HBM4 공급 관계를 확인하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ef639a185e5ca7c1d84b811c",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA Turing architecture 원문으로 Samsung HBM 관계 질문과 제품·기간이 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-70db577472ba31a870b72b24",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.0,
+        "rationale": "NVIDIA A100 공식 datasheet는 HBM2e 사양을 제공하지만 공급사를 Samsung으로 귀속하지 않고 current HBM3E/HBM4 관계를 다루지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-868ba2645d6631aeb89978a2",
+        "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "priority": 0.05,
+        "rationale": "cutoff 이전 NVIDIA GTC 2026 공식 landing이지만 일반 행사 소개뿐이고 Samsung 관련 session·product·supply 문서를 가리키지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "공식 NVIDIA 도메인 후보를 모두 분류했지만 Samsung HBM3E/HBM4 관계를 명시한 원문은 이 partition에 없다. 이는 source absence가 아니라 local roster의 materiality 결과다."
+    ]
+  },
+  "payload_hash": "7fb870ed7554ca276839d75504bb93429800fa64a6ad64095a7696c91a70a3fa",
+  "production_score_authority": false,
+  "prompt_hash": "ce9739266e4de5eaad64334969be601864fcbef86d20556660e7e8af4e5ba7db",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-19bea30aabe3adfe97759f84b8b711895284cf5d80503b7c44b9c3c18da640bb",
+  "response_id": "COLLABRESP-7da6225efdba68ebfaaf3ea1479a2f485c699944119681c94bbf228864a02882",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

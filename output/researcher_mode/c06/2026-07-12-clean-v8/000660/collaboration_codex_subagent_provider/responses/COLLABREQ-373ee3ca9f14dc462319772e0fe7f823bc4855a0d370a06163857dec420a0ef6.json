@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "rationale": "Coverage round1에서 KIND 12,095자를 처음부터 끝까지 독립 재검토했다. Embedded prior32가 정정값, bookbuilding, 공모·상장 승인과 위임, 시설계획·기집행, EUV 계약, 예탁기관 관계를 이미 exact accounting하므로 omitted distinct fact는 0이다. 표시가격·예정일·추정 투자액을 final actual이나 HBM-only 투자로 승격하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-82c4d529809691327e652074",
+        "rationale": "Coverage 재검토에서 SK하이닉스를 명시한 NVIDIA-메모리벤더 3년 계약 주장을 omitted target-direct broker fact로 1개 회수했다. 다만 복수 벤더 문장이고 제품·가격·물량·배정·취소·기간 기산점이 없어 issuer/customer-official signed HBM contract나 HBM-only 경제성으로 승격하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-93b35ee380e600a2c404d37c",
+        "rationale": "Coverage 재검토에서 SK하이닉스를 직접 상향 리비전군으로 분류한 qualitative broker fact 1개를 회수했다. 2025-09 주간 snapshot이고 old/new 수치·크기·분모가 없으므로 SUPERSEDED plain fact로만 보존하고 EPS_REVISION structured role이나 current HBM earnings evidence로 승격하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "Memory supply chain, broker-attributed",
+        "confidence": 0.72,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-82c4d529809691327e652074",
+        "economic_mechanism": "A broker report states that Nvidia entered three-year contracts early with memory vendors including SK hynix; the group-level sentence does not establish SK hynix-specific product, price, volume, allocation, cancellation or HBM-only terms.",
+        "exact_quote": "엔비디아는 TSMC N3 웨이퍼 용량의 70% 이상을 선점. SK하이닉스 등 메모리 벤더와 3년 장기 계약을\n조기 체결함으로써, 공급망 전체에서 가장 먼저 용량을 확보한 유일한 플레이어로서의 지위 확보",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "named counterparty 관계와 3년 기간은 visibility objective에 직접 관련되지만 PUBLIC_BROKER_PDF의 복수 벤더 문장일 뿐 issuer/customer-official 계약 증거가 아니다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY:MEMORY:MEMORY_GENERIC:CUSTOMER_COMMITMENT:CUSTOMER_ALLOCATION",
+        "normalized_object": "broker-reported three-year Nvidia relationship covering memory vendors including SK hynix, without target-specific terms",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "reported 2026-04-01; contract start and end dates not stated",
+        "predicate": "was included by a broker among memory vendors described as having three-year contracts with Nvidia",
+        "predicate_family": "BROKER_REPORTED_MEMORY_VENDOR_CONTRACT_CLAIM",
+        "primitive_tags": [],
+        "product_family": "Generic memory, not HBM-attributed",
+        "question_family_id": "yuanta_nvidia_memory_vendor_three_year_contract_claim",
+        "question_family_tags": [
+          "BROKER_RELATIONSHIP_CLAIM",
+          "GENERIC_MEMORY_CONTRACT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.72,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix within Nvidia's memory-vendor supply relationships",
+        "subject_id": "000660:NVIDIA:BROKER_REPORTED_MEMORY_VENDOR_CONTRACT",
+        "unit": "years",
+        "value": 3
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.82,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-93b35ee380e600a2c404d37c",
+        "economic_mechanism": "The weekly broker quant report classified SK hynix among domestic large-cap upward revisions, but supplied no target-specific old estimate, new estimate, magnitude, denominator or HBM attribution.",
+        "exact_quote": "국내 대형주 리비전 특징주는 삼성전자, SK하이닉스, LG에너지솔루션, 한국전력, LG화학,\nHD현대, 두산 상향.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "target-direct revision direction is relevant historical expectation context, but the old weekly snapshot lacks old/new numeric estimates and is not a current EPS_REVISION role.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "Hana weekly quant classification of SK hynix estimate direction as upward, without magnitude",
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "weekly snapshot dated 2025-09-22",
+        "predicate": "was classified among upward-revision domestic large caps",
+        "predicate_family": "BROKER_QUALITATIVE_ESTIMATE_REVISION_DIRECTION",
+        "primitive_tags": [],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "hana_20250922_sk_hynix_upward_revision_direction",
+        "question_family_tags": [
+          "BROKER_REVISION_DIRECTION",
+          "QUALITATIVE_ONLY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated earnings-estimate direction",
+        "subject_id": "000660:HANA_QUANT_20250922:UPWARD_REVISION_DIRECTION",
+        "unit": "direction only",
+        "value": "upward"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "3f28b043aecbb64f6bee3b46bef2f62c86f4be38781b97592b56fa4a89ef58c6",
+  "production_score_authority": false,
+  "prompt_hash": "66227fbf73bb8c924ee6c8d7826cbfefaed1d37e1168ed8217b6e74ac91ffa1a",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-373ee3ca9f14dc462319772e0fe7f823bc4855a0d370a06163857dec420a0ef6",
+  "response_id": "COLLABRESP-d8cd2732fde45d250b6d8569b3edc259bed71fa4117843a3a4125e71154d3a19",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

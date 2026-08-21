@@ -1,0 +1,65 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      10.7,
+      14.0
+    ],
+    "anchor_comparisons": [
+      "CANCH-5eb80a11ed23fc1102335092의 13.0 midpoint는 현재 제품 실행·가동·매출·ASP actual과 AMD corroboration의 수준에 가깝지만, low-confidence ordinal anchor라 exact 점수로 복사하지 않는다.",
+      "CANCH-1aa76cb8e89d85cd78d325f4의 11.0 midpoint는 customer lock과 margin bridge가 비어 있는 downside를 포착하므로 range 하단을 제약한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1"
+    ],
+    "disagreements": [
+      "실현된 메모리 actual과 HBM4 출하는 medium positive band를 지지하지만 전사/메모리 범위를 HBM-only durability로 환산할 수 없다.",
+      "AMD 공식 기술·공급 정렬은 독립성이 있으나 MOU이고, 검색 material 0은 계약 부재의 독립 증거가 아니다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-5eb80a11ed23fc1102335092",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 12.5,
+    "rationale": "두 ordinal anchor 사이에서 제품 실행·actual의 강도와 customer-lock 부재를 함께 보정했다. HBM4 양산 출하, HBM4E 샘플, 메모리 100% 가동, 매출·ASP actual 및 AMD 공식 corroboration은 11점 counter midpoint보다 높게 본다. 반면 NVIDIA 협의 중, AMD MOU, OpenAI·다수 고객 계획과 HBM-only 계약·margin·FCF 부재 때문에 positive anchor 상단 확정은 피한다.",
+    "support_fact_ids": [
+      "EFACT-0ea4c7a5b342855d104d1848",
+      "EFACT-2b58fcb0afdbec4f074e5aab",
+      "EFACT-3dcbb46fd5653fb3dc5dcd2e",
+      "EFACT-4d0e0f24a3a1645c5962f1b3",
+      "EFACT-4d6a7fe870806b29408cc3a5",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-7f9fca669110a7e761e6264d",
+      "EFACT-9d94cbc4213d1d3bc1129615",
+      "EFACT-b6ff1b966b93b843dd6bcd04",
+      "EFACT-b7565fd844a544809e1ca148",
+      "EFACT-cbd2e7a3a3670eba7a113d19",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0",
+      "EFACT-f295131e6dc092d197e8eb93"
+    ],
+    "why_not_higher": "두 anchor 모두 LOW confidence ordinal이고, signed 고객 lock·HBM-only 매출/margin/FCF·qualification 완료가 없어 14점 이상을 좁은 범위로 정당화하지 못한다.",
+    "why_not_lower": "제품 양산과 샘플 출하, 메모리 actual, 공급 제약 및 AMD 공식 HBM3E 공급 이력이 여러 독립 경로에서 확인되어 단순 기대·가격 label만 있는 counter case보다 강하다."
+  },
+  "payload_hash": "bc76d4178e654703da3b6538f28e7de6c7d3b0e8509571154b36f30cb2d0da80",
+  "production_score_authority": false,
+  "prompt_hash": "dc5508b9d376554a21c2c49b5ffc503cc8ae0d82d0e288b60e2011723b74f002",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-500980c3f9487e212f39de77d28fa6638a91bc635ce47309368f6622015b858c",
+  "response_id": "COLLABRESP-364af31b51e01df518d1d9bbc2ea15c77cee8f4a4bf41136adb664b958f435d8",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

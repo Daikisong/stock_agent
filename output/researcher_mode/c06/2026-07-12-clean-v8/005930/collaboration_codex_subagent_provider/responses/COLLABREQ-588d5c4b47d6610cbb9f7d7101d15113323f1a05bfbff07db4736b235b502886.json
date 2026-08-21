@@ -1,0 +1,317 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "2Q26 actual과 메모리 추정을 연결해 연결 영업이익·OCF를 HBM-only earnings·FCF로 분리하는 full-source bridge"
+        ],
+        "rationale": "현재 memo는 actual과 attribution 한계를 정확히 담지만, cutoff 이전 식별 broker full-report 후보가 HBM 귀속·FCF 가정을 확인하거나 반증할 수 있어 source review 전에는 충분성을 닫지 않는다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "HBM LTA·allocation·booked period가 signed 가격·물량·기간·취소조건을 가진 commitment인지 향후 기대인지 구분하는 full-source 사실"
+        ],
+        "rationale": "full utilization과 AMD 기술관계는 positive이나 contract economics는 없다. CUSTOMER_OFFICIAL material-0는 absence가 아니며 cutoff 이전 LTA·HBM broker 후보 full text가 가시성 경계를 바꿀 수 있다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "memory-wide tightness에서 HBM4-only locked capacity·realized pricing·shortage duration으로 이어지는 독립 공급망 사실"
+        ],
+        "rationale": "actual ASP와 100% 가동은 직접 지지되나 HBM4-only 고객 잠금·가격·기간 bridge가 없다. 동일 PUBLIC_BROKER_PDF pair는 대체 경로가 필요하므로 독립 industry route를 남긴다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "2Q26 actual 전후 동일 broker·동일 earnings period의 forecast와 valuation denominator revision bridge"
+        ],
+        "rationale": "score disagreement는 없지만 actual surprise의 사전 반영 정도는 혼합 기간·분모로 남는다. 동일 PUBLIC_BROKER_PDF pair를 반복하지 않는 consensus-revision route가 판단을 바꿀 수 있다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "current·forward·trailing multiple과 target-price 산식을 동일 earnings period로 맞춘 denominator 및 HBM contribution bridge"
+        ],
+        "rationale": "forward PE·revision UP과 trailing PE·PB·FCF yield·revision DOWN이 충돌한다. zero-result는 source absence가 아니며 별도 valuation-multiple route로 conditional range를 좁힐 수 있다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "OCF·주주환원 positive와 CAPEX·운전자본·차입·보증 counter가 current memo와 structured actual에 반영돼 있고 objective도 resolved다. prompt에는 판단을 바꿀 별도 executable material route가 없다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "AMD와 별개로 NVIDIA의 HBM qualification·platform·supply status와 OpenAI partnership·memory-support scope를 각각 counterparty-official 자료로 독립 확인하거나 반증하는 사실"
+        ],
+        "rationale": "AMD official corroboration은 기술관계를 확인하지만 다른 named counterparties나 signed economics를 소진하지 않는다. NVIDIA·OpenAI material-0는 source absence가 아니며 각 official catalog route를 별도로 검토할 수 있다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-4a09852cabf968a8d4e9c5ce",
+        "rationale": "cutoff 이후 candidate locator는 현재 근거로 사용할 수 없으며 source absence가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-2f5ba2b1fd280981afbd3251",
+        "rationale": "full fetch 후 미래 발행으로 확인된 4건은 as-of 판단에서 제외하되 family absence로 확대하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-cb641c897d1d1e3bee7e8d4d",
+        "rationale": "발행일을 cutoff 이전으로 검증하지 못한 문서는 current evidence가 아니며 absence claim도 허용되지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-e4e36ba1dec3bf95565da816",
+        "rationale": "full-document 단계의 미래 문서 4건은 현재 research에서 제외한다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-0b24fb05d7b94c040da2062d",
+        "rationale": "unknown publication date는 currentness gate 실패이며 source absence가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "한 차례 새 valid query를 만들지 못한 결과는 semantic saturation proof가 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-3966f483106272d23cd48594",
+        "rationale": "12개 query provider error는 transport/provider failure이며 자료 부재나 completion이 아니다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-b7c982be24bd51146eafb902",
+        "rationale": "valuation objective의 single zero-result는 명시적으로 saturation이 아니며 distinct route를 닫지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-fbae1be843b3f6094a73511a",
+        "rationale": "earnings_visibility CUSTOMER_OFFICIAL에는 accepted lineage가 없고 alternate family가 필요하다. 동일 pair를 반복하지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-b7e9c834713080275c694631",
+        "rationale": "bottleneck·market·valuation PUBLIC_BROKER_PDF에는 accepted lineage가 없고 alternate route가 요구된다. pending ranking이나 material-0를 absence로 해석하지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "direction": "RESOLUTION",
+        "fact_need": "2Q26 actual과 메모리 추정을 연결해 HBM-only earnings·FCF로 분리하는 contemporaneous full-report bridge",
+        "why_material": "HBM earnings·FCF 귀속이 현재 range의 상단 지속성과 cash conversion을 바꿀 수 있다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "direction": "RESOLUTION",
+        "fact_need": "HBM LTA·allocation·booked period가 signed commitment인지 향후 기대인지 구분하는 full-source 사실",
+        "why_material": "계획·MOU와 durable contract economics를 가르는 핵심 경계다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "direction": "RESOLUTION",
+        "fact_need": "HBM4-only locked capacity·realized price·shortage duration의 독립 산업 공급망 사실",
+        "why_material": "memory-wide tightness를 구조적 HBM scarcity premium으로 해석할 기간과 범위를 결정한다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "direction": "RESOLUTION",
+        "fact_need": "2Q26 actual 전후 same-broker·same-period forecast와 valuation denominator revision bridge",
+        "why_material": "operating delta가 이미 market expectation에 반영됐는지 구분해야 한다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "direction": "RESOLUTION",
+        "fact_need": "current·forward·trailing multiple과 target-price 산식을 동일 earnings period로 맞춘 denominator 및 HBM contribution bridge",
+        "why_material": "혼합 분모 때문에 넓어진 conditional rerating 범위를 좁힌다."
+      },
+      {
+        "component_id": "information_confidence",
+        "direction": "RESOLUTION",
+        "fact_need": "NVIDIA와 OpenAI 각각의 official catalog에서 HBM technical alignment 또는 memory-support 관계를 독립 확인하거나 반증하는 사실",
+        "why_material": "issuer·AMD 한 곳의 corroboration을 다른 named relationship에 일반화할 수 없다."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": true,
+        "direction": "STRUCTCAND-c9715743faec86487501e341 등 cutoff 이전 2Q26 actual과 메모리 추정 차이를 다룬 식별 candidate full report에서 HBM 귀속·FCF 가정과 counter를 검증한다.",
+        "objective_id": "SGOBJ-eb3cecb1e00c95ccf544cac4",
+        "rationale": "이 objective-family pair는 exhausted roster에 없고 full report가 concrete gap을 해결할 수 있다.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "STRUCTCAND-fac1a335efd84ded21c2b324 등 cutoff 이전 LTA·HBM candidate full report에서 현재 계약성·booked period·조건부 성격을 확인한다.",
+        "objective_id": "SGOBJ-5ae8f64e9b45a519ee68b062",
+        "rationale": "CUSTOMER_OFFICIAL 반복 대신 별도 identified full-report route가 visibility 경계를 바꿀 수 있다.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "issuer·단일 broker와 독립적인 cutoff-eligible memory/HBM capacity study에서 HBM4 locked capacity·realized price·shortage duration을 확인한다.",
+        "objective_id": "SGOBJ-7ba6c752cb327ae2c989b6dd",
+        "rationale": "PUBLIC_BROKER_PDF 동일 pair가 아닌 독립 structural-shortage route다.",
+        "source_family": "INDUSTRY_REPORT"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "cutoff 이전 2Q26 actual 전후 동일 broker·동일 earnings period forecast와 valuation denominator revision lineage를 연결한다.",
+        "objective_id": "SGOBJ-e78cfba9e86bfa02e9a943ae",
+        "rationale": "exhausted PUBLIC_BROKER_PDF pair를 반복하지 않는 expectation-delta route다.",
+        "source_family": "CONSENSUS_REVISION"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "cutoff current target-price 산식과 current·forward·trailing multiple의 earnings period·denominator를 동일 basis로 검증한다.",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "PUBLIC_BROKER_PDF 재시도 없이 혼합 denominator uncertainty를 직접 좁힐 수 있다.",
+        "source_family": "VALUATION_MULTIPLES"
+      },
+      {
+        "counter_or_supersession": true,
+        "direction": "NVIDIA product·platform·event catalog와 OpenAI newsroom·partnership catalog를 각각 별도로 검토해 technical relationship을 확인하거나 반증하되 signed economics로 확대하지 않는다.",
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "rationale": "AMD corroboration은 다른 named counterparty를 소진하지 않고 material-0는 source absence가 아니다.",
+        "source_family": "CUSTOMER_OFFICIAL"
+      }
+    ],
+    "next_actions": [
+      "현재 checkpoint의 ranking PENDING 후보를 immutable candidate roster로 먼저 분류하고 material full-source route만 fetch한다.",
+      "6개 concrete gap에 묶인 distinct source directions만 query planner에 전달하며 exhausted objective-family·future·unknown-date route는 반복하지 않는다.",
+      "full fetch·parse·accepted claim-fact lineage가 생긴 component만 memo와 independent judges를 refresh한다.",
+      "NVIDIA·OpenAI technical corroboration과 signed contract economics를 별도 질문으로 유지한다."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "metadata preview를 fact로 사용",
+          "연결·DS 수치를 HBM-only actual로 승격",
+          "generic broker search"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-eb3cecb1e00c95ccf544cac4",
+        "research_need": "cutoff 이전 identified full broker report에서 2Q26 actual 대비 memory/HBM earnings estimate와 CAPEX·FCF bridge·downside를 찾는다."
+      },
+      {
+        "avoid_repeating": [
+          "exhausted CUSTOMER_OFFICIAL pair",
+          "post-cutoff 발표 선반영",
+          "MOU를 계약으로 승격"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-5ae8f64e9b45a519ee68b062",
+        "research_need": "cutoff 이전 LTA·HBM full text에서 signed commitment·booked period·조건·해지와 단순 전망을 구분한다."
+      },
+      {
+        "avoid_repeating": [
+          "exhausted PUBLIC_BROKER_PDF pair",
+          "generic AI headline",
+          "DRAM capacity를 HBM allocation으로 귀속"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-7ba6c752cb327ae2c989b6dd",
+        "research_need": "independent industry source에서 memory-wide tightness와 HBM4-only capacity·price·duration 및 normalization counter를 분리한다."
+      },
+      {
+        "avoid_repeating": [
+          "exhausted PUBLIC_BROKER_PDF pair",
+          "서로 다른 기간·분모 혼합",
+          "target price 단독"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-e78cfba9e86bfa02e9a943ae",
+        "research_need": "same broker·period의 pre/post actual revision과 denominator를 연결해 market expectation delta를 재구성한다."
+      },
+      {
+        "avoid_repeating": [
+          "exhausted PUBLIC_BROKER_PDF pair",
+          "zero-result absence 해석",
+          "peer multiple 복사"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "research_need": "current·forward·trailing multiple과 target-price 산식을 동일 earnings period로 맞추고 HBM contribution의 estimate·actual 경계를 표시한다."
+      },
+      {
+        "avoid_repeating": [
+          "generic material-0 query 반복",
+          "AMD corroboration 일반화",
+          "technical alignment를 signed economics로 확대"
+        ],
+        "counter_or_supersession": true,
+        "objective_id": "SGOBJ-93cf39260befeafbc887e409",
+        "research_need": "NVIDIA와 OpenAI를 별개 named route로 유지해 cutoff-eligible official product·event·newsroom·partnership source에서 관계를 corroborate하거나 반증한다."
+      }
+    ],
+    "rationale": "7개 current memo, Red Team, Synthesis, structured roles, deterministic summary와 failure roster를 모두 검토했다. score_valid=true와 material disagreement 0은 존중하지만 source graph는 saturation 미인증이고 ranking PENDING 후보 11개 및 retryable provider/no-query/no-result/source-family failures가 남아 있다. material-0는 absence나 completion이 아니다. capital은 sufficient하나 나머지 6개에는 exhausted pair를 반복하지 않는 bounded route가 있어 NEXT_RESEARCH_REQUIRED다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "연결·DS memory actual을 HBM-only earnings·FCF로 연결하는 full-source bridge가 없다.",
+      "HBM LTA·allocation·booked period의 signed 가격·물량·기간·취소조건이 확인되지 않았다.",
+      "memory-wide tightness가 HBM4-only locked capacity·realized pricing으로 이어지는 기간이 독립 확인되지 않았다.",
+      "same-broker·same-period expectation revision과 valuation denominator bridge가 없다.",
+      "NVIDIA와 OpenAI official relationship corroboration은 material-0로 닫을 수 없다."
+    ]
+  },
+  "payload_hash": "c9ba12b3d3c37efc6caf7ff1c684769fa67d62873d6c69c83eed0d006f873066",
+  "production_score_authority": false,
+  "prompt_hash": "164ce7f3b51a31d896c58a5412d4f2c33284fb0374951906f178068ada02b755",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-588d5c4b47d6610cbb9f7d7101d15113323f1a05bfbff07db4736b235b502886",
+  "response_id": "COLLABRESP-490832f8618674e7ed200df3eb8d3431e98249fe62d38a76e846ff31f7723bbf",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

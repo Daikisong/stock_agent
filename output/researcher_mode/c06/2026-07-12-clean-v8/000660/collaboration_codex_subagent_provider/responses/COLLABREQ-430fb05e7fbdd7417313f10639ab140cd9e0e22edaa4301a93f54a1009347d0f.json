@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-9e0c9a7ec6ee14acfe77ce2f",
+        "rationale": "Independent full coverage audit of literal transport chunk 1/3 found no target-direct objective-local fact for SK hynix. This chunk contains other issuers and industry or adjacent-sector material, with no SK hynix or 000660 attribution; it therefore cannot support a target fact, and this disposition does not prove source absence for the parent document or its other chunks.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "d6712e710a083b6baac3bae6b85709a9d40a02c659c4463b02aa3661b48c5d8f",
+  "production_score_authority": false,
+  "prompt_hash": "bb911b6b205fc8e5f51e29ffd7996923e1215782f206d8299626a92ce9a92445",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-430fb05e7fbdd7417313f10639ab140cd9e0e22edaa4301a93f54a1009347d0f",
+  "response_id": "COLLABRESP-e644c45138a09ea02c30bedc0669177952876dd83b3c57c2aa6d7e51582d4857",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

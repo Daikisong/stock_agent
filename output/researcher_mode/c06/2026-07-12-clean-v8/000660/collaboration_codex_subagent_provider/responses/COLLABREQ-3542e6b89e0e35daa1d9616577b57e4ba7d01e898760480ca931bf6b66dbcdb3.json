@@ -1,0 +1,188 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "rationale": "Continuation page 2 reviewed the complete supplied literal transport chunk 0 of 2 in source order and emitted three facts distinct from the four previously accepted facts. ETF portfolio holdings, generic macro/sector commentary, historical 2018 timing, and the internally inconsistent OCR mapping of the 2027 operating-margin peak were excluded. All emitted rows remain broker observations and do not become issuer guidance, signed contract terms, HBM-only economics, or DURABLE_VISIBILITY. The canonical parent remains unresolved because chunk 1 of 2 is outside this immutable request.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory market",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권은 코스피 상승이 삼성전자와 SK하이닉스를 중심으로 진행되면서 두 회사의 코스피 시가총액 합산 비중이 48%까지 높아졌다고 관찰했다. 이는 두 회사 합산 시장집중도이며 SK하이닉스 단독 비중이 아니다.",
+        "exact_quote": "•코스피의상승이삼성전자와SK하이닉스를중심으로진행. 삼성전자와SK하이닉스의코스피내시총비중은48%까지높아짐",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Target이 포함된 메모리 대형주 쏠림의 현재 시장가치 관찰로 valuation과 market-mispricing objective의 집중도 판단에 직접 쓰이며 단독 issuer 수치로 오인하지 않았다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "Combined Samsung Electronics and SK hynix KOSPI market-cap share",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current as of 2026-05-22",
+        "predicate": "삼성전자와 SK하이닉스의 코스피 시가총액 합산 비중이 48%까지 높아졌다고 관찰했다",
+        "predicate_family": "BROKER_SAMSUNG_HYNIX_KOSPI_MARKET_CAP_SHARE",
+        "primitive_tags": [
+          "SK하이닉스",
+          "삼성전자",
+          "KOSPI",
+          "market_cap_share",
+          "48%"
+        ],
+        "product_family": "Memory issuers",
+        "question_family_id": "kospic_target_pair_market_cap_concentration",
+        "question_family_tags": [
+          "market_concentration",
+          "kospi_weight",
+          "memory_leaders"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스와 삼성전자의 코스피 시가총액 비중",
+        "subject_id": "000660:SAMSUNG_HYNIX_KOSPI_MARKET_CAP_SHARE_20260522",
+        "unit": "%",
+        "value": 48
+      },
+      {
+        "business_segment": "Memory market",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권은 삼성전자와 SK하이닉스의 합산 12개월 예상 순이익이 코스피 예상 순이익의 72%라고 제시했다. 브로커 합산 전망이며 issuer guidance나 SK하이닉스 단독 이익 전망이 아니다.",
+        "exact_quote": "•12개월예상순이익기준삼성전자와SK하이닉스의코스피내순이익비중(12개월예상기준)은무려72%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Target이 포함된 합산 forward earnings와 시장가치 집중의 연결을 수치화해 valuation/earnings/market-mispricing objective를 직접 진전시키며 issuer guidance로 승격하지 않았다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "Combined Samsung Electronics and SK hynix KOSPI 12-month forward net-income share",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "12-month forward as of 2026-05-22",
+        "predicate": "삼성전자와 SK하이닉스의 코스피 12개월 예상 순이익 합산 비중을 72%로 제시했다",
+        "predicate_family": "BROKER_SAMSUNG_HYNIX_KOSPI_FORWARD_NET_INCOME_SHARE",
+        "primitive_tags": [
+          "SK하이닉스",
+          "삼성전자",
+          "12_month_forward",
+          "net_income_share",
+          "72%"
+        ],
+        "product_family": "Memory issuers",
+        "question_family_id": "kospic_target_pair_forward_net_income_concentration",
+        "question_family_tags": [
+          "forward_net_income",
+          "kospi_weight",
+          "valuation_earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스와 삼성전자의 코스피 12개월 예상 순이익 비중",
+        "subject_id": "000660:SAMSUNG_HYNIX_KOSPI_FORWARD_NET_INCOME_SHARE_20260522",
+        "unit": "%",
+        "value": 72
+      },
+      {
+        "business_segment": "Memory market",
+        "confidence": 0.86,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "하나증권은 삼성전자와 SK하이닉스 등 대표기업의 실적 추정치가 급격히 상향되고 밸류에이션 매력이 재부각됐다고 평가했다. 이전·신규 수치가 없는 정성 브로커 관찰이므로 EPS_REVISION이나 issuer guidance 역할을 부여하지 않았다.",
+        "exact_quote": "•삼성전자, SK하이닉스등대표기업들의실적추정치가급격히상향조정. 밸류에이션매력재부각되며선순환흐름지속",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Target이 명시된 현재 earnings-revision과 valuation 관찰로 EPS/valuation/market-mispricing objective에 직접 관련되지만 정성 브로커 관찰 경계를 유지한다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "Broker qualitative earnings-estimate upward-revision momentum for Samsung Electronics and SK hynix",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current as of 2026-05-22",
+        "predicate": "대표기업들의 실적 추정치가 급격히 상향되고 밸류에이션 매력이 재부각됐다고 평가했다",
+        "predicate_family": "BROKER_TARGET_PAIR_EARNINGS_ESTIMATE_UPREVISION_MOMENTUM",
+        "primitive_tags": [
+          "SK하이닉스",
+          "삼성전자",
+          "earnings_estimate",
+          "upward_revision",
+          "valuation"
+        ],
+        "product_family": "Memory issuers",
+        "question_family_id": "target_pair_earnings_estimate_revision_momentum",
+        "question_family_tags": [
+          "earnings_revision",
+          "valuation_appeal",
+          "broker_observation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.86,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스와 삼성전자의 실적 추정치 상향 모멘텀",
+        "subject_id": "000660:SAMSUNG_HYNIX_EARNINGS_ESTIMATE_UPREVISION_20260522",
+        "unit": "",
+        "value": "earnings estimates rapidly revised upward and valuation appeal re-emerged"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-3fa5f1bda504b0cb332bde68"
+    ],
+    "unresolved_research_notes": [
+      "The immutable request supplies transport chunk 0 of 2; canonical parent chunk 1 of 2 remains for a deterministic follow-up."
+    ]
+  },
+  "payload_hash": "0a0f131af5dde8735a2ec0537f03bf0c99e85414747e144ee7b211d857148280",
+  "production_score_authority": false,
+  "prompt_hash": "55517a4a55149dd6c1c8fbeec3f72a18dfaa9eda11486e82fb2f1961bcfdb2a1",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3542e6b89e0e35daa1d9616577b57e4ba7d01e898760480ca931bf6b66dbcdb3",
+  "response_id": "COLLABRESP-d53f39fa242dfca7566b6a9bfb322d4b4c60172313fb99bd740ddd7f1bb195fb",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,340 @@
+{
+  "output_schema_hash": "0b59783cc5a12f755bec5bc64b4b0efed12a1c707ebd083a1c6b1ff644a6fede",
+  "payload": {
+    "confidence": 0.9,
+    "counter_case": "현재 valuation은 지표별로 싸고 비싼 신호가 섞여 있다. 낮은 forward PE만으로 저평가를 단정할 수 없고, 높은 forward EV/EBITDA·PB와 낮은 forward FCF yield는 현 주가에 강한 기대가 이미 반영됐을 가능성을 보여준다. HBM-only 매출액·mix·margin·CAPEX·FCF denominator와 고객별 signed price·volume·duration·취소·allocation 보호가 없으며, memory-wide 100% 가동과 투자 계획을 HBM 계약경제로 바꿀 수 없다. 고객집중, 월별·분기별 재협상, 재고평가·재공품·계약손실 부담도 rerating 상단을 제한한다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-cf3c9742b856a43c5c18a073",
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a",
+      "ORDTRANSFER-a99b35934948524825bcefbe",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b",
+      "ORDTRANSFER-75306723611a10615f950fec"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df"
+    ],
+    "positive_case": "FY2025 HBM 매출이 전년 대비 두 배 이상 늘고 기록적 실적에 기여했으며, 2026Q1에는 HBM이 가격상승 주도 제품군과 고부가 제품 판매에 포함됐다. 고객 요청 수량의 HBM4 양산과 HBM Time-to-Market 실행은 단순 계획을 넘어 제품·생산 actual을 보강한다. 메모리 설비 100% 가동, 수요가 공급역량을 초과한다는 issuer 진술, HBM·서버 DRAM 수요 확대와 M15X·용인·패키징 투자 계획은 중기 공급 제약과 이익 지속 가능성을 지지한다. Q1 DRAM 매출 증가는 회사의 메모리 수익전환을 추가로 확인한다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 0,
+        "reason": "가격·물량 재합의 cadence는 계약가시성 상단을 제한하는 유효한 current context라 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 1,
+        "reason": "고객집중 확대는 현재 valuation counter로 계속 유효하다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 3,
+        "reason": "메모리 100% 가동 actual은 HBM-only로 확대하지 않는 조건으로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 6,
+        "reason": "DRAM 매출 actual은 메모리 전환 근거로 유지하되 HBM-only 귀속은 금지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 15,
+        "reason": "재고 평가충당은 현금·가격 전환 리스크의 current counter라 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 17,
+        "reason": "재공품 계약손실충당은 운영 전환 리스크의 current counter라 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 20,
+        "reason": "DRAM 전년동기 매출 증가는 actual 전환 근거로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 21,
+        "reason": "HBM 가격상승 주도 제품군 actual은 rerating support로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 25,
+        "reason": "재공품 잔액은 출하 잠재력과 재고 리스크를 함께 보여주므로 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 27,
+        "reason": "HBM 제품 실행력 actual은 계약경제와 구분해 유지한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 31,
+        "reason": "고객 ASIC 협업은 구매의무가 아닌 상용화 경로로 한정해 유지한다."
+      }
+    ],
+    "proposed_score_lower": 4.7,
+    "proposed_score_mid": 5.4,
+    "proposed_score_upper": 6.1,
+    "research_complete": true,
+    "researcher_summary": "현재 valuation plane은 2026-07-10 관측 가격·시가총액, trailing/forward multiple과 공식·결정론적 denominator를 갖추고, HBM 매출 2배 이상 증가, HBM 가격상승 기여, 고객요청 HBM4 양산, 메모리 수요 초과와 Q1 DRAM actual이 rerating의 실물 기반을 제공한다. 동시에 forward PE 6.13배와 달리 forward EV/EBITDA 27.21배, forward PB 6.91배, trailing PE 20.68배, trailing PB 9.46배, forward FCF yield 1.78%가 혼재해 지표별 신호가 갈린다. M15X·용인·첨단 패키징 투자 및 HBM 수요는 DURABLE_VISIBILITY를 충족하지만 issuer plan·memory-wide visibility이며 HBM-only margin, FCF, signed customer price·volume·duration·allocation bridge는 없다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "월별·분기별 물량·가격 재합의는 강한 수요와 별개로 장기 계약가시성 및 가격 지속성의 상단을 제한한다.",
+        "fact_row_index": 0,
+        "source_economic_mechanism": "주요 고객 공급 물량과 가격이 월별 또는 분기별 상호 합의로 정해져 계약 가시성의 확인 주기가 짧다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "SUPPLY_VOLUME_AND_PRICE_SET_BY_MONTHLY_OR_QUARTERLY_MUTUAL_AGREEMENT",
+        "source_value_json": "\"월별/분기별 상호 합의\""
+      },
+      {
+        "component_interpretation": "두 대형 고객 매출집중의 확대는 실적 레버리지와 함께 고객 협상력·주문 변동 리스크를 높이는 반대 근거다.",
+        "fact_row_index": 1,
+        "source_economic_mechanism": "고객 A 매출이 전년 동기보다 증가하고 고객 B도 연결매출 10%를 넘어서 고객 집중 위험이 확대됐다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "고객 A 매출이 2025년 1분기 4,786,233백만원에서 2026년 1분기 7,780,590백만원으로 늘었고 고객 B도 6,536,458백만원으로 10%를 상회했다.",
+        "source_value_json": "\"7,780,590 and 6,536,458 vs 4,786,233\""
+      },
+      {
+        "component_interpretation": "2026Q1 메모리 설비 100% 가동은 현재 수요 긴장과 운영 레버리지를 지지하지만 HBM 전용 가동률이나 계약 물량은 아니다.",
+        "fact_row_index": 3,
+        "source_economic_mechanism": "2026년 1분기 반도체 생산실적은 11,465,147백만원이며 생산설비 평균가동률은 100%였다. 이는 메모리 전반의 현재 설비 활용도를 보여주지만 HBM 전용 가동률이나 장기 예약 물량을 뜻하지 않는다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "OPERATED_MEMORY_PRODUCTION_FACILITIES_AT_FULL_UTILIZATION",
+        "source_value_json": "\"production output KRW 11,465,147 million; average utilization 100%\""
+      },
+      {
+        "component_interpretation": "2026Q1 DRAM 매출 actual은 메모리 수익전환을 확인하되 HBM 단독 매출·마진·현금흐름으로 재귀속하지 않는다.",
+        "fact_row_index": 6,
+        "source_economic_mechanism": "SK하이닉스 별도 기준 2026년 1분기 DRAM 매출 실제치는 39,758,279백만원이었다. HBM 단독 매출로 재분류하지 않는다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_Q1_2026_DRAM_REVENUE",
+        "source_value_json": "39758279"
+      },
+      {
+        "component_interpretation": "수요가시성을 조건으로 한 중장기 생산기반 확대 계획은 DURABLE_VISIBILITY를 보강하지만 완공 CAPA나 구매의무는 아니다.",
+        "fact_row_index": 8,
+        "source_economic_mechanism": "The issuer plans strategic production-base expansion for mid-to-long-term demand while conditioning investment on demand visibility to balance supply stability and financial soundness; this is an investment policy, not completed capacity, HBM-only allocation, or binding customer demand.",
+        "source_period_json": "\"mid-to-long term from 2026-04-23\"",
+        "source_predicate": "plans demand-conditioned strategic production-base expansion",
+        "source_value_json": "\"expand production base while considering demand visibility and financial soundness\""
+      },
+      {
+        "component_interpretation": "첨단 패키징 공장 준비는 고객수요 대응을 위한 forward capacity plan이며 수치 CAPA·HBM 전용 배분·signed contract로 보지 않는다.",
+        "fact_row_index": 13,
+        "source_economic_mechanism": "The issuer plans to prepare its Cheongju P&T7 and Indiana advanced-packaging plants to create integrated front- and back-end manufacturing capability and respond flexibly to customer-demand changes; no numerical capacity or HBM-only allocation is disclosed.",
+        "source_period_json": "\"forward plan announced 2026-01-28\"",
+        "source_predicate": "plans to prepare integrated advanced-packaging capacity for demand response",
+        "source_value_json": "\"prepare P&T7 and Indiana advanced-packaging plants for flexible customer-demand response\""
+      },
+      {
+        "component_interpretation": "재고 평가충당금은 재고가 향후 출하·가격에 무조건 전환되지 않는다는 valuation counterweight다.",
+        "fact_row_index": 15,
+        "source_economic_mechanism": "2026년 1분기말 재고 취득원가 16,385,847백만원에 평가충당금 411,714백만원을 반영해 장부잔액을 15,974,133백만원으로 낮췄다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_INVENTORY_VALUATION_ALLOWANCE",
+        "source_value_json": "411714"
+      },
+      {
+        "component_interpretation": "M15X 조기 극대화와 용인 Fab 1 확대 계획은 공급 대응의 기간성 가시성을 주지만 HBM-only allocation은 공개되지 않았다.",
+        "fact_row_index": 16,
+        "source_economic_mechanism": "To prioritize customer-demand fulfillment, the issuer plans early maximization of M15X production capacity and stable mid-to-long-term capacity expansion through Yongin Fab 1; the quote does not identify HBM-only capacity or committed customer allocation.",
+        "source_period_json": "\"early and mid-to-long term from 2026-01-28\"",
+        "source_predicate": "plans early production maximization and mid-to-long-term capacity expansion",
+        "source_value_json": "\"M15X early production maximization and Yongin Fab 1 mid-to-long-term production-base expansion\""
+      },
+      {
+        "component_interpretation": "중국 재공품 계약손실충당부채 증가는 생산·판매 전환 과정의 손실 가능성을 보여주는 current counter다.",
+        "fact_row_index": 17,
+        "source_economic_mechanism": "2026년 1분기말 중국 종속기업 생산 재공품의 구매·추가가공·판매에서 예상되는 손실을 반영한 계약손실충당부채가 162,582백만원으로 전기초 153,267백만원보다 늘었다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_CONTRACT_LOSS_PROVISION_FOR_WAFER_WORK_IN_PROCESS",
+        "source_value_json": "162582"
+      },
+      {
+        "component_interpretation": "우호적 DRAM 가격 전망은 forward rerating 조건을 지지하지만 실현 ASP·HBM 계약가격이 아닌 issuer outlook이다.",
+        "fact_row_index": 18,
+        "source_economic_mechanism": "The issuer expects a favorable DRAM pricing environment to continue as memory-efficiency technology expands AI service economics and scale; this is a qualitative outlook, not realized DRAM or HBM ASP and not a contract price.",
+        "source_period_json": "\"forward outlook from 2026-04-23\"",
+        "source_predicate": "expects favorable pricing environment to continue",
+        "source_value_json": "\"favorable pricing environment expected to continue\""
+      },
+      {
+        "component_interpretation": "HBM·서버 DRAM 수요 확대 전망은 DURABLE_VISIBILITY를 보강하되 booked volume, price, duration 또는 purchase contract는 아니다.",
+        "fact_row_index": 19,
+        "source_economic_mechanism": "The issuer forecasts continued demand expansion for HBM and server DRAM as AI shifts toward inference and distributed architectures; the outlook is qualitative and does not establish booked volume, allocation, price, duration, or a purchase contract.",
+        "source_period_json": "\"forward outlook from 2026-01-28\"",
+        "source_predicate": "expects continued demand expansion",
+        "source_value_json": "\"continued demand expansion for HBM and server DRAM\""
+      },
+      {
+        "component_interpretation": "DRAM 매출의 전년동기 대비 큰 증가는 actual 수익전환을 보강하지만 HBM-only denominator로 쓰지 않는다.",
+        "fact_row_index": 20,
+        "source_economic_mechanism": "별도 DRAM 매출의 전년 동기 대비 확대가 메모리 수익전환을 보여주지만 HBM 단독 매출은 아니다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "별도 DRAM 매출은 2026년 1분기 39,758,279백만원으로 전년 동기 13,607,092백만원보다 컸다.",
+        "source_value_json": "\"39,758,279 vs 13,607,092\""
+      },
+      {
+        "component_interpretation": "HBM이 가격 상승 주도 제품군에 포함된 actual은 mix·pricing rerating 논리를 지지하지만 기여율은 미공개다.",
+        "fact_row_index": 21,
+        "source_economic_mechanism": "제한된 공급 환경에서 HBM이 가격 상승을 주도한 제품군에 포함돼 2026년 1분기 실적과 수익률 전환을 지지했다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "HBM_INCLUDED_AMONG_PRODUCTS_LEADING_PRICE_INCREASES",
+        "source_value_json": "\"가격 상승 주도 제품군에 포함\""
+      },
+      {
+        "component_interpretation": "고객 (가) 매출 10% 초과는 demand strength와 동시에 집중·재협상 위험을 반영하는 counter다.",
+        "fact_row_index": 22,
+        "source_economic_mechanism": "2026년 1분기 단일 외부고객 (가)의 매출이 연결 매출의 10%를 넘고 7,780,590백만원에 달해 고객 집중 위험을 확인한다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_REVENUE_FROM_CUSTOMER_A_ABOVE_TEN_PERCENT",
+        "source_value_json": "7780590"
+      },
+      {
+        "component_interpretation": "고객 수요가 공급역량을 초과한다는 issuer 진술은 memory-wide DURABLE_VISIBILITY이나 HBM-only allocation이나 고객 의무는 아니다.",
+        "fact_row_index": 23,
+        "source_economic_mechanism": "The issuer states that customer demand continues to exceed its supply capability and that securing capacity for structural AI demand is a key competitive factor; this is memory-wide demand visibility, not HBM-only allocation or a signed customer obligation.",
+        "source_period_json": "\"ongoing from 2026Q1\"",
+        "source_predicate": "reports customer demand exceeding supply capability",
+        "source_value_json": "\"customer demand exceeds supply capability in an ongoing environment\""
+      },
+      {
+        "component_interpretation": "HBM 포함 고부가 제품 판매가 실적을 지지한 actual은 긍정적이나 혼합 basket이어서 HBM-only 수익성으로 분리하지 않는다.",
+        "fact_row_index": 24,
+        "source_economic_mechanism": "The issuer says expanded sales of a high-value product basket including HBM supported the 2026Q1 earnings rise; the mixed basket also includes server DRAM modules and eSSD, so no HBM-only revenue, mix, margin, or contribution percentage is inferred.",
+        "source_period_json": "\"2026Q1\"",
+        "source_predicate": "was included in expanded high-value product sales supporting results",
+        "source_value_json": "\"HBM included in expanded high-value product sales\""
+      },
+      {
+        "component_interpretation": "큰 재공품 잔액은 출하 잠재력과 재고·현금회수 위험을 함께 가지므로 valuation 상단을 제한한다.",
+        "fact_row_index": 25,
+        "source_economic_mechanism": "2026년 1분기말 반도체 재공품은 9,627,923백만원으로 전체 재고 15,974,133백만원의 큰 비중을 차지해 향후 출하 전환 잠재력과 재고 위험을 함께 만든다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_WORK_IN_PROCESS_INVENTORY",
+        "source_value_json": "9627923"
+      },
+      {
+        "component_interpretation": "고객 (나)도 연결매출 10%를 넘어 복수 대형 고객 집중 위험을 확인한다.",
+        "fact_row_index": 26,
+        "source_economic_mechanism": "2026년 1분기 단일 외부고객 (나)의 매출도 연결 매출의 10%를 넘고 6,536,458백만원으로 공시돼 복수 대형 고객 집중을 확인한다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_REVENUE_FROM_CUSTOMER_B_ABOVE_TEN_PERCENT",
+        "source_value_json": "6536458"
+      },
+      {
+        "component_interpretation": "HBM Time-to-Market 및 성능 실행 actual은 제품 경쟁력과 rerating 가능성을 보강하되 계약경제는 아니다.",
+        "fact_row_index": 27,
+        "source_economic_mechanism": "회사는 HBM의 Time to Market 실현과 대역폭·밀도·Core Die 적층 단수 향상, 성능·품질을 제품 실행 기반으로 설명했다. 같은 문장의 기존 고객 ASIC 협업 사실과 구별되는 제품 상용화 실행력이다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "REPORTS_HBM_TIME_TO_MARKET_AND_PERFORMANCE_EXECUTION",
+        "source_value_json": "\"HBM Time to Market realized with higher bandwidth, density and Core Die stacking\""
+      },
+      {
+        "component_interpretation": "FY2025 HBM 매출이 전년 대비 두 배 이상 증가한 actual은 HBM 매출전환을 직접 지지하지만 mix·margin denominator는 없다.",
+        "fact_row_index": 29,
+        "source_economic_mechanism": "HBM sales more than doubled year over year and the issuer explicitly linked that growth to its record result, establishing realized HBM revenue conversion without supplying an HBM margin or mix percentage.",
+        "source_period_json": "\"FY2025 vs FY2024\"",
+        "source_predicate": "sales grew more than twofold year over year and contributed to record results",
+        "source_value_json": "\"more than 2x\""
+      },
+      {
+        "component_interpretation": "M15X·용인·EUV 중심 투자 확대는 forward supply response이나 금액·HBM-only CAPA·고객계약이 없는 계획이다.",
+        "fact_row_index": 30,
+        "source_economic_mechanism": "The issuer expects 2026 investment to rise significantly year over year, centered on M15X ramp-up, Yongin infrastructure preparation, and EUV equipment; this is a qualitative memory-wide investment plan without a numeric amount, HBM-only capacity, customer allocation, or contract commitment.",
+        "source_period_json": "\"FY2026 vs FY2025\"",
+        "source_predicate": "expects annual investment to increase significantly",
+        "source_value_json": "\"significant year-over-year investment increase centered on M15X, Yongin, and EUV\""
+      },
+      {
+        "component_interpretation": "고객 ASIC 협업은 상용화 경로를 보강하지만 qualification 완료·구매의무·가격·물량 증거는 아니다.",
+        "fact_row_index": 31,
+        "source_economic_mechanism": "HBM 성능·품질을 기반으로 고객과 ASIC 개발 협업을 진행해 고객 요구가 제품 개발에 연결되는 상용화 경로를 형성한다.",
+        "source_period_json": "\"2026-Q1 disclosure\"",
+        "source_predicate": "COLLABORATING_WITH_CUSTOMERS_ON_ASIC_DEVELOPMENT_FOR_HBM",
+        "source_value_json": "\"고객들과 ASIC 개발 협력\""
+      },
+      {
+        "component_interpretation": "고객 요청 수량 기준 HBM4 양산은 demand-to-production actual을 직접 지지하지만 named customer와 계약조건·배분보호는 없다.",
+        "fact_row_index": 32,
+        "source_economic_mechanism": "The issuer reports that HBM4 is currently in mass production for quantities requested by customers, directly linking customer demand to production execution while disclosing no named customer, signed purchase contract, numeric volume, price, duration, or allocation protection.",
+        "source_period_json": "\"current as of 2026-01-28\"",
+        "source_predicate": "is mass-producing customer-requested quantities",
+        "source_value_json": "\"customer-requested quantities currently in mass production\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      0,
+      1,
+      3,
+      6,
+      8,
+      13,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      29,
+      30,
+      31,
+      32
+    ],
+    "source_coverage": [
+      "COMPANYGUIDE",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "DETERMINISTIC_FORWARD_SCENARIO",
+      "ISSUER_GUIDANCE",
+      "ISSUER_NEWSROOM",
+      "KRX_PRICE_MARKET_CAP",
+      "OPENDART",
+      "TARGET_OFFICIAL_TRAILING_VALUATION"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "HBM 매출 성장 actual은 있으나 HBM-only 매출액, mix, gross margin, operating profit, CAPEX 및 FCF bridge가 없다.",
+      "고객 요청 HBM4 양산과 ASIC 협업은 signed purchase contract, named-customer volume, price, duration, cancellation 또는 allocation protection을 공개하지 않는다.",
+      "CURRENT_VALUATION의 forward PE·EV/EBITDA·PB·FCF yield가 서로 다른 valuation 신호를 주며 일부는 derived scenario라 denominator 민감도가 높다.",
+      "DURABLE_VISIBILITY는 issuer guidance와 memory-wide 투자·수요 전망을 포함하므로 completed HBM CAPA나 법적 고객의무가 아니다.",
+      "고객집중과 짧은 가격·물량 재협상 cadence, 재고 및 재공품 손실 가능성은 강한 수요의 현금전환 지속성을 제한한다.",
+      "DOCX fetch rejection은 문서 부재나 valuation 점수 근거가 아니며 이 memo의 어느 방향에도 사용하지 않았다."
+    ],
+    "why_not_higher": "HBM-specific actual execution and structured visibility are strong, but high/mixed valuation multiples, thin forward FCF yield, HBM-only earnings·cash denominator 부재, signed 고객계약·allocation 보호 부재가 강한 rerating 확신을 제한한다.",
+    "why_not_lower": "HBM 매출 2배 이상 증가, HBM 가격상승 기여, 고객요청 HBM4 양산, 메모리 수요 초과와 Q1 DRAM actual은 약한 서사만 있는 사례보다 확실한 실물 전환 근거이며 structured CURRENT_VALUATION과 DURABLE_VISIBILITY도 모두 존재한다."
+  },
+  "payload_hash": "c1253918a86a45d983bed41c3f259b0c105205af734a3d5cb8595581229035d3",
+  "production_score_authority": false,
+  "prompt_hash": "990454b379d96f3f622f3516535fce741a6dacde4080a2907178000b9d4f03db",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9ec3c447492870a19a2e20eef1edfadc770e3da3a98e870a1fd13699c9ddae48",
+  "response_id": "COLLABRESP-c02c20585bd3b49239f61920a66f8d6ef158a360f8d45edc07bb73e008322128",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "output_schema_hash": "4b40f8283f64ba24ea4ac6cc5f65514601764170ba04ce51fedd29fa28a65a8a",
+  "payload": {
+    "confidence": 0.86,
+    "counter_case": "AMD 자료는 기술·관계와 제품 정렬을 확인할 뿐 서명 구매의무, 가격, 확정 물량, 배정기간, 취소·위약 조건, backlog, HBM 단독 매출·마진·현금전환을 밝히지 않는다. NVIDIA HBM 공급은 협의 중이고 중요한 장기공급 수주거래가 보고되지 않았다는 제한적 공시도 계약 가시성을 제약한다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25",
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-90c2b7d4695e62e277703a64"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-09ab96433f8087166845bf25"
+    ],
+    "positive_case": "AMD 공식 자료가 삼성의 MI350X·MI355X HBM3E 공급 이력, MI455X용 HBM4 정렬, AI 메모리 플랫폼 기술협력을 고객사 측에서 독립 확인한다. HBM4 양산 출하 actual도 개발 계획을 넘어선 실행을 보여줘 issuer 주장만 있는 상태보다 정보 신뢰도가 높다.",
+    "prior_fact_dispositions": [
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 11,
+        "reason": "동일 HBM3E 공급 이력을 고객사 공식 자료로 독립 확인한 row 9를 선택해 issuer-side 중복 지지를 피한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 32,
+        "reason": "NVIDIA의 장기 기술관계는 현재 HBM 계약이나 독립 고객 확인이 아니므로 이번 핵심 재선정에서 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 48,
+        "reason": "재무제표 재작성 없음은 보조적 전사 공시 사실이고 AMD 기술 corroboration과 계약경제 경계의 핵심 근거가 아니므로 제외한다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 52,
+        "reason": "NVIDIA 공급이 계획·협의 단계이며 확정 계약조건이 없다는 actual-versus-plan counter를 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 94,
+        "reason": "전사 재무 추정 불확실성은 일반적 보조 counter여서 고객사 기술 corroboration과 계약경제 경계를 직접 설명하는 사실보다 우선하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 96,
+        "reason": "중요 장기공급 수주거래 공시의 제한된 부재를 계약 가시성 counter로 유지하되 전체 계약·source absence로 확대하지 않는다."
+      },
+      {
+        "disposition": "RETAIN",
+        "fact_row_index": 101,
+        "reason": "HBM4 양산 출하 actual은 계획과 구분되는 실행 근거로 유지한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 116,
+        "reason": "전사 상위 고객 집중도는 HBM 고객별 계약경제에 귀속할 수 없어 이번 핵심 선택에서 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 119,
+        "reason": "OpenAI 공급 지원은 issuer 계획이며 AMD 고객사 공식 기술 확인이나 확정 HBM 계약이 아니므로 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 121,
+        "reason": "AMD 공식 MOU·제품 정렬 row 64가 더 직접적인 독립 고객사 근거이므로 issuer MOU 중복을 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 154,
+        "reason": "감사 강조사항 없음은 전사 공시의 보조 근거이고 고객·제품·계약 정보의 직접 검증은 아니므로 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 172,
+        "reason": "OpenAI 전체 수요 전망은 삼성 배정량·HBM 물량·매출 actual이 아니므로 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 193,
+        "reason": "AMD 공식 source와 독립성을 명시한 row 210을 선택해 같은 기술협력 발언의 중복 지지를 피한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 204,
+        "reason": "AMD 공식 MOU 문맥의 row 64가 동일 고객·제품 정렬을 더 엄격한 계약 경계와 함께 제시하므로 제외한다."
+      },
+      {
+        "disposition": "OMIT",
+        "fact_row_index": 214,
+        "reason": "OpenAI LOI는 의향서이며 삼성 HBM 구매조건이나 고객사 공식 기술 검증이 아니므로 제외한다."
+      }
+    ],
+    "proposed_score_lower": 2.4,
+    "proposed_score_mid": 2.9,
+    "proposed_score_upper": 3.4,
+    "research_complete": true,
+    "researcher_summary": "현재 immutable evidence에는 AMD 공식 뉴스룸의 HBM3E 실제 공급 이력, MOU 기반 MI455X용 HBM4 정렬, AMD CEO의 메모리·GPU·CPU·rack-scale 기술협력 확인이 있어 이전 memo의 '독립 고객사 기술 corroboration 없음' 판단은 수정해야 한다. 이 확인은 기술·관계의 신뢰도를 높이지만 구매의무, 가격, 물량, 배정기간, 취소조건, backlog, HBM 단독 마진 또는 현금전환을 제공하지 않는다. HBM4 양산 출하 actual과 NVIDIA 협의 상태를 함께 보면 실행은 확인되지만 계약경제의 투명성은 중간 수준이다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "AMD 공식 자료가 실현된 HBM3E 고객·제품 공급 이력을 독립 확인해 issuer-only 관계 공백을 줄인다. 다만 가격·물량·기간·HBM 단독 매출을 확인한 것은 아니다.",
+        "fact_row_index": 9,
+        "source_economic_mechanism": "AMD 공식 뉴스룸은 삼성전자가 AMD의 primary HBM3E partner로서 Instinct MI350X와 MI355X 가속기를 지원해 왔다고 독립적으로 확인한다. 이는 실현된 고객·제품 공급 이력의 corroboration이지만 가격, 물량, 기간, HBM-only 매출은 공개하지 않는다.",
+        "source_period_json": "\"nearly two decades of collaboration through 2026-03-18; HBM3E partner history current at publication\"",
+        "source_predicate": "AMD_OFFICIAL_CONFIRMED_SAMSUNG_AS_PRIMARY_HBM3E_PARTNER_FOR_MI350X_MI355X",
+        "source_value_json": "\"primary HBM3E partner to AMD powering Instinct MI350X and MI355X\""
+      },
+      {
+        "component_interpretation": "공급 논의는 확인되지만 계획·협의와 서명 계약을 분리해야 하므로 확정 배정·물량·가격의 정보 신뢰도를 높이지 않는다.",
+        "fact_row_index": 52,
+        "source_economic_mechanism": "삼성전자는 엔비디아에 HBM3E와 HBM4를 공급할 계획이라고 밝혔지만 HBM4 공급은 아직 긴밀히 협의 중이다. 이는 명명 고객과의 공급 논의를 확인하되 서명 계약·확정 배정·물량·가격을 확인하지 못하는 가시성 counter다.",
+        "source_period_json": "\"2025-10-31 현재 및 이후\"",
+        "source_predicate": "엔비디아 대상 HBM3E·HBM4 공급은 issuer plan이며 HBM4 공급은 2025-10-31 현재 협의 중이다.",
+        "source_value_json": "\"HBM3E·HBM4 공급 계획; HBM4 공급 협의 중\""
+      },
+      {
+        "component_interpretation": "AMD가 고객·제품 수준의 HBM4 정렬을 공식 확인해 기술·관계 corroboration을 제공하지만 MOU를 구매의무나 확정 공급조건으로 승격하지 않는다.",
+        "fact_row_index": 64,
+        "source_economic_mechanism": "AMD 공식 뉴스룸은 MOU 아래 양사가 차세대 AMD Instinct MI455X용 primary HBM4 supply에 맞춰 협력한다고 확인한다. 명명 고객·제품의 미래 공급 가시성을 독립적으로 보강하지만 MOU 기반 정렬이므로 확정 구매계약, 물량, 가격, 기간 또는 취소조건으로 승격하지 않는다.",
+        "source_period_json": "\"2026-03-18 announcement; future AMD Instinct MI455X supply alignment\"",
+        "source_predicate": "AMD_OFFICIAL_CONFIRMED_PRIMARY_HBM4_SUPPLY_ALIGNMENT_FOR_MI455X",
+        "source_value_json": "\"primary HBM4 supply alignment under MOU for AMD Instinct MI455X\""
+      },
+      {
+        "component_interpretation": "재무제표에 중요한 장기공급 수주거래가 보고되지 않아 계약 기반 가시성을 제한한다. 이 제한된 문구를 모든 계약이나 source의 부재로 확대하지 않는다.",
+        "fact_row_index": 96,
+        "source_economic_mechanism": "2026년 1분기말 재무제표에 중요한 영향을 미치는 장기공급계약 수주거래가 없다는 제한된 공시는 계약 기반 가시성을 제약하지만 다른 계약의 부재로 확대할 수 없다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "NO_MATERIAL_LONG_TERM_SUPPLY_ORDER_TRANSACTION_REPORTED",
+        "source_value_json": "\"재무제표에 중요한 영향을 미치는 장기공급계약 수주거래 없음\""
+      },
+      {
+        "component_interpretation": "HBM4 양산 출하 actual은 제품 실행 상태를 확인하지만 고객별 계약·가격·물량의 actual과는 별개다.",
+        "fact_row_index": 101,
+        "source_economic_mechanism": "2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.",
+        "source_period_json": "\"2026-02\"",
+        "source_predicate": "COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS",
+        "source_value_json": "\"HBM4 양산 출하\""
+      },
+      {
+        "component_interpretation": "고객사 CEO의 공식 발언이 기술 참여와 관계를 독립 확인한다. 구매의무·가격·물량·배정기간·취소조건·backlog·마진·현금전환은 확인하지 않는다.",
+        "fact_row_index": 210,
+        "source_economic_mechanism": "AMD CEO는 AMD 공식 뉴스룸에서 삼성의 advanced memory와 AMD Instinct GPU, EPYC CPU, rack-scale platform을 결합하는 협력 확대를 직접 확인했다. 이는 기술 참여의 독립 counterparty corroboration이며 구매의무나 매출을 의미하지 않는다.",
+        "source_period_json": "\"2026-03-18\"",
+        "source_predicate": "AMD_CEO_CONFIRMED_SAMSUNG_MEMORY_PLATFORM_COLLABORATION_ON_AMD_OFFICIAL_SOURCE",
+        "source_value_json": "\"Samsung advanced memory collaboration with AMD Instinct GPUs, EPYC CPUs and rack-scale platforms\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      9,
+      52,
+      64,
+      96,
+      101,
+      210
+    ],
+    "source_coverage": [
+      "CUSTOMER_OFFICIAL",
+      "ISSUER_NEWSROOM",
+      "OPENDART"
+    ],
+    "structured_metric_row_indices": [],
+    "uncertainties": [
+      "AMD 구매의무, 가격, 확정 물량, 배정기간, 취소·위약 조건과 backlog는 공개되지 않았다.",
+      "AMD HBM4 정렬은 MOU 기반이며 signed purchase contract actual이 아니다.",
+      "HBM 단독 매출·마진·현금전환과 고객별 경제성은 확인되지 않았다.",
+      "NVIDIA HBM4는 협의 중이므로 고객사 독립 확인과 확정 계약조건이 없다."
+    ],
+    "why_not_higher": "독립 고객사 기술 corroboration은 존재하지만 계약경제와 HBM 단독 수익·현금의 핵심 조건이 공개되지 않아 강한 정보 확실성으로 평가할 수 없다.",
+    "why_not_lower": "AMD 공식 자료가 실현된 HBM3E 공급 이력과 HBM4 고객·제품 정렬 및 기술협력을 독립 확인하고 HBM4 양산 출하 actual도 존재하므로 issuer-only 계획 단계보다는 분명히 높다."
+  },
+  "payload_hash": "5de1d3f70924f499f0bb2a6d50bc1d11366f632b9891645fe2b45d3c06219c90",
+  "production_score_authority": false,
+  "prompt_hash": "35bb99ecf17d340fa1a01f68d8d34677b03b6dd93031b290fa794bdf6ba34b38",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-47678d91112ee7db235d322d40b00bfd556ab07e6351634a68d7071ee1d99a59",
+  "response_id": "COLLABRESP-274f3f5a62366ce3dd1d7a8e1ce86d1697c83d9f44656c5a52b14edda4756309",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

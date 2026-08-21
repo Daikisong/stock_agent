@@ -1,0 +1,60 @@
+{
+  "output_schema_hash": "c1387a9ab353c57e3dc24c422948ef040ab54e2d4551cf0c8c7e013d65e4565d",
+  "payload": {
+    "allowed_range": [
+      4.8,
+      6.8
+    ],
+    "anchor_comparisons": [
+      "positive ordinal anchor ORDTRANSFER-5aadf9d29303975e658a6c23의 6.84~8.74점은 100% 메모리 가동과 HBM 가격 주도에 일부 부합하지만 HBM 전용 locked CAPA가 없다.",
+      "counter ordinal anchor ORDTRANSFER-9205e8ab347aff38184b148a의 4.478571~6.378571점은 재협상·고객 집중·재고 위험과 장기 shortage 계약 부재를 더 잘 반영한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c07ed486e6d67134d19d6951",
+      "EFACT-c418009dc8a6493dd0a098b4"
+    ],
+    "disagreements": [
+      "HBM 제품 실행과 ASIC 협업만으로 장기 sold-out 또는 고정가격을 입증했다는 해석에 동의하지 않는다.",
+      "전체 메모리 100% 가동률을 HBM-only CAPA 잠김으로 전이하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-5aadf9d29303975e658a6c23",
+      "ORDTRANSFER-9205e8ab347aff38184b148a"
+    ],
+    "proposed_points": 5.8,
+    "rationale": "메모리 설비 100% 가동과 제한된 공급 환경에서 HBM이 가격 상승을 주도했다는 actual은 병목·가격력의 실재를 지지한다. 다만 전체 메모리 utilisation을 HBM 전용 capacity lock으로 분해할 수 없고, HBM 정량 ASP·장기 공급계약·선수금·RPO·취소 제한이 없다. 고객 집중과 재고평가·재공품 손실도 구조적 shortage 지속성을 낮춰 counter anchor 상단 부근으로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-fd7995c7d059c87c9d390d9b"
+    ],
+    "why_not_higher": "HBM 전용 CAPA·가동률·정량 ASP와 장기 구매의무·선수금·RPO가 없고 물량·가격의 재협상 및 재고 위험이 남는다.",
+    "why_not_lower": "실제 100% 메모리 가동과 HBM 가격 상승 주도가 함께 확인돼 병목·가격력 자체를 부정할 수는 없다."
+  },
+  "payload_hash": "e27d8e5c93ad8b0367155da2e6d7616d9d85c4ae216ad696fb67dbfdf1fd173c",
+  "production_score_authority": false,
+  "prompt_hash": "c7d6c0953be4bba1b8e46e05b2788b57c7e4fa3e85b4584d65771e411d0fc510",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b9c43c362ca1342e627348e0fb54002553ed710f0b227898e1b17c7069f1477f",
+  "response_id": "COLLABRESP-3f56078febbc78244ed260a5081ec9909e18e8d8644e5737b22ea5111290e7ba",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

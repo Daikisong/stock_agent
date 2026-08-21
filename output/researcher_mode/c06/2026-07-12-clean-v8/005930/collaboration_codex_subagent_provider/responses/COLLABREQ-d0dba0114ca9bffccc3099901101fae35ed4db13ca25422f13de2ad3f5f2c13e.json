@@ -1,0 +1,140 @@
+{
+  "output_schema_hash": "c868b7984783713b2e3740f6cd04e782db23cbf2a2dc528af1d966a1aa3d96b4",
+  "payload": {
+    "confidence": 0.83,
+    "counter_case": "향후 자본약정과 큰 매출채권 운전자본 유출은 현금수요를 높이고, 분기 배당성향은 5.2%로 낮다. 이 자본배분은 전사 수준이며 HBM 투자수익률이나 HBM 전용 CAPEX 회수기간을 증명하지 않는다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-c1052e06818f90d4a44560f0"
+    ],
+    "positive_case": "대규모 자기주식 프로그램과 실제 소각, 분기 배당, 비희석적 지분조달 부재는 주주환원 실행을 보여준다. 투자등급 조달 접근성도 AI 메모리 투자와 환원을 병행할 완충력을 제공한다.",
+    "prior_fact_dispositions": [],
+    "proposed_score_lower": 2.2,
+    "proposed_score_mid": 2.6,
+    "proposed_score_upper": 3.0,
+    "research_complete": true,
+    "researcher_summary": "현금 pooling과 투자등급 조달 접근성, 지분증권 미발행, 10조원 자기주식 프로그램과 자기주식 소각, 2026년 1분기 배당금 2,453,316백만원은 주주환원과 재무 접근성을 확인한다. 반면 낮은 분기 배당성향 5.2%, 27,503,020백만원의 향후 유형·무형자산 약정과 28,670,819백만원의 매출채권 운전자본 유출은 현금배분 부담이다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "전사 주주환원·재무 접근성 실행으로 반영하되 HBM 투자수익률이나 HBM 전용 현금흐름으로 귀속하지 않는다.",
+        "fact_row_index": 49,
+        "source_economic_mechanism": "권역별 Cash Pooling, 해외 종속기업 차입한도, Moody's Aa2와 S&P AA- 신용등급은 대규모 유동성 필요 시 내부자금 공유와 자본시장 조달 접근성을 뒷받침한다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "DISCLOSED_CASH_POOLING_AND_INVESTMENT_GRADE_FUNDING_ACCESS",
+        "source_value_json": "\"Cash Pooling; Moody's Aa2; S&P AA-\""
+      },
+      {
+        "component_interpretation": "전사 주주환원·재무 접근성 실행으로 반영하되 HBM 투자수익률이나 HBM 전용 현금흐름으로 귀속하지 않는다.",
+        "fact_row_index": 57,
+        "source_economic_mechanism": "공시대상기간 중 신규 지분증권 발행이 없어 해당 기간의 발행 희석은 발생하지 않았다.",
+        "source_period_json": "\"disclosure period through 2026Q1\"",
+        "source_predicate": "NO_EQUITY_SECURITIES_ISSUED_IN_DISCLOSURE_PERIOD",
+        "source_value_json": "\"발행 실적 없음\""
+      },
+      {
+        "component_interpretation": "전사 현금배분 부담으로 반영하되 DS 메모리 또는 HBM 전용 자금 사용으로 귀속하지 않는다.",
+        "fact_row_index": 80,
+        "source_economic_mechanism": "순이익 급증기에 현금배당성향이 5.2%로 낮아져 이익 증가가 같은 비율의 현금환원으로 전환되지는 않았다.",
+        "source_period_json": "\"2026Q1\"",
+        "source_predicate": "REPORTED_LOW_QUARTERLY_CASH_DIVIDEND_PAYOUT_RATIO",
+        "source_value_json": "5.2"
+      },
+      {
+        "component_interpretation": "전사 현금배분 부담으로 반영하되 DS 메모리 또는 HBM 전용 자금 사용으로 귀속하지 않는다.",
+        "fact_row_index": 88,
+        "source_economic_mechanism": "미집행 유형·무형자산 취득 약정",
+        "source_period_json": "\"after 2026-03-31\"",
+        "source_predicate": "분기말 미발생 유형·무형자산 취득 약정액을 공시했다",
+        "source_value_json": "27503020"
+      },
+      {
+        "component_interpretation": "전사 주주환원·재무 접근성 실행으로 반영하되 HBM 투자수익률이나 HBM 전용 현금흐름으로 귀속하지 않는다.",
+        "fact_row_index": 111,
+        "source_economic_mechanism": "발표한 10조원 자기주식 매입 프로그램을 3조원 소각과 추가 7조원 취득으로 집행했다.",
+        "source_period_json": "\"2024-11 to 2025-09\"",
+        "source_predicate": "EXECUTED_TEN_TRILLION_WON_TREASURY_SHARE_PROGRAM",
+        "source_value_json": "10"
+      },
+      {
+        "component_interpretation": "전사 주주환원·재무 접근성 실행으로 반영하되 HBM 투자수익률이나 HBM 전용 현금흐름으로 귀속하지 않는다.",
+        "fact_row_index": 120,
+        "source_economic_mechanism": "보고기간 후 자기주식 소각은 이미 매입한 주식을 제거하여 주식 수와 투입 자본을 줄인 자본환원 실행이다.",
+        "source_period_json": "\"2026-04-02\"",
+        "source_predicate": "CANCELLED_TREASURY_SHARES",
+        "source_value_json": "\"보통주 73,359,314주 및 우선주 13,603,461주\""
+      },
+      {
+        "component_interpretation": "전사 현금배분 부담으로 반영하되 DS 메모리 또는 HBM 전용 자금 사용으로 귀속하지 않는다.",
+        "fact_row_index": 137,
+        "source_economic_mechanism": "2026년 1분기 연결 현금흐름에서 매출채권 증가가 28,670,819백만원의 영업현금 감소 요인으로 작용했다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTED_RECEIVABLES_WORKING_CAPITAL_CASH_OUTFLOW",
+        "source_value_json": "-28670819"
+      },
+      {
+        "component_interpretation": "전사 주주환원·재무 접근성 실행으로 반영하되 HBM 투자수익률이나 HBM 전용 현금흐름으로 귀속하지 않는다.",
+        "fact_row_index": 150,
+        "source_economic_mechanism": "분기 배당을 통한 자본 환원",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "2026년 1분기 지급될 배당금 합계를 공시했다",
+        "source_value_json": "2453316"
+      }
+    ],
+    "selected_fact_row_indices": [
+      49,
+      57,
+      80,
+      88,
+      111,
+      120,
+      137,
+      150
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "향후 자본약정의 DS 메모리·HBM 귀속이 분리되지 않는다.",
+      "매출채권 운전자본 유출의 일시성 여부가 불명확하다.",
+      "자기주식·배당과 성장투자의 장기 우선순위가 정량적으로 연결되지 않는다."
+    ],
+    "why_not_higher": "주주환원 실행에도 큰 자본약정과 운전자본 유출, 낮은 분기 배당성향이 있어 최상단 자본배분 앵커에는 미달한다.",
+    "why_not_lower": "실제 자기주식 프로그램·소각·배당과 투자등급 조달 접근성이 확인되므로 취약한 자본배분 수준보다 높다."
+  },
+  "payload_hash": "e7dcdecbb6128d50ebeee55d592ea19c9c13fee9bb7fc68c0ad469373f7b6874",
+  "production_score_authority": false,
+  "prompt_hash": "7a6ac305f8cb250e7f0c797b3006b95927fdec9babed56f2e780f3c1e26d387f",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.4",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d0dba0114ca9bffccc3099901101fae35ed4db13ca25422f13de2ad3f5f2c13e",
+  "response_id": "COLLABRESP-5e2e1ed97562bdebb5e7a2bf412e6e934784fe8727c8a3a122c4afbe269e57e2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

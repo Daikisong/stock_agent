@@ -1,0 +1,168 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The memo losslessly separates consolidated operating profit and operating cash flow, DS-memory revenue and ASP actuals, and the still-unavailable HBM-only revenue, margin, CAPEX, working-capital, and FCF bridge. Its residual limitation is already scored and does not by itself reopen this memo."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The memo correctly distinguishes actual HBM4 shipment from NVIDIA discussions, the OpenAI LOI and demand forecast, and AMD MOU or preferred-supplier alignment. It does not promote those relationships into signed volume, price, duration, allocation, cancellation terms, backlog, or realized revenue."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The memo uses memory-wide utilization, limited supply, and realized ASP evidence while preserving the absence of an HBM-only locked-capacity or contract-price attribution. The limitation is an explicit counterweight rather than an unreviewed factual contradiction."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The memo explicitly retains the mixed valuation signals and the inability to infer mispricing from operating improvement alone. Its current valuation and revision inputs are structured and period-bounded, so the uncertainty is appropriately reflected in the low range."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "A full, as-of-eligible broker report must verify a period-aligned Samsung earnings denominator and explain how memory or HBM assumptions enter normal earnings and the cited valuation multiple; report metadata, summary text, and target price alone are not evidence."
+        ],
+        "rationale": "The current memo correctly identifies mixed forward PE, EV/EBITDA, PB, and FCF-yield signals, but the bounded structured-report roster contains a concrete current candidate, STRUCTCAND-f6fb158d7f15b0bdbb8f52f6 (DB, 2026-07-08, provider report 1111300, '메모리가 다했다'), whose full PDF could materially resolve the missing HBM or memory normal-earnings bridge. The candidate is discovery metadata only and must not be treated as a fact before full-document validation."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The memo balances executed buyback, cancellation and dividend facts against large capital commitments, working-capital cash absorption, and the lack of an HBM-specific investment and ROIC bridge. It does not attribute company-wide cash uses to HBM."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The memo still says no accepted AMD CUSTOMER_OFFICIAL source independently corroborates the technical relationship, while the same immutable prompt's current Red Team states that an AMD official source resolves technical and relationship corroboration. This requires a same-evidence semantic rewrite, not a new contract fact: the rewrite must recognize technical corroboration while preserving that it proves no purchase obligation, price, volume, allocation period, cancellation term, backlog, margin, or cash conversion."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-02ed4bdf2a6c18e286c2ac90",
+        "rationale": "Eight query attempts ended in provider errors. This is a transport failure, not proof that the requested evidence or source family is absent.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-11f05de07efa5852c6e71412",
+        "rationale": "Four full-fetched documents were after the as-of cutoff and were correctly excluded. The objective was resolved by eligible current source-graph evidence, so these future documents must not be retried or used.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-8ce8e0d17715285b367c314b",
+        "rationale": "One fetched document lacked a verifiable publication date and therefore could not be admitted into an as-of reproducible decision. The objective was resolved through other eligible evidence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "IRRELEVANT_DOCUMENT",
+        "failure_id": "FAILGROUP-93582c8d3e4a290b445687a0",
+        "rationale": "One query result reached a full document whose publication date could not be verified. It is unusable for the cutoff but says nothing about source absence, and the objective was resolved elsewhere.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-944cf2283ff44162e1cf00f0",
+        "rationale": "Four documents were rejected after full fetch because their dates were later than 2026-07-12. The rejection prevents future leakage and does not establish source absence; the objective is already resolved through eligible evidence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-b7186977512435361b544cc4",
+        "rationale": "The CUSTOMER_OFFICIAL route produced an eligible AMD official document and the Red Team used it for technical corroboration, but the deterministic accepted-claim/fact lineage is still missing. This is a lineage or extraction integration defect, not source absence, and repeating the same exhausted CUSTOMER_OFFICIAL route is prohibited.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "The LLM returned no new valid query after prior query context. That result is neither a zero-result source proof nor saturation; the separate bounded structured-report candidate supplies one nonduplicate, objective-bound route that still needs full-document validation.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "valuation_rerating",
+        "direction": "RESOLUTION",
+        "fact_need": "A full current broker report with a period-matched Samsung earnings denominator, explicit memory or HBM earnings assumptions, and the corresponding valuation multiple, keeping target price and preview numbers non-authoritative until the PDF is fetched and parsed.",
+        "why_material": "This could determine whether low headline multiples reflect Samsung's HBM or memory normal-earnings power or instead rely on consolidated assumptions that do not support an HBM rerating bridge."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": false,
+        "direction": "Resolve the full report behind STRUCTCAND-f6fb158d7f15b0bdbb8f52f6, preserving DB, 2026-07-08, provider report 1111300, and title '메모리가 다했다' as candidate identity; accept evidence only if the PDF verifies a period-matched Samsung denominator, memory or HBM assumptions, and the linked valuation multiple.",
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "rationale": "The structured candidate is as-of eligible and directly aimed at Samsung memory and HBM4, while the current valuation memo lacks a normal-earnings bridge. Its metadata remains discovery-only until the full report is fetched and parsed.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      }
+    ],
+    "next_actions": [
+      "Fetch and parse only the exact full PUBLIC_BROKER_PDF represented by STRUCTCAND-f6fb158d7f15b0bdbb8f52f6, then admit facts only after target, date, denominator, segment, and quote validation.",
+      "Repair or replay accepted-claim/fact lineage for the already fetched AMD CUSTOMER_OFFICIAL document without issuing another CUSTOMER_OFFICIAL query.",
+      "Rewrite information_confidence on the same immutable evidence to recognize AMD technical corroboration while retaining every contract-economics, qualification, concentration, margin, and cash-conversion limitation.",
+      "After the semantic information-confidence rewrite, run fresh independent component judges; separately retry provider-error transport only with the current objective-bound context and without treating another provider error as absence."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "Do not use the CompanyGuide summary, title, target price, or preview numbers as evidence.",
+          "Do not generalize consolidated estimates into HBM-only revenue, margin, FCF, or valuation.",
+          "Do not repeat the exhausted CUSTOMER_OFFICIAL route for SGOBJ-93cf39260befeafbc887e409."
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-b9fa68f5a7769660459ba605",
+        "research_need": "Obtain the exact full PUBLIC_BROKER_PDF represented by STRUCTCAND-f6fb158d7f15b0bdbb8f52f6 and test whether it provides a current Samsung earnings denominator plus explicit memory or HBM normal-earnings assumptions tied to a valuation multiple."
+      }
+    ],
+    "rationale": "All seven component memos, the current synthesis, Red Team, structured roles, counter-route proof, source graph, independent-corroboration projection, structured-report candidate roster, and all seven failure groups were audited. Counter and structured gates are complete, but independent saturation review is premature for three distinct reasons: the information-confidence memo contradicts the embedded AMD technical corroboration and needs a same-evidence rewrite; the existing AMD CUSTOMER_OFFICIAL document lacks accepted-claim/fact lineage and must be repaired rather than re-queried; and one concrete as-of-eligible PUBLIC_BROKER_PDF candidate could resolve the missing valuation normal-earnings bridge. Provider errors and a no-new-query response are not source-absence evidence, and future or undated documents remain excluded.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "Does the full DB 2026-07-08 report provide a period-matched Samsung earnings denominator and an explicit memory or HBM normal-earnings bridge for its valuation conclusion, rather than only a target price or qualitative cycle claim?",
+      "Can the information-confidence memo and deterministic accepted-claim/fact lineage be reconciled with the already embedded AMD CUSTOMER_OFFICIAL technical corroboration without upgrading MOU or preferred-supplier language into contract economics?"
+    ]
+  },
+  "payload_hash": "0328b3bd79436c51b63e53a84b592c4055792a809b04e82353278b3ef5656518",
+  "production_score_authority": false,
+  "prompt_hash": "783cdb85d30785dc39b18961b34cb877133c2dec0d1ff9bc0ea8fbb0264af489",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c7d870b47390d06ac5fe4b63d6ede843d92820033dc41b3720ecb94a7c576ec4",
+  "response_id": "COLLABRESP-c2f6db2ba30017b7fa33296b4fac38a62ac2a4668389362ca0603cea5a84bf5d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

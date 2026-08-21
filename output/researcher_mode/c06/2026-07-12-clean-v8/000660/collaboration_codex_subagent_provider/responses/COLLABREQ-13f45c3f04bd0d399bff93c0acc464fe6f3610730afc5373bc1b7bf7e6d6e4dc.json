@@ -1,0 +1,575 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "rationale": "The full issuer-newsroom document yielded twelve distinct current-objective facts on quarterly actuals, HBM revenue conversion, customer-linked HBM4 production, supply and capacity plans, and capital return. Additional distinct shareholder-return, product-plan, and information-certainty remainder remains for continuation.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Consolidated",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer reported record consolidated fourth-quarter revenue, providing a period-specific actual earnings baseline without attributing the consolidated amount solely to HBM.",
+        "exact_quote": "4분기 매출 32조 8,267억 원, 영업이익 19조 1,696억 원, 순이익 15조 2,460억 원",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "A new issuer-reported quarterly revenue actual directly advances the consolidated earnings baseline while preserving the absence of HBM-only attribution.",
+        "mechanism_scope_id": "000660:corporate:consolidated_earnings_actual",
+        "normalized_object": "2025Q4 consolidated revenue",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025Q4",
+        "predicate": "reported consolidated revenue",
+        "predicate_family": "CONSOLIDATED_REVENUE_ACTUAL",
+        "primitive_tags": [
+          "revenue_actual"
+        ],
+        "product_family": "Corporate",
+        "question_family_id": "CONSOLIDATED_QUARTERLY_REVENUE_ACTUAL",
+        "question_family_tags": [
+          "quarterly_actual",
+          "consolidated_revenue"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_REVENUE_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 32826700
+      },
+      {
+        "business_segment": "Consolidated",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer reported record consolidated fourth-quarter operating profit, establishing realized profit conversion at company level without treating it as HBM-only profit.",
+        "exact_quote": "4분기 매출 32조 8,267억 원, 영업이익 19조 1,696억 원, 순이익 15조 2,460억 원",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The period-specific consolidated operating-profit actual is material to realized earnings and cash-conversion research, but is not promoted to an HBM-only margin fact.",
+        "mechanism_scope_id": "000660:corporate:consolidated_earnings_actual",
+        "normalized_object": "2025Q4 consolidated operating profit",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025Q4",
+        "predicate": "reported consolidated operating profit",
+        "predicate_family": "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "primitive_tags": [
+          "operating_profit_actual"
+        ],
+        "product_family": "Corporate",
+        "question_family_id": "CONSOLIDATED_QUARTERLY_OPERATING_PROFIT_ACTUAL",
+        "question_family_tags": [
+          "quarterly_actual",
+          "consolidated_operating_profit"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 19169600
+      },
+      {
+        "business_segment": "Consolidated",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer reported consolidated fourth-quarter net income as an already-realized company result without segment-level attribution.",
+        "exact_quote": "4분기 매출 32조 8,267억 원, 영업이익 19조 1,696억 원, 순이익 15조 2,460억 원",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The issuer-reported quarterly net-income actual is a distinct consolidated earnings atom and does not imply HBM-only profitability.",
+        "mechanism_scope_id": "000660:corporate:consolidated_earnings_actual",
+        "normalized_object": "2025Q4 consolidated net income",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025Q4",
+        "predicate": "reported consolidated net income",
+        "predicate_family": "CONSOLIDATED_NET_INCOME_ACTUAL",
+        "primitive_tags": [
+          "net_income_actual"
+        ],
+        "product_family": "Corporate",
+        "question_family_id": "CONSOLIDATED_QUARTERLY_NET_INCOME_ACTUAL",
+        "question_family_tags": [
+          "quarterly_actual",
+          "consolidated_net_income"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_NET_INCOME_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 15246000
+      },
+      {
+        "business_segment": "Consolidated",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "Consolidated quarterly revenue increased sequentially, confirming realized company-level earnings acceleration rather than an HBM-only growth rate.",
+        "exact_quote": "전분기 대비 매출은 34% 증가한 32조 8,267억 원, 영업이익은 68% 증가한 19조 1,696억 원, 영업이익률 58%를 기록하며 세 지표 모두 분기 기준 최고치를 기록했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact issuer quote provides the current and comparison periods and a single numeric sequential revenue-growth point.",
+        "mechanism_scope_id": "000660:corporate:consolidated_earnings_actual",
+        "normalized_object": "2025Q4 consolidated revenue sequential growth",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025Q4 vs 2025Q3",
+        "predicate": "grew quarter over quarter",
+        "predicate_family": "QOQ_REVENUE_GROWTH",
+        "primitive_tags": [
+          "qoq_growth"
+        ],
+        "product_family": "Corporate",
+        "question_family_id": "CONSOLIDATED_REVENUE_SEQUENTIAL_GROWTH",
+        "question_family_tags": [
+          "quarterly_growth",
+          "consolidated_revenue"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "percent",
+        "value": 34
+      },
+      {
+        "business_segment": "Consolidated",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "Consolidated quarterly operating profit increased sequentially, confirming realized company-level profit acceleration without attributing the percentage solely to HBM.",
+        "exact_quote": "전분기 대비 매출은 34% 증가한 32조 8,267억 원, 영업이익은 68% 증가한 19조 1,696억 원, 영업이익률 58%를 기록하며 세 지표 모두 분기 기준 최고치를 기록했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact issuer quote provides the comparison period and a single numeric operating-profit growth point.",
+        "mechanism_scope_id": "000660:corporate:consolidated_earnings_actual",
+        "normalized_object": "2025Q4 consolidated operating profit sequential growth",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025Q4 vs 2025Q3",
+        "predicate": "grew quarter over quarter",
+        "predicate_family": "QOQ_OPERATING_PROFIT_GROWTH",
+        "primitive_tags": [
+          "qoq_growth"
+        ],
+        "product_family": "Corporate",
+        "question_family_id": "CONSOLIDATED_OPERATING_PROFIT_SEQUENTIAL_GROWTH",
+        "question_family_tags": [
+          "quarterly_growth",
+          "consolidated_operating_profit"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "CONSOLIDATED_EARNINGS_ACTUAL",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "CONSOLIDATED_OPERATING_PROFIT_ACTUAL",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "percent",
+        "value": 68
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "HBM sales more than doubled year over year and the issuer explicitly linked that growth to its record result, establishing realized HBM revenue conversion without supplying an HBM margin or mix percentage.",
+        "exact_quote": "구체적으로 살펴보면 D램 부문에서는 HBM 매출이 전년보다 두 배 이상 성장해 역대 최대 경영 실적 창출에 기여했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is direct issuer attribution of HBM revenue growth to realized results, while preserving that no HBM mix or margin was disclosed.",
+        "mechanism_scope_id": "000660:memory:hbm:revenue_conversion",
+        "normalized_object": "HBM sales year-over-year growth",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025 vs FY2024",
+        "predicate": "sales grew more than twofold year over year and contributed to record results",
+        "predicate_family": "HBM_REVENUE_GROWTH",
+        "primitive_tags": [
+          "hbm_sales_growth",
+          "revenue_conversion"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_REVENUE_GROWTH_AND_CONTRIBUTION",
+        "question_family_tags": [
+          "hbm_revenue",
+          "segment_contribution"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "REVENUE_ACTUAL",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK하이닉스 HBM 사업",
+        "subject_id": "000660:DRAM:HBM",
+        "unit": "multiple",
+        "value": "more than 2x"
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer states that it can supply HBM3E and HBM4 simultaneously and plans to reinforce verified quality and mass-production capability; this is an operating supply plan, not evidence of contract volume, price, allocation, or cancellation terms.",
+        "exact_quote": "이에 SK하이닉스는 HBM3E와 HBM4를 동시에 안정적으로 공급할 수 있는 기업으로서 확보된 고객 신뢰를 바탕으로 기술 우위는 물론 검증된 품질과 양산 역량을 강화한다는 방침이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Issuer-official product-specific supply capability and execution intent advances HBM visibility, while the quote does not establish binding commercial terms or a quantified period.",
+        "mechanism_scope_id": "000660:memory:hbm:supply_execution",
+        "normalized_object": "HBM3E and HBM4 stable-supply execution plan",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "plan announced 2026-01-28",
+        "predicate": "plans to strengthen simultaneous stable-supply and mass-production capability",
+        "predicate_family": "HBM_SUPPLY_EXECUTION_PLAN",
+        "primitive_tags": [
+          "stable_supply_plan",
+          "quality",
+          "mass_production"
+        ],
+        "product_family": "HBM3E and HBM4",
+        "question_family_id": "HBM_SIMULTANEOUS_STABLE_SUPPLY_PLAN",
+        "question_family_tags": [
+          "hbm_supply",
+          "mass_production_capability"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM3E 및 HBM4",
+        "subject_id": "000660:DRAM:HBM3E_HBM4",
+        "unit": "",
+        "value": "HBM3E and HBM4 simultaneous stable supply capability; quality and mass-production capability strengthening plan"
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer reports that HBM4 is currently in mass production for quantities requested by customers, directly linking customer demand to production execution while disclosing no named customer, signed purchase contract, numeric volume, price, duration, or allocation protection.",
+        "exact_quote": "특히, 지난해 9월 업계 최초로 양산 체제를 구축한 HBM4는 고객이 요청한 물량을 현재 양산 중이라고 설명했다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This issuer-official, product-specific statement establishes current customer-linked production visibility and is expressly bounded away from inferred contract economics.",
+        "mechanism_scope_id": "000660:memory:hbm4:customer_demand_production",
+        "normalized_object": "HBM4 customer-linked mass-production status",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "current as of 2026-01-28",
+        "predicate": "is mass-producing customer-requested quantities",
+        "predicate_family": "CUSTOMER_LINKED_MASS_PRODUCTION",
+        "primitive_tags": [
+          "customer_requested_quantity",
+          "production_execution"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "HBM4_CUSTOMER_REQUESTED_VOLUME_PRODUCTION",
+        "question_family_tags": [
+          "hbm4",
+          "customer_demand",
+          "mass_production"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "SK하이닉스 HBM4",
+        "subject_id": "000660:DRAM:HBM4",
+        "unit": "",
+        "value": "customer-requested quantities currently in mass production"
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer plans to prepare optimal custom-HBM products through customer and partner cooperation; this is a product-development preparation plan rather than evidence of qualification, contracted sales, or committed customer volume.",
+        "exact_quote": "이처럼 HBM4에서 지속적인 리더십을 확보하는 것은 물론, 고객 및 파트너와 협력체계를 강화해 차세대 핵심 경쟁 요소로 부상하고 있는 ‘커스텀(Custom) HBM’에서도 최적의 제품을 공급할 수 있도록 준비한다는 계획이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The product-specific issuer plan advances the future HBM portfolio mechanism, but remains preparation rather than qualification or commercial commitment.",
+        "mechanism_scope_id": "000660:memory:custom_hbm:product_preparation",
+        "normalized_object": "Custom HBM product-preparation plan",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "plan announced 2026-01-28",
+        "predicate": "plans to prepare products with customer and partner cooperation",
+        "predicate_family": "CUSTOM_HBM_PRODUCT_PLAN",
+        "primitive_tags": [
+          "customer_partner_cooperation",
+          "product_preparation"
+        ],
+        "product_family": "Custom HBM",
+        "question_family_id": "CUSTOM_HBM_PRODUCT_PREPARATION",
+        "question_family_tags": [
+          "custom_hbm",
+          "product_plan"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 커스텀 HBM",
+        "subject_id": "000660:DRAM:CUSTOM_HBM",
+        "unit": "",
+        "value": "prepare optimal Custom HBM products"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "To prioritize customer-demand fulfillment, the issuer plans early maximization of M15X production capacity and stable mid-to-long-term capacity expansion through Yongin Fab 1; the quote does not identify HBM-only capacity or committed customer allocation.",
+        "exact_quote": "회사는 수급 불균형 속에서도 고객 수요 충족을 최우선으로 고려하며 협력 관계를 강화할 것이라고 밝혔다. 이를 위해 청주 M15X의 생산력을 조기에 극대화하고 용인 1기 팹(Fab) 건설을 통해 중장기 생산 기반을 안정적으로 확충한다는 방침이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This is an issuer-official, forward, facility-specific memory capacity plan tied to customer-demand fulfillment, while preserving its memory-wide rather than HBM-only scope.",
+        "mechanism_scope_id": "000660:memory:capacity:m15x_yongin_fab1",
+        "normalized_object": "memory production-capacity expansion plan",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "early and mid-to-long term from 2026-01-28",
+        "predicate": "plans early production maximization and mid-to-long-term capacity expansion",
+        "predicate_family": "MEMORY_CAPACITY_EXPANSION_PLAN",
+        "primitive_tags": [
+          "capacity_expansion",
+          "supply_response"
+        ],
+        "product_family": "Memory",
+        "question_family_id": "MEMORY_CAPACITY_EXPANSION_PLAN",
+        "question_family_tags": [
+          "memory_capacity",
+          "customer_demand",
+          "m15x",
+          "yongin"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "SK하이닉스 M15X 및 용인 1기 팹",
+        "subject_id": "000660:MEMORY:M15X_YONGIN_FAB1",
+        "unit": "",
+        "value": "M15X early production maximization and Yongin Fab 1 mid-to-long-term production-base expansion"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.95,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer plans to prepare its Cheongju P&T7 and Indiana advanced-packaging plants to create integrated front- and back-end manufacturing capability and respond flexibly to customer-demand changes; no numerical capacity or HBM-only allocation is disclosed.",
+        "exact_quote": "청주 P&T7과 미국 인디애나의 어드밴스드 패키징(Advanced Packaging) 공장도 순조롭게 준비해, 전공정과 후공정을 아우르는 글로벌 통합 제조 역량을 갖춰 고객 수요 변화에 유연하게 대응할 계획이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "This specific forward packaging-capacity plan supports customer-demand response, but is not promoted to quantified or HBM-only capacity.",
+        "mechanism_scope_id": "000660:memory:advanced_packaging:pt7_indiana",
+        "normalized_object": "AI-memory advanced-packaging capacity plan",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "forward plan announced 2026-01-28",
+        "predicate": "plans to prepare integrated advanced-packaging capacity for demand response",
+        "predicate_family": "ADVANCED_PACKAGING_CAPACITY_PLAN",
+        "primitive_tags": [
+          "pt7",
+          "indiana_packaging",
+          "supply_response"
+        ],
+        "product_family": "AI memory packaging",
+        "question_family_id": "MEMORY_ADVANCED_PACKAGING_CAPACITY_PLAN",
+        "question_family_tags": [
+          "advanced_packaging",
+          "capacity_plan",
+          "customer_demand"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.95,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "AI_MEMORY",
+        "scope_technology_family": "AI_MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "SK하이닉스 청주 P&T7 및 인디애나 첨단 패키징 공장",
+        "subject_id": "000660:MEMORY:PT7_INDIANA_PACKAGING",
+        "unit": "",
+        "value": "prepare P&T7 and Indiana advanced-packaging plants for flexible customer-demand response"
+      },
+      {
+        "business_segment": "Corporate",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-66906bdb3ebcd1c94bb85268",
+        "economic_mechanism": "The issuer announced an additional KRW 1,500 per-share dividend totaling KRW 1 trillion, an issuer-wide capital-return action separate from memory-product economics.",
+        "exact_quote": "먼저 1조 원 규모의 주당 1,500원 추가 배당을 실시한다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The issuer-wide dividend action directly advances capital-allocation assessment and is kept separate from HBM operating attribution.",
+        "mechanism_scope_id": "000660:corporate:shareholder_return",
+        "normalized_object": "additional dividend per share",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025 settlement dividend announced 2026-01-28",
+        "predicate": "announced additional dividend per share",
+        "predicate_family": "ADDITIONAL_DIVIDEND",
+        "primitive_tags": [
+          "shareholder_return"
+        ],
+        "product_family": "Issuer-wide capital allocation",
+        "question_family_id": "ISSUER_ADDITIONAL_DIVIDEND",
+        "question_family_tags": [
+          "capital_allocation",
+          "dividend"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CAPITAL_ALLOCATION",
+        "unit": "KRW per share",
+        "value": 1500
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-66906bdb3ebcd1c94bb85268"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact transport page cap was reached; continue the same document for only distinct remaining facts, including the residual shareholder-return and preliminary-results uncertainty spans, without repeating this page."
+    ]
+  },
+  "payload_hash": "2c8ece234f6cab512234601513ef5f2c76a26a6a52b2353bec6d1f6a3393274b",
+  "production_score_authority": false,
+  "prompt_hash": "7ed5cee8df1b4ee44dd5ec291e35c6325bc22a06d4fb2627715d50edaf52cb9f",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-13f45c3f04bd0d399bff93c0acc464fe6f3610730afc5373bc1b7bf7e6d6e4dc",
+  "response_id": "COLLABRESP-8b73e92e3c8f48184f1b7dd907b6820a9faa10e906161dce7eb2c12dc60c9e1d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

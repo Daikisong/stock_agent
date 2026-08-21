@@ -1,0 +1,574 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "rationale": "Extracted 12 distinct source-order issuer facts on the corrected ADR funding scale, unresolved pricing, regulatory execution, dilution bounds, and offering structure; later bookbuilding, schedule, delegation, and facility-use details remain for continuation.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-82c4d529809691327e652074",
+        "rationale": "Full review found only a Nvidia-centered statement that generically included SK hynix among memory vendors; it did not provide target-specific product, volume, price, allocation, duration, cancellation, or signed-contract terms and therefore yielded no distinct current target-objective fact.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "SGDOC-93b35ee380e600a2c404d37c",
+        "rationale": "Full review found only qualitative historical lists saying SK hynix earnings or 3Q25 operating-profit estimates were revised upward, without an attributable metric, magnitude, denominator, or current objective-local mechanism distinct from the existing fact graph.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_EQUITY_FUNDING",
+        "exact_quote": "4. 자금조달의 목적\n- 시설자금(원)\n미국 SEC F-1 수정에 따른 기재정정\n45,453,450,000,000\n43,140,750,000,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "KIND issuer filing directly supersedes the stated ADR-funded facility-funding amount and therefore changes the current capital-allocation scale.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "ADR facility-funding amount corrected from KRW 45.45345 trillion to KRW 43.14075 trillion",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2026-07-06 correction",
+        "predicate": "revised planned facility-funding amount downward",
+        "predicate_family": "CAPITAL_FUNDING_SUPERSESSION",
+        "primitive_tags": [
+          "capital_allocation",
+          "equity_funding",
+          "supersession"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "QF_CAPITAL_ALLOCATION",
+        "question_family_tags": [
+          "QF_CAPITAL_ALLOCATION",
+          "ADR_FUNDING"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "KRW",
+        "value": "43,140,750,000,000 (previously 45,453,450,000,000)"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_EQUITY_PRICING_PROCESS",
+        "exact_quote": "6. 신주 발행가액\n- 보통주식(원)\n2,555,000\n2,425,000",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The official correction changes the displayed financing reference amount; a separate counterfact preserves that it is not the final issue price.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "displayed common-share reference amount corrected from KRW 2.555 million to KRW 2.425 million",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2026-07-06 correction",
+        "predicate": "revised displayed reference amount",
+        "predicate_family": "ISSUE_REFERENCE_PRICE_SUPERSESSION",
+        "primitive_tags": [
+          "capital_allocation",
+          "reference_price",
+          "supersession"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "QF_CAPITAL_ALLOCATION",
+        "question_family_tags": [
+          "QF_CAPITAL_ALLOCATION",
+          "ADR_PRICING"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "KRW/share",
+        "value": "2,425,000 (previously 2,555,000)"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_DEPOSITARY_ISSUANCE_STRUCTURE",
+        "exact_quote": "그에 따라, 본건 신주는 투자자들에게 직접 모집되는 것이 아니며, 당사는 ADR 발행 과 관련하여 발행되는 신주 전량을 해외 예탁기관에 원주로 발행할 예정입니다. 이에 따라 해외 예탁기관이 신주에 관한 제3자 배정에 있어서는 제3자가 됩니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The issuer filing defines the equity issuance and depositary mechanics without implying a direct allotment to end investors.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "all ADR underlying new shares issued to overseas depositary, which is the third-party allottee",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 ADR offering plan",
+        "predicate": "will issue all ADR-related new shares to the overseas depositary as underlying shares",
+        "predicate_family": "ADR_DEPOSITARY_STRUCTURE",
+        "primitive_tags": [
+          "capital_allocation",
+          "ADR",
+          "depositary"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "QF_CAPITAL_ALLOCATION",
+        "question_family_tags": [
+          "QF_CAPITAL_ALLOCATION",
+          "ADR_STRUCTURE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "structure",
+        "value": "all ADR-related new shares"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_REGULATORY_EXECUTION",
+        "exact_quote": "본건 ADR의 발행을 위하여 2026년 6월 24일 미국 증권거래위원회(Securities and Exchange Commission, 이하 “SEC”)에 Form F-1 등록 신고서(registration statement)를 제출하였고, 2026년 6월 30일에 수정본을 제출하였으며, 본 보고서 일자에 다시 수정본을 제출할 예정입니다\n.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The official filing chronology is direct evidence of execution progress while the additional amendment remains pending.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "SEC Form F-1 filing and amendment sequence for ADR issuance",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-06-24 to 2026-07-06",
+        "predicate": "filed and amended SEC Form F-1",
+        "predicate_family": "ADR_REGULATORY_FILING_STATUS",
+        "primitive_tags": [
+          "information_confidence",
+          "SEC_F1",
+          "ADR"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "QF_INFORMATION_CONFIDENCE",
+        "question_family_tags": [
+          "QF_INFORMATION_CONFIDENCE",
+          "REGULATORY_EXECUTION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "filing status",
+        "value": "filed 2026-06-24; amended 2026-06-30; another amendment planned 2026-07-06"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "DOMESTIC_SECURITIES_FILING_SCOPE",
+        "exact_quote": "이와 같이 본건 신주 및 본건 ADR에 관하여 국내에서의, 그리고 국내 거주자를 대상으로 한 모집이 예정되어 있지 아니하나, 당사는 본건 ADR에 대한 원주가 되는 본건 신주를 해외 예탁기관에게 발행하는 것이 ADR의 원주 전환에 따른 원주의 국내 유입 가능성과 관련하여 \"자본시장과 금융투자업에 관한 법률\" 시행령 제11조 제3항, \"증권의 발행 및 공시 등에 관한 규정\" 제2-2조 및 제2-2조의2에 따른 증권의 모집 또는 매출로 보는 전매기준에 해당할 가능성에 대비하여\n본 보고서와 같은 일자로 금융위원회에 증권신고서를 제출할 예정입니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The filing explains why a domestic securities report is required even though no domestic offering is planned, preventing a false inference about investor scope.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "domestic securities report planned because ADR conversion could bring underlying shares into Korea",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-07-06 filing plan",
+        "predicate": "planned domestic securities filing despite no domestic offering",
+        "predicate_family": "DOMESTIC_REGULATORY_FILING_RATIONALE",
+        "primitive_tags": [
+          "information_confidence",
+          "domestic_filing",
+          "ADR_conversion"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "QF_INFORMATION_CONFIDENCE",
+        "question_family_tags": [
+          "QF_INFORMATION_CONFIDENCE",
+          "REGULATORY_SCOPE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "filing rationale",
+        "value": "securities report planned for resale-criteria risk"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "DOMESTIC_REGULATORY_EXECUTION",
+        "exact_quote": "2026년 6월 24일 금융위원회에 증권신고서를 제출하였고, 2026년 6월 30일에 정정신고서를 제출하였으며, 본 보고서 일자에 다시 정정신고서를 제출할 예정입니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The filing sequence independently records domestic regulatory execution progress and the still-pending correction step.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "Financial Services Commission securities-report filing and amendment sequence",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-06-24 to 2026-07-06",
+        "predicate": "submitted and amended domestic securities report",
+        "predicate_family": "DOMESTIC_SECURITIES_FILING_STATUS",
+        "primitive_tags": [
+          "information_confidence",
+          "securities_report",
+          "amendment"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "QF_INFORMATION_CONFIDENCE",
+        "question_family_tags": [
+          "QF_INFORMATION_CONFIDENCE",
+          "REGULATORY_EXECUTION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "filing status",
+        "value": "filed 2026-06-24; corrected 2026-06-30; another correction planned 2026-07-06"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_EQUITY_PRICING_UNCERTAINTY",
+        "exact_quote": "4) 상기 '6. 신주의 발행가액' 및 '7. 기준주가'와 관련하여, 당사와 같은 주권상장법인이 제3자배정증자방식으로 유상증자를 하는 경우, \"증권의 발행 및 공시 등에 관한 규정\"(이하 \"발행공시규정\") 제5-18조 제1항에 따라 청약일전 과거 제3거래일부터 제5거래일까지의 가중산술평균주가(그 기간 동안 증권시장에서 거래된 해당 종목의 총 거래금액을 총 거래량으로 나눈 가격을 말합니다)를 기준주가로 하여 당사가 정하는 할인율을 적용하여 신주의 발행가액을 산정하되, 할인율은 100분의 10 이내로 정하여야 합니다. 다만, 현재 청약일이 도래하지 아니하여 '7. 기준주가'의 기준주가 및 할인율(할증률)은 기재하지 않았으며, '6. 신주의 발행가액'에 기재된 금액은\n본 정정공시 제출일 전일(2026년 7월 3일)의 당사 보통주 종가인 금 2,425,000원을 단지 참고적으로 기재한 것에 불과하며 실제 발행가액을 의미하는 것은 아닙니다.\n당사는 추후 기준주가, 발행가액 및 할인율(할증률)이 확정되면 본 보고서에 대한 정정보고서를 통하여 공시 예정입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The official filing explicitly prevents treating the displayed close as the issue price and leaves dilution economics unresolved.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "ADR underlying-share issue price and discount remain unresolved",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "as of 2026-07-06",
+        "predicate": "has not fixed the reference price, issue price, or discount",
+        "predicate_family": "ISSUE_PRICE_UNCERTAINTY",
+        "primitive_tags": [
+          "capital_allocation",
+          "pricing_uncertainty",
+          "counterfact"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "QF_CAPITAL_ALLOCATION",
+        "question_family_tags": [
+          "QF_CAPITAL_ALLOCATION",
+          "ADR_PRICING"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "pricing status",
+        "value": "KRW 2,425,000 is reference only, not actual issue price"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "EQUITY_DILUTION_CAP",
+        "exact_quote": "1. 신주의 종류와 수\n보통주식 (주)\n17,790,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The issuer-set maximum directly bounds potential share issuance and dilution, while the final quantity remains subject to bookbuilding.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "maximum new common shares for ADR issuance",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026 ADR issuance decision",
+        "predicate": "set maximum new common-share count",
+        "predicate_family": "NEW_SHARE_MAXIMUM",
+        "primitive_tags": [
+          "capital_allocation",
+          "new_shares",
+          "dilution_cap"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "QF_CAPITAL_ALLOCATION",
+        "question_family_tags": [
+          "QF_CAPITAL_ALLOCATION",
+          "ADR_DILUTION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "shares",
+        "value": 17790000
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "EQUITY_DILUTION_DENOMINATOR",
+        "exact_quote": "3. 증자전\n발행주식총수 (주)\n보통주식 (주)\n712,702,365",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The official pre-issuance share count is the denominator needed to assess maximum ADR-related dilution without estimating a final issue count.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "common shares outstanding before ADR-related issuance",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "pre-issuance as of 2026-06-24 decision",
+        "predicate": "reported pre-issuance common-share count",
+        "predicate_family": "PRE_ISSUANCE_SHARE_COUNT",
+        "primitive_tags": [
+          "capital_allocation",
+          "share_count",
+          "dilution_denominator"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "QF_CAPITAL_ALLOCATION",
+        "question_family_tags": [
+          "QF_CAPITAL_ALLOCATION",
+          "ADR_DILUTION"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "shares",
+        "value": 712702365
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "THIRD_PARTY_EQUITY_ISSUANCE",
+        "exact_quote": "5. 증자방식\n제3자배정증자",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The official issuance method defines the shareholder and allocation mechanics of the planned capital raise.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "ADR-related capital raise uses third-party allotment",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 ADR issuance decision",
+        "predicate": "selected third-party allotment issuance method",
+        "predicate_family": "EQUITY_ISSUANCE_METHOD",
+        "primitive_tags": [
+          "capital_allocation",
+          "third_party_allotment",
+          "ADR"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "QF_CAPITAL_ALLOCATION",
+        "question_family_tags": [
+          "QF_CAPITAL_ALLOCATION",
+          "EQUITY_ISSUANCE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "issuance method",
+        "value": "제3자배정증자"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_EQUITY_LISTING_DECISION",
+        "exact_quote": "* 확정사항: 당사의 신주 발행을 통한 미국 주식예탁증서(ADR) 공모 및 미국 나스닥 증권거래소 상장 결정",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The issuer converted prior unconfirmed disclosures into a final financing and listing decision, while pricing and quantity remain open.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "finalized new-share-funded ADR offering and Nasdaq listing decision",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "confirmed by 2026-06-24 filing",
+        "predicate": "made final decision to conduct an ADR offering and Nasdaq listing through new-share issuance",
+        "predicate_family": "ADR_LISTING_DECISION",
+        "primitive_tags": [
+          "capital_allocation",
+          "ADR_offering",
+          "Nasdaq_listing"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "QF_CAPITAL_ALLOCATION",
+        "question_family_tags": [
+          "QF_CAPITAL_ALLOCATION",
+          "ADR_LISTING"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "decision status",
+        "value": "new-share ADR offering and Nasdaq listing"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-7620fd80beb92f0461d44a2d",
+        "economic_mechanism": "ADR_FOREIGN_INVESTOR_FUNDING",
+        "exact_quote": "당사는, 금번 발행되는 신주를 원주로 하여 국내 거주자를 제외한, 해외 투자자들을 대상으로 ADR 발행을 통해 자금을 조달할 계획입니다. 이에 따라 국내에서 금번 발행되는 신주의 모집 및 매출이 발생되지 않는 점 참고하시길 바랍니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The official filing defines the geographic investor scope and avoids misclassifying the ADR financing as a domestic offering.",
+        "mechanism_scope_id": "000660_CORPORATE_ADR_EQUITY_FUNDING",
+        "normalized_object": "ADR funding investor scope excludes Korean residents and domestic new-share offering",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026 ADR offering plan",
+        "predicate": "plans to raise funds through ADRs offered to overseas investors excluding Korean residents",
+        "predicate_family": "ADR_INVESTOR_SCOPE",
+        "primitive_tags": [
+          "capital_allocation",
+          "foreign_investors",
+          "ADR"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "QF_CAPITAL_ALLOCATION",
+        "question_family_tags": [
+          "QF_CAPITAL_ALLOCATION",
+          "ADR_INVESTOR_SCOPE"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660",
+        "unit": "investor scope",
+        "value": "foreign investors excluding domestic residents; no domestic offering"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-7620fd80beb92f0461d44a2d"
+    ],
+    "unresolved_research_notes": [
+      "SGDOC-7620fd80beb92f0461d44a2d retains distinct source-order facts after this 12-row transport page, including bookbuilding-dependent quantity and pricing, provisional schedule, delegated execution authority, and facility-use/capex details."
+    ]
+  },
+  "payload_hash": "c5f75200a162e197fd0380e7e20012b3c067f61ba68c360af22f8e8fc9736658",
+  "production_score_authority": false,
+  "prompt_hash": "255b69e2b9af8deca69210f596d22e8d081f2300d265a251a662b9361e7d63f4",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-800de024d6ad86aff9d02859d5f1c51c5412d5f651d7b75de2fd200c85652a16",
+  "response_id": "COLLABRESP-05f5e5e8efd26a45a53f8db753138d3713203f771021bf4bae2d45b65373562a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

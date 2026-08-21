@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-1403d2019ebaabdf95c9bceb",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.01,
+        "rationale": "법률·쿠키·윤리·지속가능성 안내 페이지로 HBM·메모리 실적, 고객 약정, CAPA나 수익성의 현재 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-161410b7de44ef641d2506f6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 공유·영상 채널·단축 링크로 canonical 기사 본문이 아니며, target-direct 경제 claim을 검증할 full 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-17b180a3f3fac9c4af72dc81",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-1829361c62ade64337c4bc47",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 공유·영상 채널·단축 링크로 canonical 기사 본문이 아니며, target-direct 경제 claim을 검증할 full 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1892cb55133e9402d5040686",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-192cb63fdfe6abc0b68ffec6",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "공식 또는 발견 경로지만 일반 내비게이션·주제 페이지에 머물러 현재 HBM·메모리의 실적·계약·CAPA·counter를 검증할 개별 full document가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1b2c2305c249ff4c477943bb",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-1c1de1349db2e220355e6fee",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 공유·영상 채널·단축 링크로 canonical 기사 본문이 아니며, target-direct 경제 claim을 검증할 full 원문 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-21eae8d7b9d42650f3947898",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-27bc9137aa6752676e15d265",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 제품·지원·사업 페이지이지만 현재 HBM·메모리 earnings visibility의 날짜 있는 실적·계약·CAPA 원문이 아니거나 사업 범위가 다르다."
+      },
+      {
+        "candidate_id": "SGCAND-2a4f10385bedd85770d45615",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "공식 해시태그 검색·목록 페이지로 특정 날짜의 개별 원문과 경제 claim이 고정되지 않아 material 문서로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2b1e07ab7768d8167eccd37b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 공유·영상 채널·단축 링크로 canonical 기사 본문이 아니며, target-direct 경제 claim을 검증할 full 원문 경로가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "22214150f0054911545270f2eb5fbad13bf5b9d031aef94c02188ba1fcded876",
+  "production_score_authority": false,
+  "prompt_hash": "a55c5fc3c69fc151fd037a1b0a7bab73f6a24e02577481c776361c4a9636ecfd",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e39afa40ef82520095e91da1893d9360a48a312fbb5d080fe63cbe806beb9f43",
+  "response_id": "COLLABRESP-57b840304274cc1fc92823a68635e5f9a75853d87102ca0eb7ba43f75228d709",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

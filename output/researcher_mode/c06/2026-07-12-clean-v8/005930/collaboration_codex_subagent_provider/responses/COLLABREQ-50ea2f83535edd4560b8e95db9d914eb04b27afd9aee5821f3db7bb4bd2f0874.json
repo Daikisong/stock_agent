@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-cd2a4d72a17447d7b1b290b2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "상업 시장조사 페이지로 CUSTOMER_OFFICIAL 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2f4aebbfa25f18c9a34f1701",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "개인 블로그 산업 가이드로 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3c6c7aadc4fe250807e4602b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "다른 회사의 KRX 분기보고서로 대상 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-d096c17c3516f37e6b9fa6f1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.04,
+        "rationale": "제3자 기사이며 NVIDIA 공식 source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-fec61a775ddbec637a16b1dd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "대학 학과 홈페이지로 고객 관계 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1c8939e3eba9e2146945319f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "Perplexity 발견 페이지로 고객사 공식 원문이 아니며 스니펫을 evidence로 쓸 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-35b41c8b5f57463a76273663",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Open RAN 동향 보고서로 HBM 고객 관계 조사와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-e9dda312de363353e5520a12",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Telegram 통계 페이지로 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f009ba0ec17a71c2a55d338c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "Naver 제3자 시장 브리핑으로 CUSTOMER_OFFICIAL 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cf4bfc49469f1b196049cfd2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "PwC 산업 전망 PDF로 특정 고객 관계 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-c1493dcd7f45a6804cd4e1f4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "경영 서적 자료로 objective-bound 고객 공식 source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e55e2267c783114c9c946f84",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "2023년 삼성증권 생성 AI 보고서로 요청된 CUSTOMER_OFFICIAL 관계 문서가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "material full-fetch route가 없는 partition이며 이는 고객 관계·계약의 source absence 또는 연구 완료 판정이 아니다."
+    ]
+  },
+  "payload_hash": "ad52d81e31c9cc923816f069be9ef11881de0fc4c70dc3563e84840bab46da74",
+  "production_score_authority": false,
+  "prompt_hash": "acd87a3f7c23fdc2f261c32918493e8acaba5e2903fb83e7c237d7f7f728ecb3",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-50ea2f83535edd4560b8e95db9d914eb04b27afd9aee5821f3db7bb4bd2f0874",
+  "response_id": "COLLABRESP-82a94afc94d2199e31549bc42bd6be084ce8d7cf2ea9c1e871e01d935b328eef",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

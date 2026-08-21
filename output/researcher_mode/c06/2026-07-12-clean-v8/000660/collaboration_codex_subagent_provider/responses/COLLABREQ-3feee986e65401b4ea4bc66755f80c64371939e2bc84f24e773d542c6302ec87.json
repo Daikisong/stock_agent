@@ -1,0 +1,582 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Continuation page 5 adds 12 distinct historical broker table atoms after strict dedup of the 48 prior accepted facts. The prior 1Q2024 operating-profit point and +368% QoQ are not repeated because they are already carried by the prior expectation-gap fact. Further objective-local table atoms remain.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical SK Securities estimate of quarterly DRAM revenue; it is neither an issuer actual nor HBM-only revenue.",
+        "exact_quote": "DRAM 2,927 4,483 6,073 7,261 7,557 9,746 10,964 11,451 28,169 20,744 39,718",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated DRAM revenue estimate is objective-local earnings history but is superseded and cannot establish current HBM economics.",
+        "mechanism_scope_id": "000660:DRAM:BROKER_REVENUE_FORECAST",
+        "normalized_object": "SK hynix 2Q2024 DRAM revenue KRW 9,746 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "broker_forecast_dram_revenue",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM_REVENUE",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_QUARTERLY_REVENUE_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "REVENUE",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 2Q2024 DRAM revenue broker forecast",
+        "subject_id": "000660:DRAM_REVENUE:2Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 9746
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical SK Securities estimate of quarterly DRAM revenue; it is neither an issuer actual nor HBM-only revenue.",
+        "exact_quote": "DRAM 2,927 4,483 6,073 7,261 7,557 9,746 10,964 11,451 28,169 20,744 39,718",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated DRAM revenue estimate is objective-local earnings history but is superseded and cannot establish current HBM economics.",
+        "mechanism_scope_id": "000660:DRAM:BROKER_REVENUE_FORECAST",
+        "normalized_object": "SK hynix 3Q2024 DRAM revenue KRW 10,964 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "broker_forecast_dram_revenue",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM_REVENUE",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_QUARTERLY_REVENUE_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "REVENUE",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 3Q2024 DRAM revenue broker forecast",
+        "subject_id": "000660:DRAM_REVENUE:3Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 10964
+      },
+      {
+        "business_segment": "DRAM",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical SK Securities estimate of quarterly DRAM revenue; it is neither an issuer actual nor HBM-only revenue.",
+        "exact_quote": "DRAM 2,927 4,483 6,073 7,261 7,557 9,746 10,964 11,451 28,169 20,744 39,718",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated DRAM revenue estimate is objective-local earnings history but is superseded and cannot establish current HBM economics.",
+        "mechanism_scope_id": "000660:DRAM:BROKER_REVENUE_FORECAST",
+        "normalized_object": "SK hynix 4Q2024 DRAM revenue KRW 11,451 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "broker_forecast_dram_revenue",
+        "predicate_family": "BROKER_QUARTERLY_DRAM_REVENUE_FORECAST",
+        "primitive_tags": [
+          "DRAM_REVENUE",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "DRAM_QUARTERLY_REVENUE_FORECAST",
+        "question_family_tags": [
+          "DRAM",
+          "REVENUE",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 4Q2024 DRAM revenue broker forecast",
+        "subject_id": "000660:DRAM_REVENUE:4Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 11451
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker estimate of consolidated quarterly operating profit, without issuer-guidance or HBM-only attribution.",
+        "exact_quote": "영업이익 (3,405) (2,882) (1,792) 346 1,619 2,540 3,665 3,896 6,809 (7,734) 11,720",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The point records dated earnings-expectation history but is superseded and does not evidence current HBM-only profit.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_PROFIT_FORECAST",
+        "normalized_object": "SK hynix 2Q2024 consolidated operating profit KRW 2,540 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "broker_forecast_consolidated_operating_profit",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "OPERATING_PROFIT",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "CONSOLIDATED",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 2Q2024 consolidated operating-profit broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT:2Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 2540
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker estimate of consolidated quarterly operating profit, without issuer-guidance or HBM-only attribution.",
+        "exact_quote": "영업이익 (3,405) (2,882) (1,792) 346 1,619 2,540 3,665 3,896 6,809 (7,734) 11,720",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The point records dated earnings-expectation history but is superseded and does not evidence current HBM-only profit.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_PROFIT_FORECAST",
+        "normalized_object": "SK hynix 3Q2024 consolidated operating profit KRW 3,665 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "broker_forecast_consolidated_operating_profit",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "OPERATING_PROFIT",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "CONSOLIDATED",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 3Q2024 consolidated operating-profit broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT:3Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 3665
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker estimate of consolidated quarterly operating profit, without issuer-guidance or HBM-only attribution.",
+        "exact_quote": "영업이익 (3,405) (2,882) (1,792) 346 1,619 2,540 3,665 3,896 6,809 (7,734) 11,720",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The point records dated earnings-expectation history but is superseded and does not evidence current HBM-only profit.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_PROFIT_FORECAST",
+        "normalized_object": "SK hynix 4Q2024 consolidated operating profit KRW 3,896 billion historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "broker_forecast_consolidated_operating_profit",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "OPERATING_PROFIT",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_QUARTERLY_OPERATING_PROFIT_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "CONSOLIDATED",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 4Q2024 consolidated operating-profit broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT:4Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 3896
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated operating-profit sequential growth, not an issuer actual or HBM-only margin result.",
+        "exact_quote": "QoQ % 적지 적지 적지 흑전 368% 57% 44% 6% -45% 적전 흑전",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The sequential growth estimate records historical expectation shape but is superseded and not HBM-only evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_PROFIT_GROWTH_FORECAST",
+        "normalized_object": "SK hynix 2Q2024 consolidated operating profit +57% QoQ historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "broker_forecast_consolidated_operating_profit_qoq_growth",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_PROFIT_QOQ_FORECAST",
+        "primitive_tags": [
+          "OPERATING_PROFIT_GROWTH",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_OPERATING_PROFIT_QOQ_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "QOQ_GROWTH",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 2Q2024 consolidated operating-profit QoQ broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_QOQ:2Q2024E:SKSEC_20240314",
+        "unit": "% QoQ",
+        "value": 57
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated operating-profit sequential growth, not an issuer actual or HBM-only margin result.",
+        "exact_quote": "QoQ % 적지 적지 적지 흑전 368% 57% 44% 6% -45% 적전 흑전",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The sequential growth estimate records historical expectation shape but is superseded and not HBM-only evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_PROFIT_GROWTH_FORECAST",
+        "normalized_object": "SK hynix 3Q2024 consolidated operating profit +44% QoQ historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "broker_forecast_consolidated_operating_profit_qoq_growth",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_PROFIT_QOQ_FORECAST",
+        "primitive_tags": [
+          "OPERATING_PROFIT_GROWTH",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_OPERATING_PROFIT_QOQ_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "QOQ_GROWTH",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 3Q2024 consolidated operating-profit QoQ broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_QOQ:3Q2024E:SKSEC_20240314",
+        "unit": "% QoQ",
+        "value": 44
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of consolidated operating-profit sequential growth, not an issuer actual or HBM-only margin result.",
+        "exact_quote": "QoQ % 적지 적지 적지 흑전 368% 57% 44% 6% -45% 적전 흑전",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The sequential growth estimate records historical expectation shape but is superseded and not HBM-only evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_PROFIT_GROWTH_FORECAST",
+        "normalized_object": "SK hynix 4Q2024 consolidated operating profit +6% QoQ historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q2024E; published 2024-03-14",
+        "predicate": "broker_forecast_consolidated_operating_profit_qoq_growth",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_PROFIT_QOQ_FORECAST",
+        "primitive_tags": [
+          "OPERATING_PROFIT_GROWTH",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_OPERATING_PROFIT_QOQ_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "QOQ_GROWTH",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 4Q2024 consolidated operating-profit QoQ broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_QOQ:4Q2024E:SKSEC_20240314",
+        "unit": "% QoQ",
+        "value": 6
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of a year-over-year consolidated operating-profit return to profit; it is not an issuer actual or HBM-only result.",
+        "exact_quote": "YoY % 적전 적전 적전 흑전 흑전 흑전 흑전 1026%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The YoY turnaround is a distinct historical expectation axis, but it is superseded and does not establish current HBM profit.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_PROFIT_YOY_FORECAST",
+        "normalized_object": "SK hynix 1Q2024 consolidated operating profit year-over-year turn-to-profit historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "broker_forecast_consolidated_operating_profit_yoy_turnaround",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_PROFIT_YOY_FORECAST",
+        "primitive_tags": [
+          "OPERATING_PROFIT_TURNAROUND",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_OPERATING_PROFIT_YOY_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "YOY_GROWTH",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 1Q2024 consolidated operating-profit YoY broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_YOY:1Q2024E:SKSEC_20240314",
+        "unit": "YoY status",
+        "value": "turn to profit"
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of a year-over-year consolidated operating-profit return to profit; it is not an issuer actual or HBM-only result.",
+        "exact_quote": "YoY % 적전 적전 적전 흑전 흑전 흑전 흑전 1026%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The YoY turnaround is a distinct historical expectation axis, but it is superseded and does not establish current HBM profit.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_PROFIT_YOY_FORECAST",
+        "normalized_object": "SK hynix 2Q2024 consolidated operating profit year-over-year turn-to-profit historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q2024E; published 2024-03-14",
+        "predicate": "broker_forecast_consolidated_operating_profit_yoy_turnaround",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_PROFIT_YOY_FORECAST",
+        "primitive_tags": [
+          "OPERATING_PROFIT_TURNAROUND",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_OPERATING_PROFIT_YOY_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "YOY_GROWTH",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 2Q2024 consolidated operating-profit YoY broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_YOY:2Q2024E:SKSEC_20240314",
+        "unit": "YoY status",
+        "value": "turn to profit"
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forecast of a year-over-year consolidated operating-profit return to profit; it is not an issuer actual or HBM-only result.",
+        "exact_quote": "YoY % 적전 적전 적전 흑전 흑전 흑전 흑전 1026%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The YoY turnaround is a distinct historical expectation axis, but it is superseded and does not establish current HBM profit.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:BROKER_OPERATING_PROFIT_YOY_FORECAST",
+        "normalized_object": "SK hynix 3Q2024 consolidated operating profit year-over-year turn-to-profit historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q2024E; published 2024-03-14",
+        "predicate": "broker_forecast_consolidated_operating_profit_yoy_turnaround",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_OPERATING_PROFIT_YOY_FORECAST",
+        "primitive_tags": [
+          "OPERATING_PROFIT_TURNAROUND",
+          "HISTORICAL_ESTIMATE",
+          "NOT_HBM_ONLY"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "CONSOLIDATED_OPERATING_PROFIT_YOY_FORECAST",
+        "question_family_tags": [
+          "OPERATING_PROFIT",
+          "YOY_GROWTH",
+          "BROKER_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 3Q2024 consolidated operating-profit YoY broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_PROFIT_YOY:3Q2024E:SKSEC_20240314",
+        "unit": "YoY status",
+        "value": "turn to profit"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "The page cap was reached. Continue source order with the remaining 4Q2024 operating-profit YoY point, DRAM operating-profit forecasts, controlling net-income forecasts, margins, DRAM shipment and ASP assumptions, and estimate-change table atoms. Preserve all as historical broker estimates with SUPERSEDED lifecycle and no issuer-guidance, signed-contract, DURABLE_VISIBILITY, or HBM-only upgrade."
+    ]
+  },
+  "payload_hash": "3175f1e88e7fe8222a1eb9aa17009d54f13c52e5aaeddf3c78dd5f3e39871316",
+  "production_score_authority": false,
+  "prompt_hash": "0a79efc01e7d2c85a987033e825cf341d2928d2056762599320120e1d7f95c43",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3feee986e65401b4ea4bc66755f80c64371939e2bc84f24e773d542c6302ec87",
+  "response_id": "COLLABRESP-b18e7a8decccddbb4544b305c8ffe0379fdf67a19e23b33936555ed376186e89",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

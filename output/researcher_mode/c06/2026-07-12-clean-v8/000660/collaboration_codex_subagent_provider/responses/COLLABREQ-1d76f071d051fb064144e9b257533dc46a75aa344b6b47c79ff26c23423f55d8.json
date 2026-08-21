@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-a43743acadc80943df95d078",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·리포트 summary/대시보드로 original broker full-PDF/landing provenance가 아니다. wrong-date/future 항목도 있어 route-only 기준 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-0b17d9a8544cafce77c06d5e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·리포트 summary/대시보드로 original broker full-PDF/landing provenance가 아니다. wrong-date/future 항목도 있어 route-only 기준 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-e96b2b5aa7765009ad322623",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·리포트 summary/대시보드로 original broker full-PDF/landing provenance가 아니다. wrong-date/future 항목도 있어 route-only 기준 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-4532742649079f1efe1e75c7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·리포트 summary/대시보드로 original broker full-PDF/landing provenance가 아니다. wrong-date/future 항목도 있어 route-only 기준 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-78ba41403f3c006c0bfd946e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·리포트 summary/대시보드로 original broker full-PDF/landing provenance가 아니다. wrong-date/future 항목도 있어 route-only 기준 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-6a170ae7cd0e164c9a8f1d29",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·리포트 summary/대시보드로 original broker full-PDF/landing provenance가 아니다. wrong-date/future 항목도 있어 route-only 기준 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-2e99a9fec60eec76d9e46eba",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·리포트 summary/대시보드로 original broker full-PDF/landing provenance가 아니다. wrong-date/future 항목도 있어 route-only 기준 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-5bb2d5de4625e63e5715bca4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·리포트 summary/대시보드로 original broker full-PDF/landing provenance가 아니다. wrong-date/future 항목도 있어 route-only 기준 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-b8afc4c010c65dce09872690",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.72,
+        "rationale": "하나증권 공식 research download의 cutoff 이전 full PDF이며 주간 earnings revision 문맥에서 SK하이닉스를 직접 언급한다. 전체 원문은 추정 방향·시장 기대와 counter를 확인할 objective-bound route이므로 material이다; snippet 숫자는 evidence로 사용하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a2c154e6d2422acaef2cf004",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·리포트 summary/대시보드로 original broker full-PDF/landing provenance가 아니다. wrong-date/future 항목도 있어 route-only 기준 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-fd556aa2df4ba238fce4be41",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·리포트 summary/대시보드로 original broker full-PDF/landing provenance가 아니다. wrong-date/future 항목도 있어 route-only 기준 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-9a2744f054c5d6cc2ae3736b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "priority": 0.0,
+        "rationale": "제3자 기사·블로그·포털·리포트 summary/대시보드로 original broker full-PDF/landing provenance가 아니다. wrong-date/future 항목도 있어 route-only 기준 nonmaterial이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P5 12개 exact-once 분류. cutoff-valid official broker full PDF 1개를 후속 원문 검증용 material route로 선정했다.",
+      "ranking materiality는 route eligibility이며 snippet·metadata를 evidence나 source absence로 승격하지 않는다."
+    ]
+  },
+  "payload_hash": "9264699b0977ef81baa309aabcf662582c6a5b92cd4fd351ebdd2295ec17d836",
+  "production_score_authority": false,
+  "prompt_hash": "079176e4c5dbd0ac40428e4249a573cdf961f144e729713fed67580029415436",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1d76f071d051fb064144e9b257533dc46a75aa344b6b47c79ff26c23423f55d8",
+  "response_id": "COLLABRESP-17bea821102d058d07dd4b55ebb966b68683d372b396c4059125d26980964338",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

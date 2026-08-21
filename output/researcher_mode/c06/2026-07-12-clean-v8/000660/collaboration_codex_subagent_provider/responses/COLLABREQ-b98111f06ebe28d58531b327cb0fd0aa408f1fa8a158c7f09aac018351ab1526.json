@@ -1,0 +1,82 @@
+{
+  "output_schema_hash": "703e2f06337de4af61b475b7dc59dff87c297535ed91eef1e9716dada5a480c1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-3cb52576e0a0aade3e5af47d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "plumsec의 third-party report page로, URL에 접수번호 형태가 있어도 OPENDART 공식 원문·viewer·attachment 경로가 아니다. metadata와 snippet은 증거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-acbe10cb0e6c82507424e66d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "ADR 일정을 정리한 third-party blog로 requested OPENDART official filing 원문 route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-51ad061f2ba906922310ca16",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "투자 커뮤니티 게시물로 source owner와 provenance가 OPENDART가 아니며 original filing이나 full attachment로 연결되지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-7b2a5f9c3ca92e7d0f18bfa8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "ADR 정보를 재서술한 개인 blog로 requested OPENDART official original/full-fetch route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f2a8137413900aac3a06c8f7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 0.0,
+        "rationale": "여러 출처를 재서술한 Blogspot 글로 OPENDART 원문 소유자·공식 filing provenance가 없고, 원문 attachment의 full-fetch route도 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Checkpoint roster 5개를 supplied order로 exact-once 분류했다. 모두 third-party retelling이라 material route는 0이며, 이는 OPENDART source absence나 broader research completion을 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "a31fae4f83623ed9f5e037e1a971fade3adb44f52d08f067425f42694c36999b",
+  "production_score_authority": false,
+  "prompt_hash": "355766359b65274c66ecfebb89e945309f218fa2ca7990ba8e78777777e0c919",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b98111f06ebe28d58531b327cb0fd0aa408f1fa8a158c7f09aac018351ab1526",
+  "response_id": "COLLABRESP-f2bf9b46ea07c594862972f6daf39451fffdb3f34496999d2a6910ecefddcd24",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

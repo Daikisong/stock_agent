@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-5978cd158ab985793b9161cf",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 도메인의 제품·서비스 페이지이지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 사업 범위여서 이 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-6199c69bb2e11e874404af84",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "삼성 공식 기업·품질·지속가능성 안내 페이지이나, 날짜가 있는 HBM·메모리 매출·이익·고객 약정·CAPA counter를 제공하지 않아 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-63546b50361f06295fd3fa33",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 도메인의 제품·서비스 페이지이지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 사업 범위여서 이 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-63d4e86e1fb933f650070d64",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "삼성 공식 기업·품질·지속가능성 안내 페이지이나, 날짜가 있는 HBM·메모리 매출·이익·고객 약정·CAPA counter를 제공하지 않아 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-65ce733f99034d140efed97d",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "삼성 공식 기업·품질·지속가능성 안내 페이지이나, 날짜가 있는 HBM·메모리 매출·이익·고객 약정·CAPA counter를 제공하지 않아 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-66e45da824b21b898d92df91",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "삼성 공식 기업·품질·지속가능성 안내 페이지이나, 날짜가 있는 HBM·메모리 매출·이익·고객 약정·CAPA counter를 제공하지 않아 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-6fea5f1f716dfaba0f51dff6",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 도메인의 제품·서비스 페이지이지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 사업 범위여서 이 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-77dfd13a8668a9b2f838145b",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 도메인의 제품·서비스 페이지이지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 사업 범위여서 이 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-78ac80f4e193d0e39998d60a",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "공식 사이트의 홈·미디어 라이브러리·선택 화면 같은 탐색 페이지이며 특정 날짜의 원문 기사나 보고서로 직접 이어지는 full-fetch route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-79c36ccc6fde8d1a91b0bfb0",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "로그인·개인정보·태그·파트너 탐색 등 기능성 페이지로, 대상 기업의 현재 경제 메커니즘을 검증하는 원문 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-79ce27678701e9ee03e4605f",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 도메인의 제품·서비스 페이지이지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 사업 범위여서 이 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-7a6acd4796be8bef803f0544",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "소셜 공유 또는 단축 링크로 원문 전체 문서가 아니며, 현재 HBM·메모리 실적·계약·CAPA·수익성의 검증 가능한 근거 경로를 제공하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "ef9327f769cf2b820216c28f4db43b87fb0e5deccedea06eeb3571527e989232",
+  "production_score_authority": false,
+  "prompt_hash": "96020efc2981c44b1ce4d561e6a3834d500e57bb844ea932a1ddc561be6324fb",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3512e9dab66a10a5ae7f251492b05e651f3339a9a02ed0ce89f1046e6e20ad8d",
+  "response_id": "COLLABRESP-65ffff612efe48415707e4b185c1064182302bc9ea6639f67db6f8dab9245ff6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

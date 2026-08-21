@@ -1,0 +1,153 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The current memo is source-backed and complete as research, but the material judge ranges do not intersect. This is a same-evidence semantic interpretation disagreement, so it requires a memo rewrite and fresh independent judges rather than a newly invented source gap."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The current memo covers the supported visibility mechanism and its limitations, the current judges do not present a material range disagreement, and no concrete new fact likely to change this component is established by the supplied route graph."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The supplied evidence and counter record are present, but the material judge ranges do not intersect. This is a same-evidence semantic calibration disagreement that must be resolved by rewriting the memo and rerunning independent judges, not by opening an unsupported source search."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The current memo preserves the valuation and expectation limits, and the current judge ranges do not show a material disagreement. The supplied records do not identify a separate executable fact gap for this component."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "Exact full-report evidence that links target-attributable HBM durable visibility to a current valuation bridge, with forecast, broker inference, and realized fact clearly separated"
+        ],
+        "rationale": "The structured result remains SOURCE_PENDING because DURABLE_VISIBILITY is missing for valuation_rerating. The bounded PDF query returned NO_RESULT and therefore produced no candidate materiality decision, full fetch, evidence document, exact EvidenceFact, or structured DURABLE_VISIBILITY record. Query execution alone did not resolve the gap."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The current memo contains the available actual and forward capital evidence, but the material judge ranges do not intersect. The corrective work is a same-evidence semantic rewrite and fresh judging; the supplied prompt does not establish a distinct missing source-backed fact for this component."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The memo already states the limits of issuer concentration and independent corroboration, but the material judge ranges do not intersect. This requires a same-evidence semantic rewrite and fresh judges; the supplied artifacts do not justify inventing a separate corroboration search solely to move the score."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-266d384fd856994925ee5321",
+        "rationale": "The objective-bound bounded PDF query returned SEARCH_NO_RESULT_NOT_SATURATION. It yielded no fetched document, materiality decision, exact fact, or DURABLE_VISIBILITY record, so it neither proves source absence nor closes the valuation gap. The identical exhausted candidate/query should not be repeated, but a different bounded candidate remains executable.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-9f189ef4313bb76da9d0c2eb",
+        "rationale": "The documents were rejected after full fetch because they were published after the as-of date. They cannot be used, retried as current evidence, or converted into a source-absence claim.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-b5e3b8331dcb08b996ec83cf",
+        "rationale": "The query failures arose at full-document fetch from documents after the as-of date. The affected material is ineligible rather than evidence that an eligible source does not exist.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "The query-generation provider returned no new valid query. That outcome records planner exhaustion for that turn but is not proof of source absence or semantic saturation, especially while a concrete structured valuation role remains missing.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-edfd30b9ee82895994f8315c",
+        "rationale": "Five query-provider errors are transport failures. They do not establish source absence and remain a blocking reliability limitation until the affected route is either successfully executed or replaced by a distinct valid route.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "valuation_rerating",
+        "direction": "POSITIVE",
+        "fact_need": "A full, as-of-date eligible PUBLIC_BROKER_PDF report with exact quotes that can validate target-attributable HBM durable visibility and connect it to a period- and denominator-specific valuation bridge, without treating preview text as evidence",
+        "why_material": "DURABLE_VISIBILITY remains the sole structured role missing for valuation_rerating, and the executed bounded PDF query yielded zero results rather than a fetched and validated report. A different bounded candidate in the current prompt could still materially resolve this score-validity gate."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": false,
+        "direction": "Resolve the full report for current bounded candidate STRUCTCAND-c425f3aaa49a23c44fc8bf49 (Mirae Asset, 2026-05-27, provider file identity 1F01420260527_000660_b.pdf), then run materiality, exact-quote EvidenceFact, and structured-role validation before using it.",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "This is a different bounded candidate from the NO_RESULT attempt. Its prompt preview connects P/B versus ROE with LTA expansion and HBM customer diversification, so the full report could answer the concrete valuation DURABLE_VISIBILITY gap; the preview itself is not evidence.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      }
+    ],
+    "next_actions": [
+      "Resolve the distinct bounded candidate STRUCTCAND-c425f3aaa49a23c44fc8bf49 and require successful full fetch, materiality acceptance, exact-quote fact extraction, and DURABLE_VISIBILITY structured validation; do not repeat the prior NO_RESULT candidate route.",
+      "Rewrite eps_fcf_explosion, bottleneck_pricing, capital_allocation, and information_confidence from the unchanged evidence set, then run fresh independent Analyst, Skeptic, and Calibration judges.",
+      "After those actions, refresh Red Team and Synthesis lineage and rerun Research Supervisor; preserve all zero-result, provider-error, and future-leakage limitations without converting them into source absence."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "Do not rerun the prior STRUCTCAND-dd271cdb3c5c93d51fc8e631 bounded query that already returned NO_RESULT.",
+          "Do not paraphrase the same failed query with synonyms or treat the candidate preview as a fact.",
+          "Do not invent a URL, contract term, committed volume, price, or realized economics absent from the full report."
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "research_need": "Use the exact bounded identity STRUCTCAND-c425f3aaa49a23c44fc8bf49 to obtain and validate the full eligible report, testing whether it contains target-attributable HBM long-term visibility and a complete current valuation bridge rather than relying on its preview."
+      }
+    ],
+    "rationale": "The seven component memos and current Red Team/Synthesis lineage are present, and objective-scoped counter/supersession proof covers all seven components. Readiness nevertheless fails for two independent reasons. First, four components have material same-evidence judge disagreements and must be semantically rewritten and rejudged. Second, valuation_rerating is still SOURCE_PENDING for DURABLE_VISIBILITY: the executed bounded PDF query returned zero results and created no fetched/material evidence or structured role. A different bounded current candidate remains a reasonable positive route. Zero results, provider errors, and future-leakage rejections are retained as limitations and are not treated as source-absence or completion proof.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": false,
+    "unresolved_material_questions": [
+      "Can a distinct as-of-date bounded full report supply exact, target-attributable HBM durable-visibility evidence and a complete valuation bridge that passes materiality, fact, and structured-role validation?",
+      "After preserving the same evidence set, do semantic memo rewrites and fresh independent judges remove the material range disagreements in eps_fcf_explosion, bottleneck_pricing, capital_allocation, and information_confidence?"
+    ]
+  },
+  "payload_hash": "666e2ed57be1c83906d668de6c743081db9df3aaf1978b0db976a85818dbe7d1",
+  "production_score_authority": false,
+  "prompt_hash": "092f67b7c6845d826c988441284d3a0952c754a7e7ec975dc3360fbfa67a6fb4",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-afff7283ffe298e1871795ab7cd5f752e227bac2b1c19b7c05817f7e483f5d21",
+  "response_id": "COLLABRESP-b2c3232d9c2a9ba493264eb9a7064802397f6b9a2c6ad5452fc9787d83c05c85",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

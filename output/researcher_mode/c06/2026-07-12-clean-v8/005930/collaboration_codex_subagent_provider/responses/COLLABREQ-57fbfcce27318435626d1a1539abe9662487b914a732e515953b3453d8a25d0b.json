@@ -1,0 +1,542 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-a2a8ca683447d0f2c86f94e7",
+        "rationale": "임원 명단·경력 문서로 prior와 이번 final audit 모두 새 경제 사실이 없고 누적 accepted 0건이다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-a74dd284269075ccdf7ae43f",
+        "rationale": "prior accepted 3건을 누적 유지하며 이번 final remainder에는 새 fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-a81018f6be785d671e0b26f0",
+        "rationale": "prior accepted 24건을 누적 유지하며 이번 final remainder에는 새 fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "rationale": "prior accepted 7건에 더해 잔여 운전자본 4건, 지분가격 민감도 1건, Level 3 평가위험 3건, 유동성·조달정책 3건을 추출해 누적 18건이다. 배당·부채비율·현금·감가상각·총운전자본은 current facts와 중복이라 재추출하지 않았고 잔여를 소진했다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-ca7b0fc3f6068b34ed598f6e",
+        "rationale": "prior accepted 11건을 누적 유지하며 이번 final remainder에는 새 fact가 없다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-d47b15dea563431b627b50fc",
+        "rationale": "임원 명단·경력 문서로 prior와 이번 final audit 모두 새 경제 사실이 없고 누적 accepted 0건이다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "2026년 1분기 연결 현금흐름에서 장단기미지급금 감소가 428,358백만원의 영업현금 감소 요인으로 작용했다.",
+        "exact_quote": "장단기미지급금의 증가(감소)\n(428,358)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "미지급금 감소에 따른 현금 유출은 운전자본 현금전환을 제한하는 별도 구성요소다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "OTHER_PAYABLES_CASH_FLOW_CHANGE",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_OTHER_PAYABLES_WORKING_CAPITAL_CASH_OUTFLOW",
+        "predicate_family": "WORKING_CAPITAL_CASH_FLOW_ACTUAL",
+        "primitive_tags": [
+          "other_payables",
+          "working_capital"
+        ],
+        "product_family": "연결 운전자본",
+        "question_family_id": "CORPORATE_WORKING_CAPITAL_CASH_CONVERSION",
+        "question_family_tags": [
+          "capital_allocation",
+          "cash_conversion"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 장단기미지급금 현금흐름 변동",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": -428358
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "2026년 1분기 연결 현금흐름에서 선수금 증가가 656,211백만원의 영업현금 유입 요인으로 작용했다. 이는 HBM 계약이나 선수금으로 귀속하지 않는다.",
+        "exact_quote": "선수금의 증가(감소)\n656,211",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "선수금 증가는 연결 운전자본 현금 유입이지만 제품·고객 귀속이 없는 회사 전체 항목으로 한정한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "ADVANCES_RECEIVED_CASH_FLOW_CHANGE",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_ADVANCES_RECEIVED_WORKING_CAPITAL_CASH_INFLOW",
+        "predicate_family": "WORKING_CAPITAL_CASH_FLOW_ACTUAL",
+        "primitive_tags": [
+          "advances_received",
+          "working_capital"
+        ],
+        "product_family": "연결 운전자본",
+        "question_family_id": "CORPORATE_WORKING_CAPITAL_CASH_CONVERSION",
+        "question_family_tags": [
+          "capital_allocation",
+          "cash_conversion"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 선수금 현금흐름 변동",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 656211
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "2026년 1분기 연결 현금흐름에서 장단기충당부채 증가가 2,693,921백만원의 영업현금 유입 요인이었지만, 동시에 향후 이행할 충당부채가 늘어난 반대 근거다.",
+        "exact_quote": "장단기충당부채의 증가(감소)\n2,693,921",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "2.69조원의 충당부채 증가는 당기 현금흐름을 지지하지만 향후 의무도 키우므로 현금전환 품질의 중요한 반대 근거다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "CURRENT_AND_NONCURRENT_PROVISIONS_CASH_FLOW_CHANGE",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_PROVISIONS_WORKING_CAPITAL_CASH_INFLOW",
+        "predicate_family": "WORKING_CAPITAL_CASH_FLOW_ACTUAL",
+        "primitive_tags": [
+          "provisions",
+          "working_capital"
+        ],
+        "product_family": "연결 운전자본",
+        "question_family_id": "CORPORATE_WORKING_CAPITAL_CASH_CONVERSION",
+        "question_family_tags": [
+          "capital_allocation",
+          "cash_conversion",
+          "provisions"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 장단기충당부채 현금흐름 변동",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 2693921
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "2026년 1분기 퇴직금 지급이 연결 영업현금흐름에서 813,729백만원의 현금 유출로 반영됐다.",
+        "exact_quote": "퇴직금의 지급\n(813,729)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "퇴직금의 실제 현금 지급은 비현금 퇴직급여와 구분되는 현금전환 구성요소다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "RETIREMENT_BENEFIT_CASH_PAYMENT",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1",
+        "predicate": "REPORTED_RETIREMENT_BENEFIT_CASH_PAYMENT",
+        "predicate_family": "WORKING_CAPITAL_CASH_FLOW_ACTUAL",
+        "primitive_tags": [
+          "retirement_payment",
+          "cash_outflow"
+        ],
+        "product_family": "연결 운전자본",
+        "question_family_id": "CORPORATE_WORKING_CAPITAL_CASH_CONVERSION",
+        "question_family_tags": [
+          "capital_allocation",
+          "cash_conversion"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 퇴직금 지급",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": -813729
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "보고기간말 연결 상장지분상품 가격이 1% 변동하면 세전 당기손익은 1,324백만원, 기타포괄손익은 189,802백만원씩 변동한다.",
+        "exact_quote": "지분상품(상장주식)의 주가가 1% 변동할 경우 기타포괄손익(법인세효과 반영 전)에 미치는 영향 및 당기손익(법인세효과 반영 전)에 미치는 영향\n시장변수 상승 시 당기손익 증가\n1,324\n시장변수 하락 시 당기손익 감소\n1,324\n시장변수 상승 시 기타포괄손익 증가\n189,802\n시장변수 하락 시 기타포괄손익 감소\n189,802",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "연결 기준 지분상품의 손익·자본 민감도는 투자자산 변동이 재무성과에 미치는 규모를 직접 수치화한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "CONSOLIDATED_EQUITY_PRICE_ONE_PERCENT_SENSITIVITY",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "REPORTED_CONSOLIDATED_EQUITY_PRICE_RISK_SENSITIVITY",
+        "predicate_family": "MARKET_RISK_SENSITIVITY_ACTUAL",
+        "primitive_tags": [
+          "equity_price",
+          "sensitivity",
+          "OCI"
+        ],
+        "product_family": "연결 지분상품",
+        "question_family_id": "CORPORATE_EQUITY_PRICE_RISK_SENSITIVITY",
+        "question_family_tags": [
+          "capital_allocation",
+          "market_risk"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 상장지분상품 주가민감도",
+        "subject_id": "005930",
+        "unit": "KRW million per 1% price move",
+        "value": "profit_or_loss +/-1324; OCI +/-189802"
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "관측 불가능한 투입변수로 평가하는 연결 Level 3 금융자산의 2026년 1분기말 잔액은 4,446,356백만원이다.",
+        "exact_quote": "수준 3에 해당하는 금융상품의 변동 내역에 대한 공시\n당분기\n(단위 : 백만원)\n공정가치 서열체계의 모든 수준\n수준 3\n자산\n공정가치로 측정하는 금융자산\n기초\n4,279,929\n매입\n80,826\n매도\n(191,796)\n당기손익으로 인식된 손익\n89,495\n기타포괄손익으로 인식된 손익\n125,100\n기타\n62,802\n기말\n4,446,356",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "4.45조원의 Level 3 금융자산은 관측 불가능한 가정에 의존하는 평가위험의 규모를 보여준다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "LEVEL3_FINANCIAL_ASSET_ENDING_BALANCE",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "REPORTED_LEVEL3_FINANCIAL_ASSET_ENDING_BALANCE",
+        "predicate_family": "FAIR_VALUE_MEASUREMENT_ACTUAL",
+        "primitive_tags": [
+          "level_3",
+          "unobservable_inputs"
+        ],
+        "product_family": "연결 공정가치 금융자산",
+        "question_family_id": "CORPORATE_LEVEL3_FAIR_VALUE_EXPOSURE",
+        "question_family_tags": [
+          "capital_allocation",
+          "fair_value"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 Level 3 금융자산",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": 4446356
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "Level 3 금융자산의 관측 불가능한 가정을 합리적으로 바꾸면 세전 기타포괄손익이 271,310백만원 증가하거나 173,859백만원 감소할 수 있다.",
+        "exact_quote": "기타포괄손익(세전)으로 인식된, 가능성이 어느 정도 있고 대체할 수 있는 가정을 반영하기 위한 하나 이상의 관측할 수 없는 투입변수의 변동으로 인한 공정가치 측정치의 증가, 자산\n271,310\n0\n기타포괄손익(세전)으로 인식된, 가능성이 어느 정도 있고 대체할 수 있는 가정을 반영하기 위한 하나 이상의 관측할 수 없는 투입변수의 변동으로 인한 공정가치 측정치의 감소, 자산\n(173,859)\n0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "관측 불가능한 입력의 합리적 변동이 자본에 미치는 범위를 수치화해 Level 3 평가 불확실성을 보여준다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "LEVEL3_OCI_FAIR_VALUE_SENSITIVITY",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "REPORTED_LEVEL3_OCI_FAIR_VALUE_SENSITIVITY",
+        "predicate_family": "FAIR_VALUE_SENSITIVITY_ACTUAL",
+        "primitive_tags": [
+          "level_3",
+          "OCI",
+          "sensitivity"
+        ],
+        "product_family": "연결 공정가치 금융자산",
+        "question_family_id": "CORPORATE_LEVEL3_FAIR_VALUE_SENSITIVITY",
+        "question_family_tags": [
+          "information_confidence",
+          "fair_value_sensitivity"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 Level 3 기타포괄손익 민감도",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": "+271310 / -173859"
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "Level 3 기타 금융자산의 가격변동성 가정을 합리적으로 바꾸면 세전 당기손익이 13,536백만원 증가하거나 13,469백만원 감소할 수 있다.",
+        "exact_quote": "당기손익(세전)으로 인식된, 가능성이 어느 정도 있고 대체할 수 있는 가정을 반영하기 위한 하나 이상의 관측할 수 없는 투입변수의 변동으로 인한 공정가치 측정치의 증가, 자산\n0\n13,536\n당기손익(세전)으로 인식된, 가능성이 어느 정도 있고 대체할 수 있는 가정을 반영하기 위한 하나 이상의 관측할 수 없는 투입변수의 변동으로 인한 공정가치 측정치의 감소, 자산\n0\n(13,469)",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "관측 불가능한 가격변동성 가정이 당기손익에 미치는 범위는 공정가치 평가 불확실성의 별도 손익 경로다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "LEVEL3_PROFIT_LOSS_FAIR_VALUE_SENSITIVITY",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-03-31",
+        "predicate": "REPORTED_LEVEL3_PROFIT_LOSS_FAIR_VALUE_SENSITIVITY",
+        "predicate_family": "FAIR_VALUE_SENSITIVITY_ACTUAL",
+        "primitive_tags": [
+          "level_3",
+          "profit_loss",
+          "sensitivity"
+        ],
+        "product_family": "연결 공정가치 금융자산",
+        "question_family_id": "CORPORATE_LEVEL3_FAIR_VALUE_SENSITIVITY",
+        "question_family_tags": [
+          "information_confidence",
+          "fair_value_sensitivity"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 Level 3 당기손익 민감도",
+        "subject_id": "005930",
+        "unit": "KRW million",
+        "value": "+13536 / -13469"
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "삼성전자의 주요 유동성 공급원은 영업현금과 자본시장·금융기관 조달이며, 생산·R&D 투자·운전자본·배당이 주요 유동성 수요다.",
+        "exact_quote": "연결회사의 주요 유동성 공급원은 영업에서 창출한 현금 및 자본시장 및 금융기관에서 조달한 자금이며, 주요 유동성 수요는 생산, 연구개발을 위한 투자를 비롯해, 운전자본, 배당 등에 있습니다. 대규모 투자가 많은 연결회사의 사업 특성상 적정 유동성의 유지가 매우 중요합니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "자금의 공급원과 생산·R&D·운전자본·배당 수요를 함께 제시해 자본배분과 유동성 모니터링 구조를 설명한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "CONSOLIDATED_LIQUIDITY_SOURCES_AND_USES",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-Q1 reporting date",
+        "predicate": "DISCLOSED_LIQUIDITY_SOURCES_AND_REQUIREMENTS",
+        "predicate_family": "LIQUIDITY_MANAGEMENT_POLICY",
+        "primitive_tags": [
+          "liquidity_sources",
+          "liquidity_uses"
+        ],
+        "product_family": "연결 유동성",
+        "question_family_id": "CORPORATE_LIQUIDITY_REQUIREMENTS",
+        "question_family_tags": [
+          "capital_allocation",
+          "liquidity"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 유동성 공급원과 수요",
+        "subject_id": "005930",
+        "unit": "text",
+        "value": "operating cash and external funding versus production, R&D, working capital and dividends"
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "삼성전자는 부채비율 제한·담보제공·차입금 회수 같은 제약이 없는 금융계약을 위주로 체결하고, 예외는 별도 승인한다고 공시했다.",
+        "exact_quote": "연결회사가 체결하는 금융계약은 부채비율 제한 조항, 담보제공, 차입금 회수 등의 제약조건이 없는 계약을 위주로 체결하고 있으며, 기타의 경우 별도의 승인을 받아 거래하고 있습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "제약조건이 적은 조달 정책은 유동성·자본배분 재량을 보완하지만 개별 계약의 부재를 증명하지는 않는다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "FINANCING_COVENANT_POLICY",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 reporting date",
+        "predicate": "PRIORITIZES_FINANCING_WITHOUT_RESTRICTIVE_COVENANTS",
+        "predicate_family": "FINANCING_COVENANT_POLICY",
+        "primitive_tags": [
+          "covenants",
+          "collateral",
+          "funding_policy"
+        ],
+        "product_family": "연결 금융계약",
+        "question_family_id": "CORPORATE_FINANCING_COVENANT_POLICY",
+        "question_family_tags": [
+          "capital_allocation",
+          "funding"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 금융계약 제약조건 정책",
+        "subject_id": "005930",
+        "unit": "policy",
+        "value": "contracts without leverage, collateral or recall restrictions prioritized"
+      },
+      {
+        "business_segment": "회사 전체",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-b8618bed78ae03ea94a9b5cf",
+        "economic_mechanism": "권역별 Cash Pooling, 해외 종속기업 차입한도, Moody's Aa2와 S&P AA- 신용등급은 대규모 유동성 필요 시 내부자금 공유와 자본시장 조달 접근성을 뒷받침한다.",
+        "exact_quote": "연결회사는 주기적인 자금수지 예측, 필요 현금수준 산정 및 수입, 지출 관리 등을 통하여 적정 유동성을 유지ㆍ관리하고 있습니다. 연결회사는 권역별로 Cash Pooling을 구축하여 권역 내 개별 법인의 자금이 부족한 경우에도 유동성위험에 효율적으로 대응하고 있습니다. Cash Pooling은 자금 부족 회사와 자금 잉여 회사간 자금을 공유하는 시스템으로 개별회사의 유동성위험을 최소화하고 자금운용 부담을 경감시키며, 금융비용을 절감하는 등의 효과가 있습니다. 또한 대규모 유동성이 필요한 경우를 대비하여 본사의 지급보증을 통해 해외 종속기업이 활용할 수 있는 차입한도를 확보하고 있으며, 보고기간종료일 현재 국제신용평가기관인 Moody's로부터 Aa2, S&P로부터 AA- 등 투자적격등급을 부여받고 있어, 필요시 자본시장을 통해 적기에 자금조달이 가능합니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "내부 유동성 공유와 투자적격 신용등급은 대규모 투자·운전자본 수요를 감당할 조달능력의 직접적인 보완 근거다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "CONSOLIDATED_LIQUIDITY_ACCESS_MECHANISMS",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-03-31",
+        "predicate": "DISCLOSED_CASH_POOLING_AND_INVESTMENT_GRADE_FUNDING_ACCESS",
+        "predicate_family": "LIQUIDITY_ACCESS_POLICY",
+        "primitive_tags": [
+          "Cash_Pooling",
+          "Aa2",
+          "AA_minus"
+        ],
+        "product_family": "연결 유동성",
+        "question_family_id": "CORPORATE_LIQUIDITY_ACCESS",
+        "question_family_tags": [
+          "capital_allocation",
+          "liquidity_access"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 연결 Cash Pooling·신용등급·조달 접근성",
+        "subject_id": "005930",
+        "unit": "status",
+        "value": "Cash Pooling; Moody's Aa2; S&P AA-"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "7327f8c1e1e7a8c69665a5d6049428b46a827817e620b17bef0584ea34caa8e0",
+  "production_score_authority": false,
+  "prompt_hash": "dc1f846e3bb63f4b2d04d672d5d02efb2f3a9f7e3668a4d1924e2f6be79427d9",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-57fbfcce27318435626d1a1539abe9662487b914a732e515953b3453d8a25d0b",
+  "response_id": "COLLABRESP-8a6e9e42dd4755d9cd73b8d9e3dd54495489d40100e5a6e9084b884ecebdc9ce",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,582 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Continuation page 21 resumes after FY2025E ROA and extracts twelve source-order FY2024E/FY2025E historical SK Securities ratio atoms: ROE, EBITDA margin, current ratio, debt ratio, net debt to equity, and EBITDA to interest expense coverage. Ratio labels, signs, period, and denominator boundaries are preserved; EBITDA interest coverage is not EV/EBITDA, and negative net-debt-to-equity is represented as modeled net cash. All facts are SUPERSEDED broker forecasts and are not issuer actuals or HBM-only economics. Dividend payout, per-share, and valuation rows remain.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker-presented consolidated ROE forecast; the source row supplies the ratio but does not state a separate denominator formula, and the value is not HBM-only profitability.",
+        "exact_quote": "ROE 16.8 3.6 -15.6 13.1 23.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The target-direct profitability ratio informs the historical earnings bridge, but remains a superseded broker forecast without HBM attribution or an explicit denominator formula in the row.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:CONSOLIDATED_ROE:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 consolidated ROE 13.1 percent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "SK Securities forecast FY2024 consolidated ROE at 13.1 percent",
+        "predicate_family": "BROKER_CONSOLIDATED_ROE_FORECAST",
+        "primitive_tags": [
+          "historical_forecast",
+          "ratio",
+          "denominator_not_separately_stated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_roe_fy2024e",
+        "question_family_tags": [
+          "roe",
+          "profitability",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated return on equity",
+        "subject_id": "000660:CONSOLIDATED_ROE:FY2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 13.1
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker-presented consolidated ROE forecast; the source row supplies the ratio but does not state a separate denominator formula, and the value is not HBM-only profitability.",
+        "exact_quote": "ROE 16.8 3.6 -15.6 13.1 23.0",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The target-direct profitability ratio informs the historical earnings bridge, but remains a superseded broker forecast without HBM attribution or an explicit denominator formula in the row.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:CONSOLIDATED_ROE:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 consolidated ROE 23.0 percent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "SK Securities forecast FY2025 consolidated ROE at 23.0 percent",
+        "predicate_family": "BROKER_CONSOLIDATED_ROE_FORECAST",
+        "primitive_tags": [
+          "historical_forecast",
+          "ratio",
+          "denominator_not_separately_stated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_roe_fy2025e",
+        "question_family_tags": [
+          "roe",
+          "profitability",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated return on equity",
+        "subject_id": "000660:CONSOLIDATED_ROE:FY2025E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 23.0
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker-presented consolidated EBITDA margin forecast, kept separate from operating margin and from any memory-product or HBM margin.",
+        "exact_quote": "EBITDA마진 53.6 47.0 18.1 40.6 44.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The EBITDA profitability ratio is an earnings-conversion input, but it is a superseded consolidated broker forecast and not an HBM margin.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:CONSOLIDATED_EBITDA_MARGIN:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 consolidated EBITDA margin 40.6 percent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "SK Securities forecast FY2024 consolidated EBITDA margin at 40.6 percent",
+        "predicate_family": "BROKER_CONSOLIDATED_EBITDA_MARGIN_FORECAST",
+        "primitive_tags": [
+          "historical_forecast",
+          "ratio",
+          "consolidated_not_segment"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_ebitda_margin_fy2024e",
+        "question_family_tags": [
+          "ebitda_margin",
+          "profitability",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated EBITDA margin",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_MARGIN:FY2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 40.6
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker-presented consolidated EBITDA margin forecast, kept separate from operating margin and from any memory-product or HBM margin.",
+        "exact_quote": "EBITDA마진 53.6 47.0 18.1 40.6 44.2",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The EBITDA profitability ratio is an earnings-conversion input, but it is a superseded consolidated broker forecast and not an HBM margin.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:CONSOLIDATED_EBITDA_MARGIN:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 consolidated EBITDA margin 44.2 percent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "SK Securities forecast FY2025 consolidated EBITDA margin at 44.2 percent",
+        "predicate_family": "BROKER_CONSOLIDATED_EBITDA_MARGIN_FORECAST",
+        "primitive_tags": [
+          "historical_forecast",
+          "ratio",
+          "consolidated_not_segment"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_ebitda_margin_fy2025e",
+        "question_family_tags": [
+          "ebitda_margin",
+          "profitability",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated EBITDA margin",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_MARGIN:FY2025E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 44.2
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker-presented consolidated current ratio forecast; the row is a liquidity ratio and does not evidence HBM capacity, contracts, or product economics.",
+        "exact_quote": "유동비율 182.6 144.8 145.0 138.1 149.9",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The target-wide liquidity ratio is objective-local counter/context evidence, but is historical broker modeling rather than current issuer proof.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:CONSOLIDATED_CURRENT_RATIO:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 consolidated current ratio 138.1 percent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "SK Securities forecast FY2024 consolidated current ratio at 138.1 percent",
+        "predicate_family": "BROKER_CONSOLIDATED_CURRENT_RATIO_FORECAST",
+        "primitive_tags": [
+          "historical_forecast",
+          "ratio",
+          "issuer_wide"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_current_ratio_fy2024e",
+        "question_family_tags": [
+          "current_ratio",
+          "liquidity",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated current ratio",
+        "subject_id": "000660:CONSOLIDATED_CURRENT_RATIO:FY2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 138.1
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker-presented consolidated current ratio forecast; the row is a liquidity ratio and does not evidence HBM capacity, contracts, or product economics.",
+        "exact_quote": "유동비율 182.6 144.8 145.0 138.1 149.9",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The target-wide liquidity ratio is objective-local counter/context evidence, but is historical broker modeling rather than current issuer proof.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:CONSOLIDATED_CURRENT_RATIO:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 consolidated current ratio 149.9 percent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "SK Securities forecast FY2025 consolidated current ratio at 149.9 percent",
+        "predicate_family": "BROKER_CONSOLIDATED_CURRENT_RATIO_FORECAST",
+        "primitive_tags": [
+          "historical_forecast",
+          "ratio",
+          "issuer_wide"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_current_ratio_fy2025e",
+        "question_family_tags": [
+          "current_ratio",
+          "liquidity",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated current ratio",
+        "subject_id": "000660:CONSOLIDATED_CURRENT_RATIO:FY2025E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 149.9
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker-presented consolidated debt ratio forecast, preserved as a leverage ratio rather than a debt stock or product-specific funding fact.",
+        "exact_quote": "부채비율 54.9 64.1 87.5 111.5 110.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The leverage ratio is counterevidence to unconstrained cash conversion, but it is a superseded broker forecast and not an HBM liability allocation.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:CONSOLIDATED_DEBT_RATIO:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 consolidated debt ratio 111.5 percent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "SK Securities forecast FY2024 consolidated debt ratio at 111.5 percent",
+        "predicate_family": "BROKER_CONSOLIDATED_DEBT_RATIO_FORECAST",
+        "primitive_tags": [
+          "historical_forecast",
+          "ratio",
+          "not_debt_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_debt_ratio_fy2024e",
+        "question_family_tags": [
+          "debt_ratio",
+          "leverage",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated debt ratio",
+        "subject_id": "000660:CONSOLIDATED_DEBT_RATIO:FY2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 111.5
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker-presented consolidated debt ratio forecast, preserved as a leverage ratio rather than a debt stock or product-specific funding fact.",
+        "exact_quote": "부채비율 54.9 64.1 87.5 111.5 110.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The leverage ratio is counterevidence to unconstrained cash conversion, but it is a superseded broker forecast and not an HBM liability allocation.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:CONSOLIDATED_DEBT_RATIO:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 consolidated debt ratio 110.3 percent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "SK Securities forecast FY2025 consolidated debt ratio at 110.3 percent",
+        "predicate_family": "BROKER_CONSOLIDATED_DEBT_RATIO_FORECAST",
+        "primitive_tags": [
+          "historical_forecast",
+          "ratio",
+          "not_debt_stock"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_debt_ratio_fy2025e",
+        "question_family_tags": [
+          "debt_ratio",
+          "leverage",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated debt ratio",
+        "subject_id": "000660:CONSOLIDATED_DEBT_RATIO:FY2025E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 110.3
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker-presented net-debt-to-equity forecast; positive values indicate net debt under the row convention, while the ratio is not a debt balance or HBM funding allocation.",
+        "exact_quote": "순차입금/자기자본 16.8 29.0 46.7 17.7 -10.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The signed leverage ratio preserves the net-debt convention and is counterevidence to unconstrained cash conversion, but is historical broker modeling.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:CONSOLIDATED_NET_DEBT_TO_EQUITY:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 consolidated net debt to equity 17.7 percent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "SK Securities forecast FY2024 consolidated net debt to equity at 17.7 percent",
+        "predicate_family": "BROKER_CONSOLIDATED_NET_DEBT_TO_EQUITY_FORECAST",
+        "primitive_tags": [
+          "historical_forecast",
+          "signed_ratio",
+          "positive_net_debt"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_net_debt_to_equity_fy2024e",
+        "question_family_tags": [
+          "net_debt_to_equity",
+          "leverage",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated net debt to equity",
+        "subject_id": "000660:CONSOLIDATED_NET_DEBT_TO_EQUITY:FY2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 17.7
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker-presented net-debt-to-equity forecast; the negative value indicates net cash under the row convention, while the ratio is not a cash balance or HBM funding allocation.",
+        "exact_quote": "순차입금/자기자본 16.8 29.0 46.7 17.7 -10.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The signed ratio indicates modeled net cash rather than net debt and supports capital flexibility, but is a superseded broker forecast.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:CONSOLIDATED_NET_DEBT_TO_EQUITY:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 consolidated net debt to equity negative 10.3 percent historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "SK Securities forecast FY2025 consolidated net debt to equity at negative 10.3 percent",
+        "predicate_family": "BROKER_CONSOLIDATED_NET_DEBT_TO_EQUITY_FORECAST",
+        "primitive_tags": [
+          "historical_forecast",
+          "signed_ratio",
+          "negative_means_net_cash"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_net_debt_to_equity_fy2025e",
+        "question_family_tags": [
+          "net_debt_to_equity",
+          "leverage",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated net debt to equity",
+        "subject_id": "000660:CONSOLIDATED_NET_DEBT_TO_EQUITY:FY2025E:SKSEC_20240314",
+        "unit": "percent",
+        "value": -10.3
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker-presented EBITDA divided by interest expense coverage multiple, kept distinct from EV/EBITDA valuation and from any HBM-only coverage.",
+        "exact_quote": "EBITDA/이자비용(배) 88.7 39.3 4.0 14.2 17.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The formula-labelled coverage multiple informs modeled debt service capacity, but it is historical broker work and is not the EV/EBITDA valuation multiple.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:CONSOLIDATED_EBITDA_INTEREST_COVERAGE:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2024 EBITDA to interest expense coverage 14.2 times historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "SK Securities forecast FY2024 EBITDA to interest expense coverage at 14.2 times",
+        "predicate_family": "BROKER_CONSOLIDATED_EBITDA_INTEREST_COVERAGE_FORECAST",
+        "primitive_tags": [
+          "historical_forecast",
+          "ebitda_over_interest",
+          "not_ev_ebitda"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_ebitda_interest_coverage_fy2024e",
+        "question_family_tags": [
+          "interest_coverage",
+          "leverage",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated EBITDA to interest expense coverage",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_INTEREST_COVERAGE:FY2024E:SKSEC_20240314",
+        "unit": "times",
+        "value": 14.2
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker-presented EBITDA divided by interest expense coverage multiple, kept distinct from EV/EBITDA valuation and from any HBM-only coverage.",
+        "exact_quote": "EBITDA/이자비용(배) 88.7 39.3 4.0 14.2 17.7",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The formula-labelled coverage multiple informs modeled debt service capacity, but it is historical broker work and is not the EV/EBITDA valuation multiple.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:CONSOLIDATED_EBITDA_INTEREST_COVERAGE:SKSEC_20240314",
+        "normalized_object": "SK hynix FY2025 EBITDA to interest expense coverage 17.7 times historical broker forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "SK Securities forecast FY2025 EBITDA to interest expense coverage at 17.7 times",
+        "predicate_family": "BROKER_CONSOLIDATED_EBITDA_INTEREST_COVERAGE_FORECAST",
+        "primitive_tags": [
+          "historical_forecast",
+          "ebitda_over_interest",
+          "not_ev_ebitda"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_ebitda_interest_coverage_fy2025e",
+        "question_family_tags": [
+          "interest_coverage",
+          "leverage",
+          "broker_forecast"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated EBITDA to interest expense coverage",
+        "subject_id": "000660:CONSOLIDATED_EBITDA_INTEREST_COVERAGE:FY2025E:SKSEC_20240314",
+        "unit": "times",
+        "value": 17.7
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "Distinct dividend-payout, EPS, BPS, CFPS, cash-dividend-per-share, PER, PBR, PCR, EV/EBITDA, and dividend-yield rows remain in the supplied literal document; continuation is required."
+    ]
+  },
+  "payload_hash": "fed086074b48d4935aafb0bdd39870f974445529652f8ce0fd414f1c3906e324",
+  "production_score_authority": false,
+  "prompt_hash": "4594c2738305d2bc8d34a7eca2c79e88731e2b97687e39c954094fa88bfa5395",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-b0fd6347a5b97d1ededda73f6eccc70208bdf12619caaa4e0c7020ad7d2401b0",
+  "response_id": "COLLABRESP-2181b4248bd46213b885ad2de84b8a6ad95f51a75da97c711c84aedc7028d681",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

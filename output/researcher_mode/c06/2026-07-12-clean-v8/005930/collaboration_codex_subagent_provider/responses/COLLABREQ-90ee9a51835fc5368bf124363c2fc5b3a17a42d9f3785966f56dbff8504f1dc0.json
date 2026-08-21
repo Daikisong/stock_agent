@@ -1,0 +1,59 @@
+{
+  "output_schema_hash": "3300b52dbb6ba16d885d3f65d85f89d220bc435f7e256eb015e2998e84cc826c",
+  "payload": {
+    "allowed_range": [
+      2.1,
+      3.1
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e는 POSITIVE WEAK ordinal anchor(1.0-1.4/4.0, confidence LOW)다. 현재 근거의 실제성과 귀속 한계를 함께 반영해 exact 복제가 아닌 상대 위치만 사용했다.",
+      "ORDTRANSFER-c1052e06818f90d4a44560f0는 POSITIVE STRONG ordinal anchor(3.8-4.0/4.0, confidence LOW)다. 현재 근거의 실제성과 귀속 한계를 함께 반영해 exact 복제가 아닌 상대 위치만 사용했다.",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc는 COUNTER WEAK ordinal anchor(0.6-1.0/4.0, confidence LOW)다. 현재 근거의 실제성과 귀속 한계를 함께 반영해 exact 복제가 아닌 상대 위치만 사용했다.",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88는 COUNTER STRONG ordinal anchor(3.8-4.0/4.0, confidence LOW)다. 현재 근거의 실제성과 귀속 한계를 함께 반영해 exact 복제가 아닌 상대 위치만 사용했다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-6d299e0ff8bd67e55eb14f6d",
+      "EFACT-7393f87e629482ca368f8b2e",
+      "EFACT-ae0bcd1bc9e0500e2182f1c8"
+    ],
+    "disagreements": [],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-c1052e06818f90d4a44560f0",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc",
+      "ORDTRANSFER-7497c053a0ea965e06b50c88"
+    ],
+    "proposed_points": 2.6,
+    "rationale": "투자등급 조달 접근성, 지분증권 미발행, 10조원 자기주식 프로그램·소각 및 분기 배당은 환원 실행을 지지한다. 반면 낮은 배당성향, 대규모 자산취득 약정과 매출채권 운전자본 유출은 자본배분의 상단을 제한한다.",
+    "support_fact_ids": [
+      "EFACT-4c24af7fb383929b7af6bf38",
+      "EFACT-5220bd8edddda66abc7eeaf4",
+      "EFACT-8cc5989dd1a4e4bba6ad75b9",
+      "EFACT-97e077b865db632ec6f81cd2",
+      "EFACT-c050a5335289c9806cf802ef"
+    ],
+    "why_not_higher": "향후 자산취득 약정과 운전자본 유출이 크고 성장투자와 환원의 장기 우선순위가 정량적으로 연결되지 않는다.",
+    "why_not_lower": "실제 자기주식 취득·소각과 배당, 희석 부재 및 조달 접근성이 확인되어 약한 수준에만 머물 근거는 부족하다."
+  },
+  "payload_hash": "312f48b7251bfe3e2d2eefb4b02c05e7437a0e37456177c8719a662d00f84711",
+  "production_score_authority": false,
+  "prompt_hash": "031fdce648b611db28309b3a3a9533fd55ce0e06a8b2b9d0419c1029d4d428f6",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-90ee9a51835fc5368bf124363c2fc5b3a17a42d9f3785966f56dbff8504f1dc0",
+  "response_id": "COLLABRESP-df213cfdb5f1ab6c283f2577d121fd28e3ee6b9e566a7560b4553deabbf1dc64",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

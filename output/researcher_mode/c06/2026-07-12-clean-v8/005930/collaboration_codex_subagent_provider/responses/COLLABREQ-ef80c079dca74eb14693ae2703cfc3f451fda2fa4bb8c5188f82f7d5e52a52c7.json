@@ -1,0 +1,65 @@
+{
+  "output_schema_hash": "6f42cabe4a6fd54bcc64404c86de2b1f95d531d6440b19521e4ecdd817cb8015",
+  "payload": {
+    "peers": [
+      {
+        "comparability_rationale": "KRX 상장사 중 삼성전자의 HBM 메모리 공급 경제와 가장 직접적으로 겹치는 국내 pure-play에 가까운 direct peer다. 제품·수요·공정·CAPEX driver 비교에는 적합하지만 사업 포트폴리오와 고객·공급 증거는 회사별로 분리해야 한다.",
+        "confidence": 0.96,
+        "material_differences": [
+          "SK하이닉스는 메모리 사업 집중도가 삼성전자보다 높고, 삼성전자는 모바일·가전·파운드리 등 비메모리 사업이 연결 실적과 자본배분에 크게 섞인다.",
+          "SK하이닉스의 고객계약, HBM CAPA, 수율, allocation 또는 ASP를 삼성전자의 사실로 전이할 수 없다.",
+          "Prompt에는 두 회사의 동일시점 valuation 관측치가 없으므로 상대 multiple이나 PEER_BAND 값을 만들 수 없다."
+        ],
+        "peer_name": "SK하이닉스",
+        "peer_symbol": "000660",
+        "shared_economic_drivers": [
+          "DRAM·HBM 제품의 AI 가속기 수요, 메모리 ASP와 product mix, 미세공정·수율 및 대규모 CAPEX가 매출·마진·현금흐름을 좌우한다.",
+          "HBM3E·HBM4의 고객 qualification, 기술 세대 전환과 공급 가시성이 rerating과 earnings visibility의 핵심 변수다."
+        ]
+      },
+      {
+        "comparability_rationale": "HBM 공급망 투자·packaging 병목에 노출된 adjacent peer로서 CAPEX 사이클과 공급망 강도를 비교하는 데는 유용하다. 다만 완제품 메모리 economics를 공유하지 않으므로 direct valuation peer가 아니라 보조 비교축으로만 사용한다.",
+        "confidence": 0.8,
+        "material_differences": [
+          "한미반도체는 HBM 메모리 제조·판매사가 아니라 packaging 장비 공급사여서 메모리 ASP, wafer 생산량, 고객 allocation과 제품 margin 구조가 직접 비교되지 않는다.",
+          "장비 수주나 납품을 삼성전자의 HBM CAPA 증가, 고객계약 또는 상용 출하량으로 전이할 수 없다.",
+          "Prompt에 point-in-time structured valuation availability가 없으므로 이 adjacent peer의 배수나 PEER_BAND를 생성할 수 없다."
+        ],
+        "peer_name": "한미반도체",
+        "peer_symbol": "042700",
+        "shared_economic_drivers": [
+          "HBM 생산 확대와 적층·advanced packaging 투자 사이클이 장비 수요와 실적 가시성에 영향을 준다.",
+          "HBM 세대 전환, 고객 qualification 속도와 메모리 업체의 CAPEX 집행이 공통된 업황 민감 변수다."
+        ]
+      }
+    ],
+    "selection_complete": true,
+    "selection_rationale": "SK하이닉스를 HBM·DRAM 제품경제의 direct peer로, 한미반도체를 HBM packaging·CAPEX 민감도의 adjacent peer로 선택했다. 두 회사 모두 authoritative KRX identity roster에 있고 target은 제외했다. 이번 응답은 비교 방향만 정하며 valuation 수치, 계약, CAPA 또는 고객 allocation을 생성하지 않는다.",
+    "unresolved_research_notes": [
+      "2026-07-12 cutoff의 point_in_time_structured_peer_identity_roster가 비어 있어 두 peer의 trailing·forward valuation 또는 공통 PEER_BAND를 source-backed 값으로 만들 수 없다.",
+      "AMD CUSTOMER_OFFICIAL corroboration은 삼성전자의 named HBM3E/HBM4 기술 관계를 강화하지만 구매조건·물량·allocation이나 삼성전자 HBM CAPA를 증명하지 않으며, peer 사실로도 전이하지 않는다.",
+      "해외 direct memory peer는 authoritative KRX allowlist 밖이므로 제안하지 않았다."
+    ]
+  },
+  "payload_hash": "82d1346ec0b67c5ffccad608ff89cd815bbfb086b19d449370a2539b707bea97",
+  "production_score_authority": false,
+  "prompt_hash": "ccca181747544c8c2b5f75cd36d3c9f7ba8a82a3a1823267f04ced7604b9b1e1",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ef80c079dca74eb14693ae2703cfc3f451fda2fa4bb8c5188f82f7d5e52a52c7",
+  "response_id": "COLLABRESP-80bc7dc994d6f8a22cd76632b3e224ef72f094dfac1a877164b2cdb975442d5f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

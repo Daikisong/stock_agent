@@ -1,0 +1,42 @@
+{
+  "cache_value_hash": "0a97d5ac22f86a47406fcd4d047be0ab1c06c69e4286bc3d64bb1534600675e6",
+  "canonical_url": "https://opendart.fss.or.kr/api/list.json",
+  "content_hash": "31e44f0494a4f675b8ca4b6b4d50e83d5b7617f48baba583435cf2eda1758e23",
+  "payload": {
+    "list": [
+      {
+        "corp_cls": "Y",
+        "corp_code": "00126380",
+        "corp_name": "삼성전자",
+        "flr_nm": "삼성전자",
+        "rcept_dt": "20260310",
+        "rcept_no": "20260310002820",
+        "report_nm": "사업보고서 (2025.12)",
+        "rm": "연",
+        "stock_code": "005930"
+      },
+      {
+        "corp_cls": "Y",
+        "corp_code": "00126380",
+        "corp_name": "삼성전자",
+        "flr_nm": "박기루",
+        "rcept_dt": "20260310",
+        "rcept_no": "20260310002390",
+        "report_nm": "임원ㆍ주요주주특정증권등소유상황보고서",
+        "rm": "",
+        "stock_code": "005930"
+      }
+    ],
+    "message": "정상",
+    "page_count": 100,
+    "page_no": 1,
+    "status": "000",
+    "total_count": 2,
+    "total_page": 1
+  },
+  "provider_request_id": "HTTP-31e44f0494a4f675b8ca",
+  "request_fingerprint": "3f66ec0818faa94b4031a6dcc674c37d8c207331a63c7cd8e5c96136eed995e4",
+  "schema_version": "e2r_v5_current_structured_cache_v2",
+  "status_code": 200,
+  "text": null
+}

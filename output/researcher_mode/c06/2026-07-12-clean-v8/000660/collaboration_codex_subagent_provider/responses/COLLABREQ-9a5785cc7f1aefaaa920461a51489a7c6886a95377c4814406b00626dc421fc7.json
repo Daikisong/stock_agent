@@ -1,0 +1,607 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "The official June ADR decision was reviewed in full and deduplicated against six prior facts. This page adds the planned listing date, confirmed-decision status, and overseas-only offering scope. Additional distinct ADR mechanics and schedule caveats remain for continuation.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "The current broker report was reviewed in full and deduplicated against six prior facts. This page adds the target-specific historical DRAM profit-resilience observation and FY2026/FY2027 consolidated revenue revisions without HBM-only attribution. Additional distinct forecast and counter atoms remain for continuation.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "The final KIND correction and financing filing was reviewed in full and deduplicated against six prior facts. This page adds the final common-share count, final one-to-ten ADR ratio, and mixed funding plan for the investment remainder. Additional distinct final schedule and regulatory-status atoms remain for continuation.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "The 2024 broker report was reviewed in full and deduplicated against six prior facts. This page adds the 2Q24F and FY2025F operating-profit revisions and the 12-month-forward BPS denominator. All retain historical broker provenance and SUPERSEDED lifecycle. Additional distinct target-direct forecast atoms remain for continuation.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "economic_mechanism": "The official June filing supplied a planned date for the issuer-wide Nasdaq ADR listing; it is a capital-action schedule, not an HBM operating or contract fact.",
+        "exact_quote": "7. 상장예정일자\n2026.07.10",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The schedule helps reconstruct the issuer-wide capital action but does not establish HBM capacity, earnings, or customer economics.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:ADR_LISTING_SCHEDULE",
+        "normalized_object": "Planned Nasdaq ADR listing date of 2026-07-10",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "Decision disclosed 2026-06-24; planned listing 2026-07-10",
+        "predicate": "planned ADR listing date",
+        "predicate_family": "ISSUER_ADR_PLANNED_LISTING_DATE",
+        "primitive_tags": [
+          "ISSUER_OFFICIAL",
+          "ADR",
+          "PLANNED_DATE"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "ISSUER_ADR_LISTING_SCHEDULE",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence",
+          "ADR_schedule"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide ADR listing plan",
+        "subject_id": "000660:ADR_PLANNED_LISTING_DATE:2026-07-10:JUNE_DECISION",
+        "unit": "date",
+        "value": "2026-07-10"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "economic_mechanism": "The issuer's official disclosure changed the ADR financing and Nasdaq listing status from earlier unconfirmed reports to a confirmed board decision, without establishing any HBM-only allocation.",
+        "exact_quote": "* 확정사항: 당사의 신주 발행을 통한 미국 주식예탁증서(ADR) 공모 및 미국 나스닥 증권거래소 상장 결정",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The official confirmation resolves the capital-action status but remains issuer-wide and does not prove product-specific economics.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:ADR_DECISION_STATUS",
+        "normalized_object": "Confirmed decision to issue new shares for an ADR offering and Nasdaq listing",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2026-06-24 decision",
+        "predicate": "confirmed ADR offering and Nasdaq listing decision",
+        "predicate_family": "ISSUER_ADR_DECISION_CONFIRMATION",
+        "primitive_tags": [
+          "ISSUER_OFFICIAL",
+          "ADR",
+          "CONFIRMED_DECISION"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "ISSUER_ADR_DECISION_STATUS",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence",
+          "ADR_status"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide ADR financing decision",
+        "subject_id": "000660:ADR_DECISION_CONFIRMED:2026-06-24",
+        "unit": "status",
+        "value": "confirmed"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "economic_mechanism": "The official offering structure excluded Korean residents from the ADR placement and stated that no domestic offering or sale of the new shares would occur; this constrains distribution scope, not HBM use of proceeds.",
+        "exact_quote": "당사는, 금번 발행되는 신주를 원주로 하여 국내 거주자를 제외한, 해외 투자자들을 대상으로 ADR 발행 및 미국 나스닥 증권거래소(Nasdaq Global Select Market)에 상장 예정입니다. 이에 따라 국내에서 금번 발행되는 신주의 모집 및 매출이 발생되지 않는 점 참고하시길 바랍니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The distribution limitation is relevant to the financing structure and information quality but does not establish product-specific demand or contract terms.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:ADR_OFFERING_SCOPE",
+        "normalized_object": "ADR offering limited to overseas investors with no domestic new-share offering or sale",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2026-06-24 decision",
+        "predicate": "limited ADR offering to overseas investors",
+        "predicate_family": "ISSUER_ADR_OVERSEAS_OFFERING_SCOPE",
+        "primitive_tags": [
+          "ISSUER_OFFICIAL",
+          "ADR",
+          "OVERSEAS_OFFERING"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "ISSUER_ADR_OFFERING_SCOPE",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence",
+          "offering_scope"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide ADR offering structure",
+        "subject_id": "000660:ADR_OVERSEAS_ONLY_OFFERING:2026-06-24",
+        "unit": "offering scope",
+        "value": "overseas investors excluding Korean residents; no domestic offering or sale"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.94,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The current broker report used resilient target-attributable DRAM profit during conventional DRAM price declines as historical evidence of differentiated pricing and mix, but did not isolate HBM-only profit.",
+        "exact_quote": "은 4Q24~1Q25 일반 DRAM 가격 하락에서도 견조한 SK하이닉스의 DRAM 이익을 통해 Dual market 효과를 경험한 바 있다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The target-specific observation supports pricing resilience while remaining qualitative and not an HBM-only earnings bridge.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM:PRICING_POWER",
+        "normalized_object": "Broker-observed SK hynix DRAM profit resilience during 4Q24-1Q25 conventional DRAM price declines",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q24 through 1Q25; report published 2026-05-07",
+        "predicate": "maintained resilient DRAM profit during conventional DRAM price declines",
+        "predicate_family": "BROKER_DRAM_PROFIT_RESILIENCE_OBSERVATION",
+        "primitive_tags": [
+          "BROKER_OBSERVATION",
+          "DRAM",
+          "PRICING_RESILIENCE"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "TARGET_DRAM_DUAL_MARKET_RESILIENCE",
+        "question_family_tags": [
+          "bottleneck_pricing",
+          "earnings_visibility",
+          "DRAM_resilience"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix DRAM profit",
+        "subject_id": "000660:DRAM_PROFIT_RESILIENCE:4Q24_TO_1Q25:SKS_2026-05-07",
+        "unit": "qualitative broker observation",
+        "value": "resilient DRAM profit despite conventional DRAM price declines"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The broker raised the issuer-consolidated FY2026 revenue forecast, changing the earnings denominator used for expectation and valuation analysis; the amount is not attributed to HBM alone.",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2026E 2027E 2026E 2027E 2026E 2027E\n매출액 336,588 470,245 326,782 420,416 3% 12%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "A dated, target-attributable current revenue revision is material to the earnings and expectation bridge, while remaining consolidated rather than HBM-only.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:FY2026E_REVENUE_REVISION",
+        "normalized_object": "FY2026E consolidated revenue forecast of KRW 336,588 billion, revised from KRW 326,782 billion by 3 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E; revision report published 2026-05-07",
+        "predicate": "broker revised consolidated revenue forecast upward",
+        "predicate_family": "BROKER_CONSOLIDATED_REVENUE_REVISION",
+        "primitive_tags": [
+          "BROKER_ESTIMATE",
+          "CONSOLIDATED_REVENUE",
+          "REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_CONSOLIDATED_REVENUE_REVISION",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "revenue_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated broker revenue forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_REVISION:FY2026E:SKS_2026-05-07",
+        "unit": "KRW billion",
+        "value": 336588
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The broker raised the issuer-consolidated FY2027 revenue forecast, changing the outer-year earnings denominator used for expectation and valuation analysis; the amount is not attributed to HBM alone.",
+        "exact_quote": "SK하이닉스 분기 실적 전망 변경\n변경 후 변경 전 차이\n2026E 2027E 2026E 2027E 2026E 2027E\n매출액 336,588 470,245 326,782 420,416 3% 12%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "A dated, target-attributable outer-year revenue revision is material to the earnings and expectation bridge, while remaining consolidated rather than HBM-only.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:FY2027E_REVENUE_REVISION",
+        "normalized_object": "FY2027E consolidated revenue forecast of KRW 470,245 billion, revised from KRW 420,416 billion by 12 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E; revision report published 2026-05-07",
+        "predicate": "broker revised consolidated revenue forecast upward",
+        "predicate_family": "BROKER_CONSOLIDATED_REVENUE_REVISION",
+        "primitive_tags": [
+          "BROKER_ESTIMATE",
+          "CONSOLIDATED_REVENUE",
+          "REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_CONSOLIDATED_REVENUE_REVISION",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "revenue_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated broker revenue forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_REVISION:FY2027E:SKS_2026-05-07",
+        "unit": "KRW billion",
+        "value": 470245
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "The final official filing fixed the number of new common shares underlying the ADR financing, resolving the earlier maximum-quantity caveat without attributing proceeds to HBM alone.",
+        "exact_quote": "1. 신주의 종류와 수\n보통주식 (주)\n17,790,000",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The final share count determines the issuer-wide capital issuance and resolves the earlier provisional ceiling.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:ADR_FINAL_SHARE_COUNT",
+        "normalized_object": "Final issuance of 17,790,000 common shares for the ADR financing",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "Final terms disclosed 2026-07-10",
+        "predicate": "fixed final ADR underlying common-share count",
+        "predicate_family": "ISSUER_ADR_FINAL_SHARE_COUNT",
+        "primitive_tags": [
+          "ISSUER_OFFICIAL",
+          "ADR",
+          "FINAL_SHARE_COUNT"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "ISSUER_ADR_FINAL_SHARE_COUNT",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence",
+          "ADR_final_terms"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide ADR underlying-share issuance",
+        "subject_id": "000660:ADR_FINAL_COMMON_SHARES:2026-07-10",
+        "unit": "common shares",
+        "value": 17790000
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "CURRENT",
+        "direction": "RESOLUTION",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "The final bookbuilt ADR quantity was converted to underlying new shares at one common share per ten ADRs, defining the financing structure rather than any product economics.",
+        "exact_quote": "2) 상기 '1. 신주의 종류와 수'의 신주 수량은 본건 ADR의 상장 공모 절차에서의 수요예측(bookbuilding) 결과를 반영하여 결정된 본건 ADR의 수량에 본건 신주 대 본건 ADR의 비율(1 : 10)을 적용하여 산출한 수량입니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The final conversion ratio completes the issuer-wide issuance mechanics but is not HBM evidence.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:ADR_FINAL_RATIO",
+        "normalized_object": "Final ratio of one underlying common share to ten ADRs",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "Final terms disclosed 2026-07-10",
+        "predicate": "fixed final common-share-to-ADR ratio",
+        "predicate_family": "ISSUER_ADR_FINAL_CONVERSION_RATIO",
+        "primitive_tags": [
+          "ISSUER_OFFICIAL",
+          "ADR",
+          "FINAL_RATIO"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "ISSUER_ADR_FINAL_CONVERSION_RATIO",
+        "question_family_tags": [
+          "capital_allocation",
+          "information_confidence",
+          "ADR_ratio"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide ADR conversion structure",
+        "subject_id": "000660:ADR_FINAL_UNDERLYING_RATIO:2026-07-10",
+        "unit": "share:ADR ratio",
+        "value": "1:10 common share to ADR"
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 1.0,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "economic_mechanism": "ADR proceeds fund only part of the total investment plan; operating cash flow, borrowings, and other internal resources must cover the remainder, creating an issuer-wide cash-flow and leverage bridge that is not HBM-only.",
+        "exact_quote": "(주3) 본건 유상증자로 조달한 자금은 상기 총 투자예정금액의 일부 재원으로 충당되며, 잔여 소요액은 영업활동 현금흐름, 차입 및 그 밖의 자체 재원으로 충당할 예정입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The official funding mix directly constrains cash-flow and leverage interpretation while remaining issuer-wide rather than HBM-attributable.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:CAPEX_FUNDING_MIX",
+        "normalized_object": "Investment remainder funded by operating cash flow, borrowings, and other internal resources after partial ADR financing",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "Funding plan disclosed 2026-07-10",
+        "predicate": "planned mixed funding for investment remainder",
+        "predicate_family": "ISSUER_CAPEX_REMAINDER_FUNDING_MIX",
+        "primitive_tags": [
+          "ISSUER_OFFICIAL",
+          "OPERATING_CASH_FLOW",
+          "BORROWINGS",
+          "CAPEX_FUNDING"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "ISSUER_CAPEX_FUNDING_MIX",
+        "question_family_tags": [
+          "capital_allocation",
+          "eps_fcf_explosion",
+          "funding_mix"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 1.0,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix issuer-wide capital-investment funding plan",
+        "subject_id": "000660:CAPEX_REMAINDER_FUNDING_MIX:2026-07-10",
+        "unit": "funding sources",
+        "value": "ADR proceeds partly; remainder from operating cash flow, borrowings, and other internal resources"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The dated broker report revised the issuer-consolidated 2Q24 operating-profit estimate upward, an historical forecast change that cannot be treated as issuer actual guidance or HBM-only profit.",
+        "exact_quote": "표 14. SK하이닉스 수익추정 변경 내역\n변경 전 번경 후 변경률(%)\n2Q24F 2024F 2025F 2Q24F 2024F 2025F 2Q24F 2024F 2025F\n매출액 14,751 61,445 80,782 15,189 64,651 81,029 3.0 5.2 0.3\nQoQ/YoY 18.7 87.5 31.5 22.2 97.3 25.3 3.5 9.8 -6.1\nDRAM 9,462 39,579 53,107 9,901 42,785 53,355 4.6 8.1 0.5\nNAND 4,717 19,520 24,922 4,717 19,520 24,922 0.0 0.0 0.0\n영업이익 3,859 16,459 24,122 4,297 19,665 24,369 11.4 19.5 1.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The revision is target-attributable and exact, but historical, superseded, consolidated, and not an HBM earnings bridge.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:2Q24F_OPERATING_PROFIT_REVISION",
+        "normalized_object": "2Q24F consolidated operating-profit estimate revised to KRW 4,297 billion from KRW 3,859 billion, up 11.4 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q24F; revision report published 2024-05-16",
+        "predicate": "broker revised consolidated operating-profit forecast upward",
+        "predicate_family": "BROKER_OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "BROKER_ESTIMATE",
+          "OPERATING_PROFIT",
+          "REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "operating_profit_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK hynix consolidated broker operating-profit forecast",
+        "subject_id": "000660:OPERATING_PROFIT_REVISION:2Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 4297
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The dated broker report revised the issuer-consolidated FY2025 operating-profit estimate upward, an historical forecast change that cannot be treated as issuer actual guidance or HBM-only profit.",
+        "exact_quote": "표 14. SK하이닉스 수익추정 변경 내역\n변경 전 번경 후 변경률(%)\n2Q24F 2024F 2025F 2Q24F 2024F 2025F 2Q24F 2024F 2025F\n매출액 14,751 61,445 80,782 15,189 64,651 81,029 3.0 5.2 0.3\nQoQ/YoY 18.7 87.5 31.5 22.2 97.3 25.3 3.5 9.8 -6.1\nDRAM 9,462 39,579 53,107 9,901 42,785 53,355 4.6 8.1 0.5\nNAND 4,717 19,520 24,922 4,717 19,520 24,922 0.0 0.0 0.0\n영업이익 3,859 16,459 24,122 4,297 19,665 24,369 11.4 19.5 1.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The revision is target-attributable and exact, but historical, superseded, consolidated, and not an HBM earnings bridge.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:FY2025F_OPERATING_PROFIT_REVISION",
+        "normalized_object": "FY2025F consolidated operating-profit estimate revised to KRW 24,369 billion from KRW 24,122 billion, up 1.0 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F; revision report published 2024-05-16",
+        "predicate": "broker revised consolidated operating-profit forecast upward",
+        "predicate_family": "BROKER_OPERATING_PROFIT_REVISION",
+        "primitive_tags": [
+          "BROKER_ESTIMATE",
+          "OPERATING_PROFIT",
+          "REVISION"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_OPERATING_PROFIT_REVISION",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing",
+          "operating_profit_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "OPERATING_PROFIT_REVISION"
+        ],
+        "subject": "SK hynix consolidated broker operating-profit forecast",
+        "subject_id": "000660:OPERATING_PROFIT_REVISION:FY2025F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 24369
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The broker's 12-month-forward book value per share is the explicit denominator for its historical P/B valuation framework; it is not issuer guidance or HBM-only economics.",
+        "exact_quote": "표 15. SK하이닉스 밸류에이션\n구분 값 비고\n12개월 선행 BPS 104,114원 기존 24F/25F 평균 BPS에서 12개월 선행 기준으로 시계열 이동\n목표 PBR 2.3배 기존 2.2배 대비 상향\n목표주가 239,463원 반올림 → 240,000원",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The denominator is exact and target-attributable but belongs to a superseded historical broker valuation model.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:12M_FORWARD_BOOK_VALUE",
+        "normalized_object": "12-month-forward BPS of KRW 104,114",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "12-month forward as of report published 2024-05-16",
+        "predicate": "broker estimated 12-month-forward book value per share",
+        "predicate_family": "BROKER_FORWARD_BOOK_VALUE_PER_SHARE",
+        "primitive_tags": [
+          "BROKER_ESTIMATE",
+          "FORWARD_BPS",
+          "VALUATION_DENOMINATOR"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "BROKER_FORWARD_BOOK_VALUE",
+        "question_family_tags": [
+          "valuation_rerating",
+          "market_mispricing",
+          "forward_book_value"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_BOOK_VALUE"
+        ],
+        "subject": "SK hynix 12-month-forward book value per share",
+        "subject_id": "000660:FORWARD_BPS:12M:MIRAE_2024-05-16",
+        "unit": "KRW per share",
+        "value": 104114
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-ce7946c58ed2153ec7e72447",
+      "SGDOC-cec48c4b300fe56a6ba42cb7",
+      "SGDOC-e387fbf074539d32a618025a",
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact transport-page upper bound was reached after three genuine next facts per supplied document; all four documents retain additional distinct target-direct atoms and require continuation."
+    ]
+  },
+  "payload_hash": "35eac5fe73ec87e84f7ebbb262622f1e8eeee9ed9905dd89521155fd831a735b",
+  "production_score_authority": false,
+  "prompt_hash": "add5a46e57e0bdcff2a3320cff3c7bf39ad26212a97568684f7787a9d0f2824e",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-9a5785cc7f1aefaaa920461a51489a7c6886a95377c4814406b00626dc421fc7",
+  "response_id": "COLLABRESP-8f0e31ea1b6db62607e2b258ed37793b1a5dac94358f2cab1bdf1fddc6fed5a4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

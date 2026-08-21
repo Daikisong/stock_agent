@@ -1,0 +1,133 @@
+{
+  "output_schema_hash": "fd8388b71763d0f2ba479b414fb00cb0477f43bf1f4ff96b116fa6fa07c9c1c1",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-4d4da6bafa217b1f6a3546f4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "회사 홈페이지 최상위 경로일 뿐 2026년 1분기 IR 발표자료나 현금흐름 원문으로 직접 이어지는 식별자가 없다."
+      },
+      {
+        "candidate_id": "SGCAND-f264bface2c5ed7bff48c4ea",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.95,
+        "rationale": "검증된 발행사 IR 최상위 랜딩으로 실적발표와 발표자료 원문 메뉴에 연결되는 공식 full-fetch 경로다."
+      },
+      {
+        "candidate_id": "SGCAND-655dd9c9b3095fc80d619fad",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "협력사 교육 로그인으로 요청된 IR 발표자료·현금흐름 문서와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-4f1328339ca4f5996569642f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "배당 조회 기능은 자본배분 주변 정보지만 ISSUER_PRESENTATION 또는 CASH_FLOW 원문 문서가 아니며 현재 조회 가능 문서도 특정되지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-bbb1e13567886871d7c3bebd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "교육 포털 로그인 화면으로 연구 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-95ac703064e49b13d5af6e19",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "주주구성 페이지는 회사 범위는 맞지만 HBM CAPEX·FCF를 담는 요청 문서군이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-7e3aaf63f23e6fcdd1e4f07c",
+        "matched_requested_source_family": "ISSUER_PRESENTATION",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "priority": 1,
+        "rationale": "공식 실적발표 랜딩은 분기 발표자료와 원문 첨부를 full-fetch할 수 있어 HBM 투자와 현금전환 검증에 직접 유용하다."
+      },
+      {
+        "candidate_id": "SGCAND-837c695dcbe6195c677c9bf6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "상장현황은 주식 메타데이터로 2026년 1분기 IR 발표자료·현금흐름 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-766ca2933deec689d23903be",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "소비자 SSD 다운로드 페이지로 자본배분 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-ea0f21ad426e07d369de8e34",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "사내 대학 포털로 요청 원문 문서군과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-5eba7b07986f602926f7a728",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0,
+        "rationale": "브랜드 CI 페이지로 경제적 연구 목적과 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-7fdeebefa024a054432a4845",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "회사 연혁은 제품 이력만 제공하며 분기 발표자료나 현금흐름 원문이 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "material로 선별한 공식 IR 경로도 snippet 자체는 증거가 아니며, 첨부 원문의 기간·HBM 귀속·현금흐름을 full-fetch 후 검증해야 한다."
+    ]
+  },
+  "payload_hash": "1d4fe0219fbaffa15dbc92d881e4f5ca5d15d33758555a4feb970c6579c4c51e",
+  "production_score_authority": false,
+  "prompt_hash": "0817ca5e85a67f5be952e7bf1ea3bed5c2f09ec317c1cc68510aeb4be75f61cd",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0e4a97418619ecb1ca8f5dc3848b4b0d76e2e71157c3777281b4a3aa33883a73",
+  "response_id": "COLLABRESP-f2a7f1d4b613051d73b8ea4470c99b7df4d209f7eedb773c76175c4b14a99ddf",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

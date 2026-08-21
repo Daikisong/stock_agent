@@ -1,0 +1,55 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      3.0,
+      5.8
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df is a low-confidence ordinal anchor spanning 4.32-5.52. The conditional upper scenario can reach this band if forward earnings are realized and actual memory improvement persists, but its lack of exact lineage prevents a narrow calibration.",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b is a low-confidence ordinal anchor spanning 2.83-4.03. The conditional lower scenario overlaps this band if trailing, enterprise, and cash measures dominate or the current improvement is already priced."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1"
+    ],
+    "disagreements": [
+      "Neither low-confidence anchor can be used as an exact score or collapse the six conditional uncertainties into a narrow range.",
+      "The actual operating layer and valuation layer should remain separate until a period-matched HBM earnings or cash bridge is supplied."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 4.4,
+    "rationale": "The calibrated midpoint lies between the two ordinal anchors, while the range is intentionally wider than either anchor band. The upper condition is sustained actual memory/HBM execution plus realization of the forward consolidated earnings denominator. The lower condition is forecast erosion or prior price reflection, with trailing, enterprise, and cash metrics better representing current economics. The remaining four uncertainties reinforce breadth: no HBM standalone bridge, heterogeneous valuation denominators, no confirmed NVIDIA economics, and no HBM relevance in the corporate GPU guidance. Thus 4.4 expresses balanced current evidence without pretending the conditional band is resolved.",
+    "support_fact_ids": [
+      "EFACT-0ea4c7a5b342855d104d1848",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0"
+    ],
+    "why_not_higher": "The high side depends on an unverified forward earnings realization and persistent operating improvement; HBM cash attribution, NVIDIA economics, and HBM-specific durable visibility are absent, while several current valuation measures are less favorable.",
+    "why_not_lower": "Actual shipments, customer-official supply history, memory revenue, and ASP improvement provide enough realized execution to keep the midpoint above the counter anchor despite the wide downside condition."
+  },
+  "payload_hash": "e7bc56d848a131f3ddb6320b2589d64d9ed88cc87f720a7b732b075265a15b4d",
+  "production_score_authority": false,
+  "prompt_hash": "6956eee59fadeff2840dffc2f546013cc46cfa932f1a10ec0cc135de895a88ed",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-533e3bebf9527950913185890c04fbd78d94bc06dcf4b4805717c037450a711d",
+  "response_id": "COLLABRESP-912d4c7005b692d8cd1855501c0c717ca8273f7e939b5a722051687b995cc611",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

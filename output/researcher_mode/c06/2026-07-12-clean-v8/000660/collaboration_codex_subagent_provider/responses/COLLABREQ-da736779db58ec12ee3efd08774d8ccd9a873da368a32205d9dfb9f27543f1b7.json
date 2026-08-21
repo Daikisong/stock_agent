@@ -1,0 +1,101 @@
+{
+  "output_schema_hash": "44f0ffbd106d6ef02aafb2674643ad9e311c68a32b75ecbbca9d606387f07c45",
+  "payload": {
+    "business_model_summary": "SK하이닉스의 현재 수익 메커니즘은 메모리 제품 판매, 특히 DRAM의 큰 실제 매출 기반과 제한된 공급 환경에서 HBM이 가격 상승을 주도한 고부가 제품 효과가 결합되는 구조다. HBM의 Time-to-Market·성능·품질 및 고객 ASIC 공동개발은 제품 상용화 경로를 강화하지만 확정 구매계약이나 고객 배정 물량은 아니다. 2026년 1분기 연결 매출·영업이익·순이익·영업현금흐름은 강한 전사 actual을 보여주나 HBM 단독 매출·이익·FCF로 귀속할 수 없다. 평균원가 기준 반도체 생산능력과 100% 평균가동률도 메모리 전반의 실제 설비 활용도이며 HBM 전용 CAPA 또는 sold-out 증거가 아니다. 따라서 경제성은 고부가 메모리 가격·제품 실행과 전사 현금창출이 대규모 CAPEX·감가상각·R&D·재고 및 고객 집중 부담을 얼마나 흡수하는지로 판단해야 한다.",
+    "capacity_and_supply_constraints": [
+      "2026년 1분기 반도체 생산능력 11,465,147백만원과 생산실적 11,465,147백만원·평균가동률 100%는 메모리 전반 설비가 높은 수준으로 활용됐음을 보여준다. HBM 전용 가동률, 특정 고객 CAPA 잠김 또는 장기 sold-out을 입증하지 않는다.",
+      "제한된 공급 환경과 HBM 가격 상승 기여는 단기 병목·가격력 메커니즘을 지지하지만, 주요 고객 공급량과 가격은 월별 또는 분기별 상호 합의로 정해져 장기간 고정된 가시성으로 확대할 수 없다.",
+      "연결 유형자산 취득과 유형자산 장부가액 증가는 공급 대응 투자가 지속됨을 보여주나 제품군별, 특히 HBM 전용 투자액과 향후 증설 완료 시점은 현재 fact graph에 없다.",
+      "CIS 사업의 AI 메모리 전환 결정과 HBM 제품 실행력은 AI 메모리 공급 역량 재배치를 지지하지만, 이는 현재 생산량 actual 또는 고객 확정 배정량이 아니라 전략·제품 실행 증거다.",
+      "재공품과 재고 증가는 향후 출하 가능 물량인 동시에 수요·가격 변화 시 손실 위험이다. 100% 가동과 함께 보더라도 자동으로 구조적 shortage나 지속 가격 상승을 보장하지 않는다."
+    ],
+    "confidence": 0.93,
+    "cost_and_cash_drivers": [
+      "연결 영업활동 현금유입 26,330,119백만원과 전년 동기 대비 개선은 전사 현금전환을 지지한다. 그러나 연결 유형자산 취득 현금유출 7,657,403백만원과 회계상 취득 7,347,767백만원이 커 HBM 단독 FCF나 투자회수율은 계산할 수 없다.",
+      "연결 유형자산 감가상각 3,415,412백만원과 별도 R&D 총지출 2,297,080백만원은 자본·기술 집약도를 보여준다. R&D 대부분이 비용화되지만 HBM 전용 R&D 금액이나 realised ROIC는 아니다.",
+      "재고 장부금액 증가, 반도체 재공품 9,627,923백만원, 재고 평가충당금 및 중국 생산 재공품 계약손실충당부채는 출하 전환 잠재력과 동시에 운전자본·가격하락 위험을 만든다.",
+      "매출채권 장부금액 증가는 회수 부담을 키울 수 있고 판매보증충당부채는 품질 관련 현금보상·교환 위험을 반영한다. 두 항목 모두 HBM 단독 귀속은 확인되지 않는다.",
+      "연결 현금및현금성자산 21,166,904백만원과 차입금·사채 감소는 투자 대응 여력을 지지하지만, 현금·금융자산에는 비영업 투자자산 가치변동과 배당 수취 등이 섞여 있어 HBM 영업현금으로 보지 않는다."
+    ],
+    "customer_and_channel_dependencies": [
+      "주요 고객사 공급 물량·가격을 월별 또는 분기별 상호 합의로 결정하는 구조는 고객 협상과 갱신 주기에 실적 가시성이 의존함을 뜻한다. 장기계약·선수금·취소조건은 확인되지 않았다.",
+      "두 개의 단일 외부고객이 각각 연결 매출의 10%를 넘고 7,780,590백만원 및 6,536,458백만원을 기록해 대형 고객 집중이 존재한다. 고객명과 HBM 매출 비중은 공시되지 않았다.",
+      "HBM 성능·품질 기반 ASIC 공동개발은 고객 요구가 제품 로드맵에 연결되는 경로를 보여주지만 구매의무·가격·물량·배정 기간을 의미하지 않는다.",
+      "연결·별도 계약부채는 존재하지만 HBM 수주잔고나 고객 약정 물량으로 귀속할 근거가 없다. 제품 인도 중심의 수익 인식 구조와 함께 계약 가시성의 한계로 남는다."
+    ],
+    "fact_row_indices": [
+      1,
+      5,
+      6,
+      7,
+      8,
+      9,
+      15,
+      21,
+      25,
+      30,
+      36,
+      38,
+      41,
+      42,
+      53,
+      54,
+      56,
+      59,
+      61,
+      62,
+      68,
+      69,
+      71,
+      76,
+      79,
+      83,
+      85,
+      86,
+      88,
+      89,
+      98,
+      104,
+      105,
+      115,
+      116
+    ],
+    "research_complete": true,
+    "revenue_engines": [
+      "2026년 1분기 별도 DRAM 매출 actual 39,758,279백만원은 메모리 수익 기반을 보여주며 전년 동기 대비 확대도 확인된다. 다만 DRAM 전체를 HBM 매출로 바꾸지 않는다.",
+      "제한된 공급 환경에서 HBM이 가격 상승을 주도한 제품군에 포함된 점은 고부가 제품의 가격·수익률 기여 경로를 지지하지만 HBM 단독 ASP나 매출 비중은 공시되지 않았다.",
+      "HBM Time-to-Market 실현, 대역폭·밀도·Core Die 적층 향상과 고객 ASIC 개발 협업은 제품 개발에서 상용화로 이어지는 실행 경로다. 이는 고객 주문량·가격·계약 기간을 확정하지 않는다.",
+      "2026년 1분기 연결 매출 52,576,287백만원, 영업이익 37,610,283백만원, 순이익 40,345,909백만원은 전사 actual이다. HBM 단독 실적이나 issuer forward guidance, broker estimate로 재분류하지 않는다.",
+      "별도 고객계약 수익 대부분이 한 시점에 인식되어 제품 인도형 매출 구조가 중심이다. 기간형 반복수익이나 HBM backlog를 뜻하지 않는다."
+    ],
+    "uncertainties": [
+      "HBM 단독 매출, 영업이익, 현금흐름, CAPEX, 감가상각 및 realised ROIC가 분리 공시되지 않아 전사 actual에서 HBM 수익성과 FCF를 계산할 수 없다.",
+      "100% 평균가동률은 메모리 반도체 전반의 실제치일 뿐 HBM 전용 CAPA, 고객별 배정률, 향후 capacity lock 또는 장기 sold-out을 입증하지 않는다.",
+      "HBM 협업·Time-to-Market 증거는 있지만 장기 공급계약, committed backlog, 선수금, 취소조건, 확정 물량·가격을 보여주는 DURABLE_VISIBILITY fact는 없다.",
+      "현재 citable fact graph는 규제 공시 actual 중심이며 numeric issuer forward guidance와 dated broker revision을 포함하지 않는다. actual·issuer 전략·broker forecast의 경제적 역할을 서로 대체할 수 없다.",
+      "분기 공시는 연차 보고서의 모든 재무위험과 경영진 분석을 포함하지 않으며, 13개 문서 레코드가 하나의 OPENDART 독립성 그룹에 속해 별도 외부 corroboration은 제한적이다.",
+      "고객 집중, 재고·재공품, 매출채권 및 품질보증 부담이 강한 수요·가격 국면 이후 어떻게 변하는지는 다음 실적 공시에서 계속 확인해야 한다."
+    ]
+  },
+  "payload_hash": "81c1d2fc6918e27b5f329a0643d66a3c8fd16feb56d99e86ac52d9eeeec20eee",
+  "production_score_authority": false,
+  "prompt_hash": "42aacda424a36ce3cf1777e045265865a9e5dc6640307b910634ea1ce29c8045",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-da736779db58ec12ee3efd08774d8ccd9a873da368a32205d9dfb9f27543f1b7",
+  "response_id": "COLLABRESP-564b2e3c368d70cfb654b899d79228c00646f73967992b4e8e9aa9eb8584e82c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

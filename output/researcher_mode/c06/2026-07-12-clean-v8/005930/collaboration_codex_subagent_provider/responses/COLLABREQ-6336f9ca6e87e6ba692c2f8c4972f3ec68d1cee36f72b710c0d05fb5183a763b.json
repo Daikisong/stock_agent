@@ -1,0 +1,33 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "현재 Supervisor projection에는 unresolved_material_questions가 없고 실행 가능한 새 route나 선택된 문서 identity도 없다. HBM 단독 마진·FCF와 binding 고객 구매조건은 계속 확인되지 않았지만, 이 공백만으로 새로운 검색 identity를 만들지 않는다.",
+      "기존 2026년 1분기 실적발표 HBM 경로는 이미 실행됐으나 accepted fact lineage로 이어지지 않았으므로 같은 공식 경로를 동의어나 형식 변경으로 반복하지 않는다.",
+      "HBM4 뉴스룸 후보 중 as-of 이후 문서 또는 발행일 미검증 결과를 새 query로 재포장하지 않는다. CompanyGuide 후보도 metadata discovery hint일 뿐 새 Supervisor-selected full-document identity가 아니며, 이 판단은 source absence를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "5217a1751b91439c6a2578eeffe83e59750244e959d29a0b2d8e46c872817d04",
+  "production_score_authority": false,
+  "prompt_hash": "0fe1fe99f8c37aa88edf3e58c227192e6c01daa5753c5882b0d8f9c3a2fedc9d",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6336f9ca6e87e6ba692c2f8c4972f3ec68d1cee36f72b710c0d05fb5183a763b",
+  "response_id": "COLLABRESP-096725721433f46eae2a86a8d19f56e7155f06722ae853df2c045ae209b5a61c",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

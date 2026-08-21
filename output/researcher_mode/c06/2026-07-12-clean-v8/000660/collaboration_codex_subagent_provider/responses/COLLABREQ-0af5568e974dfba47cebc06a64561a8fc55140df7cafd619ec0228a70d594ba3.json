@@ -1,0 +1,84 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-82c4d529809691327e652074",
+        "rationale": "181,380자 전체를 검토했다. SK하이닉스 직접 귀속 문구는 NVIDIA 기업분석 섹션에 중복 게재된 동일한 3년 메모리 공급계약 broker claim뿐이며 이를 한 번만 추출했다. 나머지는 타사 재무·산업 일반·전력·냉각·NAND 등 target 또는 scope 밖이다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.76,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-82c4d529809691327e652074",
+        "economic_mechanism": "유안타증권은 엔비디아가 SK하이닉스를 포함한 메모리 벤더들과 3년 장기 계약을 조기 체결했다고 서술한다. 이는 target-attributable broker contract claim이지만 HBM 전용 계약, 시작·종료일, 고정 물량, 가격, allocation 보호, 취소 조건 또는 선수금을 확인하지 않는다.",
+        "exact_quote": "SK하이닉스 등 메모리 벤더와 3년 장기 계약을\n조기 체결함으로써, 공급망 전체에서 가장 먼저 용량을 확보한 유일한 플레이어로서의 지위 확보",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "현재 earnings-visibility gap의 계약 기간에 직접 닿는 target-attributable broker claim이다. 다만 broker source이므로 issuer/customer-official DURABLE_VISIBILITY나 세부 계약조건으로 승격할 수 없다.",
+        "mechanism_scope_id": "SK_HYNIX_NVIDIA_MEMORY_CUSTOMER_COMMITMENT",
+        "normalized_object": "NVIDIA three-year long-term contract with SK hynix among memory vendors",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "three-year term reported as of 2026-04-01; exact start and end dates not disclosed",
+        "predicate": "BROKER_REPORTS_THREE_YEAR_MEMORY_SUPPLY_CONTRACT",
+        "predicate_family": "MEMORY_SUPPLY_CONTRACT_DURATION",
+        "primitive_tags": [
+          "BROKER_REPORT",
+          "THREE_YEAR_TERM",
+          "NO_HBM_ONLY_ATTRIBUTION",
+          "NO_PRICE_OR_VOLUME_TERMS"
+        ],
+        "product_family": "Memory products",
+        "question_family_id": "BROKER_REPORTED_MEMORY_CONTRACT_DURATION",
+        "question_family_tags": [
+          "MEMORY_SUPPLY_CONTRACT",
+          "CONTRACT_DURATION",
+          "BROKER_SOURCE_BOUNDARY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.83,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 등 메모리 벤더와 엔비디아의 장기 공급 관계",
+        "subject_id": "SK_HYNIX_NVIDIA_MEMORY_SUPPLY_CONTRACT",
+        "unit": "duration",
+        "value": "broker-reported three-year long-term contract; exact commercial terms not disclosed"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "9327f858f42d4fb69e26b38b5b88fe2879a7b7500f7fa6346ecabb21ce0156f6",
+  "production_score_authority": false,
+  "prompt_hash": "191c2bce0b68bfdd411b852f1c61859945db4b3e8f97fea19312e2edb1bf544b",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0af5568e974dfba47cebc06a64561a8fc55140df7cafd619ec0228a70d594ba3",
+  "response_id": "COLLABRESP-e2fa66747e50dc99301121419f15f03ccf402ce11305bd7738669b9184336194",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

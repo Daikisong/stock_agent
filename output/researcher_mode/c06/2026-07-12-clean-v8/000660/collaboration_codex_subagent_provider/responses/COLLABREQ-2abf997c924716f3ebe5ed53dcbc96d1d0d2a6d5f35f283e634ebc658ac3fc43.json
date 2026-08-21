@@ -1,0 +1,65 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-a7ba1123e55006eaa89d2da6",
+      "CRMEMO-94a0b0951207cd91b0a3504c",
+      "CRMEMO-2249911cddf154b56adcb60c",
+      "CRMEMO-d3b966cef94684f224f000f9",
+      "CRMEMO-8251854d1e67b2527d378fab",
+      "CRMEMO-d59a4c0b36f44562d19c1762",
+      "CRMEMO-80cb0de6b0599152dc281125"
+    ],
+    "confidence": 0.91,
+    "cross_component_support": [
+      "FY2025 HBM sales growth above twofold, 2026Q1 HBM pricing contribution, customer-requested HBM4 mass production and Time-to-Market execution jointly support a real HBM product-and-revenue conversion rather than a plan-only thesis.",
+      "Memory-wide 100% utilization, demand exceeding supply capability, and M15X, Yongin and advanced-packaging expansion plans jointly support near-term bottleneck and medium-term supply-response visibility, while preserving the memory-wide versus HBM-only boundary.",
+      "Strong consolidated profit and operating cash flow, DRAM revenue growth, net cash and debt reduction support current earnings strength and investment capacity; the memos consistently avoid relabeling those company-wide actuals as HBM-only EPS, FCF or ROIC.",
+      "CURRENT_VALUATION and DURABLE_VISIBILITY create a usable valuation comparison plane, while HBM-specific actual execution gives that plane an operating basis. The evidence supports calibration, not an automatic claim of undervaluation.",
+      "OPENDART actuals and the unmodified audit opinion strengthen the reliability of revenue, cash, customer concentration, inventory and provision facts used across all seven component memos.",
+      "All seven component memos and the Red Team preserve customer concentration, inventory and receivable conversion, CAPEX, non-operating gains and dilution as shared counterweights rather than hiding them in one component."
+    ],
+    "cross_component_tensions": [
+      "Consolidated earnings, operating cash flow and DRAM revenue are strong actuals, but no HBM-only revenue, margin, EPS, CAPEX, working-capital, tax or FCF bridge permits full attribution to eps_fcf_explosion or valuation.",
+      "Customer-requested HBM4 mass production and ASIC collaboration show execution, but they do not disclose signed customer price, volume, duration, cancellation, advance-payment, backlog, RPO or allocation protection required for contract-grade earnings visibility.",
+      "Memory-wide utilization and demand exceed supply, yet HBM-only capacity, sold-out duration and realized ASP are absent; inventory valuation, large WIP and contract-loss provisions prevent treating all tightness as durable scarcity rent.",
+      "Operating cash flow improved, while CAPEX cash outflow, receivable and inventory growth, tax payments and unusually large dividend cash receipts limit the conversion to repeatable free cash flow.",
+      "Valuation signals conflict: low forward PE sits beside high forward EV/EBITDA and PB, elevated trailing PE and PB, and thin forward FCF yield, with some denominators derived rather than actual.",
+      "Issuer HBM execution and demand statements are economically relevant but remain mainly within one issuer independence group; regulated company-wide actuals do not independently corroborate HBM customer terms or standalone economics.",
+      "Demand strength is concentrated in large customers and volume-price terms are renegotiated monthly or quarterly, so high utilization does not equal diversified, long-duration contract durability.",
+      "JUDGE_INTERSECTIONS: eps_fcf_explosion=NOT_EMBEDDED/NOT_INFERRED; earnings_visibility=NOT_EMBEDDED/NOT_INFERRED; bottleneck_pricing=NOT_EMBEDDED/NOT_INFERRED; market_mispricing=NOT_EMBEDDED/NOT_INFERRED; valuation_rerating=NOT_EMBEDDED/NOT_INFERRED; capital_allocation=NOT_EMBEDDED/NOT_INFERRED; information_confidence=NOT_EMBEDDED/NOT_INFERRED. The immutable prompt contains no judge artifacts or ranges, so no three-way overlap or material-disagreement conclusion is invented."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "The seven memos and RTMEMO-95d8e647d57b680712ff2f0e form a coherent current thesis: HBM revenue, pricing and product execution are actual, memory demand is tight, and company-wide earnings, cash and balance-sheet capacity are strong. The same evidence does not establish HBM-only earnings or cash economics, long-duration signed customer obligations, HBM-only capacity lock, or an independently corroborated customer contract. Valuation is therefore supported by real operating conversion but constrained by conflicting multiples, derived denominators and missing standalone HBM bridges. Judge decisions are not embedded in the immutable prompt, so all seven A/S/C intersections are explicitly NOT_EMBEDDED/NOT_INFERRED. synthesis_complete means the seven memos and current Red Team were fully reviewed; it is not score, Stage or investment authority.",
+    "unresolved_material_questions": [
+      "What HBM-only revenue, mix, gross margin, operating profit, CAPEX, working capital and FCF bridge converts the strong company and DRAM actuals into attributable HBM economics?",
+      "Do customer relationships include signed purchase obligations with numeric volume, price, period, cancellation protection, advance payment, backlog or allocation rights, rather than requested production and collaboration alone?",
+      "What HBM-only capacity, packaging output, utilization, customer allocation and sold-out period support durable bottleneck pricing beyond memory-wide 100% utilization?",
+      "How did HBM actual results compare with an attributable pre-existing market expectation, and which current or forward valuation denominator best reflects recurring operating and cash economics?",
+      "What is the realized HBM-specific return on the issuer-wide M15X, Yongin, EUV and packaging investment program after CAPEX, R&D, working capital and tax?",
+      "Can a customer-official or otherwise independent source corroborate HBM qualification, product quality, committed demand and contract economics without treating its absence as proof against the issuer claim?",
+      "Judge-range intersections and material disagreements remain unassessed in this immutable synthesis because judge decisions are not embedded; every component is therefore marked NOT_EMBEDDED/NOT_INFERRED rather than supplemented from external outputs."
+    ]
+  },
+  "payload_hash": "6286111696237352ec9c715fe1947788db67c3a9c2290f122ec41371996e1f82",
+  "production_score_authority": false,
+  "prompt_hash": "7135e38cfce809ea89f3b14989882cb8b9594673240785a2c6ec4482d0a50d4c",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2abf997c924716f3ebe5ed53dcbc96d1d0d2a6d5f35f283e634ebc658ac3fc43",
+  "response_id": "COLLABRESP-f5c0233ed1d9b63c8d469cbeb5d7efbf210d3f75a6fec1e32923192e47ba2098",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

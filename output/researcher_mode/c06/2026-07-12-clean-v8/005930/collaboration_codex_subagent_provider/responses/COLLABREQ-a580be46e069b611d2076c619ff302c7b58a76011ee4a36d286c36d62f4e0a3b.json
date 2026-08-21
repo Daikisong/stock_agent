@@ -1,0 +1,104 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-816ab6e06d5e578c1affa19d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Naver 제3자 해외뉴스 요약으로 OpenAI CUSTOMER_OFFICIAL original source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a354436798eed2be41a60e8d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Telegram 통계 페이지로 objective-bound 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-eda5f879d5c6f11b95c6d845",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "KIEP 반도체 수출통제 보고서로 OpenAI 공식 partnership 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-65112e7f73b79695faaf0077",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "Newneek 제3자 기사이며 NVIDIA 또는 OpenAI 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-233d76661fc2e611ee890531",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2026-07-27 제목의 cutoff 이후 Naver 제3자 글이며 미래누수이자 CUSTOMER_OFFICIAL 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f8ad328a03d4658da5acf0b6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "다른 회사의 KIND 주총 공고로 대상 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-9dcee8eeb7913f66424399ae",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "제3자 매체의 일반 기사 목록이며 OpenAI 공식 original/full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cd3a635753343208873e309c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "다른 회사의 KIND 분기보고서로 삼성-OpenAI relationship scope와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-6a0304ea89ee44cddd83f0f2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "제3자 매체의 기사 목록으로 OpenAI 고객 공식 원문이 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition에도 OpenAI CUSTOMER_OFFICIAL original/full-source route가 없다. material0·metadata·snippet은 evidence, source absence 또는 completion을 증명하지 않는다."
+    ]
+  },
+  "payload_hash": "fce40cb63bad1d274fa23a8ba61dbb21c18c5439de02b4b7b03236f8fe3b39e3",
+  "production_score_authority": false,
+  "prompt_hash": "480e02e3416f19ff7427ec2a227748abbfe68ee36c50641856ae6f94d017f0da",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a580be46e069b611d2076c619ff302c7b58a76011ee4a36d286c36d62f4e0a3b",
+  "response_id": "COLLABRESP-9d1ac442accdb768d0157543c1cbebfc3d965f16c473a79f1c8775a75f61166e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

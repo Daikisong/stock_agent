@@ -1,0 +1,57 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      14.3,
+      16.1
+    ],
+    "anchor_comparisons": [
+      "CANCH-0714e46eb37d4c4b066de92c의 중간값 14.88과 비교하면, 연결 순이익·영업현금흐름 및 DRAM 매출의 실제 개선에 HBM 가격 상승 주도 사실까지 더해져 비슷하거나 소폭 높은 밴드가 타당하다. 다만 이 앵커는 ordinal 비교용이며 HBM 단독 EPS·FCF를 직접 입증하지 않는다.",
+      "CANCH-17745cd4887afd21639e9dd6의 중간값 11.52보다 높은 이유는 다섯 개의 현재 positive fact가 실제 이익·현금·DRAM 매출과 HBM 가격 방향을 함께 확인하기 때문이다. 반면 전사 CAPEX와 재고·재공품 손실 충당 사실은 이 격차를 무제한 확대하지 못하게 한다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-22b3c14ea08f7a3f6c58b170",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332"
+    ],
+    "disagreements": [
+      "강한 연결 actual과 HBM 가격 방향은 인정하지만, HBM 단독 매출·마진·EPS·CAPEX·운전자본·세금 bridge가 없으므로 전사 FCF 개선을 HBM에 전부 귀속하는 해석에는 동의하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-0714e46eb37d4c4b066de92c",
+      "CANCH-17745cd4887afd21639e9dd6"
+    ],
+    "proposed_points": 15.2,
+    "rationale": "현재 증거는 연결 순이익과 영업현금흐름의 큰 실제 개선, DRAM 매출 확대, 제한된 공급에서 HBM이 가격 상승을 주도했다는 방향을 함께 보여준다. 따라서 중간 이상의 EPS·FCF 경제성을 인정한다. 그러나 연결·DRAM 수치를 HBM 단독 이익이나 FCF로 바꿀 수 없고, 유형자산 취득 현금유출 증가와 재고평가충당금·재공품 계약손실이 현금전환의 질을 낮추므로 15.2점과 [14.3, 16.1] 범위로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-0295af0d92028218f77266f2",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-d2e799df4d980691c6707a9e"
+    ],
+    "why_not_higher": "HBM 단독 매출·영업이익·EPS·FCF와 HBM 귀속 CAPEX·운전자본이 없고, 전사 CAPEX 현금유출 증가와 재고·재공품 손실 충당이 남아 있기 때문이다.",
+    "why_not_lower": "연결 순이익과 영업현금흐름, DRAM 매출이 실제로 크게 개선됐고 HBM이 가격 상승 주도 제품군에 포함됐다는 현재 fact가 함께 있어 단순 전망만 있는 낮은 밴드보다 강하기 때문이다."
+  },
+  "payload_hash": "77bc463a6208c5913bab7b5244bc9cfd82f0168104953050e40d93923569b413",
+  "production_score_authority": false,
+  "prompt_hash": "bb3814602cd9c6f2121af2a89110052811763606ad24da1eda67f525dc6fbcef",
+  "provenance": {
+    "agent_id": "phase105_profile_response",
+    "agent_model": "codex-gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e1da058897acaca8060fb045049750256c16e5d414f8ffa6ce35919d9cfb2046",
+  "response_id": "COLLABRESP-39e5202f91b4be7a9718de31fa55aad731adeec3e1d4f341a094c658db63ebd3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

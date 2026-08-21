@@ -1,0 +1,306 @@
+{
+  "output_schema_hash": "fa029489b0fca1a2f810686b8ae7cf9f97e052cb3b0fb1b81bb6fbb442a8ccac",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-4c08866a214037b5f3304085",
+        "rationale": "issuer 공식 문서를 전수검토해 회사 AI 팩토리 GPU 계획, 엔비디아 HBM 공급 협의의 비구속 상태, HBM3E 공급, HBM4 샘플·양산 준비, HBM4 수요 대응 투자, 25년 기술협력 등 6개 distinct fact를 추출했다. AI-RAN·로봇·파운드리 일반 내용과 기존 HBM4 성능 사양은 objective 범위 또는 current semantic 중복으로 제외했다.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "회사 전체 반도체 제조",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-4c08866a214037b5f3304085",
+        "economic_mechanism": "삼성전자는 향후 수년간 엔비디아 GPU 5만개 이상을 도입해 반도체 AI 팩토리 인프라를 확충할 계획이다. 이는 수량이 제시된 미래 자원배분 계획이지만 투자금액과 회수수익은 제시하지 않는다.",
+        "exact_quote": "이를 위해 삼성전자는 향후 수년간 5만개 이상의 엔비디아 GPU를 도입해 AI 팩토리 인프라를 확충하고, 엔비디아의 시뮬레이션 라이브러리 옴니버스(Omniverse) 기반 디지털 트윈 제조 환경 구현을 가속화할 예정이다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "회사 차원의 수량 기반 미래 자원배분 계획으로 capital_allocation을 보완하지만 HBM 전용 투자나 투자금액·회수수익으로 귀속하지 않는다.",
+        "mechanism_scope_id": "005930_CORPORATE_AI_FACTORY_GPU_CAPITAL_PLAN",
+        "normalized_object": "NVIDIA_GPU_UNITS_PLANNED_FOR_SEMICONDUCTOR_AI_FACTORY",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-10-31 이후 향후 수년간",
+        "predicate": "삼성전자는 향후 수년간 엔비디아 GPU 5만개 이상을 도입할 계획이라고 밝혔다.",
+        "predicate_family": "CORPORATE_AI_FACTORY_GPU_CAPITAL_PLAN",
+        "primitive_tags": [
+          "gpu_unit_plan",
+          "corporate_capital_plan"
+        ],
+        "product_family": "반도체 AI 팩토리",
+        "question_family_id": "C06_CORPORATE_AI_FACTORY_GPU_CAPITAL_PLAN",
+        "question_family_tags": [
+          "CAPITAL_ALLOCATION",
+          "AI_FACTORY"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [
+          "FORWARD_GUIDANCE"
+        ],
+        "subject": "삼성전자 반도체 AI 팩토리 GPU 도입 계획",
+        "subject_id": "005930",
+        "unit": "GPU",
+        "value": "50,000 이상"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-4c08866a214037b5f3304085",
+        "economic_mechanism": "삼성전자는 엔비디아에 HBM3E와 HBM4를 공급할 계획이라고 밝혔지만 HBM4 공급은 아직 긴밀히 협의 중이다. 이는 명명 고객과의 공급 논의를 확인하되 서명 계약·확정 배정·물량·가격을 확인하지 못하는 가시성 counter다.",
+        "exact_quote": "삼성전자는 AI 팩토리 구축과 함께 엔비디아에 ▲HBM3E ▲HBM4 ▲GDDR7 ▲SOCAMM2 등 차세대 메모리와 파운드리 서비스도 공급해 글로벌 AI생태계에서 삼성전자와 엔비디아의 위상을 더욱 공고히 할 계획이다.\n삼성전자는 이미 공급 중인 메모리 제품뿐만 아니라 성능과 에너지 효율을 대폭 향상시킨 HBM4 공급을 엔비디아와 긴밀하게 협의 중이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "issuer가 엔비디아를 직접 명명했지만 문구는 계획과 협의 단계다. 따라서 signed allocation, 계약기간, 물량, 가격, 선수금 또는 취소조건으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930_MEMORY_NVIDIA_HBM_SUPPLY_DISCUSSION",
+        "normalized_object": "NVIDIA_HBM3E_HBM4_SUPPLY_PLAN_AND_HBM4_DISCUSSION_STATUS",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2025-10-31 현재 및 이후",
+        "predicate": "엔비디아 대상 HBM3E·HBM4 공급은 issuer plan이며 HBM4 공급은 2025-10-31 현재 협의 중이다.",
+        "predicate_family": "NVIDIA_HBM_SUPPLY_DISCUSSION_STATUS",
+        "primitive_tags": [
+          "named_customer",
+          "nonbinding_discussion"
+        ],
+        "product_family": "HBM3E·HBM4",
+        "question_family_id": "C06_NVIDIA_HBM_SUPPLY_DISCUSSION_STATUS",
+        "question_family_tags": [
+          "CUSTOMER_RELATIONSHIP",
+          "HBM_SUPPLY_DISCUSSION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "CUSTOMER_ALLOCATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CUSTOMER_COMMITMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자와 엔비디아의 HBM 공급 협의 상태",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "HBM3E·HBM4 공급 계획; HBM4 공급 협의 중"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4c08866a214037b5f3304085",
+        "economic_mechanism": "삼성전자는 2025-10-31 현재 글로벌 전 고객사에 HBM3E를 공급 중이라고 밝혔다. 다만 이 문장은 엔비디아의 확정 배정량이나 계약 조건을 특정하지 않는다.",
+        "exact_quote": "현재 삼성전자는 글로벌 전 고객사에게 HBM3E를 공급하고 있으며, HBM4도 샘플을 요청한 모든 고객사에 샘플 출하를 완료한 뒤 고객사 일정에 맞춰 양산 출하를 준비하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "issuer가 HBM3E의 현재 고객 공급을 직접 확인한다. 다만 고객별 물량·가격·계약기간·엔비디아 배정으로 해석하지 않는다.",
+        "mechanism_scope_id": "005930_MEMORY_HBM3E_GLOBAL_CUSTOMER_SUPPLY",
+        "normalized_object": "HBM3E_SUPPLY_TO_GLOBAL_CUSTOMERS_CURRENT_STATUS",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-10-31 현재",
+        "predicate": "삼성전자는 글로벌 전 고객사에 HBM3E를 공급 중이다.",
+        "predicate_family": "HBM3E_GLOBAL_CUSTOMER_SUPPLY_STATUS",
+        "primitive_tags": [
+          "current_supply",
+          "issuer_official"
+        ],
+        "product_family": "HBM3E",
+        "question_family_id": "C06_HBM3E_GLOBAL_CUSTOMER_SUPPLY_STATUS",
+        "question_family_tags": [
+          "HBM3E_SHIPMENT",
+          "CUSTOMER_SUPPLY"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자 HBM3E 글로벌 고객 공급 상태",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "글로벌 전 고객사 공급 중"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4c08866a214037b5f3304085",
+        "economic_mechanism": "삼성전자는 HBM4 샘플 요청 고객 모두에게 샘플 출하를 완료했고 고객 일정에 맞춰 양산 출하를 준비 중이다. 이는 제품 실행·생산 가시성이지만 고객 승인, 확정 주문량, 가격 또는 계약 조건을 의미하지 않는다.",
+        "exact_quote": "현재 삼성전자는 글로벌 전 고객사에게 HBM3E를 공급하고 있으며, HBM4도 샘플을 요청한 모든 고객사에 샘플 출하를 완료한 뒤 고객사 일정에 맞춰 양산 출하를 준비하고 있다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "issuer가 HBM4 고객 샘플 및 후속 양산 출하 준비를 직접 확인해 실행 가시성을 제공하지만 승인·계약·수량·가격으로 확대하지 않는다.",
+        "mechanism_scope_id": "005930_MEMORY_HBM4_SAMPLE_PRODUCTION_PREPARATION",
+        "normalized_object": "HBM4_ALL_REQUESTING_CUSTOMERS_SAMPLE_COMPLETE_AND_PRODUCTION_PREP",
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409",
+          "SGOBJ-b9fa68f5a7769660459ba605"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-10-31 현재 및 이후 고객사 일정",
+        "predicate": "HBM4 샘플 요청 고객 전원에 샘플 출하를 완료했고 고객 일정에 맞춘 양산 출하를 준비 중이다.",
+        "predicate_family": "HBM4_SAMPLE_AND_PRODUCTION_SHIPMENT_PREPARATION",
+        "primitive_tags": [
+          "sample_shipment_complete",
+          "production_shipment_preparation"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "C06_HBM4_SAMPLE_AND_PRODUCTION_SHIPMENT_PREPARATION",
+        "question_family_tags": [
+          "HBM4_SAMPLE",
+          "PRODUCTION_PREPARATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "QUALIFICATION_EXECUTION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "QUALIFICATION",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "삼성전자 HBM4 고객 샘플 및 양산 출하 준비",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "요청 고객 전원 샘플 출하 완료; 고객 일정별 양산 출하 준비"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4c08866a214037b5f3304085",
+        "economic_mechanism": "삼성전자는 증가하는 고객 HBM4 수요에 대응하기 위해 선제 설비투자를 할 계획이다. 이는 issuer의 제품별 수요·공급 대응 계획이지만 투자액, 생산능력 증가량, 고객 배정 또는 수익회수는 제시하지 않는다.",
+        "exact_quote": "삼성전자는 급격하게 증가하고 있는 고객사 HBM4 수요에 차질 없이 대응하기 위해 선제적으로 설비 투자를 진행할 예정이다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "issuer-official HBM4 수요와 공급 대응 투자를 함께 확인한다. 단, 수요량·CAPA·투자금액·확정 배정은 제시되지 않는다.",
+        "mechanism_scope_id": "005930_MEMORY_HBM4_DEMAND_CAPACITY_INVESTMENT_RESPONSE",
+        "normalized_object": "HBM4_CUSTOMER_DEMAND_RESPONSE_CAPACITY_INVESTMENT_PLAN",
+        "objective_ids": [
+          "SGOBJ-44161aa1a529ae8101bf12b1",
+          "SGOBJ-5ae8f64e9b45a519ee68b062",
+          "SGOBJ-7ba6c752cb327ae2c989b6dd",
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-10-31 이후",
+        "predicate": "삼성전자는 증가하는 고객사 HBM4 수요 대응을 위해 선제적 설비투자를 계획했다.",
+        "predicate_family": "HBM4_DEMAND_CAPACITY_INVESTMENT_RESPONSE",
+        "primitive_tags": [
+          "customer_demand",
+          "capacity_response"
+        ],
+        "product_family": "HBM4",
+        "question_family_id": "C06_HBM4_DEMAND_CAPACITY_INVESTMENT_RESPONSE",
+        "question_family_tags": [
+          "HBM4_DEMAND",
+          "CAPACITY_INVESTMENT"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [
+          "DURABLE_VISIBILITY"
+        ],
+        "subject": "삼성전자 HBM4 수요 대응 설비투자 계획",
+        "subject_id": "005930",
+        "unit": "",
+        "value": "선제 설비투자 예정"
+      },
+      {
+        "business_segment": "DS 메모리",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-4c08866a214037b5f3304085",
+        "economic_mechanism": "삼성전자는 엔비디아 그래픽카드용 D램 공급에서 시작해 25년 이상 기술 협력을 이어왔다고 밝혔다. 이는 named-counterparty 관계를 확인하지만 현재 HBM 계약·배정·수량·가격 증거는 아니다.",
+        "exact_quote": "삼성전자는 엔비디아 그래픽카드에 D램을 공급한 것을 시작으로 파운드리 분야까지 파트너십을 지속적으로 강화해 왔다.\n이번 프로젝트는 25년 이상 이어온 양사의 기술 협력이 맺은 결실로, 업계 최고 수준의 반도체 AI 팩토리 구현이라는 상징적 의미를 담고 있다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "issuer가 named customer와의 장기 기술관계를 직접 설명해 information confidence를 높이지만, 현재 HBM 계약이나 구매의무를 의미하지 않는다.",
+        "mechanism_scope_id": "005930_MEMORY_NVIDIA_LONG_TERM_TECHNICAL_COOPERATION",
+        "normalized_object": "NVIDIA_TECHNICAL_COOPERATION_HISTORY_ORIGINATING_DRAM_SUPPLY",
+        "objective_ids": [
+          "SGOBJ-93cf39260befeafbc887e409"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2025-10-31 기준 25년 이상 누적",
+        "predicate": "삼성전자와 엔비디아의 기술협력은 그래픽카드용 D램 공급에서 시작해 25년 이상 지속됐다.",
+        "predicate_family": "NVIDIA_LONG_TERM_TECHNICAL_COOPERATION_HISTORY",
+        "primitive_tags": [
+          "nvidia_relationship",
+          "dram_supply_history"
+        ],
+        "product_family": "DRAM·반도체 기술협력",
+        "question_family_id": "C06_NVIDIA_LONG_TERM_TECHNICAL_COOPERATION_HISTORY",
+        "question_family_tags": [
+          "NAMED_CUSTOMER_RELATIONSHIP",
+          "TECHNICAL_COOPERATION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.93,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "삼성전자와 엔비디아의 장기 기술협력 관계",
+        "subject_id": "005930",
+        "unit": "년",
+        "value": "25년 이상"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "43911742dc5bce95ee2f442184c43afa2ee1a478f3a6c1709be19d01d206ea0c",
+  "production_score_authority": false,
+  "prompt_hash": "68712348faa7cafceee01e0635f4c767e303b177001d7aeca868cb6ccdeab184",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1d8e888c42abf259bf987e9ca992d0bd6f7a696e077d98751398dc672328925b",
+  "response_id": "COLLABRESP-e2bc9b7385842ea88e52bbb21d7fdf2d16141c1ff9eae03e04bf3cdbce080af9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

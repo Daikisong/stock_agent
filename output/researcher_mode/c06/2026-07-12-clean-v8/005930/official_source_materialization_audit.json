@@ -1,0 +1,32 @@
+{
+  "all_normalized_chunks_preserved": true,
+  "as_of_date": "2026-07-12",
+  "chunk_transport_chars": 18000,
+  "chunking_is_top_n_selection": false,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "full_official_document_missing_count": 0,
+    "future_official_document_count": 0,
+    "live_materialization_unauthorized_count": 0,
+    "mandatory_official_provider_pending_count": 0,
+    "official_chunk_drop_count": 0,
+    "snippet_evidence_count": 0
+  },
+  "evidence_document_chunk_count": 22,
+  "full_source_count": 1,
+  "provider_attempt_count": 6,
+  "provider_failure_is_zero_score": false,
+  "provider_statuses": {
+    "CompanyGuide": "FETCHED",
+    "IssuerIR": "PROVIDER_FAILED",
+    "KIND": "FETCHED",
+    "KRX": "FETCHED",
+    "OpenDART": "FETCHED",
+    "TrustedNews": "PROVIDER_FAILED"
+  },
+  "schema_version": "e2r_v5_official_source_materialization_audit_v1",
+  "snippet_is_evidence": false,
+  "status": "OFFICIAL_SOURCE_MATERIALIZATION_PASS",
+  "structured_payload_count": 4,
+  "target_id": "005930"
+}

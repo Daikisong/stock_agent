@@ -1,0 +1,629 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "rationale": "Coverage-audit continuation page 4 adds the next twelve distinct facts in literal source order after the prior 147: all five conventional-DRAM shipment QoQ forecasts and all seven conventional-DRAM shipment YoY forecasts. These rows are explicitly conventional DRAM and were not relabelled as HBM evidence.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Conventional DRAM broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "범용 DRAM 출하량의 전분기 대비 성장률 전망은 conventional-DRAM volume 경로를 정량화하며 HBM 출하량·mix와 구분된다.",
+        "exact_quote": "범용DRAM출하량(십억Gb) 16.0 20.4 22.1 22.7 22.9 24.1 24.8 24.6 68.6 81.2 96.4\nQoQ -8 27 8 3 1 5 3 -1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명시적 전분기 분모의 범용 DRAM 출하 성장률은 HBM과 분리된 conventional-memory volume 경로를 제공한다.",
+        "mechanism_scope_id": "000660:MEMORY:CONVENTIONAL_DRAM_SHIPMENT_FORECAST",
+        "normalized_object": "SK hynix 4Q25E conventional DRAM shipment QOQ Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q25E",
+        "predicate": "대신증권은 SK하이닉스의 4Q25E 범용 DRAM 출하량 QOQ를 3%로 전망했다.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_SHIPMENT_QOQ_FORECAST",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM",
+          "SHIPMENT_QOQ",
+          "4Q25E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Conventional DRAM shipment estimate, explicitly not HBM shipment",
+        "question_family_id": "daishin_skh_conventional_dram_shipment_qoq_4q25e",
+        "question_family_tags": [
+          "conventional_dram_shipments",
+          "qoq_growth",
+          "non_hbm_boundary"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 범용 DRAM 4Q25E 출하량 QOQ 전망",
+        "subject_id": "000660:CONVENTIONAL_DRAM:SHIPMENT_QOQ:4Q25E:DAISHIN_20251128",
+        "unit": "%",
+        "value": 3
+      },
+      {
+        "business_segment": "Conventional DRAM broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "범용 DRAM 출하량의 전분기 대비 성장률 전망은 conventional-DRAM volume 경로를 정량화하며 HBM 출하량·mix와 구분된다.",
+        "exact_quote": "범용DRAM출하량(십억Gb) 16.0 20.4 22.1 22.7 22.9 24.1 24.8 24.6 68.6 81.2 96.4\nQoQ -8 27 8 3 1 5 3 -1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명시적 전분기 분모의 범용 DRAM 출하 성장률은 HBM과 분리된 conventional-memory volume 경로를 제공한다.",
+        "mechanism_scope_id": "000660:MEMORY:CONVENTIONAL_DRAM_SHIPMENT_FORECAST",
+        "normalized_object": "SK hynix 1Q26E conventional DRAM shipment QOQ Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26E",
+        "predicate": "대신증권은 SK하이닉스의 1Q26E 범용 DRAM 출하량 QOQ를 1%로 전망했다.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_SHIPMENT_QOQ_FORECAST",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM",
+          "SHIPMENT_QOQ",
+          "1Q26E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Conventional DRAM shipment estimate, explicitly not HBM shipment",
+        "question_family_id": "daishin_skh_conventional_dram_shipment_qoq_1q26e",
+        "question_family_tags": [
+          "conventional_dram_shipments",
+          "qoq_growth",
+          "non_hbm_boundary"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 범용 DRAM 1Q26E 출하량 QOQ 전망",
+        "subject_id": "000660:CONVENTIONAL_DRAM:SHIPMENT_QOQ:1Q26E:DAISHIN_20251128",
+        "unit": "%",
+        "value": 1
+      },
+      {
+        "business_segment": "Conventional DRAM broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "범용 DRAM 출하량의 전분기 대비 성장률 전망은 conventional-DRAM volume 경로를 정량화하며 HBM 출하량·mix와 구분된다.",
+        "exact_quote": "범용DRAM출하량(십억Gb) 16.0 20.4 22.1 22.7 22.9 24.1 24.8 24.6 68.6 81.2 96.4\nQoQ -8 27 8 3 1 5 3 -1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명시적 전분기 분모의 범용 DRAM 출하 성장률은 HBM과 분리된 conventional-memory volume 경로를 제공한다.",
+        "mechanism_scope_id": "000660:MEMORY:CONVENTIONAL_DRAM_SHIPMENT_FORECAST",
+        "normalized_object": "SK hynix 2Q26E conventional DRAM shipment QOQ Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E",
+        "predicate": "대신증권은 SK하이닉스의 2Q26E 범용 DRAM 출하량 QOQ를 5%로 전망했다.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_SHIPMENT_QOQ_FORECAST",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM",
+          "SHIPMENT_QOQ",
+          "2Q26E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Conventional DRAM shipment estimate, explicitly not HBM shipment",
+        "question_family_id": "daishin_skh_conventional_dram_shipment_qoq_2q26e",
+        "question_family_tags": [
+          "conventional_dram_shipments",
+          "qoq_growth",
+          "non_hbm_boundary"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 범용 DRAM 2Q26E 출하량 QOQ 전망",
+        "subject_id": "000660:CONVENTIONAL_DRAM:SHIPMENT_QOQ:2Q26E:DAISHIN_20251128",
+        "unit": "%",
+        "value": 5
+      },
+      {
+        "business_segment": "Conventional DRAM broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "범용 DRAM 출하량의 전분기 대비 성장률 전망은 conventional-DRAM volume 경로를 정량화하며 HBM 출하량·mix와 구분된다.",
+        "exact_quote": "범용DRAM출하량(십억Gb) 16.0 20.4 22.1 22.7 22.9 24.1 24.8 24.6 68.6 81.2 96.4\nQoQ -8 27 8 3 1 5 3 -1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명시적 전분기 분모의 범용 DRAM 출하 성장률은 HBM과 분리된 conventional-memory volume 경로를 제공한다.",
+        "mechanism_scope_id": "000660:MEMORY:CONVENTIONAL_DRAM_SHIPMENT_FORECAST",
+        "normalized_object": "SK hynix 3Q26E conventional DRAM shipment QOQ Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E",
+        "predicate": "대신증권은 SK하이닉스의 3Q26E 범용 DRAM 출하량 QOQ를 3%로 전망했다.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_SHIPMENT_QOQ_FORECAST",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM",
+          "SHIPMENT_QOQ",
+          "3Q26E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Conventional DRAM shipment estimate, explicitly not HBM shipment",
+        "question_family_id": "daishin_skh_conventional_dram_shipment_qoq_3q26e",
+        "question_family_tags": [
+          "conventional_dram_shipments",
+          "qoq_growth",
+          "non_hbm_boundary"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 범용 DRAM 3Q26E 출하량 QOQ 전망",
+        "subject_id": "000660:CONVENTIONAL_DRAM:SHIPMENT_QOQ:3Q26E:DAISHIN_20251128",
+        "unit": "%",
+        "value": 3
+      },
+      {
+        "business_segment": "Conventional DRAM broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "범용 DRAM 출하량의 전분기 대비 감소 전망은 범용 제품 volume의 지속성 counter이며 HBM 출하량·mix로 전이할 수 없다.",
+        "exact_quote": "범용DRAM출하량(십억Gb) 16.0 20.4 22.1 22.7 22.9 24.1 24.8 24.6 68.6 81.2 96.4\nQoQ -8 27 8 3 1 5 3 -1",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "범용 DRAM 출하량의 명시적 QoQ 감소는 non-HBM conventional volume counter이며 HBM 수요 약화로 확대하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:CONVENTIONAL_DRAM_SHIPMENT_FORECAST",
+        "normalized_object": "SK hynix 4Q26E conventional DRAM shipment QOQ Daishin broker forecast and contraction counter",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q26E",
+        "predicate": "대신증권은 SK하이닉스의 4Q26E 범용 DRAM 출하량 QOQ를 -1%로 전망했다.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_SHIPMENT_QOQ_FORECAST",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM",
+          "SHIPMENT_QOQ",
+          "4Q26E",
+          "BROKER_ESTIMATE",
+          "SEQUENTIAL_DECLINE"
+        ],
+        "product_family": "Conventional DRAM shipment estimate, explicitly not HBM shipment",
+        "question_family_id": "daishin_skh_conventional_dram_shipment_qoq_4q26e",
+        "question_family_tags": [
+          "conventional_dram_shipments",
+          "qoq_growth",
+          "non_hbm_boundary"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK하이닉스 범용 DRAM 4Q26E 출하량 QOQ 전망",
+        "subject_id": "000660:CONVENTIONAL_DRAM:SHIPMENT_QOQ:4Q26E:DAISHIN_20251128",
+        "unit": "%",
+        "value": -1
+      },
+      {
+        "business_segment": "Conventional DRAM broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "범용 DRAM 출하량의 전년동기 대비 성장률 전망은 conventional-DRAM volume 경로를 정량화하며 HBM 출하량·mix와 구분된다.",
+        "exact_quote": "범용DRAM출하량(십억Gb) 16.0 20.4 22.1 22.7 22.9 24.1 24.8 24.6 68.6 81.2 96.4\nQoQ -8 27 8 3 1 5 3 -1\nYoY 4 10 28 31 43 18 13 8 9 18 19",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명시적 전년동기 분모의 범용 DRAM 출하 성장률은 HBM과 분리된 conventional-memory volume 경로를 제공한다.",
+        "mechanism_scope_id": "000660:MEMORY:CONVENTIONAL_DRAM_SHIPMENT_FORECAST",
+        "normalized_object": "SK hynix 4Q25E conventional DRAM shipment YOY Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q25E",
+        "predicate": "대신증권은 SK하이닉스의 4Q25E 범용 DRAM 출하량 YOY를 31%로 전망했다.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_SHIPMENT_YOY_FORECAST",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM",
+          "SHIPMENT_YOY",
+          "4Q25E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Conventional DRAM shipment estimate, explicitly not HBM shipment",
+        "question_family_id": "daishin_skh_conventional_dram_shipment_yoy_4q25e",
+        "question_family_tags": [
+          "conventional_dram_shipments",
+          "yoy_growth",
+          "non_hbm_boundary"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 범용 DRAM 4Q25E 출하량 YOY 전망",
+        "subject_id": "000660:CONVENTIONAL_DRAM:SHIPMENT_YOY:4Q25E:DAISHIN_20251128",
+        "unit": "%",
+        "value": 31
+      },
+      {
+        "business_segment": "Conventional DRAM broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "범용 DRAM 출하량의 전년동기 대비 성장률 전망은 conventional-DRAM volume 경로를 정량화하며 HBM 출하량·mix와 구분된다.",
+        "exact_quote": "범용DRAM출하량(십억Gb) 16.0 20.4 22.1 22.7 22.9 24.1 24.8 24.6 68.6 81.2 96.4\nQoQ -8 27 8 3 1 5 3 -1\nYoY 4 10 28 31 43 18 13 8 9 18 19",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명시적 전년동기 분모의 범용 DRAM 출하 성장률은 HBM과 분리된 conventional-memory volume 경로를 제공한다.",
+        "mechanism_scope_id": "000660:MEMORY:CONVENTIONAL_DRAM_SHIPMENT_FORECAST",
+        "normalized_object": "SK hynix 1Q26E conventional DRAM shipment YOY Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26E",
+        "predicate": "대신증권은 SK하이닉스의 1Q26E 범용 DRAM 출하량 YOY를 43%로 전망했다.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_SHIPMENT_YOY_FORECAST",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM",
+          "SHIPMENT_YOY",
+          "1Q26E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Conventional DRAM shipment estimate, explicitly not HBM shipment",
+        "question_family_id": "daishin_skh_conventional_dram_shipment_yoy_1q26e",
+        "question_family_tags": [
+          "conventional_dram_shipments",
+          "yoy_growth",
+          "non_hbm_boundary"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 범용 DRAM 1Q26E 출하량 YOY 전망",
+        "subject_id": "000660:CONVENTIONAL_DRAM:SHIPMENT_YOY:1Q26E:DAISHIN_20251128",
+        "unit": "%",
+        "value": 43
+      },
+      {
+        "business_segment": "Conventional DRAM broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "범용 DRAM 출하량의 전년동기 대비 성장률 전망은 conventional-DRAM volume 경로를 정량화하며 HBM 출하량·mix와 구분된다.",
+        "exact_quote": "범용DRAM출하량(십억Gb) 16.0 20.4 22.1 22.7 22.9 24.1 24.8 24.6 68.6 81.2 96.4\nQoQ -8 27 8 3 1 5 3 -1\nYoY 4 10 28 31 43 18 13 8 9 18 19",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명시적 전년동기 분모의 범용 DRAM 출하 성장률은 HBM과 분리된 conventional-memory volume 경로를 제공한다.",
+        "mechanism_scope_id": "000660:MEMORY:CONVENTIONAL_DRAM_SHIPMENT_FORECAST",
+        "normalized_object": "SK hynix 2Q26E conventional DRAM shipment YOY Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E",
+        "predicate": "대신증권은 SK하이닉스의 2Q26E 범용 DRAM 출하량 YOY를 18%로 전망했다.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_SHIPMENT_YOY_FORECAST",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM",
+          "SHIPMENT_YOY",
+          "2Q26E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Conventional DRAM shipment estimate, explicitly not HBM shipment",
+        "question_family_id": "daishin_skh_conventional_dram_shipment_yoy_2q26e",
+        "question_family_tags": [
+          "conventional_dram_shipments",
+          "yoy_growth",
+          "non_hbm_boundary"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 범용 DRAM 2Q26E 출하량 YOY 전망",
+        "subject_id": "000660:CONVENTIONAL_DRAM:SHIPMENT_YOY:2Q26E:DAISHIN_20251128",
+        "unit": "%",
+        "value": 18
+      },
+      {
+        "business_segment": "Conventional DRAM broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "범용 DRAM 출하량의 전년동기 대비 성장률 전망은 conventional-DRAM volume 경로를 정량화하며 HBM 출하량·mix와 구분된다.",
+        "exact_quote": "범용DRAM출하량(십억Gb) 16.0 20.4 22.1 22.7 22.9 24.1 24.8 24.6 68.6 81.2 96.4\nQoQ -8 27 8 3 1 5 3 -1\nYoY 4 10 28 31 43 18 13 8 9 18 19",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명시적 전년동기 분모의 범용 DRAM 출하 성장률은 HBM과 분리된 conventional-memory volume 경로를 제공한다.",
+        "mechanism_scope_id": "000660:MEMORY:CONVENTIONAL_DRAM_SHIPMENT_FORECAST",
+        "normalized_object": "SK hynix 3Q26E conventional DRAM shipment YOY Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E",
+        "predicate": "대신증권은 SK하이닉스의 3Q26E 범용 DRAM 출하량 YOY를 13%로 전망했다.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_SHIPMENT_YOY_FORECAST",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM",
+          "SHIPMENT_YOY",
+          "3Q26E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Conventional DRAM shipment estimate, explicitly not HBM shipment",
+        "question_family_id": "daishin_skh_conventional_dram_shipment_yoy_3q26e",
+        "question_family_tags": [
+          "conventional_dram_shipments",
+          "yoy_growth",
+          "non_hbm_boundary"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 범용 DRAM 3Q26E 출하량 YOY 전망",
+        "subject_id": "000660:CONVENTIONAL_DRAM:SHIPMENT_YOY:3Q26E:DAISHIN_20251128",
+        "unit": "%",
+        "value": 13
+      },
+      {
+        "business_segment": "Conventional DRAM broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "범용 DRAM 출하량의 전년동기 대비 성장률 전망은 conventional-DRAM volume 경로를 정량화하며 HBM 출하량·mix와 구분된다.",
+        "exact_quote": "범용DRAM출하량(십억Gb) 16.0 20.4 22.1 22.7 22.9 24.1 24.8 24.6 68.6 81.2 96.4\nQoQ -8 27 8 3 1 5 3 -1\nYoY 4 10 28 31 43 18 13 8 9 18 19",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명시적 전년동기 분모의 범용 DRAM 출하 성장률은 HBM과 분리된 conventional-memory volume 경로를 제공한다.",
+        "mechanism_scope_id": "000660:MEMORY:CONVENTIONAL_DRAM_SHIPMENT_FORECAST",
+        "normalized_object": "SK hynix 4Q26E conventional DRAM shipment YOY Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q26E",
+        "predicate": "대신증권은 SK하이닉스의 4Q26E 범용 DRAM 출하량 YOY를 8%로 전망했다.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_SHIPMENT_YOY_FORECAST",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM",
+          "SHIPMENT_YOY",
+          "4Q26E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Conventional DRAM shipment estimate, explicitly not HBM shipment",
+        "question_family_id": "daishin_skh_conventional_dram_shipment_yoy_4q26e",
+        "question_family_tags": [
+          "conventional_dram_shipments",
+          "yoy_growth",
+          "non_hbm_boundary"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 범용 DRAM 4Q26E 출하량 YOY 전망",
+        "subject_id": "000660:CONVENTIONAL_DRAM:SHIPMENT_YOY:4Q26E:DAISHIN_20251128",
+        "unit": "%",
+        "value": 8
+      },
+      {
+        "business_segment": "Conventional DRAM broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "범용 DRAM 출하량의 전년동기 대비 성장률 전망은 conventional-DRAM volume 경로를 정량화하며 HBM 출하량·mix와 구분된다.",
+        "exact_quote": "범용DRAM출하량(십억Gb) 16.0 20.4 22.1 22.7 22.9 24.1 24.8 24.6 68.6 81.2 96.4\nQoQ -8 27 8 3 1 5 3 -1\nYoY 4 10 28 31 43 18 13 8 9 18 19",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명시적 전년동기 분모의 범용 DRAM 출하 성장률은 HBM과 분리된 conventional-memory volume 경로를 제공한다.",
+        "mechanism_scope_id": "000660:MEMORY:CONVENTIONAL_DRAM_SHIPMENT_FORECAST",
+        "normalized_object": "SK hynix FY2025E conventional DRAM shipment YOY Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "대신증권은 SK하이닉스의 FY2025E 범용 DRAM 출하량 YOY를 18%로 전망했다.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_SHIPMENT_YOY_FORECAST",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM",
+          "SHIPMENT_YOY",
+          "FY2025E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Conventional DRAM shipment estimate, explicitly not HBM shipment",
+        "question_family_id": "daishin_skh_conventional_dram_shipment_yoy_fy2025e",
+        "question_family_tags": [
+          "conventional_dram_shipments",
+          "yoy_growth",
+          "non_hbm_boundary"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 범용 DRAM FY2025E 출하량 YOY 전망",
+        "subject_id": "000660:CONVENTIONAL_DRAM:SHIPMENT_YOY:FY2025E:DAISHIN_20251128",
+        "unit": "%",
+        "value": 18
+      },
+      {
+        "business_segment": "Conventional DRAM broker estimate, not HBM-attributed",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "범용 DRAM 출하량의 전년동기 대비 성장률 전망은 conventional-DRAM volume 경로를 정량화하며 HBM 출하량·mix와 구분된다.",
+        "exact_quote": "범용DRAM출하량(십억Gb) 16.0 20.4 22.1 22.7 22.9 24.1 24.8 24.6 68.6 81.2 96.4\nQoQ -8 27 8 3 1 5 3 -1\nYoY 4 10 28 31 43 18 13 8 9 18 19",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "명시적 전년동기 분모의 범용 DRAM 출하 성장률은 HBM과 분리된 conventional-memory volume 경로를 제공한다.",
+        "mechanism_scope_id": "000660:MEMORY:CONVENTIONAL_DRAM_SHIPMENT_FORECAST",
+        "normalized_object": "SK hynix FY2026E conventional DRAM shipment YOY Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "대신증권은 SK하이닉스의 FY2026E 범용 DRAM 출하량 YOY를 19%로 전망했다.",
+        "predicate_family": "BROKER_CONVENTIONAL_DRAM_SHIPMENT_YOY_FORECAST",
+        "primitive_tags": [
+          "CONVENTIONAL_DRAM",
+          "SHIPMENT_YOY",
+          "FY2026E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Conventional DRAM shipment estimate, explicitly not HBM shipment",
+        "question_family_id": "daishin_skh_conventional_dram_shipment_yoy_fy2026e",
+        "question_family_tags": [
+          "conventional_dram_shipments",
+          "yoy_growth",
+          "non_hbm_boundary"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "REVENUE_CONVERSION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_SHIPMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 범용 DRAM FY2026E 출하량 YOY 전망",
+        "subject_id": "000660:CONVENTIONAL_DRAM:SHIPMENT_YOY:FY2026E:DAISHIN_20251128",
+        "unit": "%",
+        "value": 19
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-b06350879c518ec49fa8cd5c"
+    ],
+    "unresolved_research_notes": [
+      "The page cap was reached before the later conventional-DRAM ASP-per-Gb point, QoQ, and YoY rows. Continue this same chunk without repeating the prior 147 or these twelve; conventional DRAM remains a non-HBM boundary and material search failure is not source absence."
+    ]
+  },
+  "payload_hash": "fb14ddf07ca0d1e2fce4c1580238db6ab4220a79b2ef719587f70b3d9d1b0fb1",
+  "production_score_authority": false,
+  "prompt_hash": "600004f4659aa1902e90f4238055d560fe88648342cafdda98d2ccb00b3cb351",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4d05dabce4537a75a5181f3a419d9f6cca1ab17f91d37ae08ba92c3988b3053f",
+  "response_id": "COLLABRESP-ff6ec35310722fa3606e012a0f7e4f1e059d07cca95844dfa7749ca4c0d06a6e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

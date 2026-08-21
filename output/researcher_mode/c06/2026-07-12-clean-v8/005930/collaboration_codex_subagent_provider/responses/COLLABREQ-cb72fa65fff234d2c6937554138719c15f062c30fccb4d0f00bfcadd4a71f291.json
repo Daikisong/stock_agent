@@ -1,0 +1,70 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-ab936a5232e7a47b4b77f908",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "공식 사이트의 홈·미디어 라이브러리·선택 화면 같은 탐색 페이지이며 특정 날짜의 원문 기사나 보고서로 직접 이어지는 full-fetch route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-abad60d0e44550b6e9b5c3ab",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 도메인의 제품·서비스 페이지이지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 사업 범위여서 이 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-ac4b74301d1df57f56099b3d",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "공식 또는 발견 경로이지만 일반 제품·지원·행사·내비게이션 페이지에 머물러 현재 HBM·메모리 경제 메커니즘의 양면 근거를 검증할 full document가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-afc45a6c4a8d5a130311da3e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "공식 사이트의 홈·미디어 라이브러리·선택 화면 같은 탐색 페이지이며 특정 날짜의 원문 기사나 보고서로 직접 이어지는 full-fetch route가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "533cebc98076c196d26629db77eea1647698819c3ada9419aaae07d8076479bb",
+  "production_score_authority": false,
+  "prompt_hash": "8b58417c7bf99bdbf3eaa0d0def4db90fc23e73c0d888b652a6a174bfff20f14",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cb72fa65fff234d2c6937554138719c15f062c30fccb4d0f00bfcadd4a71f291",
+  "response_id": "COLLABRESP-cb40f3d50b0d966d6de4791b54a70b087802031a48db11a8d9cafe0ed548d563",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

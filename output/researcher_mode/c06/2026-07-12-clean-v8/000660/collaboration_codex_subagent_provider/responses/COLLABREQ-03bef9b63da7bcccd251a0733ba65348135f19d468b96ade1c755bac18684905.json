@@ -1,0 +1,165 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-a7ba1123e55006eaa89d2da6는 연결 순이익·영업현금과 DRAM actual, HBM 가격 기여를 HBM-only EPS·FCF 귀속 공백 및 CAPEX·재고·재공품 손실과 함께 반영한다. Prompt에는 tri-role judge range가 없어 intersection은 NOT_EMBEDDED/NOT_INFERRED지만 deterministic material-disagreement roster는 비어 있으므로 그 투영 한계만으로 memo를 재개방하지 않는다."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-94a0b0951207cd91b0a3504c는 DRAM actual·메모리 100% 가동·HBM 제품 실행과 월·분기 재협의, 고객 집중 및 장기 계약·RPO 부재를 같은 evidence plane에서 다룬다. Judge intersection은 NOT_EMBEDDED/NOT_INFERRED이며 prompt의 material-disagreement roster는 비어 있다."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-2249911cddf154b56adcb60c는 메모리 100% 가동과 HBM 가격 기여를 HBM-only locked CAPA·장기 sold-out·고정가격으로 확대하지 않고 재고·재공품·고객 집중 counter를 보존한다. Judge intersection은 NOT_EMBEDDED/NOT_INFERRED이고 현재 prompt에는 material disagreement가 없다."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-d3b966cef94684f224f000f9는 actual operating delta와 시장 기대·mispricing 직접 증명의 경계를 명시하고 current valuation·revision을 비교면으로만 사용한다. 이 한계는 이미 score band의 counterweight이며 prompt에 새 material disagreement는 없다. Judge intersection은 NOT_EMBEDDED/NOT_INFERRED다."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "STRUCTCAND-45d9d65d2fcf68d5fd524538의 exact PUBLIC_BROKER_PDF full report가 HBM-attributable earnings·cash denominator, 메모리 가격의 사전 기대 대비 변화와 current rerating bridge를 source-backed로 제공하는지 확인해야 한다."
+        ],
+        "rationale": "CRMEMO-bd1ae968a0ff283334124565는 actual HBM 실행과 혼합 valuation 신호를 균형 있게 다루고 judge intersection은 NOT_EMBEDDED/NOT_INFERRED다. 그러나 prompt가 2026-07-09 KB report candidate STRUCTCAND-45d9d65d2fcf68d5fd524538/provider_report_id 1111523을 bounded metadata hint로 명시하며, 제목·요약은 메모리 가격의 시장 기대 상회 및 재평가를 직접 다룬다. Metadata 자체는 evidence가 아니지만 exact full report는 HBM 귀속 denominator와 기대 대비 valuation bridge를 바꿀 수 있는 구체적 positive route이므로 확인 전 memo sufficiency를 닫지 않는다."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-d59a4c0b36f44562d19c1762는 전사 순현금·부채축소·배당·자기주식 소각과 CAPEX·R&D·운전자본·희석 부담을 대칭적으로 반영하며 HBM-only realized ROIC를 발명하지 않는다. Judge intersection은 NOT_EMBEDDED/NOT_INFERRED이고 prompt의 material-disagreement roster는 비어 있다."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-80cb0de6b0599152dc281125는 감사된 OPENDART actual의 신뢰성과 issuer HBM 실행·협업의 독립 corroboration 한계를 분리하며 빈 corroboration count를 source absence로 만들지 않는다. Prompt에는 명명된 새 counterparty-official identity가 없고 judge intersection은 NOT_EMBEDDED/NOT_INFERRED다."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-1a14a205b1ca37e2a0a08185",
+        "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED 문서 거절 1건은 source absence가 아니며 SOURCE_GRAPH_OBJECTIVE_RESOLUTION으로 해소된 과거 fetch 제약이다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-22d4f2ab487d7655fc546810",
+        "rationale": "QUERY_PROVIDER_ERROR 16건은 query transport/provider 실패이지 자료 부재의 증명이 아니다. Immutable snapshot에서는 후발 결과를 추정하지 않고 재검증이 필요한 transport 상태로 남긴다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-6b4221952f92d264dd1a7d6c",
+        "rationale": "PUBLIC_BROKER_PDF 요청에서 accepted claim/fact lineage가 없었던 1건은 source absence가 아니다. 기존의 넓거나 실패한 route를 반복하지 말고 prompt가 식별한 exact current candidate의 full report만 candidate-bound로 검증해야 한다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FETCH_FAILURE",
+        "failure_id": "FAILGROUP-976e77a75db8ea1311b1326c",
+        "rationale": "SNIPPET_ONLY_FULL_FETCH_REQUIRED query failure 1건은 objective resolution으로 해소됐고 source absence를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-9f189ef4313bb76da9d0c2eb",
+        "rationale": "As-of date 뒤 문서 6건은 full fetch 뒤 거절된 미래자료이며 current 판단에서 제외해야 한다. 재시도나 source absence 주장의 근거가 아니다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-b5e3b8331dcb08b996ec83cf",
+        "rationale": "FUTURE_DOCUMENT_AFTER_FULL_FETCH query failure 6건은 cutoff 위반으로 정당하게 배제됐으며 current source 부재를 뜻하지 않는다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "DUPLICATE_QUERY",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "LLM_RETURNED_NO_NEW_VALID_QUERY 1건은 당시 제안에서 distinct valid query가 없었다는 뜻일 뿐 saturation 또는 source absence proof가 아니다. 새 route는 exact candidate identity에 묶여야 한다.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-d5ae73aeae8a077698c8758a",
+        "rationale": "SEARCH_NO_RESULT_NOT_SATURATION 6건은 이름 그대로 zero-result-only이며 자료 부재나 완료를 증명하지 않는다. 후발 response는 이 immutable review에 선반영하지 않는다.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "valuation_rerating",
+        "direction": "POSITIVE",
+        "fact_need": "Exact candidate STRUCTCAND-45d9d65d2fcf68d5fd524538/provider_report_id 1111523의 full report에서 HBM-attributable forward earnings·cash denominator와 메모리 가격의 시장 기대 대비 변화가 current valuation rerating과 어떻게 연결되는지 확인한다.",
+        "why_material": "현재 memo의 forward PE 6.13배와 높은 EV/EBITDA·PB, 낮은 FCF yield 충돌은 HBM-only denominator가 없어 범위가 넓다. Candidate metadata는 증거가 아니지만 해당 full report의 source-backed bridge가 이 범위와 rerating 판단을 실제로 바꿀 수 있다."
+      }
+    ],
+    "new_source_family_directions": [],
+    "next_actions": [
+      "SOURCE_QUERY_GENERATION LLM이 SGOBJ-5fccea4d80fc98e697bd7a0e에 대해 STRUCTCAND-45d9d65d2fcf68d5fd524538/provider_report_id 1111523 identity-bound full-report retrieval만 생성·검증한다.",
+      "Full report가 eligible하게 fetch·parse되어 source-backed semantic delta가 생긴 경우에만 valuation memo와 독립 judges, Red Team, Synthesis, Supervisor를 순서대로 갱신하고, 그렇지 않으면 metadata나 no-result를 evidence·absence·completion으로 승격하지 않는다."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "이전에 실패한 STRUCTCAND-dd271cdb3c5c93d51fc8e631/LS provider_report_id 1108519 route",
+          "candidate identity가 없는 일반 SK하이닉스 valuation·HBM 검색",
+          "동일 metadata summary를 fact로 재포장하는 query",
+          "as_of_date 2026-07-12 뒤 자료"
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "research_need": "Bounded candidate STRUCTCAND-45d9d65d2fcf68d5fd524538, KB, published 2026-07-09, provider_report_id 1111523의 exact full report를 대상으로 HBM-attributable forward earnings·cash denominator, 메모리 가격의 시장 기대 대비 변화 및 current rerating bridge가 실제 source-backed claim으로 존재하는지 검증한다. Metadata preview는 evidence로 사용하지 않는다."
+      }
+    ],
+    "rationale": "Current component memos 7개와 RTMEMO-8ed934301d7aeb07d694beae, SYNMEMO-7e62fcb75ef8db2fa237e384, structured 1,669 records, 7-objective counter proof 및 8 failure groups/38 members를 immutable prompt 안에서 전수 감사했다. Structured roles는 전 component에서 complete이고 Red Team과 counter/supersession proof도 전 objective를 덮는다. Prompt에는 individual judge artifacts/ranges가 없으므로 7 tri-role intersections는 모두 NOT_EMBEDDED/NOT_INFERRED이며 deterministic material-disagreement roster가 비어 있다는 사실만 보존한다. 이 투영 한계 자체는 memo 재작성 근거가 아니다. 다만 current bounded candidate roster의 2026-07-09 KB exact report는 valuation memo의 HBM-only denominator·expectation bridge를 바꿀 수 있는 구체적 full-report route다. 따라서 valuation memo만 아직 sufficient하지 않고 route는 하나 남으며, provider/no-result/future-rejection 이력은 어느 것도 source absence나 completion 근거가 아니다.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": [
+      "Exact KB full-report candidate STRUCTCAND-45d9d65d2fcf68d5fd524538/provider_report_id 1111523이 HBM-attributable earnings·cash denominator와 시장 기대 대비 메모리 가격 변화를 current rerating으로 연결하는 source-backed fact를 실제로 포함하는가?"
+    ]
+  },
+  "payload_hash": "db4b7d3790a458fc5506474871aac716a6bacde3bff8d96e088b897d44c848cb",
+  "production_score_authority": false,
+  "prompt_hash": "86b1851c20aee63f3f9a73328991a7be1f3e30f5f5723148a8628adce0244fc3",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-03bef9b63da7bcccd251a0733ba65348135f19d468b96ade1c755bac18684905",
+  "response_id": "COLLABRESP-de99bbba645681216997451c5c5b37038c2885dbdb4c0f25b12e7c2cc392eddc",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,235 @@
+{
+  "output_schema_hash": "c868b7984783713b2e3740f6cd04e782db23cbf2a2dc528af1d966a1aa3d96b4",
+  "payload": {
+    "confidence": 0.78,
+    "counter_case": "COUNTER 행 38,39,41,43,64,75,102,107을 모두 반영한다. 큰 유형자산·R&D 지출, 연결·별도 매출채권 증가, 재고 증가 및 교환사채 주식 교환은 현금전환·희석의 counterweight이며 HBM 전용 투자성과는 확인되지 않는다.",
+    "historical_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "nearest_counter_anchor_ids": [
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "nearest_positive_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e"
+    ],
+    "positive_case": "POSITIVE 행 7,16,19,44,58,71,84,93,94,103,105를 모두 반영한다. 순현금·부채 감소·약정 준수·부채 상환과 주주환원은 positive지만 전사 자본구조이며 HBM 전용 realised ROIC로 귀속하지 않는다. CAPEX_SUPPLY_RESPONSE와 CASH_CONVERSION actual은 전사 actual이다.",
+    "prior_fact_dispositions": [],
+    "proposed_score_lower": 2.2,
+    "proposed_score_mid": 2.7,
+    "proposed_score_upper": 3.2,
+    "research_complete": true,
+    "researcher_summary": "현금·단기금융자산 대비 차입금, 금융부채 감소, 차입약정 준수와 순현금, 현금 증가·부채 상환, 배당 및 자기주식 소각은 capital allocation의 positive다. 반면 큰 CAPEX·R&D 지출, 매출채권·재고 증가와 교환사채 희석은 현금효율을 제한한다.",
+    "selected_fact_groundings": [
+      {
+        "component_interpretation": "capital_allocation positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 7,
+        "source_economic_mechanism": "2026년 1분기말 연결 현금및현금성자산은 21,166,904백만원으로 전기말 14,923,766백만원보다 증가해 자본투자와 주주환원에 대응할 유동성 기반을 강화했다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_CONSOLIDATED_CASH_BALANCE",
+        "source_value_json": "21166904"
+      },
+      {
+        "component_interpretation": "capital_allocation positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 16,
+        "source_economic_mechanism": "연결 금융부채 범주 합계가 2025년 말 40,872,970백만원에서 2026년 1분기 말 36,477,745백만원으로 감소해 재무부담 변화를 보여준다.",
+        "source_period_json": "\"2026-03-31 vs 2025-12-31\"",
+        "source_predicate": "연결 금융부채 범주 합계는 2026년 1분기 말 36,477,745백만원으로 전기말 40,872,970백만원보다 감소했다.",
+        "source_value_json": "\"36,477,745 vs 40,872,970\""
+      },
+      {
+        "component_interpretation": "capital_allocation positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 19,
+        "source_economic_mechanism": "2026년 1분기말 별도 현금·단기금융·단기투자 합계 29,650,237백만원이 차입금 17,017,563백만원을 웃돌아 순차입금 비율이 음수였다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "REPORTS_NET_CASH_CAPITAL_STRUCTURE",
+        "source_value_json": "\"cash and short-term financial assets KRW 29,650,237 million; borrowings KRW 17,017,563 million\""
+      },
+      {
+        "component_interpretation": "capital_allocation counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 38,
+        "source_economic_mechanism": "2026년 1분기 별도 연구개발 총지출은 2,297,080백만원이며, 99,015백만원을 개발비로 자산화하고 2,198,065백만원을 경상개발비로 인식했다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_RESEARCH_AND_DEVELOPMENT_SPEND_AND_CAPITALIZATION",
+        "source_value_json": "\"gross R&D KRW 2,297,080 million; capitalized KRW 99,015 million; current R&D KRW 2,198,065 million\""
+      },
+      {
+        "component_interpretation": "capital_allocation counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 39,
+        "source_economic_mechanism": "연결 채권 장부금액의 큰 증가는 매출 성장과 함께 운전자본 회수 부담을 확대할 수 있다. HBM 단독 채권이나 부실 증가로 귀속하지 않는다.",
+        "source_period_json": "\"2026-03-31 vs 2025-12-31\"",
+        "source_predicate": "연결 매출채권 및 기타채권 장부금액 합계는 2025년 말 19,005,457백만원에서 2026년 1분기 말 34,708,542백만원으로 증가했다.",
+        "source_value_json": "\"34,708,542 vs 19,005,457\""
+      },
+      {
+        "component_interpretation": "capital_allocation counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 41,
+        "source_economic_mechanism": "본사 별도 유형자산 취득 규모가 감가상각보다 커 투자 집행과 현금소요가 이어졌음을 보여준다. 연결 CAPEX나 HBM 전용 투자로 귀속하지 않는다.",
+        "source_period_json": "\"2026-01-01~2026-03-31\"",
+        "source_predicate": "2026년 1분기 본사 별도 유형자산 취득은 7,004,155백만원, 감가상각은 2,839,481백만원이었다.",
+        "source_value_json": "\"취득 7,004,155; 감가상각 2,839,481\""
+      },
+      {
+        "component_interpretation": "capital_allocation counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 43,
+        "source_economic_mechanism": "연구개발비 대부분이 경상개발비로 비용화되고 일부만 자산화돼 당기 이익과 장기 자산 형성의 경계가 드러난다. HBM 전용 연구개발비로 귀속하지 않는다.",
+        "source_period_json": "\"2026-01-01~2026-03-31\"",
+        "source_predicate": "2026년 1분기 연구개발비 총지출 2,297,080백만원 중 99,015백만원을 개발비로 자산화하고 2,198,065백만원을 경상개발비로 처리했다.",
+        "source_value_json": "\"총지출 2,297,080; 자산화 99,015; 경상개발비 2,198,065\""
+      },
+      {
+        "component_interpretation": "capital_allocation positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 44,
+        "source_economic_mechanism": "차입금 약정 조건 준수는 기말 자금조달 제약이 즉시 현실화되지 않았음을 보여준다. 약정 여유폭이나 미래 준수를 보장하지는 않는다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "2026년 1분기 말 주요 차입금 계약의 부채비율·담보채무비율 조건을 준수했다.",
+        "source_value_json": "\"부채비율·담보채무비율 조건 준수\""
+      },
+      {
+        "component_interpretation": "capital_allocation positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 58,
+        "source_economic_mechanism": "2026년 3월 25일 주주총회는 1,327,712백만원의 배당을 결의했으며 분기말에는 미지급 상태였다.",
+        "source_period_json": "\"approved 2026-03-25; unpaid at 2026-03-31\"",
+        "source_predicate": "APPROVED_ANNUAL_DIVIDEND_REMAINING_UNPAID_AT_QUARTER_END",
+        "source_value_json": "1327712"
+      },
+      {
+        "component_interpretation": "capital_allocation counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 64,
+        "source_economic_mechanism": "2026년 1분기 연결 유형자산 회계상 취득액은 7,347,767백만원으로 대규모 생산설비 투자가 지속됐다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_PROPERTY_PLANT_EQUIPMENT_ADDITIONS",
+        "source_value_json": "7347767"
+      },
+      {
+        "component_interpretation": "capital_allocation positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 71,
+        "source_economic_mechanism": "별도 부채비율은 2025년 말 43.97%에서 2026년 1분기 말 33.89%로 낮아졌고 현금성자산 등이 차입금을 초과했다. 기존 순현금 수준과 구별되는 자본구조 비교다.",
+        "source_period_json": "\"2026-03-31 vs 2025-12-31\"",
+        "source_predicate": "별도 부채비율은 43.97%에서 33.89%로 하락했고 2026년 1분기 말 순차입금비율은 부의 값이라 표시하지 않았다.",
+        "source_value_json": "\"33.89% vs 43.97%\""
+      },
+      {
+        "component_interpretation": "capital_allocation counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 75,
+        "source_economic_mechanism": "2026년 1분기 중 해외 교환사채 USD 510.8백만이 자기주식 6,179,194주로 교환돼 부채를 줄이는 대신 주식 유통과 희석 구조에 영향을 줬다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_EXCHANGEABLE_BOND_EXERCISE",
+        "source_value_json": "\"USD 510,800,000 exchanged for 6,179,194 shares\""
+      },
+      {
+        "component_interpretation": "capital_allocation positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 84,
+        "source_economic_mechanism": "2026년 1분기 연결 현금및현금성자산 순증가는 6,243,138백만원으로, 분기말 잔액이 21,166,904백만원에 이르렀다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_CASH_AND_CASH_EQUIVALENTS_NET_INCREASE",
+        "source_value_json": "6243138"
+      },
+      {
+        "component_interpretation": "capital_allocation positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 93,
+        "source_economic_mechanism": "별도 연구개발비 총지출 확대는 기술투자 강도를 보여주지만 HBM 전용 R&D나 realised ROIC는 아니다.",
+        "source_period_json": "\"2026-Q1 vs 2025-Q1\"",
+        "source_predicate": "별도 연구개발비 총지출은 2026년 1분기 2,297,080백만원으로 전년 동기 1,396,595백만원보다 컸다.",
+        "source_value_json": "\"2,297,080 vs 1,396,595\""
+      },
+      {
+        "component_interpretation": "capital_allocation positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 94,
+        "source_economic_mechanism": "2026년 1분기 중 자기주식 15,300,000주를 이익소각해 발행주식수를 직접 줄였다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_TREASURY_SHARE_RETIREMENT",
+        "source_value_json": "15300000"
+      },
+      {
+        "component_interpretation": "capital_allocation counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 102,
+        "source_economic_mechanism": "본사 별도 채권 장부금액의 증가는 현금 회수와 운전자본 부담을 키울 수 있다. 연결 수치나 HBM 단독 채권으로 혼동하지 않는다.",
+        "source_period_json": "\"2026-03-31 vs 2025-12-31\"",
+        "source_predicate": "별도 매출채권 및 기타채권 장부금액 합계는 2025년 말 23,524,252백만원에서 2026년 1분기 말 38,828,152백만원으로 증가했다.",
+        "source_value_json": "\"38,828,152 vs 23,524,252\""
+      },
+      {
+        "component_interpretation": "capital_allocation positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 103,
+        "source_economic_mechanism": "2026년 1분기 연결 차입금 상환 현금유출은 3,760,030백만원으로, 차입 1,006,250백만원을 웃돌아 순차입 축소 방향을 보여준다.",
+        "source_period_json": "\"2026-Q1\"",
+        "source_predicate": "REPORTS_DEBT_REPAYMENT_CASH_OUTFLOW",
+        "source_value_json": "3760030"
+      },
+      {
+        "component_interpretation": "capital_allocation positive 근거로 반영하되 원 메커니즘의 subject·segment·product 귀속과 actual/guidance 경계를 그대로 유지한다.",
+        "fact_row_index": 105,
+        "source_economic_mechanism": "2026년 1분기 말 연결 현금성자산 등이 차입금을 초과했고 부채비율은 35.56%였다. 이는 회사 전체 자본여력이며 HBM별 투자회수나 FCF로 귀속하지 않는다.",
+        "source_period_json": "\"2026-03-31\"",
+        "source_predicate": "연결 현금및현금성자산 등은 54,329,761백만원, 차입금은 19,317,665백만원, 부채비율은 35.56%였고 순차입금비율은 부의 값이라 표시하지 않았다.",
+        "source_value_json": "\"54,329,761 cash vs 19,317,665 debt; debt ratio 35.56%\""
+      },
+      {
+        "component_interpretation": "capital_allocation counterweight로 반영하며 이 위험을 다른 제품·세그먼트나 HBM 단독 수치로 확대하지 않는다.",
+        "fact_row_index": 107,
+        "source_economic_mechanism": "연결 재고 장부금액 증가가 운전자본과 가격·수요 변동 노출을 키운다. 구성에는 전 제품군이 섞여 있어 HBM 재고로 귀속하지 않는다.",
+        "source_period_json": "\"2026-03-31 vs 2025-12-31\"",
+        "source_predicate": "연결 재고자산 장부금액 합계는 2025년 말 14,289,390백만원에서 2026년 1분기 말 15,974,133백만원으로 증가했다.",
+        "source_value_json": "\"15,974,133 vs 14,289,390\""
+      }
+    ],
+    "selected_fact_row_indices": [
+      7,
+      16,
+      19,
+      38,
+      39,
+      41,
+      43,
+      44,
+      58,
+      64,
+      71,
+      75,
+      84,
+      93,
+      94,
+      102,
+      103,
+      105,
+      107
+    ],
+    "source_coverage": [
+      "OPENDART",
+      "DART_ACTUALS_DETERMINISTIC_SCENARIO"
+    ],
+    "structured_metric_row_indices": [
+      0,
+      1
+    ],
+    "uncertainties": [
+      "전사 CAPEX·R&D를 HBM 전용 투자와 realised ROIC로 분해할 수 없다.",
+      "매출채권·재고 증가의 회수 및 출하 전환 시점이 불확실하다.",
+      "배당·자기주식 소각과 성장투자 간 장기 자본배분 목표를 정량 검증할 수 없다."
+    ],
+    "why_not_higher": "순현금에도 불구하고 큰 CAPEX·R&D, 매출채권·재고 증가와 희석 위험이 있고 HBM 전용 투자수익률이 없다.",
+    "why_not_lower": "순현금, 금융부채 감소, 차입약정 준수, 부채 상환, 배당·자기주식 소각이라는 source-backed positive를 무시할 수 없다."
+  },
+  "payload_hash": "29c432bb7312ba6a4f533732dfcbf22de725fb574fb14e161ea4649192e87efb",
+  "production_score_authority": false,
+  "prompt_hash": "39b4b0c51c4974cb132c391e854be112ef81d67b3465c3a26e8b375866e9cfbb",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4d7b050dd9bde60774b0457eb2aeab3b854b74e9695da460f2f63f1ae98866ea",
+  "response_id": "COLLABRESP-da3fc881f82aa8fb524636f91cd358adc228077c5ae3fbb03314c8a87be7c0f7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

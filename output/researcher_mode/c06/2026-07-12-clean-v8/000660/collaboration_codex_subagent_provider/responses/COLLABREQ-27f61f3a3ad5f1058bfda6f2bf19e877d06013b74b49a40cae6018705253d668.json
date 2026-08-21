@@ -1,0 +1,72 @@
+{
+  "output_schema_hash": "7898fd577667183c98b838d240ce0cf709854afb944fd0eb8422e070ea8a6c59",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-e61b7dce890bca845d441547",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 공식 뉴스룸 URL이지만 제목·URL 메타상 요청된 ISSUER_EARNINGS_RELEASE 원문이 아니라 제품·기술·행사·일반 설명 자료다. 요청 family provenance가 맞지 않아 material evidence route로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-50222f8c7ebf08ed3dae1e92",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 공식 뉴스룸 URL이지만 제목·URL 메타상 요청된 ISSUER_EARNINGS_RELEASE 원문이 아니라 제품·기술·행사·일반 설명 자료다. 요청 family provenance가 맞지 않아 material evidence route로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-72d8fbdb92a6e4d1f62820c4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 공식 뉴스룸 URL이지만 제목·URL 메타상 요청된 ISSUER_EARNINGS_RELEASE 원문이 아니라 제품·기술·행사·일반 설명 자료다. 요청 family provenance가 맞지 않아 material evidence route로 승격하지 않았다."
+      },
+      {
+        "candidate_id": "SGCAND-8a02f1be29f38a72c9be7afb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 공식 뉴스룸 URL이지만 제목·URL 메타상 요청된 ISSUER_EARNINGS_RELEASE 원문이 아니라 제품·기술·행사·일반 설명 자료다. 요청 family provenance가 맞지 않아 material evidence route로 승격하지 않았다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "동일 후보 identity는 current prompt에서 다시 전수 판정했다. 이 transport roster는 전수 분류했으며 snippet은 discovery metadata로만 사용했다. material 후보는 full fetch 후 발행일·원문 내용·as_of 적합성을 재검증해야 한다."
+    ]
+  },
+  "payload_hash": "3b30ecee99b08056a8c415a937604929b08eefa75fe8a224e7fbce7b3e847dc9",
+  "production_score_authority": false,
+  "prompt_hash": "0fdd50e9b81ed4a2214168aa2dc07d3a33fe6a168aaa77d7a8fc0847d4881679",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-27f61f3a3ad5f1058bfda6f2bf19e877d06013b74b49a40cae6018705253d668",
+  "response_id": "COLLABRESP-20d4a9e6d5d30fcb722171c47d595e5e61651411bb93375553eb932c8bff4840",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

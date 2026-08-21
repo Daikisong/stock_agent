@@ -1,0 +1,134 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-1573fa9dea9ea4bb4f21a89b",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.08,
+        "rationale": "원본 broker PDF 경로는 맞지만 2024년 자료의 2025~2026 전망으로, 2026-07-12 현재 2Q26 EPS/FCF 누락을 해소할 최신 자료가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8a18f2d76e6f8a721f240a91",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.96,
+        "rationale": "삼성증권의 2026년 문서별 PDF download 경로이며 SK하이닉스와 HBM LTA를 직접 다루는 full broker source route다. snippet은 증거로 쓰지 않고 원문 fetch와 content hash 뒤 계약 기간·물량·취소 조건을 검증해야 한다."
+      },
+      {
+        "candidate_id": "SGCAND-eba7b144d07a7008920ab867",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-0804dd591889c515e4009ee9",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a0977a43e0c00acb73e056c2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ee4c5772b641b9c9b98b4695",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-22b54fffa90af09a98ec7fa6",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "priority": 0.78,
+        "rationale": "유안타증권 원문 서버의 2026년 PDF download 경로다. AI 가치사슬과 HBM 관련 target-specific EPS/FCF bridge 포함 여부를 확인할 수 있는 bounded full-fetch route이며, 현재 metadata 자체는 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-455df08e9bc5c12ccfc28829",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-785180bc4b6705772849a925",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-1bc7571c4994ccabf2db9bc1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.9,
+        "rationale": "특정 반도체 보고서 번호에 결박된 download landing으로 SK하이닉스와 LTA·장기 이익 전망을 직접 가리킨다. generic navigation이 아니므로 full report 해석 경로로 보존하되 원문 hash 전에는 수치나 계약을 사실로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-2db87f2c8c8701a4619d297f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-e5d40b28ea3a090e82da246f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "선택된 항목은 full-source fetch 경로일 뿐 EvidenceFact가 아니다. 원문 content hash와 target·기간·segment·mechanism 검증 뒤에만 evidence로 사용할 수 있다."
+    ]
+  },
+  "payload_hash": "3fd7d065da795191c433eb461a0b08a508eda203164246d06c1efddbe97b2b51",
+  "production_score_authority": false,
+  "prompt_hash": "0ec128790811f44c1278c002a51ae1aeae4b538d32429c4a912c9e6a974a75ea",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-207fb468bb95538ea0e18750730a60145b69301ddf692e45ee55837c5ddc91b9",
+  "response_id": "COLLABRESP-35910f6c2b3c31329164736cbc83671d3dfd045ac0ed2d12201e90889ba59ecb",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

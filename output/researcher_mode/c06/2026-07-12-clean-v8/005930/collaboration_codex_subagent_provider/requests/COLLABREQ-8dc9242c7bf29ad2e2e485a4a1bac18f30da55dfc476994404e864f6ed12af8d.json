@@ -1,0 +1,129 @@
+{
+  "output_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "allowed_range": {
+        "items": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "anchor_comparisons": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "counter_fact_ids": {
+        "items": {
+          "enum": [
+            "EFACT-432ffed78641a7fa3eb2aaf1"
+          ],
+          "type": "string"
+        },
+        "maxItems": 1,
+        "minItems": 1,
+        "prefixItems": [
+          {
+            "enum": [
+              "EFACT-432ffed78641a7fa3eb2aaf1"
+            ],
+            "type": "string"
+          }
+        ],
+        "type": "array"
+      },
+      "disagreements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "nearest_anchor_ids": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "proposed_points": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "rationale": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "support_fact_ids": {
+        "items": {
+          "enum": [
+            "EFACT-2e14e423fe28bef557c6af3a",
+            "EFACT-3dcbb46fd5653fb3dc5dcd2e",
+            "EFACT-4d6a7fe870806b29408cc3a5",
+            "EFACT-5b70b07b35d08b89839b5ae7",
+            "EFACT-653a13dd35d5c7a1f6e4d3e1",
+            "EFACT-6e7cdee571c7ae305a860ce6",
+            "EFACT-7fbb65f7ab612c9f98c5b4fe",
+            "EFACT-7ff6bfcbd0d673fdb7f351e7",
+            "EFACT-939b29c020b166da3e38d343",
+            "EFACT-b7565fd844a544809e1ca148",
+            "EFACT-de5ea57b4d3bc79a7b40fe3e",
+            "EFACT-eea88d392c237374ec65f4b0"
+          ],
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "why_not_higher": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "why_not_lower": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "anchor_comparisons",
+      "proposed_points",
+      "allowed_range",
+      "rationale",
+      "disagreements",
+      "support_fact_ids",
+      "counter_fact_ids",
+      "nearest_anchor_ids",
+      "why_not_higher",
+      "why_not_lower"
+    ],
+    "type": "object"
+  },
+  "output_schema_hash": "0c3a947dc2ea28a5be3f0f5e32b9f7c82c72ffdb01f4683c8e7f56c7f2c89002",
+  "pass_name": "COMPONENT_SKEPTIC_JUDGE",
+  "production_score_authority": false,
+  "prompt": "You are an independent E2R 2.0 research analyst.\nUse only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.\nRead the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.\nFor loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.\nDecode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.\nWhen the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.\nCite only ids present in the input. Do not invent facts, sources, metrics, or anchors.\nNever output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.\nFirst decode every evidence_fact_projection.facts row positionally with evidence_fact_projection.fact_fields. Each row preserves one exact fact_id and its economic meaning. Resolve source_independence_group_index through source_independence_group_dictionary. The count/hash rosters account only for repeated lineage; they are not omitted research, a top-N selection, or permission to skip rows. Review all fact_count rows. Act as the independent skeptic for exactly one broad component. Review every supplied counterfact and explicitly reflect business phase, valuation, customer or supplier concentration, and uncertainty in proposed component points and the allowed range. Compare with a nearest blind anchor and explain both bounds.\nReturn exactly one JSON object matching the supplied schema.\n{\"allowed_counter_fact_ids\": [\"EFACT-432ffed78641a7fa3eb2aaf1\"], \"allowed_nearest_anchor_ids\": [\"ORDTRANSFER-5aadf9d29303975e658a6c23\", \"ORDTRANSFER-9205e8ab347aff38184b148a\"], \"allowed_support_fact_ids\": [\"EFACT-2e14e423fe28bef557c6af3a\", \"EFACT-3dcbb46fd5653fb3dc5dcd2e\", \"EFACT-4d6a7fe870806b29408cc3a5\", \"EFACT-5b70b07b35d08b89839b5ae7\", \"EFACT-653a13dd35d5c7a1f6e4d3e1\", \"EFACT-6e7cdee571c7ae305a860ce6\", \"EFACT-7fbb65f7ab612c9f98c5b4fe\", \"EFACT-7ff6bfcbd0d673fdb7f351e7\", \"EFACT-939b29c020b166da3e38d343\", \"EFACT-b7565fd844a544809e1ca148\", \"EFACT-de5ea57b4d3bc79a7b40fe3e\", \"EFACT-eea88d392c237374ec65f4b0\"], \"component_id\": \"bottleneck_pricing\", \"component_max_points\": 19.0, \"component_research_memo\": {\"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"component_max_points\": 19.0, \"counter_case\": \"행 18은 NVIDIA HBM4가 아직 협의 중이라 확정 allocation·물량·가격을 주지 않는다. total-memory 가동률·capacity·ASP를 HBM-only economics로 귀속할 수 없고, 행 49의 3배 매출 전망과 행 70의 설비투자는 실현치가 아니다. pre-cutoff broker PDF나 customer-official 검색의 material 0도 source absence나 계약 부재를 증명하지 않는다.\", \"counter_fact_ids\": [\"EFACT-432ffed78641a7fa3eb2aaf1\"], \"historical_anchor_ids\": [\"ORDTRANSFER-5aadf9d29303975e658a6c23\", \"ORDTRANSFER-9205e8ab347aff38184b148a\"], \"memo_id\": \"CRMEMO-51d9d7d26e392069dd93f5d4\", \"nearest_counter_anchor_ids\": [\"ORDTRANSFER-9205e8ab347aff38184b148a\"], \"nearest_positive_anchor_ids\": [\"ORDTRANSFER-5aadf9d29303975e658a6c23\"], \"positive_case\": \"행 16의 메모리 100% 가동, 행 41·43의 actual output/capacity, 행 62의 제한된 공급 가용량, 행 73의 realized ASP 상승은 당기 수급·가격 전환을 함께 보인다. 행 36은 HBM4 양산 출하 actual이고, 행 12·33은 cleanroom·1c 생산성의 공급 대응 기반을 보강한다. 다만 행 27·49·70은 각각 전망·guidance·투자 계획으로 actual과 구분한다.\", \"positive_fact_ids\": [\"EFACT-2e14e423fe28bef557c6af3a\", \"EFACT-3dcbb46fd5653fb3dc5dcd2e\", \"EFACT-4d6a7fe870806b29408cc3a5\", \"EFACT-5b70b07b35d08b89839b5ae7\", \"EFACT-653a13dd35d5c7a1f6e4d3e1\", \"EFACT-6e7cdee571c7ae305a860ce6\", \"EFACT-7fbb65f7ab612c9f98c5b4fe\", \"EFACT-7ff6bfcbd0d673fdb7f351e7\", \"EFACT-939b29c020b166da3e38d343\", \"EFACT-b7565fd844a544809e1ca148\", \"EFACT-de5ea57b4d3bc79a7b40fe3e\", \"EFACT-eea88d392c237374ec65f4b0\"], \"research_complete\": true, \"researcher_role\": \"BottleneckPricingResearcher\", \"researcher_summary\": \"메모리 100% 가동, 제한된 공급 가용량, 실제 생산량·생산능력, 146% ASP 상승과 HBM4 양산 출하는 강한 current bottleneck/pricing 근거다. 그러나 가동률·capacity·ASP 대부분은 메모리 전체 범위이고, HBM4 전용 capacity 잠김·고객 배정·계약 가격·기간은 확인되지 않았다. HBM 매출 3배 및 증설은 guidance·plan이며, NVIDIA HBM4도 협의 중이다. DB full-report 후보 또는 CUSTOMER_OFFICIAL 검색의 material 0은 source absence나 HBM 병목 부재 증명이 아니므로, realized generic-memory tightness와 아직 미확인인 durable HBM-only bottleneck을 분리한다.\", \"resolution_fact_ids\": [], \"source_coverage\": [\"ISSUER_NEWSROOM\", \"OPENDART\"], \"structured_metrics\": {}, \"target_id\": \"005930\", \"uncertainties\": [\"메모리 total capacity와 ASP에서 HBM4-only capacity·price로 이어지는 분리 bridge가 없다.\", \"HBM4의 고객별 배정·확정 물량·가격·기간·취소조건이 없다.\", \"공급 부족 duration은 issuer outlook이며 bounded full-report exact quote로 독립 확인되지 않았다.\", \"material 0 검색 결과는 source absence나 HBM 병목 부재의 증명이 아니다.\"]}, \"conditional_judge_rules\": {\"empty_support_plane\": {\"condition\": \"allowed_support_fact_ids is empty\", \"required_allowed_range\": [0, 0], \"required_proposed_points\": 0, \"required_support_fact_ids\": []}, \"positive_points_require_support\": \"proposed_points greater than zero requires at least one exact id from allowed_support_fact_ids in support_fact_ids\"}, \"evidence_fact_projection\": {\"advisory_tags_are_not_score_gates\": true, \"allowed_component_coverage\": {\"bottleneck_pricing\": 13, \"capital_allocation\": 13, \"earnings_visibility\": 13, \"eps_fcf_explosion\": 13, \"information_confidence\": 13, \"market_mispricing\": 13, \"valuation_rerating\": 13}, \"as_of_date_coverage\": {\"2026-07-12\": 13}, \"claim_id_roster\": {\"count\": 13, \"roster_hash\": \"21862fe71da90c7a6ffb65f78fbcbc5a131eb196e0a599fcbdabae74f7ef316b\"}, \"corroborating_independence_group_roster\": {\"count\": 2, \"roster_hash\": \"dd8c98d09b9a0b64072d4df23f3d331228b352a9aa243a13de6465be74ef4bc7\"}, \"every_fact_id_preserved\": true, \"every_fact_lineage_accounted_by_count_and_hash\": true, \"fact_count\": 13, \"fact_fields\": [\"fact_row_index\", \"fact_id\", \"subject\", \"business_segment\", \"product_family\", \"economic_mechanism\", \"predicate\", \"value\", \"unit\", \"period\", \"direction\", \"current_lifecycle\", \"confidence\", \"structured_evidence_roles\", \"source_independence_group_index\", \"corroborating_independence_group_count\"], \"fact_roster_hash\": \"6e732b7f1da8e699a78e2284ce41674cf380897fb71b81380940b52f7164a2fa\", \"facts\": [[0, \"EFACT-2e14e423fe28bef557c6af3a\", \"삼성전자 HBM 공급 대응 기반\", \"DS 메모리\", \"HBM\", \"대규모 DRAM 생산능력과 선제 확보한 클린룸을 기반으로 HBM 수요 확대 시 단기간에 공급을 늘릴 수 있다고 설명했으나 확정 고객 물량은 아니다.\", \"DISCLOSED_FLEXIBLE_HBM_SUPPLY_RESPONSE_CAPABILITY\", \"large DRAM capacity and presecured cleanroom support flexible HBM response\", \"issuer_statement\", \"2026 onward conditional on HBM demand\", \"POSITIVE\", \"OPEN\", 0.98, [\"DURABLE_VISIBILITY\"], 0, 1], [1, \"EFACT-3dcbb46fd5653fb3dc5dcd2e\", \"삼성전자 메모리 가동률\", \"DS 메모리\", \"메모리\", \"메모리 생산라인의 100% 가동은 해당 분기의 유휴 공급 여력이 없었음을 보여준다.\", \"MEMORY_LINES_OPERATED_AT_FULL_UTILIZATION\", 100, \"%\", \"2026Q1\", \"POSITIVE\", \"CURRENT\", 1.0, [], 1, 1], [2, \"EFACT-432ffed78641a7fa3eb2aaf1\", \"삼성전자와 엔비디아의 HBM 공급 협의 상태\", \"DS 메모리\", \"HBM3E·HBM4\", \"삼성전자는 엔비디아에 HBM3E와 HBM4를 공급할 계획이라고 밝혔지만 HBM4 공급은 아직 긴밀히 협의 중이다. 이는 명명 고객과의 공급 논의를 확인하되 서명 계약·확정 배정·물량·가격을 확인하지 못하는 가시성 counter다.\", \"엔비디아 대상 HBM3E·HBM4 공급은 issuer plan이며 HBM4 공급은 2025-10-31 현재 협의 중이다.\", \"HBM3E·HBM4 공급 계획; HBM4 공급 협의 중\", null, \"2025-10-31 현재 및 이후\", \"COUNTER\", \"OPEN\", 0.99, [], 0, 1], [3, \"EFACT-4d6a7fe870806b29408cc3a5\", \"삼성전자 메모리 시장 수요\", \"DS 메모리\", \"메모리\", \"2026년 1분기 데이터센터 AI 인프라 CAPEX 확대와 Agentic AI 초기 수요가 서버향 메모리 수요 강세를 만들었다는 회사의 시장 평가는 수급 우호성을 설명한다.\", \"SERVER_MEMORY_DEMAND_STRENGTHENED_WITH_AI_INFRASTRUCTURE_CAPEX\", \"서버향 중심 수요 강세가 한층 더 확연\", \"assessment\", \"2026-Q1\", \"POSITIVE\", \"CURRENT\", 0.97, [], 1, 1], [4, \"EFACT-5b70b07b35d08b89839b5ae7\", \"삼성전자 메모리 시장 공급 부족\", \"DS 메모리\", \"메모리\", \"PC·모바일 수요 부담에도 공급사들이 서버 중심으로 공급을 대응하면서 전반적 메모리 공급 부족이 지속될 것이라는 전망은 가격·수급의 지속성을 뒷받침하되 실현된 사실과 구분해야 한다.\", \"EXPECTS_MEMORY_SUPPLY_SHORTAGE_TO_PERSIST_WITH_SERVER_FOCUSED_SUPPLY\", \"전반적인 공급 부족 현상 지속 전망\", \"outlook\", \"2026 onward from Q1 report\", \"POSITIVE\", \"OPEN\", 0.96, [], 1, 1], [5, \"EFACT-653a13dd35d5c7a1f6e4d3e1\", \"삼성전자 1c DRAM 생산성\", \"DS 메모리\", \"DRAM\", \"1c DRAM이 5세대 DRAM보다 생산성을 30% 이상 높였다는 실제 제품 특성은 동일 설비의 공급 대응력과 원가 효율을 개선한다.\", \"IMPROVED_1C_DRAM_PRODUCTIVITY_VERSUS_FIFTH_GENERATION\", 30, \"%\", \"2025-06 product generation\", \"POSITIVE\", \"CURRENT\", 0.99, [], 1, 1], [6, \"EFACT-6e7cdee571c7ae305a860ce6\", \"삼성전자 HBM4\", \"DS 메모리\", \"HBM4\", \"2026년 2월 HBM4 양산 출하는 개발 단계에서 실제 상용 출하로 전환되었음을 직접 확인한다.\", \"COMMENCED_HBM4_MASS_PRODUCTION_SHIPMENTS\", \"HBM4 양산 출하\", \"status\", \"2026-02\", \"POSITIVE\", \"CURRENT\", 0.99, [], 1, 1], [7, \"EFACT-7fbb65f7ab612c9f98c5b4fe\", \"삼성전자 메모리 생산실적\", \"DS 메모리\", \"메모리\", \"메모리 실제 생산량은 수요에 대응해 공급된 물량 기반을 확인한다.\", \"REPORTED_MEMORY_PRODUCTION_OUTPUT\", 658532, \"백만개\", \"2026Q1\", \"POSITIVE\", \"CURRENT\", 1.0, [], 1, 1], [8, \"EFACT-7ff6bfcbd0d673fdb7f351e7\", \"삼성전자 메모리 생산능력\", \"DS 메모리\", \"메모리\", \"공시된 메모리 생산능력은 공급 가능한 물량 기반과 후속 증설 필요성을 정량화한다.\", \"REPORTED_MEMORY_PRODUCTION_CAPACITY\", 658532038, \"천개\", \"2026Q1\", \"POSITIVE\", \"CURRENT\", 0.99, [], 1, 1], [9, \"EFACT-939b29c020b166da3e38d343\", \"삼성전자 2026년 HBM 매출·HBM4 생산능력\", \"DS 메모리\", \"HBM\", \"회사는 2026년 HBM 매출을 2025년의 3배 이상으로 전망하고 HBM4 생산능력을 선제 확대하고 있다.\", \"GUIDES_HBM_REVENUE_ABOVE_THREE_TIMES_AND_EXPANDS_HBM4_CAPACITY\", \"2026 HBM revenue more than 3x 2025\", \"x versus 2025\", \"2026\", \"POSITIVE\", \"OPEN\", 0.99, [\"FORWARD_GUIDANCE\"], 0, 1], [10, \"EFACT-b7565fd844a544809e1ca148\", \"삼성전자 메모리 공급\", \"DS 메모리\", \"메모리\", \"삼성전자는 2026년 2분기 공급 계획을 설명하면서 메모리 공급 가용량이 제한되어 있다고 명시했다.\", \"REPORTS_LIMITED_MEMORY_SUPPLY_AVAILABILITY\", \"제한된 공급 가용량\", \"issuer_commentary\", \"2026-Q2 outlook\", \"POSITIVE\", \"OPEN\", 0.99, [], 1, 1], [11, \"EFACT-de5ea57b4d3bc79a7b40fe3e\", \"삼성전자 HBM4 수요 대응 설비투자 계획\", \"DS 메모리\", \"HBM4\", \"삼성전자는 증가하는 고객 HBM4 수요에 대응하기 위해 선제 설비투자를 할 계획이다. 이는 issuer의 제품별 수요·공급 대응 계획이지만 투자액, 생산능력 증가량, 고객 배정 또는 수익회수는 제시하지 않는다.\", \"삼성전자는 증가하는 고객사 HBM4 수요 대응을 위해 선제적 설비투자를 계획했다.\", \"선제 설비투자 예정\", null, \"2025-10-31 이후\", \"POSITIVE\", \"OPEN\", 0.99, [\"DURABLE_VISIBILITY\"], 0, 1], [12, \"EFACT-eea88d392c237374ec65f4b0\", \"삼성전자 메모리 평균판매가격\", \"DS 메모리\", \"메모리\", \"메모리 평균판매가격의 급등은 동일 출하량의 매출과 이익 전환력을 높이는 실현 가격 증거다.\", \"MEMORY_ASP_INCREASED_VERSUS_PRIOR_YEAR_AVERAGE\", 146, \"%\", \"2026Q1 vs 2025 annual average\", \"POSITIVE\", \"CURRENT\", 1.0, [], 1, 1]], \"fixed_top_n_used\": false, \"full_fact_records_persisted_outside_prompt\": true, \"primitive_tag_roster_hash\": \"36e219e90d0a240508c8d933be9f6bf9c7c4df02d4d89230da00fd6c4b3067cf\", \"prompt_projection_is_research_cap\": false, \"question_family_tag_roster_hash\": \"5b6c364af09bd171081496a4bfab9f50c038022502ca019b97cd08ad9ecd5450\", \"quote_id_roster\": {\"count\": 13, \"roster_hash\": \"6dd06ad2659a338216ffd7645c820d7189ff0dff6a89feb536ace0804c4cac5d\"}, \"repeated_lineage_arrays_omitted_from_semantic_rows\": true, \"schema_version\": \"e2r_v5_citable_fact_prompt_projection_v3\", \"score_authority\": false, \"source_id_roster\": {\"count\": 5, \"roster_hash\": \"eafc97ba19e8637e05a84f2a736cd72b7a7bd33a0b8e82b9827c57a75d3d6ede\"}, \"source_independence_group_dictionary\": [\"ISSUER_NEWSROOM:news.samsung.com\", \"OPENDART:opendart\"], \"target_id_coverage\": {\"005930\": 13}}, \"historical_component_anchors\": [{\"anchor_id\": \"ORDTRANSFER-5aadf9d29303975e658a6c23\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"c27_game_movie_kids_ip_liveops_retained_economics_leaf_v3\", \"songdaiki_stock_web\"], \"max_points\": 19.0, \"points_lower\": 6.84, \"points_mid\": 7.79, \"points_upper\": 8.74, \"role\": \"POSITIVE\", \"score_band\": \"MEDIUM\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}, {\"anchor_id\": \"ORDTRANSFER-9205e8ab347aff38184b148a\", \"archetype_id\": \"C06_HBM_MEMORY_CUSTOMER_CAPACITY\", \"component_id\": \"bottleneck_pricing\", \"confidence\": \"LOW\", \"economic_fact_patterns\": [\"explicit_component_score_without_fact_signature\"], \"max_points\": 19.0, \"points_lower\": 4.478571, \"points_mid\": 5.428571, \"points_upper\": 6.378571, \"role\": \"COUNTER\", \"score_band\": \"WEAK\", \"usable_as_exact_anchor\": false, \"usable_as_ordinal_anchor\": true}], \"independent_role_mandate\": [\"COUNTEREVIDENCE\", \"BUSINESS_PHASE\", \"VALUATION\", \"CONCENTRATION\", \"UNCERTAINTY\"], \"judge_pass_name\": \"COMPONENT_SKEPTIC_JUDGE\", \"judge_role\": \"SKEPTIC\", \"required_judge_output_fields\": [\"allowed_range\", \"anchor_comparisons\", \"counter_fact_ids\", \"disagreements\", \"nearest_anchor_ids\", \"proposed_points\", \"rationale\", \"support_fact_ids\", \"why_not_higher\", \"why_not_lower\"]}",
+  "prompt_hash": "fc8abe2ec54c3e5fce67b831d4b65d63090bda63558c50a7cff408918401da0c",
+  "provider_identity": {
+    "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+    "direct_score_or_stage_authority": false,
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+    "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-8dc9242c7bf29ad2e2e485a4a1bac18f30da55dfc476994404e864f6ed12af8d",
+  "request_identity": {
+    "output_schema_hash": "0c3a947dc2ea28a5be3f0f5e32b9f7c82c72ffdb01f4683c8e7f56c7f2c89002",
+    "pass_name": "COMPONENT_SKEPTIC_JUDGE",
+    "prompt_hash": "fc8abe2ec54c3e5fce67b831d4b65d63090bda63558c50a7cff408918401da0c",
+    "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898"
+  },
+  "response_import_required": true,
+  "schema_name": "e2r_v5_component_skeptic_judge",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_request_v1",
+  "score_or_stage_authority": false
+}

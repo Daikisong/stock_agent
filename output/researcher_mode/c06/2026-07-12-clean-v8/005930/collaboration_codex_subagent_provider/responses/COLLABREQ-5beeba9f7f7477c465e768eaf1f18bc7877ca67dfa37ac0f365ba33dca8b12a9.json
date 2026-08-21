@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-17326786e5071f1490c5c64e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "삼성증권 반도체 리포트로 고객 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d978d2869fbf3a5bda0bab33",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "자산운용사 AI 전망 자료로 OpenAI original이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-246c99c9207efc1e90617991",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "자산운용사 반도체 전망으로 CUSTOMER_OFFICIAL source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a1ec215fdb8e9315f52a0543",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "미래에셋 AI 보고서로 OpenAI 공식 관계 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-99ddf096db7bd2e2c595662f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "PwC APEC 자료로 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-88eb839f02c35b01b9b16e80",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "삼성증권 생성 AI 보고서로 고객 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f4851d083d415b02f0af0559",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "Naver의 JP모건 요약으로 OpenAI original/full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a1ef5ba379773de062652594",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Naver 인플루언서 feed로 공식 source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b18b8729f8c94730ba9687d1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "유진 전기전자 리포트로 OpenAI 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-d4992e770d8a73d1ffefd271",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Naver 제3자 글이며 인용된 공식 입장문 자체가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9ba17bd7dea8cbb3d45f28bf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "대학 투자학회 보고서로 CUSTOMER_OFFICIAL source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-d44f6005b2b0084da7f499c0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.04,
+        "rationale": "한국경제 제3자 기사이며 OpenAI 공식 홈페이지 원문 자체가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P1 material0은 source absence나 completion이 아니다."
+    ]
+  },
+  "payload_hash": "9cdd830fa949959a48f033688b6b2897cbe6d5ddc7670e4f76ad634932d1d1ba",
+  "production_score_authority": false,
+  "prompt_hash": "f1ea520e1a11727de3fef6c8dc65847ce4ea5155d994335ef7f30a2028a4c658",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5beeba9f7f7477c465e768eaf1f18bc7877ca67dfa37ac0f365ba33dca8b12a9",
+  "response_id": "COLLABRESP-b98939cafe2971175ff70accd012f94751c668a9ad3d8c03353963687555ed3e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

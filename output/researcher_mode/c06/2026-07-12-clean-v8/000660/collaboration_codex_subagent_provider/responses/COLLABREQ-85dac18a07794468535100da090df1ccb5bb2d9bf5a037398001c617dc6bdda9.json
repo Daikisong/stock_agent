@@ -1,0 +1,64 @@
+{
+  "output_schema_hash": "7898fd577667183c98b838d240ce0cf709854afb944fd0eb8422e070ea8a6c59",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-6569cc322007e5980e2bebd7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.03,
+        "rationale": "youtube.com embed는 fetched 공식 실적 페이지의 관련 영상 경로지만 issuer earnings release 원문 URL 소유권이나 문서 형식을 충족하지 않는다. 본문·발행일도 없는 navigation성 media link이므로 earnings visibility의 full-document route나 증거로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-6d769995b57aeb472342e2ef",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.12,
+        "rationale": "fetched 공식 parent가 참조한 2026년 1분기 실적 infographic ZIP 부속자료로 보이지만, 압축 이미지 묶음은 requested issuer earnings release의 full text가 아니다. 현재 metadata에는 본문·발행일·exact quote가 없으므로 관련 asset과 원문을 구분해 nonmaterial로 판정한다."
+      },
+      {
+        "candidate_id": "SGCAND-ac5bb9d097a58aa4043e40b1",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.98,
+        "rationale": "fetched SK하이닉스 공식 2026년 1분기 경영실적 parent가 참조한 보도자료 DOCX로 파일명, target, period와 requested family가 직접 일치한다. Parent authority가 검증된 별도 full-document route이며 fetched content identity가 없으므로 공식 HTML parent와 중복이라고 추정할 수 없다. Full fetch 후 실적, HBM·메모리 수요·생산·CAPA와 반대 조건의 원문을 검증할 가치가 있어 material이다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Material DOCX는 full fetch 후 content hash, 발행일, target, 전체 본문과 exact quote를 확인해야 하며 parent HTML과 동일 content인지도 그때만 판정한다.",
+      "S3 child route의 issuer provenance는 verified parent reference에 한정되며, metadata나 파일명 자체는 EvidenceFact 또는 score 근거가 아니다.",
+      "비선정 related media·infographic과 fetch 실패는 eligible source의 부재를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "76637d33507870daabce29e5d7ee2e395550e8ad08854c4dae502eb5321aba3d",
+  "production_score_authority": false,
+  "prompt_hash": "a808bf4af46312653f77dd0e7fdac3962bce6986251ceb089e1f5f02824640e2",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-85dac18a07794468535100da090df1ccb5bb2d9bf5a037398001c617dc6bdda9",
+  "response_id": "COLLABRESP-edf30ed8f866eab80f89ed84a6403aa4b4587aa8a0efa8658c079a6d436169e3",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

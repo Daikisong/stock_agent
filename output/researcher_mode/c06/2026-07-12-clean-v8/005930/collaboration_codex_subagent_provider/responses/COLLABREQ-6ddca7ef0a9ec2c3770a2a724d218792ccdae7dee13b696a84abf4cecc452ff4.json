@@ -1,0 +1,35 @@
+{
+  "output_schema_hash": "e6e3b174ce32fcb153d8ebe6ea765432d01832c9b8d292496fff3a18bb53c20b",
+  "payload": {
+    "approve": true,
+    "counter_and_supersession_routes_checked": true,
+    "material_positive_routes_reviewed": true,
+    "new_source_family_directions_reviewed": true,
+    "rationale": "The current prompt binds seven complete component memos and their current judge intersections, RTMEMO-3499364b218fc0685b419e3c with all seven components reviewed, SYNMEMO-d78c309d16b8dbda91c3148f, and the latest Supervisor review RSUP-06feaf2624ff7cacfaff7b64. That Supervisor is READY only after post-patch objective-scoped counter/supersession proof covered all seven components; structured status is COMPLETE with no missing roles, and no source or query directions remain unexecuted. Contract economics, HBM-specific capacity/yield/allocation, valuation bridge, and investment ROIC remain visible monitoring limitations rather than executable material research questions. This approval does not rely on empty results, provider errors, fixed rounds, transport exhaustion, or a source-absence claim, and it has no score or Stage authority.",
+    "reasonable_positive_routes_remaining": false,
+    "seven_component_memos_complete": true,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "65d5814b7709215ba44048837e80a551a3a948a52a78943940595c2ffeb51ab5",
+  "production_score_authority": false,
+  "prompt_hash": "f2c9db6fa790da497a3af46bc66eafe00d39a63ab5e3b42e0b7d2294c32c6df6",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-6ddca7ef0a9ec2c3770a2a724d218792ccdae7dee13b696a84abf4cecc452ff4",
+  "response_id": "COLLABRESP-8c65a06295d437711f607c9cda015f8b86b1c0bf16dccc3c737d16df514caa37",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

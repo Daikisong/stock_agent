@@ -1,0 +1,578 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Accepted 12 next distinct source-order historical broker forecast and valuation-table atoms after strict deduplication against the 24 embedded prior facts; further target-direct quarterly and model-table atoms remain beyond this page cap.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical SK Securities forecast of consolidated controlling-shareholder net income; it is not issuer guidance or HBM-only profit.",
+        "exact_quote": "순이익(지배주주) 십억원 4,755 9,602 2,230 -9,112 7,417 15,541\n160,000 74",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It records the historical outer-year earnings expectation but is superseded and cannot establish current or HBM-only economics.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2025 controlling-shareholder net income KRW 15,541 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forecast controlling-shareholder net income",
+        "predicate_family": "BROKER_CONTROLLING_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "controlling_net_income",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_controlling_net_income_fy2025e",
+        "question_family_tags": [
+          "earnings_visibility",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONTROLLING_NET_INCOME:FY2025E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 15541
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical SK Securities EPS forecast used in its earnings and valuation table; it is not an issuer-owned forecast.",
+        "exact_quote": "EPS 원 6,532 13,190 3,063 -12,517 10,188 21,347",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It captures a historical broker EPS expectation, but no prior estimate is shown and the forecast is superseded.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2024 EPS KRW 10,188 historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker forecast earnings per share",
+        "predicate_family": "BROKER_EPS_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "eps",
+          "per_share"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_eps_fy2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:EPS:FY2024E:SKSEC_20240314",
+        "unit": "KRW per share",
+        "value": 10188
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical SK Securities EPS forecast used in its earnings and valuation table; it is not an issuer-owned forecast.",
+        "exact_quote": "EPS 원 6,532 13,190 3,063 -12,517 10,188 21,347",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It captures the historical outer-year broker EPS expectation, but no prior estimate is shown and the forecast is superseded.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2025 EPS KRW 21,347 historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forecast earnings per share",
+        "predicate_family": "BROKER_EPS_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "eps",
+          "per_share"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_eps_fy2025e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:EPS:FY2025E:SKSEC_20240314",
+        "unit": "KRW per share",
+        "value": 21347
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker price-to-earnings multiple based on the report's FY2024 earnings forecast.",
+        "exact_quote": "PER 배 18.1 9.9 24.5 -11.3 16.1 7.7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated multiple is useful historical valuation context but is not a current valuation denominator.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2024 PER 16.1 times historical SK Securities estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker forward price earnings multiple",
+        "predicate_family": "BROKER_FORWARD_PER",
+        "primitive_tags": [
+          "broker_valuation",
+          "per",
+          "forward_multiple"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_per_fy2024e",
+        "question_family_tags": [
+          "valuation_rerating",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:PER:FY2024E:SKSEC_20240314",
+        "unit": "times",
+        "value": 16.1
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker price-to-earnings multiple based on the report's FY2025 earnings forecast.",
+        "exact_quote": "PER 배 18.1 9.9 24.5 -11.3 16.1 7.7",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated outer-year multiple is useful historical valuation context but is not a current valuation denominator.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2025 PER 7.7 times historical SK Securities estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forward price earnings multiple",
+        "predicate_family": "BROKER_FORWARD_PER",
+        "primitive_tags": [
+          "broker_valuation",
+          "per",
+          "forward_multiple"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_per_fy2025e",
+        "question_family_tags": [
+          "valuation_rerating",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:PER:FY2025E:SKSEC_20240314",
+        "unit": "times",
+        "value": 7.7
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forward price-to-book multiple using the report's FY2024 book-value denominator.",
+        "exact_quote": "PBR 배 1.6 1.5 0.8 1.8 1.9 1.5",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It directly supplies a dated forward P/B point, while its historical forecast lifecycle prevents current-score use.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2024 PBR 1.9 times historical SK Securities estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker forward price book multiple",
+        "predicate_family": "BROKER_FORWARD_PBR",
+        "primitive_tags": [
+          "broker_valuation",
+          "pbr",
+          "forward_multiple"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_pbr_fy2024e",
+        "question_family_tags": [
+          "valuation_rerating",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:PBR:FY2024E:SKSEC_20240314",
+        "unit": "times",
+        "value": 1.9
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forward price-to-book multiple using the report's FY2025 book-value denominator.",
+        "exact_quote": "PBR 배 1.6 1.5 0.8 1.8 1.9 1.5",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It directly supplies a dated outer-year forward P/B point, while its historical forecast lifecycle prevents current-score use.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2025 PBR 1.5 times historical SK Securities estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forward price book multiple",
+        "predicate_family": "BROKER_FORWARD_PBR",
+        "primitive_tags": [
+          "broker_valuation",
+          "pbr",
+          "forward_multiple"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_pbr_fy2025e",
+        "question_family_tags": [
+          "valuation_rerating",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_PB"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:PBR:FY2025E:SKSEC_20240314",
+        "unit": "times",
+        "value": 1.5
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forward enterprise-value-to-EBITDA multiple using its FY2024 forecast denominator.",
+        "exact_quote": "EV/EBITDA 배 6.4 4.6 3.5 21.5 5.3 3.2",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It directly supplies a dated forward EV/EBITDA point, while its historical forecast lifecycle prevents current-score use.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2024 EV to EBITDA 5.3 times historical SK Securities estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker forward enterprise value EBITDA multiple",
+        "predicate_family": "BROKER_FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "broker_valuation",
+          "ev_ebitda",
+          "forward_multiple"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_ev_ebitda_fy2024e",
+        "question_family_tags": [
+          "valuation_rerating",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:EV_EBITDA:FY2024E:SKSEC_20240314",
+        "unit": "times",
+        "value": 5.3
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker forward enterprise-value-to-EBITDA multiple using its FY2025 forecast denominator.",
+        "exact_quote": "EV/EBITDA 배 6.4 4.6 3.5 21.5 5.3 3.2",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It directly supplies a dated outer-year forward EV/EBITDA point, while its historical forecast lifecycle prevents current-score use.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix FY2025 EV to EBITDA 3.2 times historical SK Securities estimate",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forward enterprise value EBITDA multiple",
+        "predicate_family": "BROKER_FORWARD_EV_EBITDA",
+        "primitive_tags": [
+          "broker_valuation",
+          "ev_ebitda",
+          "forward_multiple"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_ev_ebitda_fy2025e",
+        "question_family_tags": [
+          "valuation_rerating",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "FORWARD_EV_EBITDA"
+        ],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:EV_EBITDA:FY2025E:SKSEC_20240314",
+        "unit": "times",
+        "value": 3.2
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker return-on-equity forecast linking consolidated profitability to valuation; it is not an HBM-only return metric.",
+        "exact_quote": "ROE % 9.5 16.8 3.6 -15.6 13.1 23.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It provides historical profitability-to-valuation context but cannot establish current or HBM-only returns.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2024 ROE 13.1 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2024E; published 2024-03-14",
+        "predicate": "broker forecast return on equity",
+        "predicate_family": "BROKER_ROE_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "roe",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_roe_fy2024e",
+        "question_family_tags": [
+          "valuation_rerating",
+          "eps_fcf_explosion"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:ROE:FY2024E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 13.1
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical broker return-on-equity forecast linking consolidated profitability to valuation; it is not an HBM-only return metric.",
+        "exact_quote": "ROE % 9.5 16.8 3.6 -15.6 13.1 23.0",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It provides historical outer-year profitability-to-valuation context but cannot establish current or HBM-only returns.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "SK hynix FY2025 ROE 23.0 percent historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E; published 2024-03-14",
+        "predicate": "broker forecast return on equity",
+        "predicate_family": "BROKER_ROE_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "roe",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_roe_fy2025e",
+        "question_family_tags": [
+          "valuation_rerating",
+          "eps_fcf_explosion"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:ROE:FY2025E:SKSEC_20240314",
+        "unit": "percent",
+        "value": 23.0
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "Historical SK Securities quarterly consolidated revenue forecast; it is neither issuer guidance nor HBM-only revenue.",
+        "exact_quote": "SK하이닉스 분기 연결 실적 추이 및 전망 (단위: 십억원)\n1Q23 2Q23 3Q23 4Q23 1Q24E 2Q24E 3Q24E 4Q24E 2022 2023 2024E\n매출액 5,088 7,306 9,066 11,306 12,214 14,976 16,612 17,205 44,622 32,766 61,007",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "It is the next distinct source-order quarterly earnings atom, but the historical broker forecast is superseded and not HBM-attributable.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_ANALYSIS:MARKET_EXPECTATION_GAP",
+        "normalized_object": "SK hynix 1Q2024 consolidated revenue KRW 12,214 billion historical SK Securities forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q2024E; published 2024-03-14",
+        "predicate": "broker forecast quarterly consolidated revenue",
+        "predicate_family": "BROKER_QUARTERLY_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "broker_forecast",
+          "quarterly_revenue",
+          "consolidated"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "sksec_skh_quarterly_consolidated_revenue_1q2024e",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_mispricing"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:1Q2024E:SKSEC_20240314",
+        "unit": "KRW billion",
+        "value": 12214
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-bf1e1d3af59f8c85f9b1fab0"
+    ],
+    "unresolved_research_notes": [
+      "The 12-fact upper bound was reached. Continue the supplied full document in source order for remaining distinct SK hynix quarterly and model-table atoms, preserving historical broker-forecast lifecycle, denominator, period, and non-HBM attribution."
+    ]
+  },
+  "payload_hash": "fc6bad73bf58719ca0e27a0cbfa1ee9e487fac98601d57ed27ebdad593570576",
+  "production_score_authority": false,
+  "prompt_hash": "46f1270925b8f23ac5782f03d1336fafb2ff7337be01c652c270416931ff1173",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-beceac44d81739cabb630ec8ccc50f0658634f8be75abbb575fb9e98219a98f4",
+  "response_id": "COLLABRESP-e631e687d601014bba0cd639b0386b2e30b0af2df92aa5067d57ff3143d459b7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

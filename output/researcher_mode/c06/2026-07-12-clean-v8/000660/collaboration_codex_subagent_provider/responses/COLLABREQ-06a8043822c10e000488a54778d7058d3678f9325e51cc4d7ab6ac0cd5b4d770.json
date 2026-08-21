@@ -1,0 +1,77 @@
+{
+  "output_schema_hash": "52eab4c822a6039f3f503e89ac0f869386913839e0248348a37efbcd395cfe42",
+  "payload": {
+    "allowed_range": [
+      4.6,
+      6.0
+    ],
+    "anchor_comparisons": [
+      "ORDTRANSFER-cf3c9742b856a43c5c18a073의 WEAK positive [0.0,0.96]보다 높다. 대상은 HBM 매출 2배 이상, HBM 가격상승 기여와 고객요청 HBM4 양산이라는 actual을 갖는다.",
+      "ORDTRANSFER-c54e0c02076da1642b64c8df의 MEDIUM positive [4.32,5.52]가 가장 가까운 ordinal anchor다. 대상은 실제 HBM 실행이 더 강하지만 혼합 valuation 지표와 HBM-only denominator 공백 때문에 제한적 상향만 정당화된다.",
+      "ORDTRANSFER-505a232bb2f7dc1ce7f89a4a의 STRONG positive [11.4,12.0]보다 현저히 낮다. 장기 locked order, HBM-only CAPA, 가격·물량·기간·취소조건과 현금 bridge가 없다.",
+      "ORDTRANSFER-a99b35934948524825bcefbe의 ZERO counter [0.0,0.6]보다 높다. HBM 매출 성장, 생산 execution과 structured valuation·visibility가 있어 valuation thesis가 무근거가 아니다.",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b의 WEAK counter [2.83,4.03]는 하단 비교점이다. 고객집중·재고·재협상 위험은 실제지만, HBM actual과 demand-to-production evidence가 그보다 높은 중간 범위를 지지한다.",
+      "ORDTRANSFER-75306723611a10615f950fec의 STRONG counter [11.4,12.0]는 낮은 신뢰도의 비동질 proxy라 nearest로 쓰지 않는다. 다만 강한 기대가 이미 반영될 수 있다는 counter 방향은 high EV/EBITDA·PB와 낮은 FCF yield에 의해 부분적으로 확인된다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-0acf42f2a7b3a54791c685ca",
+      "EFACT-77cefacbebfbafb1aa209ddb",
+      "EFACT-7c51dbf39047c0fb2e983332",
+      "EFACT-b9dd766ffd77fd0993705f4c",
+      "EFACT-c07ed486e6d67134d19d6951",
+      "EFACT-c418009dc8a6493dd0a098b4"
+    ],
+    "disagreements": [
+      "Operational actuals are stronger than a generic medium proxy, but they do not justify the strong anchor because durable visibility is largely issuer plan and memory-wide demand rather than locked HBM contract economics.",
+      "Low forward PE cannot be treated as a standalone rerating signal because EV/EBITDA, PB and FCF-yield measures point in the opposite direction and use mixed or derived denominators.",
+      "Customer-requested mass production resolves product execution, not named-customer price, volume, duration, cancellation or allocation protection."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-c54e0c02076da1642b64c8df",
+      "ORDTRANSFER-c2ec77e0538ebb9af9ce204b"
+    ],
+    "proposed_points": 5.3,
+    "rationale": "Calibration은 16개 positive와 6개 counter를 모두 반영했다. FY2025 HBM 매출 2배 이상, 2026Q1 HBM 가격상승 기여, 고객요청 HBM4 양산, Time-to-Market 실행과 메모리 demand-over-capacity는 중간 positive anchor를 웃도는 실제 전환이다. 반면 forward PE 6.13배와 forward EV/EBITDA 27.21배·PB 6.91배·FCF yield 1.78%, trailing PE 20.68배·PB 9.46배가 상충한다. DRAM·memory-wide actual과 issuer investment plan을 HBM-only margin, FCF 또는 signed customer economics로 바꿀 수 없으므로 5.3점과 [4.6,6.0]이 적정하다.",
+    "support_fact_ids": [
+      "EFACT-1c3831e5ef2401b6cfabbd74",
+      "EFACT-437433ffa125207e6f71a099",
+      "EFACT-58437e66a64e47597ab0071d",
+      "EFACT-65b0834b92258006acfacf85",
+      "EFACT-793b1cbbdc783d3329b6d6c8",
+      "EFACT-8745489d83eba20d5f7d2efb",
+      "EFACT-9657d8948101c516333a456b",
+      "EFACT-9b0182bf50644425d6cb17e9",
+      "EFACT-acae6dd071cb2075b264bc92",
+      "EFACT-ba66b6dd060612b4ef02b2c0",
+      "EFACT-bb91ecbbd8d864664f4994f5",
+      "EFACT-e00a584221085d366d802f39",
+      "EFACT-e7b5a6f6472ae963fe820932",
+      "EFACT-fbebe9bd766d3ccabf23232b",
+      "EFACT-fd7995c7d059c87c9d390d9b",
+      "EFACT-fe3de19254ddabef098a6b03"
+    ],
+    "why_not_higher": "Strong HBM actuals do not supply an HBM-only earnings, margin, CAPEX or FCF denominator, and no signed customer price-volume-duration-allocation terms are disclosed. High EV/EBITDA·PB, low FCF yield, customer concentration, periodic repricing and inventory/WIP losses cap the upper end.",
+    "why_not_lower": "The thesis is backed by realized HBM sales growth, HBM pricing contribution, customer-requested HBM4 mass production, HBM product execution, demand exceeding supply and current DRAM revenue growth, while both structured CURRENT_VALUATION and DURABLE_VISIBILITY are populated."
+  },
+  "payload_hash": "54c4b6680677cab6186a5fca72df2d1c7fea8c4946230b6d75581798183636e0",
+  "production_score_authority": false,
+  "prompt_hash": "92134ac78b0018269ef0042fe64fb9fd96e78bd1beee30d34a5b245a5d593fd5",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-06a8043822c10e000488a54778d7058d3678f9325e51cc4d7ab6ac0cd5b4d770",
+  "response_id": "COLLABRESP-700d784314080c797f356a674072530bcc7df3fcb5345b31723e0249c62c5fda",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

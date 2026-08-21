@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-d1359307a34904b90847d65e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-c3d208d002b133f9e2c156c3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-953e814de70b16e1c89ad864",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-88c6fe2ec4391ce064691238",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ccad47a11d59f70710793396",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-d4e5e49f1728fbdd4856d2c2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ab14b7b5ce180ceedc47d0fd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-b2c99b399ab10dce8a7ab325",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-5c80a0e1ae2155b2cfd3bc2d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-cef13f0526a5c04fb037bce1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-5d44488db0c1ea2d9944d826",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-ba53f59c0d20f793ef374d4c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "requested PUBLIC_BROKER_PDF의 target-specific original/full-document 경로가 아니다. generic navigation, 재게시·요약, 타사·타주제 또는 snippet-only metadata이므로 evidence나 fetch material로 승격하지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 transport roster에는 current objective를 해소하는 target-specific original/full broker source가 없었다. 이는 broader source absence나 research completion의 증명이 아니다."
+    ]
+  },
+  "payload_hash": "e29c55b12db53e06c9565737d871bf1db83df2e3c6ca85c0e7b25af17958bc0a",
+  "production_score_authority": false,
+  "prompt_hash": "5f102c08c0dba43117450d4ed738ea4e3fe34670c32f14ade831495ef9e9b468",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-da8f1b349ae2974c3d672173451740169adc5caa3bfe6ece5a4fc1b1e027e57c",
+  "response_id": "COLLABRESP-aadeabf2dc2d9bbf77186ecb2a27b3546b1f66a0ea6ed3c7798bc1d6340e7891",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

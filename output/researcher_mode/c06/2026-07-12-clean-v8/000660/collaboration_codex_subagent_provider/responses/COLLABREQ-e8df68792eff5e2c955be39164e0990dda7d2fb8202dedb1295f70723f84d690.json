@@ -1,0 +1,196 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "OFFICIALDOC-7ad7370ba36a061011a502fc",
+        "rationale": "기존 accepted 2건에 더해 독립 coverage에서 반도체 생산능력과 생산실적·100% 평균가동률의 서로 다른 실제 의미 2건을 추가했다. HBM 전용 CAPA나 확정 고객 물량으로 확대하지 않았다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-a2de46b6c6bf08dc11a40d16",
+        "rationale": "전문을 재검토했다. 유형자산 약정·자금조달·배당·현금흐름은 current fact graph의 동일 의미와 중복되고 NAND 의무와 일반 특수관계 거래는 허용 제품 또는 현재 목표 범위 밖이다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "rationale": "기존 accepted 2건에 더해 같은 복합 문장에서 고객 ASIC 협업과 구별되는 HBM Time-to-Market 및 성능·품질 실행력 1건을 추가했다. 연결 실적·산업 일반·NAND 내용은 중복 또는 범위 밖이다.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "OFFICIALDOC-dd72c1e74089a8c8524a106a",
+        "rationale": "전문을 재검토했다. DRAM 매출과 연결 재무·공급자금융·유형자산 약정은 current fact graph와 중복되고 NAND 조건 및 일반 특수관계 거래는 현재 objective-local 신규 사실이 아니다.",
+        "status": "NO_MATERIAL_FACT"
+      },
+      {
+        "document_id": "OFFICIALDOC-de8e1147336ba33b29bf9138",
+        "rationale": "전문을 재검토했다. 연결·별도 현금흐름, 유형자산 취득, 유동성·차입 및 회계 분류는 current fact graph와 중복되고 Dalian 후속 합병은 허용 메모리 제품 목표에 직접 귀속되지 않는다.",
+        "status": "NO_MATERIAL_FACT"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "메모리 반도체",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "NEUTRAL",
+        "document_id": "OFFICIALDOC-7ad7370ba36a061011a502fc",
+        "economic_mechanism": "2026년 1분기 반도체 생산능력은 평균원가 기준 11,465,147백만원으로 산출되어 메모리 공급 기반의 현재 규모를 보여준다. 이 수치는 HBM 단독 CAPA로 확대하지 않는다.",
+        "exact_quote": "생산능력은 \"해당 연간 최대생산 일의 생산량ⅹ누적일수ⅹ평균원가\"의 방법으로\n산출하고 있으며, 2026년 1분기 생산능력은 11,465,147백만원입니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공식 분기보고서가 메모리 공급·투자 판단의 기준이 되는 현재 생산능력 수치를 직접 공시한다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "2026년 1분기 반도체 생산능력 11,465,147백만원",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "REPORTS_Q1_MEMORY_PRODUCTION_CAPACITY",
+        "predicate_family": "MEMORY_PRODUCTION_CAPACITY_ACTUAL",
+        "primitive_tags": [
+          "capacity",
+          "supply_response",
+          "actual"
+        ],
+        "product_family": "메모리 제품",
+        "question_family_id": "MEMORY_PRODUCTION_CAPACITY_ACTUAL",
+        "question_family_tags": [
+          "memory_capacity",
+          "issuer_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 반도체 생산능력",
+        "subject_id": "000660",
+        "unit": "KRW million",
+        "value": 11465147
+      },
+      {
+        "business_segment": "메모리 반도체",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-7ad7370ba36a061011a502fc",
+        "economic_mechanism": "2026년 1분기 반도체 생산실적은 11,465,147백만원이며 생산설비 평균가동률은 100%였다. 이는 메모리 전반의 현재 설비 활용도를 보여주지만 HBM 전용 가동률이나 장기 예약 물량을 뜻하지 않는다.",
+        "exact_quote": "당사의 2026년 1분기 생산실적은 11,465,147백만원으로 집계되었으며,동 기간의 생산설비의 평균가동률은 100%를 유지하였습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "공식 실제 생산실적과 완전 가동은 공급 대응 여력·병목 및 투자 효율 판단에 직접 연결된다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "2026년 1분기 반도체 생산실적과 평균가동률 100%",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1",
+        "predicate": "OPERATED_MEMORY_PRODUCTION_FACILITIES_AT_FULL_UTILIZATION",
+        "predicate_family": "MEMORY_CAPACITY_UTILIZATION_ACTUAL",
+        "primitive_tags": [
+          "capacity_utilization",
+          "production",
+          "actual"
+        ],
+        "product_family": "메모리 제품",
+        "question_family_id": "MEMORY_CAPACITY_UTILIZATION_ACTUAL",
+        "question_family_tags": [
+          "memory_utilization",
+          "issuer_actual"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "CAPACITY_SCARCITY",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 반도체 생산설비",
+        "subject_id": "000660",
+        "unit": "KRW million; percent",
+        "value": "production output KRW 11,465,147 million; average utilization 100%"
+      },
+      {
+        "business_segment": "메모리 반도체",
+        "confidence": 0.98,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "OFFICIALDOC-c800a91f87de890b5b8d2e06",
+        "economic_mechanism": "회사는 HBM의 Time to Market 실현과 대역폭·밀도·Core Die 적층 단수 향상, 성능·품질을 제품 실행 기반으로 설명했다. 같은 문장의 기존 고객 ASIC 협업 사실과 구별되는 제품 상용화 실행력이다.",
+        "exact_quote": "당사는 HBM제품의 Time to Market을 실현하고 대역폭과 Density/Core Die 적층 단수 상향 등 업계 최고 수준의 성능과 품질에 기반하여 고객들과 ASIC 개발에 더욱 협력하고 있으며, 이를 토대로 HBM 시장을 선도하기 위해 최선의 노력을 다하고 있습니다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "HBM의 시장 적시성 및 성능·품질 실행은 제품 상용화와 실적 가시성의 직접적인 issuer evidence다.",
+        "mechanism_scope_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "normalized_object": "HBM Time-to-Market 및 성능·품질 실행력",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2026-Q1 disclosure",
+        "predicate": "REPORTS_HBM_TIME_TO_MARKET_AND_PERFORMANCE_EXECUTION",
+        "predicate_family": "HBM_PRODUCT_EXECUTION_CAPABILITY",
+        "primitive_tags": [
+          "time_to_market",
+          "bandwidth",
+          "stacking",
+          "quality"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "HBM_PRODUCT_EXECUTION_CAPABILITY",
+        "question_family_tags": [
+          "hbm_product",
+          "commercialization",
+          "issuer_official"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 HBM 제품 실행력",
+        "subject_id": "000660",
+        "unit": "qualitative",
+        "value": "HBM Time to Market realized with higher bandwidth, density and Core Die stacking"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "abcc82383d4292a86abcb1073063452dfb6449b3378d9672247f8e65c5789bc7",
+  "production_score_authority": false,
+  "prompt_hash": "4b1dcea38654aa28c8adf6ca30a1d044d5f675f2c8c7cca848736f3a899583b1",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-e8df68792eff5e2c955be39164e0990dda7d2fb8202dedb1295f70723f84d690",
+  "response_id": "COLLABRESP-728f8f10c85fe29c7836cca3216d62b0a42a3c3d26d627f4457f98e576dee1d7",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

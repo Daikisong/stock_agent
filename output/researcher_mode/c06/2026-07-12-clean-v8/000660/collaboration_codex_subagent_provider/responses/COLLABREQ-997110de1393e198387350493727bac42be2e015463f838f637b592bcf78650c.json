@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "rationale": "The supplied transport chunk 0 was reviewed through the remaining continuation after strict deduplication against all 11 previously accepted facts. No further distinct target-wide current-objective material fact remains in this literal chunk. Remaining passages are general industry context, adjacent-company discussion, ETF composition/marketing, or duplicates of the accepted target valuation, cycle, pricing, HBM4 and earnings-estimate observations; none is promoted into issuer actuals, issuer guidance, signed HBM contracts, or HBM-only economics. This closes only the supplied chunk-level batch so deterministic transport can advance; the canonical parent document still requires its separately supplied chunk 1 before document aggregation.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "b4764d99c27fb8eef164fcc97ebb30aacc5be8ee150fe6c05e650de1a12d90c3",
+  "production_score_authority": false,
+  "prompt_hash": "31d3931cce2b3877fe1a2085f73a648d47d6c32771e8b0a6124da477ad5d06df",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-997110de1393e198387350493727bac42be2e015463f838f637b592bcf78650c",
+  "response_id": "COLLABRESP-2f345e92694db262676f5041435752884b595c777ac3bbf4e261861c71a7e809",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "7898fd577667183c98b838d240ce0cf709854afb944fd0eb8422e070ea8a6c59",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-0f6bdb53158d9d9e70d3b041",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "SK하이닉스 Facebook 링크로 공식 실적발표 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-180b6fe87540d03f83b3a75b",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "공식 도메인의 개인정보처리방침 페이지로 실적발표·경제 증거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-23612a2c0730ae1cbfbff46c",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "뉴스룸 연락처 페이지로 issuer earnings release가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2a338a8c60ce338695383ce2",
+        "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.05,
+        "rationale": "2025년 연간 경영실적 공식 URL로 family는 맞지만 parent SGCAND-f37ea2119658f849f54d3264와 SGDOC-b6b83f2a9680810eeb594ea0의 이미 full-fetch된 동일 경로라 새 material route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3583d4c3585dd7a258a322c3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "미래인재 교육 콘텐츠로 실적발표 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3f3b6f41c8c3d8282741abed",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "뉴스룸 분석가 인터뷰로 요청된 실적발표 family가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-4d4da6bafa217b1f6a3546f4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "회사 홈페이지 최상위 URL로 특정 full-document 실적 경로가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5358b73dab036da1328000ba",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "뉴스룸 정책 페이지로 실적발표 또는 경제 증거가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5d545814e68b1dd06c57f7ea",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "Kakao 채널 링크로 공식 실적발표 원문·첨부문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6735ae950ec57f81851257a6",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.08,
+        "rationale": "공식 팹 시설투자 뉴스 경로지만 요청된 ISSUER_EARNINGS_RELEASE가 아니다. Metadata만으로 HBM 전용 CAPA나 booked visibility도 증명하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-6f9c5dfefb337598473b3025",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "Instagram 계정 링크로 실적발표 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-73407145a7845eddb22a52f8",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "priority": 0.0,
+        "rationale": "YouTube 채널 링크로 검증 가능한 실적 full document가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Parent 공식 연간실적 링크 확장에서 distinct ISSUER_EARNINGS_RELEASE는 없었다. 동일 연간실적 URL은 이미 full-fetch된 parent와 중복이며, 이는 추가 공식 원문의 source absence를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "c486be8e834425b870bf81a9408b01d87669c8f8346ce782fc28bc977240e1be",
+  "production_score_authority": false,
+  "prompt_hash": "91891611c12c01c5697d556a6bdbefed8b9436ee31105c6058102439acf9acd5",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-a4d5ee83828844a58089f33970417c05172f6b3aa6ccedeed9925c6b2739d5a5",
+  "response_id": "COLLABRESP-fd09f4063d414f734b66dbf1cf984f7b972470bd2c97808ad669f54c55de5f32",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

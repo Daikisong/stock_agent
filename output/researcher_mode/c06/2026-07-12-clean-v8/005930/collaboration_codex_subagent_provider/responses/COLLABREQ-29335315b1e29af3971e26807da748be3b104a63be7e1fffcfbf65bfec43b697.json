@@ -1,0 +1,150 @@
+{
+  "output_schema_hash": "d0f83bd40cc9feacb7f78383448fc6de25fc45e553c3178ec9569fc2d4617433",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-9c86c0ef4ad697f3d605672e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 도메인의 제품·서비스 페이지이지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 사업 범위여서 이 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-9de2fa34a04b4e523c78ac9b",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 도메인의 제품·서비스 페이지이지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 사업 범위여서 이 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-9ea51a9a0644f46b781d5cbe",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 도메인의 제품·서비스 페이지이지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 사업 범위여서 이 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-9f6a3d8d6c320fdbf43abdf3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "제3자 기능성 페이지이며 Samsung target-direct 원문과 요청 source-family provenance를 충족하지 않아 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-a218d88934c2a037c9d0cc64",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 도메인의 제품·서비스 페이지이지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 사업 범위여서 이 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-a35374be667befae8b707c23",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0,
+        "rationale": "뉴스룸 TTS 음성 파일로 canonical 기사 본문과 발행 맥락을 직접 검증할 수 없어 원문 full-fetch 경로로 채택하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a374fcfa0cc6bf60ca81771b",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 도메인의 제품·서비스 페이지이지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 사업 범위여서 이 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-a5b515176864cb2896c410b4",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.02,
+        "rationale": "공식 사이트의 홈·미디어 라이브러리·선택 화면 같은 탐색 페이지이며 특정 날짜의 원문 기사나 보고서로 직접 이어지는 full-fetch route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-a77af7890580dcbf5d00f05c",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "삼성 공식 기업·품질·지속가능성 안내 페이지이나, 날짜가 있는 HBM·메모리 매출·이익·고객 약정·CAPA counter를 제공하지 않아 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-a870963ca3a94c7e678ef56e",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.04,
+        "rationale": "삼성 공식 기업·품질·지속가능성 안내 페이지이나, 날짜가 있는 HBM·메모리 매출·이익·고객 약정·CAPA counter를 제공하지 않아 material하지 않다."
+      },
+      {
+        "candidate_id": "SGCAND-aa13d6b0bf94f11363ea306d",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 도메인의 제품·서비스 페이지이지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 사업 범위여서 이 objective를 해소하지 못한다."
+      },
+      {
+        "candidate_id": "SGCAND-ab4056583543585b462fff39",
+        "matched_requested_source_family": "ISSUER_NEWSROOM",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5ae8f64e9b45a519ee68b062"
+        ],
+        "priority": 0.03,
+        "rationale": "삼성 공식 도메인의 제품·서비스 페이지이지만 메모리/HBM 현재 실적과 가시성이 아닌 다른 제품 또는 Foundry 사업 범위여서 이 objective를 해소하지 못한다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": []
+  },
+  "payload_hash": "6c051d87ee57c5f372812b8b8f66637e5298b21eb7d8337d2c6d2d864d8edb98",
+  "production_score_authority": false,
+  "prompt_hash": "1ff85072af6b7acabad2c6807162423dadf57631c1cf250cb631eb9b18ffbe53",
+  "provenance": {
+    "agent_id": "hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-29335315b1e29af3971e26807da748be3b104a63be7e1fffcfbf65bfec43b697",
+  "response_id": "COLLABRESP-f5ccc2168272026185a9df57bb4fe8fce804fb80e7f842cc59cc4de76025510a",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

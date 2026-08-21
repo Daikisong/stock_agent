@@ -1,0 +1,147 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-bb548fcc7184c3b8311f34c1 is complete as a research record, but the current A/S/C ranges do not form a material consensus band (14.5-16.8, 12.4-15.3, and 15.8-18.2). Reconcile consolidated and DRAM actuals versus HBM-only EPS/FCF attribution and CAPEX/inventory counters using the same evidence, then obtain fresh independent judges; no new fact is required for this semantic rewrite."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-94a0b0951207cd91b0a3504c is complete and no material score disagreement or structured-role gap is identified for this component. Actual, guidance, customer, and contract-boundary attribution remains explicit."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-0ae07a753ef960ad026cbdc5 is complete as a research record, but current A/S/C ranges 6.4-8.3, 4.8-6.8, and 11.6-14.4 do not intersect. Rewrite the same-evidence distinction between memory-wide utilization/price strength and HBM-only locked CAPA, sold-out duration, or binding allocation, then obtain fresh judges; do not open a source gap merely to move the score."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-d3b966cef94684f224f000f9 is complete, has no material judge disagreement or missing structured role in the exact prompt, and retains market expectation versus operating evidence boundaries."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "Exact-quote-verified DURABLE_VISIBILITY evidence that links target-attributable HBM forward pricing, product execution, or customer durability to a specific valuation bridge, while preserving broker forecast versus issuer actual boundaries."
+        ],
+        "rationale": "CRMEMO-1df0a19e0f5ff6d900c01394 is not sufficient for the current structured contract because valuation_rerating is PROVIDER_SOURCE_PENDING with DURABLE_VISIBILITY missing. Current and trailing multiples exist, but the durable HBM-to-valuation bridge remains unverified; a bounded public-broker full-report candidate supplies a concrete executable route."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-18a08208e63f573f7613e57e is complete as a research record, but current A/S/C ranges 1.0-1.4, 0.6-1.2, and 2.3-3.0 do not form a material consensus band. Reconcile actual shareholder returns and balance-sheet capacity against CAPEX, working capital, dilution, and unverified HBM realized ROIC using the same evidence, then obtain fresh judges."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "CRMEMO-4eb14edcf8543c39e6254924 is complete as a research record, but the current judge roster is flagged for material disagreement. Reconcile official issuer/customer provenance against broker context, contract specificity, and attribution boundaries using the same evidence, then obtain fresh judges; the honest-empty query outcome is not a missing-fact or source-absence conclusion."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-85964f73e5ad6f1c2b0b9e42",
+        "rationale": "Four query attempts ended in provider errors. The current structured valuation route remains executable, so provider failure is neither source absence nor proof of completion.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-9f189ef4313bb76da9d0c2eb",
+        "rationale": "Six fully fetched documents were after the as-of boundary and were correctly excluded. These nonretryable exclusions do not establish source absence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-b5e3b8331dcb08b996ec83cf",
+        "rationale": "Six query members resolved to future-dated full documents and were correctly excluded; they are not a retry route or source-absence proof.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "The LLM returned no new valid query for that transport attempt. This honest-empty outcome neither proves source absence nor closes the independently identified structured public-broker candidate route.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "valuation_rerating",
+        "direction": "POSITIVE",
+        "fact_need": "A full-report, exact-quote-verified target-specific HBM durability and valuation bridge from bounded candidate STRUCTCAND-dd271cdb3c5c93d51fc8e631 (LS, 2026-06-29, provider report 1108519, file 1F04720260629_000660_a.pdf), with forecast claims separated from issuer actuals.",
+        "why_material": "valuation_rerating lacks the required DURABLE_VISIBILITY structured role; current/trailing multiples alone cannot show that target-attributable HBM pricing or product durability supports the forward rerating bridge."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": false,
+        "direction": "Resolve the full exact report behind STRUCTCAND-dd271cdb3c5c93d51fc8e631 / provider report 1108519 / 1F04720260629_000660_a.pdf and extract only exact-quote-verified target HBM durability and valuation-bridge claims.",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "The bounded candidate explicitly connects expected HBM ASP, HBM4E technical execution, and an HBM target P/E change, so its full report can answer the concrete missing DURABLE_VISIBILITY role. Candidate metadata and preview text are discovery hints, not facts.",
+        "source_family": "PUBLIC_BROKER_PDF"
+      }
+    ],
+    "next_actions": [
+      "Resolve and fully fetch the bounded LS public-broker report candidate, then pass any exact-quote-verified claims through normal fact extraction and structured DURABLE_VISIBILITY validation.",
+      "Rewrite eps_fcf_explosion, bottleneck_pricing, capital_allocation, and information_confidence memos using the current evidence only, then run fresh independent A/S/C judges for those four components.",
+      "After the valuation route and semantic rewrites are consumed, refresh Red Team and Synthesis and run a new Supervisor review."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "Generic SK hynix valuation or HBM synonym searches",
+          "The prior honest-empty no-new-valid-query attempt",
+          "Using CompanyGuide candidate summary or preview numbers as evidence",
+          "Inventing a URL instead of resolving the bounded provider identity"
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "research_need": "Obtain and verify the full LS report identified by STRUCTCAND-dd271cdb3c5c93d51fc8e631, provider report 1108519, file 1F04720260629_000660_a.pdf; establish whether exact text supports target-specific HBM pricing/product durability and its valuation bridge, with broker forecast separated from issuer actual."
+      }
+    ],
+    "rationale": "The exact current record is not ready. Counter/supersession proof covers all seven objectives and Red Team is complete, but structured status is SOURCE_PENDING because valuation_rerating lacks DURABLE_VISIBILITY. A concrete nonduplicate public-broker full-report route remains through bounded candidate STRUCTCAND-dd271cdb3c5c93d51fc8e631. Separately, four components have material same-evidence judge disagreements and require semantic memo rewrites plus fresh judges, not invented searches. The 057 honest-empty transport outcome, provider errors, no-new-query marker, future exclusions, fixed rounds, and transport limits are not used as source-absence or completion evidence.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": false,
+    "unresolved_material_questions": [
+      "Can the bounded full broker report provide exact-quote-verified target-specific HBM DURABLE_VISIBILITY and a defensible valuation bridge rather than preview-only forecasts?",
+      "Can same-evidence rewrites and fresh independent judges remove the material range disagreements in eps_fcf_explosion, bottleneck_pricing, capital_allocation, and information_confidence?"
+    ]
+  },
+  "payload_hash": "677f931f2c554c28103db9f7d4642e6baa03e410abf6f544552035c454844d5b",
+  "production_score_authority": false,
+  "prompt_hash": "7ea6762a0b2df0ab6125bbab6148ad334325b1410ca0d3c69aaed8f4fe7b67e9",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-03c658001b22c0907252361e6551c882c7b29a98f1a5e8511b946731dc4bd895",
+  "response_id": "COLLABRESP-f93eef5fcf422ab1693488b6371dda0f32dff790c5c33b770790c11471282198",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

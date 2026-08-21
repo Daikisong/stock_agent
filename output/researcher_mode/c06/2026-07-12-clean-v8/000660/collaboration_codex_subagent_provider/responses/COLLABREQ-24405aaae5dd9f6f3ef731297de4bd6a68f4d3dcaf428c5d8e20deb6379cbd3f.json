@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-fc72baddd47308dbb89a05d1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "PDF 경로와 broker provenance는 맞지만 광범위한 미·중 증시 전략 자료이며 current 000660 valuation mechanism을 target-direct로 해소할 full-source route가 아니어서 nonmaterial이다. snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-3d4e1041c074e55fe19b7335",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram discovery page이며 requested original PUBLIC_BROKER_PDF 경로가 아니므로 nonmaterial이다. metadata와 snippet은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-ed59635e55f2fa8a67e31b50",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": true,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.88,
+        "rationale": "하나증권 공식 파일 서버의 2026년 하반기 전망포럼 full PDF로, target memory names와 빅테크 순익-CAPEX를 포함한 current valuation·수요 bridge를 원문에서 검증할 수 있는 bounded route다. 현재 판정은 fetch 가치일 뿐 snippet을 evidence로 승격하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-3f995e9d106076be68a427bf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "무관한 미국주식 Telegram discovery page로 requested broker original route와 target scope를 모두 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-a53313dc96240a6384c534db",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "철강·운송 Telegram 게시물로 target과 objective가 다르고 original PUBLIC_BROKER_PDF도 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-95e5ec8ba1f1313664503aa2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "삼성SDI 관련 Telegram retelling으로 wrong target이며 original broker PDF route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2beaf787bbfb4a73b40cd8ca",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "통신 업종 Telegram 게시물로 wrong target이고 requested original broker source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-db1c9cb7ceb297d7b84cbc1a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "과거 글로벌 daily Telegram 게시물로 target-direct full broker document route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-56b19208f039df75fb43a944",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "삼성전기 관련 Telegram retelling으로 wrong target이며 original PUBLIC_BROKER_PDF route가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0bc193bb2a1f4809ddfdfce1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.1,
+        "rationale": "PDF와 broker provenance는 맞지만 2009년 generic market 자료라 current target valuation objective를 해소하지 못해 nonmaterial이다."
+      },
+      {
+        "candidate_id": "SGCAND-8ac5a265e94f86309c4ea774",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "Micron 관련 third-party Telegram 요약으로 target과 requested original broker source provenance를 충족하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-896df4f8150b155da1e9359f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "priority": 0.0,
+        "rationale": "과거 매크로 Telegram 게시물로 target-direct original broker full-source route가 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "12개 후보를 supplied order로 exact-once 분류했다. material 판정은 full PDF fetch 가치이며 아직 evidence가 아니고, nonmaterial 또는 material0도 source absence나 broader research completion을 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "cba09a832524a4eb3b4c876c29f7a0ea5d7abf6dc728986d873398f3406a3b75",
+  "production_score_authority": false,
+  "prompt_hash": "73394151f79a329fc584da9f2307945d80403b8992f1861480ee993c202ed8f0",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-24405aaae5dd9f6f3ef731297de4bd6a68f4d3dcaf428c5d8e20deb6379cbd3f",
+  "response_id": "COLLABRESP-916f49de01184e7b25644732b3b9e1059969e7c9fb7f089c841908cd7629568e",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

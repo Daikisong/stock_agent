@@ -1,0 +1,621 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ce7946c58ed2153ec7e72447",
+        "rationale": "No additional distinct fact remains after ten prior accepted issuer-wide ADR decision atoms; no HBM, signed-customer, or durable-visibility upgrade is inferred.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "rationale": "Six next source-order current broker atoms were extracted: 3Q26E-4Q26E and FY2026E-FY2027E DRAM shipment growth, followed by 2Q26E-3Q26E DRAM ASP. All remain broker forecasts for broad DRAM, not issuer guidance, realized HBM pricing, signed terms, or durable visibility.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-e387fbf074539d32a618025a",
+        "rationale": "No additional distinct fact remains after twenty-two prior accepted official ADR and issuer-wide capital atoms; none is promoted to HBM-only economics or customer visibility.",
+        "status": "FACTS_EXTRACTED"
+      },
+      {
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "rationale": "Six next source-order historical broker atoms were extracted: 4Q24F consolidated revenue, 2Q24F-4Q24F consolidated revenue growth, and 2Q24F-3Q24F DRAM revenue. All remain SUPERSEDED and non-HBM-attributed.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DRAM broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The dated broker model forecasts 3Q26E DRAM shipment quarter-on-quarter growth of 10 percent. This is broad DRAM volume, not HBM-only shipment or issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25 1Q26 2Q26E 3Q26E 4Q26E 2024 2025 2026E 2027E\nDRAM\nShipment (1Gb equiv. mn) 19,118 23,796 25,231 25,593 25,537 27,593 30,489 33,297 76,919 93,738 116,917 145,490\nQoQ % -7% 24% 6% 1% 0% 8% 10% 9% 15% 22% 25% 24%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The period-specific DRAM shipment path informs supply and earnings expectations without converting DRAM into HBM-only capacity or signed visibility.",
+        "mechanism_scope_id": "000660:DRAM:SHIPMENT_QOQ_GROWTH:3Q26E:SKS",
+        "normalized_object": "3Q26E DRAM shipment QoQ growth forecast of 10 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E; report published 2026-05-07",
+        "predicate": "was forecast by the broker to grow quarter on quarter by",
+        "predicate_family": "BROKER_DRAM_SHIPMENT_QOQ_GROWTH",
+        "primitive_tags": [
+          "3Q26_FORECAST",
+          "DRAM",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "DRAM shipment forecast",
+        "question_family_id": "DRAM_SHIPMENT_QOQ_GROWTH",
+        "question_family_tags": [
+          "DRAM_SHIPMENT",
+          "FORECAST_GROWTH",
+          "QOQ_GROWTH"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix 3Q26E DRAM shipment growth forecast",
+        "subject_id": "000660:DRAM_SHIPMENT_QOQ_GROWTH:3Q26E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 10
+      },
+      {
+        "business_segment": "DRAM broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The dated broker model forecasts 4Q26E DRAM shipment quarter-on-quarter growth of 9 percent. This is broad DRAM volume, not HBM-only shipment or issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25 1Q26 2Q26E 3Q26E 4Q26E 2024 2025 2026E 2027E\nDRAM\nShipment (1Gb equiv. mn) 19,118 23,796 25,231 25,593 25,537 27,593 30,489 33,297 76,919 93,738 116,917 145,490\nQoQ % -7% 24% 6% 1% 0% 8% 10% 9% 15% 22% 25% 24%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The period-specific DRAM shipment path informs supply and earnings expectations without converting DRAM into HBM-only capacity or signed visibility.",
+        "mechanism_scope_id": "000660:DRAM:SHIPMENT_QOQ_GROWTH:4Q26E:SKS",
+        "normalized_object": "4Q26E DRAM shipment QoQ growth forecast of 9 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q26E; report published 2026-05-07",
+        "predicate": "was forecast by the broker to grow quarter on quarter by",
+        "predicate_family": "BROKER_DRAM_SHIPMENT_QOQ_GROWTH",
+        "primitive_tags": [
+          "4Q26_FORECAST",
+          "DRAM",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "DRAM shipment forecast",
+        "question_family_id": "DRAM_SHIPMENT_QOQ_GROWTH",
+        "question_family_tags": [
+          "DRAM_SHIPMENT",
+          "FORECAST_GROWTH",
+          "QOQ_GROWTH"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix 4Q26E DRAM shipment growth forecast",
+        "subject_id": "000660:DRAM_SHIPMENT_QOQ_GROWTH:4Q26E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 9
+      },
+      {
+        "business_segment": "DRAM broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The dated broker model forecasts FY2026E DRAM shipment annual growth of 25 percent. This is broad DRAM volume, not HBM-only shipment or issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25 1Q26 2Q26E 3Q26E 4Q26E 2024 2025 2026E 2027E\nDRAM\nShipment (1Gb equiv. mn) 19,118 23,796 25,231 25,593 25,537 27,593 30,489 33,297 76,919 93,738 116,917 145,490\nQoQ % -7% 24% 6% 1% 0% 8% 10% 9% 15% 22% 25% 24%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The period-specific DRAM shipment path informs supply and earnings expectations without converting DRAM into HBM-only capacity or signed visibility.",
+        "mechanism_scope_id": "000660:DRAM:SHIPMENT_ANNUAL_GROWTH:FY2026E:SKS",
+        "normalized_object": "FY2026E DRAM shipment annual growth forecast of 25 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E; report published 2026-05-07",
+        "predicate": "was forecast by the broker to grow annually by",
+        "predicate_family": "BROKER_DRAM_SHIPMENT_ANNUAL_GROWTH",
+        "primitive_tags": [
+          "FY2026_FORECAST",
+          "DRAM",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "DRAM shipment forecast",
+        "question_family_id": "DRAM_SHIPMENT_ANNUAL_GROWTH",
+        "question_family_tags": [
+          "DRAM_SHIPMENT",
+          "FORECAST_GROWTH",
+          "ANNUAL_GROWTH"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2026E DRAM shipment growth forecast",
+        "subject_id": "000660:DRAM_SHIPMENT_ANNUAL_GROWTH:FY2026E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 25
+      },
+      {
+        "business_segment": "DRAM broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The dated broker model forecasts FY2027E DRAM shipment annual growth of 24 percent. This is broad DRAM volume, not HBM-only shipment or issuer guidance.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25 1Q26 2Q26E 3Q26E 4Q26E 2024 2025 2026E 2027E\nDRAM\nShipment (1Gb equiv. mn) 19,118 23,796 25,231 25,593 25,537 27,593 30,489 33,297 76,919 93,738 116,917 145,490\nQoQ % -7% 24% 6% 1% 0% 8% 10% 9% 15% 22% 25% 24%",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The period-specific DRAM shipment path informs supply and earnings expectations without converting DRAM into HBM-only capacity or signed visibility.",
+        "mechanism_scope_id": "000660:DRAM:SHIPMENT_ANNUAL_GROWTH:FY2027E:SKS",
+        "normalized_object": "FY2027E DRAM shipment annual growth forecast of 24 percent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2027E; report published 2026-05-07",
+        "predicate": "was forecast by the broker to grow annually by",
+        "predicate_family": "BROKER_DRAM_SHIPMENT_ANNUAL_GROWTH",
+        "primitive_tags": [
+          "FY2027_FORECAST",
+          "DRAM",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "DRAM shipment forecast",
+        "question_family_id": "DRAM_SHIPMENT_ANNUAL_GROWTH",
+        "question_family_tags": [
+          "DRAM_SHIPMENT",
+          "FORECAST_GROWTH",
+          "ANNUAL_GROWTH"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2027E DRAM shipment growth forecast",
+        "subject_id": "000660:DRAM_SHIPMENT_ANNUAL_GROWTH:FY2027E:SKS_2026-05-07",
+        "unit": "percent",
+        "value": 24
+      },
+      {
+        "business_segment": "DRAM broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The dated broker model forecasts 2Q26E DRAM ASP of USD 1.56 per 1Gb equivalent. It is a broad DRAM forecast, not realized ASP, issuer guidance, or an HBM-only price.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25 1Q26 2Q26E 3Q26E 4Q26E 2024 2025 2026E 2027E\nDRAM\nShipment (1Gb equiv. mn) 19,118 23,796 25,231 25,593 25,537 27,593 30,489 33,297 76,919 93,738 116,917 145,490\nQoQ % -7% 24% 6% 1% 0% 8% 10% 9% 15% 22% 25% 24%\nASP ($) 0.50 0.51 0.54 0.67 1.11 1.56 1.71 1.78 0.43 0.56 1.56 1.80",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit period and broad-DRAM denominator support pricing analysis while preventing conversion into realized or HBM-only ASP.",
+        "mechanism_scope_id": "000660:DRAM:ASP_FORECAST:2Q26E:SKS",
+        "normalized_object": "2Q26E DRAM ASP forecast of USD 1.56 per 1Gb equivalent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E; report published 2026-05-07",
+        "predicate": "was forecast by the broker at",
+        "predicate_family": "BROKER_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "2Q26_FORECAST",
+          "DRAM",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "DRAM average selling price forecast",
+        "question_family_id": "DRAM_ASP_FORECAST",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "PRICE_FORECAST",
+          "SEGMENT_ATTRIBUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 2Q26E DRAM ASP forecast",
+        "subject_id": "000660:DRAM_ASP_FORECAST:2Q26E:SKS_2026-05-07",
+        "unit": "USD per 1Gb equivalent",
+        "value": 1.56
+      },
+      {
+        "business_segment": "DRAM broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-cec48c4b300fe56a6ba42cb7",
+        "economic_mechanism": "The dated broker model forecasts 3Q26E DRAM ASP of USD 1.71 per 1Gb equivalent. It is a broad DRAM forecast, not realized ASP, issuer guidance, or an HBM-only price.",
+        "exact_quote": "1Q25 2Q25 3Q25 4Q25 1Q26 2Q26E 3Q26E 4Q26E 2024 2025 2026E 2027E\nDRAM\nShipment (1Gb equiv. mn) 19,118 23,796 25,231 25,593 25,537 27,593 30,489 33,297 76,919 93,738 116,917 145,490\nQoQ % -7% 24% 6% 1% 0% 8% 10% 9% 15% 22% 25% 24%\nASP ($) 0.50 0.51 0.54 0.67 1.11 1.56 1.71 1.78 0.43 0.56 1.56 1.80",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit period and broad-DRAM denominator support pricing analysis while preventing conversion into realized or HBM-only ASP.",
+        "mechanism_scope_id": "000660:DRAM:ASP_FORECAST:3Q26E:SKS",
+        "normalized_object": "3Q26E DRAM ASP forecast of USD 1.71 per 1Gb equivalent",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E; report published 2026-05-07",
+        "predicate": "was forecast by the broker at",
+        "predicate_family": "BROKER_DRAM_ASP_FORECAST",
+        "primitive_tags": [
+          "3Q26_FORECAST",
+          "DRAM",
+          "CURRENT_BROKER"
+        ],
+        "product_family": "DRAM average selling price forecast",
+        "question_family_id": "DRAM_ASP_FORECAST",
+        "question_family_tags": [
+          "DRAM_ASP",
+          "PRICE_FORECAST",
+          "SEGMENT_ATTRIBUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 3Q26E DRAM ASP forecast",
+        "subject_id": "000660:DRAM_ASP_FORECAST:3Q26E:SKS_2026-05-07",
+        "unit": "USD per 1Gb equivalent",
+        "value": 1.71
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 4Q24F consolidated revenue of KRW 19,244 billion. It is superseded, issuer-wide, and cannot establish current or HBM-only revenue.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The period-specific revenue forecast is retained only as superseded expectation context and not current HBM evidence.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:REVENUE:4Q24F:MIRAE",
+        "normalized_object": "Historical 4Q24F consolidated revenue forecast of KRW 19,244 billion",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "4Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_QUARTERLY_REVENUE_FORECAST",
+        "primitive_tags": [
+          "4Q24_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory revenue forecast",
+        "question_family_id": "HISTORICAL_QUARTERLY_REVENUE_FORECAST",
+        "question_family_tags": [
+          "CONSOLIDATED_REVENUE",
+          "HISTORICAL_FORECAST",
+          "QUARTERLY_MODEL"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix 4Q24F consolidated revenue forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:4Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 19244
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 2Q24F consolidated revenue growth of 22.2 percent quarter on quarter. It is superseded, issuer-wide, and cannot establish current HBM growth.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact quarterly growth rate remains superseded context and preserves its consolidated denominator.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:REVENUE_QOQ_GROWTH:2Q24F:MIRAE",
+        "normalized_object": "Historical 2Q24F consolidated revenue QoQ growth forecast of 22.2 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker to grow quarter on quarter by",
+        "predicate_family": "HISTORICAL_QUARTERLY_REVENUE_QOQ_GROWTH",
+        "primitive_tags": [
+          "2Q24_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory revenue growth forecast",
+        "question_family_id": "HISTORICAL_QUARTERLY_REVENUE_QOQ_GROWTH",
+        "question_family_tags": [
+          "CONSOLIDATED_REVENUE",
+          "QOQ_GROWTH",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix 2Q24F consolidated revenue growth forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_QOQ_GROWTH:2Q24F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 22.2
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 3Q24F consolidated revenue growth of 17.1 percent quarter on quarter. It is superseded, issuer-wide, and cannot establish current HBM growth.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact quarterly growth rate remains superseded context and preserves its consolidated denominator.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:REVENUE_QOQ_GROWTH:3Q24F:MIRAE",
+        "normalized_object": "Historical 3Q24F consolidated revenue QoQ growth forecast of 17.1 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "3Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker to grow quarter on quarter by",
+        "predicate_family": "HISTORICAL_QUARTERLY_REVENUE_QOQ_GROWTH",
+        "primitive_tags": [
+          "3Q24_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory revenue growth forecast",
+        "question_family_id": "HISTORICAL_QUARTERLY_REVENUE_QOQ_GROWTH",
+        "question_family_tags": [
+          "CONSOLIDATED_REVENUE",
+          "QOQ_GROWTH",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix 3Q24F consolidated revenue growth forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_QOQ_GROWTH:3Q24F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 17.1
+      },
+      {
+        "business_segment": "Consolidated historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 4Q24F consolidated revenue growth of 8.2 percent quarter on quarter. It is superseded, issuer-wide, and cannot establish current HBM growth.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact quarterly growth rate remains superseded context and preserves its consolidated denominator.",
+        "mechanism_scope_id": "000660:CONSOLIDATED:REVENUE_QOQ_GROWTH:4Q24F:MIRAE",
+        "normalized_object": "Historical 4Q24F consolidated revenue QoQ growth forecast of 8.2 percent",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "4Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker to grow quarter on quarter by",
+        "predicate_family": "HISTORICAL_QUARTERLY_REVENUE_QOQ_GROWTH",
+        "primitive_tags": [
+          "4Q24_FORECAST",
+          "SUPERSEDED",
+          "CONSOLIDATED"
+        ],
+        "product_family": "Issuer-wide memory revenue growth forecast",
+        "question_family_id": "HISTORICAL_QUARTERLY_REVENUE_QOQ_GROWTH",
+        "question_family_tags": [
+          "CONSOLIDATED_REVENUE",
+          "QOQ_GROWTH",
+          "HISTORICAL_FORECAST"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "QOQ_GROWTH"
+        ],
+        "subject": "SK hynix 4Q24F consolidated revenue growth forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE_QOQ_GROWTH:4Q24F:MIRAE_2024-05-16",
+        "unit": "percent",
+        "value": 8.2
+      },
+      {
+        "business_segment": "DRAM historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 2Q24F DRAM revenue of KRW 9,901 billion. It is superseded broad DRAM revenue and cannot establish current or HBM-only revenue.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact DRAM segment value is retained as superseded context without conversion to HBM-only revenue.",
+        "mechanism_scope_id": "000660:DRAM:REVENUE:2Q24F:MIRAE",
+        "normalized_object": "Historical 2Q24F DRAM revenue forecast of KRW 9,901 billion",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "2Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_DRAM_REVENUE_FORECAST",
+        "primitive_tags": [
+          "2Q24_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "DRAM segment revenue forecast",
+        "question_family_id": "HISTORICAL_DRAM_REVENUE_FORECAST",
+        "question_family_tags": [
+          "DRAM_REVENUE",
+          "HISTORICAL_FORECAST",
+          "SEGMENT_ATTRIBUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix 2Q24F DRAM revenue forecast",
+        "subject_id": "000660:DRAM_REVENUE:2Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 9901
+      },
+      {
+        "business_segment": "DRAM historical broker forecast, not HBM-only",
+        "confidence": 0.97,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-f87582d14c66af24ff78d6d8",
+        "economic_mechanism": "The historical broker model forecasts 3Q24F DRAM revenue of KRW 12,102 billion. It is superseded broad DRAM revenue and cannot establish current or HBM-only revenue.",
+        "exact_quote": "표 12. SK하이닉스 실적 추이 및 전망\n1Q23 2Q23 3Q23 4Q23 1Q24P 2Q24F 3Q24F 4Q24F 2022 2023P 2024F 2025F\n매출액 5,088 7,306 9,066 11,306 12,430 15,189 17,788 19,244 44,622 32,766 64,651 81,029\nQoQ/YoY -33.7 43.6 24.1 24.7 9.9 22.2 17.1 8.2 3.8 -26.6 97.3 25.3\nDRAM 2,951 4,530 6,074 7,349 7,582 9,901 12,102 13,201 28,372 20,904 42,785 53,355",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The exact DRAM segment value is retained as superseded context without conversion to HBM-only revenue.",
+        "mechanism_scope_id": "000660:DRAM:REVENUE:3Q24F:MIRAE",
+        "normalized_object": "Historical 3Q24F DRAM revenue forecast of KRW 12,102 billion",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "SUPERSEDE",
+        "period": "3Q24F; report published 2024-05-16",
+        "predicate": "was forecast by the historical broker at",
+        "predicate_family": "HISTORICAL_DRAM_REVENUE_FORECAST",
+        "primitive_tags": [
+          "3Q24_FORECAST",
+          "SUPERSEDED",
+          "DRAM"
+        ],
+        "product_family": "DRAM segment revenue forecast",
+        "question_family_id": "HISTORICAL_DRAM_REVENUE_FORECAST",
+        "question_family_tags": [
+          "DRAM_REVENUE",
+          "HISTORICAL_FORECAST",
+          "SEGMENT_ATTRIBUTION"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK hynix 3Q24F DRAM revenue forecast",
+        "subject_id": "000660:DRAM_REVENUE:3Q24F:MIRAE_2024-05-16",
+        "unit": "KRW billion",
+        "value": 12102
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-cec48c4b300fe56a6ba42cb7",
+      "SGDOC-f87582d14c66af24ff78d6d8"
+    ],
+    "unresolved_research_notes": [
+      "Distinct 4Q26E and annual DRAM ASP and ASP-growth model atoms remain in SGDOC-cec48c4b300fe56a6ba42cb7.",
+      "Distinct historical 4Q24F and annual DRAM revenue plus operating-profit and margin model atoms remain in SGDOC-f87582d14c66af24ff78d6d8."
+    ]
+  },
+  "payload_hash": "fcca8a93a9cae2c7eaaea6ee189defd01b86dcd2e0de6526cb9efd51c89c7294",
+  "production_score_authority": false,
+  "prompt_hash": "7baa8971d8aea787a37713e250e23a3d3771eb62264c56eed9419c5c261e4285",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-cb1a3efe07e68c4d31fca1b6b5f2c046177e55a6fcd3069b17798c3699e8c5ec",
+  "response_id": "COLLABRESP-78b6952bfe1e11d89fdf8f75a762dc68bd13ef6f75343662fec373d9f1eed0e1",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

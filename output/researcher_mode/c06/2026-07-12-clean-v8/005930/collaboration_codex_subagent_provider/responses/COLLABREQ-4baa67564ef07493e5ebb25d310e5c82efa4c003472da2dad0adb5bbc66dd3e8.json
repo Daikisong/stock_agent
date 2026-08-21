@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-c49d552cd6440f3b7d8b2f6e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "Anthropic 일반 홈페이지로, 삼성과의 메모리·HBM 고객 관계나 거래 조건을 다루는 full-source 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f826c7362361e3f532ed3e66",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.08,
+        "rationale": "Korea Times 제3자 기사로 CUSTOMER_OFFICIAL 원문이 아니다. 검색 스니펫은 증거 또는 계약 부재 확인으로 사용할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-83b5230c8d7aa39c999c54cc",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.06,
+        "rationale": "Yahoo/Investing.com의 Reuters 재전재 성격 기사로 고객사 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-cd3067f16cc834fe9d2c2110",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.04,
+        "rationale": "제3자 매체의 기술 동향 기사이며 요청된 CUSTOMER_OFFICIAL 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-18785939890872205cf847b2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.04,
+        "rationale": "제3자 산업 기사이고 고객사의 공식 관계·거래 문서가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-756e9f6a92e9a146afd3965a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "유안타증권 리포트 PDF로 PUBLIC_BROKER_PDF일 수 있으나 이 요청의 CUSTOMER_OFFICIAL family와 일치하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-cd74c96aa4f15b693f678199",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.06,
+        "rationale": "Investing.com 제3자 기사로 고객사 공식 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-5520028b43998dc0c4e2df8f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Anthropic 공식 글이지만 자금조달 내용으로 삼성 메모리·HBM 관계를 확인하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-748494c83a2be1961afafd1d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "Clien 게시물은 고객사 공식 원문이 아니며 검색 스니펫은 evidence가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-9ed8f4eeaa9186aa8ee15137",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "Korea.net 정부 정책 보도는 공신력 있는 보조 출처일 수 있으나 요청된 고객사 공식 source family가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-12300e0abadd49d7c7d5a36a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "일반 뉴스 검색·배포 홈페이지로 objective-bound full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8e720121c05ae6f25b4e1419",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "2020년 삼성 사업보고서로 issuer 문서이며 현재 고객 공식 관계 조사와 맞지 않는다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition에는 요청된 CUSTOMER_OFFICIAL 관계를 직접 확인할 material full-fetch route가 없다. 이 material0 판정은 관련 사실이나 계약의 부재·연구 완료를 뜻하지 않는다."
+    ]
+  },
+  "payload_hash": "5c31fb4e5ede1672bb370258c288f10d1a46c64b7f3f13f07a9feb944b594389",
+  "production_score_authority": false,
+  "prompt_hash": "e503f64e9352d6eeaf96c89c4852d819b7dfe5b0617ca3399274f223a8b10ed6",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-4baa67564ef07493e5ebb25d310e5c82efa4c003472da2dad0adb5bbc66dd3e8",
+  "response_id": "COLLABRESP-8991af6538dbda78db44e0f76f67cb8dae36735f9e285f5bb073b38505397695",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

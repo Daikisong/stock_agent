@@ -1,0 +1,69 @@
+{
+  "output_schema_hash": "9a95c6f520a26f65d55857039be78ab432c60bb053afc96973bce9ad4fa37e4c",
+  "payload": {
+    "allowed_range": [
+      0.6,
+      1.2
+    ],
+    "anchor_comparisons": [
+      "positive ordinal anchor ORDTRANSFER-b21b177481b9b2eea2f1c13e의 1.0~1.4점은 순현금·부채 감소·주주환원을 반영하지만 HBM realised ROIC는 확인하지 못한다.",
+      "counter ordinal anchor ORDTRANSFER-0508f71bf609ed09f47c3acc의 0.6~1.0점은 대규모 CAPEX·R&D·운전자본과 희석 부담을 반영해 현재 증거에 가깝다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-62724280ce8a0d4997a36f35",
+      "EFACT-6459972ca51023d1d4491408",
+      "EFACT-68380c1d51423fc5e672e63b",
+      "EFACT-6a46eb88222723dffed4cb6d",
+      "EFACT-9fdeaa2b756caf1fc9e5d690",
+      "EFACT-b15e02831a18564591fe308c",
+      "EFACT-eb7bbf5be9f2d8629eb0c50d",
+      "EFACT-f9fa114a3daa17bcad2e20e9"
+    ],
+    "disagreements": [
+      "순현금과 주주환원이 HBM 투자 회수율을 입증한다는 해석에 동의하지 않는다.",
+      "전체 CAPEX·R&D를 HBM 전용 성장투자로 분류하지 않는다."
+    ],
+    "nearest_anchor_ids": [
+      "ORDTRANSFER-b21b177481b9b2eea2f1c13e",
+      "ORDTRANSFER-0508f71bf609ed09f47c3acc"
+    ],
+    "proposed_points": 0.9,
+    "rationale": "현금 증가, 금융부채·차입 축소, 약정 준수, 순현금, 배당과 자기주식 소각은 전사 자본여력을 지지한다. 그러나 대규모 유형자산·R&D 지출, 연결·별도 채권 증가, 재고 증가와 교환사채 주식 교환은 현금효율과 희석의 counter다. 전사 actual을 HBM 전용 투자성과나 realised ROIC로 귀속할 수 없어 두 약한 anchor가 겹치는 범위에 둔다.",
+    "support_fact_ids": [
+      "EFACT-0b9e70905467d2dbab1b361a",
+      "EFACT-21677a91e8afb32e4876aa8c",
+      "EFACT-2a5c9f33dcc58bbaef146c81",
+      "EFACT-6a5438af79a463ece8fe62b4",
+      "EFACT-84886f3397f7bbc2bee937cd",
+      "EFACT-a88fbe9f73705566b2cb8cdc",
+      "EFACT-c50c5649fa26bea0cfce0e68",
+      "EFACT-d86605614919821796fffc66",
+      "EFACT-d9f801f19a001e7214e5af8c",
+      "EFACT-ef16520d0f9ee4210108fc41",
+      "EFACT-f344a6f409575d6f77888831"
+    ],
+    "why_not_higher": "HBM 전용 CAPEX·R&D와 realised ROIC가 없고 채권·재고 증가, 큰 투자지출과 주식 교환 희석이 현금효율을 제한한다.",
+    "why_not_lower": "실제 순현금, 현금 증가, 부채 감소·상환, 약정 준수와 주주환원이 자본완충력을 명확히 보여준다."
+  },
+  "payload_hash": "9e573ee2602f98e15c3e48b118822e0e8bf95d8f44809353f89a31436c5d3dc0",
+  "production_score_authority": false,
+  "prompt_hash": "6e57a3eb2c40817251a1655441fef4f12504d7710ceb7325153fc659e42bb74d",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-f09a68c524795de112ce3900eeb55ecc65c52e73779b1ca3ced08e8b04ac41b6",
+  "response_id": "COLLABRESP-2d87d615e2c46fdf720aba8e54ebde7dd1b28c107118cb1b6e215ee706135ce9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

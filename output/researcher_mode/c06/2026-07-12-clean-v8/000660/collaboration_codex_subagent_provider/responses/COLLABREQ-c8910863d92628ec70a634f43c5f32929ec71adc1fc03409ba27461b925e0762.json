@@ -1,0 +1,71 @@
+{
+  "output_schema_hash": "d8457f7133675cc5350baf44e2779e63d4a657fdc791905b432dae654f0bf66d",
+  "payload": {
+    "component_memo_ids": [
+      "CRMEMO-a7ba1123e55006eaa89d2da6",
+      "CRMEMO-94a0b0951207cd91b0a3504c",
+      "CRMEMO-2249911cddf154b56adcb60c",
+      "CRMEMO-d3b966cef94684f224f000f9",
+      "CRMEMO-bd1ae968a0ff283334124565",
+      "CRMEMO-d59a4c0b36f44562d19c1762",
+      "CRMEMO-80cb0de6b0599152dc281125"
+    ],
+    "confidence": 0.82,
+    "cross_component_support": [
+      "2026년 1분기 연결 순이익·영업현금과 DRAM actual 개선, FY2025 HBM 매출 2배 이상 및 2026Q1 HBM 가격상승 기여가 이익·현금·제품 실행의 같은 방향을 지지한다. 다만 연결·DRAM actual을 HBM 단독 수치로 바꾸지 않는다.",
+      "메모리 설비 평균 100% 가동, 공급 역량을 넘는 수요 진술, HBM4 고객요청 수량 양산과 HBM Time-to-Market은 당기 병목·가격·제품 실행이 단순 계획에만 머물지 않았음을 함께 뒷받침한다.",
+      "M15X·용인·첨단패키징 투자 계획과 HBM·server DRAM 수요 전망은 forward durability의 방향성을 보강하지만 issuer plan·outlook이며 signed purchase obligation 또는 HBM 전용 capacity lock은 아니다.",
+      "연결 순현금, 금융부채 감소·순상환, 승인 배당과 실제 자기주식 소각은 투자 부담을 흡수할 전사 자본여력 및 주주환원 실행을 확인한다.",
+      "OPENDART actual과 독립 감사 적정의견은 DRAM 매출, 고객 집중, 계약부채, 재고·충당부채·CAPEX·현금흐름의 기본 정보 신뢰도를 지지한다.",
+      "현재·forward·trailing valuation 자료는 rerating과 mispricing을 검토할 비교면을 제공한다. 낮은 forward PE와 높은 EV/EBITDA·PB, 낮은 FCF yield가 함께 있어 방향을 일방적으로 확정하지는 않는다."
+    ],
+    "cross_component_tensions": [
+      "eps_fcf_explosion tri-role intersection: NOT_EMBEDDED/NOT_INFERRED. Immutable prompt에 Analyst·Skeptic·Calibration judge range가 없어 외부 judge 파일 없이 교집합이나 material disagreement를 계산할 수 없다.",
+      "earnings_visibility tri-role intersection: NOT_EMBEDDED/NOT_INFERRED. Immutable prompt에 세 judge range가 없어 교집합을 발명하지 않는다.",
+      "bottleneck_pricing tri-role intersection: NOT_EMBEDDED/NOT_INFERRED. Immutable prompt에 세 judge range가 없어 교집합을 발명하지 않는다.",
+      "market_mispricing tri-role intersection: NOT_EMBEDDED/NOT_INFERRED. Immutable prompt에 세 judge range가 없어 교집합을 발명하지 않는다.",
+      "valuation_rerating tri-role intersection: NOT_EMBEDDED/NOT_INFERRED. Immutable prompt에 세 judge range가 없어 교집합을 발명하지 않는다.",
+      "capital_allocation tri-role intersection: NOT_EMBEDDED/NOT_INFERRED. Immutable prompt에 세 judge range가 없어 교집합을 발명하지 않는다.",
+      "information_confidence tri-role intersection: NOT_EMBEDDED/NOT_INFERRED. Immutable prompt에 세 judge range가 없어 교집합을 발명하지 않는다.",
+      "강한 연결·DRAM actual 및 HBM 제품 실행과 HBM-only revenue·margin·EPS·FCF 귀속 공백이 동시에 존재한다. 전사 또는 DRAM 수치를 HBM standalone economics로 확장할 수 없다.",
+      "메모리 100% 가동과 demand exceeding supply는 당기 공급 제약을 지지하지만 HBM-only CAPA, 장기 sold-out, 고객별 allocation 또는 realized ASP를 증명하지 않는다.",
+      "고객 요청 양산, MOU·ASIC 협업과 issuer 수요 전망은 제품·관계 실행 근거지만 signed price·volume·duration·cancellation·advance payment·backlog/RPO를 제공하지 않는다.",
+      "낮은 forward PE와 높은 forward EV/EBITDA·PB, 높은 trailing PE·PB, 낮은 forward FCF yield가 충돌하고 일부 분모는 derived scenario여서 valuation 상·하단을 넓힌다.",
+      "대형 고객 집중, 월·분기 가격·물량 재협의, WIP·재고 증가, 재고평가·계약손실·판매보증충당, CAPEX·R&D 부담은 actual 실적 강도의 지속성과 현금전환을 제한한다."
+    ],
+    "synthesis_complete": true,
+    "synthesis_summary": "Immutable prompt에 내장된 current memo 7개와 RTMEMO-8ed934301d7aeb07d694beae를 모두 검토했다. 연결·DRAM actual 개선, HBM 매출·가격·제품 실행, 메모리 100% 가동과 수요 초과, 전사 순현금·환원 실행은 긍정적 operating plane을 형성한다. 반면 actual과 plan, memory/DRAM과 HBM, 협업·고객 요청과 signed contract, 전사 cash·valuation denominator와 HBM-only economics의 경계는 여전히 열려 있다. Judge artifact가 prompt에 없으므로 7개 tri-role intersection은 모두 NOT_EMBEDDED/NOT_INFERRED이며 외부 결과를 끌어와 합의 또는 불일치를 만들지 않았다. synthesis_complete는 이 bounded artifact의 전수 review coverage만 뜻하고 점수·Stage 또는 투자결론 권한을 뜻하지 않는다.",
+    "unresolved_material_questions": [
+      "Prompt에 7개 component의 Analyst·Skeptic·Calibration artifacts가 내장되지 않아 모든 tri-role intersection과 material disagreement 상태는 NOT_EMBEDDED/NOT_INFERRED로 남는다.",
+      "HBM-only revenue·mix·gross/operating margin·EPS·CAPEX·working capital·tax·FCF를 동일 기간 actual로 연결하는 source-backed bridge가 있는가?",
+      "고객 요청 양산·MOU·ASIC 협업과 구별되는 signed purchase obligation의 volume·price·duration·cancellation·advance payment·backlog/RPO·allocation protection이 있는가?",
+      "HBM-only front-end·packaging CAPA, utilization, sold-out duration, 고객별 allocation 및 realized ASP를 기간별로 확인할 수 있는가?",
+      "HBM attributable actual이 사전 consensus·revision·expectation을 얼마나 상회했고 그 차이가 현재 가격에 미반영됐다는 직접 근거가 있는가?",
+      "상충하는 forward·trailing multiple 및 FCF yield를 HBM-only earnings·cash denominator와 일관되게 연결할 수 있는가?",
+      "M15X·용인·EUV·패키징 투자와 전사 CAPEX·R&D에서 HBM-only 투자액, working capital, FCF 및 realized ROIC를 분리할 수 있는가?",
+      "Customer-official 또는 독립 source가 HBM qualification·quality·committed demand와 contract economics를 corroborate하는가? 확인되지 않음은 source absence를 뜻하지 않는다.",
+      "고객 집중, 가격·물량 재협의, WIP·재고 및 각종 충당부채가 향후 실적 지속성과 현금전환에 미치는 HBM 귀속 영향을 확인할 수 있는가?"
+    ]
+  },
+  "payload_hash": "4050720fcddb0518b63a2944b543d8465decf75f553f6ca3341dda118b73946c",
+  "production_score_authority": false,
+  "prompt_hash": "b60ddfbc75ef4c863be11b6b968955cdaf917efd92e19e92724c486645dd9f26",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-c8910863d92628ec70a634f43c5f32929ec71adc1fc03409ba27461b925e0762",
+  "response_id": "COLLABRESP-1ca9bba019151f6794685c43635fee4dadce60bf6dfdd42a1e561a73ea67acc4",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

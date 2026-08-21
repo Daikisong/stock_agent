@@ -1,0 +1,157 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The immutable Analyst [14.5,16.8], Skeptic [12.4,15.3], and Calibration [15.8,18.2] ranges have no three-way intersection. A same-evidence semantic rewrite and fresh independent judges must reconcile the weight assigned to consolidated and DRAM actuals versus the absent HBM-only earnings and FCF bridge, CAPEX cash use, inventory allowance, and work-in-process loss risk."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The three judge ranges intersect at [11.7,12.0], and the memo correctly separates DRAM actual growth and HBM product execution from monthly or quarterly price agreements, long-term purchase commitments, RPO, advance payments, and cancellation protection. Its residual contract limitations are already explicit counterweights."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The Analyst [6.4,8.3], Skeptic [4.8,6.8], and Calibration [11.6,14.4] ranges do not intersect. The same evidence must be rewritten and rejudged so that memory-wide 100% utilization and HBM-led pricing are not inconsistently promoted into HBM-only locked capacity, long-duration sold-out status, or fixed contract pricing."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "The three judge ranges intersect at [5.7,5.8]. The memo preserves that operating improvement, structured revision data, and current valuation observations do not by themselves prove that HBM economics are absent from market expectations."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": false,
+        "missing_fact_needs": [
+          "An as-of-eligible issuer-official presentation must provide target-attributable, forward-scoped HBM demand, production, capacity, or customer-allocation visibility with a stated period and status sufficient for the structured DURABLE_VISIBILITY role; memory-wide utilization, broker forecasts, and generic customer collaboration are insufficient."
+        ],
+        "rationale": "Although the valuation judges intersect at [3.9,4.4], the deterministic structured result is SOURCE_PENDING and explicitly lacks DURABLE_VISIBILITY for valuation_rerating. The current derived valuation and peer bands cannot substitute for official forward HBM visibility, and four PUBLIC_BROKER_PDF searches returning no result do not close an untried objective-bound issuer-official route."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The Analyst [1.0,1.4], Skeptic [0.6,1.2], and Calibration [2.1,3.2] ranges have no three-way intersection. A same-evidence rewrite and fresh judges must consistently balance net cash, debt reduction, dividends, and share cancellation against CAPEX, R&D, receivables, inventory, and exchange-bond dilution without inventing an HBM-specific realized ROIC."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": false,
+        "missing_fact_needs": [],
+        "rationale": "The Analyst [1.65,2.15], Skeptic [1.4,2.0], and Calibration [2.3,3.4] ranges do not intersect. The same-evidence rewrite must reconcile the weight of audited OPENDART actuals against a single-source independence group and the absence of independently corroborated HBM contract, quality, margin, and cash-conversion evidence; the empty corroboration count alone is not source absence and does not force a new query without a named executable counterparty identity."
+      }
+    ],
+    "component_memos_sufficient": false,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-0f0e8b73ccb5b1bab9221bac",
+        "rationale": "Nine query attempts ended with provider errors. This is a retryable transport failure and cannot establish source absence or completion.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-82f77e12f4f22607d865bfc5",
+        "rationale": "Four PUBLIC_BROKER_PDF searches returned no result for valuation_rerating. Zero results are not saturation, and broker material could not by itself fill strict issuer-official DURABLE_VISIBILITY; an alternate objective-bound official route remains.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-9f189ef4313bb76da9d0c2eb",
+        "rationale": "Six fetched documents were after the 2026-07-12 cutoff and were correctly rejected. They must remain excluded and do not imply that eligible current sources are absent.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-b5e3b8331dcb08b996ec83cf",
+        "rationale": "Six full-fetch query outcomes failed because the resulting documents were future-dated. The as-of rejection is final for those documents, not evidence of source absence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-c87e0e01ccdb4961aa9d17ba",
+        "rationale": "The LLM returned no new valid query after prior context. This is not a zero-result absence proof; the immutable prompt still exposes an objective-specific official presentation route for the unresolved structured valuation role.",
+        "retryable": true,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [
+      {
+        "component_id": "valuation_rerating",
+        "direction": "RESOLUTION",
+        "fact_need": "Issuer-official, period-specific HBM demand, production, capacity, or customer-allocation visibility that is attributable to SK hynix and has a forward operational status strong enough to support DURABLE_VISIBILITY without being converted into a signed contract unless the source says so.",
+        "why_material": "The structured valuation plane is SOURCE_PENDING solely because DURABLE_VISIBILITY is missing; without this fact, current multiples and contextual peer bands cannot be joined to durable HBM economics."
+      }
+    ],
+    "new_source_family_directions": [
+      {
+        "counter_or_supersession": false,
+        "direction": "Resolve an as-of-eligible SK hynix official earnings or IR presentation that states forward HBM demand, production, capacity, or customer-allocation visibility with a defined period and operational status; preserve the distinction between an issuer plan, an operational allocation, and a legally binding purchase contract.",
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "rationale": "The structured engine is missing DURABLE_VISIBILITY for valuation_rerating, while prior attempts were PUBLIC_BROKER_PDF zero results and an ISSUER_PRESENTATION route has not been executed for this objective. Official forward visibility can fill the role; memory-wide utilization and broker estimates cannot.",
+        "source_family": "ISSUER_PRESENTATION"
+      }
+    ],
+    "next_actions": [
+      "Semantically rewrite eps_fcf_explosion, bottleneck_pricing, capital_allocation, and information_confidence on the exact current evidence, then run fresh independent Analyst, Skeptic, and Calibration judges for those four components.",
+      "Send the valuation_rerating issuer-presentation direction to the query-generation LLM and fetch only an as-of-eligible official full document; do not reuse or infer the later 85e query response in this immutable review.",
+      "If an eligible official document yields a valid forward HBM visibility fact, extract and compile it, then rerun structured valuation role assessment before rewriting valuation_rerating.",
+      "Retry provider-error transport only with the current objective-bound context; preserve every provider failure and zero-result event as non-absence if the retry fails."
+    ],
+    "query_direction_briefs": [
+      {
+        "avoid_repeating": [
+          "Do not repeat the four PUBLIC_BROKER_PDF zero-result attempts.",
+          "Do not treat memory-wide 100% utilization as HBM-only capacity allocation.",
+          "Do not convert issuer guidance, customer collaboration, or monthly or quarterly price negotiation into a signed contract, fixed volume, or cancellation protection."
+        ],
+        "counter_or_supersession": false,
+        "objective_id": "SGOBJ-5fccea4d80fc98e697bd7a0e",
+        "research_need": "Find an exact pre-cutoff SK hynix official earnings or IR presentation that provides period-specific forward HBM production, capacity, demand, or customer-allocation visibility and determine whether its status satisfies DURABLE_VISIBILITY."
+      }
+    ],
+    "rationale": "The immutable request's seven memos, 21 memo-bound judge reviews, RTMEMO-6e4f02d70848620a3682d91f, SYNMEMO-6c2635811123db98988f65b5, complete seven-objective counter proof, current fact graph, structured source attempts, source graph, and all five failure groups were audited without using the later 85e query response. Four material three-judge disagreements require same-evidence rewrites, and valuation_rerating remains deterministically SOURCE_PENDING because DURABLE_VISIBILITY is missing. One nonduplicate issuer-presentation route remains for that structured role. Provider errors, broker zero results, and an LLM no-new-query response are not source absence, while six future documents and their paired query failures remain excluded.",
+    "ready_for_independent_saturation_review": false,
+    "reasonable_positive_routes_remaining": true,
+    "structured_data_complete": false,
+    "unresolved_material_questions": [
+      "How should the same evidence reconcile consolidated and DRAM actual strength with the absent HBM-only earnings and FCF bridge in eps_fcf_explosion?",
+      "How should the same evidence consistently weight memory-wide 100% utilization and HBM-led pricing against the absence of HBM-only locked capacity and long-duration pricing in bottleneck_pricing?",
+      "How should net cash and executed shareholder returns be weighed consistently against CAPEX, R&D, working-capital absorption, and dilution in capital_allocation?",
+      "How should audited official actuals be weighed against single-group source independence and HBM-specific disclosure limitations in information_confidence?",
+      "Does an as-of-eligible SK hynix official presentation provide period-specific HBM demand, production, capacity, or customer-allocation visibility sufficient for the missing DURABLE_VISIBILITY role without overstating guidance as contract economics?"
+    ]
+  },
+  "payload_hash": "b13bc18cb881d030f086cbe027fedd70f592afb329bd29c55ff6e0144bb294bd",
+  "production_score_authority": false,
+  "prompt_hash": "51dfbcc279cc35ebf57a0db372f0b15708528eeb4273b888dc4d5469ea7f4ac4",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5742ce2eefdacb57524d32176eb78fdfd248e95df5f66e3241faf74fe6e67862",
+  "response_id": "COLLABRESP-18a6439190d76273d5a8fcf28044969c62c95ae0fc986a83d5ad172b5d74bbeb",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

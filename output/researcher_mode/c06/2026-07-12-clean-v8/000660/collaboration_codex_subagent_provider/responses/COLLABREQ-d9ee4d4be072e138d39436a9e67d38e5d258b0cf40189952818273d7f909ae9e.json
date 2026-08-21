@@ -1,0 +1,588 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "rationale": "Continuation page 7 adds twelve distinct target-objective facts in literal source order after the prior 72: FY2026 DRAM segment operating profit, five quarterly pretax-income forecasts, five quarterly net-income forecasts, and the first explicit operating-margin forecast. Additional distinct margin rows remain in this supplied chunk.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "DRAM segment broker estimate, not issuer guidance",
+        "confidence": 0.99,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "대신증권의 FY2026 DRAM 부문 영업이익 전망은 연결 이익 중 DRAM의 수익 기여를 수치로 분리하지만 발행사 가이던스나 실적은 아니다.",
+        "exact_quote": "DRAM 7,500 9,500 11,500 14,743 18,144 19,799 19,927 17,190 20,959 43,243 75,060",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "DRAM 귀속 영업이익을 연간 수치로 분리해 이익 전환과 valuation earnings bridge를 직접 진전시키지만 broker 전망이라는 한계를 유지한다.",
+        "mechanism_scope_id": "000660:MEMORY:DRAM_SEGMENT_EARNINGS_FORECAST",
+        "normalized_object": "SK hynix FY2026 DRAM segment operating-profit Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "대신증권은 SK하이닉스 DRAM 부문의 FY2026 영업이익을 75,060십억원으로 전망했다.",
+        "predicate_family": "BROKER_DRAM_SEGMENT_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "OPERATING_PROFIT",
+          "FY2026E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "DRAM segment earnings estimate",
+        "question_family_id": "daishin_skh_dram_segment_operating_profit_fy2026e",
+        "question_family_tags": [
+          "dram_segment_profit",
+          "broker_forecast",
+          "earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [
+          "SEGMENT_CONTRIBUTION"
+        ],
+        "subject": "SK하이닉스 DRAM 부문 FY2026 영업이익 전망",
+        "subject_id": "000660:DRAM_OP:FY2026E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 75060
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "연결 세전이익의 분기 전망으로 전사 earnings path를 보여주지만 DRAM 또는 HBM 귀속은 분리하지 않는다.",
+        "exact_quote": "세전이익 9,299 8,723 14,790 15,321 19,775 21,961 22,341 18,668 23,885 48,133 82,744",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "분기 연결 이익 경로를 보완하지만 HBM·DRAM 기여를 직접 분리하지 않는 broker 전망이다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_PRETAX_FORECAST",
+        "normalized_object": "SK hynix 4Q25 consolidated pretax-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q25E",
+        "predicate": "대신증권은 SK하이닉스의 4Q25 연결 세전이익을 15,321십억원으로 전망했다.",
+        "predicate_family": "BROKER_CONSOLIDATED_PRETAX_INCOME_FORECAST",
+        "primitive_tags": [
+          "PRETAX_INCOME",
+          "4Q25E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "daishin_skh_consolidated_pretax_income_4q25e",
+        "question_family_tags": [
+          "consolidated_pretax",
+          "quarterly_forecast",
+          "earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 4Q25 세전이익 전망",
+        "subject_id": "000660:CONSOLIDATED_PRETAX_INCOME:4Q25E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 15321
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "연결 세전이익의 분기 전망으로 전사 earnings path를 보여주지만 DRAM 또는 HBM 귀속은 분리하지 않는다.",
+        "exact_quote": "세전이익 9,299 8,723 14,790 15,321 19,775 21,961 22,341 18,668 23,885 48,133 82,744",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "4Q25 대비 증가하는 연결 세전이익 경로를 보완하지만 HBM·DRAM 기여를 직접 분리하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_PRETAX_FORECAST",
+        "normalized_object": "SK hynix 1Q26 consolidated pretax-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26E",
+        "predicate": "대신증권은 SK하이닉스의 1Q26 연결 세전이익을 19,775십억원으로 전망했다.",
+        "predicate_family": "BROKER_CONSOLIDATED_PRETAX_INCOME_FORECAST",
+        "primitive_tags": [
+          "PRETAX_INCOME",
+          "1Q26E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "daishin_skh_consolidated_pretax_income_1q26e",
+        "question_family_tags": [
+          "consolidated_pretax",
+          "quarterly_forecast",
+          "earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 1Q26 세전이익 전망",
+        "subject_id": "000660:CONSOLIDATED_PRETAX_INCOME:1Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 19775
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "연결 세전이익의 분기 전망으로 전사 earnings path를 보여주지만 DRAM 또는 HBM 귀속은 분리하지 않는다.",
+        "exact_quote": "세전이익 9,299 8,723 14,790 15,321 19,775 21,961 22,341 18,668 23,885 48,133 82,744",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "연결 세전이익의 분기 상승 경로를 보완하지만 HBM·DRAM 기여를 직접 분리하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_PRETAX_FORECAST",
+        "normalized_object": "SK hynix 2Q26 consolidated pretax-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E",
+        "predicate": "대신증권은 SK하이닉스의 2Q26 연결 세전이익을 21,961십억원으로 전망했다.",
+        "predicate_family": "BROKER_CONSOLIDATED_PRETAX_INCOME_FORECAST",
+        "primitive_tags": [
+          "PRETAX_INCOME",
+          "2Q26E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "daishin_skh_consolidated_pretax_income_2q26e",
+        "question_family_tags": [
+          "consolidated_pretax",
+          "quarterly_forecast",
+          "earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 2Q26 세전이익 전망",
+        "subject_id": "000660:CONSOLIDATED_PRETAX_INCOME:2Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 21961
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "연결 세전이익의 분기 전망으로 전사 earnings path를 보여주지만 DRAM 또는 HBM 귀속은 분리하지 않는다.",
+        "exact_quote": "세전이익 9,299 8,723 14,790 15,321 19,775 21,961 22,341 18,668 23,885 48,133 82,744",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "연결 세전이익의 2026년 분기 정점 경로를 보완하지만 HBM·DRAM 기여를 직접 분리하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_PRETAX_FORECAST",
+        "normalized_object": "SK hynix 3Q26 consolidated pretax-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E",
+        "predicate": "대신증권은 SK하이닉스의 3Q26 연결 세전이익을 22,341십억원으로 전망했다.",
+        "predicate_family": "BROKER_CONSOLIDATED_PRETAX_INCOME_FORECAST",
+        "primitive_tags": [
+          "PRETAX_INCOME",
+          "3Q26E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "daishin_skh_consolidated_pretax_income_3q26e",
+        "question_family_tags": [
+          "consolidated_pretax",
+          "quarterly_forecast",
+          "earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 3Q26 세전이익 전망",
+        "subject_id": "000660:CONSOLIDATED_PRETAX_INCOME:3Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 22341
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "연결 세전이익의 4Q26 감소 전망은 외형 강세가 연중 동일하게 지속된다는 가정의 counter이며 HBM·DRAM 귀속은 분리하지 않는다.",
+        "exact_quote": "세전이익 9,299 8,723 14,790 15,321 19,775 21,961 22,341 18,668 23,885 48,133 82,744",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "3Q26 대비 감소하는 연결 세전이익 전망은 지속적 이익 상승 가정에 대한 분기 counter지만 HBM 귀속은 없다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_PRETAX_FORECAST",
+        "normalized_object": "SK hynix 4Q26 consolidated pretax-income Daishin broker forecast and sequential counter",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q26E",
+        "predicate": "대신증권은 SK하이닉스의 4Q26 연결 세전이익을 18,668십억원으로 전망했다.",
+        "predicate_family": "BROKER_CONSOLIDATED_PRETAX_INCOME_FORECAST",
+        "primitive_tags": [
+          "PRETAX_INCOME",
+          "4Q26E",
+          "BROKER_ESTIMATE",
+          "SEQUENTIAL_DECLINE"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "daishin_skh_consolidated_pretax_income_4q26e",
+        "question_family_tags": [
+          "consolidated_pretax",
+          "quarterly_forecast",
+          "earnings_counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 4Q26 세전이익 전망",
+        "subject_id": "000660:CONSOLIDATED_PRETAX_INCOME:4Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 18668
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "연결 순이익의 분기 전망으로 전사 earnings path를 보여주지만 지배지분 순이익이나 HBM·DRAM 귀속으로 확대할 수 없다.",
+        "exact_quote": "순이익 8,108 6,996 12,598 11,644 15,029 16,690 16,979 14,188 19,797 39,346 62,886",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "분기 연결 순이익 경로를 보완하지만 지배지분·DRAM·HBM 귀속을 제공하지 않는 broker 전망이다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_NET_INCOME_FORECAST",
+        "normalized_object": "SK hynix 4Q25 consolidated net-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q25E",
+        "predicate": "대신증권은 SK하이닉스의 4Q25 연결 순이익을 11,644십억원으로 전망했다.",
+        "predicate_family": "BROKER_CONSOLIDATED_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "NET_INCOME",
+          "4Q25E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "daishin_skh_consolidated_net_income_4q25e",
+        "question_family_tags": [
+          "consolidated_net_income",
+          "quarterly_forecast",
+          "earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 4Q25 순이익 전망",
+        "subject_id": "000660:CONSOLIDATED_NET_INCOME:4Q25E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 11644
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "연결 순이익의 분기 전망으로 전사 earnings path를 보여주지만 지배지분 순이익이나 HBM·DRAM 귀속으로 확대할 수 없다.",
+        "exact_quote": "순이익 8,108 6,996 12,598 11,644 15,029 16,690 16,979 14,188 19,797 39,346 62,886",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "4Q25 대비 증가하는 연결 순이익 경로를 보완하지만 지배지분·DRAM·HBM 귀속을 제공하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_NET_INCOME_FORECAST",
+        "normalized_object": "SK hynix 1Q26 consolidated net-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "1Q26E",
+        "predicate": "대신증권은 SK하이닉스의 1Q26 연결 순이익을 15,029십억원으로 전망했다.",
+        "predicate_family": "BROKER_CONSOLIDATED_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "NET_INCOME",
+          "1Q26E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "daishin_skh_consolidated_net_income_1q26e",
+        "question_family_tags": [
+          "consolidated_net_income",
+          "quarterly_forecast",
+          "earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 1Q26 순이익 전망",
+        "subject_id": "000660:CONSOLIDATED_NET_INCOME:1Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 15029
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "연결 순이익의 분기 전망으로 전사 earnings path를 보여주지만 지배지분 순이익이나 HBM·DRAM 귀속으로 확대할 수 없다.",
+        "exact_quote": "순이익 8,108 6,996 12,598 11,644 15,029 16,690 16,979 14,188 19,797 39,346 62,886",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "연결 순이익의 분기 상승 경로를 보완하지만 지배지분·DRAM·HBM 귀속을 제공하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_NET_INCOME_FORECAST",
+        "normalized_object": "SK hynix 2Q26 consolidated net-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2Q26E",
+        "predicate": "대신증권은 SK하이닉스의 2Q26 연결 순이익을 16,690십억원으로 전망했다.",
+        "predicate_family": "BROKER_CONSOLIDATED_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "NET_INCOME",
+          "2Q26E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "daishin_skh_consolidated_net_income_2q26e",
+        "question_family_tags": [
+          "consolidated_net_income",
+          "quarterly_forecast",
+          "earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 2Q26 순이익 전망",
+        "subject_id": "000660:CONSOLIDATED_NET_INCOME:2Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 16690
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "연결 순이익의 분기 전망으로 전사 earnings path를 보여주지만 지배지분 순이익이나 HBM·DRAM 귀속으로 확대할 수 없다.",
+        "exact_quote": "순이익 8,108 6,996 12,598 11,644 15,029 16,690 16,979 14,188 19,797 39,346 62,886",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "연결 순이익의 2026년 분기 정점 경로를 보완하지만 지배지분·DRAM·HBM 귀속을 제공하지 않는다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_NET_INCOME_FORECAST",
+        "normalized_object": "SK hynix 3Q26 consolidated net-income Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "3Q26E",
+        "predicate": "대신증권은 SK하이닉스의 3Q26 연결 순이익을 16,979십억원으로 전망했다.",
+        "predicate_family": "BROKER_CONSOLIDATED_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "NET_INCOME",
+          "3Q26E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "daishin_skh_consolidated_net_income_3q26e",
+        "question_family_tags": [
+          "consolidated_net_income",
+          "quarterly_forecast",
+          "earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 3Q26 순이익 전망",
+        "subject_id": "000660:CONSOLIDATED_NET_INCOME:3Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 16979
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "연결 순이익의 4Q26 감소 전망은 연중 강세가 동일하게 지속된다는 가정의 counter이며 지배지분 순이익이나 HBM·DRAM 귀속을 제공하지 않는다.",
+        "exact_quote": "순이익 8,108 6,996 12,598 11,644 15,029 16,690 16,979 14,188 19,797 39,346 62,886",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "3Q26 대비 감소하는 연결 순이익 전망은 지속적 이익 상승 가정에 대한 분기 counter지만 지배지분·HBM 귀속은 없다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_NET_INCOME_FORECAST",
+        "normalized_object": "SK hynix 4Q26 consolidated net-income Daishin broker forecast and sequential counter",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "4Q26E",
+        "predicate": "대신증권은 SK하이닉스의 4Q26 연결 순이익을 14,188십억원으로 전망했다.",
+        "predicate_family": "BROKER_CONSOLIDATED_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "NET_INCOME",
+          "4Q26E",
+          "BROKER_ESTIMATE",
+          "SEQUENTIAL_DECLINE"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "daishin_skh_consolidated_net_income_4q26e",
+        "question_family_tags": [
+          "consolidated_net_income",
+          "quarterly_forecast",
+          "earnings_counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 4Q26 순이익 전망",
+        "subject_id": "000660:CONSOLIDATED_NET_INCOME:4Q26E:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 14188
+      },
+      {
+        "business_segment": "Consolidated broker estimate, not HBM-attributed",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "연결 영업이익률 전망은 매출 대비 전사 영업이익 전환을 정량화하지만 DRAM 또는 HBM margin으로 귀속되지 않는다.",
+        "exact_quote": "이익률(%)\n영업이익 42 41 47 52 57 59 59 51 35 46 57",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "명시적 분모가 있는 4Q25 연결 영업이익률 전망으로 이익 전환을 보완하지만 HBM·DRAM margin은 아니다.",
+        "mechanism_scope_id": "000660:MEMORY:CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "normalized_object": "SK hynix 4Q25 consolidated operating-margin Daishin broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "4Q25E",
+        "predicate": "대신증권은 SK하이닉스의 4Q25 연결 영업이익률을 52%로 전망했다.",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_MARGIN_FORECAST",
+        "primitive_tags": [
+          "OPERATING_MARGIN",
+          "4Q25E",
+          "BROKER_ESTIMATE"
+        ],
+        "product_family": "Issuer-wide memory margin estimate",
+        "question_family_id": "daishin_skh_consolidated_operating_margin_4q25e",
+        "question_family_tags": [
+          "consolidated_operating_margin",
+          "quarterly_forecast",
+          "earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 연결 4Q25 영업이익률 전망",
+        "subject_id": "000660:CONSOLIDATED_OPERATING_MARGIN:4Q25E:DAISHIN_20251128",
+        "unit": "%",
+        "value": 52
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-b06350879c518ec49fa8cd5c"
+    ],
+    "unresolved_research_notes": [
+      "The supplied SK hynix forecast table still contains distinct unconsumed consolidated and DRAM operating-margin periods after this capped page; continue the same literal chunk without repeating these 12 or the prior 72."
+    ]
+  },
+  "payload_hash": "7e29fbb5bec8a3002ba2904c1f5c1b9ad8b8a8f5bdab8d3a267dbd763af617d6",
+  "production_score_authority": false,
+  "prompt_hash": "8bd10b153b0d672198142508c46b606bcd9943c6488908a55b6becaa31695309",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-d9ee4d4be072e138d39436a9e67d38e5d258b0cf40189952818273d7f909ae9e",
+  "response_id": "COLLABRESP-53dae5e96766a43441ec1a32ce12f94ab4eca96b0d80c4a5fce4b72b28049881",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

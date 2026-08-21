@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-e940a7afdb5e9593f1bf9e10",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.05,
+        "rationale": "금감원 호스팅 SK하이닉스 신용평가 자료로 대상 회사 고객사의 공식 문서가 아니며, 스니펫의 계약 표현도 이 요청의 evidence로 승격할 수 없다."
+      },
+      {
+        "candidate_id": "SGCAND-66bd4d0f69d0b4c639cd76d7",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.12,
+        "rationale": "SK Group 공식 OpenAI 협력 원문이지만 대상 삼성전자의 고객 관계·계약을 직접 검증하는 CUSTOMER_OFFICIAL 문서는 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8bdfac4aa07c9fe0b1037572",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "상업 시장조사 페이지로 고객사 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-0ffd126b7716e5952d8786dd",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.03,
+        "rationale": "제3자 뉴스 기사로 고객사 공식 source family와 일치하지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-920f52e33d416fb5139aafd0",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.1,
+        "rationale": "Korea.net 정부 보도는 보조 출처일 수 있으나 고객사 공식 full-source는 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-2f3a996b6a0afede53cafcf4",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "2021년 삼성 사업보고서로 issuer 문서이며 현재 고객 관계 조사와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-6bd3381c4cd978188020945f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "중국 방문기 증권 리포트로 요청 objective와 source family가 모두 맞지 않는다."
+      },
+      {
+        "candidate_id": "SGCAND-afa28537e31836c8b640d48d",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.06,
+        "rationale": "ITPro 제3자 기사로 OpenAI 또는 다른 고객의 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-8f60fb611978fadb854ea376",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "2019년 스마트폰 제품 기사로 HBM 고객 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-fb43be29e37d4e06fb924764",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "일반 기사 목록 페이지이며 objective-bound full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6850b96dc9ef08dc81c712e3",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "PwC 산업 가이드북으로 특정 고객사의 삼성 HBM 관계·계약 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-69aa66e6d0d82b48d51080e1",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.04,
+        "rationale": "SammyGuru 제3자 기사이며 AMD CUSTOMER_OFFICIAL 원문이 아니다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "이 partition의 material0은 CUSTOMER_OFFICIAL full-source route가 없다는 분류일 뿐, 고객 관계·계약의 부재 또는 연구 완료를 증명하지 않는다."
+    ]
+  },
+  "payload_hash": "089b3d7d5c78cdfba0f2b397a57a049f5e8bf6ef243bde3b5745f3c38477bdbd",
+  "production_score_authority": false,
+  "prompt_hash": "b121263fb65642bba7b7b500145d8883806c6c1677d023910dc8b51deade8938",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-005aceeff7f0ae376f1e909befe60e19de3b1a0705639d329e5264c6cce3a80c",
+  "response_id": "COLLABRESP-b28137f3a814e48c2a00aabf29607938c2284568afe87f49a5c8970ecbf636da",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

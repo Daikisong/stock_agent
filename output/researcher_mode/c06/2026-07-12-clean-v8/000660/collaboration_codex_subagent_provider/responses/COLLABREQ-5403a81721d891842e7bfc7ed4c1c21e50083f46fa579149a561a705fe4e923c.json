@@ -1,0 +1,52 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-b5b1441b0102f431635c58cf",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Naver blog attachment list is not a broker-original target research document and provides no target-specific HBM customer relationship."
+      },
+      {
+        "candidate_id": "SGCAND-2fbb5b5f023c94f3c65673c1",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.2,
+        "rationale": "MyAsset broker PDF discusses memory pricing and process assumptions, but the supplied metadata has no Microsoft, Nvidia, named platform, qualification or deployment linkage."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "Neither candidate in this partition provides a bounded named-customer corroboration route."
+    ]
+  },
+  "payload_hash": "614b0456bcdc57ba95a354290e26e5ca6a405f988f034a1e7a36f30a19fb24f6",
+  "production_score_authority": false,
+  "prompt_hash": "3b7c6f2ab5faefbc514042f490a748d0f9a513abd0a0ac1c9f598d7212ea926b",
+  "provenance": {
+    "agent_id": "/root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/direct_analysis",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5403a81721d891842e7bfc7ed4c1c21e50083f46fa579149a561a705fe4e923c",
+  "response_id": "COLLABRESP-d47d71ee624f5761f5adc9537144ec6cac31d83a3fa7ae6554733c4c2c1312a2",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "output_schema_hash": "74f772c170ff4c96f9af791d5f0bb59ed80a27950cce08d0c9ba761a878b9c2c",
+  "payload": {
+    "allowed_range": [
+      12.2,
+      14.4
+    ],
+    "anchor_comparisons": [
+      "CANCH-5eb80a11ed23fc1102335092의 positive medium band(11.95~14.05)보다 HBM4 양산 출하, 메모리 actual, AMD 공식 corroboration이 더 구체적이어서 중단 이상이 합리적이지만 signed contract가 없어 상단을 크게 넘기 어렵다.",
+      "CANCH-1aa76cb8e89d85cd78d325f4의 counter band(9.95~12.05)와 비교하면 고객 lock·margin bridge 부재는 유사하나, 현재는 100% 가동·ASP·매출 actual과 HBM4 출하가 있어 그 상단보다 높다."
+    ],
+    "counter_fact_ids": [
+      "EFACT-432ffed78641a7fa3eb2aaf1"
+    ],
+    "disagreements": [
+      "AMD의 HBM3E 이력과 HBM4 MOU·기술협력은 독립 고객 corroboration이지만 가격·물량·기간·취소조건을 가진 signed 구매계약과 동일하지 않다.",
+      "CUSTOMER_OFFICIAL ranking material 0은 NVIDIA·OpenAI 계약 부재나 source absence의 증명이 아니다."
+    ],
+    "nearest_anchor_ids": [
+      "CANCH-5eb80a11ed23fc1102335092",
+      "CANCH-1aa76cb8e89d85cd78d325f4"
+    ],
+    "proposed_points": 13.6,
+    "rationale": "HBM4 양산 출하와 HBM4E 고객 샘플, 100% 메모리 가동, 서버향 판매 확대, 2026Q1 메모리 매출 74,779,980백만원 및 ASP 146% 상승은 실제 실행과 수익 전환을 지지한다. AMD 공식 자료의 HBM3E 공급 이력과 HBM4 정렬도 issuer-only 주장보다 독립성이 높다. 그러나 MOU·계획·기술협력과 signed 계약경제를 분리하고, 연결·메모리 actual을 HBM-only 매출·마진·FCF로 귀속하지 않아 medium 상단 범위로 제한한다.",
+    "support_fact_ids": [
+      "EFACT-0ea4c7a5b342855d104d1848",
+      "EFACT-2b58fcb0afdbec4f074e5aab",
+      "EFACT-3dcbb46fd5653fb3dc5dcd2e",
+      "EFACT-4d0e0f24a3a1645c5962f1b3",
+      "EFACT-4d6a7fe870806b29408cc3a5",
+      "EFACT-6e7cdee571c7ae305a860ce6",
+      "EFACT-7f9fca669110a7e761e6264d",
+      "EFACT-9d94cbc4213d1d3bc1129615",
+      "EFACT-b6ff1b966b93b843dd6bcd04",
+      "EFACT-b7565fd844a544809e1ca148",
+      "EFACT-cbd2e7a3a3670eba7a113d19",
+      "EFACT-ccffdfd9c63b55091b78702d",
+      "EFACT-eea88d392c237374ec65f4b0",
+      "EFACT-f295131e6dc092d197e8eb93"
+    ],
+    "why_not_higher": "NVIDIA HBM4는 협의 중이고 AMD HBM4는 MOU 기반 정렬이며 OpenAI·다수 고객 공급은 계획이다. HBM-only 가격·확정물량·기간·취소조건·backlog/RPO·margin/FCF bridge가 없다.",
+    "why_not_lower": "HBM4가 실제 양산 출하됐고 HBM4E 샘플도 고객 평가에 진입했으며, 메모리 100% 가동·매출·ASP actual과 AMD 공식 HBM3E 이력이 단순 기대보다 강한 실행 증거를 제공한다."
+  },
+  "payload_hash": "e6cc9000071af56ea1b5253296d9aecce2e0f0c777c3567cce77820fd5aec3fb",
+  "production_score_authority": false,
+  "prompt_hash": "514ae7ef7079f2f0321900a35dc48898a0eb7b5795ac15746695f602e7ce33a5",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "codex-collaboration",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1e67b7fc4f2f31584acaa198e254ba72872a8b4f79f8b029f34803ba19b38f91",
+  "response_id": "COLLABRESP-f82de74cf3e719d05afa0f99bc9e6bd9a3f85b56fc65e8272320e7a4bad13cf9",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

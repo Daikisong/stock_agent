@@ -1,0 +1,582 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "rationale": "Continuation page 3 reviewed the full 120,010-character broker report in source order and strictly deduplicated the 24 prior accepted atoms. It extracts the next 12 target-direct table atoms: FY2025/FY2026 consolidated broker estimates for revenue, operating profit, pretax income, net income, and EPS, followed by FY2025/FY2026 forward PER. FY2025 estimates are marked superseded and FY2026 estimates open; all remain broker estimates, not issuer actuals or guidance, signed contract economics, or HBM-only earnings. NAND-only rows are excluded. Distinct ROE/PBR/EV-EBITDA, revision, DRAM-segment, and cash-flow table remainder remains after the page cap.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권은 FY2025 SK하이닉스 전사 매출을 92.743조원으로 전망했다. 경과한 broker estimate이며 issuer actual, issuer guidance 또는 HBM-only revenue가 아니다.",
+        "exact_quote": "주가(원,10/21) 479,000 12월 결산(십억원) 2023A 2024A 2025E 2026E\n시가총액(십억원) 348,713 매출액 32,766 66,193 92,743 121,100",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 매출 expectation의 기간·수치가 명확하지만 HBM attribution이 없고 현재는 과거 forecast다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "FY2025 전사 매출 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "FY2025 전사 매출을 92.743조원으로 전망했다",
+        "predicate_family": "BROKER_ANNUAL_REVENUE_FORECAST",
+        "primitive_tags": [
+          "revenue",
+          "FY2025E",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "annual_revenue_forecast",
+        "question_family_tags": [
+          "annual_revenue_forecast",
+          "broker_estimate",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025 전사 매출 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_REVENUE_FY2025",
+        "unit": "KRW billion",
+        "value": 92743
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권은 FY2026 SK하이닉스 전사 매출을 121.100조원으로 전망했다. Broker estimate이며 issuer guidance 또는 HBM-only revenue가 아니다.",
+        "exact_quote": "주가(원,10/21) 479,000 12월 결산(십억원) 2023A 2024A 2025E 2026E\n시가총액(십억원) 348,713 매출액 32,766 66,193 92,743 121,100",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 forward revenue estimate의 기간·수치가 명확하지만 HBM attribution과 issuer ownership은 없다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "FY2026 전사 매출 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "FY2026 전사 매출을 121.100조원으로 전망했다",
+        "predicate_family": "BROKER_ANNUAL_REVENUE_FORECAST",
+        "primitive_tags": [
+          "revenue",
+          "FY2026E",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "annual_revenue_forecast",
+        "question_family_tags": [
+          "annual_revenue_forecast",
+          "broker_estimate",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 전사 매출 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_REVENUE_FY2026",
+        "unit": "KRW billion",
+        "value": 121100
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권은 FY2025 SK하이닉스 전사 영업이익을 43.038조원으로 전망했다. 경과한 broker estimate이며 issuer actual, issuer guidance 또는 HBM-only profit가 아니다.",
+        "exact_quote": "주가(원,10/21) 479,000 12월 결산(십억원) 2023A 2024A 2025E 2026E\n시가총액(십억원) 348,713 매출액 32,766 66,193 92,743 121,100\n영업이익 -7,730 23,467 43,038 60,504",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 영업이익 expectation의 기간·수치가 명확하지만 HBM profit attribution이 없고 현재는 과거 forecast다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2025 전사 영업이익 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "FY2025 전사 영업이익을 43.038조원으로 전망했다",
+        "predicate_family": "BROKER_ANNUAL_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "operating_profit",
+          "FY2025E",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "annual_operating_profit_forecast",
+        "question_family_tags": [
+          "annual_operating_profit_forecast",
+          "broker_estimate",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025 전사 영업이익 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_OPERATING_PROFIT_FY2025",
+        "unit": "KRW billion",
+        "value": 43038
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권은 FY2026 SK하이닉스 전사 영업이익을 60.504조원으로 전망했다. Broker estimate이며 issuer guidance 또는 HBM-only profit가 아니다.",
+        "exact_quote": "주가(원,10/21) 479,000 12월 결산(십억원) 2023A 2024A 2025E 2026E\n시가총액(십억원) 348,713 매출액 32,766 66,193 92,743 121,100\n영업이익 -7,730 23,467 43,038 60,504",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 forward operating-profit estimate의 기간·수치가 명확하지만 HBM attribution과 issuer ownership은 없다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2026 전사 영업이익 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "FY2026 전사 영업이익을 60.504조원으로 전망했다",
+        "predicate_family": "BROKER_ANNUAL_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "operating_profit",
+          "FY2026E",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "annual_operating_profit_forecast",
+        "question_family_tags": [
+          "annual_operating_profit_forecast",
+          "broker_estimate",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 전사 영업이익 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_OPERATING_PROFIT_FY2026",
+        "unit": "KRW billion",
+        "value": 60504
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.88,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권은 FY2025 SK하이닉스 전사 세전손익을 46.594조원으로 전망했다. 경과한 broker estimate이며 HBM-only earnings가 아니다.",
+        "exact_quote": "주가(원,10/21) 479,000 12월 결산(십억원) 2023A 2024A 2025E 2026E\n시가총액(십억원) 348,713 매출액 32,766 66,193 92,743 121,100\n영업이익 -7,730 23,467 43,038 60,504\n발행주식수 728,002천주\n세전손익 -11,658 23,885 46,594 62,182",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "전사 세전손익 expectation의 별도 earnings atom이지만 HBM attribution이 없고 현재는 과거 forecast다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2025 전사 세전손익 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "FY2025 전사 세전손익을 46.594조원으로 전망했다",
+        "predicate_family": "BROKER_ANNUAL_PRETAX_INCOME_FORECAST",
+        "primitive_tags": [
+          "pretax_income",
+          "FY2025E",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "annual_pretax_income_forecast",
+        "question_family_tags": [
+          "annual_pretax_income_forecast",
+          "broker_estimate",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.8,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025 전사 세전손익 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_PRETAX_INCOME_FY2025",
+        "unit": "KRW billion",
+        "value": 46594
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.88,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권은 FY2026 SK하이닉스 전사 세전손익을 62.182조원으로 전망했다. Broker estimate이며 HBM-only earnings가 아니다.",
+        "exact_quote": "주가(원,10/21) 479,000 12월 결산(십억원) 2023A 2024A 2025E 2026E\n시가총액(십억원) 348,713 매출액 32,766 66,193 92,743 121,100\n영업이익 -7,730 23,467 43,038 60,504\n발행주식수 728,002천주\n세전손익 -11,658 23,885 46,594 62,182",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "전사 forward pre-tax expectation의 별도 earnings atom이지만 HBM attribution과 issuer ownership은 없다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2026 전사 세전손익 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "FY2026 전사 세전손익을 62.182조원으로 전망했다",
+        "predicate_family": "BROKER_ANNUAL_PRETAX_INCOME_FORECAST",
+        "primitive_tags": [
+          "pretax_income",
+          "FY2026E",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "annual_pretax_income_forecast",
+        "question_family_tags": [
+          "annual_pretax_income_forecast",
+          "broker_estimate",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.8,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 전사 세전손익 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_PRETAX_INCOME_FY2026",
+        "unit": "KRW billion",
+        "value": 62182
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권은 FY2025 SK하이닉스 전사 당기순이익을 38.248조원으로 전망했다. 경과한 broker estimate이며 issuer actual 또는 HBM-only net income이 아니다.",
+        "exact_quote": "주가(원,10/21) 479,000 12월 결산(십억원) 2023A 2024A 2025E 2026E\n시가총액(십억원) 348,713 매출액 32,766 66,193 92,743 121,100\n영업이익 -7,730 23,467 43,038 60,504\n발행주식수 728,002천주\n세전손익 -11,658 23,885 46,594 62,182\n52주 최고가 485,500원\n당기순이익 -9,138 19,797 38,248 50,368",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 net-income expectation의 기간·수치가 명확하지만 HBM attribution이 없고 현재는 과거 forecast다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2025 전사 당기순이익 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "FY2025 전사 당기순이익을 38.248조원으로 전망했다",
+        "predicate_family": "BROKER_ANNUAL_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "net_income",
+          "FY2025E",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "annual_net_income_forecast",
+        "question_family_tags": [
+          "annual_net_income_forecast",
+          "broker_estimate",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025 전사 당기순이익 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_NET_INCOME_FY2025",
+        "unit": "KRW billion",
+        "value": 38248
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권은 FY2026 SK하이닉스 전사 당기순이익을 50.368조원으로 전망했다. Broker estimate이며 issuer guidance 또는 HBM-only net income이 아니다.",
+        "exact_quote": "주가(원,10/21) 479,000 12월 결산(십억원) 2023A 2024A 2025E 2026E\n시가총액(십억원) 348,713 매출액 32,766 66,193 92,743 121,100\n영업이익 -7,730 23,467 43,038 60,504\n발행주식수 728,002천주\n세전손익 -11,658 23,885 46,594 62,182\n52주 최고가 485,500원\n당기순이익 -9,138 19,797 38,248 50,368",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 forward net-income estimate의 기간·수치가 명확하지만 HBM attribution과 issuer ownership은 없다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2026 전사 당기순이익 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "FY2026 전사 당기순이익을 50.368조원으로 전망했다",
+        "predicate_family": "BROKER_ANNUAL_NET_INCOME_FORECAST",
+        "primitive_tags": [
+          "net_income",
+          "FY2026E",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "annual_net_income_forecast",
+        "question_family_tags": [
+          "annual_net_income_forecast",
+          "broker_estimate",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.82,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 전사 당기순이익 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_NET_INCOME_FY2026",
+        "unit": "KRW billion",
+        "value": 50368
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권은 FY2025 SK하이닉스 전사 EPS를 52,396원으로 전망했다. 경과한 broker estimate이며 dated previous/revised pair가 없어 EPS_REVISION이 아니다.",
+        "exact_quote": "주가(원,10/21) 479,000 12월 결산(십억원) 2023A 2024A 2025E 2026E\n시가총액(십억원) 348,713 매출액 32,766 66,193 92,743 121,100\n영업이익 -7,730 23,467 43,038 60,504\n발행주식수 728,002천주\n세전손익 -11,658 23,885 46,594 62,182\n52주 최고가 485,500원\n당기순이익 -9,138 19,797 38,248 50,368\n최저가 157,600원\nEPS(원) -12,517 27,182 52,396 68,877",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 EPS expectation의 기간·수치가 명확하지만 HBM attribution이 없고 현재는 과거 forecast다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2025 전사 EPS 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "FY2025 전사 EPS를 52,396원으로 전망했다",
+        "predicate_family": "BROKER_ANNUAL_EPS_FORECAST",
+        "primitive_tags": [
+          "EPS",
+          "FY2025E",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "annual_eps_forecast",
+        "question_family_tags": [
+          "annual_eps_forecast",
+          "broker_estimate",
+          "not_eps_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.84,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025 전사 EPS 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_EPS_FY2025",
+        "unit": "KRW/share",
+        "value": 52396
+      },
+      {
+        "business_segment": "Consolidated estimate, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권은 FY2026 SK하이닉스 전사 EPS를 68,877원으로 전망했다. Broker estimate이며 dated previous/revised pair가 없어 EPS_REVISION이 아니다.",
+        "exact_quote": "주가(원,10/21) 479,000 12월 결산(십억원) 2023A 2024A 2025E 2026E\n시가총액(십억원) 348,713 매출액 32,766 66,193 92,743 121,100\n영업이익 -7,730 23,467 43,038 60,504\n발행주식수 728,002천주\n세전손익 -11,658 23,885 46,594 62,182\n52주 최고가 485,500원\n당기순이익 -9,138 19,797 38,248 50,368\n최저가 157,600원\nEPS(원) -12,517 27,182 52,396 68,877",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "전사 forward EPS expectation의 기간·수치가 명확하지만 HBM attribution과 issuer ownership은 없다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:VALUATION_EARNINGS_BRIDGE",
+        "normalized_object": "FY2026 전사 EPS 전망",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "FY2026 전사 EPS를 68,877원으로 전망했다",
+        "predicate_family": "BROKER_ANNUAL_EPS_FORECAST",
+        "primitive_tags": [
+          "EPS",
+          "FY2026E",
+          "broker_forecast"
+        ],
+        "product_family": "Issuer-wide memory earnings estimate",
+        "question_family_id": "annual_eps_forecast",
+        "question_family_tags": [
+          "annual_eps_forecast",
+          "broker_estimate",
+          "not_eps_revision"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.84,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 전사 EPS 전망",
+        "subject_id": "000660:HYNIX_CONSOLIDATED_EPS_FY2026",
+        "unit": "KRW/share",
+        "value": 68877
+      },
+      {
+        "business_segment": "Consolidated valuation, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권 표는 SK하이닉스 FY2025 PER을 9.3배로 제시했다. 경과한 broker valuation estimate이며 issuer guidance, HBM-only valuation 또는 target price가 아니다.",
+        "exact_quote": "주가(원,10/21) 479,000 12월 결산(십억원) 2023A 2024A 2025E 2026E\n시가총액(십억원) 348,713 매출액 32,766 66,193 92,743 121,100\n영업이익 -7,730 23,467 43,038 60,504\n발행주식수 728,002천주\n세전손익 -11,658 23,885 46,594 62,182\n52주 최고가 485,500원\n당기순이익 -9,138 19,797 38,248 50,368\n최저가 157,600원\nEPS(원) -12,517 27,182 52,396 68,877\n52주 일간 Beta 2.16\n증감률(%) 적전 흑전 92.8 31.5\n60일 일평균거래대금 10,631억원\nPER(배) - 6.4 9.3 7.0\n외국인 지분율 55.3%\nROE(%) -15.6 31.1 41.8 37.2\n배당수익률(2025F) 0.1%\nPBR(배) 1.9 1.7 3.3 2.2\n주주구성\nEV/EBITDA(배) 21.7 3.9 3.9 2.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 denominator가 있는 전사 valuation point지만 현재는 경과한 estimate이고 HBM earnings bridge는 별도 확인이 필요하다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "FY2025 forward PER 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E",
+        "predicate": "FY2025 forward PER을 9.3배로 제시했다",
+        "predicate_family": "BROKER_FORWARD_PER_ESTIMATE",
+        "primitive_tags": [
+          "PER",
+          "FY2025E",
+          "broker_estimate"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "forward_per_estimate",
+        "question_family_tags": [
+          "forward_per_estimate",
+          "broker_valuation",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.86,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2025 forward PER 전망",
+        "subject_id": "000660:HYNIX_FORWARD_PER_FY2025",
+        "unit": "multiple",
+        "value": 9.3
+      },
+      {
+        "business_segment": "Consolidated valuation, not HBM-attributed",
+        "confidence": 0.9,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-6e405a0dc5bd4f8f2cf7ed5f",
+        "economic_mechanism": "유진투자증권 표는 SK하이닉스 FY2026 PER을 7.0배로 제시했다. Broker valuation estimate이며 issuer guidance, HBM-only valuation 또는 target price가 아니다.",
+        "exact_quote": "주가(원,10/21) 479,000 12월 결산(십억원) 2023A 2024A 2025E 2026E\n시가총액(십억원) 348,713 매출액 32,766 66,193 92,743 121,100\n영업이익 -7,730 23,467 43,038 60,504\n발행주식수 728,002천주\n세전손익 -11,658 23,885 46,594 62,182\n52주 최고가 485,500원\n당기순이익 -9,138 19,797 38,248 50,368\n최저가 157,600원\nEPS(원) -12,517 27,182 52,396 68,877\n52주 일간 Beta 2.16\n증감률(%) 적전 흑전 92.8 31.5\n60일 일평균거래대금 10,631억원\nPER(배) - 6.4 9.3 7.0\n외국인 지분율 55.3%\nROE(%) -15.6 31.1 41.8 37.2\n배당수익률(2025F) 0.1%\nPBR(배) 1.9 1.7 3.3 2.2\n주주구성\nEV/EBITDA(배) 21.7 3.9 3.9 2.5",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "기간과 denominator가 있는 forward valuation point지만 HBM earnings bridge와 issuer ownership은 없다.",
+        "mechanism_scope_id": "000660:MEMORY:MEMORY_GENERIC:MARKET_EXPECTATION_GAP",
+        "normalized_object": "FY2026 forward PER 전망",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026E",
+        "predicate": "FY2026 forward PER을 7.0배로 제시했다",
+        "predicate_family": "BROKER_FORWARD_PER_ESTIMATE",
+        "primitive_tags": [
+          "PER",
+          "FY2026E",
+          "broker_estimate"
+        ],
+        "product_family": "Issuer-wide memory valuation estimate",
+        "question_family_id": "forward_per_estimate",
+        "question_family_tags": [
+          "forward_per_estimate",
+          "broker_valuation",
+          "consolidated_not_hbm"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.86,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK하이닉스 FY2026 forward PER 전망",
+        "subject_id": "000660:HYNIX_FORWARD_PER_FY2026",
+        "unit": "multiple",
+        "value": 7.0
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-6e405a0dc5bd4f8f2cf7ed5f"
+    ],
+    "unresolved_research_notes": [
+      "Continue SGDOC-6e405a0dc5bd4f8f2cf7ed5f after the FY2026 PER row with strict prior-36 dedup: review remaining ROE/PBR/EV-EBITDA, operating-profit revision, DRAM-segment, and consolidated cash-flow/CAPEX/FCF atoms; exclude NAND-only facts unless they are directly objective-local counters."
+    ]
+  },
+  "payload_hash": "78a2375cd66fa9be0e14eaebc7df9092b8316f95729bc52b0fb1dbf2559002e0",
+  "production_score_authority": false,
+  "prompt_hash": "00234623ec6fcb288047013a3ccb2821372dd93a57ae80ed134141ae4536f7a0",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-3709e326d8220f165a3cef13852eab193208cce859bf1b5461476b119467e813",
+  "response_id": "COLLABRESP-c13f5225cdfb0fa0cc8f6341416edcb9482d3181146adf5d693be19a65c6ba59",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

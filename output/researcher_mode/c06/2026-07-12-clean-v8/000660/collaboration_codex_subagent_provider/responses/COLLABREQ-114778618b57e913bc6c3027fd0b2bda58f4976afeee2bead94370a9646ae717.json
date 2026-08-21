@@ -1,0 +1,397 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "rationale": "Independent coverage audit of the complete supplied document against 271 accepted identities found eight distinct objective-linked omissions: two numeric HBM advanced-packaging economics legs, one explicit P/B quantification limitation, one full OP-BPS-P/B target-price scenario range, three dated valuation-snapshot atoms, and one conflict/prepublication disclosure. Repeated financial-table EPS/PER/PBR/EV-EBITDA rows and target-price history were excluded as semantic duplicates. Generic industry, other-company, navigation, and non-objective metadata were not promoted. All historical broker content is SUPERSEDED and no row is treated as issuer actual, current valuation, signed HBM contract, or independently verified outcome.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker estimated that HBM advanced-packaging investment per equal capacity was one-eighth of front-end investment, a capital-intensity input rather than issuer-reported CAPEX.",
+        "exact_quote": "메모리 반도체 주도주인 SK 하이닉스의 P/B 은 새로운 영역으로 진입했다. 2016-\n23년 메모리 Big Cycle 구간에서 확인된 P/B 상단을 이미 상향 이탈했다. AI 혁명\n에서 시작된 HBM 이라는 메모리 신제품이 압도적인 ROIC 를 보이고 있기 때문이\n다. HBM 관련 Advanced Packaging 의 투자 비용은 동일 Capa 기준 전공정 대\n비 1/8 수준에 불과한 것으로 추정된다. 그리고 Advanced Packaging 이 적용된\n가격은 5-7배 수준으로 추정된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The numeric capital-intensity leg is directly relevant to HBM supply economics and cash conversion, but is an old broker estimate rather than current issuer CAPEX evidence.",
+        "mechanism_scope_id": "000660:HBM:ADVANCED_PACKAGING_CAPEX_INTENSITY:SKSEC_20240314",
+        "normalized_object": "HBM advanced-packaging investment cost estimated at one-eighth of front-end cost for equal capacity",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-db965864e15ed32d6d471762"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "structural estimate published 2024-03-14",
+        "predicate": "SK Securities estimated HBM advanced-packaging investment cost at one-eighth of front-end investment for equal capacity",
+        "predicate_family": "BROKER_HBM_ADVANCED_PACKAGING_CAPEX_INTENSITY_ESTIMATE",
+        "primitive_tags": [
+          "numeric_ratio",
+          "capacity_investment",
+          "not_issuer_actual"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_advanced_packaging_capex_intensity_broker_estimate",
+        "question_family_tags": [
+          "hbm_capex_intensity",
+          "advanced_packaging",
+          "broker_estimate"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix HBM advanced-packaging capacity economics",
+        "subject_id": "000660:HBM:ADVANCED_PACKAGING_CAPEX_INTENSITY:2024-03-14",
+        "unit": "relative ratio",
+        "value": "one-eighth of front-end investment at equal capacity"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.98,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker estimated a five-to-seven-times applied price for advanced-packaged HBM; this is a pricing estimate, not a quantified issuer realized ASP.",
+        "exact_quote": "메모리 반도체 주도주인 SK 하이닉스의 P/B 은 새로운 영역으로 진입했다. 2016-\n23년 메모리 Big Cycle 구간에서 확인된 P/B 상단을 이미 상향 이탈했다. AI 혁명\n에서 시작된 HBM 이라는 메모리 신제품이 압도적인 ROIC 를 보이고 있기 때문이\n다. HBM 관련 Advanced Packaging 의 투자 비용은 동일 Capa 기준 전공정 대\n비 1/8 수준에 불과한 것으로 추정된다. 그리고 Advanced Packaging 이 적용된\n가격은 5-7배 수준으로 추정된다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The distinct numeric pricing leg informs the HBM profitability bridge, but cannot substitute for current source-backed realized ASP or contract terms.",
+        "mechanism_scope_id": "000660:HBM:ADVANCED_PACKAGING_PRICE_MULTIPLE:SKSEC_20240314",
+        "normalized_object": "HBM advanced-packaging applied price estimated at five to seven times",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "structural estimate published 2024-03-14",
+        "predicate": "SK Securities estimated the advanced-packaging applied price at five to seven times",
+        "predicate_family": "BROKER_HBM_ADVANCED_PACKAGING_PRICE_MULTIPLE_ESTIMATE",
+        "primitive_tags": [
+          "numeric_range",
+          "pricing_estimate",
+          "not_realized_asp"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "hbm_advanced_packaging_price_multiple_broker_estimate",
+        "question_family_tags": [
+          "hbm_price_multiple",
+          "advanced_packaging",
+          "broker_estimate"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "PRICING_POWER",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRICING_ACTUAL",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix HBM advanced-packaging pricing economics",
+        "subject_id": "000660:HBM:ADVANCED_PACKAGING_PRICE_MULTIPLE:2024-03-14",
+        "unit": "times",
+        "value": "5-7 times"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker explicitly stated that additional data still needed confirmation before a new P/B target could be quantified, limiting certainty of the rerating thesis.",
+        "exact_quote": "다만, 새로운 P/B 목표를 산정하는데 있어 아직 정량화하기에 확인해야할 데이터가\n남아있는 것도 사실이다. 이에 주도주인 SK 하이닉스에 대해 2025 년 영업이익 전\n망치에 따른 BPS 변화와 Fwd. P/B 목표치 변화에 따른 민감도를 분석했다.\n시나리오 별 도달 가능 주가는 아래와 같다.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The explicit quantification limitation is counterevidence to treating the broker rerating thesis as a settled current valuation anchor.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:FORWARD_PB_QUANTIFICATION_UNCERTAINTY:SKSEC_20240314",
+        "normalized_object": "New forward P/B target required additional data confirmation before quantification",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "assessment published 2024-03-14",
+        "predicate": "SK Securities stated that further data needed confirmation to quantify a new P/B target",
+        "predicate_family": "BROKER_FORWARD_PB_QUANTIFICATION_UNCERTAINTY",
+        "primitive_tags": [
+          "uncertainty",
+          "additional_data_required",
+          "historical_assessment"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "forward_pb_target_quantification_uncertainty",
+        "question_family_tags": [
+          "valuation_uncertainty",
+          "forward_pb",
+          "broker_limitation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix forward P/B target quantification",
+        "subject_id": "000660:FORWARD_PB_TARGET:QUANTIFICATION_UNCERTAINTY:2024-03-14",
+        "unit": "text",
+        "value": "additional data remained to be confirmed"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker scenario matrix linked FY2025 operating-profit cases to BPS and target P/B assumptions, yielding a wide target-price range rather than one verified valuation point.",
+        "exact_quote": "SK하이닉스 2025년 영업이익, BPS, Target P/B별 목표주가 시나리오\n25E OP (조원) 16 18 20 22 24 28\n25E BPS (원) 93,794 97,591 101,388 105,185 108,982 116,576\n1.6X 150,071 156,146 162,221 168,296 174,372 186,522\n1.8X 168,830 175,664 182,499 189,333 196,168 209,837\nTarget P/B 2.0X 187,589 195,183 202,777 210,371 217,964 233,152\n2.2X 206,348 214,701 223,054 231,408 239,761 256,467\n2.4X 225,107 234,219 243,332 252,445 261,557 279,783\n2.6X 243,866 253,738 263,610 273,482 283,354 303,098",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The matrix is a complete historical broker valuation sensitivity with explicit drivers, but its wide range and old assumptions prevent use as a current single-point valuation.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:FY2025E_OP_BPS_PB_TARGET_PRICE_SCENARIO:SKSEC_20240314",
+        "normalized_object": "FY2025 OP-BPS-target-P/B scenario target-price range KRW 150,071 to KRW 303,098",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025E scenario published 2024-03-14",
+        "predicate": "SK Securities' FY2025 operating-profit and target-P/B matrix produced target prices from KRW 150,071 to KRW 303,098",
+        "predicate_family": "BROKER_FY2025_OP_BPS_PB_TARGET_PRICE_SCENARIO_RANGE",
+        "primitive_tags": [
+          "scenario_range",
+          "historical_forecast",
+          "not_current_valuation"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "fy2025_op_bps_pb_target_price_scenario_range",
+        "question_family_tags": [
+          "valuation_scenario",
+          "forward_bps",
+          "target_pb"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix FY2025 operating-profit, BPS, P/B target-price scenarios",
+        "subject_id": "000660:FY2025E:OP_BPS_PB_TARGET_PRICE_SCENARIO:2024-03-14",
+        "unit": "KRW per share scenario range",
+        "value": "KRW 150,071-303,098 across FY2025E OP KRW 16-28 trillion and target P/B 1.6-2.6 times"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The report identified the target share price on 2024-03-13; this is a historical market observation, not a current price as of 2026-07-12.",
+        "exact_quote": "주가(24/03/13) 163,600 원",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The dated price completes the historical valuation denominator but must not be promoted as the current price for the production as-of date.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:HISTORICAL_SHARE_PRICE:2024-03-13",
+        "normalized_object": "SK hynix 2024-03-13 share price KRW 163,600",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2024-03-13 close; published 2024-03-14",
+        "predicate": "SK hynix share price was KRW 163,600 on 2024-03-13 in the broker report",
+        "predicate_family": "BROKER_REPORT_DATE_SHARE_PRICE",
+        "primitive_tags": [
+          "dated_price",
+          "historical_only",
+          "not_current_price"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "historical_report_date_share_price",
+        "question_family_tags": [
+          "share_price",
+          "historical_valuation_snapshot"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix share price",
+        "subject_id": "000660:SHARE_PRICE:2024-03-13:SKSEC_REPORT",
+        "unit": "KRW per share",
+        "value": 163600
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker stated 34.5 percent upside from its historical current-price snapshot to its target price; it is not a realized return or current upside.",
+        "exact_quote": "상승여력: 34.5%",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The explicit historical upside completes the broker valuation snapshot, but it is recommendation-derived and cannot establish current mispricing or realized performance.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:HISTORICAL_TARGET_PRICE_UPSIDE:SKSEC_20240314",
+        "normalized_object": "SK hynix historical SK Securities target-price upside 34.5 percent",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "report published 2024-03-14 using 2024-03-13 share price",
+        "predicate": "SK Securities stated 34.5 percent upside to its KRW 220,000 target price",
+        "predicate_family": "BROKER_TARGET_PRICE_UPSIDE",
+        "primitive_tags": [
+          "broker_upside",
+          "historical_only",
+          "not_realized_return"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "historical_broker_target_price_upside",
+        "question_family_tags": [
+          "target_price_upside",
+          "historical_valuation_snapshot"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix broker target-price upside",
+        "subject_id": "000660:TARGET_PRICE_UPSIDE:2024-03-14:SKSEC",
+        "unit": "percent",
+        "value": 34.5
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker report presented a KRW 119,101 billion market capitalization snapshot; it is historical and cannot substitute for a current PIT market cap.",
+        "exact_quote": "시가총액 119,101 십억원",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The market-cap snapshot is a dated valuation input, but is not current as of 2026-07-12 and does not attribute value to HBM alone.",
+        "mechanism_scope_id": "000660:MEMORY_GENERIC:HISTORICAL_MARKET_CAP:SKSEC_20240314",
+        "normalized_object": "SK hynix historical broker-report market capitalization KRW 119,101 billion",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "report snapshot published 2024-03-14",
+        "predicate": "SK Securities reported SK hynix market capitalization at KRW 119,101 billion",
+        "predicate_family": "BROKER_REPORT_MARKET_CAP_SNAPSHOT",
+        "primitive_tags": [
+          "dated_market_cap",
+          "historical_only",
+          "not_hbm_attributed"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "historical_report_market_cap",
+        "question_family_tags": [
+          "market_cap",
+          "historical_valuation_snapshot"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix market capitalization",
+        "subject_id": "000660:MARKET_CAP:2024-03-14:SKSEC_REPORT",
+        "unit": "KRW billion",
+        "value": 119101
+      },
+      {
+        "business_segment": "CORPORATE_GENERIC",
+        "confidence": 0.99,
+        "current_lifecycle": "SUPERSEDED",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-bf1e1d3af59f8c85f9b1fab0",
+        "economic_mechanism": "The broker disclosed that the analyst did not own covered stocks, the report was not pre-provided, and the firm had no special relationship with the company; this addresses disclosed conflicts but is not independent verification of economic claims.",
+        "exact_quote": "본 보고서에 언급된 종목의 경우 당사 조사분석담당자는 본인의 담당종목을 보유하고 있지 않습니다.\n본 보고서는 기관투자가 또는 제 3자에게 사전 제공된 사실이 없습니다.\n당사는 자료공표일 현재 해당기업과 관련하여 특별한 이해 관계가 없습니다.",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The disclosure improves conflict-of-interest provenance accounting while not proving that the broker's forecasts or HBM assertions were independently verified.",
+        "mechanism_scope_id": "000660:CORPORATE_GENERIC:SKSEC_CONFLICT_PREPUBLICATION_DISCLOSURE:2024-03-14",
+        "normalized_object": "SK Securities disclosed absence of analyst holdings, prepublication, and special relationship for the report",
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "report disclosure dated 2024-03-14",
+        "predicate": "SK Securities disclosed no analyst holding, no institutional or third-party prepublication, and no special relationship with the covered company",
+        "predicate_family": "BROKER_REPORT_CONFLICT_PREPUBLICATION_DISCLOSURE",
+        "primitive_tags": [
+          "no_analyst_holding",
+          "no_prepublication",
+          "no_special_relationship"
+        ],
+        "product_family": "CORPORATE_GENERIC",
+        "question_family_id": "broker_report_conflict_prepublication_disclosure",
+        "question_family_tags": [
+          "source_quality",
+          "conflict_disclosure",
+          "prepublication_disclosure"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK Securities SK hynix report conflict and prepublication disclosure",
+        "subject_id": "000660:SKSEC_REPORT:CONFLICT_PREPUBLICATION_DISCLOSURE:2024-03-14",
+        "unit": "text",
+        "value": "analyst no holding; no prepublication; no special relationship disclosed"
+      }
+    ],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "b0c82134795851c66dbe6d51a889b8626f0be4121bddc204be020a37d5c75645",
+  "production_score_authority": false,
+  "prompt_hash": "7f4c444954d8b3491da35992a14c0d0e04afbc430782f11b556a9114332d1dd4",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-114778618b57e913bc6c3027fd0b2bda58f4976afeee2bead94370a9646ae717",
+  "response_id": "COLLABRESP-8e7e06a4f66aa1f4ddaa7654124c7d6123112b68ae2a35491fff2847ef944708",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

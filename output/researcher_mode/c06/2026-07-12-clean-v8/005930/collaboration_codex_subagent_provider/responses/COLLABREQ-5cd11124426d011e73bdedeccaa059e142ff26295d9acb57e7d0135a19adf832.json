@@ -1,0 +1,32 @@
+{
+  "output_schema_hash": "8b01e81139f3c80c69aa1e22ae089f26f8d004852cd9eee0f43cac87a043f0c1",
+  "payload": {
+    "new_source_directions": [],
+    "suggested_queries": [],
+    "unresolved_research_notes": [
+      "Semantic retry의 six bounded directions는 prior 18 queries에서 이미 DB 1111300, iM 1110016/1111200, IBK 1111165 또는 KB 1111123, NVIDIA-official, OpenAI-official 경로로 실행되었다. Prompt는 이들과 의미상 구별되는 새 verified executable identity 또는 alternate transport를 제공하지 않으므로 표현만 바꾼 query를 만들지 않는다.",
+      "검색 결과 0건, material candidate 0건, unknown/future publication date, provider failure 또는 accepted claim lineage 미확보는 source absence나 research completion을 증명하지 않는다. 미해결 evidence gaps는 PENDING 상태로 보존한다."
+    ]
+  },
+  "payload_hash": "ad3e583ba4cb74ef89050fa1ef8da5026cc74666d24b89bb049e2891bd723101",
+  "production_score_authority": false,
+  "prompt_hash": "f25645d65564d372df79158428b783bfffc3b5d3ab435a3f10557520645f4dcd",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch34_query",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch34_query",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-5cd11124426d011e73bdedeccaa059e142ff26295d9acb57e7d0135a19adf832",
+  "response_id": "COLLABRESP-fd04d5b3f880f39a886e1955f9e36b69b588a82e4febc302bc4b83cde57de86d",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

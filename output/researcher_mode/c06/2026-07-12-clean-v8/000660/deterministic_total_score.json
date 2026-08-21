@@ -1,0 +1,9 @@
+{
+  "pending_reasons": [
+    "EXACT_SEVEN_COMPONENT_DECISIONS_REQUIRED:MISSING=bottleneck_pricing,capital_allocation,earnings_visibility,eps_fcf_explosion,information_confidence,market_mispricing,valuation_rerating:EXTRA=NONE"
+  ],
+  "production_stage_authority": false,
+  "schema_version": "e2r_total_aggregation_result_v2",
+  "score": null,
+  "status": "RESEARCH_REQUIRED"
+}

@@ -1,0 +1,64 @@
+{
+  "cache_value_hash": "cd7c683e5af90706e2950c242d7cd713f8775c0470ee571841f3638b4b0260aa",
+  "canonical_url": "https://opendart.fss.or.kr/api/list.json",
+  "content_hash": "2706bb621c71ce995772d8a23c59eef5338136f5aac1ec745340df91690b6759",
+  "payload": {
+    "list": [
+      {
+        "corp_cls": "Y",
+        "corp_code": "00126380",
+        "corp_name": "삼성전자",
+        "flr_nm": "삼성전자",
+        "rcept_dt": "20250515",
+        "rcept_no": "20250515002447",
+        "report_nm": "동일인등출자계열회사와의상품ㆍ용역거래변경",
+        "rm": "공",
+        "stock_code": "005930"
+      },
+      {
+        "corp_cls": "Y",
+        "corp_code": "00126380",
+        "corp_name": "삼성전자",
+        "flr_nm": "삼성전자",
+        "rcept_dt": "20250515",
+        "rcept_no": "20250515002395",
+        "report_nm": "동일인등출자계열회사와의상품ㆍ용역거래변경",
+        "rm": "공",
+        "stock_code": "005930"
+      },
+      {
+        "corp_cls": "Y",
+        "corp_code": "00126380",
+        "corp_name": "삼성전자",
+        "flr_nm": "삼성전자",
+        "rcept_dt": "20250515",
+        "rcept_no": "20250515002341",
+        "report_nm": "동일인등출자계열회사와의상품ㆍ용역거래변경",
+        "rm": "공",
+        "stock_code": "005930"
+      },
+      {
+        "corp_cls": "Y",
+        "corp_code": "00126380",
+        "corp_name": "삼성전자",
+        "flr_nm": "삼성전자",
+        "rcept_dt": "20250515",
+        "rcept_no": "20250515001922",
+        "report_nm": "분기보고서 (2025.03)",
+        "rm": "",
+        "stock_code": "005930"
+      }
+    ],
+    "message": "정상",
+    "page_count": 100,
+    "page_no": 1,
+    "status": "000",
+    "total_count": 4,
+    "total_page": 1
+  },
+  "provider_request_id": "HTTP-2706bb621c71ce995772",
+  "request_fingerprint": "32fccf7837173329194508b4ae93b372f99a09638b2277495a49ba0766a3d39f",
+  "schema_version": "e2r_v5_current_structured_cache_v2",
+  "status_code": 200,
+  "text": null
+}

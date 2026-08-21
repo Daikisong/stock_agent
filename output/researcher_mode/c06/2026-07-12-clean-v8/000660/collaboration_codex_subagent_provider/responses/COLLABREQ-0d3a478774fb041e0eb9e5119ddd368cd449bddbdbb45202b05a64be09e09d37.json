@@ -1,0 +1,557 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "rationale": "The literal chunk 0/2 was reviewed in full. This page records twelve distinct target-direct broker facts spanning DDR5 supply, memory CAPEX and DRAM production, M15X capacity and upside, DRAM 1c and HBM4 yield estimates, issuer-wide liquidity, and consolidated earnings forecasts. No broker estimate was upgraded to issuer guidance, signed contract economics, HBM-only actuals, or durable visibility. Additional distinct target tables and period-specific estimates remain in this chunk.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "Memory",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker expects SK hynix, alongside peers, to expand production of server DDR5 modules in 2026; this is a broker supply outlook, not issuer guidance or a customer contract.",
+        "exact_quote": "삼성전자와 SK하이닉스, 마이크론이 엔터프라이즈향 SSD모듈,\n서버향DDR5모듈(LPDDR5,GDDR5)생산확대를추진,모듈업체의매출과수익성호조가지속",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The target-attributable broker outlook supports future DRAM supply and revenue visibility, but it does not quantify target volume or contract terms.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-SUPPLY-RESPONSE",
+        "normalized_object": "SK hynix server DDR5 module production expansion outlook",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 outlook",
+        "predicate": "broker expects server DDR5 module production expansion",
+        "predicate_family": "BROKER_SERVER_DDR5_PRODUCTION_EXPANSION",
+        "primitive_tags": [
+          "DDR5",
+          "production_expansion"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "daishin_skh_server_ddr5_production_expansion_2026",
+        "question_family_tags": [
+          "earnings_visibility",
+          "DRAM_supply"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix server DDR5 module production outlook",
+        "subject_id": "000660:DRAM:SERVER_DDR5_PRODUCTION:2026",
+        "unit": "",
+        "value": "생산확대 추진"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker forecasts issuer-wide memory CAPEX for 2025 without attributing the amount to HBM alone.",
+        "exact_quote": " SK하이닉스:Capex는2025년 27조원,2026년 34조원전망.당사예상Capex기준2026년 생산\n증가율은 DRAM+10%중반,NAND(본사기준)+20%중반수준.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The forecast is material to supply discipline and capital allocation, but it remains a broker estimate and is not HBM-only CAPEX.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CAPEX",
+        "normalized_object": "SK hynix FY2025 memory CAPEX broker forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "broker forecasts FY2025 CAPEX of KRW 27 trillion",
+        "predicate_family": "BROKER_MEMORY_CAPEX_FORECAST",
+        "primitive_tags": [
+          "CAPEX",
+          "broker_forecast"
+        ],
+        "product_family": "Memory generic",
+        "question_family_id": "daishin_skh_capex_fy2025f",
+        "question_family_tags": [
+          "capital_allocation",
+          "capacity_scarcity"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix memory CAPEX broker forecast",
+        "subject_id": "000660:MEMORY:CAPEX:FY2025F:DAISHIN_20251128",
+        "unit": "KRW trillion",
+        "value": 27
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker forecasts higher issuer-wide memory CAPEX for 2026, without HBM-only attribution or issuer-guidance status.",
+        "exact_quote": " SK하이닉스:Capex는2025년 27조원,2026년 34조원전망.당사예상Capex기준2026년 생산\n증가율은 DRAM+10%중반,NAND(본사기준)+20%중반수준.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The forward CAPEX estimate affects supply-growth and cash-allocation analysis, while remaining a broker estimate for memory broadly.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CAPEX",
+        "normalized_object": "SK hynix FY2026 memory CAPEX broker forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "broker forecasts FY2026 CAPEX of KRW 34 trillion",
+        "predicate_family": "BROKER_MEMORY_CAPEX_FORECAST",
+        "primitive_tags": [
+          "CAPEX",
+          "broker_forecast"
+        ],
+        "product_family": "Memory generic",
+        "question_family_id": "daishin_skh_capex_fy2026f",
+        "question_family_tags": [
+          "capital_allocation",
+          "capacity_scarcity"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix memory CAPEX broker forecast",
+        "subject_id": "000660:MEMORY:CAPEX:FY2026F:DAISHIN_20251128",
+        "unit": "KRW trillion",
+        "value": 34
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker estimates mid-teens DRAM production growth for 2026 under its CAPEX case, not an issuer commitment or HBM-only capacity statement.",
+        "exact_quote": " SK하이닉스:Capex는2025년 27조원,2026년 34조원전망.당사예상Capex기준2026년 생산\n증가율은 DRAM+10%중반,NAND(본사기준)+20%중반수준.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The target- and segment-attributable forecast constrains the expected DRAM supply response, but it is not issuer guidance.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-SUPPLY-RESPONSE",
+        "normalized_object": "SK hynix FY2026 DRAM production growth broker estimate",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-96e6fadd695c6b292e28d22e"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "broker estimates FY2026 DRAM production growth in the mid-teens",
+        "predicate_family": "BROKER_DRAM_PRODUCTION_GROWTH_FORECAST",
+        "primitive_tags": [
+          "DRAM",
+          "production_growth"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "daishin_skh_dram_production_growth_fy2026f",
+        "question_family_tags": [
+          "earnings_visibility",
+          "capacity_scarcity"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix DRAM production-growth broker forecast",
+        "subject_id": "000660:DRAM:PRODUCTION_GROWTH:FY2026F:DAISHIN_20251128",
+        "unit": "% YoY",
+        "value": "+10% 중반"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.96,
+        "current_lifecycle": "OPEN",
+        "direction": "NEUTRAL",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker estimates end-2026 M15X wafer-input capacity at the mid-30-thousand-per-month level under the current CAPEX stance, without HBM-only attribution.",
+        "exact_quote": " SK하이닉스: M15x에 대한 추가 투자가 가능한 구조라 생각. 현 Capex 기조 하, 2026년 말 M15x\nCapa는WaferIn기준월30K중반수준인것으로판단되나,늘린다면늘릴수있을것이라는판단.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The numeric target-site capacity estimate is material to supply response, while the source does not identify that capacity as HBM-only.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CAPACITY",
+        "normalized_object": "M15X year-end FY2026 wafer-input capacity estimate",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 year-end",
+        "predicate": "broker estimates end-2026 M15X capacity at mid-30K wafers per month",
+        "predicate_family": "BROKER_M15X_WAFER_CAPACITY_FORECAST",
+        "primitive_tags": [
+          "M15X",
+          "wafer_capacity"
+        ],
+        "product_family": "Memory generic",
+        "question_family_id": "daishin_skh_m15x_capacity_fy2026f",
+        "question_family_tags": [
+          "capacity_scarcity",
+          "capital_allocation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.97,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix M15X capacity broker estimate",
+        "subject_id": "000660:M15X:WAFER_CAPACITY:FY2026F:DAISHIN_20251128",
+        "unit": "thousand wafers per month",
+        "value": "30K 중반"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.94,
+        "current_lifecycle": "OPEN",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker sees additional M15X investment and capacity headroom, a conditional supply-upside counter to a fixed-capacity scarcity thesis rather than an announced issuer plan.",
+        "exact_quote": " SK하이닉스: M15x에 대한 추가 투자가 가능한 구조라 생각. 현 Capex 기조 하, 2026년 말 M15x\nCapa는WaferIn기준월30K중반수준인것으로판단되나,늘린다면늘릴수있을것이라는판단.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "Conditional expansion headroom is a direct counterfact to structural supply scarcity, but it is not issuer guidance or a committed expansion.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-CAPACITY",
+        "normalized_object": "conditional M15X capacity expansion headroom",
+        "objective_ids": [
+          "SGOBJ-96e6fadd695c6b292e28d22e",
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "FY2026 outlook",
+        "predicate": "broker identifies conditional M15X investment and capacity upside",
+        "predicate_family": "BROKER_M15X_CAPACITY_UPSIDE",
+        "primitive_tags": [
+          "M15X",
+          "capacity_upside"
+        ],
+        "product_family": "Memory generic",
+        "question_family_id": "daishin_skh_m15x_capacity_upside_2026",
+        "question_family_tags": [
+          "capacity_scarcity",
+          "counterevidence"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "SUPPLY_RESPONSE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "CAPACITY_INVESTMENT",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix M15X additional-investment headroom",
+        "subject_id": "000660:M15X:CAPACITY_UPSIDE:2026:DAISHIN_20251128",
+        "unit": "",
+        "value": "추가 투자 및 증산 여력"
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker estimates DRAM 1c yield near a 90% mature-yield level, which supports manufacturing execution but is not an issuer-reported actual.",
+        "exact_quote": " DRAM: DRAM 1c와 HBM4에서 선도력을 재차 입증.\nDRAM1c수율은성숙수율인90%에근접,HBM4수율\n도 조기에 안정화 (완제품 수율 기준 60% 중반인 것으로\n추정).",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The target- and DRAM-attributable broker estimate informs production execution, with source status kept as estimate rather than issuer actual.",
+        "mechanism_scope_id": "MSCOPE-000660-DRAM-COMMERCIALIZATION",
+        "normalized_object": "DRAM 1c yield estimate near mature-yield level",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "report dated 2025-11-28",
+        "predicate": "broker estimates DRAM 1c yield near 90%",
+        "predicate_family": "BROKER_DRAM1C_YIELD_ESTIMATE",
+        "primitive_tags": [
+          "DRAM1c",
+          "yield"
+        ],
+        "product_family": "DRAM",
+        "question_family_id": "daishin_skh_dram1c_yield_20251128",
+        "question_family_tags": [
+          "earnings_visibility",
+          "qualification_execution"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.98,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "DRAM",
+        "scope_technology_family": "DRAM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix DRAM 1c yield broker estimate",
+        "subject_id": "000660:DRAM1C:YIELD:DAISHIN_20251128",
+        "unit": "% approximate",
+        "value": 90
+      },
+      {
+        "business_segment": "Memory",
+        "confidence": 0.97,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker estimates that HBM4 finished-product yield stabilized early in the mid-60% range; this is manufacturing evidence, not contract or allocation economics.",
+        "exact_quote": " DRAM: DRAM 1c와 HBM4에서 선도력을 재차 입증.\nDRAM1c수율은성숙수율인90%에근접,HBM4수율\n도 조기에 안정화 (완제품 수율 기준 60% 중반인 것으로\n추정).",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The HBM-specific yield estimate supports commercialization execution but does not prove signed volume, price, allocation, or issuer guidance.",
+        "mechanism_scope_id": "MSCOPE-000660-HBM-COMMERCIALIZATION",
+        "normalized_object": "HBM4 finished-product yield estimate",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "report dated 2025-11-28",
+        "predicate": "broker estimates HBM4 finished-product yield in mid-60% range",
+        "predicate_family": "BROKER_HBM4_FINAL_YIELD_ESTIMATE",
+        "primitive_tags": [
+          "HBM4",
+          "yield"
+        ],
+        "product_family": "HBM",
+        "question_family_id": "daishin_skh_hbm4_final_yield_20251128",
+        "question_family_tags": [
+          "earnings_visibility",
+          "qualification_execution"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "PRODUCT_COMMERCIALIZATION",
+        "scope_product_family": "HBM",
+        "scope_technology_family": "HBM",
+        "scope_transaction_type": "PRODUCT_PROFILE",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix HBM4 finished-product yield broker estimate",
+        "subject_id": "000660:HBM4:FINAL_YIELD:DAISHIN_20251128",
+        "unit": "% approximate",
+        "value": "60% 중반"
+      },
+      {
+        "business_segment": "Corporate-wide capital allocation",
+        "confidence": 0.97,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker forecasts issuer-wide cash and cash equivalents including financial assets at about KRW 60 trillion by end-2026; it is not HBM-only cash generation or issuer guidance.",
+        "exact_quote": "2026년 말 기준 SK하이닉스\n의현금및현금성자산(금융자산포함)은60조원수준에\n이를것.",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The forecast is directly relevant to capital-allocation capacity while remaining a broker estimate for the consolidated issuer.",
+        "mechanism_scope_id": "MSCOPE-000660-CORPORATE-CAPITAL-ALLOCATION",
+        "normalized_object": "issuer-wide cash and financial assets broker forecast",
+        "objective_ids": [
+          "SGOBJ-fb7995224e0c3fac0a347e8c"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026 year-end forecast",
+        "predicate": "broker forecasts end-2026 cash and financial assets of about KRW 60 trillion",
+        "predicate_family": "BROKER_CASH_FINANCIAL_ASSETS_FORECAST",
+        "primitive_tags": [
+          "cash",
+          "financial_assets"
+        ],
+        "product_family": "Issuer-wide liquidity",
+        "question_family_id": "daishin_skh_cash_financial_assets_fy2026f",
+        "question_family_tags": [
+          "capital_allocation",
+          "liquidity"
+        ],
+        "scope_business_segment": "CORPORATE_GENERIC",
+        "scope_confidence": 0.99,
+        "scope_economic_mechanism": "INFORMATION_ONLY",
+        "scope_product_family": "CORPORATE_GENERIC",
+        "scope_technology_family": "CORPORATE_GENERIC",
+        "scope_transaction_type": "GENERIC_INFORMATION",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix cash and financial-assets broker forecast",
+        "subject_id": "000660:CORPORATE_CASH:FY2026F:DAISHIN_20251128",
+        "unit": "KRW trillion approximate",
+        "value": 60
+      },
+      {
+        "business_segment": "Memory consolidated estimate",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker forecasts consolidated FY2025 revenue, which informs earnings expectations but is not issuer guidance or HBM-only revenue.",
+        "exact_quote": "(십억원, 원, %) 2023A 2024A 2025F 2026F 2027F\n매출액 32,766 66,193 93,366 142,659 134,573",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The period-mapped consolidated estimate is material to the earnings bridge while preserving that it is neither actual nor HBM-attributed.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2025 consolidated revenue broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "broker forecasts FY2025 consolidated revenue of KRW 93,366 billion",
+        "predicate_family": "BROKER_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "consolidated_revenue",
+          "broker_forecast"
+        ],
+        "product_family": "Memory generic",
+        "question_family_id": "daishin_skh_consolidated_revenue_fy2025f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_expectation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated revenue broker forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:FY2025F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 93366
+      },
+      {
+        "business_segment": "Memory consolidated estimate",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker forecasts consolidated FY2026 revenue, preserving its estimate status and absence of HBM-only attribution.",
+        "exact_quote": "(십억원, 원, %) 2023A 2024A 2025F 2026F 2027F\n매출액 32,766 66,193 93,366 142,659 134,573",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The period-mapped consolidated estimate is material to forward earnings and valuation but is not issuer guidance or HBM-only revenue.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2026 consolidated revenue broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2026F",
+        "predicate": "broker forecasts FY2026 consolidated revenue of KRW 142,659 billion",
+        "predicate_family": "BROKER_CONSOLIDATED_REVENUE_FORECAST",
+        "primitive_tags": [
+          "consolidated_revenue",
+          "broker_forecast"
+        ],
+        "product_family": "Memory generic",
+        "question_family_id": "daishin_skh_consolidated_revenue_fy2026f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_expectation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated revenue broker forecast",
+        "subject_id": "000660:CONSOLIDATED_REVENUE:FY2026F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 142659
+      },
+      {
+        "business_segment": "Memory consolidated estimate",
+        "confidence": 0.98,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-b06350879c518ec49fa8cd5c",
+        "economic_mechanism": "The broker forecasts consolidated FY2025 operating profit, without upgrading it to reported actual or HBM-only profit.",
+        "exact_quote": "영업이익 -7,730 23,467 43,251 80,665 35,893",
+        "material": true,
+        "materiality": "CRITICAL",
+        "materiality_rationale": "The consolidated broker forecast is material to the earnings bridge while retaining estimate and non-HBM-attributed boundaries.",
+        "mechanism_scope_id": "MSCOPE-000660-MEMORY-VALUATION-EARNINGS",
+        "normalized_object": "SK hynix FY2025 consolidated operating-profit broker forecast",
+        "objective_ids": [
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "FY2025F",
+        "predicate": "broker forecasts FY2025 consolidated operating profit of KRW 43,251 billion",
+        "predicate_family": "BROKER_CONSOLIDATED_OPERATING_PROFIT_FORECAST",
+        "primitive_tags": [
+          "operating_profit",
+          "broker_forecast"
+        ],
+        "product_family": "Memory generic",
+        "question_family_id": "daishin_skh_consolidated_operating_profit_fy2025f",
+        "question_family_tags": [
+          "eps_fcf_explosion",
+          "market_expectation"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.96,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix consolidated operating-profit broker forecast",
+        "subject_id": "000660:CONSOLIDATED_OP:FY2025F:DAISHIN_20251128",
+        "unit": "KRW billion",
+        "value": 43251
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-b06350879c518ec49fa8cd5c"
+    ],
+    "unresolved_research_notes": [
+      "Continue the same literal chunk after these twelve identities, covering the remaining target-specific consolidated and segment broker forecasts, valuation table atoms, and quarterly assumptions without repeating industry background or other issuers. Parent chunk 1/2 is separate transport work."
+    ]
+  },
+  "payload_hash": "67bdd112db9869e36cff8f9addf67ed48c1e78ed457680ca653ef0f209d004e4",
+  "production_score_authority": false,
+  "prompt_hash": "8d2ceb9c75ffa3021267e8fd993ba09d4c86a0cf16533d00a60fcb3e1e9e1b30",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-0d3a478774fb041e0eb9e5119ddd368cd449bddbdbb45202b05a64be09e09d37",
+  "response_id": "COLLABRESP-74d328da61e8d2c737928f28846d839fc9376cf1b7b57b95dd2cb9d22b3636a0",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

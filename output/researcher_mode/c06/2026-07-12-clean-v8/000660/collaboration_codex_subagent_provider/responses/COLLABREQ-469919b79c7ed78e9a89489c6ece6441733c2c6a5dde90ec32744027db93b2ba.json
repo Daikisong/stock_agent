@@ -1,0 +1,176 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "rationale": "Three further distinct target-specific broker facts were extracted after strict exclusion of the eight continuation facts already accepted. General industry, adjacent-company, ETF-composition and generic semiconductor passages were not promoted into issuer guidance, signed HBM contracts, or HBM-only economics. This supplied transport is chunk 0 of 2, so the canonical parent document remains unresolved until the unsupplied second chunk is reviewed.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": false,
+    "facts": [
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.96,
+        "current_lifecycle": "CURRENT",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "exact_quote": "SK하이닉스(000660) IBUY I TP 2,750,000원\n메모리주도업체로서멀티플정당화필요",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The target-specific broker valuation view advances market-expectation and valuation research, but it is a broker opinion and target price without a complete HBM-only earnings or cash-flow bridge; it is not issuer guidance or a score/stage conclusion.",
+        "mechanism_scope_id": "000660:MEMORY:PUBLIC_BROKER_VALUATION_20260522",
+        "normalized_object": "Hana Securities BUY rating and KRW 2,750,000 target price for SK hynix, framed as multiple justification for a memory leader",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "broker view published 2026-05-22",
+        "predicate": "broker_recommends_buy_and_sets_target_price_without_a_complete_hbm_only_earnings_bridge",
+        "predicate_family": "BROKER_TARGET_PRICE_VALUATION_VIEW",
+        "primitive_tags": [
+          "PUBLIC_BROKER_TARGET_PRICE",
+          "VALUATION_VIEW"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "broker_target_valuation_view",
+        "question_family_tags": [
+          "broker_target_valuation_view",
+          "target_price_without_complete_earnings_bridge"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.94,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix broker valuation view",
+        "subject_id": "000660:PUBLIC_BROKER_VALUATION_20260522",
+        "unit": "KRW/share",
+        "value": 2750000
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.9,
+        "current_lifecycle": "CURRENT",
+        "direction": "COUNTER",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "RISK_COUNTER",
+        "exact_quote": "•2018년SK하이닉스주가고점은5월, 12개월예상영\n50,000\n20\n18 45,000 업이익률정점은7월: 주가2개월선행",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The target-specific historical lead/lag pattern is a counterweight for current rerating and market-timing interpretation. It is a broker historical analogy, not proof that the current cycle must peak in the same way and not an HBM-only economic fact.",
+        "mechanism_scope_id": "000660:MEMORY:STOCK_MARGIN_CYCLE_RISK",
+        "normalized_object": "Broker historical observation that SK hynix stock peaked two months before its 12-month-forward operating-margin estimate peaked in 2018",
+        "objective_ids": [
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "COUNTER",
+        "period": "2018-05 to 2018-07 historical comparison",
+        "predicate": "historical_stock_price_peak_preceded_the_twelve_month_forward_operating_margin_peak_by_two_months",
+        "predicate_family": "BROKER_TARGET_STOCK_FORWARD_MARGIN_PEAK_LEAD",
+        "primitive_tags": [
+          "HISTORICAL_STOCK_MARGIN_LEAD",
+          "VALUATION_CYCLE_RISK"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "target_stock_margin_cycle_lead",
+        "question_family_tags": [
+          "target_stock_margin_cycle_lead",
+          "historical_market_cycle_counter"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.92,
+        "scope_economic_mechanism": "RISK_COUNTER",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "RISK",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix historical stock and forward operating-margin cycle",
+        "subject_id": "000660:STOCK_MARGIN_PEAK_LEAD_2018",
+        "unit": "historical timing observation",
+        "value": "stock peak 2018-05; 12-month-forward operating-margin peak 2018-07; stock lead 2 months"
+      },
+      {
+        "business_segment": "MEMORY",
+        "confidence": 0.78,
+        "current_lifecycle": "OPEN",
+        "direction": "POSITIVE",
+        "document_id": "SGDOC-3fa5f1bda504b0cb332bde68",
+        "economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "exact_quote": "기55%. SK하이닉스는2027년2분기76%\n16.1 16.5 16.9 17.1 17.5 17.9 18.1 18.5 18.9\n2018년SK하이닉스주가와영업이익률: 비슷한시기에정점 삼성전자영업이익률정점2027년2분기, SK하이닉스는3분기",
+        "material": true,
+        "materiality": "NONCRITICAL",
+        "materiality_rationale": "The target-specific broker estimate advances forward earnings and valuation research, while the payload preserves the source's Q2-versus-Q3 label mismatch. It is neither a reported actual nor issuer guidance nor an HBM-only margin estimate.",
+        "mechanism_scope_id": "000660:MEMORY:BROKER_FORWARD_OPERATING_MARGIN_2027",
+        "normalized_object": "Broker forward estimate places SK hynix operating-margin peak near 76% around 2027Q2-Q3, with an internal quarter-label mismatch",
+        "objective_ids": [
+          "SGOBJ-47b5c4f0c9d561a7e1b8cc82",
+          "SGOBJ-5fccea4d80fc98e697bd7a0e",
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0",
+          "SGOBJ-db965864e15ed32d6d471762",
+          "SGOBJ-ec638d635428191a67369c54"
+        ],
+        "objective_relation": "ADVANCE",
+        "period": "2027Q2-Q3 broker estimate",
+        "predicate": "broker_projects_operating_margin_near_seventy_six_percent_around_2027q2_to_2027q3_with_an_internal_timing_mismatch",
+        "predicate_family": "BROKER_TARGET_FORWARD_OPERATING_MARGIN_PEAK",
+        "primitive_tags": [
+          "BROKER_FORWARD_OPERATING_MARGIN",
+          "ESTIMATE_TIMING_MISMATCH"
+        ],
+        "product_family": "MEMORY_GENERIC",
+        "question_family_id": "broker_forward_operating_margin_peak",
+        "question_family_tags": [
+          "broker_forward_operating_margin_peak",
+          "forward_estimate_not_issuer_guidance"
+        ],
+        "scope_business_segment": "MEMORY",
+        "scope_confidence": 0.9,
+        "scope_economic_mechanism": "VALUATION_EARNINGS_BRIDGE",
+        "scope_product_family": "MEMORY_GENERIC",
+        "scope_technology_family": "MEMORY",
+        "scope_transaction_type": "VALUATION_ANALYSIS",
+        "structured_evidence_roles": [],
+        "subject": "SK hynix broker forward operating-margin estimate",
+        "subject_id": "000660:BROKER_FORWARD_OPERATING_MARGIN_PEAK_2027",
+        "unit": "% operating margin; broker estimate",
+        "value": "approximately 76%; body says 2027Q2 while adjacent chart title says 2027Q3"
+      }
+    ],
+    "unresolved_document_ids": [
+      "SGDOC-3fa5f1bda504b0cb332bde68"
+    ],
+    "unresolved_research_notes": [
+      "The canonical parent document has two required transport chunks, but this immutable request supplies only chunk 0 (characters 0-219991 of 402878). Chunk 1 must be reviewed before document-level extraction can be complete; this is transport remainder, not evidence of source absence."
+    ]
+  },
+  "payload_hash": "508b275f50de595bc7b38c7057a0e8d2a9fea568ed988be7fdb0f023835ba1c1",
+  "production_score_authority": false,
+  "prompt_hash": "4d19169374864f2b7c1c6e1ff02957d5ceecc27d64b6a66d38c3b3e4cf8154ff",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-469919b79c7ed78e9a89489c6ece6441733c2c6a5dde90ec32744027db93b2ba",
+  "response_id": "COLLABRESP-ebeca38a29ab4f97cfb5fe162627186e617d5cd6397d4ba94069779512510b7f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

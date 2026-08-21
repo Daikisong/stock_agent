@@ -1,0 +1,152 @@
+{
+  "output_schema_hash": "a446e11fd01490aafb526ce1fefa82f3db0dc62c197da91afb90dea280fb832d",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-f4d497b2f0be0bf249f3a161",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "The discovery snippet mentions SK hynix, Nvidia and customized GPU demand, but the already-complete fact corpus is sufficient for scoring and the snippet itself cannot establish a source-backed named platform or counterparty relationship. No additional fetch is authorized for this bounded closeout."
+      },
+      {
+        "candidate_id": "SGCAND-1573fa9dea9ea4bb4f21a89b",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.2,
+        "rationale": "Broker PDF matches the source family but the snippet is generic customized-memory demand and DRAM capacity, without a named customer, platform, qualification or deployment route."
+      },
+      {
+        "candidate_id": "SGCAND-8100748bc36d4c1602db77c5",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.2,
+        "rationale": "The MyAsset PDF is broker-origin, but the snippet supplies broad ASIC/HBM industry discussion rather than a target-specific named relationship."
+      },
+      {
+        "candidate_id": "SGCAND-cc27c387ab28b9fa2ef4dfdd",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Samsung Securities AI overview matches broker provenance but the supplied metadata does not connect SK hynix HBM to a named customer or platform."
+      },
+      {
+        "candidate_id": "SGCAND-f9c01ec53333ec5ed78265e6",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.1,
+        "rationale": "Mirae Asset AI report is broker-origin but its discovery metadata provides no target-specific Microsoft, Nvidia, qualification or deployment relationship."
+      },
+      {
+        "candidate_id": "SGCAND-8104a6b6ae79df7499ebf209",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.3,
+        "rationale": "Daishin PDF is relevant to supplier HBM volume negotiations but names no customer or platform in the snippet, so it cannot resolve the independent-corroboration objective."
+      },
+      {
+        "candidate_id": "SGCAND-b099f1badd7171138d87830a",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram channel is neither a broker-original PDF nor evidence of a named HBM customer relationship."
+      },
+      {
+        "candidate_id": "SGCAND-233714efa2ca13ffee1e61eb",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Reposted U.S. strategy PDF is unrelated to the target-specific HBM customer relationship and is not a verified broker-original route."
+      },
+      {
+        "candidate_id": "SGCAND-cf0cd8dd7483439bde1ec563",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "The discovery snippet merely places SK hynix analysis near Amazon and Microsoft capex assumptions; it does not establish a target-specific relationship. The completed corpus will be scored with this corroboration gap recorded rather than opening another fetch."
+      },
+      {
+        "candidate_id": "SGCAND-814e4eb0c3357f1c663ebfa7",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.1,
+        "rationale": "Hyundai Motor Securities PDF discusses broad AI bottlenecks and investable firms but gives no named customer/platform corroboration for SK hynix."
+      },
+      {
+        "candidate_id": "SGCAND-b5415ac11dc488420a8a7f1e",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "Telegram channel content is not a broker-original PDF and the snippet is unrelated to the target relationship."
+      },
+      {
+        "candidate_id": "SGCAND-0a31e098c08bb66701d1b836",
+        "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        "material_relevance": false,
+        "objective_ids": [
+          "SGOBJ-7f61ec3a6e8e8409f1c536a0"
+        ],
+        "priority": 0.0,
+        "rationale": "The title indicates 2026-07-21, after the 2026-07-12 cutoff, so it is ineligible for the as-of analysis even though it is a broker PDF."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "No candidate is selected for another fetch. The customer/platform corroboration gap remains explicit and will reduce evidence confidence in deterministic scoring rather than prolong collection."
+    ]
+  },
+  "payload_hash": "358dc3a4c20264a9e1169fb9a4eb1ec22388c315783ff4819db958e136b20a33",
+  "production_score_authority": false,
+  "prompt_hash": "9b39e9986465fbfbc4fe8d9fef15c9c4dc0b95dfe32e02519d697c7db653dfec",
+  "provenance": {
+    "agent_id": "/root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/direct_analysis",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-1e80572663a66859eee104def906944a105018766ae2a8f68b813ac7182d6a49",
+  "response_id": "COLLABRESP-89e4c9134067c5856053eb4d22629fb7397ecfb40dc92d32ca5edfad46ecacc6",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

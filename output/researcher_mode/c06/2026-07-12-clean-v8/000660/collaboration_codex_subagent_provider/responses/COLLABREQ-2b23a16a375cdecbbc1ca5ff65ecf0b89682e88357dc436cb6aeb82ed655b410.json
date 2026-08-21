@@ -1,0 +1,37 @@
+{
+  "output_schema_hash": "d6d49838bf63a28c67f879a8616b02c755b4f48a76486d9e05b1ae8fbc91ef4f",
+  "payload": {
+    "document_dispositions": [
+      {
+        "document_id": "SGDOC-ca57bd95ff38204b5a08eb67",
+        "rationale": "Independent coverage audit of the entire supplied literal transport chunk 0/3 found no distinct target-direct current-objective atom omitted from the 204 facts already accepted in this cumulative coverage context. The prior roster already represents the SK hynix HBM/DRAM capacity, production, supply-price outlook, consolidated and DRAM earnings, margin, per-share, and valuation rows. Remaining mentions are repetitions, OCR-ambiguous chart copies, adjacent CXL or NAND background outside the compatible C06 objective mechanism, industry-general rows without target attribution, other issuers, or SK Square-perspective dividend inflow; none can be promoted to an issuer actual, guidance, customer-official corroboration, signed contract, HBM-only result, or source-absence proof.",
+        "status": "FACTS_EXTRACTED"
+      }
+    ],
+    "extraction_complete": true,
+    "facts": [],
+    "unresolved_document_ids": [],
+    "unresolved_research_notes": []
+  },
+  "payload_hash": "5120b5ad6d4a43ab828a138707b4d3a248a0b84dcef8be2aaf4905bfe9786874",
+  "production_score_authority": false,
+  "prompt_hash": "88fca93f72b0c643514e095c4e93b3d81bf128145c550784619217c6a06a8203",
+  "provenance": {
+    "agent_id": "/root/hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-2b23a16a375cdecbbc1ca5ff65ecf0b89682e88357dc436cb6aeb82ed655b410",
+  "response_id": "COLLABRESP-40ea74cc4144cc3a65c838c36081f40ba3a13ad9f2b6024c6584e7f7aa9fb859",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

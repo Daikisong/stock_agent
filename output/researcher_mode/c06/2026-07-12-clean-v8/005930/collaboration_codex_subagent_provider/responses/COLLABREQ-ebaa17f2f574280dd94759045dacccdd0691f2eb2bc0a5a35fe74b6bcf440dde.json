@@ -1,0 +1,125 @@
+{
+  "output_schema_hash": "2039d02b6248242cc4d37166f0719e3574891c23d4cfe0bd2bf9ea0cdfe78e2c",
+  "payload": {
+    "component_findings": [
+      {
+        "component_id": "eps_fcf_explosion",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-9090dbe7d62ea6f7e55994e5 is complete and separates consolidated and memory actuals from HBM attribution, retains CAPEX counterevidence, and has a nonempty current judge intersection."
+      },
+      {
+        "component_id": "earnings_visibility",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-e33d24eb53e54f8b0079b89d is complete and separates actual HBM4 shipment from LOI, MOU, negotiation, forecast, and undisclosed contract economics, with a nonempty current judge intersection."
+      },
+      {
+        "component_id": "bottleneck_pricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-c989e641c46cb2589aaef403 is complete and keeps memory-wide utilization and ASP distinct from HBM-only capacity, yield, allocation, and binding terms, with a nonempty current judge intersection."
+      },
+      {
+        "component_id": "market_mispricing",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-ef70ee03faa19d8789cfb3f2 is complete and preserves mixed structured valuation/revision signals and avoids asserting direct unpriced HBM value, with a nonempty current judge intersection."
+      },
+      {
+        "component_id": "valuation_rerating",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-a8ea1b713155d07973355ec3 is complete and labels forward valuation as derived, peers as context, and the HBM earnings bridge as limited, with a nonempty current judge intersection."
+      },
+      {
+        "component_id": "capital_allocation",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-49d146bc643b60c9fe57efe2 is complete and separates actual return/cash evidence from CAPEX, working capital, dilution, and unverified HBM investment ROIC, with a nonempty current judge intersection."
+      },
+      {
+        "component_id": "information_confidence",
+        "memo_sufficient": true,
+        "missing_fact_needs": [],
+        "rationale": "Current memo CRMEMO-6268597ffc9811550a086087 is complete and combines formal issuer reporting and customer-official corroboration while preserving plan/actual and contract-specificity limits, with a nonempty current judge intersection."
+      }
+    ],
+    "component_memos_sufficient": true,
+    "counter_and_supersession_checked": true,
+    "failure_assessments": [
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-11f05de07efa5852c6e71412",
+        "rationale": "Four query members resolved at full-document future-date exclusion; nonretryable and not source-absence proof.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "INSUFFICIENT_SEARCH",
+        "failure_id": "FAILGROUP-828cb4bb9fe49e835dfadd21",
+        "rationale": "No new valid nonduplicate LLM query closes only that query lane and does not prove source absence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-8ce8e0d17715285b367c314b",
+        "rationale": "One document lacked a verifiable publication date after full fetch; the resolved exclusion is not source-absence evidence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PARSER_EXTRACTOR_FAILURE",
+        "failure_id": "FAILGROUP-93582c8d3e4a290b445687a0",
+        "rationale": "The matching query member failed publication-date validation after full fetch; resolved and not source-absence evidence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "FUTURE_LEAKAGE",
+        "failure_id": "FAILGROUP-944cf2283ff44162e1cf00f0",
+        "rationale": "Four future-dated documents were correctly excluded at the as-of boundary; resolved and not source-absence evidence.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      },
+      {
+        "classification": "PROVIDER_FAILURE",
+        "failure_id": "FAILGROUP-b111a10918c8fead4510bb44",
+        "rationale": "Five provider-error query members are resolved; provider failure is not source-absence proof.",
+        "retryable": false,
+        "source_absence_claim_allowed": false
+      }
+    ],
+    "missing_material_facts": [],
+    "new_source_family_directions": [],
+    "next_actions": [],
+    "query_direction_briefs": [],
+    "rationale": "The post-patch deterministic proof has objective-scoped counter/supersession coverage for all seven canonical components, is parser/extractor verified, and is not zero-result-only. RTMEMO-3499364b218fc0685b419e3c independently reviewed all seven components and SYNMEMO-d78c309d16b8dbda91c3148f is current. All seven current memos are complete, all current three-role intervals intersect, structured status is COMPLETE with no missing roles, all seven source objectives are resolved, and all six failure groups are losslessly assessed without source-absence claims. Residual contract, HBM-specific capacity/yield/allocation, valuation bridge, and ROIC details remain explicit monitoring limitations rather than executable material gaps. No concrete nonduplicate positive route remains, so the record is ready only for independent saturation review and carries no score or Stage authority.",
+    "ready_for_independent_saturation_review": true,
+    "reasonable_positive_routes_remaining": false,
+    "structured_data_complete": true,
+    "unresolved_material_questions": []
+  },
+  "payload_hash": "6df01bcfa52150909162914e8ec9b7fafec65ef0d4d7a40f5943ac904c52a4c6",
+  "production_score_authority": false,
+  "prompt_hash": "3dc0110fc7fdf70ca7a7675a5b770c19829d00b44c4eeae6f0becce89fc1d3cf",
+  "provenance": {
+    "agent_id": "hynix_epoch33_fact",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/hynix_epoch33_fact",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-ebaa17f2f574280dd94759045dacccdd0691f2eb2bc0a5a35fe74b6bcf440dde",
+  "response_id": "COLLABRESP-f328519e8e8f4500c225cce74c217d7d5fbd299d098b2ac3e9065cb921d42c1f",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}

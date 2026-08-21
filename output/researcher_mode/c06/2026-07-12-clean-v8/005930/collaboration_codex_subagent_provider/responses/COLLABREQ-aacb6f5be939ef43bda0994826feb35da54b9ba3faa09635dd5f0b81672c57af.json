@@ -1,0 +1,128 @@
+{
+  "output_schema_hash": "4165328a87878d59e74fcfe205b387d1b98aa5ff94d606d00677f92de20e122c",
+  "payload": {
+    "decisions": [
+      {
+        "candidate_id": "SGCAND-08fcff61c21b21a5bf035879",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.0,
+        "rationale": "2026-07-13 cutoff 이후 제3자 뉴스로 미래누수다."
+      },
+      {
+        "candidate_id": "SGCAND-ab1e48e29a8a70085fbee2ac",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.02,
+        "rationale": "삼성증권 Tech Talk으로 CUSTOMER_OFFICIAL source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-63d650ec3018c7748cbb1c93",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Naver 해외뉴스 요약으로 OpenAI original이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-e887202cea4cc876a7adbb34",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "KISTEP 정책 동향 보고서로 대상 관계와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-5a8f1eabde74b5e0b047b118",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "IBK 리포트로 고객 공식 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-bc3e86c4a46de244d28c6a4f",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "개인 투자 리포트로 CUSTOMER_OFFICIAL source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-00fee2b89325d73a0d4da3ea",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "산업연구원 자료로 OpenAI partnership 원문이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-b98b82d4d9adef78e406df93",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "Naver 투자자료로 공식 original이 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-1613856a7ad4de2c3c8c3aca",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "국가 R&D 연구로 objective와 무관하다."
+      },
+      {
+        "candidate_id": "SGCAND-576e3d710703b3e7de313759",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "기관평가보고서로 고객 관계 full-source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-6d15560737ebf64d82ede0b2",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "테마주 소개 페이지로 OpenAI 공식 source가 아니다."
+      },
+      {
+        "candidate_id": "SGCAND-f644f0857f2e96fe2728f063",
+        "matched_requested_source_family": "NONE",
+        "material_relevance": false,
+        "objective_ids": [],
+        "priority": 0.01,
+        "rationale": "R&D 예산 연구로 objective와 무관하다."
+      }
+    ],
+    "ranking_complete": true,
+    "unresolved_notes": [
+      "P2 material0은 source absence나 completion이 아니다."
+    ]
+  },
+  "payload_hash": "74bec4d63831352e48618db17ab8d23bd96a1a6526a3fcfc6f133bb2230bd6c6",
+  "production_score_authority": false,
+  "prompt_hash": "9d0db7a1dfc511445d374601f202a8307b5d954ee29635ea8df40d3f4bef2fda",
+  "provenance": {
+    "agent_id": "/root/phase105_profile_response",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/phase105_profile_response",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "provider_identity_hash": "8369c44ba987961559375c47096dbf3187a5c88be8acb68b357fea5d85d3f898",
+  "request_id": "COLLABREQ-aacb6f5be939ef43bda0994826feb35da54b9ba3faa09635dd5f0b81672c57af",
+  "response_id": "COLLABRESP-0d6c52a809dc46a07ec0b30a07b2ee12d7e3c1a2ad25aa884881584fbe1d0151",
+  "schema_version": "e2r_v5_collaboration_codex_subagent_response_v1",
+  "score_or_stage_authority": false,
+  "validation": {
+    "blind_research_output_valid": true,
+    "downstream_semantic_validation_required": true,
+    "draft202012_schema_valid": true,
+    "request_hashes_valid": true
+  }
+}
