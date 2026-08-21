@@ -1,0 +1,47 @@
+{
+  "schema_version": "e2r_v6_gate1_current_fact_roster_receipt_v1",
+  "audit_date": "2026-08-22",
+  "target_id": "000660",
+  "as_of_date": "2026-07-12",
+  "source_file": "output/researcher_mode/c06/2026-07-12-clean-v8/000660/evidence_facts.jsonl",
+  "source_file_sha256": "d1131aaf68579e04be1277883f1e08922d36c806176b036dcc78e72e91d60c52",
+  "claim_fact_links_file_sha256": "74095ffe06f2a114945ec5132c0d1a827b6090ad0398de72f5473b1fc582c6f4",
+  "projection_function": "e2r.research_brain.researcher_mode.prompt_projection.project_current_decision_citable_facts",
+  "projection_schema_version": "e2r_v5_current_decision_citable_fact_projection_v1",
+  "lifecycle_counts": {
+    "OPEN": 797,
+    "CURRENT": 199,
+    "RESOLVED": 0,
+    "SUPERSEDED": 1194
+  },
+  "input_fact_count": 2190,
+  "current_or_open_fact_count": 996,
+  "closed_or_superseded_fact_count": 1194,
+  "input_fact_roster_hash": "227799063432221e60f4531cb58fb50249ec7ac7834cfc9ee36e6261cdc5a71e",
+  "current_fact_roster_hash": "885ce834edd2f6818446f1b869dfd380f8a7fd1db71e95cc57f1caad530ee56a",
+  "closed_fact_roster_hash": "8fad4c213a2deb6bea3f0d165cc5e49f0dc31150436d4a0f7ac3e46a3d5ccae9",
+  "current_fact_id_roster": {
+    "count": 996,
+    "roster_hash": "91bda94280fd83b631ad39dfb3df918d259021eb94388ecebd7cde8aabd39f0c"
+  },
+  "closed_fact_history": {
+    "record_count": 1194,
+    "semantic_group_count": 211,
+    "every_record_accounted_by_hash_and_group_count": true
+  },
+  "invariants": {
+    "every_input_fact_accounted": true,
+    "every_current_fact_individually_citable": true,
+    "every_closed_fact_accounted_by_hash_and_group_count": true,
+    "fact_extraction_complete": true,
+    "fact_extraction_pending_reason_count": 0,
+    "future_source_count": 0
+  },
+  "freeze_contract": {
+    "frozen_current_fact_count": 996,
+    "frozen_current_fact_roster_hash": "885ce834edd2f6818446f1b869dfd380f8a7fd1db71e95cc57f1caad530ee56a",
+    "unrelated_component_fact_loss_is_hard_failure": true,
+    "original_snapshot_must_not_be_mutated": true
+  },
+  "verdict": "CURRENT_FACT_ROSTER_FROZEN"
+}

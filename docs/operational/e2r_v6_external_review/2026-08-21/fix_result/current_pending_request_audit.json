@@ -1,0 +1,42 @@
+{
+  "schema_version": "e2r_v6_gate1_current_pending_request_audit_v1",
+  "audit_date": "2026-08-22",
+  "target_id": "000660",
+  "journal_root": "output/researcher_mode/c06/2026-07-12-clean-v8/000660/collaboration_codex_subagent_provider",
+  "request_count": 471,
+  "response_count": 469,
+  "unanswered_requests": [
+    {
+      "request_id": "COLLABREQ-88bd97c0d762008c9c9d48fa29aa85f70c57b87629a3d0ee7994e9ca22a2866b",
+      "pass_name": "SOURCE_QUERY_GENERATION",
+      "prompt_hash": "259a69ce7520544e13f38deab48f8754c758889d6a088adcdd7c9584b15f82a1",
+      "request_file_sha256": "fdda0d4ed8b4b728694ad36dd153f249de0dc0879a12acda8d5354c16774087c",
+      "canonical_checkpoint_reference": "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:COLLABREQ-88bd97c0d762008c9c9d48fa29aa85f70c57b87629a3d0ee7994e9ca22a2866b",
+      "classification": "CURRENT_CANONICAL_BLOCKER",
+      "expected_gate1_response_semantics": {
+        "suggested_queries": [],
+        "new_source_directions": [],
+        "unresolved_research_notes_may_describe_gap_without_claiming_absence": true
+      }
+    },
+    {
+      "request_id": "COLLABREQ-5e6c2b2ca9dd21fb10677567846f67de456dd231924e4112f3952b600a3df087",
+      "pass_name": "EVIDENCE_FACT_EXTRACTION",
+      "prompt_hash": "7884d4ac88d562619db64a418f7e07ebf7d296236badaf32c01ab620864218b8",
+      "request_file_sha256": "0cffb4f68bd601780c0bf70b7915a617baa151f93ded9326dfbd5977016c8764",
+      "canonical_checkpoint_reference": null,
+      "fact_extraction_current_status": "FACT_EXTRACTION_COMPLETE",
+      "fact_extraction_current_pending_reasons": [],
+      "classification": "QUARANTINED_HISTORICAL_RESIDUE",
+      "counts_as_current_pending": false
+    }
+  ],
+  "canonical_pending_request_ids": [
+    "COLLABREQ-88bd97c0d762008c9c9d48fa29aa85f70c57b87629a3d0ee7994e9ca22a2866b"
+  ],
+  "quarantined_historical_request_ids": [
+    "COLLABREQ-5e6c2b2ca9dd21fb10677567846f67de456dd231924e4112f3952b600a3df087"
+  ],
+  "third_same_gap_query_opened_at_r0": false,
+  "verdict": "ONE_CURRENT_SOURCE_QUERY_GENERATION_RESPONSE_PENDING"
+}
