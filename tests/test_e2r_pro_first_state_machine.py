@@ -72,17 +72,28 @@ class ProFirstStateMachineTest(unittest.TestCase):
 
     def _reach_approval(self) -> str:
         self._transition(JobStatus.PACKET_BUILDING, "packet-building")
-        self._transition(
-            JobStatus.PACKET_READY,
-            "packet-ready",
-            updates={"packet_id": "packet-1", "packet_hash": "a" * 64},
+        self.job = self.store.record_packet(
+            self.job.job_id,
+            expected_version=self.job.state_version,
+            packet_id="packet-1",
+            packet_hash="a" * 64,
+            manifest={"packet_hash": "a" * 64},
+            actor="unit-worker",
+            idempotency_key="packet-ready",
         )
-        self._transition(
-            JobStatus.BROWSER_PREPARING,
-            "browser-preparing",
-            updates={"browser_session_id": "browser-session-1"},
+        self._transition(JobStatus.BROWSER_PREPARING, "browser-preparing")
+        self.job = self.store.record_browser_prepared(
+            self.job.job_id,
+            expected_version=self.job.state_version,
+            browser_session_id="browser-session-1",
+            conversation_id="conversation-1",
+            adapter_name="UnitBrowserAdapter",
+            packet_hash="a" * 64,
+            prompt_hash=self.prompt_hash,
+            state={"state": JobStatus.AWAITING_USER_APPROVAL.value},
+            actor="unit-worker",
+            idempotency_key="approval-wait",
         )
-        self._transition(JobStatus.AWAITING_USER_APPROVAL, "approval-wait")
         self.job, nonce = self.store.issue_approval_nonce(
             self.job.job_id,
             expected_version=self.job.state_version,

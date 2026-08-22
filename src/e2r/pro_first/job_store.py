@@ -634,6 +634,98 @@ class ProFirstJobStore:
             result = self._require_job_row(connection, job_id)
         return self._job_from_row(result)
 
+    def record_browser_prepared(
+        self,
+        job_id: str,
+        *,
+        expected_version: int,
+        browser_session_id: str,
+        conversation_id: str | None,
+        adapter_name: str,
+        packet_hash: str,
+        prompt_hash: str,
+        state: Mapping[str, Any],
+        actor: str,
+        idempotency_key: str,
+    ) -> ProResearchJob:
+        if len(packet_hash) != 64 or len(prompt_hash) != 64:
+            raise ValueError("packet and prompt hashes must be sha256")
+        durable_browser_state = {
+            **dict(state),
+            "packet_hash": packet_hash,
+            "prompt_hash": prompt_hash,
+        }
+        payload = {
+            "browser_session_id": browser_session_id,
+            "conversation_id": conversation_id,
+            "packet_hash": packet_hash,
+            "prompt_hash": prompt_hash,
+            "state_hash": canonical_hash(durable_browser_state),
+        }
+        with self._transaction() as connection:
+            if self._existing_idempotent_event(
+                connection,
+                job_id,
+                idempotency_key,
+                JobStatus.AWAITING_USER_APPROVAL,
+                payload,
+            ):
+                return self._job_from_row(self._require_job_row(connection, job_id))
+            row = self._require_job_row(connection, job_id)
+            self._require_version(row, expected_version)
+            source = JobStatus(row["status"])
+            self.state_machine.validate(source, JobStatus.AWAITING_USER_APPROVAL)
+            if row["packet_hash"] != packet_hash:
+                raise ApprovalInvalid("prepared browser packet hash differs from durable packet")
+            created_at = self._now_text()
+            connection.execute(
+                """
+                INSERT INTO pro_browser_sessions (
+                    browser_session_id, job_id, adapter_name, conversation_id,
+                    state_json, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    browser_session_id,
+                    job_id,
+                    adapter_name,
+                    conversation_id,
+                    canonical_json(durable_browser_state),
+                    created_at,
+                    created_at,
+                ),
+            )
+            cursor = connection.execute(
+                """
+                UPDATE pro_research_jobs
+                SET status=?, browser_session_id=?, conversation_id=?,
+                    state_version=state_version+1, updated_at=?
+                WHERE job_id=? AND state_version=?
+                """,
+                (
+                    JobStatus.AWAITING_USER_APPROVAL.value,
+                    browser_session_id,
+                    conversation_id,
+                    created_at,
+                    job_id,
+                    expected_version,
+                ),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict(f"job version changed concurrently: {job_id}")
+            self._insert_event(
+                connection,
+                job_id=job_id,
+                from_status=source,
+                to_status=JobStatus.AWAITING_USER_APPROVAL,
+                actor=actor,
+                idempotency_key=idempotency_key,
+                payload=payload,
+                created_at=created_at,
+            )
+            result = self._require_job_row(connection, job_id)
+        return self._job_from_row(result)
+
     def list_events(self, job_id: str) -> tuple[JobEvent, ...]:
         with self._connect() as connection:
             rows = connection.execute(
@@ -721,6 +813,18 @@ class ProFirstJobStore:
                 raise ApprovalInvalid("approval requires a prepared packet and browser session")
             if len(prompt_hash) != 64:
                 raise ApprovalInvalid("approval prompt hash must be sha256")
+            browser_row = connection.execute(
+                "SELECT state_json FROM pro_browser_sessions WHERE browser_session_id=? AND job_id=?",
+                (row["browser_session_id"], job_id),
+            ).fetchone()
+            if browser_row is None:
+                raise ApprovalInvalid("approval requires a durable prepared browser binding")
+            browser_state = json.loads(browser_row["state_json"])
+            if (
+                browser_state.get("packet_hash") != row["packet_hash"]
+                or browser_state.get("prompt_hash") != prompt_hash
+            ):
+                raise ApprovalInvalid("approval hashes differ from prepared browser content")
             if self._parse_timestamp(expires_at) <= self._now_value():
                 raise ApprovalInvalid("approval nonce expiry must be in the future")
             existing = connection.execute(

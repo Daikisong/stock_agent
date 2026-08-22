@@ -4,12 +4,14 @@ import asyncio
 import socket
 from pathlib import Path
 from tempfile import TemporaryDirectory
+import json
 import unittest
 from urllib.request import urlopen
 
 from e2r.pro_first.browser.chatgpt_adapter import PlaywrightChatGPTWebAdapter
 from e2r.pro_first.browser.mock_chatgpt_app import MockChatGPTServer
 from e2r.pro_first.browser.protocol import (
+    BrowserUIIncompatible,
     BrowserUIState,
     ManualLoginRequired,
     SubmitAuthorizationRequired,
@@ -27,7 +29,11 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         self.server.__enter__()
         self.addCleanup(self.server.__exit__, None, None, None)
         self.packet_path = Path(self.temporary_directory.name) / "research_packet.json"
-        self.packet_path.write_text('{"schema_version":"e2r_pro_research_packet_v1"}\n', encoding="utf-8")
+        self.packet_payload = {"schema_version": "e2r_pro_research_packet_v1"}
+        self.packet_path.write_text(
+            json.dumps(self.packet_payload), encoding="utf-8"
+        )
+        self.packet_hash = canonical_hash(self.packet_payload)
         self.prompt = (
             "독립적으로 조사하라.\n"
             "[[E2R_PRO_RUN_ID:PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb]]\n"
@@ -54,7 +60,7 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         prepared = await self.adapter.prepare_without_submit(
             browser_session_id="BROWSER-session",
             packet_path=self.packet_path,
-            packet_hash=canonical_hash({"packet": "fixture"}),
+            packet_hash=self.packet_hash,
             prompt=self.prompt,
             prompt_hash=canonical_hash({"prompt": self.prompt}),
         )
@@ -74,6 +80,25 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         filename = await self.adapter.upload_packet(self.packet_path)
         self.assertEqual(filename, "research_packet.json")
         self.assertTrue(await self.page.get_by_text(filename, exact=False).is_visible())
+
+    async def test_prepare_rejects_packet_or_prompt_hash_mismatch(self) -> None:
+        with self.assertRaisesRegex(BrowserUIIncompatible, "packet file hash"):
+            await self.adapter.prepare_without_submit(
+                browser_session_id="BROWSER-session",
+                packet_path=self.packet_path,
+                packet_hash="f" * 64,
+                prompt=self.prompt,
+                prompt_hash=canonical_hash({"prompt": self.prompt}),
+            )
+        with self.assertRaisesRegex(BrowserUIIncompatible, "prompt hash"):
+            await self.adapter.prepare_without_submit(
+                browser_session_id="BROWSER-session",
+                packet_path=self.packet_path,
+                packet_hash=self.packet_hash,
+                prompt=self.prompt,
+                prompt_hash="e" * 64,
+            )
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
 
     async def test_set_prompt(self) -> None:
         await self.adapter.set_prompt(self.prompt)

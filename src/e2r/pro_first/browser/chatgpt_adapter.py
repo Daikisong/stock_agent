@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 from typing import Any
 
+from ..ids import canonical_hash
 from .page_helpers import editor_text, first_existing, first_visible, locator_enabled
 from .protocol import (
     AttachmentKey,
@@ -37,6 +39,8 @@ class PlaywrightChatGPTWebAdapter:
     def __init__(self, page: Any) -> None:
         self.page = page
         self._uploaded_filename: str | None = None
+        self._prepared_binding: dict[str, str] | None = None
+        self._submit_attempted = False
 
     async def ensure_logged_in(self) -> BrowserInspection:
         editor = await first_visible(self.page, EDITOR_SELECTORS)
@@ -123,6 +127,15 @@ class PlaywrightChatGPTWebAdapter:
         prompt: str,
         prompt_hash: str,
     ) -> PreparedBrowserJob:
+        path = Path(packet_path).resolve()
+        try:
+            packet_payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as error:
+            raise BrowserUIIncompatible("prepared packet must be valid research_packet.json") from error
+        if canonical_hash(packet_payload) != packet_hash:
+            raise BrowserUIIncompatible("prepared packet file hash differs from durable packet hash")
+        if canonical_hash({"prompt": prompt}) != prompt_hash:
+            raise BrowserUIIncompatible("prepared prompt hash differs from rendered prompt")
         await self.ensure_logged_in()
         await self.ensure_deep_research_mode()
         uploaded_filename = await self.upload_packet(packet_path)
@@ -131,11 +144,16 @@ class PlaywrightChatGPTWebAdapter:
         send = await first_visible(self.page, SEND_SELECTORS)
         if not await locator_enabled(send):
             raise BrowserUIIncompatible("ChatGPT send button is not ready after packet preparation")
+        self._prepared_binding = {
+            "browser_session_id": browser_session_id,
+            "packet_hash": packet_hash,
+            "prompt_hash": prompt_hash,
+        }
         return PreparedBrowserJob(
             browser_session_id=browser_session_id,
             conversation_id=self.conversation_id(),
             state=BrowserUIState.AWAITING_USER_APPROVAL,
-            packet_path=Path(packet_path).resolve(),
+            packet_path=path,
             packet_hash=packet_hash,
             prompt_hash=prompt_hash,
             uploaded_filename=uploaded_filename,
@@ -147,9 +165,39 @@ class PlaywrightChatGPTWebAdapter:
         )
 
     async def submit_once(self, approval_proof: Any) -> BrowserInspection:
-        raise SubmitAuthorizationRequired(
-            "P4 adapter cannot submit; P5 worker must supply a consumed durable approval proof"
-        )
+        from ..approval import ConsumedApprovalProof
+
+        if not isinstance(approval_proof, ConsumedApprovalProof) or not approval_proof.ledger_verified:
+            raise SubmitAuthorizationRequired("DOM send requires a consumed durable approval proof")
+        if self._submit_attempted:
+            raise SubmitAuthorizationRequired("this prepared browser adapter already attempted submit")
+        expected = self._prepared_binding
+        actual = {
+            "browser_session_id": approval_proof.browser_session_id,
+            "packet_hash": approval_proof.packet_hash,
+            "prompt_hash": approval_proof.prompt_hash,
+        }
+        if expected is None or expected != actual:
+            raise SubmitAuthorizationRequired("approval proof does not match prepared browser content")
+        editor = await first_visible(self.page, EDITOR_SELECTORS)
+        if editor is None:
+            raise BrowserUIIncompatible("prompt editor disappeared before submit")
+        current_prompt = await editor_text(editor)
+        if f"[[E2R_PRO_JOB_ID:{approval_proof.job_id}]]" not in current_prompt:
+            raise SubmitAuthorizationRequired("prepared prompt job marker differs from approval proof")
+        if approval_proof.conversation_id != self.conversation_id():
+            raise SubmitAuthorizationRequired("conversation changed after approval")
+        send = await first_visible(self.page, SEND_SELECTORS)
+        if not await locator_enabled(send):
+            raise BrowserUIIncompatible("ChatGPT send button is not ready")
+        self._submit_attempted = True
+        await send.click()
+        for _attempt in range(50):
+            inspection = await self.inspect_state()
+            if inspection.state is BrowserUIState.RESEARCH_RUNNING:
+                return inspection
+            await self.page.wait_for_timeout(100)
+        return await self.inspect_state()
 
     async def inspect_state(self) -> BrowserInspection:
         editor = await first_visible(self.page, EDITOR_SELECTORS)

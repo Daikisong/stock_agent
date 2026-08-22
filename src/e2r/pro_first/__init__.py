@@ -4,6 +4,7 @@ ChatGPT Pro may propose research material, but deterministic E2R layers retain
 all EvidenceFact, score, and canonical Stage authority.
 """
 
+from .approval import ExactlyOnceSubmitCoordinator, ProApprovalService
 from .job_store import ProFirstJobStore
 from .models import (
     CandidateRecord,
@@ -30,9 +31,11 @@ __all__ = [
     "ScanRunRecord",
     "ScanWindow",
     "FrozenClock",
+    "ExactlyOnceSubmitCoordinator",
     "PersistentKrxScheduler",
     "PacketBuildInput",
     "ProResearchPromptContract",
+    "ProApprovalService",
     "ResearchPacketBuilder",
     "ResearchPacketV1",
     "SystemClock",
