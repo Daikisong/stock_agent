@@ -17,6 +17,7 @@ from e2r.pro_first.ids import canonical_hash, canonical_json, stable_id
 from e2r.pro_first.job_store import ProFirstJobStore
 from e2r.pro_first.models import JobStatus, ResearchMode, ScanWindow
 from e2r.pro_first.publication import ProResultPublisher
+from e2r.pro_first.reuse import ProSameInputReuseGate
 from e2r.pro_first.state_machine import TransitionContext
 from e2r.research_brain.researcher_mode.schemas import CANONICAL_COMPONENT_ORDER
 
@@ -471,6 +472,40 @@ class ProFirstDashboardTest(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), first.result)
         self.assertIsNotNone(self.store.get_job(self.job.job_id).published_at)
+
+    def test_same_dossier_rerun_zero_browser_zero_supplement(self) -> None:
+        job_root = self._finalize_job()
+        published = ProResultPublisher(self.store).publish(
+            self.job.job_id,
+            job_root=job_root,
+        )
+        dossier_receipt = self.store.get_dossier_import_receipt(self.job.job_id)
+        self.assertIsNotNone(dossier_receipt)
+        dossier_hash = str(dossier_receipt["normalized_dossier_hash"])
+        before_jobs = self.store.list_jobs()
+
+        reused = ProSameInputReuseGate(self.store).evaluate(
+            prior_job_id=self.job.job_id,
+            current_trigger_fingerprint=self.job.trigger_fingerprint,
+            prior_source_delta_hash="SOURCE-DELTA-SAME",
+            current_source_delta_hash="SOURCE-DELTA-SAME",
+            expected_dossier_hash=dossier_hash,
+        )
+
+        self.assertIsNotNone(reused)
+        self.assertEqual(reused.result, published.result)
+        self.assertEqual(reused.receipt["status"], "SAME_DOSSIER_NOOP")
+        self.assertEqual(reused.receipt["browser_submit_count"], 0)
+        self.assertEqual(reused.receipt["new_pro_research_count"], 0)
+        self.assertEqual(reused.receipt["supplemental_query_count"], 0)
+        self.assertEqual(reused.receipt["supplemental_fetch_count"], 0)
+        self.assertEqual(reused.receipt["source_fetch_count"], 0)
+        self.assertEqual(reused.receipt["recomputed_component_count"], 0)
+        self.assertEqual(reused.receipt["recomputed_judge_count"], 0)
+        self.assertEqual(reused.receipt["score_variance"], 0.0)
+        self.assertEqual(reused.receipt["stage_variance"], 0)
+        self.assertTrue(reused.receipt["no_new_job_created"])
+        self.assertEqual(self.store.list_jobs(), before_jobs)
 
 
 if __name__ == "__main__":

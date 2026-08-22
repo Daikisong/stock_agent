@@ -20,6 +20,7 @@ from .models import (
 )
 from .packet import PacketBuildInput, ResearchPacketBuilder, ResearchPacketV1
 from .publication import ProPublishedResult, ProResultPublisher
+from .reuse import DeltaScoringReuseContext, ProSameInputReuseGate, SameInputNoopResult
 from .prompt_contract import ProResearchPromptContract
 from .scheduler import FrozenClock, PersistentKrxScheduler, SystemClock
 from .scoring import ProScoringPipelineService
@@ -37,9 +38,11 @@ __all__ = [
     "ProResearchJob",
     "ProPublishedResult",
     "ProResultPublisher",
+    "ProSameInputReuseGate",
     "ProScoringPipelineService",
     "ProSourceVerificationService",
     "ResearchMode",
+    "SameInputNoopResult",
     "ScanRunRecord",
     "ScanWindow",
     "FrozenClock",
@@ -53,4 +56,5 @@ __all__ = [
     "ResearchPacketBuilder",
     "ResearchPacketV1",
     "SystemClock",
+    "DeltaScoringReuseContext",
 ]

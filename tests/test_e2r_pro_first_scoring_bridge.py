@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -13,6 +14,7 @@ from e2r.pro_first.scoring.component_bridge import ProComponentMemoCompiler
 from e2r.pro_first.scoring.judge_bridge import ProEvidenceOnlyJudgeBridge
 from e2r.pro_first.scoring.scorer_bridge import ProCalibratedScorerBridge
 from e2r.pro_first.scoring.service import ProScoringPipelineService
+from e2r.pro_first.reuse import DeltaScoringReuseContext
 from e2r.pro_first.scoring.stagecourt_bridge import ProAtomicStageCourtBridge
 from e2r.pro_first.state_machine import TransitionContext
 from e2r.research_brain.researcher_mode.schemas import (
@@ -291,7 +293,13 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
                 encoding="utf-8",
             )
 
-    def _run_durable_pipeline(self, root: Path, provider):
+    def _run_durable_pipeline(
+        self,
+        root: Path,
+        provider,
+        *,
+        delta_reuse_context: DeltaScoringReuseContext | None = None,
+    ):
         return ProScoringPipelineService(self.store).run_job(
             self.job.job_id,
             job_root=root,
@@ -303,6 +311,7 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
             validity_evidence=passing_full_score_validity_evidence(
                 "PRO-FIRST-DURABLE-SCORING"
             ),
+            delta_reuse_context=delta_reuse_context,
         )
 
     def test_component_bridge_uses_verified_fact_ids(self) -> None:
@@ -505,6 +514,100 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
         self.assertEqual(resumed.job.status, JobStatus.FINAL.value)
         self.assertEqual(len(provider.requests), 21)
         self.assertEqual(fail_if_called.requests, [])
+
+    def test_delta_reopens_only_impacted_components(self) -> None:
+        prior_root = Path(self.temporary_directory.name) / "prior-full-job"
+        self._prepare_durable_component_job(prior_root)
+        prior_run = self._run_durable_pipeline(
+            prior_root,
+            _EvidenceOnlyProvider(),
+        )
+        prior_job = prior_run.job
+
+        candidate = self.store.create_candidate(
+            symbol=prior_job.symbol,
+            company_name=prior_job.company_name,
+            as_of_date=prior_job.as_of_date,
+            scan_window=ScanWindow.EVENING,
+            trigger_fingerprint="scoring-delta-trigger",
+            research_mode=ResearchMode.DELTA_RESEARCH,
+            selection_receipt={"production_candidate": True, "delta": True},
+        )
+        self.job = self.store.create_job(
+            candidate.candidate_id,
+            archetype_ids=(self.archetype_id,),
+        )
+        delta_root = Path(self.temporary_directory.name) / "delta-job"
+        self._prepare_durable_component_job(delta_root)
+        delta_fact = replace(
+            self.fact,
+            fact_id="EFACT-delta-pricing",
+            value=12,
+            source_ids=("PROSRC-delta-pricing",),
+            claim_ids=("C2",),
+            quote_ids=("PROQUOTE-delta-pricing",),
+        )
+        dossier = {**self._dossier(), "job_id": self.job.job_id}
+        dossier["component_research"]["bottleneck_pricing"][
+            "positive_fact_ids"
+        ].append("PROFACT-delta-pricing")
+        (delta_root / "import/research_dossier.normalized.json").write_text(
+            canonical_json(dossier) + "\n",
+            encoding="utf-8",
+        )
+        verification_root = delta_root / "verification"
+        rows_by_name = {
+            "evidence_facts.jsonl": (self.fact.to_dict(), delta_fact.to_dict()),
+            "source_verifications.jsonl": (
+                {
+                    "dossier_fact_id": "PROFACT-verified",
+                    "status": "ACCEPTED_CURRENT",
+                    "compiled_claim_id": "C1",
+                },
+                {
+                    "dossier_fact_id": "PROFACT-delta-pricing",
+                    "status": "ACCEPTED_CURRENT",
+                    "compiled_claim_id": "C2",
+                },
+            ),
+            "claim_fact_links.jsonl": (
+                {"claim_id": "C1", "fact_id": self.fact.fact_id},
+                {"claim_id": "C2", "fact_id": delta_fact.fact_id},
+            ),
+        }
+        for name, rows in rows_by_name.items():
+            (verification_root / name).write_text(
+                "".join(canonical_json(row) + "\n" for row in rows),
+                encoding="utf-8",
+            )
+        provider = _EvidenceOnlyProvider()
+        result = self._run_durable_pipeline(
+            delta_root,
+            provider,
+            delta_reuse_context=DeltaScoringReuseContext(
+                prior_job_id=prior_job.job_id,
+                prior_job_root=prior_root,
+                components_to_revisit=("bottleneck_pricing",),
+            ),
+        )
+
+        self.assertEqual(result.job.status, JobStatus.FINAL.value)
+        self.assertEqual(len(provider.requests), 3)
+        self.assertEqual(
+            {request["component_memo"]["component_id"] for request in provider.requests},
+            {"bottleneck_pricing"},
+        )
+        self.assertEqual(
+            result.reuse_receipt["recomputed_components"],
+            ["bottleneck_pricing"],
+        )
+        self.assertEqual(result.reuse_receipt["recomputed_component_count"], 1)
+        self.assertEqual(result.reuse_receipt["reused_component_count"], 6)
+        self.assertEqual(result.reuse_receipt["recomputed_judge_count"], 3)
+        self.assertEqual(result.reuse_receipt["reused_judge_count"], 18)
+        self.assertEqual(result.reuse_receipt["scoring_query_count"], 0)
+        self.assertEqual(result.reuse_receipt["scoring_fetch_count"], 0)
+        self.assertEqual(result.reuse_receipt["full_restart_count"], 0)
 
 
 if __name__ == "__main__":

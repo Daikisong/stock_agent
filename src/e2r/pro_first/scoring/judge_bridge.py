@@ -96,6 +96,7 @@ class ProEvidenceOnlyJudgeBridge:
         evidence_facts: Sequence[EvidenceFact],
         historical_anchors: Sequence[ComponentAnchor | Mapping[str, Any]],
         gap_decisions: Sequence[Mapping[str, Any]],
+        component_ids: Sequence[str] | None = None,
     ) -> JudgeBridgeResult:
         if self.provider is None:
             return JudgeBridgeResult(
@@ -107,6 +108,15 @@ class ProEvidenceOnlyJudgeBridge:
         by_component = {row.component_id: row for row in memos}
         if set(by_component) != set(CANONICAL_COMPONENT_ORDER) or len(memos) != 7:
             raise ValueError("judge bridge requires exactly seven component memos")
+        selected_components = (
+            tuple(CANONICAL_COMPONENT_ORDER)
+            if component_ids is None
+            else tuple(dict.fromkeys(str(value) for value in component_ids))
+        )
+        if not selected_components or not set(selected_components).issubset(
+            CANONICAL_COMPONENT_ORDER
+        ):
+            raise ValueError("judge bridge component subset is invalid")
         fact_by_id = {row.fact_id: row for row in evidence_facts}
         anchor_by_id = {
             _anchor_id(row): _anchor_dict(row)
@@ -116,6 +126,8 @@ class ProEvidenceOnlyJudgeBridge:
         decisions: list[ComponentJudgeDecision] = []
         receipts: list[JudgeCallReceipt] = []
         for component_id in CANONICAL_COMPONENT_ORDER:
+            if component_id not in set(selected_components):
+                continue
             memo = by_component[component_id]
             if not memo.research_complete:
                 return JudgeBridgeResult(
@@ -227,7 +239,11 @@ class ProEvidenceOnlyJudgeBridge:
                     )
                 )
         return JudgeBridgeResult(
-            status="JUDGING_COMPLETE",
+            status=(
+                "JUDGING_COMPLETE"
+                if len(selected_components) == 7
+                else "JUDGING_PARTIAL_COMPLETE"
+            ),
             decisions=tuple(decisions),
             call_receipts=tuple(receipts),
             pending_reasons=(),
