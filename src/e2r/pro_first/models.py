@@ -56,6 +56,76 @@ class ScanWindow(str, Enum):
 
 
 @dataclass(frozen=True)
+class ScanRunRecord:
+    scan_run_id: str
+    as_of_date: str
+    scan_window: str
+    window_key: str
+    status: str
+    scheduled_for: str
+    catchup: bool
+    receipt: Mapping[str, Any]
+    created_at: str
+    completed_at: str | None
+
+    def __post_init__(self) -> None:
+        _required(self.scan_run_id, "scan_run_id")
+        date.fromisoformat(self.as_of_date)
+        ScanWindow(self.scan_window)
+        _required(self.window_key, "window_key")
+        if self.status not in {"CLAIMED", "COMPLETED", "FAILED"}:
+            raise ValueError("unsupported scan run status")
+
+
+@dataclass(frozen=True)
+class CandidateSelectionReceipt:
+    schema_version: str
+    candidate_id: str
+    symbol: str
+    company_name: str
+    as_of_date: str
+    scan_window: str
+    trigger_ids: tuple[str, ...]
+    reason_codes: tuple[str, ...]
+    cheap_scan_total_score: float
+    candidate_archetypes: tuple[str, ...]
+    existing_dossier_id: str | None
+    research_mode: str
+    production_candidate: bool
+    test_injected: bool
+    final_score_visible_at_selection: bool = False
+    final_stage_visible_at_selection: bool = False
+
+    def __post_init__(self) -> None:
+        if self.schema_version != "e2r_pro_candidate_selection_v1":
+            raise ValueError("unsupported candidate selection schema")
+        _required(self.candidate_id, "candidate_id")
+        _required(self.symbol, "symbol")
+        _required(self.company_name, "company_name")
+        date.fromisoformat(self.as_of_date)
+        ScanWindow(self.scan_window)
+        ResearchMode(self.research_mode)
+        if self.final_score_visible_at_selection or self.final_stage_visible_at_selection:
+            raise ValueError("candidate selection must be blind to final score and Stage")
+        if not self.production_candidate or self.test_injected:
+            raise ValueError("only non-injected production candidates may be selected")
+        if not 0 <= self.cheap_scan_total_score <= 100:
+            raise ValueError("cheap scan priority score must be between 0 and 100")
+        object.__setattr__(self, "trigger_ids", tuple(dict.fromkeys(self.trigger_ids)))
+        object.__setattr__(self, "reason_codes", tuple(dict.fromkeys(self.reason_codes)))
+        object.__setattr__(
+            self, "candidate_archetypes", tuple(dict.fromkeys(self.candidate_archetypes))
+        )
+
+    def to_dict(self) -> Mapping[str, Any]:
+        payload = asdict(self)
+        payload["trigger_ids"] = list(self.trigger_ids)
+        payload["reason_codes"] = list(self.reason_codes)
+        payload["candidate_archetypes"] = list(self.candidate_archetypes)
+        return payload
+
+
+@dataclass(frozen=True)
 class CandidateRecord:
     candidate_id: str
     scan_run_id: str | None
@@ -180,10 +250,12 @@ def _required(value: str, label: str) -> None:
 
 __all__ = [
     "CandidateRecord",
+    "CandidateSelectionReceipt",
     "JobEvent",
     "JobStatus",
     "ProResearchJob",
     "ResearchMode",
+    "ScanRunRecord",
     "ScanWindow",
     "TERMINAL_JOB_STATUSES",
 ]

@@ -17,7 +17,15 @@ import sqlite3
 from typing import Any, Callable, Iterator, Mapping, Sequence
 
 from .ids import canonical_hash, canonical_json, stable_id
-from .models import CandidateRecord, JobEvent, JobStatus, ProResearchJob, ResearchMode, ScanWindow
+from .models import (
+    CandidateRecord,
+    JobEvent,
+    JobStatus,
+    ProResearchJob,
+    ResearchMode,
+    ScanRunRecord,
+    ScanWindow,
+)
 from .state_machine import NoProgressDetected, ProgressSnapshot, ProJobStateMachine, TransitionContext
 
 
@@ -70,6 +78,8 @@ CREATE TABLE IF NOT EXISTS pro_scan_runs (
     scan_window TEXT NOT NULL,
     window_key TEXT NOT NULL UNIQUE,
     status TEXT NOT NULL,
+    scheduled_for TEXT NOT NULL,
+    catchup INTEGER NOT NULL CHECK (catchup IN (0, 1)),
     receipt_json TEXT NOT NULL DEFAULT '{}',
     created_at TEXT NOT NULL,
     completed_at TEXT
@@ -91,7 +101,7 @@ CREATE TABLE IF NOT EXISTS pro_candidates (
 
 CREATE TABLE IF NOT EXISTS pro_research_jobs (
     job_id TEXT PRIMARY KEY,
-    candidate_id TEXT NOT NULL REFERENCES pro_candidates(candidate_id),
+    candidate_id TEXT NOT NULL UNIQUE REFERENCES pro_candidates(candidate_id),
     symbol TEXT NOT NULL,
     company_name TEXT NOT NULL,
     as_of_date TEXT NOT NULL,
@@ -301,6 +311,85 @@ class ProFirstJobStore:
                 "busy_timeout": int(connection.execute("PRAGMA busy_timeout").fetchone()[0]),
             }
 
+    def claim_scan_run(
+        self,
+        *,
+        as_of_date: str,
+        scan_window: str | ScanWindow,
+        scheduled_for: str,
+        catchup: bool,
+    ) -> ScanRunRecord | None:
+        window = ScanWindow(scan_window).value
+        window_key = f"{as_of_date}:{window}"
+        scan_run_id = stable_id("SCAN", {"window_key": window_key})
+        created_at = self._now_text()
+        with self._transaction() as connection:
+            try:
+                connection.execute(
+                    """
+                    INSERT INTO pro_scan_runs (
+                        scan_run_id, as_of_date, scan_window, window_key, status,
+                        scheduled_for, catchup, receipt_json, created_at
+                    ) VALUES (?, ?, ?, ?, 'CLAIMED', ?, ?, '{}', ?)
+                    """,
+                    (
+                        scan_run_id,
+                        as_of_date,
+                        window,
+                        window_key,
+                        scheduled_for,
+                        int(catchup),
+                        created_at,
+                    ),
+                )
+            except sqlite3.IntegrityError as error:
+                if "window_key" in str(error) or "UNIQUE constraint" in str(error):
+                    return None
+                raise
+            row = connection.execute(
+                "SELECT * FROM pro_scan_runs WHERE scan_run_id=?", (scan_run_id,)
+            ).fetchone()
+        return self._scan_run_from_row(row)
+
+    def complete_scan_run(
+        self,
+        scan_run_id: str,
+        *,
+        receipt: Mapping[str, Any],
+        failed: bool = False,
+    ) -> ScanRunRecord:
+        completed_at = self._now_text()
+        with self._transaction() as connection:
+            cursor = connection.execute(
+                """
+                UPDATE pro_scan_runs
+                SET status=?, receipt_json=?, completed_at=?
+                WHERE scan_run_id=? AND status='CLAIMED'
+                """,
+                (
+                    "FAILED" if failed else "COMPLETED",
+                    canonical_json(receipt),
+                    completed_at,
+                    scan_run_id,
+                ),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict("scan run was already completed or does not exist")
+            row = connection.execute(
+                "SELECT * FROM pro_scan_runs WHERE scan_run_id=?", (scan_run_id,)
+            ).fetchone()
+        return self._scan_run_from_row(row)
+
+    def get_scan_run_by_window(
+        self, as_of_date: str, scan_window: str | ScanWindow
+    ) -> ScanRunRecord | None:
+        window_key = f"{as_of_date}:{ScanWindow(scan_window).value}"
+        with self._connect() as connection:
+            row = connection.execute(
+                "SELECT * FROM pro_scan_runs WHERE window_key=?", (window_key,)
+            ).fetchone()
+        return None if row is None else self._scan_run_from_row(row)
+
     def create_candidate(
         self,
         *,
@@ -320,7 +409,6 @@ class ProFirstJobStore:
         identity = {
             "symbol": symbol,
             "as_of_date": as_of_date,
-            "scan_window": window,
             "trigger_fingerprint": trigger_fingerprint,
             "mode": mode,
         }
@@ -341,29 +429,54 @@ class ProFirstJobStore:
             created_at=created_at,
         )
         with self._transaction() as connection:
-            connection.execute(
-                """
-                INSERT INTO pro_candidates (
-                    candidate_id, scan_run_id, symbol, company_name, as_of_date,
-                    scan_window, trigger_fingerprint, research_mode, dedupe_key,
-                    selection_receipt_json, created_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """,
-                (
-                    record.candidate_id,
-                    record.scan_run_id,
-                    record.symbol,
-                    record.company_name,
-                    record.as_of_date,
-                    record.scan_window,
-                    record.trigger_fingerprint,
-                    record.research_mode,
-                    record.dedupe_key,
-                    canonical_json(record.selection_receipt),
-                    record.created_at,
-                ),
-            )
+            try:
+                connection.execute(
+                    """
+                    INSERT INTO pro_candidates (
+                        candidate_id, scan_run_id, symbol, company_name, as_of_date,
+                        scan_window, trigger_fingerprint, research_mode, dedupe_key,
+                        selection_receipt_json, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        record.candidate_id,
+                        record.scan_run_id,
+                        record.symbol,
+                        record.company_name,
+                        record.as_of_date,
+                        record.scan_window,
+                        record.trigger_fingerprint,
+                        record.research_mode,
+                        record.dedupe_key,
+                        canonical_json(record.selection_receipt),
+                        record.created_at,
+                    ),
+                )
+            except sqlite3.IntegrityError as error:
+                if "dedupe_key" not in str(error) and "UNIQUE constraint" not in str(error):
+                    raise
+                row = connection.execute(
+                    "SELECT * FROM pro_candidates WHERE dedupe_key=?", (dedupe_key,)
+                ).fetchone()
+                if row is None:
+                    raise
+                return self._candidate_from_row(row)
         return record
+
+    def get_candidate_by_dedupe(self, dedupe_key: str) -> CandidateRecord | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                "SELECT * FROM pro_candidates WHERE dedupe_key=?", (dedupe_key,)
+            ).fetchone()
+        return None if row is None else self._candidate_from_row(row)
+
+    def get_job_by_candidate(self, candidate_id: str) -> ProResearchJob | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                "SELECT * FROM pro_research_jobs WHERE candidate_id=? ORDER BY created_at LIMIT 1",
+                (candidate_id,),
+            ).fetchone()
+        return None if row is None else self._job_from_row(row)
 
     def create_job(
         self,
@@ -391,30 +504,40 @@ class ProFirstJobStore:
                 },
             )
             unique_archetypes = tuple(dict.fromkeys(str(value) for value in archetype_ids))
-            connection.execute(
-                """
-                INSERT INTO pro_research_jobs (
-                    job_id, candidate_id, symbol, company_name, as_of_date, mode,
-                    status, state_version, priority, archetype_ids_json,
-                    trigger_fingerprint, submit_count, capture_count, created_at,
-                    updated_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, 0, 0, ?, ?)
-                """,
-                (
-                    job_id,
-                    candidate_id,
-                    candidate_row["symbol"],
-                    candidate_row["company_name"],
-                    candidate_row["as_of_date"],
-                    candidate_row["research_mode"],
-                    JobStatus.CANDIDATE_SELECTED.value,
-                    priority,
-                    canonical_json(list(unique_archetypes)),
-                    candidate_row["trigger_fingerprint"],
-                    created_at,
-                    created_at,
-                ),
-            )
+            try:
+                connection.execute(
+                    """
+                    INSERT INTO pro_research_jobs (
+                        job_id, candidate_id, symbol, company_name, as_of_date, mode,
+                        status, state_version, priority, archetype_ids_json,
+                        trigger_fingerprint, submit_count, capture_count, created_at,
+                        updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, 0, 0, ?, ?)
+                    """,
+                    (
+                        job_id,
+                        candidate_id,
+                        candidate_row["symbol"],
+                        candidate_row["company_name"],
+                        candidate_row["as_of_date"],
+                        candidate_row["research_mode"],
+                        JobStatus.CANDIDATE_SELECTED.value,
+                        priority,
+                        canonical_json(list(unique_archetypes)),
+                        candidate_row["trigger_fingerprint"],
+                        created_at,
+                        created_at,
+                    ),
+                )
+            except sqlite3.IntegrityError as error:
+                if "UNIQUE constraint" not in str(error):
+                    raise
+                existing = connection.execute(
+                    "SELECT * FROM pro_research_jobs WHERE candidate_id=?", (candidate_id,)
+                ).fetchone()
+                if existing is None:
+                    raise
+                return self._job_from_row(existing)
             self._insert_event(
                 connection,
                 job_id=job_id,
@@ -852,6 +975,37 @@ class ProFirstJobStore:
         if parsed.tzinfo is None or parsed.utcoffset() is None:
             raise ApprovalInvalid("approval expiry must be timezone-aware")
         return parsed.astimezone(timezone.utc)
+
+    @staticmethod
+    def _scan_run_from_row(row: sqlite3.Row) -> ScanRunRecord:
+        return ScanRunRecord(
+            scan_run_id=row["scan_run_id"],
+            as_of_date=row["as_of_date"],
+            scan_window=row["scan_window"],
+            window_key=row["window_key"],
+            status=row["status"],
+            scheduled_for=row["scheduled_for"],
+            catchup=bool(row["catchup"]),
+            receipt=json.loads(row["receipt_json"]),
+            created_at=row["created_at"],
+            completed_at=row["completed_at"],
+        )
+
+    @staticmethod
+    def _candidate_from_row(row: sqlite3.Row) -> CandidateRecord:
+        return CandidateRecord(
+            candidate_id=row["candidate_id"],
+            scan_run_id=row["scan_run_id"],
+            symbol=row["symbol"],
+            company_name=row["company_name"],
+            as_of_date=row["as_of_date"],
+            scan_window=row["scan_window"],
+            trigger_fingerprint=row["trigger_fingerprint"],
+            research_mode=row["research_mode"],
+            dedupe_key=row["dedupe_key"],
+            selection_receipt=json.loads(row["selection_receipt_json"]),
+            created_at=row["created_at"],
+        )
 
     @staticmethod
     def _job_from_row(row: sqlite3.Row) -> ProResearchJob:
