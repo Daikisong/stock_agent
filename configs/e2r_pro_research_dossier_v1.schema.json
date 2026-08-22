@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://e2r.local/schema/e2r_pro_research_dossier_v1.schema.json",
+  "title": "E2R Pro Research Dossier V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "job_id",
+    "run_id",
+    "target",
+    "as_of_date",
+    "research_status",
+    "business_model",
+    "candidate_archetypes",
+    "material_facts",
+    "counterfacts",
+    "component_research",
+    "structured_metrics",
+    "unresolved_gaps",
+    "sources",
+    "research_saturation",
+    "proposed_score_ranges",
+    "score_authority",
+    "stage_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "e2r_pro_research_dossier_v1"},
+    "job_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "target": {
+      "type": "object",
+      "minProperties": 1,
+      "anyOf": [
+        {"required": ["target_id"]},
+        {"required": ["symbol"]}
+      ],
+      "properties": {
+        "target_id": {"type": "string", "minLength": 1},
+        "symbol": {"type": "string", "minLength": 1},
+        "company_name": {"type": "string"},
+        "aliases": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      },
+      "additionalProperties": true
+    },
+    "as_of_date": {"type": "string", "format": "date"},
+    "research_status": {"const": "COMPLETE"},
+    "business_model": {"type": "object"},
+    "candidate_archetypes": {
+      "type": "array",
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "material_facts": {"type": "array", "items": {"$ref": "#/$defs/fact"}},
+    "counterfacts": {"type": "array", "items": {"$ref": "#/$defs/fact"}},
+    "component_research": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing",
+        "market_mispricing",
+        "valuation_rerating",
+        "capital_allocation",
+        "information_confidence"
+      ],
+      "properties": {
+        "eps_fcf_explosion": {"type": "object"},
+        "earnings_visibility": {"type": "object"},
+        "bottleneck_pricing": {"type": "object"},
+        "market_mispricing": {"type": "object"},
+        "valuation_rerating": {"type": "object"},
+        "capital_allocation": {"type": "object"},
+        "information_confidence": {"type": "object"}
+      }
+    },
+    "structured_metrics": {"type": "object"},
+    "unresolved_gaps": {"type": "array", "items": {"type": "object"}},
+    "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+    "research_saturation": {"type": "object"},
+    "proposed_score_ranges": {"type": "object"},
+    "score_authority": {"const": false},
+    "stage_authority": {"const": false}
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "required": ["source_url"],
+      "properties": {
+        "source_id": {"type": "string"},
+        "source_url": {"type": "string", "format": "uri"},
+        "source_title": {"type": "string"},
+        "source_publisher": {"type": "string"},
+        "published_at": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "dossier_fact_id",
+        "statement",
+        "direction",
+        "subject",
+        "target_id",
+        "issuer_scoped",
+        "business_segment",
+        "product_family",
+        "economic_mechanism",
+        "predicate",
+        "value",
+        "unit",
+        "period",
+        "event_date",
+        "current_status",
+        "candidate_components",
+        "source_url",
+        "source_title",
+        "source_publisher",
+        "published_at",
+        "supporting_excerpt",
+        "confidence"
+      ],
+      "properties": {
+        "dossier_fact_id": {"type": "string", "pattern": "^PROFACT-[A-Za-z0-9._:-]+$"},
+        "statement": {"type": "string", "minLength": 1},
+        "direction": {"enum": ["POSITIVE", "COUNTER", "NEGATIVE", "NEUTRAL", "RESOLUTION"]},
+        "subject": {"type": "string", "minLength": 1},
+        "target_id": {"type": "string", "minLength": 1},
+        "issuer_scoped": {"type": "boolean"},
+        "business_segment": {"type": ["string", "null"]},
+        "product_family": {"type": ["string", "null"]},
+        "economic_mechanism": {"type": "string", "minLength": 1},
+        "predicate": {"type": "string", "minLength": 1},
+        "value": {},
+        "unit": {"type": ["string", "null"]},
+        "period": {"type": ["string", "null"]},
+        "event_date": {"type": ["string", "null"]},
+        "current_status": {"enum": ["CURRENT", "OPEN", "RESOLVED", "SUPERSEDED", "UNKNOWN"]},
+        "candidate_components": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "eps_fcf_explosion",
+              "earnings_visibility",
+              "bottleneck_pricing",
+              "market_mispricing",
+              "valuation_rerating",
+              "capital_allocation",
+              "information_confidence"
+            ]
+          }
+        },
+        "source_url": {"type": "string", "format": "uri"},
+        "source_title": {"type": "string"},
+        "source_publisher": {"type": "string"},
+        "published_at": {"type": ["string", "null"]},
+        "supporting_excerpt": {"type": "string", "minLength": 1},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    }
+  }
+}

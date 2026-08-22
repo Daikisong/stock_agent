@@ -138,7 +138,6 @@ class AtomicCaptureWriter:
             lines = block.splitlines()
             if len(lines) < 3 or not lines[-1].strip().startswith("```"):
                 raise ValueError("dossier code fence is incomplete")
-            block = "\n".join(lines[1:-1]).strip()
         if not block:
             raise ValueError("dossier sentinel block is empty")
         return block

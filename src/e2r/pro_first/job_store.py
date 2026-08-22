@@ -861,6 +861,109 @@ class ProFirstJobStore:
             result = self._require_job_row(connection, job_id)
         return self._job_from_row(result)
 
+    def record_dossier_import(
+        self,
+        job_id: str,
+        *,
+        expected_version: int,
+        dossier_id: str,
+        dossier_hash: str,
+        import_receipt: Mapping[str, Any],
+        actor: str,
+        idempotency_key: str,
+    ) -> ProResearchJob:
+        if len(dossier_hash) != 64:
+            raise ValueError("dossier_hash must be sha256")
+        if (
+            import_receipt.get("schema_version") != "e2r_pro_dossier_import_receipt_v1"
+            or import_receipt.get("job_id") != job_id
+            or import_receipt.get("normalized_dossier_hash") != dossier_hash
+            or import_receipt.get("validation_status") != "PASS"
+            or import_receipt.get("score_authority") is not False
+            or import_receipt.get("stage_authority") is not False
+            or import_receipt.get("evidence_promoted_count") != 0
+            or len(import_receipt.get("component_ids") or ()) != 7
+        ):
+            raise ValueError("invalid dossier import receipt")
+        payload = {
+            "dossier_id": dossier_id,
+            "dossier_hash": dossier_hash,
+            "import_receipt_hash": canonical_hash(import_receipt),
+        }
+        with self._transaction() as connection:
+            if self._existing_idempotent_event(
+                connection,
+                job_id,
+                idempotency_key,
+                JobStatus.DOSSIER_IMPORTED,
+                payload,
+            ):
+                return self._job_from_row(self._require_job_row(connection, job_id))
+            row = self._require_job_row(connection, job_id)
+            self._require_version(row, expected_version)
+            source = JobStatus(row["status"])
+            if source is not JobStatus.IMPORTING:
+                raise ValueError("dossier import may only close IMPORTING")
+            self.state_machine.validate(
+                source,
+                JobStatus.DOSSIER_IMPORTED,
+                context=TransitionContext(dossier_validated=True),
+            )
+            created_at = self._now_text()
+            connection.execute(
+                """
+                INSERT INTO pro_dossier_imports (
+                    dossier_id, job_id, schema_version, dossier_hash,
+                    import_receipt_json, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    dossier_id,
+                    job_id,
+                    "e2r_pro_research_dossier_v1",
+                    dossier_hash,
+                    canonical_json(import_receipt),
+                    created_at,
+                ),
+            )
+            cursor = connection.execute(
+                """
+                UPDATE pro_research_jobs
+                SET status=?, dossier_id=?, last_error_class=NULL,
+                    last_error_message=NULL, state_version=state_version+1, updated_at=?
+                WHERE job_id=? AND state_version=?
+                """,
+                (
+                    JobStatus.DOSSIER_IMPORTED.value,
+                    dossier_id,
+                    created_at,
+                    job_id,
+                    expected_version,
+                ),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict(f"dossier import changed concurrently: {job_id}")
+            self._insert_event(
+                connection,
+                job_id=job_id,
+                from_status=source,
+                to_status=JobStatus.DOSSIER_IMPORTED,
+                actor=actor,
+                idempotency_key=idempotency_key,
+                payload=payload,
+                created_at=created_at,
+            )
+            result = self._require_job_row(connection, job_id)
+        return self._job_from_row(result)
+
+    def get_dossier_import_receipt(self, job_id: str) -> Mapping[str, Any] | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                "SELECT import_receipt_json FROM pro_dossier_imports WHERE job_id=?",
+                (job_id,),
+            ).fetchone()
+        return None if row is None else json.loads(row["import_receipt_json"])
+
     def list_events(self, job_id: str) -> tuple[JobEvent, ...]:
         with self._connect() as connection:
             rows = connection.execute(

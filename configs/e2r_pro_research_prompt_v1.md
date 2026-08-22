@@ -16,10 +16,31 @@
 10. 같은 사실을 여러 기사로 중복 계산하지 않는 source lineage
 11. 확인하지 못한 사항을 ABSENT로 단정하지 않는 명시적 UNKNOWN 처리
 12. 최종 score와 Stage를 결정하거나 제안하지 않는 것
+13. 매수·매도·비중 조절 같은 투자 권고를 출력하지 않는 것
 
 공식 공시·issuer IR·고객/파트너 공식 자료를 우선하고, 모든 인용은 as_of_date를 넘지 않아야 한다. LLM 추론만으로 material fact를 만들지 마라.
 
 보고서 마지막에 아래 두 marker 사이에 `e2r_pro_research_dossier_v1` JSON 객체를 정확히 하나 출력하라.
+
+JSON 최상위에는 다음 필드를 모두 둔다.
+
+`schema_version`, `job_id`, `run_id`, `target`, `as_of_date`, `research_status`,
+`business_model`, `candidate_archetypes`, `material_facts`, `counterfacts`,
+`component_research`, `structured_metrics`, `unresolved_gaps`, `sources`,
+`research_saturation`, `proposed_score_ranges`, `score_authority`, `stage_authority`.
+
+- `target.target_id`는 packet의 symbol과 같게 한다.
+- `research_status`는 `COMPLETE`, `score_authority`와 `stage_authority`는 반드시 `false`다.
+- `component_research`에는 정확히 `eps_fcf_explosion`, `earnings_visibility`,
+  `bottleneck_pricing`, `market_mispricing`, `valuation_rerating`,
+  `capital_allocation`, `information_confidence` 7개 key를 모두 둔다.
+- 각 `material_facts`/`counterfacts` 항목에는 `dossier_fact_id`, `statement`,
+  `direction`, `subject`, `target_id`, `issuer_scoped`, `business_segment`,
+  `product_family`, `economic_mechanism`, `predicate`, `value`, `unit`, `period`,
+  `event_date`, `current_status`, `candidate_components`, `source_url`,
+  `source_title`, `source_publisher`, `published_at`, `supporting_excerpt`,
+  `confidence`를 모두 둔다.
+- `sources`의 각 항목에는 최소한 `source_url`을 둔다.
 
 E2R_RESEARCH_DOSSIER_JSON_BEGIN
 ```json

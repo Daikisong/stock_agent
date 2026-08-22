@@ -21,7 +21,15 @@ def _mock_report(*, job_id: str, run_id: str, target_id: str, as_of_date: str) -
         "candidate_archetypes": [],
         "material_facts": [],
         "counterfacts": [],
-        "component_research": {},
+        "component_research": {
+            "eps_fcf_explosion": {},
+            "earnings_visibility": {},
+            "bottleneck_pricing": {},
+            "market_mispricing": {},
+            "valuation_rerating": {},
+            "capital_allocation": {},
+            "information_confidence": {},
+        },
         "structured_metrics": {},
         "unresolved_gaps": [],
         "sources": [],
@@ -86,7 +94,11 @@ def render_mock_chatgpt(
         run_id: context.run_id, target: {{target_id: context.target_id}},
         as_of_date: context.as_of_date, research_status: 'COMPLETE', business_model: {{}},
         candidate_archetypes: [], material_facts: [], counterfacts: [],
-        component_research: {{}}, structured_metrics: {{}}, unresolved_gaps: [],
+        component_research: {{
+          eps_fcf_explosion: {{}}, earnings_visibility: {{}}, bottleneck_pricing: {{}},
+          market_mispricing: {{}}, valuation_rerating: {{}}, capital_allocation: {{}},
+          information_confidence: {{}}
+        }}, structured_metrics: {{}}, unresolved_gaps: [],
         sources: [], research_saturation: {{}}, proposed_score_ranges: {{}},
         score_authority: false, stage_authority: false
       }};
