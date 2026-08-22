@@ -132,6 +132,8 @@ class ProDossierImporter:
                     run_id=receipt.run_id,
                     target_id=job.symbol,
                     as_of_date=job.as_of_date,
+                    conversation_id=receipt.conversation_id,
+                    candidate_archetype_ids=job.archetype_ids,
                 ),
             )
             normalized = self.normalizer.normalize(adapted.payload)
@@ -141,6 +143,7 @@ class ProDossierImporter:
             )
             import_receipt: Mapping[str, Any] = {
                 "schema_version": "e2r_pro_dossier_import_receipt_v1",
+                "dossier_schema_version": validation.schema_version,
                 "validation_status": "PASS",
                 "job_id": job_id,
                 "run_id": receipt.run_id,
@@ -162,6 +165,15 @@ class ProDossierImporter:
                 "fact_count": len(validation.fact_ids),
                 "source_urls": list(validation.source_urls),
                 "component_ids": list(validation.component_ids),
+                "conversation_id": validation.conversation_id,
+                "research_pass_id": validation.research_pass_id,
+                "selected_archetype_ids": list(validation.selected_archetype_ids),
+                "question_family_ids": list(validation.question_family_ids),
+                "question_family_count": len(validation.question_family_ids),
+                "search_route_receipt_ids": list(
+                    validation.search_route_receipt_ids
+                ),
+                "research_status": validation.research_status,
                 "score_authority": False,
                 "stage_authority": False,
                 "evidence_promoted_count": 0,

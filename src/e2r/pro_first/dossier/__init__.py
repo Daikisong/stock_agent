@@ -1,4 +1,4 @@
-"""Strict ResearchDossierV1 parsing, validation, normalization, and import."""
+"""Strict ResearchDossier V1/V2 parsing, validation, normalization, and import."""
 
 from .importer import DossierImportResult, ProDossierImporter
 from .dialect_adapter import (
@@ -14,20 +14,36 @@ from .validator import (
     DossierValidationError,
     ResearchDossierValidator,
 )
+from .v2 import (
+    AvailabilityClass,
+    DossierV2ClosureSummary,
+    QuestionStatus,
+    ResearchPassName,
+    compile_dossier_v2_closure_summary,
+    validate_research_status,
+    validate_route_bindings,
+)
 
 __all__ = [
     "CANONICAL_COMPONENT_IDS",
     "AdaptedDossier",
+    "AvailabilityClass",
     "DossierDialectError",
     "DossierImportResult",
     "DossierParseError",
     "DossierValidationContext",
     "DossierValidationError",
+    "DossierV2ClosureSummary",
     "NormalizedDossier",
     "ParsedDossier",
     "ProDossierImporter",
+    "QuestionStatus",
     "ResearchDossierNormalizer",
     "ResearchDossierDialectAdapter",
     "ResearchDossierParser",
     "ResearchDossierValidator",
+    "ResearchPassName",
+    "compile_dossier_v2_closure_summary",
+    "validate_research_status",
+    "validate_route_bindings",
 ]

@@ -55,6 +55,19 @@ Terminal: `SUPPORTED_SCORING`, `PARTIALLY_SUPPORTED_SCORING`, `SUPPORTED_NON_SCO
 
 Non-terminal: `PUBLIC_SEARCHABLE`, `UNKNOWN_ROUTE_NOT_YET_TESTED`, `CONTRADICTED_UNRESOLVED`, `SOURCE_PENDING`, `PROVIDER_PENDING`, `PARSER_PENDING`, `VERIFIER_REPAIR_REQUIRED`
 
+## ResearchDossierV2 출력 계약
+
+최상위 필드: `schema_version`, `job_id`, `run_id`, `conversation_id`, `research_pass_id`, `parent_pass_id`, `target`, `as_of_date`, `candidate_archetypes`, `selected_archetypes`, `research_status`, `business_model`, `material_facts`, `counterfacts`, `resolution_facts`, `question_family_results`, `component_research`, `structured_metrics`, `unresolved_gaps`, `source_lineages`, `search_route_receipts`, `research_passes`, `research_saturation`, `verification_repair_register`, `proposed_score_ranges`, `score_authority`, `stage_authority`를 모두 둔다.
+
+각 question result에는 `archetype_id`, `question_family_id`, `status`, `support_fact_ids`, `counter_fact_ids`, `resolution_fact_ids`, `attempted_source_role_ids`, `search_route_receipt_ids`, `required_source_roles_satisfied`, `required_source_roles_missing`, `availability_class`, `affected_component_ids`, materiality boolean 3개, `closure_reason`, `adequate_search_proven`을 둔다.
+
+각 route receipt에는 실제 수행한 `route_receipt_id`, `pass_id`, `archetype_id`, `question_family_id`, `gap_id`, `source_role_id`, navigation objective/query, result/opened URL/fact/rejection rosters, provider status, no-new-route reason, performed_at만 기록한다. hidden reasoning은 기록하지 않는다.
+
+`proposed_score_ranges`는 빈 배열 `[]`, `score_authority`와 `stage_authority`는 `false`다.
+
+JSON은 `E2R_RESEARCH_DOSSIER_JSON_BEGIN`과 `E2R_RESEARCH_DOSSIER_JSON_END` 사이에 정확히 하나 출력한다.
+최종 응답에는 `[[E2R_PRO_RUN_ID:PROMPT-SNAPSHOT-RUN-C06_HBM_MEMORY_CUSTOMER_CAPACITY]]`와 `[[E2R_PRO_JOB_ID:PROMPT-SNAPSHOT-C06_HBM_MEMORY_CUSTOMER_CAPACITY]]` marker를 각각 정확히 한 번 출력한다.
+
 ## 선택된 primary research contracts
 
 ### `C06_HBM_MEMORY_CUSTOMER_CAPACITY`

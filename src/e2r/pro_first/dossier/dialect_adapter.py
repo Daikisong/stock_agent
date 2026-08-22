@@ -91,6 +91,21 @@ class ResearchDossierDialectAdapter:
     def adapt(self, payload: Mapping[str, Any]) -> AdaptedDossier:
         before_hash = canonical_hash(payload)
         adapted = deepcopy(dict(payload))
+        if adapted.get("schema_version") == "e2r_pro_research_dossier_v2":
+            for collection in ("material_facts", "counterfacts", "resolution_facts"):
+                for fact in adapted.get(collection) or ():
+                    fact_id = str((fact or {}).get("dossier_fact_id") or "")
+                    if not fact_id.startswith("PROFACT-"):
+                        raise DossierDialectError(
+                            "V2 dossier fact ids must already use the canonical PROFACT prefix"
+                        )
+            return AdaptedDossier(
+                payload=adapted,
+                before_hash=before_hash,
+                after_hash=canonical_hash(adapted),
+                operations=("V2_CANONICAL_DIALECT_NO_LEGACY_REWRITE",),
+                id_map={},
+            )
         protected_before = _protected_fact_values(adapted)
         fact_count_before = _fact_count(adapted)
         operations: list[str] = []
@@ -313,14 +328,17 @@ def _legacy_identifier_strings(value: Any) -> set[str]:
 def _protected_fact_values(payload: Mapping[str, Any]) -> tuple[tuple[Any, ...], ...]:
     return tuple(
         tuple(deepcopy(fact.get(key)) for key in _PROTECTED_FACT_FIELDS)
-        for collection in ("material_facts", "counterfacts")
+        for collection in ("material_facts", "counterfacts", "resolution_facts")
         for fact in payload.get(collection) or ()
         if isinstance(fact, Mapping)
     )
 
 
 def _fact_count(payload: Mapping[str, Any]) -> int:
-    return sum(len(payload.get(key) or ()) for key in ("material_facts", "counterfacts"))
+    return sum(
+        len(payload.get(key) or ())
+        for key in ("material_facts", "counterfacts", "resolution_facts")
+    )
 
 
 __all__ = [

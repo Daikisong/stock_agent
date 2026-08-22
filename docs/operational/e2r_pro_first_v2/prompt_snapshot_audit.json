@@ -1,5 +1,5 @@
 {
-  "audit_hash": "0302ad485d3288687e0897eb5c5f4b51936a51815580567ceaac8aa370aa2d35",
+  "audit_hash": "1227e5d07cbdc73f75c5de72b572d2f1d3bc1ac09e0ce083ec80bd374f4a6d79",
   "canonical_contract_count": 36,
   "critical_count": 0,
   "cross_guard_prompt_snapshot_count": 4,
@@ -15,7 +15,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "b6e6aa19fa739b4c5d56f5fccfb09b64d1984ddbb763c1c69c9af8afb47a8b11",
+      "prompt_hash": "a2eaedde1adcbff323c8bbac2d461f66ca5ceb7e9f1c2e6c3ba6ac7ffd42d92e",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C01_ORDER_BACKLOG_MARGIN_BRIDGE.md"
     },
     {
@@ -24,7 +24,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "e5c0f43afa8f74eea377f2f0995a9067349160d3cfa382d7915a5bf2c3c8396e",
+      "prompt_hash": "4ebbab6cac1d44fe90dd92bd5b066397c6b56d9b982deaa5d0d969e516c268ef",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C02_POWER_GRID_DATACENTER_CAPEX.md"
     },
     {
@@ -33,7 +33,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "3f8c7074a819bb5631c8215ee5c7972d661e9454a760065d2032c19ef959b95d",
+      "prompt_hash": "7597c0639f3c7786dd35f452a0dc58da6f73b79e91493dc1a58572da0df8843f",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG.md"
     },
     {
@@ -42,7 +42,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "47c245cdb3270d87c1249d58e0f6ce714b01a6b41a42bd5e608bb4185249291d",
+      "prompt_hash": "9055a2b0eb623842bbed52e173271a3e25293fb23ca50d648802d24341257135",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY.md"
     },
     {
@@ -51,7 +51,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "78ada6b81f504e8e471163e0bdf7fcb3b1f4d186ba1d2014b8cb65b25ccbff5f",
+      "prompt_hash": "12674b814d0528d4ea7f21f3a14b17adfe06e73c78eb2cefaa23eaa3d539cadd",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C05_EPC_MEGA_CONTRACT_MARGIN_GAP.md"
     },
     {
@@ -60,7 +60,7 @@
       "mandatory_question_count": 8,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "9abdd2eaa748ac8cf3aae6b5d36f7a86e2090c4c4ef77a7d9c10aa2f6022e948",
+      "prompt_hash": "862d8350d0f65d8559589368b4ae5ed4c46340717379db6eaf9da1fecdf527c0",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C06_HBM_MEMORY_CUSTOMER_CAPACITY.md"
     },
     {
@@ -69,7 +69,7 @@
       "mandatory_question_count": 8,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "30bb3ff9792778dd8187659fbdbc6e8b57764315c48fb24a6c86746bba5027d6",
+      "prompt_hash": "69e2f37a7dd07b4b6a6a59b7086a2fe5cdf1d368e0860a60086031c036eea2a2",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH.md"
     },
     {
@@ -78,7 +78,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "23eeebd7f7cbf8677cab778f8f0438b4332430be6c19db3cb794873853cea89d",
+      "prompt_hash": "eaffd92e13570901a7e1dd88f4a5d0b19073114f14be996c009b63f130a1427e",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY.md"
     },
     {
@@ -87,7 +87,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "6dd5f4be234bb301b6ea290958be5f492f36d55be06132f2ca3ef6532cb86673",
+      "prompt_hash": "b069899bf0b48ed82f2d0a15565aa8377a058ce20491cfe56bc71986949b4a8c",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF.md"
     },
     {
@@ -96,7 +96,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "1ff8c6b6fdc1a8c7d3c0d22c894dc1cb217c229b005eef55f49bc276bef488c8",
+      "prompt_hash": "f3a364072a271624dfbef51260ce316c0e8c2e4bd8e8ffe76e1bfe52d9c5465c",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE.md"
     },
     {
@@ -105,7 +105,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "59578099c040e39a7fffc1c2db2215e6e2a919e6cf56a48f38130229085e7831",
+      "prompt_hash": "c36db5a78ccb313f7d223356c3647d6ef6cddee0c9c7442d41e9eea3309d6981",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C11_BATTERY_ORDERBOOK_RERATING.md"
     },
     {
@@ -114,7 +114,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "f9a9daf90fc123e7ba813a9eaacf12798293ee4faec3fb5b948e878840e5be13",
+      "prompt_hash": "0ad464af3ec0b3235e57fb296fb0320b2c52a9800920fd95d6162e58553047c9",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK.md"
     },
     {
@@ -123,7 +123,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "88ea0ded1045eea992d0751f243ec3d51f07ae94e584f911c979a2c315c452f2",
+      "prompt_hash": "db52d594ae38851d4ce1e98e713b14de2a155b63f81e68014dd24be9b9853a0b",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C13_BATTERY_JV_UTILIZATION_AMPC_IRA.md"
     },
     {
@@ -132,7 +132,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "d58030a5f4040606d608ce79c8534cdae7e572afee7ef6413ec7bd226062de06",
+      "prompt_hash": "cca8c602fe447ae97a0caef96ead04710e8bdd2fc916684fe31e26061e10172c",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C14_EV_DEMAND_SLOWDOWN_4B_4C.md"
     },
     {
@@ -141,7 +141,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "2de626bf5ae02c90ae466e81c1391be6f3a7fd93179f8e6e198710f7164077c1",
+      "prompt_hash": "efd49e8de065350f255df593a8a9f472fa4001b982e406f51c8e1dc97dcd6166",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C15_MATERIAL_SPREAD_SUPERCYCLE.md"
     },
     {
@@ -150,7 +150,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "8adc401e1987383cf1a80230f4aa00af10c66815d1a7c4b7e92ec97096e8bd95",
+      "prompt_hash": "d155cd4d5d5ca1d3cd965d324e5fe84057b8879075c7c7897e43dc70f62741a0",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C16_STRATEGIC_RESOURCE_POLICY_SUPPLY.md"
     },
     {
@@ -159,7 +159,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "21ac59f2b9187d87a4f173893b1b3ccbbac63c0f9402cf86a35468f6914cb4fe",
+      "prompt_hash": "da3df107f44c38989c9da86eee5324975356c2457c2957f985f76ac99011bc4f",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C17_CHEMICAL_COMMODITY_MARGIN_SPREAD.md"
     },
     {
@@ -168,7 +168,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "75753c3bf32dd7032f2ae9fcae3b6d01d3744d90445f88e32a9ce2e5f1f22842",
+      "prompt_hash": "c16855b9e05a378621e741e34c40fe24d67d785ff7d131dffc3a4d78ec088019",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C18_CONSUMER_EXPORT_CHANNEL_REORDER.md"
     },
     {
@@ -177,7 +177,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "375ba0face05a5558a8f1c93931baef8306af961103a24eb96d804b7333384ad",
+      "prompt_hash": "d392839d324dbe5d3416c065fc9228eef31984e8cc984e320f7a419129c74ae9",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C19_BRAND_RETAIL_INVENTORY_MARGIN.md"
     },
     {
@@ -186,7 +186,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "d53234596734950d22abe3866ad0539600519a561a2e132023962727a9a90f46",
+      "prompt_hash": "c248960fdac12c1e89c34e71816e65c28ade259000d6e2d7b76ffc24738df924",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION.md"
     },
     {
@@ -195,7 +195,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "4c3877af78415522b7663d5bc87e8e1470777c43b8e386f530b510464bd05aeb",
+      "prompt_hash": "9c050750c92e94379c206ea4ad880abff099a84f224e0ca4ee596ccdcd605c12",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN.md"
     },
     {
@@ -204,7 +204,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "025baea66b58f3a51f3c8276e851b1adf49fc251de98c9846828776e85911ce7",
+      "prompt_hash": "2147c9075af0334a43b182a747bf585878dcd0229053fd36eeed275febabba60",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C22_INSURANCE_RATE_CYCLE_RESERVE.md"
     },
     {
@@ -213,7 +213,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "9c7ebe9b719727e9cabb98175c03ef8e025d35f7d0d5f07ae347b1a71a7ad38b",
+      "prompt_hash": "d65552502e47792295f57674f40307a99f4f19a0aa46649bb97173670861438f",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION.md"
     },
     {
@@ -222,7 +222,7 @@
       "mandatory_question_count": 8,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "b1467ca595f0e20892146110bf8509dbb1d6dd15b4b775266e5227cf93ad9cdc",
+      "prompt_hash": "9abc0301d31472681af1e0a690c6bebdc508f47fb5defccc9587b627a7049696",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C24_BIO_TRIAL_DATA_EVENT_RISK.md"
     },
     {
@@ -231,7 +231,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "da21df13da2225f9099653c58e64cf2a973dba5998581aa9da229e195d7fafb6",
+      "prompt_hash": "7a96f771e9dfd44c1f52a72c9182a6abc4d23077803ead8c3517a22531ba3346",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT.md"
     },
     {
@@ -240,7 +240,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "af959f287a865d2ce704a31842de1eeee8f2cac3cdb54d8f0287e54747bfd10f",
+      "prompt_hash": "1d8def1865f6e676dddcd0b19274d8226dfa86a0471269d389a02330c1906bb2",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE.md"
     },
     {
@@ -249,7 +249,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "41691a6f40547fa1d6c0b95c2d2e6b68c92d5adb9a70eec66c898f4543c9f557",
+      "prompt_hash": "b8ac1f1cc49f05997ba6d801afbd807db806873f7a31cb3915ea855702f1bed9",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C27_CONTENT_IP_GLOBAL_MONETIZATION.md"
     },
     {
@@ -258,7 +258,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "44dfbbd19efc7f6f12cc31a89552105c60717b6a9c83ccf95be7429097a45394",
+      "prompt_hash": "9997ba2280808c35c8df9b2245b9cf4fbc7ea1c65bd27a71d32d04c0df9117bf",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C28_SOFTWARE_SECURITY_CONTRACT_RETENTION.md"
     },
     {
@@ -267,7 +267,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "49a1f0bbda9ced55d40f9e4cabcc3afed7a7c00d09490fd87ba249ab7a071e31",
+      "prompt_hash": "60aeaa1b17ea554026e58e508dc656c7e875137cca3de7309499f7c609a481c3",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE.md"
     },
     {
@@ -276,7 +276,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "654d224a026ae0092c59a80ac36879572e0ffaa834735cff6fed25478157c700",
+      "prompt_hash": "553f18e4bc125a27d1ef1f2b9980ce49952deac7a92625a81bf4dfbd260dcb46",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK.md"
     },
     {
@@ -285,7 +285,7 @@
       "mandatory_question_count": 7,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "36dc138071755d33be958e6ead8cee2e508a0d14659b6b053b5f3a59d5868e23",
+      "prompt_hash": "0189fed63af6f5d53aa8187cc6c7c1ffb4cbc04c0c8375e755693b207352a28b",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C31_POLICY_SUBSIDY_LEGISLATION_EVENT.md"
     },
     {
@@ -294,7 +294,7 @@
       "mandatory_question_count": 6,
       "missing_question_count": 0,
       "polluted_by_archetype_ids": [],
-      "prompt_hash": "65a016dc4ca905a1cc9a4ab01465995a05cc3253b9e245b8c73f91f9f12f0973",
+      "prompt_hash": "480bdbedd6e2c722476e6d2687804f80369abf23537f85afbc12ef137dd0d956",
       "snapshot_path": "docs/operational/e2r_pro_first_v2/prompt_snapshots/C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP.md"
     },
     {
