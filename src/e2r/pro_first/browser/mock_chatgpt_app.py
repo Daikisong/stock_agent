@@ -61,6 +61,7 @@ def render_mock_chatgpt(
     target_id: str = "123456",
     as_of_date: str = "2026-08-22",
     filename: str = "E2R_PRO_PROJOB-mock_123456_2026-08-22.md",
+    report_text: str | None = None,
 ) -> str:
     login = state == "LOGIN_REQUIRED"
     composer = "" if login else """
@@ -88,7 +89,9 @@ def render_mock_chatgpt(
     window.__submitCount = 0;
     window.__downloadClicks = [];
     const defaultContext = {json.dumps({"job_id": job_id, "run_id": run_id, "target_id": target_id, "as_of_date": as_of_date, "filename": filename})};
+    const suppliedReport = {json.dumps(report_text, ensure_ascii=False)};
     function reportText(context) {{
+      if (suppliedReport !== null) return suppliedReport;
       const dossier = {{
         schema_version: 'e2r_pro_research_dossier_v1', job_id: context.job_id,
         run_id: context.run_id, target: {{target_id: context.target_id}},
@@ -207,11 +210,16 @@ class _MockHandler(BaseHTTPRequestHandler):
                 report = b"%PDF-1.4\n% E2R mock PDF\n1 0 obj<<>>endobj\n%%EOF\n"
                 content_type = "application/pdf"
             else:
-                report = _mock_report(
-                    job_id=query.get("job_id", ["PROJOB-mock"])[0],
-                    run_id=query.get("run_id", ["PRORUN-mock"])[0],
-                    target_id=query.get("target_id", ["123456"])[0],
-                    as_of_date=query.get("as_of_date", ["2026-08-22"])[0],
+                supplied = getattr(self.server, "report_text", None)
+                report = (
+                    supplied
+                    if supplied is not None
+                    else _mock_report(
+                        job_id=query.get("job_id", ["PROJOB-mock"])[0],
+                        run_id=query.get("run_id", ["PRORUN-mock"])[0],
+                        target_id=query.get("target_id", ["123456"])[0],
+                        as_of_date=query.get("as_of_date", ["2026-08-22"])[0],
+                    )
                 ).encode("utf-8")
                 content_type = "text/markdown; charset=utf-8"
             self.send_response(200)
@@ -231,6 +239,7 @@ class _MockHandler(BaseHTTPRequestHandler):
             filename=query.get(
                 "filename", ["E2R_PRO_PROJOB-mock_123456_2026-08-22.md"]
             )[0],
+            report_text=getattr(self.server, "report_text", None),
         ).encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -243,8 +252,9 @@ class _MockHandler(BaseHTTPRequestHandler):
 
 
 class MockChatGPTServer(AbstractContextManager["MockChatGPTServer"]):
-    def __init__(self) -> None:
+    def __init__(self, *, report_text: str | None = None) -> None:
         self.server = ThreadingHTTPServer(("127.0.0.1", 0), _MockHandler)
+        self.server.report_text = report_text  # type: ignore[attr-defined]
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
 
     @property
@@ -254,6 +264,11 @@ class MockChatGPTServer(AbstractContextManager["MockChatGPTServer"]):
     def __enter__(self) -> "MockChatGPTServer":
         self.thread.start()
         return self
+
+    def set_report_text(self, report_text: str) -> None:
+        if not report_text.strip():
+            raise ValueError("mock report text must be nonempty")
+        self.server.report_text = report_text  # type: ignore[attr-defined]
 
     def __exit__(self, *_args: object) -> None:
         self.server.shutdown()

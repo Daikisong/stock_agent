@@ -1,0 +1,37 @@
+{
+  "schema_version": "e2r_pro_research_packet_v1",
+  "job_id": "PROJOB-171717171717171717171717",
+  "run_id": "PRORUN-171717171717171717171717",
+  "target": {
+    "symbol": "222222",
+    "company_name": "스프레드화학",
+    "aliases": ["Spread Chemical"]
+  },
+  "as_of_date": "2026-06-30",
+  "latest_trading_snapshot_date": "2026-06-30",
+  "research_mode": "FULL_RESEARCH",
+  "trigger_summary": [
+    {
+      "trigger_id": "TRIGGER-C17-GOLDEN",
+      "reason": "제품-원료 스프레드의 실제 마진 전환 검증 필요"
+    }
+  ],
+  "candidate_archetypes": ["C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"],
+  "business_snapshot": {"segments": ["CHEMICALS"], "products": ["CHEMICAL_PRODUCT"]},
+  "structured_financial_snapshot": {"period": "2026Q2", "source_status": "segment_actual_available"},
+  "revision_valuation_snapshot": {"snapshot_date": "2026-06-30"},
+  "existing_thesis_digest": null,
+  "historical_anchor_digest": [],
+  "known_positive_facts": [],
+  "known_counterfacts": [],
+  "research_objectives": [
+    "실현 판매가격과 원료비를 같은 기간으로 연결한다.",
+    "회계 마진 개선과 원재료 반전 위험을 함께 확인한다."
+  ],
+  "source_preferences": ["ISSUER_EARNINGS_RELEASE", "SEGMENT_DATA"],
+  "forbidden_inferences": ["상품가격 헤드라인만으로 발행사 마진 전환을 추정하지 않는다."],
+  "delta_context": null,
+  "output_contract": "e2r_pro_research_dossier_v1",
+  "score_authority": false,
+  "stage_authority": false
+}

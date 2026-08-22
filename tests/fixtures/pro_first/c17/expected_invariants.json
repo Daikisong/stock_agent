@@ -1,0 +1,17 @@
+{
+  "bundle_id": "C17_PRO_FIRST_GOLDEN_V1",
+  "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+  "accepted_fact_count": 3,
+  "accepted_counter_count": 1,
+  "gap_labels": [],
+  "nonzero_components": ["eps_fcf_explosion", "bottleneck_pricing"],
+  "supplemental_task_count": 0,
+  "full_restart_count": 0,
+  "decision_must_be_final": false,
+  "score_must_be_valid": false,
+  "source_documents": {
+    "https://issuer.example/c17-spread": "spread_bridge.txt",
+    "https://issuer.example/c17-margin": "margin_bridge.txt",
+    "https://issuer.example/c17-risk": "raw_material_risk.txt"
+  }
+}
