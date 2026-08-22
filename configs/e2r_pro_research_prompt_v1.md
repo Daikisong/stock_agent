@@ -29,5 +29,8 @@ E2R_RESEARCH_DOSSIER_JSON_END
 
 가능하면 동일 내용을 `{{OUTPUT_FILENAME}}` Markdown 파일로도 생성하라.
 
+완료 감지와 다른 작업의 결과 혼입 방지를 위해 최종 응답 본문에도 아래 두 marker를
+철자와 값을 바꾸지 말고 각각 정확히 한 번 출력하라.
+
 [[E2R_PRO_RUN_ID:{{RUN_ID}}]]
 [[E2R_PRO_JOB_ID:{{JOB_ID}}]]

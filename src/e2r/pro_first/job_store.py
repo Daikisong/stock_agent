@@ -726,6 +726,141 @@ class ProFirstJobStore:
             result = self._require_job_row(connection, job_id)
         return self._job_from_row(result)
 
+    def record_capture_complete(
+        self,
+        job_id: str,
+        *,
+        expected_version: int,
+        receipt: Mapping[str, Any],
+        artifacts: Sequence[Mapping[str, Any]],
+        actor: str,
+        idempotency_key: str,
+    ) -> ProResearchJob:
+        required_kinds = {"REPORT_MD", "DOSSIER_JSON", "CAPTURE_RECEIPT", "READY"}
+        artifact_kinds = {str(row.get("artifact_kind")) for row in artifacts}
+        if (
+            len(artifact_kinds) != len(artifacts)
+            or not required_kinds.issubset(artifact_kinds)
+            or not (artifact_kinds - required_kinds).issubset({"REPORT_PDF"})
+        ):
+            raise ValueError("capture completion requires MD, dossier, receipt, and READY artifacts")
+        if (
+            receipt.get("schema_version") != "e2r_pro_capture_receipt_v1"
+            or receipt.get("event_type") != "PRO_RESEARCH_CAPTURE_COMPLETE"
+        ):
+            raise ValueError("unsupported capture receipt identity")
+        artifacts_by_kind = {str(row["artifact_kind"]): row for row in artifacts}
+        if (
+            artifacts_by_kind["REPORT_MD"].get("content_hash")
+            != receipt.get("report_md_hash")
+            or artifacts_by_kind["DOSSIER_JSON"].get("content_hash")
+            != receipt.get("dossier_json_hash")
+        ):
+            raise ValueError("capture artifact hashes differ from the receipt")
+        if "REPORT_PDF" in artifacts_by_kind:
+            if artifacts_by_kind["REPORT_PDF"].get("content_hash") != receipt.get(
+                "report_pdf_hash"
+            ):
+                raise ValueError("capture PDF hash differs from the receipt")
+        elif receipt.get("report_pdf_hash") is not None:
+            raise ValueError("capture receipt declares a missing PDF artifact")
+        payload = {
+            "receipt_hash": canonical_hash(receipt),
+            "artifact_roster_hash": canonical_hash(list(artifacts)),
+            "capture_count": receipt.get("capture_count"),
+        }
+        with self._transaction() as connection:
+            if self._existing_idempotent_event(
+                connection,
+                job_id,
+                idempotency_key,
+                JobStatus.CAPTURE_COMPLETE,
+                payload,
+            ):
+                return self._job_from_row(self._require_job_row(connection, job_id))
+            row = self._require_job_row(connection, job_id)
+            self._require_version(row, expected_version)
+            source = JobStatus(row["status"])
+            self.state_machine.validate(source, JobStatus.CAPTURE_COMPLETE)
+            if source is not JobStatus.CAPTURING_ARTIFACTS:
+                raise ValueError("capture receipt may only close CAPTURING_ARTIFACTS")
+            bindings = {
+                "job_id": job_id,
+                "target_id": row["symbol"],
+                "as_of_date": row["as_of_date"],
+                "packet_hash": row["packet_hash"],
+                "prompt_hash": row["approval_prompt_hash"],
+                "conversation_id": row["conversation_id"],
+                "submit_count": row["submit_count"],
+                "capture_count": 1,
+            }
+            for key, expected in bindings.items():
+                if receipt.get(key) != expected:
+                    raise ValueError(f"capture receipt binding mismatch: {key}")
+            created_at = self._now_text()
+            for artifact in artifacts:
+                content_hash = str(artifact.get("content_hash", ""))
+                byte_count = int(artifact.get("byte_count", -1))
+                relative_path = str(artifact.get("relative_path", ""))
+                artifact_kind = str(artifact.get("artifact_kind", ""))
+                if len(content_hash) != 64 or byte_count < 0 or not relative_path:
+                    raise ValueError("invalid capture artifact record")
+                artifact_id = stable_id(
+                    "ARTIFACT",
+                    {
+                        "job_id": job_id,
+                        "artifact_kind": artifact_kind,
+                        "content_hash": content_hash,
+                    },
+                )
+                connection.execute(
+                    """
+                    INSERT INTO pro_artifacts (
+                        artifact_id, job_id, artifact_kind, relative_path,
+                        content_hash, byte_count, metadata_json, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        artifact_id,
+                        job_id,
+                        artifact_kind,
+                        relative_path,
+                        content_hash,
+                        byte_count,
+                        canonical_json(dict(artifact.get("metadata", {}))),
+                        created_at,
+                    ),
+                )
+            cursor = connection.execute(
+                """
+                UPDATE pro_research_jobs
+                SET status=?, capture_count=1, research_completed_at=?,
+                    state_version=state_version+1, updated_at=?
+                WHERE job_id=? AND state_version=? AND capture_count=0 AND submit_count=1
+                """,
+                (
+                    JobStatus.CAPTURE_COMPLETE.value,
+                    receipt["captured_at"],
+                    created_at,
+                    job_id,
+                    expected_version,
+                ),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict(f"capture was completed concurrently: {job_id}")
+            self._insert_event(
+                connection,
+                job_id=job_id,
+                from_status=source,
+                to_status=JobStatus.CAPTURE_COMPLETE,
+                actor=actor,
+                idempotency_key=idempotency_key,
+                payload=payload,
+                created_at=created_at,
+            )
+            result = self._require_job_row(connection, job_id)
+        return self._job_from_row(result)
+
     def list_events(self, job_id: str) -> tuple[JobEvent, ...]:
         with self._connect() as connection:
             rows = connection.execute(

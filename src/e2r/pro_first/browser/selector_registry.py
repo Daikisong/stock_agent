@@ -74,6 +74,13 @@ MD_CANDIDATE_SELECTORS = (
     '.entity-underline:has-text(".md")',
 )
 
+PDF_CANDIDATE_SELECTORS = (
+    'button:has-text(".pdf")',
+    'a:has-text(".pdf")',
+    '[data-testid*="behavior-btn"]:has-text(".pdf")',
+    '.entity-underline:has-text(".pdf")',
+)
+
 PREVIEW_ROOT_SELECTORS = (
     '[role="dialog"]',
     '[data-side-pane-shell-rail="true"]',
@@ -88,6 +95,22 @@ DOWNLOAD_SELECTORS = (
     'a[aria-label="Download"]',
     'button:has-text("다운로드")',
     'button:has-text("Download")',
+)
+
+ASSISTANT_TURN_SELECTORS = (
+    '[data-message-author-role="assistant"]',
+    'article[data-turn="assistant"]',
+    '[data-testid^="conversation-turn-"]:has([data-message-author-role="assistant"])',
+    '[data-e2r-role="assistant"]',
+)
+
+CITATION_SELECTORS = (
+    'a[href^="http://"]',
+    'a[href^="https://"]',
+    '[data-testid*="citation"]',
+    '[data-testid*="source"]',
+    'button:has-text("Sources")',
+    'button:has-text("출처")',
 )
 
 __all__ = [name for name in globals() if name.endswith("_SELECTORS")]

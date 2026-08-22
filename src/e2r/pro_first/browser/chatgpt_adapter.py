@@ -11,22 +11,30 @@ from ..ids import canonical_hash
 from .page_helpers import editor_text, first_existing, first_visible, locator_enabled
 from .protocol import (
     AttachmentKey,
+    BrowserCaptureRequest,
     BrowserInspection,
+    BrowserResultSnapshot,
     BrowserUIIncompatible,
     BrowserUIState,
     ManualLoginRequired,
     PreparedBrowserJob,
+    RawBrowserCapture,
     SubmitAuthorizationRequired,
 )
 from .selector_registry import (
+    ASSISTANT_TURN_SELECTORS,
     ATTACH_BUTTON_SELECTORS,
+    CITATION_SELECTORS,
     DEEP_RESEARCH_ACTIVE_SELECTORS,
     DEEP_RESEARCH_CONTROL_SELECTORS,
     DEEP_RESEARCH_OPTION_SELECTORS,
     EDITOR_SELECTORS,
     FILE_INPUT_SELECTORS,
     LOGIN_INDICATOR_SELECTORS,
+    DOWNLOAD_SELECTORS,
     MD_CANDIDATE_SELECTORS,
+    PDF_CANDIDATE_SELECTORS,
+    PREVIEW_ROOT_SELECTORS,
     SEND_SELECTORS,
     STOP_SELECTORS,
     TOOLS_BUTTON_SELECTORS,
@@ -40,6 +48,9 @@ class PlaywrightChatGPTWebAdapter:
         self.page = page
         self._uploaded_filename: str | None = None
         self._prepared_binding: dict[str, str] | None = None
+        self._preexisting_attachment_keys: frozenset[str] = frozenset()
+        self._prepared_job_id: str | None = None
+        self._prepared_run_id: str | None = None
         self._submit_attempted = False
 
     async def ensure_logged_in(self) -> BrowserInspection:
@@ -149,6 +160,9 @@ class PlaywrightChatGPTWebAdapter:
             "packet_hash": packet_hash,
             "prompt_hash": prompt_hash,
         }
+        self._preexisting_attachment_keys = frozenset(row.stable_key for row in preexisting)
+        self._prepared_job_id = self._marker_value(prompt, "E2R_PRO_JOB_ID")
+        self._prepared_run_id = self._marker_value(prompt, "E2R_PRO_RUN_ID")
         return PreparedBrowserJob(
             browser_session_id=browser_session_id,
             conversation_id=self.conversation_id(),
@@ -206,15 +220,27 @@ class PlaywrightChatGPTWebAdapter:
         send = await first_visible(self.page, SEND_SELECTORS)
         stop = await first_visible(self.page, STOP_SELECTORS)
         editor_value = await editor_text(editor) if editor is not None else ""
-        body_text = (await self.page.locator("body").inner_text()).lower()
+        body = self.page.locator("body")
+        body_text = (await body.inner_text()).lower()
+        mock_state = (await body.get_attribute("data-mock-state") or "").upper()
         packet_uploaded = bool(
             self._uploaded_filename and self._uploaded_filename.lower() in body_text
         )
         prompt_ready = bool(editor_value)
         if editor is None and (login is not None or "/auth/" in self.page.url):
             state = BrowserUIState.LOGIN_REQUIRED
+        elif mock_state == "CLARIFICATION" or any(
+            token in body_text
+            for token in ("before i start, please clarify", "시작하기 전에 확인", "need clarification")
+        ):
+            state = BrowserUIState.AWAITING_CLARIFICATION
         elif any(token in body_text for token in ("usage limit", "quota", "사용 한도", "한도에 도달")):
             state = BrowserUIState.QUOTA_PENDING
+        elif mock_state == "ERROR" or any(
+            token in body_text
+            for token in ("something went wrong", "network error", "오류가 발생", "다시 시도하세요")
+        ):
+            state = BrowserUIState.RETRYABLE_ERROR
         elif stop is not None:
             state = BrowserUIState.RESEARCH_RUNNING
         elif prompt_ready and packet_uploaded and deep_ready:
@@ -227,6 +253,14 @@ class PlaywrightChatGPTWebAdapter:
             state = BrowserUIState.READY_FOR_INPUT
         else:
             state = BrowserUIState.UI_INCOMPATIBLE
+        detail = None
+        if state in {
+            BrowserUIState.AWAITING_CLARIFICATION,
+            BrowserUIState.QUOTA_PENDING,
+            BrowserUIState.RETRYABLE_ERROR,
+            BrowserUIState.UI_INCOMPATIBLE,
+        }:
+            detail = (await body.inner_text()).strip()[-2_000:] or state.value
         return BrowserInspection(
             state=state,
             conversation_id=self.conversation_id(),
@@ -236,15 +270,129 @@ class PlaywrightChatGPTWebAdapter:
             prompt_ready=prompt_ready,
             send_ready=await locator_enabled(send),
             stop_visible=stop is not None,
+            detail=detail,
         )
 
-    async def capture_result(self, destination: str | Path) -> Any:
-        raise NotImplementedError("P6 owns completion detection and atomic capture")
+    async def inspect_result(self, *, job_id: str, run_id: str) -> BrowserResultSnapshot:
+        turns = await self._assistant_turns()
+        if not turns:
+            return BrowserResultSnapshot(
+                conversation_id=self.conversation_id(),
+                assistant_turn_id=None,
+                report_text="",
+                report_hash=canonical_hash({"report_text": "", "attachments": []}),
+                has_citations=False,
+                has_dossier_marker=False,
+                job_marker_matches=False,
+                run_marker_matches=False,
+                new_attachment_keys=(),
+            )
+        turn = turns[-1]
+        report_text = (await turn.inner_text()).strip()
+        turn_id = await self._turn_id(turn)
+        has_dossier = (
+            "E2R_RESEARCH_DOSSIER_JSON_BEGIN" in report_text
+            and "E2R_RESEARCH_DOSSIER_JSON_END" in report_text
+        )
+        citations = False
+        for selector in CITATION_SELECTORS:
+            if await turn.locator(selector).count() > 0:
+                citations = True
+                break
+        new_keys = tuple(key for key, _locator in await self._new_md_candidates())
+        report_hash = canonical_hash(
+            {
+                "conversation_id": self.conversation_id(),
+                "assistant_turn_id": turn_id,
+                "report_text": report_text,
+                "attachment_keys": [row.stable_key for row in new_keys],
+            }
+        )
+        return BrowserResultSnapshot(
+            conversation_id=self.conversation_id(),
+            assistant_turn_id=turn_id,
+            report_text=report_text,
+            report_hash=report_hash,
+            has_citations=citations,
+            has_dossier_marker=has_dossier,
+            job_marker_matches=f"[[E2R_PRO_JOB_ID:{job_id}]]" in report_text,
+            run_marker_matches=f"[[E2R_PRO_RUN_ID:{run_id}]]" in report_text,
+            new_attachment_keys=new_keys,
+        )
+
+    async def capture_result(self, request: BrowserCaptureRequest) -> RawBrowserCapture:
+        snapshot = await self.inspect_result(job_id=request.job_id, run_id=request.run_id)
+        if not snapshot.structurally_complete or snapshot.report_hash != request.expected_report_hash:
+            raise BrowserUIIncompatible("capture requires the same stable completed assistant result")
+        request.staging_directory.mkdir(parents=True, exist_ok=True)
+        part_path = request.staging_directory / "pro_report.md.part"
+        matching = [
+            (key, locator)
+            for key, locator in await self._new_md_candidates()
+            if key.button_text.strip() == request.expected_filename
+        ]
+        if matching:
+            key, locator = matching[-1]
+            download = await self._download_from_candidate(locator)
+            suggested = download.suggested_filename
+            if suggested.strip() != request.expected_filename:
+                raise BrowserUIIncompatible(
+                    f"downloaded filename mismatch: expected {request.expected_filename}, got {suggested}"
+                )
+            await download.save_as(str(part_path))
+            if not part_path.is_file() or part_path.stat().st_size == 0:
+                raise BrowserUIIncompatible("Playwright download produced an empty MD file")
+            source = "DOWNLOAD_MD"
+            downloaded_filename = suggested
+            attachment_key = key
+        else:
+            if not snapshot.has_dossier_marker:
+                raise BrowserUIIncompatible("no matching new MD and no complete direct report fallback")
+            part_path.write_text(snapshot.report_text + "\n", encoding="utf-8")
+            source = "DIRECT_REPORT_DOM"
+            downloaded_filename = None
+            attachment_key = None
+        expected_pdf = Path(request.expected_filename).with_suffix(".pdf").name
+        matching_pdf = [
+            (key, locator)
+            for key, locator in await self._new_pdf_candidates()
+            if key.button_text.strip() == expected_pdf
+        ]
+        pdf_part_path = None
+        downloaded_pdf_filename = None
+        optional_pdf_error = None
+        if matching_pdf:
+            try:
+                _pdf_key, pdf_locator = matching_pdf[-1]
+                pdf_download = await self._download_from_candidate(pdf_locator)
+                if pdf_download.suggested_filename.strip() != expected_pdf:
+                    raise BrowserUIIncompatible("optional PDF filename differs from the expected report")
+                pdf_part_path = request.staging_directory / "pro_report.pdf.part"
+                await pdf_download.save_as(str(pdf_part_path))
+                if not pdf_part_path.read_bytes().startswith(b"%PDF-"):
+                    pdf_part_path.unlink(missing_ok=True)
+                    raise BrowserUIIncompatible("optional PDF download has no PDF magic header")
+                downloaded_pdf_filename = pdf_download.suggested_filename
+            except Exception as error:
+                optional_pdf_error = f"{type(error).__name__}: {error}"
+                pdf_part_path = None
+                downloaded_pdf_filename = None
+        return RawBrowserCapture(
+            conversation_id=snapshot.conversation_id,
+            assistant_turn_id=snapshot.assistant_turn_id or "",
+            report_md_part_path=part_path,
+            source=source,
+            downloaded_filename=downloaded_filename,
+            attachment_key=attachment_key,
+            report_pdf_part_path=pdf_part_path,
+            downloaded_pdf_filename=downloaded_pdf_filename,
+            optional_pdf_error=optional_pdf_error,
+        )
 
     async def snapshot_attachment_keys(self) -> tuple[AttachmentKey, ...]:
         keys: list[AttachmentKey] = []
         conversation_id = self.conversation_id()
-        for selector in MD_CANDIDATE_SELECTORS:
+        for selector in (*MD_CANDIDATE_SELECTORS, *PDF_CANDIDATE_SELECTORS):
             locator = self.page.locator(selector)
             for index in range(await locator.count()):
                 item = locator.nth(index)
@@ -261,6 +409,109 @@ class PlaywrightChatGPTWebAdapter:
                 if key.stable_key not in {row.stable_key for row in keys}:
                     keys.append(key)
         return tuple(keys)
+
+    async def _new_md_candidates(self) -> list[tuple[AttachmentKey, Any]]:
+        return await self._new_file_candidates(MD_CANDIDATE_SELECTORS)
+
+    async def _new_pdf_candidates(self) -> list[tuple[AttachmentKey, Any]]:
+        return await self._new_file_candidates(PDF_CANDIDATE_SELECTORS)
+
+    async def _new_file_candidates(
+        self, selectors: tuple[str, ...]
+    ) -> list[tuple[AttachmentKey, Any]]:
+        candidates: list[tuple[AttachmentKey, Any]] = []
+        seen: set[str] = set()
+        for selector in selectors:
+            locator = self.page.locator(selector)
+            for index in range(await locator.count()):
+                item = locator.nth(index)
+                if not await item.is_visible():
+                    continue
+                key = AttachmentKey(
+                    self.conversation_id(),
+                    await self._turn_id(item),
+                    (await item.inner_text()).strip(),
+                )
+                if key.stable_key in self._preexisting_attachment_keys or key.stable_key in seen:
+                    continue
+                seen.add(key.stable_key)
+                candidates.append((key, item))
+        return candidates
+
+    async def _download_from_candidate(self, candidate: Any) -> Any:
+        try:
+            async with self.page.expect_download(timeout=1_000) as download_info:
+                await candidate.click()
+            return await download_info.value
+        except Exception as direct_error:
+            preview = await first_visible(self.page, PREVIEW_ROOT_SELECTORS)
+            if preview is None:
+                raise BrowserUIIncompatible(
+                    "MD candidate produced neither a Playwright download nor a preview"
+                ) from direct_error
+            download_control = None
+            for selector in DOWNLOAD_SELECTORS:
+                matches = preview.locator(selector)
+                for index in range(await matches.count()):
+                    item = matches.nth(index)
+                    if not await item.is_visible() or not await item.is_enabled():
+                        continue
+                    label = " ".join(
+                        filter(
+                            None,
+                            (
+                                (await item.inner_text()).strip(),
+                                await item.get_attribute("aria-label"),
+                                await item.get_attribute("title"),
+                            ),
+                        )
+                    ).lower()
+                    if "앱 다운로드" in label or "download app" in label:
+                        continue
+                    download_control = item
+                    break
+                if download_control is not None:
+                    break
+            if download_control is None:
+                raise BrowserUIIncompatible("preview has no enabled real download control")
+            try:
+                async with self.page.expect_download(timeout=10_000) as download_info:
+                    await download_control.click()
+                return await download_info.value
+            except Exception as error:
+                raise BrowserUIIncompatible("preview download was not observed by Playwright") from error
+
+    async def _assistant_turns(self) -> list[Any]:
+        turns: list[Any] = []
+        seen: set[str] = set()
+        for selector in ASSISTANT_TURN_SELECTORS:
+            locator = self.page.locator(selector)
+            for index in range(await locator.count()):
+                item = locator.nth(index)
+                if not await item.is_visible():
+                    continue
+                identity = await item.evaluate(
+                    "element => element.getAttribute('data-message-id') || element.getAttribute('data-turn-id') || element.outerHTML.slice(0, 200)"
+                )
+                if identity in seen:
+                    continue
+                seen.add(identity)
+                turns.append(item)
+        return turns
+
+    @staticmethod
+    async def _turn_id(locator: Any) -> str | None:
+        return await locator.evaluate(
+            """element => {
+                const turn = element.closest('[data-message-id], [data-turn-id]');
+                return turn ? (turn.getAttribute('data-message-id') || turn.getAttribute('data-turn-id')) : null;
+            }"""
+        )
+
+    @staticmethod
+    def _marker_value(prompt: str, marker: str) -> str | None:
+        match = re.search(rf"\[\[{re.escape(marker)}:([^\]]+)\]\]", prompt)
+        return match.group(1) if match else None
 
     def conversation_id(self) -> str | None:
         match = re.search(r"/c/([^/?#]+)", self.page.url)

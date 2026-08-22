@@ -71,6 +71,52 @@ class PreparedBrowserJob:
             raise ValueError("prepare_without_submit must never submit")
 
 
+@dataclass(frozen=True)
+class BrowserResultSnapshot:
+    conversation_id: str | None
+    assistant_turn_id: str | None
+    report_text: str
+    report_hash: str
+    has_citations: bool
+    has_dossier_marker: bool
+    job_marker_matches: bool
+    run_marker_matches: bool
+    new_attachment_keys: tuple[AttachmentKey, ...]
+
+    @property
+    def structurally_complete(self) -> bool:
+        return bool(
+            self.assistant_turn_id
+            and self.report_text.strip()
+            and (self.has_citations or self.has_dossier_marker)
+            and self.job_marker_matches
+            and self.run_marker_matches
+            and (self.new_attachment_keys or self.has_dossier_marker)
+        )
+
+
+@dataclass(frozen=True)
+class BrowserCaptureRequest:
+    job_id: str
+    run_id: str
+    expected_filename: str
+    expected_report_hash: str
+    staging_directory: Path
+
+
+@dataclass(frozen=True)
+class RawBrowserCapture:
+    conversation_id: str | None
+    assistant_turn_id: str
+    report_md_part_path: Path
+    source: str
+    downloaded_filename: str | None
+    attachment_key: AttachmentKey | None
+    report_pdf_part_path: Path | None = None
+    downloaded_pdf_filename: str | None = None
+    optional_pdf_error: str | None = None
+
+
 class ChatGPTWebAdapter(Protocol):
     async def ensure_logged_in(self) -> BrowserInspection: ...
 
@@ -94,7 +140,9 @@ class ChatGPTWebAdapter(Protocol):
 
     async def inspect_state(self) -> BrowserInspection: ...
 
-    async def capture_result(self, destination: str | Path) -> Any: ...
+    async def inspect_result(self, *, job_id: str, run_id: str) -> BrowserResultSnapshot: ...
+
+    async def capture_result(self, request: BrowserCaptureRequest) -> RawBrowserCapture: ...
 
 
 class ManualLoginRequired(RuntimeError):
@@ -112,10 +160,13 @@ class SubmitAuthorizationRequired(PermissionError):
 __all__ = [
     "AttachmentKey",
     "BrowserInspection",
+    "BrowserCaptureRequest",
+    "BrowserResultSnapshot",
     "BrowserUIIncompatible",
     "BrowserUIState",
     "ChatGPTWebAdapter",
     "ManualLoginRequired",
     "PreparedBrowserJob",
+    "RawBrowserCapture",
     "SubmitAuthorizationRequired",
 ]
