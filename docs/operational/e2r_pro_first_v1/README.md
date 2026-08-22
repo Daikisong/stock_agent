@@ -35,9 +35,10 @@ capture가 끝난 뒤에는 별도 사용자 승인이 없다. runtime이 dossie
 현재 canary 최종 handoff는 [live_pilot_handoff.json](live_pilot_handoff.json), 실제
 결과와 hash는 [live canary acceptance](live_canary_acceptance_2026-08-22.json), 작업
 순서와 실패·수정 이력은 [구현 진행 기록](implementation_progress_2026-08-22.md)에
-있다. `live_shadow_receipt.json`은 로그인 전 안전 정지를 증명하는 과거 snapshot이며
-현재 상태 문서가 아니다. 전용 profile 로그인 전에는 승인 nonce를 발급하거나 send
-버튼을 누르지 않는 원칙은 그대로 유지된다.
+있다. [live shadow receipt](live_shadow_receipt.json)은 전용 logged-in Chrome에서
+packet·prompt·Pro 모드가 전송 직전까지 준비되고 실제 전송은 0회였던 compatibility
+PASS를 기록한다. 전용 profile 로그인 전에는 승인 nonce를 발급하거나 send 버튼을
+누르지 않는 원칙은 그대로 유지된다.
 
 ## 오프라인 검증
 
@@ -48,4 +49,6 @@ PYTHONPATH=src python scripts/run_e2r_pro_first_offline_ci.py \
 
 CI는 실제 ChatGPT 계정이나 쿠키를 사용하지 않는다. loopback mock을 같은 `PlaywrightChatGPTWebAdapter`로 조작해 업로드, prompt, 1회 전송, 새 MD 다운로드, capture/import와 후반 deterministic 파이프라인을 검증한다.
 
-관련 문서: [구조](architecture.md), [상태기계](state_machine.md), [보안](security.md), [최종 readiness](final_readiness.md).
+관련 문서: [구조](architecture.md), [상태기계](state_machine.md), [보안](security.md),
+[최종 readiness](final_readiness.md),
+[master goal 완료 감사](master_goal_completion_audit_2026-08-23.md).

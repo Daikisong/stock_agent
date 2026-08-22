@@ -412,8 +412,38 @@ final Pro-first offline CI: PRO_FIRST_OFFLINE_CI_PASS
 
 ## 7. 남은 작업
 
-1. 한글 commit/push 후 Draft PR #7 본문을 실제 FINAL 상태로 갱신한다.
-2. 새 PR head의 GitHub Actions 결과를 확인한다.
+master goal 최종 대조에서 구현 동작 누락은 없었다. 다만 저장소의
+`live_shadow_receipt.json`이 실제 logged-in Chrome shadow PASS 뒤에도 로그인 전
+PENDING snapshot을 가리키고 있었고, 공식 browser 영수증은 44개 이전 실행에
+머물러 있었다. 실제 runtime shadow receipt의 SHA-256을 보존해 PASS 영수증으로
+교체하고 offline/browser/performance/static 공식 CLI 영수증을 최신 코드로 다시
+생성했다.
+
+또 master goal 39절의 최소 테스트 이름 87개를 AST로 대조했다. 기능 검증은 모두
+있었지만 capture 테스트 7개가 더 긴 결합형 이름 4개에 포함돼 있었다. 이들을
+개별 계약 이름으로 분리했으며 focused 17/17과 browser mock 47/47이 통과했다.
+
+최종 로컬 closing 검증:
+
+```text
+master-goal required test names: 87/87, missing 0
+full unittest discovered/executed: 7,407, process exit 0
+failure/error: 0/0
+existing conditional skip baseline: 38
+new skip/xfail construct: 0
+Pro-first core: 191/191 PASS
+browser mock E2E: 47/47 PASS
+golden offline E2E: 4/4 PASS
+performance/reuse audit: 4/4 PASS
+Phase100: 15/15 PASS
+Pro-first static audit: critical 0 PASS
+production static audit: critical 0 PASS
+production static audit hash: 5e3c32cbf4257235441639291fa720e338d0ce6eef12d23e8b79bcb6518067b1
+compileall / git diff --check: PASS / PASS
+```
+
+남은 작업은 이 closing 변경을 한글 commit/push하고 새 PR head의 GitHub Actions가
+green인지 확인하는 것뿐이다. 새 연구·query·fetch는 실행하지 않았다.
 
 이 문서를 포함한 PR head SHA가 최종 코드 identity다. commit 객체 안에 자기 자신의
 SHA를 적으면 내용 변경으로 SHA가 다시 바뀌므로, 고정 문자열을 억지로 적지 않고

@@ -1,17 +1,12 @@
 {
-  "elapsed_seconds": 12.323189,
+  "elapsed_seconds": 12.716965,
   "error_count": 0,
   "failure_count": 0,
   "label": "PRO_FIRST_OFFLINE_E2E",
-  "recorded_at": "2026-08-22T08:32:33.488258Z",
+  "output_tail": "test_c06_full_offline_e2e (tests.test_e2r_pro_first_browser_e2e.ProFirstBrowserGoldenE2ETest) ... ok\ntest_c17_full_offline_e2e (tests.test_e2r_pro_first_browser_e2e.ProFirstBrowserGoldenE2ETest) ... ok\ntest_c24_or_c28_full_offline_e2e (tests.test_e2r_pro_first_browser_e2e.ProFirstBrowserGoldenE2ETest) ... ok\ntest_backend_restart_after_capture (tests.test_e2r_pro_first_browser_e2e.ProFirstBrowserGoldenE2ETest) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 12.717s\n\nOK\n",
+  "recorded_at": "2026-08-22T16:07:49.127135Z",
   "schema_version": "e2r_pro_first_test_receipt_v1",
   "skip_count": 0,
   "status": "PASS",
-  "tests": {
-    "backend_restart_after_capture": "PASS",
-    "c06_full_offline_e2e": "PASS",
-    "c17_full_offline_e2e": "PASS_CONSERVATIVE_PENDING",
-    "c24_or_c28_full_offline_e2e": "PASS_C28"
-  },
   "tests_run": 4
 }

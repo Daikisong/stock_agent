@@ -53,9 +53,10 @@ investment recommendation: false
 최종 로컬 검증:
 
 ```text
-full unittest: 7,404 PASS, failure/error 0, conditional skip 38
-Pro-first core: 188/188 PASS
-browser mock E2E: 44/44 PASS
+full unittest: 7,407 PASS, failure/error 0, conditional skip baseline 38
+Pro-first core: 191/191 PASS
+master-goal required test names: 87/87 present
+browser mock E2E: 47/47 PASS
 golden offline E2E: 4/4 PASS
 Phase100: 15/15 PASS
 Pro-first static audit: critical 0
@@ -73,7 +74,9 @@ compileall / git diff --check: PASS / PASS
 
 상세 hash와 재실행 수치는
 `live_canary_acceptance_2026-08-22.json`, 구현·실패·수정 순서는
-`implementation_progress_2026-08-22.md`를 canonical 외부 검수 진입점으로 삼는다.
+`implementation_progress_2026-08-22.md`, master goal 전체 대조는
+`master_goal_completion_audit_2026-08-23.md`를 canonical 외부 검수 진입점으로
+삼는다.
 
 이번 판정은 이 단일 forced validation canary가 끝났다는 뜻이다. 다른 아키타입이나
 전체 daily universe의 production readiness를 주장하지 않는다.

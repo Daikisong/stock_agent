@@ -10,7 +10,7 @@
   },
   "live_chatgpt_research_latency_measured": false,
   "measurement": "cProfile cumulative wall-adjacent runtime over bounded fixtures",
-  "recorded_at": "2026-08-22T08:32:39.023386Z",
+  "recorded_at": "2026-08-22T16:07:40.875506Z",
   "same_dossier_rerun": {
     "browser_submit": 0,
     "new_fetch": 0,
@@ -23,24 +23,27 @@
   "status": "PASS",
   "supplemental_count": 0,
   "tests": {
-    "elapsed_seconds": 3.896768,
+    "elapsed_seconds": 4.127014,
     "error_count": 0,
     "failure_count": 0,
     "label": "PRO_FIRST_PERFORMANCE_AUDIT",
+    "output_tail": "....\n----------------------------------------------------------------------\nRan 4 tests in 4.127s\n\nOK\n",
+    "recorded_at": "2026-08-22T16:07:40.875481Z",
+    "schema_version": "e2r_pro_first_test_receipt_v1",
     "skip_count": 0,
     "status": "PASS",
     "tests_run": 4
   },
   "timings": {
-    "browser_prepare_elapsed_seconds": 0.062247,
-    "capture_elapsed_seconds": 0.077188,
-    "gap_elapsed_seconds": 0.043863,
-    "import_elapsed_seconds": 0.022551,
-    "judge_elapsed_seconds": 0.008623,
-    "packet_elapsed_seconds": 0.001234,
-    "research_completion_observation_elapsed_seconds": 0.10641,
-    "scan_elapsed_seconds": 0.029806,
-    "score_stage_elapsed_seconds": 0.198034,
-    "source_verification_elapsed_seconds": 0.04124
+    "browser_prepare_elapsed_seconds": 0.064317,
+    "capture_elapsed_seconds": 0.082621,
+    "gap_elapsed_seconds": 0.052263,
+    "import_elapsed_seconds": 0.035876,
+    "judge_elapsed_seconds": 0.151703,
+    "packet_elapsed_seconds": 0.001426,
+    "research_completion_observation_elapsed_seconds": 0.108549,
+    "scan_elapsed_seconds": 0.030716,
+    "score_stage_elapsed_seconds": 0.365871,
+    "source_verification_elapsed_seconds": 0.062734
   }
 }

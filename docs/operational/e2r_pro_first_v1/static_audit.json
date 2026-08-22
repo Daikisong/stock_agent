@@ -1,4 +1,5 @@
 {
+  "audited_package": "src/e2r/pro_first",
   "critical_count_sum": 0,
   "critical_counts": {
     "cookie_export_count": 0,
@@ -18,7 +19,7 @@
   },
   "findings": [],
   "guarded_dom_submit_path_count": 1,
-  "recorded_at": "2026-08-22T08:30:36.313322Z",
+  "recorded_at": "2026-08-22T16:28:43.934820Z",
   "schema_version": "e2r_pro_first_static_audit_v1",
   "status": "E2R_PRO_FIRST_STATIC_AUDIT_PASS"
 }

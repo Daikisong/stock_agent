@@ -247,7 +247,7 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(updated.status, JobStatus.USER_ATTENTION_REQUIRED.value)
         self.assertEqual(updated.submit_count, 1)
 
-    async def test_old_md_button_not_downloaded_and_new_preview_downloaded(self) -> None:
+    async def _capture_new_md_preview(self):
         job, _prompt_hash = await self._running_job()
         await self._complete_page(job.job_id)
         observed = await self._stable_completion(job.job_id)
@@ -261,11 +261,19 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
                 staging_directory=root / "capture/.staging",
             )
         )
-        self.assertEqual(raw.source, "DOWNLOAD_MD")
-        self.assertGreater(raw.report_md_part_path.stat().st_size, 0)
         clicks = await self.page.evaluate("window.__downloadClicks")
+        return job, raw, clicks
+
+    async def test_old_md_button_not_downloaded(self) -> None:
+        job, _raw, clicks = await self._capture_new_md_preview()
         self.assertEqual(clicks, [self._filename(job.job_id)])
         self.assertNotIn("old_result.md", clicks)
+
+    async def test_new_md_preview_and_real_download(self) -> None:
+        job, raw, clicks = await self._capture_new_md_preview()
+        self.assertEqual(raw.source, "DOWNLOAD_MD")
+        self.assertGreater(raw.report_md_part_path.stat().st_size, 0)
+        self.assertEqual(clicks, [self._filename(job.job_id)])
 
     async def test_direct_report_fallback(self) -> None:
         job, _prompt_hash = await self._running_job()
@@ -323,7 +331,7 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
         self.assertIsNotNone(result.receipt.report_pdf_hash)
         self.assertTrue((root / "capture/incoming/pro_report.pdf").is_file())
 
-    async def test_download_expectation_hashes_ready_last_and_dispatch(self) -> None:
+    async def _coordinated_md_capture(self):
         job, _prompt_hash = await self._running_job()
         await self._complete_page(job.job_id)
         monitor = BrowserCompletionMonitor(self.adapter, required_stable_observations=3)
@@ -356,17 +364,36 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
                 adapter=self.adapter,
                 capture_mode="DOM_CONTRACT_MOCK",
             )
+        return job, root, replace_order, completed, events, result
+
+    async def test_download_expectation_and_hash(self) -> None:
+        job, root, _replace_order, _completed, _events, result = (
+            await self._coordinated_md_capture()
+        )
+        receipt = load_capture_receipt(result.receipt_path)
+        self.assertEqual(file_sha256(root / receipt.report_md_path), receipt.report_md_hash)
+        self.assertEqual(file_sha256(root / receipt.dossier_json_path), receipt.dossier_json_hash)
+        self.assertEqual(await self.page.evaluate("window.__downloadClicks"), [self._filename(job.job_id)])
+
+    async def test_ready_written_last(self) -> None:
+        _job, _root, replace_order, completed, events, result = (
+            await self._coordinated_md_capture()
+        )
         self.assertEqual(replace_order[-1], "READY.json")
         self.assertEqual(completed.status, JobStatus.CAPTURE_COMPLETE.value)
         self.assertEqual(completed.capture_count, 1)
         self.assertEqual(len(events), 1)
+        self.assertTrue(result.ready_path.is_file())
+
+    async def test_capture_receipt_hashes(self) -> None:
+        _job, root, _replace_order, _completed, _events, result = (
+            await self._coordinated_md_capture()
+        )
         receipt = load_capture_receipt(result.receipt_path)
         self.assertEqual(file_sha256(root / receipt.report_md_path), receipt.report_md_hash)
         self.assertEqual(file_sha256(root / receipt.dossier_json_path), receipt.dossier_json_hash)
-        self.assertTrue(result.ready_path.is_file())
-        self.assertEqual(await self.page.evaluate("window.__downloadClicks"), [self._filename(job.job_id)])
 
-    async def test_partial_file_not_reconciled(self) -> None:
+    async def test_partial_file_not_imported(self) -> None:
         root = Path(self.temporary_directory.name) / "partial"
         part = root / "capture/.staging/pro_report.md.part"
         part.parent.mkdir(parents=True)
@@ -374,7 +401,7 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
         reconciled = await CaptureFilesystemReconciler(self.store).reconcile(root)
         self.assertIsNone(reconciled)
 
-    async def test_backend_restart_recovers_ready_capture_idempotently(self) -> None:
+    async def test_restart_recovers_from_ready_file(self) -> None:
         job, prompt_hash = await self._running_job()
         await self._complete_page(job.job_id, direct=True)
         observed = await self._stable_completion(job.job_id)
