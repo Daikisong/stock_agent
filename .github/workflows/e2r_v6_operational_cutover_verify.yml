@@ -89,6 +89,10 @@ jobs:
             --require-hashes \
             -r requirements/e2r_pro_first_py310_linux_x86_64.lock
 
+      - name: Install Playwright Chromium and system libraries
+        shell: bash
+        run: python -m playwright install --with-deps chromium
+
       - name: Verify Gate 1 tracked-receipt consistency offline
         shell: bash
         run: |

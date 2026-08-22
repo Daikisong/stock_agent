@@ -1053,6 +1053,10 @@ class Gate1WorkflowRegressionTest(unittest.TestCase):
             "-r requirements/e2r_v6_clean_clone_py310_linux_x86_64.lock",
             workflow,
         )
+        self.assertIn(
+            "python -m playwright install --with-deps chromium",
+            workflow,
+        )
         self.assertIn('E2R_RUN_LIVE_TESTS: "0"', workflow)
 
 
