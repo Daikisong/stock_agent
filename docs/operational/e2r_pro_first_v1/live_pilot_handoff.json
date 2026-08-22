@@ -1,0 +1,9 @@
+{
+  "schema_version": "e2r_pro_first_live_pilot_handoff_v1",
+  "status": "LIVE_PILOT_NOT_YET_PREPARED",
+  "selection_mode": null,
+  "job_id": null,
+  "submit_count": 0,
+  "capture_count": 0,
+  "remaining_external_action": "P15 live shadow and explicit approval-bound canary execution"
+}

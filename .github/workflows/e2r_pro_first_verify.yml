@@ -1,0 +1,140 @@
+name: E2R Pro-first verification
+
+"on":
+  push:
+    branches: [main, "feature/e2r-pro-first-browser-platform-20260822"]
+    paths:
+      - ".github/workflows/e2r_pro_first_verify.yml"
+      - "configs/e2r_pro_first_*"
+      - "docs/operational/e2r_pro_first_v1/**"
+      - "requirements/e2r_pro_first_py310_linux_x86_64.lock"
+      - "scripts/*e2r_pro_first*"
+      - "scripts/start_e2r_pro_chrome.ps1"
+      - "src/e2r/pro_first/**"
+      - "src/e2r/cli/*e2r_pro_first*"
+      - "tests/test_e2r_pro_first*"
+      - "tests/fixtures/pro_first/**"
+  pull_request:
+    paths:
+      - ".github/workflows/e2r_pro_first_verify.yml"
+      - "configs/e2r_pro_first_*"
+      - "docs/operational/e2r_pro_first_v1/**"
+      - "requirements/e2r_pro_first_py310_linux_x86_64.lock"
+      - "scripts/*e2r_pro_first*"
+      - "scripts/start_e2r_pro_chrome.ps1"
+      - "src/e2r/pro_first/**"
+      - "src/e2r/cli/*e2r_pro_first*"
+      - "tests/test_e2r_pro_first*"
+      - "tests/fixtures/pro_first/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2r-pro-first-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  E2R_RUN_LIVE_TESTS: "0"
+  PYTHONPATH: src
+
+jobs:
+  core-unit:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install hash-locked Pro-first dependencies
+        run: python -m pip install --disable-pip-version-check --require-hashes -r requirements/e2r_pro_first_py310_linux_x86_64.lock
+      - name: Run core Pro-first unit gates
+        run: python -m e2r.cli.verify_e2r_pro_first_readiness --repo-root . --output "${RUNNER_TEMP}/readiness.json"
+
+  browser-mock-e2e:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install hash-locked Pro-first dependencies
+        run: python -m pip install --disable-pip-version-check --require-hashes -r requirements/e2r_pro_first_py310_linux_x86_64.lock
+      - name: Install Playwright Chromium and system libraries
+        run: python -m playwright install --with-deps chromium
+      - name: Run mock browser E2E through the production adapter
+        run: python -m e2r.cli.run_e2r_pro_first_browser_mock_e2e --output "${RUNNER_TEMP}/browser_mock_e2e.json"
+
+  full-regression:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install hash-locked Pro-first dependencies
+        run: python -m pip install --disable-pip-version-check --require-hashes -r requirements/e2r_pro_first_py310_linux_x86_64.lock
+      - name: Install Playwright Chromium and system libraries
+        run: python -m playwright install --with-deps chromium
+      - name: Reject deleted tests and new skip or xfail decorators
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          base="${BASE_SHA:-$(git rev-parse HEAD^)}"
+          if git diff --diff-filter=D --name-only "${base}...HEAD" | grep -Eq '^tests/'; then
+            echo "The Pro-first change deletes existing tests."
+            exit 1
+          fi
+          if git diff --unified=0 "${base}...HEAD" -- tests | grep '^+' | grep -Eq '(@unittest\.skip|pytest\.mark\.(skip|xfail)|self\.skipTest)'; then
+            echo "The Pro-first change adds a skip/xfail path."
+            exit 1
+          fi
+      - name: Run the full existing regression suite
+        run: python -m unittest discover -s tests -v
+      - name: Compile and check patch whitespace
+        run: |
+          python -m compileall -q src tests
+          git diff --check
+
+  static-security:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install hash-locked Pro-first dependencies
+        run: python -m pip install --disable-pip-version-check --require-hashes -r requirements/e2r_pro_first_py310_linux_x86_64.lock
+      - name: Reject new tracked runtime raw/cache/output paths
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          base="${BASE_SHA:-$(git rev-parse HEAD^)}"
+          if git diff --name-only --diff-filter=AM "${base}...HEAD" | grep -Eq '^(\.e2r_cache/|data/cache/|output/)'; then
+            echo "Pro-first delta tracks a forbidden runtime artifact."
+            exit 1
+          fi
+      - name: Recompute semantic security and authority audit
+        run: python -m e2r.cli.audit_e2r_pro_first --repo-root . --output "${RUNNER_TEMP}/static_audit.json"
+      - name: Prove CI has no live ChatGPT credential or login path
+        run: |
+          test "${E2R_RUN_LIVE_TESTS}" = "0"
+          test -z "${CHATGPT_COOKIE:-}"
+          test -z "${CHATGPT_PASSWORD:-}"

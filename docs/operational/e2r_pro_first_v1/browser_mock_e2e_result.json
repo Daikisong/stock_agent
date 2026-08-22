@@ -1,0 +1,13 @@
+{
+  "browser": "PLAYWRIGHT_CHROMIUM_LOOPBACK_MOCK",
+  "elapsed_seconds": 52.678754,
+  "error_count": 0,
+  "failure_count": 0,
+  "label": "PRO_FIRST_BROWSER_MOCK_E2E",
+  "production_adapter": "PlaywrightChatGPTWebAdapter",
+  "recorded_at": "2026-08-22T06:04:45.493447Z",
+  "schema_version": "e2r_pro_first_test_receipt_v1",
+  "skip_count": 0,
+  "status": "PASS",
+  "tests_run": 32
+}

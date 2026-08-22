@@ -1,0 +1,17 @@
+{
+  "elapsed_seconds": 13.721416,
+  "error_count": 0,
+  "failure_count": 0,
+  "label": "PRO_FIRST_OFFLINE_E2E",
+  "recorded_at": "2026-08-22T06:03:45.096125Z",
+  "schema_version": "e2r_pro_first_test_receipt_v1",
+  "skip_count": 0,
+  "status": "PASS",
+  "tests": {
+    "backend_restart_after_capture": "PASS",
+    "c06_full_offline_e2e": "PASS",
+    "c17_full_offline_e2e": "PASS_CONSERVATIVE_PENDING",
+    "c24_or_c28_full_offline_e2e": "PASS_C28"
+  },
+  "tests_run": 4
+}

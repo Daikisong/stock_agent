@@ -1,0 +1,6 @@
+{
+  "schema_version": "e2r_pro_first_live_shadow_receipt_v1",
+  "status": "CHATGPT_WEB_SHADOW_NOT_YET_RUN",
+  "submit_count": 0,
+  "reason": "P14 tracked implementation receipt; P15 must replace this only after a real logged-in CDP shadow check"
+}
