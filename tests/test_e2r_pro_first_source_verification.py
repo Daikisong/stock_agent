@@ -11,7 +11,12 @@ from e2r.pro_first.ids import canonical_hash, canonical_json
 from e2r.pro_first.job_store import ProFirstJobStore
 from e2r.pro_first.models import JobStatus, ResearchMode, ScanWindow
 from e2r.pro_first.state_machine import TransitionContext
+from e2r.pro_first.state_machine import NoProgressDetected
 from e2r.pro_first.verification import ProSourceVerificationService
+from e2r.pro_first.verification.mechanism_scope_mapper import (
+    MechanismScopeMappingRun,
+)
+from e2r.pro_first.verification.quote_verifier import ExactQuoteVerifier
 from e2r.pro_first.verification.source_verifier import ProSourceVerifier
 from e2r.research.page_fetcher import FetchResult, PageFetcher
 
@@ -24,6 +29,12 @@ class _CountingFetcher:
     def fetch(self, url: str, *, as_of_date: date) -> FetchResult:
         self.calls.append((url, as_of_date.isoformat()))
         return self.results[url]
+
+
+class _ChangedSemanticsVerifier(ProSourceVerifier):
+    @property
+    def semantics_version(self) -> str:
+        return "e2r_pro_source_verification_test_v3"
 
 
 class ProFirstSourceVerificationTest(unittest.TestCase):
@@ -179,6 +190,65 @@ class ProFirstSourceVerificationTest(unittest.TestCase):
         self.assertEqual(len(evidence.claim_ids), 1)
         self.assertEqual(len(evidence.quote_ids), 1)
 
+    def test_open_ended_pro_scope_is_structured_before_existing_validator(self) -> None:
+        fact = self._fact(
+            predicate="novel_open_ended_capacity_predicate",
+        )
+        for field in (
+            "scope_business_segment",
+            "scope_product_family",
+            "scope_technology_family",
+            "scope_transaction_type",
+            "scope_economic_mechanism",
+            "scope_confidence",
+        ):
+            fact.pop(field)
+
+        class ScopeMapper:
+            provider_name = "UNIT_SCOPE_MAPPER"
+
+            def map_facts(inner_self, *, facts, contracts):
+                self.assertEqual(len(facts), 1)
+                self.assertTrue(contracts)
+                return MechanismScopeMappingRun(
+                    mappings_by_fact_id={
+                        "PROFACT-001": {
+                            "scope_business_segment": "MEMORY",
+                            "scope_product_family": "HBM",
+                            "scope_technology_family": "HBM",
+                            "scope_transaction_type": "CAPACITY_INVESTMENT",
+                            "scope_economic_mechanism": "CAPACITY_SCARCITY",
+                            "scope_confidence": 0.97,
+                        }
+                    },
+                    provider_name=inner_self.provider_name,
+                    prompt_hash="prompt-hash",
+                    response_hash="response-hash",
+                )
+
+        fetcher = PageFetcher(
+            fixture_text_by_url={self.url: self._document()},
+            live_enabled=False,
+            max_text_chars=None,
+        )
+        result = ProSourceVerifier(
+            page_fetcher=fetcher,
+            mechanism_scope_mapper=ScopeMapper(),
+        ).verify(
+            dossier=self._dossier(fact),
+            job=self.job,
+            job_root=self.root,
+        )
+        self.assertEqual(
+            result.verifications[0].allowed_component_ids,
+            ("bottleneck_pricing",),
+        )
+        self.assertEqual(result.receipt_payload["mechanism_scope_mapping_count"], 1)
+        self.assertEqual(
+            result.receipt_payload["mechanism_scope_provider_name"],
+            "UNIT_SCOPE_MAPPER",
+        )
+
     def test_snippet_only_rejected(self) -> None:
         result = self._verify(
             self._fact(),
@@ -277,6 +347,27 @@ class ProFirstSourceVerificationTest(unittest.TestCase):
         self.assertTrue(result.verifications[1].cache_reused)
         self.assertEqual(len(result.fact_compilation.facts), 2)
 
+    def test_hash_verified_durable_document_cache_avoids_refetch(self) -> None:
+        first = self._verify(self._fact())
+        verification_root = self.root / "verification"
+        (verification_root / "source_verifications.jsonl").write_text(
+            "".join(
+                canonical_json(row.to_dict()) + "\n"
+                for row in first.verifications
+            ),
+            encoding="utf-8",
+        )
+        no_network = _CountingFetcher({})
+        second = ProSourceVerifier(page_fetcher=no_network).verify(
+            dossier=self._dossier(self._fact()),
+            job=self.job,
+            job_root=self.root,
+        )
+        self.assertEqual(no_network.calls, [])
+        self.assertEqual(second.full_document_fetch_count, 0)
+        self.assertEqual(second.document_cache_reuse_count, 1)
+        self.assertEqual(second.verifications[0].status, "ACCEPTED_CURRENT")
+
     def test_unicode_punctuation_normalized_quote_is_literal_enough(self) -> None:
         quoted = "검증기업 MEMORY HBM capacity—전량 배정"
         source = "검증기업 MEMORY HBM capacity - 전량 배정"
@@ -289,6 +380,129 @@ class ProFirstSourceVerificationTest(unittest.TestCase):
             result.verifications[0].quote_match_mode,
             "UNICODE_PUNCTUATION_WHITESPACE_NORMALIZED",
         )
+
+    def test_ordered_ellipsis_quote_is_deletion_only_literal_match(self) -> None:
+        quoted = "검증기업 MEMORY ... HBM capacity 전량 배정"
+        source = (
+            "검증기업 MEMORY 사업에서 여러 고객 검증을 마쳤으며 "
+            "HBM capacity 전량 배정 상태라고 밝혔다."
+        )
+        result = self._verify(
+            self._fact(supporting_excerpt=quoted),
+            document=self._document(excerpt=source),
+        )
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
+        self.assertEqual(
+            result.verifications[0].quote_match_mode,
+            "EXACT_ORDERED_FRAGMENT_LIST",
+        )
+
+    def test_semicolon_separated_table_cells_are_ordered_literal_anchors(self) -> None:
+        quoted = "Revenue ... 131,895,033; Operating Profit ... 98,152,891"
+        source = (
+            "Revenue for the period was 131,895,033 in the filed table. "
+            "Operating Profit for the same period was 98,152,891."
+        )
+        result = self._verify(
+            self._fact(supporting_excerpt=quoted),
+            document=self._document(excerpt=source),
+        )
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
+        self.assertEqual(
+            result.verifications[0].quote_match_mode,
+            "EXACT_ORDERED_FRAGMENT_LIST",
+        )
+
+    def test_ordered_fragments_try_later_repeated_anchor(self) -> None:
+        quote = "Revenue ... 131,895,033; Operating Profit ... 98,152,891"
+        document = self._document(
+            excerpt=(
+                "Revenue appeared in an earlier narrative section. "
+                + ("unrelated disclosure text " * 120)
+                + "Revenue current period 131,895,033 "
+                + "Operating Profit current period 98,152,891"
+            )
+        )
+        result = self._verify(
+            self._fact(supporting_excerpt=quote),
+            document=document,
+        )
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
+        self.assertEqual(
+            result.verifications[0].quote_match_mode,
+            "EXACT_ORDERED_FRAGMENT_LIST",
+        )
+
+    def test_ordered_fragment_keeps_exact_short_numeric_cell(self) -> None:
+        quote = "Average utilization ratio ... 100%"
+        document = self._document(
+            excerpt=(
+                "Average utilization ratio Semiconductor "
+                "136,255,098 136,255,098 100 %"
+            )
+        )
+        result = self._verify(
+            self._fact(supporting_excerpt=quote),
+            document=document,
+        )
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
+        self.assertEqual(
+            result.verifications[0].quote_match_mode,
+            "EXACT_ORDERED_FRAGMENT_LIST",
+        )
+
+    def test_ellipsis_fragments_wrong_order_or_unbounded_gap_are_rejected(self) -> None:
+        result = ExactQuoteVerifier().verify(
+            "검증기업 MEMORY ... HBM capacity 전량 배정",
+            "HBM capacity 전량 배정 이후 검증기업 MEMORY 사업을 설명했다.",
+        )
+        self.assertFalse(result.matched)
+
+    def test_semantic_scope_descriptor_uses_general_literal_anchors(self) -> None:
+        result = self._verify(
+            self._fact(
+                business_segment="Consolidated MEMORY business",
+                product_family="Strategic HBM product portfolio",
+            )
+        )
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
+
+    def test_issuer_english_alias_and_joint_party_are_supported(self) -> None:
+        excerpt = "SK hynix and NVIDIA announced an HBM partnership."
+        fact = self._fact(
+            subject="SK hynix Inc. and NVIDIA",
+            supporting_excerpt=excerpt,
+            business_segment="MEMORY",
+            product_family="HBM",
+        )
+        dossier = self._dossier(fact)
+        dossier["target"]["english_name"] = "SK hynix Inc."
+        fetcher = PageFetcher(
+            fixture_text_by_url={
+                self.url: self._document(excerpt=excerpt)
+                .replace(self.company_name, "SK hynix Inc. and NVIDIA")
+            },
+            live_enabled=False,
+            max_text_chars=None,
+        )
+        result = ProSourceVerifier(page_fetcher=fetcher).verify(
+            dossier=dossier,
+            job=self.job,
+            job_root=self.root,
+        )
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
+
+    def test_nonissuer_peer_fact_does_not_require_target_name_in_peer_source(self) -> None:
+        excerpt = "Micron Technology, Inc. began HBM volume shipments."
+        result = self._verify(
+            self._fact(
+                subject="Micron Technology, Inc.",
+                issuer_scoped=False,
+                supporting_excerpt=excerpt,
+            ),
+            document=self._document(excerpt=excerpt, include_company=False),
+        )
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
 
     def test_source_unavailable_rejected_without_search(self) -> None:
         result = self._verify(
@@ -376,6 +590,78 @@ class ProFirstSourceVerificationTest(unittest.TestCase):
             if event.to_status == JobStatus.GAP_ADJUDICATION.value
         ]
         self.assertEqual(len(matching_events), 1)
+
+    def test_changed_semantics_allows_one_bounded_durable_reverification(self) -> None:
+        dossier = self._dossier(self._fact())
+        self.job = self._advance_to_importing(self.job)
+        dossier["job_id"] = self.job.job_id
+        normalized_hash = canonical_hash(dossier)
+        import_root = self.root / "import"
+        import_root.mkdir(parents=True, exist_ok=True)
+        (import_root / "research_dossier.normalized.json").write_text(
+            canonical_json(dossier) + "\n", encoding="utf-8"
+        )
+        self.job = self.store.record_dossier_import(
+            self.job.job_id,
+            expected_version=self.job.state_version,
+            dossier_id="PRODOSSIER-reverification",
+            dossier_hash=normalized_hash,
+            import_receipt={
+                "schema_version": "e2r_pro_dossier_import_receipt_v1",
+                "job_id": self.job.job_id,
+                "normalized_dossier_hash": normalized_hash,
+                "validation_status": "PASS",
+                "score_authority": False,
+                "stage_authority": False,
+                "evidence_promoted_count": 0,
+                "component_ids": list(CANONICAL_COMPONENT_IDS),
+            },
+            actor="test",
+            idempotency_key="dossier-imported-reverification",
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={self.url: self._document()},
+            live_enabled=False,
+            max_text_chars=None,
+        )
+        first_service = ProSourceVerificationService(
+            self.store, verifier=ProSourceVerifier(page_fetcher=fetcher)
+        )
+        first = first_service.verify_job(self.job.job_id, job_root=self.root)
+        self.job = self.store.transition(
+            self.job.job_id,
+            expected_version=first.job.state_version,
+            to_status=JobStatus.SUPPLEMENTAL_RESEARCH,
+            actor="test",
+            idempotency_key="test-material-gap",
+        )
+        changed_service = ProSourceVerificationService(
+            self.store, verifier=_ChangedSemanticsVerifier(page_fetcher=fetcher)
+        )
+        reopened = changed_service.request_reverification(
+            self.job.job_id, reason="scope verifier semantics corrected"
+        )
+        self.assertEqual(reopened.status, JobStatus.VERIFYING_SOURCES.value)
+        second = changed_service.verify_job(self.job.job_id, job_root=self.root)
+        self.assertEqual(second.job.status, JobStatus.GAP_ADJUDICATION.value)
+        self.assertEqual(self.store.source_verification_attempt_count(self.job.job_id), 2)
+        self.assertEqual(
+            self.store.get_source_verification_receipt(self.job.job_id)[
+                "verification_semantics_version"
+            ],
+            "e2r_pro_source_verification_test_v3",
+        )
+        self.job = self.store.transition(
+            self.job.job_id,
+            expected_version=second.job.state_version,
+            to_status=JobStatus.SUPPLEMENTAL_RESEARCH,
+            actor="test",
+            idempotency_key="test-material-gap-again",
+        )
+        with self.assertRaisesRegex(NoProgressDetected, "unchanged"):
+            changed_service.request_reverification(
+                self.job.job_id, reason="same semantics must not repeat"
+            )
 
     def _advance_to_importing(self, job):
         contexts = {

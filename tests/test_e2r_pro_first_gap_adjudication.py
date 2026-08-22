@@ -21,10 +21,14 @@ from e2r.pro_first.gaps.supplemental_service import (
     load_effective_verified_evidence,
     resolved_supplemental_gap_keys,
 )
+from e2r.pro_first.gaps.source_family_policy import (
+    route_source_classes,
+    source_family_requires_general_web,
+)
 from e2r.pro_first.job_store import ProFirstJobStore
 from e2r.pro_first.ids import canonical_hash, canonical_json
 from e2r.pro_first.models import JobStatus, ResearchMode, ScanWindow
-from e2r.pro_first.state_machine import TransitionContext
+from e2r.pro_first.state_machine import NoProgressDetected, TransitionContext
 from e2r.pro_first.dossier.validator import CANONICAL_COMPONENT_IDS
 from e2r.research_brain.researcher_mode.evidence_gap import (
     EvidenceGapDisposition,
@@ -132,6 +136,7 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
         hard_break: bool = False,
         monitoring_only: bool = False,
         provider_failure: bool = False,
+        official_gap_reasons: tuple[str, ...] = (),
     ) -> DeterministicGapContext:
         return DeterministicGapContext(
             dossier_gap_id=gap_id,
@@ -144,6 +149,7 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
             direct_contradiction_or_hard_break_unresolved=hard_break,
             could_change_score=not monitoring_only,
             monitoring_only=monitoring_only,
+            official_gap_reasons=official_gap_reasons,
             rationale="기존 deterministic score/Stage 경계 계산 결과",
         )
 
@@ -194,6 +200,9 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
             lower_stage="2",
             upper_stage="3-Green",
             routes=("CUSTOMER_OFFICIAL:new-route",),
+            official_gap_reasons=(
+                "NO_DIRECT_CONNECTOR_FOR_REQUESTED_OFFICIAL_FAMILY:CUSTOMER_OFFICIAL",
+            ),
         )
         result = self._adjudicate(gap, context, with_verified_fact=True)
         decision = result.decisions[0]
@@ -213,6 +222,9 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
         context = self._context(
             routes=("CUSTOMER_OFFICIAL:counter-route",),
             hard_break=True,
+            official_gap_reasons=(
+                "NO_DIRECT_CONNECTOR_FOR_REQUESTED_OFFICIAL_FAMILY:CUSTOMER_OFFICIAL",
+            ),
         )
         result = self._adjudicate(gap, context, with_verified_fact=True)
         decision = result.decisions[0]
@@ -236,6 +248,90 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
             self.planner.plan(adjudication=result, job=self.job).tasks,
             (),
         )
+
+    def test_open_ended_peer_family_is_supporting_not_unknown_core(self) -> None:
+        gap = self._gap(source_family="PEER_CAPACITY_GUIDANCE")
+        result = self._adjudicate(
+            gap,
+            self._context(),
+            with_verified_fact=True,
+        )
+        self.assertEqual(
+            result.decisions[0].assessment.gap_class.value,
+            "CORROBORATION_CAP",
+        )
+        self.assertFalse(result.decisions[0].supplemental_allowed)
+
+    def test_novel_pro_predicate_uses_validated_component_scope_not_word_list(self) -> None:
+        gap = self._gap(source_family="PEER_CAPACITY_GUIDANCE")
+        fact = self._verified_fact("earnings_visibility")
+        fact["predicate"] = "novel_provider_predicate_without_registered_markers"
+        fact["structured_evidence_roles"] = []
+        result = self.adjudicator.adjudicate(
+            dossier=self._dossier(gap),
+            job=self.job,
+            verified_facts=[fact],
+            claim_fact_links=[self._claim_link("earnings_visibility")],
+            deterministic_contexts={gap["dossier_gap_id"]: self._context()},
+        )
+        self.assertEqual(
+            result.decisions[0].assessment.gap_class.value,
+            "CORROBORATION_CAP",
+        )
+
+    def test_open_ended_issuer_family_is_core_without_validated_scope(self) -> None:
+        gap = self._gap(source_family="ISSUER_CAPACITY_KPI")
+        result = self._adjudicate(
+            gap,
+            self._context(routes=("issuer-capacity",)),
+            with_verified_fact=False,
+        )
+        self.assertEqual(
+            result.decisions[0].assessment.gap_class.value,
+            "CORE_SCORE_BLOCKER",
+        )
+        self.assertTrue(result.decisions[0].supplemental_allowed)
+
+    def test_additional_issuer_detail_is_cap_after_validated_scope(self) -> None:
+        gap = self._gap(source_family="ISSUER_CAPACITY_KPI")
+        result = self._adjudicate(
+            gap,
+            self._context(routes=("issuer-capacity",)),
+            with_verified_fact=True,
+        )
+        self.assertEqual(
+            result.decisions[0].assessment.gap_class.value,
+            "CORROBORATION_CAP",
+        )
+        self.assertFalse(result.decisions[0].supplemental_allowed)
+
+    def test_unvalidated_profile_does_not_bound_component_range(self) -> None:
+        gap = self._gap(source_family="CUSTOMER_OFFICIAL")
+        fact = self._verified_fact("earnings_visibility")
+        fact["predicate"] = "COMPANY_PROFILE"
+        fact["allowed_component_ids"] = []
+        result = self.adjudicator.adjudicate(
+            dossier=self._dossier(gap),
+            job=self.job,
+            verified_facts=[fact],
+            claim_fact_links=[self._claim_link("earnings_visibility")],
+            deterministic_contexts={gap["dossier_gap_id"]: self._context()},
+        )
+        self.assertEqual(
+            result.decisions[0].assessment.gap_class.value,
+            "CORE_SCORE_BLOCKER",
+        )
+
+    def test_open_ended_authority_routes_use_existing_bounded_connectors(self) -> None:
+        self.assertEqual(
+            route_source_classes("ISSUER_CAPACITY_KPI"),
+            ("IssuerIR", "DART"),
+        )
+        self.assertEqual(
+            route_source_classes("PEER_CAPACITY_GUIDANCE"),
+            ("GeneralWebSearch",),
+        )
+        self.assertTrue(source_family_requires_general_web("PEER_CAPACITY_GUIDANCE"))
 
     def test_monitoring_gap_no_supplement(self) -> None:
         gap = self._gap(
@@ -544,6 +640,11 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
         )
         self.assertEqual(result.receipt["query_count"], 0)
         self.assertEqual(result.receipt["fetch_count"], 0)
+        with self.assertRaises(NoProgressDetected):
+            ProSupplementalResearchService(
+                self.store,
+                executor=PendingExecutor(),
+            ).run_job(self.job.job_id, job_root=root)
 
     def test_future_llm_query_is_rejected_before_any_source_execution(self) -> None:
         task = self.planner.plan(
@@ -568,6 +669,7 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
                 result = Completion()
                 result.payload = {
                     "input_id": payload["input_id"],
+                    "selected_contract_primitive_id": "margin_fcf_conversion",
                     "literal_queries": ["검증기업 2027 현금흐름 공식 공시"],
                     "generation_rationale": "원문 확인",
                     "ambiguity_reasons": [],

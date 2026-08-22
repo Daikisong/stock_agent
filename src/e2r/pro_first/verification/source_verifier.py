@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from datetime import date
+from datetime import date, datetime
 import hashlib
+import json
 import os
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -16,17 +17,22 @@ from e2r.research_brain.researcher_mode.evidence_fact_compiler import (
     FactCompilationResult,
 )
 from e2r.research_brain.scoring.business_mechanism_scope import (
+    ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT,
     MechanismScopeValidator,
     infer_business_mechanism_scope,
     load_mechanism_scope_contracts,
 )
 
-from ..ids import stable_id
+from ..ids import canonical_hash, stable_id
 from ..models import ProResearchJob
 from .date_verifier import AsOfDateVerifier
 from .lifecycle_bridge import EvidenceLifecycleBridge
+from .mechanism_scope_mapper import MechanismScopeMapper, MechanismScopeMappingRun
 from .quote_verifier import ExactQuoteVerifier
 from .subject_scope_verifier import SubjectScopeVerifier
+
+
+SOURCE_VERIFICATION_SEMANTICS_VERSION = "e2r_pro_source_verification_v6"
 
 
 TERMINAL_SOURCE_STATUSES = frozenset(
@@ -92,6 +98,7 @@ class SourceVerificationResult:
     full_document_fetch_count: int
     document_cache_reuse_count: int
     source_document_count: int
+    mechanism_scope_mapping: MechanismScopeMappingRun | None = None
 
     @property
     def receipt_payload(self) -> Mapping[str, Any]:
@@ -113,6 +120,31 @@ class SourceVerificationResult:
             "full_document_fetch_count": self.full_document_fetch_count,
             "document_cache_reuse_count": self.document_cache_reuse_count,
             "source_document_count": self.source_document_count,
+            "mechanism_scope_mapping_count": (
+                len(self.mechanism_scope_mapping.mappings_by_fact_id)
+                if self.mechanism_scope_mapping is not None
+                else 0
+            ),
+            "mechanism_scope_provider_name": (
+                self.mechanism_scope_mapping.provider_name
+                if self.mechanism_scope_mapping is not None
+                else "DETERMINISTIC_LEGACY_INFERENCE"
+            ),
+            "mechanism_scope_prompt_hash": (
+                self.mechanism_scope_mapping.prompt_hash
+                if self.mechanism_scope_mapping is not None
+                else None
+            ),
+            "mechanism_scope_response_hash": (
+                self.mechanism_scope_mapping.response_hash
+                if self.mechanism_scope_mapping is not None
+                else None
+            ),
+            "mechanism_scope_mapping_hash": (
+                canonical_hash(self.mechanism_scope_mapping.mappings_by_fact_id)
+                if self.mechanism_scope_mapping is not None
+                else None
+            ),
             "status_counts": counts,
             "fact_graph_ready": self.fact_compilation.fact_graph_ready,
             "query_count": 0,
@@ -138,6 +170,7 @@ class ProSourceVerifier:
         *,
         page_fetcher: PageFetcher | None = None,
         min_full_document_chars: int = 120,
+        mechanism_scope_mapper: MechanismScopeMapper | None = None,
     ) -> None:
         if min_full_document_chars < 32:
             raise ValueError("full-document minimum is too small")
@@ -145,6 +178,7 @@ class ProSourceVerifier:
             live_enabled=False, max_text_chars=None
         )
         self.min_full_document_chars = min_full_document_chars
+        self.mechanism_scope_mapper = mechanism_scope_mapper
         self.quote_verifier = ExactQuoteVerifier()
         self.date_verifier = AsOfDateVerifier()
         self.scope_verifier = SubjectScopeVerifier()
@@ -154,6 +188,10 @@ class ProSourceVerifier:
             Path(__file__).resolve().parents[4]
             / "configs/e2r_archetype_mechanism_scopes_v1.json"
         )
+
+    @property
+    def semantics_version(self) -> str:
+        return SOURCE_VERIFICATION_SEMANTICS_VERSION
 
     def verify(
         self,
@@ -165,15 +203,40 @@ class ProSourceVerifier:
         root = Path(job_root).resolve()
         source_pages = root / "verification/source_pages"
         source_pages.mkdir(parents=True, exist_ok=True)
-        fetch_cache: dict[tuple[str, str], _FetchedDocument | FetchResult] = {}
+        facts = tuple(dossier.get("material_facts") or ()) + tuple(
+            dossier.get("counterfacts") or ()
+        )
+        selected_scope_contracts = self._selected_scope_contracts(job)
+        scope_mapping = None
+        if self.mechanism_scope_mapper is not None:
+            scope_mapping = self._load_durable_mechanism_scope_mapping(
+                root=root,
+                facts=facts,
+            ) or self.mechanism_scope_mapper.map_facts(
+                facts=facts,
+                contracts=tuple(contract for _, contract in selected_scope_contracts),
+            )
+        fetch_cache = self._load_durable_document_cache(
+            root=root,
+            as_of_date=job.as_of_date,
+            allowed_urls={str(fact.get("source_url") or "") for fact in facts},
+        )
         fetch_count = 0
         cache_reuse_count = 0
         verifications: list[FactSourceVerification] = []
         accepted_claims: list[Mapping[str, Any]] = []
         target = dossier.get("target") or {}
-        target_aliases = tuple(str(value) for value in target.get("aliases") or ())
-        facts = tuple(dossier.get("material_facts") or ()) + tuple(
-            dossier.get("counterfacts") or ()
+        target_aliases = tuple(
+            dict.fromkeys(
+                str(value)
+                for value in (
+                    *(target.get("aliases") or ()),
+                    target.get("english_name"),
+                    target.get("symbol"),
+                    target.get("target_id"),
+                )
+                if str(value or "").strip()
+            )
         )
         for fact in facts:
             url = str(fact.get("source_url") or "")
@@ -197,6 +260,13 @@ class ProSourceVerifier:
                 job=job,
                 target_aliases=target_aliases,
                 cache_reused=cache_reused,
+                explicit_scope=(
+                    scope_mapping.mappings_by_fact_id.get(
+                        str(fact.get("dossier_fact_id") or "")
+                    )
+                    if scope_mapping is not None
+                    else None
+                ),
             )
             verifications.append(verification)
             if claim is not None:
@@ -214,6 +284,129 @@ class ProSourceVerifier:
             full_document_fetch_count=fetch_count,
             document_cache_reuse_count=cache_reuse_count,
             source_document_count=sum(isinstance(value, _FetchedDocument) for value in fetch_cache.values()),
+            mechanism_scope_mapping=scope_mapping,
+        )
+
+    def _load_durable_document_cache(
+        self,
+        *,
+        root: Path,
+        as_of_date: str,
+        allowed_urls: set[str],
+    ) -> dict[tuple[str, str], _FetchedDocument | FetchResult]:
+        """Reuse only hash-verified full documents from the same job snapshot."""
+
+        roster_path = root / "verification/source_verifications.jsonl"
+        if not roster_path.is_file():
+            return {}
+        cache: dict[tuple[str, str], _FetchedDocument | FetchResult] = {}
+        for line in roster_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            url = str(row.get("source_url") or "")
+            relative_path = str(row.get("document_path") or "")
+            expected_hash = str(row.get("content_hash") or "")
+            if (
+                not url
+                or url not in allowed_urls
+                or not relative_path
+                or not expected_hash
+                or row.get("full_document") is not True
+            ):
+                continue
+            path = (root / relative_path).resolve()
+            try:
+                path.relative_to(root)
+            except ValueError:
+                continue
+            if not path.is_file():
+                continue
+            payload = path.read_bytes()
+            if hashlib.sha256(payload).hexdigest() != expected_hash:
+                continue
+            try:
+                text = payload.decode("utf-8")
+            except UnicodeDecodeError:
+                continue
+            source_id = str(row.get("source_id") or "") or stable_id(
+                "PROSRC", {"url": url, "content_hash": expected_hash}
+            )
+            snapshot_date = date.fromisoformat(as_of_date)
+            fetch = FetchResult(
+                url=url,
+                ok=True,
+                text=text,
+                content_type="text/plain",
+                fetched_at=datetime(
+                    snapshot_date.year,
+                    snapshot_date.month,
+                    snapshot_date.day,
+                    8,
+                    0,
+                ),
+                source_path=str(path),
+                text_complete=True,
+                original_text_chars=len(text),
+                returned_text_chars=len(text),
+            )
+            cache[(url, as_of_date)] = _FetchedDocument(
+                fetch=fetch,
+                text=text,
+                content_hash=expected_hash,
+                source_id=source_id,
+                relative_path=relative_path,
+                full_document=True,
+            )
+        return cache
+
+    def _load_durable_mechanism_scope_mapping(
+        self,
+        *,
+        root: Path,
+        facts: Sequence[Mapping[str, Any]],
+    ) -> MechanismScopeMappingRun | None:
+        mapping_path = root / "verification/mechanism_scope_mappings.jsonl"
+        receipt_path = root / "verification/source_verification_receipt.json"
+        if not mapping_path.is_file() or not receipt_path.is_file():
+            return None
+        try:
+            rows = tuple(
+                json.loads(line)
+                for line in mapping_path.read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            )
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            return None
+        expected_ids = tuple(
+            str(row.get("dossier_fact_id") or "") for row in facts
+        )
+        actual_ids = tuple(str(row.get("dossier_fact_id") or "") for row in rows)
+        if actual_ids != expected_ids:
+            return None
+        mappings = {
+            fact_id: {
+                key: value
+                for key, value in row.items()
+                if key != "dossier_fact_id"
+            }
+            for fact_id, row in zip(actual_ids, rows)
+        }
+        expected_hash = str(receipt.get("mechanism_scope_mapping_hash") or "")
+        if not expected_hash or canonical_hash(mappings) != expected_hash:
+            return None
+        return MechanismScopeMappingRun(
+            mappings_by_fact_id=mappings,
+            provider_name=(
+                str(receipt.get("mechanism_scope_provider_name") or "UNKNOWN")
+                + ":DURABLE_CACHE"
+            ),
+            prompt_hash=str(receipt.get("mechanism_scope_prompt_hash") or ""),
+            response_hash=str(receipt.get("mechanism_scope_response_hash") or ""),
         )
 
     def _materialize_document(
@@ -252,6 +445,7 @@ class ProSourceVerifier:
         job: ProResearchJob,
         target_aliases: Sequence[str],
         cache_reused: bool,
+        explicit_scope: Mapping[str, Any] | None = None,
     ) -> tuple[FactSourceVerification, Mapping[str, Any] | None]:
         dossier_fact_id = str(fact.get("dossier_fact_id") or "")
         url = str(fact.get("source_url") or "")
@@ -362,6 +556,7 @@ class ProSourceVerifier:
             fact=fact,
             job=job,
             proposed_components=proposed,
+            explicit_scope=explicit_scope,
         )
         if not lifecycle.compile_as_evidence:
             return terminal(
@@ -447,16 +642,9 @@ class ProSourceVerifier:
         fact: Mapping[str, Any],
         job: ProResearchJob,
         proposed_components: tuple[str, ...],
+        explicit_scope: Mapping[str, Any] | None = None,
     ) -> tuple[tuple[str, ...], tuple[str, ...]]:
-        selected_contracts = []
-        for job_archetype in job.archetype_ids:
-            matches = [
-                (archetype_id, contract)
-                for archetype_id, contract in self._scope_contracts.items()
-                if archetype_id == job_archetype
-                or archetype_id.startswith(f"{job_archetype}_")
-            ]
-            selected_contracts.extend(matches)
+        selected_contracts = self._selected_scope_contracts(job)
         if not selected_contracts:
             return (), ("NO_SELECTED_MECHANISM_SCOPE_CONTRACT",)
         allowed: list[str] = []
@@ -465,7 +653,31 @@ class ProSourceVerifier:
             **dict(fact),
             "exact_quote": fact.get("supporting_excerpt"),
             "target_id": job.symbol,
+            "raw_assertion": {
+                "predicate": fact.get("predicate"),
+                "object_text": " ".join(
+                    str(fact.get(key) or "")
+                    for key in (
+                        "statement",
+                        "business_segment",
+                        "product_family",
+                        "economic_mechanism",
+                    )
+                ),
+            },
+            "document_context_excerpt": " ".join(
+                str(fact.get(key) or "")
+                for key in (
+                    "supporting_excerpt",
+                    "business_segment",
+                    "product_family",
+                    "economic_mechanism",
+                )
+            ),
         }
+        claim.update(_issuer_consolidated_scope_projection(fact))
+        if explicit_scope is not None:
+            claim.update(dict(explicit_scope))
         for component_id in proposed_components:
             component_pass = False
             for archetype_id, contract in selected_contracts:
@@ -487,6 +699,19 @@ class ProSourceVerifier:
                 allowed.append(component_id)
         return tuple(dict.fromkeys(allowed)), tuple(dict.fromkeys(reasons))
 
+    def _selected_scope_contracts(self, job: ProResearchJob) -> list[tuple[str, Any]]:
+        selected_contracts: list[tuple[str, Any]] = []
+        for job_archetype in job.archetype_ids:
+            selected_contracts.extend(
+                (archetype_id, contract)
+                for archetype_id, contract in self._scope_contracts.items()
+                if archetype_id == job_archetype
+                or archetype_id.startswith(f"{job_archetype}_")
+            )
+        if not selected_contracts:
+            raise ValueError("selected archetype has no mechanism scope contract")
+        return selected_contracts
+
     @staticmethod
     def _write_text_atomic(path: Path, text: str) -> None:
         part = path.with_suffix(path.suffix + ".part")
@@ -503,10 +728,57 @@ def _source_independence_group(url: str, publisher: str) -> str:
     return stable_id("PROSRCGROUP", {"identity": identity})
 
 
+def _issuer_consolidated_scope_projection(
+    fact: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Project generic consolidated actuals onto the existing common contract."""
+
+    if fact.get("issuer_scoped") is not True:
+        return {}
+    segment = str(fact.get("business_segment") or "").casefold()
+    if not any(value in segment for value in ("consolidated", "corporate", "연결")):
+        return {}
+    text = " ".join(
+        str(fact.get(key) or "")
+        for key in (
+            "statement",
+            "predicate",
+            "economic_mechanism",
+            "business_segment",
+            "product_family",
+        )
+    ).casefold()
+    aliases = {
+        "revenue": ("revenue", "revenues", "매출"),
+        "operating_profit": ("operating profit", "영업이익"),
+        "net_income": ("net income", "net profit", "당기순이익"),
+        "operating_cash_flow": (
+            "operating cash flow",
+            "영업활동현금흐름",
+        ),
+        "capex": ("capex", "capital expenditure", "설비투자"),
+        "free_cash_flow": ("free cash flow", "fcf", "잉여현금흐름"),
+        "cash_balance": ("cash balance", "net cash", "borrowings", "현금", "차입금"),
+    }
+    contract = ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT
+    for metric_name, transaction, mechanism in contract.metric_scope_rows:
+        if any(token in text for token in aliases.get(metric_name, (metric_name,))):
+            return {
+                "scope_business_segment": contract.scope_business_segment,
+                "scope_product_family": contract.scope_product_family,
+                "scope_technology_family": contract.scope_technology_family,
+                "scope_transaction_type": transaction,
+                "scope_economic_mechanism": mechanism,
+                "scope_confidence": 1.0,
+            }
+    return {}
+
+
 __all__ = [
     "ACCEPTED_SOURCE_STATUSES",
     "FactSourceVerification",
     "ProSourceVerifier",
+    "SOURCE_VERIFICATION_SEMANTICS_VERSION",
     "SourceVerificationResult",
     "TERMINAL_SOURCE_STATUSES",
 ]

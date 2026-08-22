@@ -22,6 +22,22 @@ STOP_SELECTORS = (
     'button[aria-label*="Stop"]',
 )
 
+# Current ChatGPT Pro UI (2026-08): research runs from the ordinary Chat
+# composer with the reasoning level shown as ``Pro``.  Both controls must be
+# visible and active; ``Work + Pro`` and ``Chat + Light`` are not equivalent.
+CHAT_MODE_ACTIVE_SELECTORS = (
+    'button[role="radio"][data-state="on"]:has-text("Chat")',
+    'button[role="radio"][aria-checked="true"]:has-text("Chat")',
+)
+
+CHAT_MODE_CONTROL_SELECTORS = (
+    'button[role="radio"]:has-text("Chat")',
+)
+
+PRO_REASONING_ACTIVE_SELECTORS = (
+    'form button:has-text("Pro")',
+)
+
 DEEP_RESEARCH_ACTIVE_SELECTORS = (
     '[data-testid*="deep-research"][aria-pressed="true"]',
     '[data-testid*="deep-research"][data-state="active"]',

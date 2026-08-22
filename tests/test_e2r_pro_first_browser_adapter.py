@@ -78,10 +78,70 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
             {row.button_text for row in prepared.preexisting_attachment_keys},
         )
 
+    async def test_prepare_waits_for_attachment_processing_without_submitting(self) -> None:
+        await self.page.evaluate(
+            """() => {
+                const send = document.querySelector('#composer-submit-button');
+                send.disabled = true;
+                window.setTimeout(() => { send.disabled = false; }, 250);
+            }"""
+        )
+        prepared = await self.adapter.prepare_without_submit(
+            browser_session_id="BROWSER-session",
+            packet_path=self.packet_path,
+            packet_hash=self.packet_hash,
+            prompt=self.prompt,
+            prompt_hash=canonical_hash({"prompt": self.prompt}),
+        )
+        self.assertTrue(prepared.send_ready)
+        self.assertEqual(prepared.submit_count, 0)
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
+
+    async def test_prepare_restart_reuses_exact_hashed_attachment(self) -> None:
+        first = await self.adapter.prepare_without_submit(
+            browser_session_id="BROWSER-session",
+            packet_path=self.packet_path,
+            packet_hash=self.packet_hash,
+            prompt=self.prompt,
+            prompt_hash=canonical_hash({"prompt": self.prompt}),
+        )
+        restarted = PlaywrightChatGPTWebAdapter(self.page)
+        second = await restarted.prepare_without_submit(
+            browser_session_id="BROWSER-session",
+            packet_path=self.packet_path,
+            packet_hash=self.packet_hash,
+            prompt=self.prompt,
+            prompt_hash=canonical_hash({"prompt": self.prompt}),
+        )
+        self.assertEqual(first.uploaded_filename, second.uploaded_filename)
+        self.assertEqual(
+            await self.page.locator('#attachments button:has-text("research_packet.json")').count(),
+            1,
+        )
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
+
     async def test_upload_packet(self) -> None:
         filename = await self.adapter.upload_packet(self.packet_path)
         self.assertEqual(filename, "research_packet.json")
         self.assertTrue(await self.page.get_by_text(filename, exact=False).is_visible())
+
+    async def test_upload_filename_accepts_visible_accessibility_label(self) -> None:
+        await self.page.set_content(
+            '<html><body><button aria-label="research_packet.json"></button></body></html>'
+        )
+        self.assertEqual(
+            await self.adapter._wait_for_uploaded_filename("research_packet.json"),
+            "research_packet.json",
+        )
+
+    async def test_upload_filename_accepts_only_numeric_collision_suffix(self) -> None:
+        await self.page.set_content(
+            '<html><body><button aria-label="research_packet(2).json"></button></body></html>'
+        )
+        self.assertEqual(
+            await self.adapter._wait_for_uploaded_filename("research_packet.json"),
+            "research_packet(2).json",
+        )
 
     async def test_prepare_rejects_packet_or_prompt_hash_mismatch(self) -> None:
         with self.assertRaisesRegex(BrowserUIIncompatible, "packet file hash"):
@@ -115,6 +175,55 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
             await self.page.locator('#deep-research').get_attribute('aria-pressed'),
             "true",
         )
+
+    async def test_current_chat_plus_pro_mode_is_research_ready(self) -> None:
+        await self.page.set_content(
+            "<html><body>"
+            '<button id="chat" role="radio" data-state="on">Chat</button>'
+            '<button id="work" role="radio" data-state="off">Work</button>'
+            "<form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button id="reasoning" type="button" data-state="closed">Pro</button>'
+            '<button id="composer-submit-button" type="submit">Send</button>'
+            "</form></body></html>"
+        )
+        inspection = await self.adapter.ensure_deep_research_mode()
+        self.assertTrue(inspection.deep_research_ready)
+        self.assertEqual(await self.page.locator("#chat").get_attribute("data-state"), "on")
+        self.assertEqual(await self.page.locator("#work").get_attribute("data-state"), "off")
+
+    async def test_chat_plus_light_does_not_pass_as_pro_mode(self) -> None:
+        await self.page.set_content(
+            "<html><body>"
+            '<button role="radio" data-state="on">Chat</button>'
+            "<form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button type="button" data-state="closed">Light</button>'
+            "</form></body></html>"
+        )
+        with self.assertRaisesRegex(BrowserUIIncompatible, "Chat \\+ Pro"):
+            await self.adapter.ensure_deep_research_mode()
+        self.assertFalse((await self.adapter.inspect_state()).deep_research_ready)
+
+    async def test_work_plus_pro_switches_to_chat_before_becoming_ready(self) -> None:
+        await self.page.set_content(
+            "<html><body>"
+            '<button id="chat" role="radio" data-state="off" '
+            'onclick="this.dataset.state=\'on\'; '
+            'document.querySelector(\'#work\').dataset.state=\'off\'">Chat</button>'
+            '<button id="work" role="radio" data-state="on">Work</button>'
+            "<form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button type="button" data-state="closed">Pro</button>'
+            "</form></body></html>"
+        )
+        inspection = await self.adapter.ensure_deep_research_mode()
+        self.assertTrue(inspection.deep_research_ready)
+        self.assertEqual(await self.page.locator("#chat").get_attribute("data-state"), "on")
+        self.assertEqual(await self.page.locator("#work").get_attribute("data-state"), "off")
 
     async def test_manual_login_is_reported_not_automated(self) -> None:
         await self.page.goto(

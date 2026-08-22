@@ -206,6 +206,7 @@ CREATE TABLE IF NOT EXISTS pro_gap_decisions (
     evidence_gap_key TEXT NOT NULL,
     disposition TEXT NOT NULL,
     decision_hash TEXT NOT NULL,
+    adjudication_batch_id TEXT NOT NULL DEFAULT '',
     receipt_json TEXT NOT NULL,
     created_at TEXT NOT NULL,
     UNIQUE(job_id, evidence_gap_key, decision_hash)
@@ -302,6 +303,17 @@ class ProFirstJobStore:
         with self._connect() as connection:
             connection.execute("PRAGMA journal_mode=WAL")
             connection.executescript(_SCHEMA)
+            columns = {
+                str(row[1])
+                for row in connection.execute(
+                    "PRAGMA table_info(pro_gap_decisions)"
+                ).fetchall()
+            }
+            if "adjudication_batch_id" not in columns:
+                connection.execute(
+                    "ALTER TABLE pro_gap_decisions ADD COLUMN "
+                    "adjudication_batch_id TEXT NOT NULL DEFAULT ''"
+                )
 
     def pragma_snapshot(self) -> Mapping[str, Any]:
         with self._connect() as connection:
@@ -1206,10 +1218,20 @@ class ProFirstJobStore:
     def get_source_verification_receipt(self, job_id: str) -> Mapping[str, Any] | None:
         with self._connect() as connection:
             row = connection.execute(
-                "SELECT receipt_json FROM pro_source_verifications WHERE job_id=?",
+                "SELECT receipt_json FROM pro_source_verifications "
+                "WHERE job_id=? ORDER BY rowid DESC LIMIT 1",
                 (job_id,),
             ).fetchone()
         return None if row is None else json.loads(row["receipt_json"])
+
+    def source_verification_attempt_count(self, job_id: str) -> int:
+        with self._connect() as connection:
+            row = connection.execute(
+                "SELECT COUNT(*) AS attempt_count FROM pro_source_verifications "
+                "WHERE job_id=?",
+                (job_id,),
+            ).fetchone()
+        return int(row["attempt_count"] if row is not None else 0)
 
     def record_gap_adjudication(
         self,
@@ -1282,6 +1304,7 @@ class ProFirstJobStore:
             "decision_roster_hash": canonical_hash(list(decision_hashes)),
             "supplemental_task_count": supplemental_count,
         }
+        adjudication_batch_id = canonical_hash(receipt)
         with self._transaction() as connection:
             if self._existing_idempotent_event(
                 connection,
@@ -1311,8 +1334,8 @@ class ProFirstJobStore:
                     """
                     INSERT INTO pro_gap_decisions (
                         gap_decision_id, job_id, evidence_gap_key, disposition,
-                        decision_hash, receipt_json, created_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                        decision_hash, adjudication_batch_id, receipt_json, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         decision_id,
@@ -1320,6 +1343,7 @@ class ProFirstJobStore:
                         decision["evidence_gap_key"],
                         decision["planner_label"],
                         decision["decision_hash"],
+                        adjudication_batch_id,
                         canonical_json(decision),
                         created_at,
                     ),
@@ -1353,9 +1377,13 @@ class ProFirstJobStore:
             rows = connection.execute(
                 """
                 SELECT receipt_json FROM pro_gap_decisions
-                WHERE job_id=? ORDER BY created_at, gap_decision_id
+                WHERE job_id=? AND adjudication_batch_id=(
+                    SELECT adjudication_batch_id FROM pro_gap_decisions
+                    WHERE job_id=? ORDER BY rowid DESC LIMIT 1
+                )
+                ORDER BY rowid
                 """,
-                (job_id,),
+                (job_id, job_id),
             ).fetchall()
         return tuple(json.loads(row["receipt_json"]) for row in rows)
 

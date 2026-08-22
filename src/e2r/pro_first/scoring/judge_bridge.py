@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import json
+import os
+from pathlib import Path
 from typing import Any, Mapping, Protocol, Sequence
 
 from e2r.research_brain.researcher_mode.schemas import (
@@ -15,6 +18,7 @@ from e2r.research_brain.researcher_mode.schemas import (
 )
 
 from ..ids import canonical_hash, stable_id
+from ..atomic_io import fsync_directory
 
 
 PASS_BY_ROLE = {
@@ -22,6 +26,8 @@ PASS_BY_ROLE = {
     ComponentJudgeRole.SKEPTIC.value: "COMPONENT_SKEPTIC_JUDGE",
     ComponentJudgeRole.CALIBRATION_JUDGE.value: "CALIBRATION_JUDGE",
 }
+
+_JUDGE_PROVIDER_SEMANTICS = "e2r_pro_evidence_only_judge_v2"
 
 
 class EvidenceOnlyJudgeProvider(Protocol):
@@ -40,6 +46,8 @@ class JudgeCallReceipt:
     provider_name: str
     status: str
     error: str | None = None
+    provider_called: bool = True
+    response_reused: bool = False
 
     def to_dict(self) -> Mapping[str, Any]:
         return {
@@ -72,6 +80,12 @@ class JudgeBridgeResult:
             "status": self.status,
             "judge_decision_count": len(self.decisions),
             "judge_call_count": len(self.call_receipts),
+            "provider_call_count": sum(
+                row.provider_called for row in self.call_receipts
+            ),
+            "provider_response_reuse_count": sum(
+                row.response_reused for row in self.call_receipts
+            ),
             "expected_judge_count": 21,
             "pending_reasons": list(self.pending_reasons),
             "mode": "EVIDENCE_ONLY_NO_SEARCH",
@@ -97,6 +111,7 @@ class ProEvidenceOnlyJudgeBridge:
         historical_anchors: Sequence[ComponentAnchor | Mapping[str, Any]],
         gap_decisions: Sequence[Mapping[str, Any]],
         component_ids: Sequence[str] | None = None,
+        response_cache_root: str | Path | None = None,
     ) -> JudgeBridgeResult:
         if self.provider is None:
             return JudgeBridgeResult(
@@ -123,6 +138,11 @@ class ProEvidenceOnlyJudgeBridge:
             for row in historical_anchors
             if _anchor_id(row)
         }
+        cache_root = (
+            Path(response_cache_root).resolve()
+            if response_cache_root is not None
+            else None
+        )
         decisions: list[ComponentJudgeDecision] = []
         receipts: list[JudgeCallReceipt] = []
         for component_id in CANONICAL_COMPONENT_ORDER:
@@ -168,6 +188,7 @@ class ProEvidenceOnlyJudgeBridge:
             ):
                 request = {
                     "schema_version": "e2r_pro_evidence_only_judge_request_v1",
+                    "provider_semantics": _JUDGE_PROVIDER_SEMANTICS,
                     "mode": "EVIDENCE_ONLY_NO_SEARCH",
                     "role": role,
                     "component_memo": memo.to_dict(),
@@ -192,9 +213,36 @@ class ProEvidenceOnlyJudgeBridge:
                         "prompt_hash": prompt_hash,
                     },
                 )
+                response_hash = None
+                response_reused = False
+                provider_called = False
                 try:
-                    response = dict(self.provider.judge(request))
-                    response_hash = canonical_hash(response)
+                    response = _read_cached_judge_response(
+                        cache_root=cache_root,
+                        judge_call_id=judge_call_id,
+                        prompt_hash=prompt_hash,
+                    )
+                    if response is None:
+                        provider_called = True
+                        response = dict(self.provider.judge(request))
+                        response_hash = canonical_hash(response)
+                        _write_cached_judge_response(
+                            cache_root=cache_root,
+                            judge_call_id=judge_call_id,
+                            prompt_hash=prompt_hash,
+                            response_hash=response_hash,
+                            provider_name=str(
+                                getattr(
+                                    self.provider,
+                                    "provider_name",
+                                    "UNKNOWN",
+                                )
+                            ),
+                            response=response,
+                        )
+                    else:
+                        response_reused = True
+                        response_hash = canonical_hash(response)
                     decision = self._decision(
                         response=response,
                         memo=memo,
@@ -210,12 +258,18 @@ class ProEvidenceOnlyJudgeBridge:
                             component_id=component_id,
                             role=role,
                             prompt_hash=prompt_hash,
-                            response_hash=None,
+                            response_hash=response_hash,
                             provider_name=str(
                                 getattr(self.provider, "provider_name", "UNKNOWN")
                             ),
-                            status="PROVIDER_ERROR",
+                            status=(
+                                "PROVIDER_ERROR"
+                                if response_hash is None
+                                else "RESPONSE_INVALID"
+                            ),
                             error=f"{type(error).__name__}: {error}",
+                            provider_called=provider_called,
+                            response_reused=response_reused,
                         )
                     )
                     return JudgeBridgeResult(
@@ -235,7 +289,13 @@ class ProEvidenceOnlyJudgeBridge:
                         prompt_hash=prompt_hash,
                         response_hash=response_hash,
                         provider_name=decision.provider_name,
-                        status="COMPLETE",
+                        status=(
+                            "REUSED_COMPLETE"
+                            if response_reused
+                            else "COMPLETE"
+                        ),
+                        provider_called=provider_called,
+                        response_reused=response_reused,
                     )
                 )
         return JudgeBridgeResult(
@@ -268,6 +328,13 @@ class ProEvidenceOnlyJudgeBridge:
         nearest = tuple(str(value) for value in response.get("nearest_anchor_ids") or ())
         if not set(nearest).issubset(memo.historical_anchor_ids):
             raise ValueError("judge anchor is outside the memo anchor roster")
+        comparisons = tuple(
+            str(value) for value in response.get("anchor_comparisons") or ()
+        )
+        if memo.historical_anchor_ids and (not nearest or not comparisons):
+            raise ValueError(
+                "judge must compare a supplied historical anchor when one exists"
+            )
         proposed = float(response.get("proposed_points", 0.0))
         allowed = tuple(
             float(value)
@@ -298,9 +365,7 @@ class ProEvidenceOnlyJudgeBridge:
             prompt_hash=prompt_hash,
             response_hash=response_hash,
             provider_name=str(getattr(self.provider, "provider_name", "UNKNOWN")),
-            anchor_comparisons=tuple(
-                str(value) for value in response.get("anchor_comparisons") or ()
-            ),
+            anchor_comparisons=comparisons,
             proposed_points=proposed,
             allowed_range=allowed,  # type: ignore[arg-type]
             rationale=str(response.get("rationale") or "").strip(),
@@ -321,6 +386,63 @@ def _anchor_id(row: ComponentAnchor | Mapping[str, Any]) -> str:
 
 def _anchor_dict(row: ComponentAnchor | Mapping[str, Any]) -> Mapping[str, Any]:
     return row.to_dict() if isinstance(row, ComponentAnchor) else dict(row)
+
+
+def _read_cached_judge_response(
+    *,
+    cache_root: Path | None,
+    judge_call_id: str,
+    prompt_hash: str,
+) -> Mapping[str, Any] | None:
+    if cache_root is None:
+        return None
+    path = cache_root / f"{judge_call_id}.json"
+    if not path.is_file():
+        return None
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    response = payload.get("response")
+    if (
+        payload.get("judge_call_id") != judge_call_id
+        or payload.get("prompt_hash") != prompt_hash
+        or not isinstance(response, Mapping)
+        or payload.get("response_hash") != canonical_hash(response)
+    ):
+        raise ValueError("durable Judge response cache failed hash validation")
+    return dict(response)
+
+
+def _write_cached_judge_response(
+    *,
+    cache_root: Path | None,
+    judge_call_id: str,
+    prompt_hash: str,
+    response_hash: str,
+    provider_name: str,
+    response: Mapping[str, Any],
+) -> None:
+    if cache_root is None:
+        return
+    cache_root.mkdir(parents=True, exist_ok=True)
+    path = cache_root / f"{judge_call_id}.json"
+    part = path.with_suffix(".json.part")
+    payload = {
+        "schema_version": "e2r_pro_judge_response_cache_v1",
+        "judge_call_id": judge_call_id,
+        "prompt_hash": prompt_hash,
+        "response_hash": response_hash,
+        "provider_name": provider_name,
+        "provider_original_call_count": 1,
+        "query_count": 0,
+        "fetch_count": 0,
+        "response": response,
+    }
+    with part.open("w", encoding="utf-8") as stream:
+        stream.write(json.dumps(payload, ensure_ascii=False, sort_keys=True))
+        stream.write("\n")
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.replace(part, path)
+    fsync_directory(path.parent)
 
 
 __all__ = [

@@ -10,6 +10,7 @@ from e2r.research_brain.schemas import SourceTask, SourceTaskType
 from ..ids import stable_id
 from ..models import ProResearchJob
 from .adjudicator import GapAdjudicationResult, ProGapDecision
+from .source_family_policy import source_family_requires_general_web
 
 
 GENERAL_WEB_FAMILIES = frozenset(
@@ -47,9 +48,7 @@ class SupplementalTaskBinding:
             raise ValueError("supplemental max_candidates exceeds material-gap budget")
         if self.source_task.max_fetches > 6:
             raise ValueError("supplemental max_fetches exceeds material-gap budget")
-        if self.source_task.general_search_allowed and (
-            not self.official_first_attempted or not self.official_gap_reasons
-        ):
+        if self.source_task.general_search_allowed and not self.official_gap_reasons:
             raise ValueError("general web supplemental requires an official-source gap")
 
     def to_dict(self) -> Mapping[str, Any]:
@@ -121,11 +120,9 @@ class MaterialGapSupplementalPlanner:
         job: ProResearchJob,
     ) -> SupplementalTaskBinding:
         families = _source_families(decision.key.required_source_family)
-        general_web = bool(set(families) & GENERAL_WEB_FAMILIES)
+        general_web = any(source_family_requires_general_web(row) for row in families)
         context = decision.deterministic_context
-        if general_web and (
-            not context.official_first_attempted or not context.official_gap_reasons
-        ):
+        if general_web and not context.official_gap_reasons:
             raise ValueError("general web route lacks official-first gap lineage")
         preferred = tuple(
             sorted(

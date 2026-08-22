@@ -68,7 +68,7 @@ _ALLOWED: Mapping[JobStatus, frozenset[JobStatus]] = {
     JobStatus.IMPORTING: frozenset({JobStatus.DOSSIER_IMPORTED, JobStatus.USER_ATTENTION_REQUIRED, JobStatus.FAILED_RETRYABLE, JobStatus.BLOCKED}),
     JobStatus.DOSSIER_IMPORTED: frozenset({JobStatus.VERIFYING_SOURCES, JobStatus.BLOCKED}),
     JobStatus.VERIFYING_SOURCES: frozenset({JobStatus.GAP_ADJUDICATION, JobStatus.USER_ATTENTION_REQUIRED, JobStatus.FAILED_RETRYABLE, JobStatus.BLOCKED}),
-    JobStatus.GAP_ADJUDICATION: frozenset({JobStatus.SUPPLEMENTAL_RESEARCH, JobStatus.COMPONENT_RESEARCH, JobStatus.BLOCKED}),
+    JobStatus.GAP_ADJUDICATION: frozenset({JobStatus.VERIFYING_SOURCES, JobStatus.SUPPLEMENTAL_RESEARCH, JobStatus.COMPONENT_RESEARCH, JobStatus.BLOCKED}),
     JobStatus.SUPPLEMENTAL_RESEARCH: frozenset({JobStatus.VERIFYING_SOURCES, JobStatus.COMPONENT_RESEARCH, JobStatus.FAILED_RETRYABLE, JobStatus.BLOCKED}),
     JobStatus.COMPONENT_RESEARCH: frozenset({JobStatus.JUDGING, JobStatus.FAILED_RETRYABLE, JobStatus.BLOCKED}),
     JobStatus.JUDGING: frozenset({JobStatus.SCORING, JobStatus.FAILED_RETRYABLE, JobStatus.BLOCKED}),

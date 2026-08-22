@@ -11,6 +11,10 @@ from e2r.pro_first.browser.protocol import RawBrowserCapture
 from e2r.pro_first.capture.atomic_capture import AtomicCaptureWriter, CaptureIdentity
 from e2r.pro_first.capture.coordinator import CaptureFilesystemReconciler
 from e2r.pro_first.dossier.importer import ProDossierImporter
+from e2r.pro_first.dossier.dialect_adapter import (
+    DossierDialectError,
+    ResearchDossierDialectAdapter,
+)
 from e2r.pro_first.dossier.parser import DossierParseError, ResearchDossierParser
 from e2r.pro_first.dossier.validator import (
     CANONICAL_COMPONENT_IDS,
@@ -307,6 +311,82 @@ class ProFirstDossierImportTest(unittest.IsolatedAsyncioTestCase):
         self.assertIn("REMOVE_TRAILING_COMMAS:1", result.import_receipt["repair_operations"])
         self.assertEqual(len(result.normalized_dossier["material_facts"]), 1)
 
+    async def test_known_pro_dialect_is_audited_before_strict_validation(self) -> None:
+        dossier = self._valid_dossier()
+        dossier["candidate_archetypes"] = [
+            {
+                "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                "supporting_material_fact_ids": ["MF-123456-001"],
+            }
+        ]
+        fact = dossier["material_facts"][0]
+        fact["dossier_fact_id"] = "MF-123456-001"
+        fact["direction"] = "positive"
+        fact["confidence"] = "MEDIUM_HIGH"
+        fact["current_status"] = "CONFIRMED_FILED_ACTUAL"
+        dossier["component_research"]["eps_fcf_explosion"][
+            "positive_fact_ids"
+        ] = ["MF-123456-001"]
+        dossier["unresolved_gaps"] = [
+            {
+                "dossier_gap_id": "GAP-123456-001",
+                "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                "stable_objective_id": "contract_terms",
+                "affected_component_ids": ["earnings_visibility"],
+                "required_source_families": ["ISSUER_IR"],
+                "economic_mechanism_id": "CUSTOMER_COMMITMENT",
+                "predicate_or_fact_need_id": "CONTRACT_TERMS",
+                "economic_reason": "계약 조건이 공개되지 않았다.",
+                "proposed_gap_class": "MATERIAL_UNKNOWN",
+                "proposed_missing_source_role": "DIRECT_CONTRACT_TERMS",
+                "proposed_could_change_score": True,
+                "proposed_could_change_stage": True,
+                "proposed_could_change_hard_break": False,
+            }
+        ]
+        dossier["proposed_score_ranges"] = []
+        await self._capture(dossier)
+        result = ProDossierImporter(self.store, now=lambda: self.now).import_job(
+            self.job.job_id, job_root=self.root
+        )
+        self.assertEqual(
+            result.normalized_dossier["material_facts"][0]["dossier_fact_id"],
+            "PROFACT-MF-123456-001",
+        )
+        self.assertEqual(
+            result.normalized_dossier["component_research"]["eps_fcf_explosion"][
+                "positive_fact_ids"
+            ],
+            ["PROFACT-MF-123456-001"],
+        )
+        self.assertEqual(
+            result.normalized_dossier["unresolved_gaps"][0]["dossier_gap_id"],
+            "PROGAP-GAP-123456-001",
+        )
+        self.assertEqual(
+            result.normalized_dossier["unresolved_gaps"][0]["proposed_gap_class"],
+            "STAGE_BOUNDARY_GAP",
+        )
+        self.assertEqual(fact["supporting_excerpt"], "공식 수치가 전년 대비 10% 개선됐다.")
+        self.assertEqual(
+            result.import_receipt["dialect_id_map"]["MF-123456-001"],
+            "PROFACT-MF-123456-001",
+        )
+        self.assertIn(
+            "MAP_CONFIDENCE_BANDS_TO_MIDPOINTS:1",
+            result.import_receipt["dialect_operations"],
+        )
+
+    def test_unknown_pro_dialect_is_not_guessed(self) -> None:
+        dossier = self._valid_dossier()
+        dossier["material_facts"][0]["confidence"] = "FAIRLY_CERTAIN"
+        with self.assertRaisesRegex(DossierDialectError, "qualitative confidence"):
+            ResearchDossierDialectAdapter().adapt(dossier)
+        dossier = self._valid_dossier()
+        dossier["proposed_score_ranges"] = [{"component": "unknown"}]
+        with self.assertRaisesRegex(DossierDialectError, "cannot be migrated safely"):
+            ResearchDossierDialectAdapter().adapt(dossier)
+
     def test_json_sentinel_parse(self) -> None:
         payload = self._valid_dossier()
         text = (
@@ -319,6 +399,22 @@ class ProFirstDossierImportTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(
             parsed.repair_operations,
             ("EXTRACT_DOSSIER_SENTINEL_BLOCK", "REMOVE_JSON_CODE_FENCE"),
+        )
+
+    def test_visible_dom_standalone_json_label_is_deletion_only_repair(self) -> None:
+        payload = self._valid_dossier()
+        text = "JSON\n" + json.dumps(payload, ensure_ascii=False)
+        parsed = ResearchDossierParser().parse_text(
+            text, parser_source="DOWNLOADED_JSON"
+        )
+        self.assertEqual(parsed.payload, payload)
+        self.assertEqual(
+            parsed.repair_operations,
+            ("REMOVE_STANDALONE_JSON_LANGUAGE_LABEL",),
+        )
+        self.assertEqual(
+            parsed.protected_values_before,
+            parsed.protected_values_after,
         )
 
     def test_parser_prefers_downloaded_json_then_falls_back_to_md(self) -> None:

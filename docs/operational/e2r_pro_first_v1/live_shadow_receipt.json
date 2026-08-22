@@ -1,5 +1,7 @@
 {
   "schema_version": "e2r_pro_first_live_shadow_receipt_v1",
+  "historical_pre_login_snapshot": true,
+  "superseded_by": "live_canary_acceptance_2026-08-22.json",
   "status": "CHATGPT_WEB_SHADOW_PENDING_USER_ENV",
   "reason_code": "DEDICATED_PROFILE_MANUAL_LOGIN_REQUIRED",
   "error_class": "ManualLoginRequired",

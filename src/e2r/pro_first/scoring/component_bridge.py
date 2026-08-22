@@ -443,7 +443,32 @@ def _text(value: Any, default: str) -> str:
 def _probability(value: Any, *, default: float) -> float:
     if value is None:
         return default
-    number = float(value)
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        normalized = (
+            str(value)
+            .strip()
+            .upper()
+            .replace("-", "_")
+            .replace("/", "_")
+            .replace(" ", "_")
+        )
+        tokens = set(normalized.split("_"))
+        qualitative: list[float] = []
+        if "LOW" in tokens:
+            qualitative.append(0.35)
+        if tokens.intersection({"MEDIUM", "MODERATE"}):
+            qualitative.append(0.60)
+        if "HIGH" in tokens:
+            qualitative.append(0.80)
+        if not qualitative:
+            raise ValueError(
+                "Pro component confidence must be numeric or use HIGH/MEDIUM/LOW labels"
+            )
+        # Compound labels describe confidence in several parts of one memo.
+        # Use the weakest stated band so a prose label cannot inflate credit.
+        number = min(qualitative)
     if not 0 <= number <= 1:
         raise ValueError("Pro component confidence must be between 0 and 1")
     return number

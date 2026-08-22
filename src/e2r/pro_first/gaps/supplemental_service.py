@@ -50,6 +50,8 @@ from ..atomic_io import fsync_directory
 from ..ids import canonical_hash, canonical_json, stable_id
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
+from ..state_machine import NoProgressDetected
+from .source_family_policy import route_source_classes
 
 
 _GENERAL_WEB_SOURCE_CLASSES = frozenset(
@@ -65,6 +67,7 @@ _GENERAL_WEB_SOURCE_CLASSES = frozenset(
 )
 
 _QUERY_PROMPT_SCHEMA_NAME = "e2r_pro_material_gap_queries"
+SUPPLEMENTAL_EXECUTION_SEMANTICS_VERSION = "e2r_pro_supplemental_execution_v3"
 
 
 @dataclass(frozen=True)
@@ -80,6 +83,7 @@ class SupplementalTaskResult:
     query_prompt_hashes: tuple[str, ...] = ()
     query_response_hashes: tuple[str, ...] = ()
     provider_name: str = ""
+    selected_contract_primitive_id: str = ""
     provider_errors: tuple[str, ...] = ()
     stop_reason: str = ""
     dossier_facts: tuple[Mapping[str, Any], ...] = ()
@@ -122,6 +126,7 @@ class SupplementalTaskResult:
             "query_prompt_hashes": list(self.query_prompt_hashes),
             "query_response_hashes": list(self.query_response_hashes),
             "provider_name": self.provider_name,
+            "selected_contract_primitive_id": self.selected_contract_primitive_id,
             "provider_errors": list(self.provider_errors),
             "stop_reason": self.stop_reason,
             "dossier_fact_count": len(self.dossier_facts),
@@ -200,12 +205,35 @@ class CodexBoundedSupplementalExecutor:
             raise ValueError("supplemental SourceTask belongs to another durable job")
         if not task.llm_query_allowed:
             raise ValueError("material-gap supplemental task must delegate queries to LLM")
-        queries, prompt_hashes, response_hashes, pending = self._generate_queries(
+        contracts = load_evidence_contracts_v2(require_all_archetypes=True)
+        contract = contracts.get(task.archetype_id)
+        if contract is None:
+            return SupplementalTaskResult(
+                evidence_gap_key=gap_key,
+                task_id=task.task_id,
+                status="PROVIDER_PENDING",
+                resolved=False,
+                query_count=0,
+                candidate_count=0,
+                fetch_count=0,
+                provider_name=str(getattr(self.query_provider, "provider_name", "UNKNOWN")),
+                provider_errors=("EVIDENCE_CONTRACT_NOT_FOUND",),
+                stop_reason="selected_archetype_contract_missing",
+            )
+        allowed_primitives = _contract_primitive_ids(contract)
+        (
+            queries,
+            selected_primitive,
+            prompt_hashes,
+            response_hashes,
+            pending,
+        ) = self._generate_queries(
             job=job,
             task=task,
             gap_decision=gap_decision,
             dossier=dossier,
             verified_facts=verified_facts,
+            allowed_primitive_ids=allowed_primitives,
         )
         if pending is not None:
             return SupplementalTaskResult(
@@ -219,29 +247,16 @@ class CodexBoundedSupplementalExecutor:
                 query_prompt_hashes=prompt_hashes,
                 query_response_hashes=response_hashes,
                 provider_name=str(getattr(self.query_provider, "provider_name", "UNKNOWN")),
+                selected_contract_primitive_id=selected_primitive or "",
                 provider_errors=(pending,),
                 stop_reason="llm_query_generation_pending",
             )
 
-        routed = _routed_source_task(task, queries=queries)
-        contracts = load_evidence_contracts_v2(require_all_archetypes=True)
-        contract = contracts.get(task.archetype_id)
-        if contract is None:
-            return SupplementalTaskResult(
-                evidence_gap_key=gap_key,
-                task_id=task.task_id,
-                status="PROVIDER_PENDING",
-                resolved=False,
-                query_count=len(queries),
-                candidate_count=0,
-                fetch_count=0,
-                queries=queries,
-                query_prompt_hashes=prompt_hashes,
-                query_response_hashes=response_hashes,
-                provider_name=str(getattr(self.query_provider, "provider_name", "UNKNOWN")),
-                provider_errors=("EVIDENCE_CONTRACT_NOT_FOUND",),
-                stop_reason="selected_archetype_contract_missing",
-            )
+        routed = _routed_source_task(
+            task,
+            queries=queries,
+            selected_primitive_id=str(selected_primitive),
+        )
         event = CandidateEventV2(
             candidate_event_id=job.candidate_id,
             symbol=job.symbol,
@@ -299,6 +314,7 @@ class CodexBoundedSupplementalExecutor:
             query_prompt_hashes=prompt_hashes,
             query_response_hashes=response_hashes,
             provider_name=str(execution.provider_name or ""),
+            selected_contract_primitive_id=str(selected_primitive),
             provider_errors=tuple(execution.provider_errors),
             stop_reason=str(execution.stop_reason or ""),
             dossier_facts=dossier_facts,
@@ -316,7 +332,14 @@ class CodexBoundedSupplementalExecutor:
         gap_decision: Mapping[str, Any],
         dossier: Mapping[str, Any],
         verified_facts: Sequence[Mapping[str, Any]],
-    ) -> tuple[tuple[str, ...], tuple[str, ...], tuple[str, ...], str | None]:
+        allowed_primitive_ids: Sequence[str],
+    ) -> tuple[
+        tuple[str, ...],
+        str | None,
+        tuple[str, ...],
+        tuple[str, ...],
+        str | None,
+    ]:
         current = tuple(
             CurrentEvidenceFact(
                 fact_id=str(row.get("fact_id") or stable_id("PROFACTCTX", row)),
@@ -374,6 +397,7 @@ class CodexBoundedSupplementalExecutor:
         prompt_hashes: list[str] = []
         response_hashes: list[str] = []
         for attempt in range(1, 4):
+            completion = None
             payload = {
                 "schema_version": "e2r_pro_material_gap_query_input_v1",
                 "input_id": stable_id(
@@ -397,6 +421,7 @@ class CodexBoundedSupplementalExecutor:
                     "preferred_source_families": list(task.preferred_source_classes),
                     "general_search_allowed": task.general_search_allowed,
                 },
+                "allowed_contract_primitive_ids": list(allowed_primitive_ids),
                 "budget": budget.to_dict(),
                 "validation_feedback": list(feedback),
                 "rejected_queries": list(dict.fromkeys(rejected)),
@@ -407,6 +432,7 @@ class CodexBoundedSupplementalExecutor:
                 (
                     "You generate literal source queries for one bounded E2R material evidence gap.",
                     "Use only the supplied current facts and missing information. Every query must name the target and use an explicit reporting year no later than as_of_date.",
+                    "Select exactly one allowed_contract_primitive_id that best operationalizes the open-ended gap, and generate queries for that same primitive. Do not invent a primitive.",
                     "Do not output a score, Stage, investment instruction, canonical archetype label, or deterministic fallback query. Return exactly the requested JSON object.",
                     canonical_json(payload),
                 )
@@ -415,11 +441,14 @@ class CodexBoundedSupplementalExecutor:
             try:
                 completion = self.query_provider.complete(
                     prompt=prompt,
-                    output_schema=QUERY_INTENT_OUTPUT_SCHEMA,
+                    output_schema=_supplemental_query_output_schema(
+                        allowed_primitive_ids
+                    ),
                 )
-                decoded = decode_query_generation_output(
+                decoded = _decode_supplemental_query_output(
                     completion.payload,
                     expected_input_id=str(payload["input_id"]),
+                    allowed_primitive_ids=allowed_primitive_ids,
                 )
                 raw_response = str(getattr(completion, "raw_response", ""))
                 response_hashes.append(
@@ -428,6 +457,7 @@ class CodexBoundedSupplementalExecutor:
                 if decoded["abstain"]:
                     return (
                         (),
+                        decoded["selected_contract_primitive_id"],
                         tuple(prompt_hashes),
                         tuple(response_hashes),
                         "QUERY_PROVIDER_ABSTAINED:" + str(decoded["abstention_reason"]),
@@ -435,18 +465,19 @@ class CodexBoundedSupplementalExecutor:
                 queries = validate_llm_literal_queries(
                     decoded["literal_queries"],
                     context=context,
-                    primitive_id=task.primitive_gap,
+                    primitive_id=decoded["selected_contract_primitive_id"],
                     budget=budget,
                     prior_rejected_queries=tuple(rejected),
                 )
                 return (
                     queries,
+                    decoded["selected_contract_primitive_id"],
                     tuple(prompt_hashes),
                     tuple(response_hashes),
                     None,
                 )
             except Exception as error:
-                raw = getattr(locals().get("completion"), "payload", {})
+                raw = getattr(completion, "payload", {})
                 if isinstance(raw, Mapping):
                     rejected.extend(
                         str(value)
@@ -456,6 +487,7 @@ class CodexBoundedSupplementalExecutor:
                 feedback.append(f"attempt_{attempt}:{type(error).__name__}:{error}")
         return (
             (),
+            None,
             tuple(prompt_hashes),
             tuple(response_hashes),
             "QUERY_PROVIDER_OR_OUTPUT_ERROR:" + "|".join(feedback),
@@ -497,6 +529,7 @@ class ProSupplementalResearchService:
                     reused=True,
                 )
             raise ValueError("job is outside the supplemental research boundary")
+        prior_receipt = _read_json(receipt_path) if receipt_path.is_file() else None
         tasks = _read_jsonl(root / "gaps/supplemental_tasks.jsonl")
         decisions = {
             str(row.get("evidence_gap_key") or ""): row
@@ -506,6 +539,43 @@ class ProSupplementalResearchService:
             raise ValueError("supplemental task roster is missing exact gap decisions")
         dossier = _read_json(root / "import/research_dossier.normalized.json")
         verified_facts = _read_jsonl(root / "verification/evidence_facts.jsonl")
+        supplemental_input_hash = canonical_hash(
+            {
+                "job_id": job.job_id,
+                "dossier_hash": canonical_hash(dossier),
+                "verified_fact_roster_hash": canonical_hash(verified_facts),
+                "tasks": tasks,
+                "decisions": [
+                    decisions[str(task.get("evidence_gap_key") or "")]
+                    for task in tasks
+                ],
+            }
+        )
+        if (
+            prior_receipt is not None
+            and prior_receipt.get("status")
+            in {
+                "SUPPLEMENTAL_RESEARCH_PROVIDER_PENDING",
+                "SUPPLEMENTAL_RESEARCH_UNRESOLVED",
+            }
+        ):
+            prior_semantics = str(
+                prior_receipt.get("execution_semantics_version") or ""
+            )
+            prior_input_hash = str(
+                prior_receipt.get("supplemental_input_hash") or ""
+            )
+            if (
+                prior_semantics == SUPPLEMENTAL_EXECUTION_SEMANTICS_VERSION
+                and prior_input_hash == supplemental_input_hash
+            ):
+                raise NoProgressDetected(
+                    "supplemental inputs and execution semantics are unchanged; repeat is forbidden"
+                )
+            _archive_prior_supplemental_attempt(
+                supplemental_root=supplemental_root,
+                receipt=prior_receipt,
+            )
         task_results = tuple(
             self.executor.execute(
                 job=job,
@@ -556,6 +626,12 @@ class ProSupplementalResearchService:
         )
         receipt = {
             "schema_version": "e2r_pro_supplemental_execution_receipt_v1",
+            "execution_semantics_version": SUPPLEMENTAL_EXECUTION_SEMANTICS_VERSION,
+            "supplemental_input_hash": supplemental_input_hash,
+            "execution_attempt": int(
+                (prior_receipt or {}).get("execution_attempt") or 1
+            )
+            + (1 if prior_receipt is not None else 0),
             "status": receipt_status,
             "job_id": job.job_id,
             "dossier_id": job.dossier_id,
@@ -713,50 +789,150 @@ def _source_task_from_mapping(row: Mapping[str, Any]) -> SourceTask:
     return SourceTask(**payload)
 
 
-def _routed_source_task(task: SourceTask, *, queries: tuple[str, ...]) -> SourceTask:
+def _supplemental_query_output_schema(
+    allowed_primitive_ids: Sequence[str],
+) -> Mapping[str, Any]:
+    allowed = tuple(dict.fromkeys(str(value).strip() for value in allowed_primitive_ids))
+    if not allowed or any(not value for value in allowed):
+        raise ValueError("supplemental query schema requires contract primitives")
+    properties = dict(QUERY_INTENT_OUTPUT_SCHEMA["properties"])
+    properties["selected_contract_primitive_id"] = {
+        "type": "string",
+        "enum": list(allowed),
+    }
+    return {
+        "type": "object",
+        "additionalProperties": False,
+        "properties": properties,
+        "required": [
+            *QUERY_INTENT_OUTPUT_SCHEMA["required"],
+            "selected_contract_primitive_id",
+        ],
+    }
+
+
+def _decode_supplemental_query_output(
+    raw: Mapping[str, Any],
+    *,
+    expected_input_id: str,
+    allowed_primitive_ids: Sequence[str],
+) -> Mapping[str, Any]:
+    base_keys = frozenset(str(value) for value in QUERY_INTENT_OUTPUT_SCHEMA["required"])
+    expected_keys = base_keys | {"selected_contract_primitive_id"}
+    actual_keys = frozenset(str(key) for key in raw)
+    if actual_keys != expected_keys:
+        raise ValueError(
+            "supplemental query output keys differ: "
+            f"missing={sorted(expected_keys - actual_keys)}, "
+            f"unknown={sorted(actual_keys - expected_keys)}"
+        )
+    decoded = dict(
+        decode_query_generation_output(
+            {key: raw[key] for key in base_keys},
+            expected_input_id=expected_input_id,
+        )
+    )
+    selected = str(raw.get("selected_contract_primitive_id") or "").strip()
+    allowed = frozenset(str(value).strip() for value in allowed_primitive_ids)
+    if not selected or selected not in allowed:
+        raise ValueError("query provider selected a primitive outside the contract")
+    decoded["selected_contract_primitive_id"] = selected
+    return decoded
+
+
+def _contract_primitive_ids(contract: Any) -> tuple[str, ...]:
+    primitive_ids = set(str(value).strip() for value in contract.required_primitives)
+    primitive_ids.update(str(value).strip() for value in contract.green_gate.primitive_ids())
+    primitive_ids.update(str(value).strip() for value in contract.alternative_primitives)
+    primitive_ids.update(
+        str(value).strip()
+        for values in contract.alternative_primitives.values()
+        for value in values
+    )
+    primitive_ids.update(str(value).strip() for value in contract.primitive_aliases)
+    primitive_ids.update(
+        str(value).strip()
+        for values in contract.score_rubric.values()
+        for value in values
+    )
+    return tuple(sorted(value for value in primitive_ids if value))
+
+
+def _routed_source_task(
+    task: SourceTask,
+    *,
+    queries: tuple[str, ...],
+    selected_primitive_id: str,
+) -> SourceTask:
+    if not selected_primitive_id.strip():
+        raise ValueError("supplemental SourceTask requires a selected contract primitive")
     routed: list[str] = []
     for family in task.preferred_source_classes:
         routed.extend(_router_source_classes(family))
     routed = list(dict.fromkeys(routed))
-    general = any(value in _GENERAL_WEB_SOURCE_CLASSES for value in routed)
-    if general and not task.general_search_allowed:
+    official = [value for value in routed if value not in _GENERAL_WEB_SOURCE_CLASSES]
+    external = [value for value in routed if value in _GENERAL_WEB_SOURCE_CLASSES]
+    if official:
+        # Mixed requests remain official-first.  General web is a later,
+        # explicit fallback, not a companion to an official-solvable attempt.
+        routed = official
+        general = False
+    elif external and task.general_search_allowed:
+        routed = external
+        general = True
+    elif external:
         # A conceptual source such as CUSTOMER_OFFICIAL has no direct connector.
         # Do not silently widen it to general web without an official-gap lineage.
-        routed = [value for value in routed if value not in _GENERAL_WEB_SOURCE_CLASSES]
+        routed = []
+        general = False
+    else:
         general = False
     if not routed:
         routed = list(task.preferred_source_classes)
     return replace(
         task,
+        primitive_gap=selected_primitive_id,
         preferred_source_classes=tuple(routed),
         query_intents=queries,
         general_search_allowed=general,
     )
 
 
+def _archive_prior_supplemental_attempt(
+    *,
+    supplemental_root: Path,
+    receipt: Mapping[str, Any],
+) -> None:
+    identity = str(receipt.get("task_result_hash") or canonical_hash(receipt))
+    archive_root = supplemental_root / "attempts" / identity
+    archived_receipt = archive_root / "supplemental_execution_receipt.json"
+    receipt_payload = canonical_json(receipt) + "\n"
+    if archived_receipt.is_file():
+        if archived_receipt.read_text(encoding="utf-8") != receipt_payload:
+            raise ValueError("archived supplemental receipt identity collision")
+    else:
+        _write_atomic(archived_receipt, receipt_payload)
+    for name in (
+        "task_executions.jsonl",
+        "dossier_facts.jsonl",
+        "evidence_facts.jsonl",
+        "claim_fact_links.jsonl",
+        "source_verifications.jsonl",
+    ):
+        source = supplemental_root / name
+        destination = archive_root / name
+        if not source.is_file():
+            continue
+        payload = source.read_text(encoding="utf-8")
+        if destination.is_file():
+            if destination.read_text(encoding="utf-8") != payload:
+                raise ValueError("archived supplemental artifact identity collision")
+            continue
+        _write_atomic(destination, payload)
+
+
 def _router_source_classes(family: str) -> tuple[str, ...]:
-    value = str(family or "").strip().upper()
-    mapping = {
-        "OPENDART": ("DART",),
-        "DART": ("DART",),
-        "KIND_KRX": ("KIND", "KRX"),
-        "KIND": ("KIND",),
-        "KRX": ("KRX",),
-        "ISSUER_EARNINGS_RELEASE": ("IssuerIR", "DART"),
-        "ISSUER_PRESENTATION": ("IssuerIR",),
-        "ISSUER_NEWSROOM": ("IssuerIR",),
-        "FINANCIAL_STATEMENTS": ("DART", "CompanyGuide"),
-        "SEGMENT_DATA": ("DART", "CompanyGuide"),
-        "CASH_FLOW": ("DART", "CompanyGuide"),
-        "MARKET_CAP_PRICE": ("CompanyGuide",),
-        "CONSENSUS_REVISION": ("CompanyGuide",),
-        "VALUATION_MULTIPLES": ("CompanyGuide",),
-        "GENERAL_WEB_DISCOVERY": ("GeneralWebSearch",),
-        "NAVER_DISCOVERY": ("NaverSearch",),
-        "TRUSTED_BUSINESS_MEDIA": ("TrustedNews",),
-        "CUSTOMER_OFFICIAL": ("GeneralWebSearch",),
-    }
-    return mapping.get(value, (family,))
+    return route_source_classes(family)
 
 
 def _compile_bundle_evidence(

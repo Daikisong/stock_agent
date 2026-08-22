@@ -12,6 +12,7 @@ from ..atomic_io import fsync_directory
 from ..ids import canonical_hash, canonical_json, stable_id
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
+from ..state_machine import NoProgressDetected
 from .source_verifier import ProSourceVerifier, SourceVerificationResult
 
 
@@ -32,6 +33,56 @@ class ProSourceVerificationService:
     ) -> None:
         self.store = store
         self.verifier = verifier or ProSourceVerifier()
+
+    def request_reverification(
+        self,
+        job_id: str,
+        *,
+        reason: str,
+        maximum_attempts: int = 3,
+    ) -> ProResearchJob:
+        """Reopen source verification only after a verifier semantics change."""
+
+        if not reason.strip():
+            raise ValueError("source reverification requires an explicit reason")
+        job = self.store.get_job(job_id)
+        if job.status not in {
+            JobStatus.GAP_ADJUDICATION.value,
+            JobStatus.SUPPLEMENTAL_RESEARCH.value,
+            JobStatus.USER_ATTENTION_REQUIRED.value,
+            JobStatus.FAILED_RETRYABLE.value,
+        }:
+            raise ValueError("job is outside the source-reverification recovery boundary")
+        previous = self.store.get_source_verification_receipt(job_id)
+        if previous is None:
+            raise ValueError("source reverification requires a prior durable receipt")
+        current_semantics = str(self.verifier.semantics_version)
+        previous_semantics = str(previous.get("verification_semantics_version") or "")
+        if previous_semantics == current_semantics:
+            raise NoProgressDetected(
+                "source verification semantics are unchanged; repeat is forbidden"
+            )
+        attempts = self.store.source_verification_attempt_count(job_id)
+        if attempts >= maximum_attempts:
+            raise NoProgressDetected("source verification attempt bound reached")
+        return self.store.transition(
+            job_id,
+            expected_version=job.state_version,
+            to_status=JobStatus.VERIFYING_SOURCES,
+            actor="pro-source-verifier-recovery",
+            idempotency_key=(
+                f"source-reverification:{previous.get('verification_hash')}:"
+                f"{current_semantics}"
+            ),
+            payload={
+                "reason": reason,
+                "prior_verification_hash": previous.get("verification_hash"),
+                "prior_semantics_version": previous_semantics or None,
+                "next_semantics_version": current_semantics,
+                "next_attempt": attempts + 1,
+                "automatic_research_resubmit_allowed": False,
+            },
+        )
 
     def verify_job(self, job_id: str, *, job_root: str | Path) -> SourceVerificationRun:
         root = Path(job_root).resolve()
@@ -85,6 +136,9 @@ class ProSourceVerificationService:
                 {
                     "job_id": job_id,
                     "dossier_id": job.dossier_id,
+                    "verification_semantics_version": (
+                        self.verifier.semantics_version
+                    ),
                     "verifications": verification_rows,
                     "fact_compilation": compilation,
                 }
@@ -100,6 +154,10 @@ class ProSourceVerificationService:
                 "verification_id": verification_id,
                 "verification_hash": verification_hash,
                 "normalized_dossier_hash": canonical_hash(dossier),
+                "verification_semantics_version": self.verifier.semantics_version,
+                "verification_attempt": (
+                    self.store.source_verification_attempt_count(job_id) + 1
+                ),
             }
             self._write_jsonl_atomic(
                 verification_root / "source_verifications.jsonl", verification_rows
@@ -115,6 +173,20 @@ class ProSourceVerificationService:
             self._write_jsonl_atomic(
                 verification_root / "fact_compilation_rejections.jsonl",
                 [row.to_dict() for row in result.fact_compilation.rejected_claims],
+            )
+            self._write_jsonl_atomic(
+                verification_root / "mechanism_scope_mappings.jsonl",
+                [
+                    {
+                        "dossier_fact_id": fact_id,
+                        **dict(mapping),
+                    }
+                    for fact_id, mapping in (
+                        result.mechanism_scope_mapping.mappings_by_fact_id.items()
+                        if result.mechanism_scope_mapping is not None
+                        else ()
+                    )
+                ],
             )
             self._write_json_atomic(
                 verification_root / "fact_compilation_receipt.json", compilation

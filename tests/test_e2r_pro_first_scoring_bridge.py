@@ -20,6 +20,9 @@ from e2r.pro_first.scoring.component_bridge import ProComponentMemoCompiler
 from e2r.pro_first.scoring.codex_judge_provider import (
     CodexEvidenceOnlyJudgeProvider,
 )
+from e2r.pro_first.scoring.codex_dossier_impact_provider import (
+    CodexDossierImpactProvider,
+)
 from e2r.pro_first.scoring.impact_compiler import ProValidatedImpactCompiler
 from e2r.pro_first.scoring.judge_bridge import ProEvidenceOnlyJudgeBridge
 from e2r.pro_first.scoring.scorer_bridge import ProCalibratedScorerBridge
@@ -134,6 +137,41 @@ class _TamperingImpactProvider(_ImpactProvider):
             result["impacts"][0]["source_family"] = "PROVIDER-INVENTED-SOURCE"
             result["impacts"][0]["direction"] = "COUNTER"
         return result
+
+
+class _WholeDossierImpactProvider:
+    provider_name = "UNIT_WHOLE_DOSSIER_IMPACT_PROVIDER"
+
+    def __init__(self, *, tamper_mapping: bool = False) -> None:
+        self.calls = []
+        self.tamper_mapping = tamper_mapping
+
+    def complete_dossier(self, *, payload):
+        self.calls.append(dict(payload))
+        impacts = []
+        for claim in payload["verified_claim_catalog"]:
+            edge = dict(claim["allowed_impact_edges"][0])
+            if self.tamper_mapping:
+                edge["mapping_id"] = "PROVIDER-INVENTED-MAPPING"
+            impacts.append(
+                {
+                    "claim_id": claim["claim_id"],
+                    **edge,
+                    "support_type": "PARTIAL_BRIDGE",
+                    "strength_band": "MODERATE",
+                    "completeness_band": "PARTIAL",
+                    "causal_distance": "DIRECT",
+                    "confidence": 0.8,
+                    "rationale": "검증된 claim과 허용 edge만 연결했다.",
+                    "unsupported_aspects": ["더 강한 인과 bridge는 확인되지 않았다."],
+                    "counter_claim_ids": [],
+                }
+            )
+        return {
+            "impacts": impacts,
+            "unsupported_aspects": ["미확인 bridge는 deterministic cap으로 남긴다."],
+            "reasoning_summary": "whole dossier bounded pass",
+        }
 
 
 class _JudgeTransport:
@@ -537,6 +575,57 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
         )
         self.assertEqual(pricing.source_coverage, ("PROSRC-verified",))
 
+    def test_component_bridge_conservatively_normalizes_qualitative_confidence(self) -> None:
+        dossier = self._dossier()
+        dossier["component_research"]["eps_fcf_explosion"]["confidence"] = (
+            "HIGH_ON_REPORTED_ACTUALS_MEDIUM_ON_RUN_RATE"
+        )
+        dossier["component_research"]["bottleneck_pricing"].update(
+            {
+                "proposed_score_lower": 0.0,
+                "proposed_score_mid": 0.0,
+                "proposed_score_upper": 0.0,
+            }
+        )
+        result = ProComponentMemoCompiler().compile(
+            dossier=dossier,
+            job=self.job,
+            selected_archetype_id=self.archetype_id,
+            verified_facts=(self.fact,),
+            source_verifications=(),
+            claim_fact_links=(),
+            gap_decisions=(),
+            historical_anchors=self.anchors,
+        )
+        memo = next(
+            row for row in result.memos if row.component_id == "eps_fcf_explosion"
+        )
+        self.assertEqual(memo.confidence, 0.60)
+
+    def test_component_bridge_rejects_unknown_confidence_prose(self) -> None:
+        dossier = self._dossier()
+        dossier["component_research"]["eps_fcf_explosion"]["confidence"] = (
+            "FAIRLY_CERTAIN"
+        )
+        dossier["component_research"]["bottleneck_pricing"].update(
+            {
+                "proposed_score_lower": 0.0,
+                "proposed_score_mid": 0.0,
+                "proposed_score_upper": 0.0,
+            }
+        )
+        with self.assertRaisesRegex(ValueError, "HIGH/MEDIUM/LOW"):
+            ProComponentMemoCompiler().compile(
+                dossier=dossier,
+                job=self.job,
+                selected_archetype_id=self.archetype_id,
+                verified_facts=(self.fact,),
+                source_verifications=(),
+                claim_fact_links=(),
+                gap_decisions=(),
+                historical_anchors=self.anchors,
+            )
+
     def test_corroboration_gap_is_uncertainty_not_component_blocker(self) -> None:
         result = self._component_result(
             gap_decisions=(
@@ -569,6 +658,62 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
         self.assertEqual(result.receipt_payload["query_count"], 0)
         self.assertEqual(result.receipt_payload["fetch_count"], 0)
         self.assertFalse(result.receipt_payload["web_search_allowed"])
+
+    def test_21_judge_allows_explicit_no_anchor_state(self) -> None:
+        class NoAnchorProvider(_EvidenceOnlyProvider):
+            def judge(self, request):
+                payload = super().judge(request)
+                payload["nearest_anchor_ids"] = []
+                payload["anchor_comparisons"] = []
+                return payload
+
+        component = self._component_result()
+        memos = tuple(
+            replace(
+                memo,
+                historical_anchor_ids=(),
+                nearest_positive_anchor_ids=(),
+                nearest_counter_anchor_ids=(),
+            )
+            for memo in component.memos
+        )
+        result = ProEvidenceOnlyJudgeBridge(NoAnchorProvider()).run(
+            memos=memos,
+            evidence_facts=(self.fact,),
+            historical_anchors=(),
+            gap_decisions=(),
+        )
+        self.assertEqual(result.status, "JUDGING_COMPLETE")
+        self.assertEqual(len(result.decisions), 21)
+        self.assertTrue(
+            all(not decision.nearest_anchor_ids for decision in result.decisions)
+        )
+
+    def test_21_judge_reuses_durable_response_cache(self) -> None:
+        component = self._component_result()
+        provider = _EvidenceOnlyProvider()
+        cache_root = Path(self.temporary_directory.name) / "judge-cache"
+        first = ProEvidenceOnlyJudgeBridge(provider).run(
+            memos=component.memos,
+            evidence_facts=(self.fact,),
+            historical_anchors=self.anchors,
+            gap_decisions=(),
+            response_cache_root=cache_root,
+        )
+        second = ProEvidenceOnlyJudgeBridge(provider).run(
+            memos=component.memos,
+            evidence_facts=(self.fact,),
+            historical_anchors=self.anchors,
+            gap_decisions=(),
+            response_cache_root=cache_root,
+        )
+        self.assertEqual(first.status, "JUDGING_COMPLETE")
+        self.assertEqual(second.status, "JUDGING_COMPLETE")
+        self.assertEqual(len(provider.requests), 21)
+        self.assertEqual(second.receipt_payload["provider_call_count"], 0)
+        self.assertEqual(
+            second.receipt_payload["provider_response_reuse_count"], 21
+        )
 
     def test_judge_provider_failure_pending(self) -> None:
         component = self._component_result()
@@ -641,6 +786,125 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
         prompt = transport.calls[0]["prompt"]
         self.assertIn("Never browse", prompt)
         self.assertNotIn("canonical_stage", prompt)
+        self.assertNotIn("uniqueItems", str(transport.calls[0]["output_schema"]))
+
+    def test_codex_whole_dossier_provider_excludes_score_and_stage_authority(self) -> None:
+        transport = _JudgeTransport(
+            {
+                "impacts": [],
+                "unsupported_aspects": ["검증 claim이 없으면 impact를 만들지 않는다."],
+                "reasoning_summary": "bounded evidence only",
+            }
+        )
+        provider = CodexDossierImpactProvider(transport)
+        provider.complete_dossier(
+            payload={
+                "mode": "EVIDENCE_ONLY_NO_SEARCH",
+                "verified_claim_catalog": [],
+            }
+        )
+        self.assertEqual(len(transport.calls), 1)
+        call = transport.calls[0]
+        impact_properties = call["output_schema"]["properties"]["impacts"][
+            "items"
+        ]["properties"]
+        self.assertNotIn("score", impact_properties)
+        self.assertNotIn("stage", impact_properties)
+        self.assertNotIn("direction", impact_properties)
+        self.assertNotIn("source_family", impact_properties)
+        self.assertNotIn("uniqueItems", str(call["output_schema"]))
+        self.assertIn("Do not browse", call["prompt"])
+        self.assertIn("deterministic pipeline", call["prompt"])
+
+    def test_operational_impact_compiler_uses_one_whole_dossier_call(self) -> None:
+        runtime_root = Path(self.temporary_directory.name) / "batch-impact-runtime"
+        job_root = runtime_root / "jobs" / self.job.job_id
+        self._prepare_durable_component_job(job_root)
+        provider = _WholeDossierImpactProvider()
+        dossier = {
+            **self._dossier(),
+            "material_facts": [
+                {
+                    "dossier_fact_id": "PROFACT-verified",
+                    "statement": "HBM 가격이 10% 상승했다.",
+                    "supporting_excerpt": "HBM 가격은 2026Q2에 10% 상승했다.",
+                    "source_url": "https://issuer.example/ir",
+                    "source_publisher": "검증기업",
+                    "published_at": "2026-08-20",
+                    "event_date": "2026-08-20",
+                }
+            ],
+            "counterfacts": [],
+        }
+        result = ProValidatedImpactCompiler(
+            provider,
+            repo_root=Path(__file__).resolve().parents[1],
+        ).compile(
+            job=self.store.get_job(self.job.job_id),
+            dossier=dossier,
+            job_root=job_root,
+            selected_archetype_id=self.archetype_id,
+        )
+        self.assertEqual(len(provider.calls), 1)
+        self.assertEqual(result.provider_call_count, 1)
+        self.assertEqual(len(result.impacts), 1)
+        self.assertEqual(
+            result.receipt["provider_name"],
+            "UNIT_WHOLE_DOSSIER_IMPACT_PROVIDER",
+        )
+        request = provider.calls[0]
+        self.assertEqual(request["mode"], "EVIDENCE_ONLY_NO_SEARCH")
+        self.assertEqual(len(request["verified_claim_catalog"]), 1)
+        self.assertNotIn("score", request["authority_boundary"])
+        rerun = ProValidatedImpactCompiler(
+            provider,
+            repo_root=Path(__file__).resolve().parents[1],
+        ).compile(
+            job=self.store.get_job(self.job.job_id),
+            dossier=dossier,
+            job_root=job_root,
+            selected_archetype_id=self.archetype_id,
+        )
+        self.assertEqual(len(provider.calls), 1)
+        self.assertEqual(rerun.provider_call_count, 0)
+
+    def test_whole_dossier_unknown_mapping_is_rejected_before_scoring(self) -> None:
+        runtime_root = Path(self.temporary_directory.name) / "batch-tamper-runtime"
+        job_root = runtime_root / "jobs" / self.job.job_id
+        self._prepare_durable_component_job(job_root)
+        provider = _WholeDossierImpactProvider(tamper_mapping=True)
+        result = ProValidatedImpactCompiler(
+            provider,
+            repo_root=Path(__file__).resolve().parents[1],
+        ).compile(
+            job=self.store.get_job(self.job.job_id),
+            dossier={
+                **self._dossier(),
+                "material_facts": [
+                    {
+                        "dossier_fact_id": "PROFACT-verified",
+                        "statement": "HBM 가격이 10% 상승했다.",
+                        "supporting_excerpt": "HBM 가격은 2026Q2에 10% 상승했다.",
+                        "source_url": "https://issuer.example/ir",
+                        "source_publisher": "검증기업",
+                        "published_at": "2026-08-20",
+                        "event_date": "2026-08-20",
+                    }
+                ],
+                "counterfacts": [],
+            },
+            job_root=job_root,
+            selected_archetype_id=self.archetype_id,
+        )
+        self.assertEqual(len(provider.calls), 2)
+        self.assertEqual(result.provider_call_count, 2)
+        self.assertEqual(result.impacts, ())
+        self.assertTrue(
+            any(
+                reason.startswith("WHOLE_DOSSIER_IMPACT_INVALID_ROWS")
+                for reason in result.pending_reasons
+            )
+        )
 
     def test_operational_impact_compiler_stays_pending_without_seven_components(self) -> None:
         runtime_root = Path(self.temporary_directory.name) / "impact-runtime"
@@ -819,6 +1083,27 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
         )["PROGAP-GENERAL-WEB"]
         self.assertFalse(context.official_first_attempted)
         self.assertEqual(context.official_gap_reasons, ())
+
+    def test_external_official_family_records_connector_gap_before_web(self) -> None:
+        gap = {
+            "dossier_gap_id": "PROGAP-PEER-OFFICIAL",
+            "archetype_id": self.archetype_id,
+            "affected_component_ids": ["earnings_visibility"],
+            "required_source_families": ["PEER_CAPACITY_GUIDANCE"],
+        }
+        context = compile_conservative_gap_contexts(
+            self.job,
+            {"unresolved_gaps": [gap]},
+            Path(self.temporary_directory.name),
+        )["PROGAP-PEER-OFFICIAL"]
+        self.assertFalse(context.official_first_attempted)
+        self.assertEqual(
+            context.official_gap_reasons,
+            (
+                "NO_DIRECT_CONNECTOR_FOR_REQUESTED_OFFICIAL_FAMILY:"
+                "PEER_CAPACITY_GUIDANCE",
+            ),
+        )
 
     def test_pro_score_ignored(self) -> None:
         scoring = self._score_result()

@@ -24,6 +24,8 @@ from .protocol import (
 from .selector_registry import (
     ASSISTANT_TURN_SELECTORS,
     ATTACH_BUTTON_SELECTORS,
+    CHAT_MODE_ACTIVE_SELECTORS,
+    CHAT_MODE_CONTROL_SELECTORS,
     CITATION_SELECTORS,
     DEEP_RESEARCH_ACTIVE_SELECTORS,
     DEEP_RESEARCH_CONTROL_SELECTORS,
@@ -35,6 +37,7 @@ from .selector_registry import (
     MD_CANDIDATE_SELECTORS,
     PDF_CANDIDATE_SELECTORS,
     PREVIEW_ROOT_SELECTORS,
+    PRO_REASONING_ACTIVE_SELECTORS,
     SEND_SELECTORS,
     STOP_SELECTORS,
     TOOLS_BUTTON_SELECTORS,
@@ -70,9 +73,22 @@ class PlaywrightChatGPTWebAdapter:
         raise BrowserUIIncompatible("ChatGPT prompt editor was not found")
 
     async def ensure_deep_research_mode(self) -> BrowserInspection:
+        """Require the supported Pro research UI before packet preparation.
+
+        The current public UI exposes this as ordinary ``Chat`` mode plus the
+        composer reasoning level ``Pro``.  Legacy Deep Research selectors are
+        retained for older DOM-contract fixtures and transitional deployments.
+        """
         await self.ensure_logged_in()
         if await self._deep_research_ready():
             return await self.inspect_state()
+
+        chat = await first_visible(self.page, CHAT_MODE_CONTROL_SELECTORS)
+        if chat is not None and await chat.is_enabled():
+            await chat.click()
+            await self.page.wait_for_timeout(100)
+            if await self._deep_research_ready():
+                return await self.inspect_state()
 
         control = await first_visible(self.page, DEEP_RESEARCH_CONTROL_SELECTORS)
         if control is not None and await control.is_enabled():
@@ -94,7 +110,10 @@ class PlaywrightChatGPTWebAdapter:
                 await self.page.wait_for_timeout(100)
             if await self._deep_research_ready():
                 return await self.inspect_state()
-        raise BrowserUIIncompatible("Deep Research mode control was not found or did not activate")
+        raise BrowserUIIncompatible(
+            "Chat + Pro research mode was not active and no supported legacy "
+            "Deep Research control could be activated"
+        )
 
     async def upload_packet(self, packet_path: str | Path) -> str:
         path = Path(packet_path).resolve()
@@ -111,16 +130,13 @@ class PlaywrightChatGPTWebAdapter:
                 await attach.click()
             chooser = await chooser_info.value
             await chooser.set_files(str(path))
-        try:
-            await self.page.get_by_text(path.name, exact=False).first.wait_for(
-                state="visible", timeout=10_000
-            )
-        except Exception as error:
+        displayed_filename = await self._wait_for_uploaded_filename(path.name)
+        if displayed_filename is None:
             raise BrowserUIIncompatible(
                 f"uploaded packet filename was not confirmed in the DOM: {path.name}"
-            ) from error
-        self._uploaded_filename = path.name
-        return path.name
+            )
+        self._uploaded_filename = displayed_filename
+        return displayed_filename
 
     async def set_prompt(self, prompt: str) -> None:
         if not prompt.strip():
@@ -156,11 +172,15 @@ class PlaywrightChatGPTWebAdapter:
             raise BrowserUIIncompatible("prepared prompt hash differs from rendered prompt")
         await self.ensure_logged_in()
         await self.ensure_deep_research_mode()
-        uploaded_filename = await self.upload_packet(packet_path)
+        uploaded_filename = await self._reuse_matching_uploaded_packet(
+            path, packet_hash
+        )
+        if uploaded_filename is None:
+            uploaded_filename = await self.upload_packet(packet_path)
         await self.set_prompt(prompt)
         preexisting = await self.snapshot_attachment_keys()
-        send = await first_visible(self.page, SEND_SELECTORS)
-        if not await locator_enabled(send):
+        send = await self._wait_for_send_ready()
+        if send is None:
             raise BrowserUIIncompatible("ChatGPT send button is not ready after packet preparation")
         self._prepared_binding = {
             "browser_session_id": browser_session_id,
@@ -525,7 +545,81 @@ class PlaywrightChatGPTWebAdapter:
         return match.group(1) if match else None
 
     async def _deep_research_ready(self) -> bool:
+        chat_active = await first_visible(self.page, CHAT_MODE_ACTIVE_SELECTORS)
+        pro_active = await first_visible(self.page, PRO_REASONING_ACTIVE_SELECTORS)
+        if chat_active is not None and pro_active is not None:
+            # ``:has-text`` is deliberately followed by an exact text check so
+            # a future button such as ``Upgrade to Pro`` cannot satisfy the
+            # production readiness gate.
+            if " ".join((await pro_active.inner_text()).split()) == "Pro":
+                return True
         return await first_visible(self.page, DEEP_RESEARCH_ACTIVE_SELECTORS) is not None
+
+    async def _wait_for_send_ready(self) -> Any | None:
+        # ChatGPT can show the uploaded filename before its attachment scan is
+        # complete.  During that short interval the visible send button stays
+        # disabled, so wait finitely without ever clicking it.
+        for attempt in range(300):
+            send = await first_visible(self.page, SEND_SELECTORS)
+            if await locator_enabled(send):
+                return send
+            if attempt < 299:
+                await self.page.wait_for_timeout(100)
+        return None
+
+    async def _wait_for_uploaded_filename(self, filename: str) -> str | None:
+        # Current ChatGPT file tiles can expose the name only through their
+        # visible accessibility label; older builds rendered it as text.  The
+        # public UI may add ``(1)`` after repeated safe preparation attempts.
+        path = Path(filename)
+        display_pattern = re.compile(
+            rf"^{re.escape(path.stem)}(?:\(\d+\))?{re.escape(path.suffix)}$"
+        )
+        for attempt in range(100):
+            label = self.page.get_by_label(display_pattern).first
+            if await label.count() and await label.is_visible():
+                displayed = (await label.get_attribute("aria-label") or "").strip()
+                if display_pattern.fullmatch(displayed):
+                    return displayed
+            text = self.page.get_by_text(display_pattern).first
+            if await text.count() and await text.is_visible():
+                displayed = (await text.inner_text()).strip().splitlines()[0]
+                if display_pattern.fullmatch(displayed):
+                    return displayed
+            if attempt < 99:
+                await self.page.wait_for_timeout(100)
+        return None
+
+    async def _reuse_matching_uploaded_packet(
+        self, packet_path: Path, packet_hash: str
+    ) -> str | None:
+        """Reuse a visible selected file only after exact JSON hash validation."""
+
+        inputs = self.page.locator('input[type="file"]')
+        for index in range(await inputs.count()):
+            item = inputs.nth(index)
+            try:
+                selected = await item.evaluate(
+                    """async input => {
+                        const file = input.files && input.files[0];
+                        return file ? {name: file.name, text: await file.text()} : null;
+                    }"""
+                )
+            except Exception:
+                continue
+            if not selected or str(selected.get("name") or "") != packet_path.name:
+                continue
+            try:
+                payload = json.loads(str(selected.get("text") or ""))
+            except json.JSONDecodeError:
+                continue
+            if canonical_hash(payload) != packet_hash:
+                continue
+            displayed = await self._wait_for_uploaded_filename(packet_path.name)
+            if displayed is not None:
+                self._uploaded_filename = displayed
+                return displayed
+        return None
 
     async def _manual_login_required(self) -> bool:
         if "/auth/" in self.page.url:

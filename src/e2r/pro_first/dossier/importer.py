@@ -16,6 +16,7 @@ from ..ids import canonical_hash, canonical_json, stable_id
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
 from ..state_machine import TransitionContext
+from .dialect_adapter import ResearchDossierDialectAdapter
 from .normalizer import ResearchDossierNormalizer
 from .parser import ResearchDossierParser
 from .validator import DossierValidationContext, ResearchDossierValidator
@@ -36,12 +37,14 @@ class ProDossierImporter:
         store: ProFirstJobStore,
         *,
         parser: ResearchDossierParser | None = None,
+        dialect_adapter: ResearchDossierDialectAdapter | None = None,
         validator: ResearchDossierValidator | None = None,
         normalizer: ResearchDossierNormalizer | None = None,
         now: Callable[[], datetime] | None = None,
     ) -> None:
         self.store = store
         self.parser = parser or ResearchDossierParser()
+        self.dialect_adapter = dialect_adapter or ResearchDossierDialectAdapter()
         self.validator = validator or ResearchDossierValidator()
         self.normalizer = normalizer or ResearchDossierNormalizer()
         self._now = now or (lambda: datetime.now(timezone.utc))
@@ -121,8 +124,9 @@ class ProDossierImporter:
                 report_md_path=incoming / "pro_report.md",
                 final_response_text=final_response_text,
             )
+            adapted = self.dialect_adapter.adapt(parsed.payload)
             validation = self.validator.validate(
-                parsed.payload,
+                adapted.payload,
                 DossierValidationContext(
                     job_id=job_id,
                     run_id=receipt.run_id,
@@ -130,7 +134,7 @@ class ProDossierImporter:
                     as_of_date=job.as_of_date,
                 ),
             )
-            normalized = self.normalizer.normalize(parsed.payload)
+            normalized = self.normalizer.normalize(adapted.payload)
             dossier_id = stable_id(
                 "DOSSIER",
                 {"job_id": job_id, "dossier_hash": normalized.after_hash},
@@ -147,6 +151,10 @@ class ProDossierImporter:
                 "parser_before_hash": parsed.before_hash,
                 "parser_after_hash": parsed.after_hash,
                 "repair_operations": list(parsed.repair_operations),
+                "dialect_before_hash": adapted.before_hash,
+                "dialect_after_hash": adapted.after_hash,
+                "dialect_operations": list(adapted.operations),
+                "dialect_id_map": dict(adapted.id_map),
                 "normalizer_before_hash": normalized.before_hash,
                 "normalized_dossier_hash": normalized.after_hash,
                 "normalizer_operations": list(normalized.operations),

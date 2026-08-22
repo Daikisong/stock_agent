@@ -32,7 +32,12 @@ capture가 끝난 뒤에는 별도 사용자 승인이 없다. runtime이 dossie
 
 검증된 fact는 기존 impact validator, 7개 component, evidence-only 21 Judge, `ResearchCalibratedComponentScorer`, `AtomicStageCourtV2`를 차례로 지난다. 예를 들어 Judge provider가 실패하면 해당 job은 pending에 머물며 `0점 Stage 0`을 정상 결과처럼 게시하지 않는다.
 
-현재 canary handoff는 [live_pilot_handoff.json](live_pilot_handoff.json)에 있다. 전용 profile 로그인 전에는 승인 nonce를 발급하거나 send 버튼을 누르지 않는다.
+현재 canary 최종 handoff는 [live_pilot_handoff.json](live_pilot_handoff.json), 실제
+결과와 hash는 [live canary acceptance](live_canary_acceptance_2026-08-22.json), 작업
+순서와 실패·수정 이력은 [구현 진행 기록](implementation_progress_2026-08-22.md)에
+있다. `live_shadow_receipt.json`은 로그인 전 안전 정지를 증명하는 과거 snapshot이며
+현재 상태 문서가 아니다. 전용 profile 로그인 전에는 승인 nonce를 발급하거나 send
+버튼을 누르지 않는 원칙은 그대로 유지된다.
 
 ## 오프라인 검증
 

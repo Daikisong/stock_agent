@@ -17,7 +17,6 @@ from e2r.research_brain.runtime.scoring_contracts import (
     load_archetype_scoring_contract,
 )
 from e2r.research_brain.scoring import (
-    CodexEvidenceImpactProvider,
     CreditValidatedImpact,
     EventOverlayInput,
     FullScoreValidityEvidenceV2,
@@ -29,15 +28,18 @@ from .gaps.supplemental_service import (
     CodexBoundedSupplementalExecutor,
     ProSupplementalResearchService,
 )
+from .gaps.source_family_policy import source_family_requires_general_web
 from .ids import stable_id
 from .job_store import ProFirstJobStore
 from .models import JobStatus, ProResearchJob
 from .publication import ProResultPublisher
 from .scoring.judge_bridge import EvidenceOnlyJudgeProvider
+from .scoring.codex_dossier_impact_provider import CodexDossierImpactProvider
 from .scoring.codex_judge_provider import CodexEvidenceOnlyJudgeProvider
 from .scoring.impact_compiler import ProValidatedImpactCompiler
 from .scoring.service import ProScoringPipelineService
 from .verification import ProSourceVerificationService, ProSourceVerifier
+from .verification.mechanism_scope_mapper import CodexMechanismScopeMapper
 
 
 _GENERAL_WEB_FAMILIES = frozenset(
@@ -128,7 +130,17 @@ class ProFirstPostImportCoordinator:
             or ProSourceVerificationService(
                 store,
                 verifier=ProSourceVerifier(
-                    page_fetcher=PageFetcher(live_enabled=True, max_text_chars=None)
+                    page_fetcher=PageFetcher(
+                        live_enabled=True,
+                        max_body_bytes=25_000_000,
+                        max_text_chars=None,
+                    ),
+                    mechanism_scope_mapper=CodexMechanismScopeMapper.default(
+                        working_directory=(
+                            Path.home() if os.name == "nt" else self.repo_root
+                        ),
+                        timeout_seconds=180.0,
+                    ),
                 ),
             )
         )
@@ -308,7 +320,15 @@ def compile_conservative_gap_contexts(
         if not set(affected).issubset(contract.component_max_points):
             raise ValueError("dossier gap affects a component outside the scoring contract")
         required = tuple(str(value).upper() for value in gap.get("required_source_families") or ())
-        general_web_requested = bool(set(required) & _GENERAL_WEB_FAMILIES)
+        general_web_requested = any(
+            source_family_requires_general_web(value) for value in required
+        )
+        official_gap_reasons = tuple(
+            f"NO_DIRECT_CONNECTOR_FOR_REQUESTED_OFFICIAL_FAMILY:{value}"
+            for value in required
+            if source_family_requires_general_web(value)
+            and value not in _GENERAL_WEB_FAMILIES
+        )
         route_signatures = tuple(
             stable_id(
                 "PROSOURCE_ROUTE",
@@ -332,9 +352,15 @@ def compile_conservative_gap_contexts(
             executable_new_source_route_signatures=route_signatures,
             could_change_score=True,
             official_first_attempted=not general_web_requested,
+            official_gap_reasons=official_gap_reasons,
             rationale=(
                 "verified fact roster and scoring-contract component maximum bound; "
-                "Pro-proposed gap class and Stage flags are not authoritative"
+                "Pro-proposed gap class and Stage flags are not authoritative; "
+                + (
+                    "direct official connector absence is recorded before bounded web fallback"
+                    if general_web_requested
+                    else "bounded official connector route is available"
+                )
             ),
         )
     return contexts
@@ -390,9 +416,9 @@ class OperationalProScoringInputProvider:
     def __init__(self, *, repo_root: str | Path = ".") -> None:
         self.repo_root = Path(repo_root).expanduser().resolve()
         provider_workdir = Path.home() if os.name == "nt" else self.repo_root
-        self.impact_provider = CodexEvidenceImpactProvider.default(
+        self.impact_provider = CodexDossierImpactProvider.default(
             working_directory=provider_workdir,
-            timeout_seconds=180.0,
+            timeout_seconds=300.0,
         )
         self.judge_provider = CodexEvidenceOnlyJudgeProvider.default(
             working_directory=provider_workdir,

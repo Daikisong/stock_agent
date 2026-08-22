@@ -93,6 +93,17 @@ class ResearchDossierParser:
                 raise DossierParseError("dossier JSON code fence is incomplete")
             repaired = "\n".join(lines[1:-1]).strip()
             operations.append("REMOVE_JSON_CODE_FENCE")
+        # ChatGPT's visible code-block DOM can omit the backticks while
+        # retaining the standalone language badge as the first text line.
+        # Removing only that exact label is a bounded, deletion-only repair.
+        lines = repaired.strip().splitlines()
+        if (
+            len(lines) >= 2
+            and lines[0].strip().casefold() == "json"
+            and lines[1].lstrip().startswith("{")
+        ):
+            repaired = "\n".join(lines[1:]).strip()
+            operations.append("REMOVE_STANDALONE_JSON_LANGUAGE_LABEL")
         trailing_fixed, removed_count = _remove_trailing_commas(repaired)
         if removed_count:
             repaired = trailing_fixed

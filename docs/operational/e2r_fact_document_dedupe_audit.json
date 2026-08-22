@@ -15,7 +15,7 @@
     },
     "005930": {
       "document_cluster_count": 3,
-      "economic_fact_cluster_count": 21,
+      "economic_fact_cluster_count": 22,
       "suppressed_same_document_duplicate_count": 17,
       "suppressed_same_fact_duplicate_count": 1
     }

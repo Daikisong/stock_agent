@@ -249,6 +249,7 @@ class ProScoringPipelineService:
                     evidence_facts=facts,
                     historical_anchors=historical_anchors,
                     gap_decisions=gap_decisions,
+                    response_cache_root=scoring_root / "judge_response_cache",
                 )
             else:
                 changed_judges = ProEvidenceOnlyJudgeBridge(judge_provider).run(
@@ -257,6 +258,7 @@ class ProScoringPipelineService:
                     historical_anchors=historical_anchors,
                     gap_decisions=gap_decisions,
                     component_ids=changed_components,
+                    response_cache_root=scoring_root / "judge_response_cache",
                 )
                 judges = _combine_delta_judges(
                     prior=delta_inputs.prior_judges,

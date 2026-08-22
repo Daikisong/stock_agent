@@ -31,6 +31,8 @@ JSON 최상위에는 다음 필드를 모두 둔다.
 
 - `target.target_id`는 packet의 symbol과 같게 한다.
 - `research_status`는 `COMPLETE`, `score_authority`와 `stage_authority`는 반드시 `false`다.
+- `candidate_archetypes`는 객체 배열이 아니라 archetype ID **문자열 배열**이다.
+  예: `["C06_HBM_MEMORY_CUSTOMER_CAPACITY"]`.
 - `component_research`에는 정확히 `eps_fcf_explosion`, `earnings_visibility`,
   `bottleneck_pricing`, `market_mispricing`, `valuation_rerating`,
   `capital_allocation`, `information_confidence` 7개 key를 모두 둔다.
@@ -40,6 +42,14 @@ JSON 최상위에는 다음 필드를 모두 둔다.
   `event_date`, `current_status`, `candidate_components`, `source_url`,
   `source_title`, `source_publisher`, `published_at`, `supporting_excerpt`,
   `confidence`를 모두 둔다.
+- `dossier_fact_id`는 `PROFACT-`로 시작한다. 예: `PROFACT-000660-001`.
+- `direction`은 정확히 `POSITIVE`, `COUNTER`, `NEGATIVE`, `NEUTRAL`,
+  `RESOLUTION` 중 하나다.
+- `current_status`는 세부 설명 문구가 아니라 정확히 `CURRENT`, `OPEN`,
+  `RESOLVED`, `SUPERSEDED`, `HISTORICAL`, `UNKNOWN` 중 하나다. 예를 들어
+  공시로 확인된 현재 실적은 `CURRENT`, 아직 실행 중인 자사주 매입은 `OPEN`,
+  확인할 수 없는 고객별 계약 조건은 `UNKNOWN`이다.
+- `confidence`는 `HIGH` 같은 문자열이 아니라 0~1 숫자다. 예: `0.85`.
 - 각 `unresolved_gaps` 항목에는 `dossier_gap_id`, `archetype_id`,
   `stable_objective_id`, `affected_component_ids`, `required_source_families`,
   `economic_mechanism_id`, `predicate_or_fact_need_id`, `economic_reason`,
@@ -47,7 +57,15 @@ JSON 최상위에는 다음 필드를 모두 둔다.
   `proposed_could_change_score`, `proposed_could_change_stage`,
   `proposed_could_change_hard_break`를 모두 둔다. 이 값은 연구자 제안일
   뿐이며 E2R의 deterministic gap 판정을 덮어쓰지 않는다.
+- `dossier_gap_id`는 `PROGAP-`으로 시작한다. 예: `PROGAP-000660-001`.
+- `proposed_gap_class`는 정확히 `CORE_SCORE_BLOCKER`, `STAGE_BOUNDARY_GAP`,
+  `HARD_BREAK_GAP`, `CORROBORATION_CAP`, `MONITORING_GAP` 중 하나다.
+- `proposed_missing_source_role`은 정확히 `CORE_SCORE_SOURCE`,
+  `INDEPENDENT_CORROBORATION`, `MONITORING_ONLY` 중 하나다. 구체적인 희망
+  자료 종류는 `required_source_families`에 쓴다.
 - `sources`의 각 항목에는 최소한 `source_url`을 둔다.
+- `proposed_score_ranges`는 배열이 아니라 JSON 객체다. 제안할 범위가 없으면
+  반드시 빈 객체 `{}`를 쓴다. 이 객체도 최종 score 권한을 갖지 않는다.
 
 E2R_RESEARCH_DOSSIER_JSON_BEGIN
 ```json

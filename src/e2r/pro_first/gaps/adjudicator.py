@@ -15,13 +15,13 @@ from e2r.research_brain.researcher_mode.evidence_gap import (
     accepted_lineage_profile,
     classify_missing_source_role,
     derive_objective_identity,
-    fact_has_core_economic_role,
     guard_source_query_generation,
 )
 from e2r.research_brain.researcher_mode.schemas import CANONICAL_COMPONENT_ORDER
 
 from ..ids import canonical_hash
 from ..models import ProResearchJob
+from .source_family_policy import canonical_gap_source_family
 
 
 SUPPLEMENTAL_ALLOWED_LABELS = frozenset(
@@ -83,8 +83,13 @@ class DeterministicGapContext:
             )
         )
         object.__setattr__(self, "official_gap_reasons", reasons)
-        if reasons and not self.official_first_attempted:
-            raise ValueError("official gap reasons require an official-first attempt")
+        if reasons and not self.official_first_attempted and not all(
+            reason.startswith("NO_DIRECT_CONNECTOR_FOR_REQUESTED_OFFICIAL_FAMILY:")
+            for reason in reasons
+        ):
+            raise ValueError(
+                "an unattempted official lane may only record deterministic connector absence"
+            )
         if self.monitoring_only and any(
             (
                 self.provider_or_parser_failure,
@@ -289,8 +294,16 @@ class ProGapAdjudicator:
             missing_role = (
                 MissingSourceRole.MONITORING_ONLY
                 if context.monitoring_only
+                else MissingSourceRole.INDEPENDENT_CORROBORATION
+                if range_bounded
+                and not context.provider_or_parser_failure
+                and not context.direct_contradiction_or_hard_break_unresolved
+                and not context.required_red_team_evidence_missing
                 else classify_missing_source_role(
-                    required_source_families=required_families,
+                    required_source_families=tuple(
+                        canonical_gap_source_family(value)
+                        for value in required_families
+                    ),
                     affected_component_ids=key.affected_component_ids,
                     core_economic_role_fact_count_by_component=core_counts,
                 )
@@ -408,16 +421,21 @@ def _mapping(row: Mapping[str, Any] | Any) -> Mapping[str, Any]:
 
 
 def _core_role_counts(facts: Sequence[Mapping[str, Any]]) -> Mapping[str, int]:
+    """Count Pro facts whose component mechanism already passed validation.
+
+    ``allowed_component_ids`` in this lane is not the model's proposal.  The
+    source verifier writes it only after ``MechanismScopeValidator`` accepts
+    the fact against the selected archetype contract.  Re-parsing arbitrary
+    predicate words here would discard open-ended Pro facts a second time.
+    """
+
     counts = {component_id: 0 for component_id in CANONICAL_COMPONENT_ORDER}
     for fact in facts:
         if str(fact.get("current_lifecycle") or "") in {"RESOLVED", "SUPERSEDED"}:
             continue
         for component_id in fact.get("allowed_component_ids") or ():
             component = str(component_id)
-            if component in counts and fact_has_core_economic_role(
-                fact,
-                component_id=component,
-            ):
+            if component in counts:
                 counts[component] += 1
     return counts
 

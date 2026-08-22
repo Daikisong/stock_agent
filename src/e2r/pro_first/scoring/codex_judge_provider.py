@@ -39,17 +39,14 @@ _JUDGE_SCHEMA: Mapping[str, Any] = {
         "support_fact_ids": {
             "type": "array",
             "items": {"type": "string"},
-            "uniqueItems": True,
         },
         "counter_fact_ids": {
             "type": "array",
             "items": {"type": "string"},
-            "uniqueItems": True,
         },
         "nearest_anchor_ids": {
             "type": "array",
             "items": {"type": "string"},
-            "uniqueItems": True,
         },
         "anchor_comparisons": {
             "type": "array",

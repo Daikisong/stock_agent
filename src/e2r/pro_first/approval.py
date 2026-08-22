@@ -139,6 +139,12 @@ class ExactlyOnceSubmitCoordinator:
                 raise RuntimeError(
                     f"send click did not produce RESEARCH_RUNNING: {inspection.state.value}"
                 )
+            if (
+                claimed.conversation_id
+                and inspection.conversation_id
+                and claimed.conversation_id != inspection.conversation_id
+            ):
+                raise RuntimeError("conversation changed to an unrelated id after submit")
         except Exception as error:
             self.store.transition(
                 job_id,
@@ -163,7 +169,13 @@ class ExactlyOnceSubmitCoordinator:
             to_status=JobStatus.RESEARCH_RUNNING,
             actor=actor,
             idempotency_key=f"research-running:{job_id}",
-            payload={"submit_count": 1, "conversation_id": claimed.conversation_id},
+            payload={
+                "submit_count": 1,
+                "conversation_id": inspection.conversation_id or claimed.conversation_id,
+            },
+            updates={
+                "conversation_id": inspection.conversation_id or claimed.conversation_id,
+            },
         )
         return SubmitResult(job=running, inspection=inspection)
 

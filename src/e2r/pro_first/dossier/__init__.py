@@ -1,6 +1,11 @@
 """Strict ResearchDossierV1 parsing, validation, normalization, and import."""
 
 from .importer import DossierImportResult, ProDossierImporter
+from .dialect_adapter import (
+    AdaptedDossier,
+    DossierDialectError,
+    ResearchDossierDialectAdapter,
+)
 from .normalizer import NormalizedDossier, ResearchDossierNormalizer
 from .parser import DossierParseError, ParsedDossier, ResearchDossierParser
 from .validator import (
@@ -12,6 +17,8 @@ from .validator import (
 
 __all__ = [
     "CANONICAL_COMPONENT_IDS",
+    "AdaptedDossier",
+    "DossierDialectError",
     "DossierImportResult",
     "DossierParseError",
     "DossierValidationContext",
@@ -20,6 +27,7 @@ __all__ = [
     "ParsedDossier",
     "ProDossierImporter",
     "ResearchDossierNormalizer",
+    "ResearchDossierDialectAdapter",
     "ResearchDossierParser",
     "ResearchDossierValidator",
 ]

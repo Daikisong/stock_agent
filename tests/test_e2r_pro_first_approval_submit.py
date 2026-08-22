@@ -141,6 +141,32 @@ class ProFirstApprovalSubmitTest(unittest.IsolatedAsyncioTestCase):
             await ExactlyOnceSubmitCoordinator(self.store).submit(job.job_id, self.adapter)
         self.assertEqual(await self.page.evaluate("window.__submitCount"), 1)
 
+    async def test_first_submit_persists_new_conversation_id(self) -> None:
+        await self.page.goto(
+            f"{self.server.base_url}/",
+            wait_until="domcontentloaded",
+        )
+        self.adapter = PlaywrightChatGPTWebAdapter(self.page)
+        job, prompt_hash = await self._prepare_durable_job()
+        self.assertIsNone(job.conversation_id)
+        await self.page.locator("#composer-submit-button").evaluate(
+            """button => button.addEventListener(
+                'click',
+                () => history.pushState({}, '', '/c/new-conversation-id'),
+                {once: true}
+            )"""
+        )
+        service = ProApprovalService(self.store, now=lambda: self.now)
+        grant = service.issue(job.job_id, prompt_hash=prompt_hash)
+        service.approve(grant)
+
+        result = await ExactlyOnceSubmitCoordinator(self.store).submit(
+            job.job_id, self.adapter
+        )
+        self.assertEqual(result.job.conversation_id, "new-conversation-id")
+        self.assertEqual(result.inspection.conversation_id, "new-conversation-id")
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 1)
+
     async def test_forged_or_missing_approval_proof_cannot_click_send(self) -> None:
         job, _prompt_hash = await self._prepare_durable_job()
         forged = ConsumedApprovalProof(

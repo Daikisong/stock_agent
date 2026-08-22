@@ -8,6 +8,7 @@ from .judge_bridge import (
     ProEvidenceOnlyJudgeBridge,
 )
 from .codex_judge_provider import CodexEvidenceOnlyJudgeProvider
+from .codex_dossier_impact_provider import CodexDossierImpactProvider
 from .impact_compiler import ProImpactCompilationResult, ProValidatedImpactCompiler
 from .scorer_bridge import CalibratedScoreBridgeResult, ProCalibratedScorerBridge
 from .service import ProScoringPipelineRun, ProScoringPipelineService
@@ -18,6 +19,7 @@ __all__ = [
     "ComponentBridgeResult",
     "EvidenceOnlyJudgeProvider",
     "CodexEvidenceOnlyJudgeProvider",
+    "CodexDossierImpactProvider",
     "JudgeBridgeResult",
     "JudgeCallReceipt",
     "ProImpactCompilationResult",
