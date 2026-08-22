@@ -1221,6 +1221,254 @@ class ProFirstJobStore:
             ).fetchall()
         return tuple(json.loads(row["receipt_json"]) for row in rows)
 
+    def record_score_result(
+        self,
+        job_id: str,
+        *,
+        expected_version: int,
+        score_receipt_id: str,
+        score_hash: str,
+        receipt: Mapping[str, Any],
+        actor: str,
+        idempotency_key: str,
+    ) -> ProResearchJob:
+        score = receipt.get("score") or {}
+        assessments = receipt.get("component_assessments") or ()
+        receipt_without_identity = {
+            key: value
+            for key, value in receipt.items()
+            if key not in {"score_receipt_id", "score_hash"}
+        }
+        if (
+            len(score_hash) != 64
+            or receipt.get("schema_version")
+            != "e2r_pro_calibrated_score_bridge_receipt_v1"
+            or receipt.get("job_id") != job_id
+            or receipt.get("score_receipt_id") != score_receipt_id
+            or receipt.get("score_hash") != score_hash
+            or canonical_hash(receipt_without_identity) != score_hash
+            or receipt.get("scorer_class") != "ResearchCalibratedComponentScorer"
+            or receipt.get("new_score_engine_count") != 0
+            or receipt.get("pro_score_ignored") is not True
+            or receipt.get("pro_stage_ignored") is not True
+            or receipt.get("production_score_authority") is not True
+            or receipt.get("production_stage_authority") is not False
+            or len(assessments) != 7
+            or set(row.get("component_id") for row in assessments)
+            != {
+                "eps_fcf_explosion",
+                "earnings_visibility",
+                "bottleneck_pricing",
+                "market_mispricing",
+                "valuation_rerating",
+                "capital_allocation",
+                "information_confidence",
+            }
+            or not isinstance(score, Mapping)
+        ):
+            raise ValueError("invalid calibrated score receipt")
+        payload = {
+            "score_receipt_id": score_receipt_id,
+            "score_hash": score_hash,
+            "score_valid": receipt.get("score_valid") is True,
+        }
+        with self._transaction() as connection:
+            if self._existing_idempotent_event(
+                connection,
+                job_id,
+                idempotency_key,
+                JobStatus.STAGECOURT,
+                payload,
+            ):
+                return self._job_from_row(self._require_job_row(connection, job_id))
+            row = self._require_job_row(connection, job_id)
+            self._require_version(row, expected_version)
+            source = JobStatus(row["status"])
+            if source is not JobStatus.SCORING:
+                raise ValueError("score receipt may only close SCORING")
+            self.state_machine.validate(
+                source,
+                JobStatus.STAGECOURT,
+                context=TransitionContext(deterministic_score_present=True),
+            )
+            created_at = self._now_text()
+            connection.execute(
+                """
+                INSERT INTO pro_score_receipts (
+                    score_receipt_id, job_id, score_hash, receipt_json, created_at
+                ) VALUES (?, ?, ?, ?, ?)
+                """,
+                (
+                    score_receipt_id,
+                    job_id,
+                    score_hash,
+                    canonical_json(receipt),
+                    created_at,
+                ),
+            )
+            cursor = connection.execute(
+                """
+                UPDATE pro_research_jobs
+                SET status=?, score_receipt_id=?, state_version=state_version+1,
+                    updated_at=? WHERE job_id=? AND state_version=?
+                """,
+                (
+                    JobStatus.STAGECOURT.value,
+                    score_receipt_id,
+                    created_at,
+                    job_id,
+                    expected_version,
+                ),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict(f"score result changed concurrently: {job_id}")
+            self._insert_event(
+                connection,
+                job_id=job_id,
+                from_status=source,
+                to_status=JobStatus.STAGECOURT,
+                actor=actor,
+                idempotency_key=idempotency_key,
+                payload=payload,
+                created_at=created_at,
+            )
+            result = self._require_job_row(connection, job_id)
+        return self._job_from_row(result)
+
+    def get_score_receipt(self, job_id: str) -> Mapping[str, Any] | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                "SELECT receipt_json FROM pro_score_receipts WHERE job_id=?",
+                (job_id,),
+            ).fetchone()
+        return None if row is None else json.loads(row["receipt_json"])
+
+    def record_stagecourt_result(
+        self,
+        job_id: str,
+        *,
+        expected_version: int,
+        stagecourt_receipt_id: str,
+        stagecourt_hash: str,
+        receipt: Mapping[str, Any],
+        actor: str,
+        idempotency_key: str,
+    ) -> ProResearchJob:
+        decision = receipt.get("decision") or {}
+        receipt_without_identity = {
+            key: value
+            for key, value in receipt.items()
+            if key not in {"stagecourt_receipt_id", "stagecourt_hash"}
+        }
+        canonical_stages = {
+            "0",
+            "1",
+            "2",
+            "3-Green",
+            "3-Yellow",
+            "3-Red",
+            "4A",
+            "4B",
+            "4C",
+            "5",
+        }
+        if (
+            len(stagecourt_hash) != 64
+            or receipt.get("schema_version")
+            != "e2r_pro_atomic_stagecourt_bridge_receipt_v1"
+            or receipt.get("status") != "ATOMIC_STAGECOURT_COMPLETE"
+            or receipt.get("job_id") != job_id
+            or receipt.get("stagecourt_receipt_id") != stagecourt_receipt_id
+            or receipt.get("stagecourt_hash") != stagecourt_hash
+            or canonical_hash(receipt_without_identity) != stagecourt_hash
+            or receipt.get("stagecourt_class") != "AtomicStageCourtV2"
+            or receipt.get("new_stage_engine_count") != 0
+            or receipt.get("pro_stage_ignored") is not True
+            or receipt.get("production_score_authority") is not False
+            or receipt.get("production_stage_authority") is not True
+            or not isinstance(decision, Mapping)
+            or decision.get("canonical_stage") not in canonical_stages
+            or len(decision.get("component_assessment_ids") or ()) != 7
+        ):
+            raise ValueError("invalid AtomicStageCourtV2 receipt")
+        payload = {
+            "stagecourt_receipt_id": stagecourt_receipt_id,
+            "stagecourt_hash": stagecourt_hash,
+            "canonical_stage": decision.get("canonical_stage"),
+            "decision_status": decision.get("decision_status"),
+        }
+        with self._transaction() as connection:
+            if self._existing_idempotent_event(
+                connection,
+                job_id,
+                idempotency_key,
+                JobStatus.FINAL,
+                payload,
+            ):
+                return self._job_from_row(self._require_job_row(connection, job_id))
+            row = self._require_job_row(connection, job_id)
+            self._require_version(row, expected_version)
+            source = JobStatus(row["status"])
+            if source is not JobStatus.STAGECOURT:
+                raise ValueError("StageCourt receipt may only close STAGECOURT")
+            self.state_machine.validate(
+                source,
+                JobStatus.FINAL,
+                context=TransitionContext(deterministic_stagecourt_present=True),
+            )
+            created_at = self._now_text()
+            connection.execute(
+                """
+                INSERT INTO pro_stagecourt_receipts (
+                    stagecourt_receipt_id, job_id, stagecourt_hash,
+                    receipt_json, created_at
+                ) VALUES (?, ?, ?, ?, ?)
+                """,
+                (
+                    stagecourt_receipt_id,
+                    job_id,
+                    stagecourt_hash,
+                    canonical_json(receipt),
+                    created_at,
+                ),
+            )
+            cursor = connection.execute(
+                """
+                UPDATE pro_research_jobs
+                SET status=?, stagecourt_receipt_id=?, state_version=state_version+1,
+                    updated_at=? WHERE job_id=? AND state_version=?
+                """,
+                (
+                    JobStatus.FINAL.value,
+                    stagecourt_receipt_id,
+                    created_at,
+                    job_id,
+                    expected_version,
+                ),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict(f"StageCourt result changed concurrently: {job_id}")
+            self._insert_event(
+                connection,
+                job_id=job_id,
+                from_status=source,
+                to_status=JobStatus.FINAL,
+                actor=actor,
+                idempotency_key=idempotency_key,
+                payload=payload,
+                created_at=created_at,
+            )
+            result = self._require_job_row(connection, job_id)
+        return self._job_from_row(result)
+
+    def get_stagecourt_receipt(self, job_id: str) -> Mapping[str, Any] | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                "SELECT receipt_json FROM pro_stagecourt_receipts WHERE job_id=?",
+                (job_id,),
+            ).fetchone()
+        return None if row is None else json.loads(row["receipt_json"])
+
     def list_events(self, job_id: str) -> tuple[JobEvent, ...]:
         with self._connect() as connection:
             rows = connection.execute(

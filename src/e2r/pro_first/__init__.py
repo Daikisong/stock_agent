@@ -21,6 +21,7 @@ from .models import (
 from .packet import PacketBuildInput, ResearchPacketBuilder, ResearchPacketV1
 from .prompt_contract import ProResearchPromptContract
 from .scheduler import FrozenClock, PersistentKrxScheduler, SystemClock
+from .scoring import ProScoringPipelineService
 from .state_machine import ProJobStateMachine
 from .verification import ProSourceVerificationService
 
@@ -33,6 +34,7 @@ __all__ = [
     "ProGapAdjudicationService",
     "ProJobStateMachine",
     "ProResearchJob",
+    "ProScoringPipelineService",
     "ProSourceVerificationService",
     "ResearchMode",
     "ScanRunRecord",
