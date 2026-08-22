@@ -1,0 +1,44 @@
+{
+  "component_memo_ids": [
+    "CRMEMO-5db0c2be52f5bbe9b84e54e9",
+    "CRMEMO-2fa3856596e4716b60f9fb66",
+    "CRMEMO-4a4a45dcb83e4b96f72ab6d1",
+    "CRMEMO-413182e1e42101d0bcd203c0",
+    "CRMEMO-52a74f1c909c265fa7f89eda",
+    "CRMEMO-0cfc4ae2912114f8d9871563",
+    "CRMEMO-137b5e997839258e509c5707"
+  ],
+  "confidence": 0.84,
+  "cross_component_support": [
+    "공시 actual 순이익·영업현금흐름, HBM 매출 성장, 100% 가동률, HBM 제품 실행이 earnings와 capacity thesis를 서로 지지한다.",
+    "고객 요청 HBM4 양산과 ASIC 공동개발이 earnings_visibility와 bottleneck_pricing의 상용화 경로를 연결한다.",
+    "금융부채 감소와 자기주식 소각은 강한 현금창출이 자본여력으로 이어질 수 있음을 지지한다.",
+    "적정 감사의견과 OPENDART actual이 재무 component의 source confidence를 지지한다."
+  ],
+  "cross_component_tensions": [
+    "영업현금흐름 확대에도 CAPEX와 매출채권 증가가 FCF 전환을 제한한다.",
+    "100% 가동과 고객 요청 양산은 병목을 지지하지만 M15X·용인 증설은 고정 scarcity에 대한 counter다.",
+    "주요 고객 매출 증가는 가시성을 지지하는 동시에 고객 집중 위험을 높인다.",
+    "제품 실행과 실적 성장은 rerating을 지지하지만 현재 가격 반영도와 signed 계약경제 미확인이 시장 오판 폭을 제한한다."
+  ],
+  "production_score_authority": false,
+  "prompt_hash": "04b91a26defd9ff702dabf425ee7ce51c2b16d5e7fc09ef8bf93e28a84939852",
+  "provenance": {
+    "agent_id": "root",
+    "agent_model": "gpt-5.6-sol",
+    "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+    "canonical_task_name": "/root/gate1_manual_completion",
+    "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+  },
+  "request_id": "COLLABREQ-b5636764e1fa212665c53661d605c876c1cff8c4e744953ddd8771cd5c843f0e",
+  "response_hash": "eb1a076abc500e270616b2578ac3e9a94c421dc403c5073472ba6f7c150bbf6b",
+  "response_id": "COLLABRESP-f508a3ce79cf1e35dfb675a67340745f78d1d1967357d6c48de00fb515748eb3",
+  "score_or_stage_authority": false,
+  "synthesis_complete": true,
+  "synthesis_summary": "7개 component와 Red Team은 확인된 actual·제품 실행을 유지하면서 HBM-only 귀속, 고객 계약조건, 전용 CAPA 공백을 CORROBORATION_CAP으로 상단 제한했다. 이 공백은 source absence나 전체 score blocker가 아니며 현재 snapshot에서 새 검색 없이 bounded deterministic score로 진행할 수 있다.",
+  "unresolved_material_questions": [
+    "HBM-only 매출·마진·FCF bridge가 전사 actual과 완전히 분리되지 않는다.",
+    "고객별 signed 물량·가격·기간·취소보호·선수금·backlog/RPO가 독립 확인되지 않는다.",
+    "HBM 전용 CAPA 잠김·sold-out 기간·realized ASP가 정량 확인되지 않는다."
+  ]
+}

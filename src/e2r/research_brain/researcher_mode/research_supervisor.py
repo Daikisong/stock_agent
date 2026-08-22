@@ -2531,13 +2531,21 @@ def _failure_blocks_readiness(
 
     if bool(source.get("resolved")) or str(source.get("resolved_by") or "").strip():
         return False
-    if assessment.retryable or bool(source.get("zero_result_only")):
+    if assessment.retryable:
         return True
     if assessment.classification == "SOURCE_ABSENCE_CANDIDATE":
         return not (
             assessment.source_absence_claim_allowed
             and _source_absence_proof_valid(source)
         )
+    # A zero-result attempt is never source-absence or saturation proof.  It is
+    # nevertheless only a current blocker when the independent Supervisor says
+    # that the failed search remains material (INSUFFICIENT_SEARCH/retryable).
+    # Otherwise one historical empty query would keep a fully sourced component
+    # in an impossible loop even after a different accepted route completed the
+    # memo and the same query was classified as a non-retryable duplicate.
+    if bool(source.get("zero_result_only")):
+        return assessment.classification == "INSUFFICIENT_SEARCH"
     return assessment.classification in {
         "PROVIDER_FAILURE",
         "AUTH_FAILURE",

@@ -1,0 +1,36 @@
+{
+  "audit_date": "2026-08-22",
+  "command": "PYTHONPATH=src python -m unittest tests.test_e2r_evidence_gap_fixpoint tests.test_e2r_v5_semantic_research_saturation tests.test_e2r_v5_stagecourt tests.test_e2r_v5_phase94_runner_contract -v",
+  "elapsed_seconds": 12.929,
+  "errors": 0,
+  "failures": 0,
+  "modules": [
+    "tests.test_e2r_evidence_gap_fixpoint",
+    "tests.test_e2r_v5_semantic_research_saturation",
+    "tests.test_e2r_v5_stagecourt",
+    "tests.test_e2r_v5_phase94_runner_contract"
+  ],
+  "newly_added_acceptance_tests": [
+    "test_000660_snapshot_reaches_component_memos_after_fixpoint",
+    "test_000660_snapshot_completes_7_components_and_21_judges",
+    "test_identical_000660_rerun_creates_no_new_query",
+    "test_identical_000660_rerun_has_zero_score_stage_variance",
+    "test_nonretryable_duplicate_zero_result_does_not_reopen_complete_memos"
+  ],
+  "required_regression_families": {
+    "component_sufficiency": "PASS",
+    "disposition": "PASS",
+    "fixpoint": "PASS",
+    "frozen_000660_snapshot": "PASS",
+    "gap_identity": "PASS",
+    "phase94_runner_contract": "PASS",
+    "score_stage": "PASS",
+    "stagecourt": "PASS",
+    "supervisor_zero_result_duplicate": "PASS"
+  },
+  "schema_version": "e2r_v6_gate1_focused_test_receipt_v1",
+  "skipped": 0,
+  "temporary_log_sha256": "204b59ae886b7483b4821691492ec05f5223f546a822a990c67ebb58ec22d9c1",
+  "tests_run": 221,
+  "verdict": "PASS"
+}

@@ -1,0 +1,108 @@
+{
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "as_of_date": "2026-07-12",
+  "audit_date": "2026-08-22",
+  "canonical_stage": "2",
+  "classifier_version": "e2r-2.0-cp2",
+  "component_vector": {
+    "bottleneck_pricing": 14.0,
+    "capital_allocation": 3.0,
+    "earnings_visibility": 14.5,
+    "eps_fcf_explosion": 18.5,
+    "information_confidence": 3.2,
+    "market_mispricing": 9.0,
+    "valuation_rerating": 8.0
+  },
+  "counter_thesis_complete": true,
+  "current_guard_primitives": [],
+  "decision_id": "ADEC5-50c846082d6d68fa69ce3142",
+  "event_overlay": {
+    "canonical_stage_effect": "NONE",
+    "event_claim_ids": [],
+    "event_type": "",
+    "rationale": "",
+    "source_evidence_ids": [],
+    "status": "NO_EVENT_OVERLAY"
+  },
+  "green_gate_missing_primitives": [
+    "customer_preorder_or_allocation",
+    "hbm_capacity_pre_sold"
+  ],
+  "green_gate_required_primitives": [
+    "customer_preorder_or_allocation",
+    "revenue_visibility_contract",
+    "hbm_capacity_constraint",
+    "hbm_capacity_pre_sold"
+  ],
+  "hard_break_claim_ids": [],
+  "llm_stage_authority": false,
+  "mapping_ids": [
+    "STGMAP-158be20da589cd480019d8c3",
+    "STGMAP-bb16c3a141d6bd0db90c16a3",
+    "STGMAP-07e6dfa3486c328443318770",
+    "STGMAP-8e66c4b9358cbb84286a9c5e",
+    "STGMAP-d59f0611902191bca864c9f2",
+    "STGMAP-d775a156c5992b3112cdeed9",
+    "STGMAP-11e32e48715eeeef05a6e73d",
+    "STGMAP-92abf6632e472c8b7d9dfd47",
+    "STGMAP-49f0cab05f0be953aa5e2d47",
+    "STGMAP-64e0f4db3e05e4de11c2dd99",
+    "STGMAP-d296c2322c8291fefa50f9cd",
+    "STGMAP-f8d86fe127a43a3a25b76310",
+    "STGMAP-07f698e12757deb32f0438e3",
+    "STGMAP-da310902bf4c164484939602",
+    "STGMAP-c2e6a05c4514c3e3bed0b0c5",
+    "STGMAP-4773e6dfe92c6c70b92e5f02",
+    "STGMAP-b0366bc1ad9a8d923de2491f",
+    "STGMAP-8cdafc9df24d636d5e0f6880",
+    "STGMAP-f1af80cccf606732ef674ce5",
+    "STGMAP-012b361407a6637b1acf6514"
+  ],
+  "pending_reasons": [],
+  "present_positive_primitives": [
+    "actual_earnings_conversion",
+    "capacity_supply_response",
+    "cash_or_revision_conversion",
+    "current_valuation_vs_earnings",
+    "hbm_capacity_constraint",
+    "hbm_product_profile",
+    "margin_fcf_conversion",
+    "market_expectation_gap",
+    "medium_term_revision_visibility",
+    "memory_price_increase_mentioned",
+    "package_substrate_sympathy",
+    "revenue_visibility_contract",
+    "shipment_or_revenue_mix"
+  ],
+  "research_complete": true,
+  "schema_version": "e2r_v6_gate1_000660_stagecourt_receipt_v1",
+  "score_fact_ids": [
+    "EFACT-0295af0d92028218f77266f2",
+    "EFACT-d2e799df4d980691c6707a9e",
+    "EFACT-1c3831e5ef2401b6cfabbd74",
+    "EFACT-e00a584221085d366d802f39",
+    "EFACT-fd7995c7d059c87c9d390d9b",
+    "EFACT-fe3de19254ddabef098a6b03",
+    "EFACT-793b1cbbdc783d3329b6d6c8",
+    "EFACT-e7b5a6f6472ae963fe820932",
+    "EFACT-fbebe9bd766d3ccabf23232b",
+    "EFACT-21677a91e8afb32e4876aa8c",
+    "EFACT-d9f801f19a001e7214e5af8c",
+    "EFACT-59fe4fe59aecdedfd2cd7aac"
+  ],
+  "score_valid": true,
+  "stage_cap_reasons": [
+    "고객 요청 HBM4 물량 양산 mapping은 존재하지만 독립 source quorum을 충족하지 못해 present positive primitive가 아님",
+    "HBM CAPA가 사전 판매·예약·완판됐다는 current source-backed fact가 없음",
+    "브로커가 보고한 공급계약 관계에는 독립 공식 물량·가격·기간·취소·선수금·backlog/RPO가 없음"
+  ],
+  "stage_gates_complete": true,
+  "stage_reasons": [
+    "candidate threshold was met with required score components"
+  ],
+  "status": "FINAL",
+  "target_id": "000660",
+  "total_points": 70.2,
+  "trace_id": "STAGECOURT-72c6a3be8f8147a879f69338",
+  "verdict": "STAGECOURT_FINAL"
+}

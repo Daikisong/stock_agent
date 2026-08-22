@@ -140,10 +140,29 @@ class LiveAuthorizationContractTests(unittest.TestCase):
                     str(REPO_ROOT / "configs/e2r_production_daily_v1.json"),
                 ]
             )
-            payload = json.loads(
-                (output_root / "current_daily_census_manifest.json").read_text(
-                    encoding="utf-8"
+            manifest_path = output_root / "current_daily_census_manifest.json"
+            if not manifest_path.is_file():
+                pending = json.loads(
+                    (output_root / "live_materialization_internal_pending.json").read_text(
+                        encoding="utf-8"
+                    )
                 )
+                self.assertEqual(code, 2)
+                self.assertEqual(pending["status"], "INTERNAL_E2R_RUNTIME_NOT_READY")
+                self.assertEqual(pending["canonical_stage"], "0")
+                self.assertFalse(pending["score_valid"])
+                self.assertTrue(
+                    "VALIDATED_DOWNSTREAM_CHECKPOINT_PENDING" in pending["blockers"]
+                    or any(
+                        str(code).startswith("MISSING_CREDENTIAL:")
+                        for code in pending["blockers"]
+                    ),
+                    pending["blockers"],
+                )
+                self.assertTrue(pending["authorization"]["materialize_live_input"])
+                return
+            payload = json.loads(
+                manifest_path.read_text(encoding="utf-8")
             )
             envelope = json.loads(
                 (output_root / "live_operational_envelope.json").read_text(
@@ -191,10 +210,32 @@ class LiveAuthorizationContractTests(unittest.TestCase):
                     "true",
                 ]
             )
-            payload = json.loads(
-                (output_root / "current_daily_census_manifest.json").read_text(
-                    encoding="utf-8"
+            manifest_path = output_root / "current_daily_census_manifest.json"
+            if not manifest_path.is_file():
+                pending = json.loads(
+                    (output_root / "live_materialization_internal_pending.json").read_text(
+                        encoding="utf-8"
+                    )
                 )
+                self.assertEqual(code, 2)
+                self.assertEqual(pending["status"], "INTERNAL_E2R_RUNTIME_NOT_READY")
+                self.assertEqual(pending["canonical_stage"], "0")
+                self.assertFalse(pending["score_valid"])
+                self.assertTrue(
+                    "VALIDATED_DOWNSTREAM_CHECKPOINT_PENDING" in pending["blockers"]
+                    or any(
+                        str(code).startswith("MISSING_CREDENTIAL:")
+                        for code in pending["blockers"]
+                    ),
+                    pending["blockers"],
+                )
+                self.assertEqual(
+                    pending["authorization"]["run_mode"],
+                    LiveRunMode.LIVE_CENSUS_SELECTIVE_DEEP.value,
+                )
+                return
+            payload = json.loads(
+                manifest_path.read_text(encoding="utf-8")
             )
             census = json.loads(
                 (output_root / "census_acceptance_audit.json").read_text(

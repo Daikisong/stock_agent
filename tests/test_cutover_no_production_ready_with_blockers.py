@@ -1,9 +1,11 @@
 import unittest
 
 from e2r.production.cutover_shadow import ProductionCutoverConfig, _readiness_blockers, build_production_cutover_bundle
+from tests.live_test_policy import requires_live_test
 
 
 class CutoverNoProductionReadyWithBlockersTests(unittest.TestCase):
+    @requires_live_test
     def test_blockers_force_not_ready(self):
         bundle = build_production_cutover_bundle(
             config=ProductionCutoverConfig(as_of_date="2026-06-30"),

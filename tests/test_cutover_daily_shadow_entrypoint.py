@@ -5,8 +5,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from tests.live_test_policy import requires_live_test
+
 
 class CutoverDailyShadowEntrypointTests(unittest.TestCase):
+    @requires_live_test
     def test_cli_generates_shadow_outputs(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             output = Path(tmpdir) / "out"

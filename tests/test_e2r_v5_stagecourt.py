@@ -135,6 +135,17 @@ class E2RV5StageCourtTests(unittest.TestCase):
             0,
         )
 
+    def test_research_in_progress_is_not_final_stage0(self) -> None:
+        run = _decide(
+            provider=StageMappingProvider(),
+            archetype_id=C06,
+            research_complete=False,
+        )
+
+        self.assertEqual("RESEARCH_IN_PROGRESS", run.decision.status)
+        self.assertIsNone(run.decision.canonical_stage)
+        self.assertNotEqual("0", run.decision.canonical_stage)
+
     def test_provider_failure_is_pending_without_score_or_stage_fabrication(self) -> None:
         provider = StageMappingProvider(fail=True)
         run = _decide(provider=provider, archetype_id=C06)
@@ -253,6 +264,22 @@ class E2RV5StageCourtTests(unittest.TestCase):
         self.assertNotIn("score", keys)
         self.assertNotIn("stage", keys)
         self.assertNotIn("uniqueItems", keys)
+
+    def test_stagecourt_uses_deterministic_component_vector(self) -> None:
+        provider = StageMappingProvider()
+        run = _decide(provider=provider, archetype_id=C06)
+        deterministic = _aggregation_run(mode="STRONG")[0]
+        expected = deterministic.total_result.score
+        assert expected is not None
+
+        self.assertEqual(
+            dict(expected.component_points),
+            run.decision.component_vector,
+        )
+        self.assertNotIn(
+            "component_vector",
+            _recursive_keys(provider.calls[0]["payload"]),
+        )
 
     def test_empty_mapping_cannot_skip_explicit_fact_dispositions(self) -> None:
         class MissingDispositionProvider(StageMappingProvider):
