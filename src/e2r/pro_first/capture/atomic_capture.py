@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 from typing import Callable, Mapping
 
+from ..atomic_io import fsync_directory
 from ..browser.protocol import RawBrowserCapture
 from ..ids import canonical_json
 from .receipt import CaptureReceipt, file_sha256, verify_capture_bundle
@@ -158,11 +159,7 @@ class AtomicCaptureWriter:
 
     @staticmethod
     def _fsync_directory(path: Path) -> None:
-        descriptor = os.open(path, os.O_RDONLY)
-        try:
-            os.fsync(descriptor)
-        finally:
-            os.close(descriptor)
+        fsync_directory(path)
 
     def _now_value(self) -> datetime:
         value = self._now()

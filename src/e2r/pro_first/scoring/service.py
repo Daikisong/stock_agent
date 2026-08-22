@@ -21,9 +21,14 @@ from e2r.research_brain.scoring import (
     FullScoreValidityEvidenceV2,
 )
 
+from ..atomic_io import fsync_directory
 from ..ids import canonical_hash, canonical_json, stable_id
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob, ResearchMode
+from ..gaps.supplemental_service import (
+    load_effective_verified_evidence,
+    resolved_supplemental_gap_keys,
+)
 from ..reuse import DeltaScoringReuseContext
 from ..state_machine import TransitionContext
 from .component_bridge import (
@@ -151,18 +156,16 @@ class ProScoringPipelineService:
         ):
             raise ValueError("delta reuse context is only valid for DELTA_RESEARCH")
         dossier = _read_json(root / "import/research_dossier.normalized.json")
-        verification_root = root / "verification"
-        facts = tuple(
-            evidence_fact_from_mapping(row)
-            for row in _read_jsonl(verification_root / "evidence_facts.jsonl")
+        fact_rows, claim_fact_links, source_verifications = (
+            load_effective_verified_evidence(root)
         )
-        source_verifications = _read_jsonl(
-            verification_root / "source_verifications.jsonl"
+        facts = tuple(evidence_fact_from_mapping(row) for row in fact_rows)
+        resolved_gap_keys = resolved_supplemental_gap_keys(root)
+        gap_decisions = tuple(
+            row
+            for row in self.store.get_gap_decisions(job_id)
+            if str(row.get("evidence_gap_key") or "") not in resolved_gap_keys
         )
-        claim_fact_links = _read_jsonl(
-            verification_root / "claim_fact_links.jsonl"
-        )
-        gap_decisions = self.store.get_gap_decisions(job_id)
         delta_inputs = None
         effective_impacts = tuple(validated_impacts)
         effective_terminal_evidence = dict(terminal_evidence)
@@ -1229,11 +1232,7 @@ def _write_atomic(path: Path, payload: str) -> None:
         stream.flush()
         os.fsync(stream.fileno())
     os.replace(part, path)
-    descriptor = os.open(path.parent, os.O_RDONLY)
-    try:
-        os.fsync(descriptor)
-    finally:
-        os.close(descriptor)
+    fsync_directory(path.parent)
 
 
 __all__ = ["ProScoringPipelineRun", "ProScoringPipelineService"]

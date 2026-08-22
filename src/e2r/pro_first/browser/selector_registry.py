@@ -63,8 +63,19 @@ FILE_INPUT_SELECTORS = ('input[type="file"]',)
 
 LOGIN_INDICATOR_SELECTORS = (
     'a[href*="/auth/login"]',
+    'a[href*="/auth/signup"]',
+    'a[href*="/log-in"]',
+    'a[href*="/sign-up"]',
+    'a[href*="auth.openai.com"]',
+    'button[data-testid*="login"]',
     'button:has-text("Log in")',
+    'a:has-text("Log in")',
+    'button:has-text("Sign up")',
+    'a:has-text("Sign up")',
     'button:has-text("로그인")',
+    'a:has-text("로그인")',
+    'button:has-text("가입")',
+    'a:has-text("가입")',
 )
 
 MD_CANDIDATE_SELECTORS = (

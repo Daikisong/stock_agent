@@ -21,6 +21,7 @@ from .dossier import ProDossierImporter
 from .job_store import ProFirstJobStore
 from .models import JobStatus, ScanWindow
 from .operations import PreparedBrowserRuntime, build_job_packet, prepare_job_in_logged_in_browser
+from .post_import import ProFirstPostImportCoordinator
 from .scheduler import (
     KoreaScanToProQueue,
     PersistentKrxScheduler,
@@ -38,15 +39,27 @@ class ProFirstLocalStack:
     exactly-once coordinator.
     """
 
-    def __init__(self, config: ProFirstLocalConfig, *, repo_root: str | Path = ".") -> None:
+    def __init__(
+        self,
+        config: ProFirstLocalConfig,
+        *,
+        repo_root: str | Path = ".",
+        post_import_coordinator: ProFirstPostImportCoordinator | None = None,
+    ) -> None:
         self.config = config
         self.repo_root = Path(repo_root).expanduser().resolve()
         self.config.runtime_root.mkdir(parents=True, exist_ok=True)
         self.store = ProFirstJobStore(config.database_path)
+        self.post_import = post_import_coordinator or ProFirstPostImportCoordinator(
+            self.store,
+            runtime_root=config.runtime_root,
+            repo_root=self.repo_root,
+        )
         self.stop_event = asyncio.Event()
         self.sessions: dict[str, PreparedBrowserRuntime] = {}
         self.monitors: dict[str, ProCompletionStateService] = {}
         self._job_lock = asyncio.Lock()
+        self._post_import_waiting: dict[str, tuple[str, int]] = {}
         self.local_token = secrets.token_urlsafe(32)
         self.scheduler = PersistentKrxScheduler(
             self.store,
@@ -230,6 +243,27 @@ class ProFirstLocalStack:
                 if prepared is not None:
                     await prepared.close()
                 return {"job_id": job_id, "status": imported.job.status, "dossier_id": imported.job.dossier_id}
+            if job.status in {
+                JobStatus.DOSSIER_IMPORTED.value,
+                JobStatus.VERIFYING_SOURCES.value,
+                JobStatus.GAP_ADJUDICATION.value,
+                JobStatus.SUPPLEMENTAL_RESEARCH.value,
+                JobStatus.COMPONENT_RESEARCH.value,
+                JobStatus.JUDGING.value,
+                JobStatus.SCORING.value,
+                JobStatus.STAGECOURT.value,
+                JobStatus.FINAL.value,
+            }:
+                advance = self.post_import.advance_once(job_id)
+                current = self.store.get_job(job_id)
+                if advance.wait_reason is not None:
+                    self._post_import_waiting[job_id] = (
+                        current.status,
+                        current.state_version,
+                    )
+                else:
+                    self._post_import_waiting.pop(job_id, None)
+                return dict(advance.to_dict())
             return {"job_id": job_id, "status": job.status, "action": "NONE"}
 
     async def _browser_loop(self) -> None:
@@ -240,10 +274,29 @@ class ProFirstLocalStack:
             JobStatus.RESEARCH_RUNNING.value,
             JobStatus.RESULT_DETECTED.value,
             JobStatus.CAPTURE_COMPLETE.value,
+            JobStatus.DOSSIER_IMPORTED.value,
+            JobStatus.VERIFYING_SOURCES.value,
+            JobStatus.GAP_ADJUDICATION.value,
+            JobStatus.SUPPLEMENTAL_RESEARCH.value,
+            JobStatus.COMPONENT_RESEARCH.value,
+            JobStatus.SCORING.value,
+            JobStatus.STAGECOURT.value,
         }
+        if self.post_import.judge_provider_available:
+            actionable.add(JobStatus.JUDGING.value)
         while not self.stop_event.is_set():
             for job in self.store.list_jobs(limit=200):
+                if (
+                    job.status == JobStatus.FINAL.value
+                    and self.store.get_publication(job.job_id) is None
+                ):
+                    actionable.add(JobStatus.FINAL.value)
                 if job.status not in actionable:
+                    continue
+                if self._post_import_waiting.get(job.job_id) == (
+                    job.status,
+                    job.state_version,
+                ):
                     continue
                 try:
                     await self.process_job_once(job.job_id)

@@ -10,7 +10,7 @@
   },
   "live_chatgpt_research_latency_measured": false,
   "measurement": "cProfile cumulative wall-adjacent runtime over bounded fixtures",
-  "recorded_at": "2026-08-22T06:10:32.705720Z",
+  "recorded_at": "2026-08-22T08:32:39.023386Z",
   "same_dossier_rerun": {
     "browser_submit": 0,
     "new_fetch": 0,
@@ -23,7 +23,7 @@
   "status": "PASS",
   "supplemental_count": 0,
   "tests": {
-    "elapsed_seconds": 4.480245,
+    "elapsed_seconds": 3.896768,
     "error_count": 0,
     "failure_count": 0,
     "label": "PRO_FIRST_PERFORMANCE_AUDIT",
@@ -32,15 +32,15 @@
     "tests_run": 4
   },
   "timings": {
-    "browser_prepare_elapsed_seconds": 0.132686,
-    "capture_elapsed_seconds": 0.083557,
-    "gap_elapsed_seconds": 0.016568,
-    "import_elapsed_seconds": 0.026143,
-    "judge_elapsed_seconds": 0.010635,
-    "packet_elapsed_seconds": 0.002235,
-    "research_completion_observation_elapsed_seconds": 0.112332,
-    "scan_elapsed_seconds": 0.031202,
-    "score_stage_elapsed_seconds": 0.23798,
-    "source_verification_elapsed_seconds": 0.042367
+    "browser_prepare_elapsed_seconds": 0.062247,
+    "capture_elapsed_seconds": 0.077188,
+    "gap_elapsed_seconds": 0.043863,
+    "import_elapsed_seconds": 0.022551,
+    "judge_elapsed_seconds": 0.008623,
+    "packet_elapsed_seconds": 0.001234,
+    "research_completion_observation_elapsed_seconds": 0.10641,
+    "scan_elapsed_seconds": 0.029806,
+    "score_stage_elapsed_seconds": 0.198034,
+    "source_verification_elapsed_seconds": 0.04124
   }
 }

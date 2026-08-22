@@ -16,6 +16,7 @@
   "browser": {
     "mode": "CDP_ATTACH",
     "cdp_url": "http://127.0.0.1:9222",
+    "cdp_active_port_file": null,
     "chatgpt_url": "https://chatgpt.com/",
     "require_manual_login": true,
     "require_user_start_approval": true,

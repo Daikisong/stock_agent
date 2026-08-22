@@ -17,15 +17,22 @@ from e2r.pro_first.operations import create_forced_validation_canary, prepare_jo
 
 async def _run(args: argparse.Namespace) -> dict:
     base = load_pro_first_local_config(args.config)
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    config = replace(base, runtime_root=base.runtime_root / "shadow" / stamp)
+    if args.job_id:
+        config = base
+    else:
+        stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        config = replace(base, runtime_root=base.runtime_root / "shadow" / stamp)
     store = ProFirstJobStore(config.database_path)
-    job = create_forced_validation_canary(
-        store,
-        symbol=args.symbol,
-        company_name=args.company_name,
-        as_of_date=args.as_of_date,
-        archetype_ids=tuple(args.archetype_id),
+    job = (
+        store.get_job(args.job_id)
+        if args.job_id
+        else create_forced_validation_canary(
+            store,
+            symbol=args.symbol,
+            company_name=args.company_name,
+            as_of_date=args.as_of_date,
+            archetype_ids=tuple(args.archetype_id),
+        )
     )
     screenshot = config.runtime_root / "private/live_shadow.png"
     try:
@@ -54,12 +61,33 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", required=True)
     parser.add_argument("--repo-root", default=".")
-    parser.add_argument("--symbol", required=True)
-    parser.add_argument("--company-name", required=True)
-    parser.add_argument("--as-of-date", required=True)
+    parser.add_argument(
+        "--job-id",
+        help="reuse one durable PACKET_READY job instead of creating another canary",
+    )
+    parser.add_argument("--symbol")
+    parser.add_argument("--company-name")
+    parser.add_argument("--as-of-date")
     parser.add_argument("--archetype-id", action="append", default=[])
     parser.add_argument("--output")
     args = parser.parse_args(argv)
+    if args.job_id:
+        if any(
+            value
+            for value in (
+                args.symbol,
+                args.company_name,
+                args.as_of_date,
+                *args.archetype_id,
+            )
+        ):
+            parser.error(
+                "--job-id cannot be combined with canary creation arguments"
+            )
+    elif not all((args.symbol, args.company_name, args.as_of_date)):
+        parser.error(
+            "new shadow canary requires --symbol, --company-name, and --as-of-date"
+        )
     result = asyncio.run(_run(args))
     if args.output:
         write_receipt(args.output, result)

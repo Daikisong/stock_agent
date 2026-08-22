@@ -274,6 +274,12 @@ class ProEvidenceOnlyJudgeBridge:
             for value in response.get("allowed_range")
             or (proposed, proposed)
         )
+        if (
+            len(allowed) != 2
+            or not 0 <= allowed[0] <= proposed <= allowed[1]
+            or allowed[1] > memo.component_max_points
+        ):
+            raise ValueError("judge points or allowed range exceed the component contract")
         judge_id = stable_id(
             "PROJUDGE",
             {

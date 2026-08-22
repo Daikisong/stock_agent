@@ -9,9 +9,11 @@ from pathlib import Path
 import re
 from typing import Any, Mapping
 
+from .atomic_io import fsync_directory
 from .ids import canonical_hash, canonical_json, stable_id
 from .job_store import ProFirstJobStore
 from .models import JobStatus, ProResearchJob
+from .gaps.supplemental_service import load_effective_verified_evidence
 
 
 _DIRECTIVE_PATTERN = re.compile(
@@ -115,8 +117,8 @@ class ProResultPublisher:
             raise ValueError("publication component/Judge/score/Stage lineage is inconsistent")
         gap_decisions = self.store.get_gap_decisions(job_id)
         candidate = self.store.get_candidate(job.candidate_id)
-        source_rows = _read_optional_jsonl(
-            root / "verification/source_verifications.jsonl"
+        effective_fact_rows, _effective_links, source_rows = (
+            load_effective_verified_evidence(root)
         )
         accepted_source_ids = {
             str(row.get("source_id") or "")
@@ -124,9 +126,10 @@ class ProResultPublisher:
             if str(row.get("status") or "").startswith("ACCEPTED_")
             and str(row.get("source_id") or "")
         }
-        candidate_count = int(verification_receipt.get("candidate_fact_count") or 0)
-        accepted_count = int(
-            verification_receipt.get("accepted_fact_candidate_count") or 0
+        candidate_count = len(source_rows)
+        accepted_count = sum(
+            str(row.get("status") or "").startswith("ACCEPTED_")
+            for row in source_rows
         )
         monitoring_conditions = _monitoring_conditions(
             gap_decisions=gap_decisions,
@@ -161,9 +164,7 @@ class ProResultPublisher:
                 ),
                 "accepted_fact_count": accepted_count,
                 "rejected_fact_count": max(0, candidate_count - accepted_count),
-                "compiled_evidence_fact_count": int(
-                    verification_receipt.get("compiled_evidence_fact_count") or 0
-                ),
+                "compiled_evidence_fact_count": len(effective_fact_rows),
                 "unresolved_gap_count": len(gap_decisions),
                 "component_coverage": "7/7",
                 "judge_coverage": "21/21",
@@ -311,11 +312,7 @@ def _write_or_verify_json(path: Path, payload: Mapping[str, Any]) -> None:
         stream.flush()
         os.fsync(stream.fileno())
     os.replace(part, path)
-    descriptor = os.open(path.parent, os.O_RDONLY)
-    try:
-        os.fsync(descriptor)
-    finally:
-        os.close(descriptor)
+    fsync_directory(path.parent)
 
 
 __all__ = ["ProPublishedResult", "ProResultPublisher"]

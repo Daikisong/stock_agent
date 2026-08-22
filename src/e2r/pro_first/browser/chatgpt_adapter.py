@@ -54,12 +54,19 @@ class PlaywrightChatGPTWebAdapter:
         self._submit_attempted = False
 
     async def ensure_logged_in(self) -> BrowserInspection:
-        editor = await first_visible(self.page, EDITOR_SELECTORS)
-        if editor is not None:
-            return await self.inspect_state()
-        login = await first_visible(self.page, LOGIN_INDICATOR_SELECTORS)
-        if login is not None or "/auth/" in self.page.url:
-            raise ManualLoginRequired("ChatGPT manual login is required; login automation is forbidden")
+        # A newly opened ChatGPT landing page can render the authentication
+        # controls a little after ``domcontentloaded``.  Keep this wait finite:
+        # login remains a manual user action and is never automated here.
+        for attempt in range(9):
+            editor = await first_visible(self.page, EDITOR_SELECTORS)
+            if editor is not None:
+                return await self.inspect_state()
+            if await self._manual_login_required():
+                raise ManualLoginRequired(
+                    "ChatGPT manual login is required; login automation is forbidden"
+                )
+            if attempt < 8:
+                await self.page.wait_for_timeout(250)
         raise BrowserUIIncompatible("ChatGPT prompt editor was not found")
 
     async def ensure_deep_research_mode(self) -> BrowserInspection:
@@ -215,7 +222,7 @@ class PlaywrightChatGPTWebAdapter:
 
     async def inspect_state(self) -> BrowserInspection:
         editor = await first_visible(self.page, EDITOR_SELECTORS)
-        login = await first_visible(self.page, LOGIN_INDICATOR_SELECTORS)
+        login_required = editor is None and await self._manual_login_required()
         deep_ready = await self._deep_research_ready()
         send = await first_visible(self.page, SEND_SELECTORS)
         stop = await first_visible(self.page, STOP_SELECTORS)
@@ -227,7 +234,7 @@ class PlaywrightChatGPTWebAdapter:
             self._uploaded_filename and self._uploaded_filename.lower() in body_text
         )
         prompt_ready = bool(editor_value)
-        if editor is None and (login is not None or "/auth/" in self.page.url):
+        if login_required:
             state = BrowserUIState.LOGIN_REQUIRED
         elif mock_state == "CLARIFICATION" or any(
             token in body_text
@@ -519,6 +526,26 @@ class PlaywrightChatGPTWebAdapter:
 
     async def _deep_research_ready(self) -> bool:
         return await first_visible(self.page, DEEP_RESEARCH_ACTIVE_SELECTORS) is not None
+
+    async def _manual_login_required(self) -> bool:
+        if "/auth/" in self.page.url:
+            return True
+        if await first_visible(self.page, LOGIN_INDICATOR_SELECTORS) is not None:
+            return True
+        body = self.page.locator("body")
+        try:
+            body_text = (await body.inner_text()).lower()
+        except Exception:
+            return False
+        return any(
+            marker in body_text
+            for marker in (
+                "log in",
+                "sign up",
+                "로그인",
+                "회원가입",
+            )
+        )
 
 
 __all__ = ["PlaywrightChatGPTWebAdapter"]

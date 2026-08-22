@@ -1,12 +1,16 @@
 from __future__ import annotations
 
+from argparse import Namespace
 from dataclasses import replace
 import asyncio
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
+from e2r.pro_first.atomic_io import fsync_directory
+from e2r.pro_first.browser.protocol import ManualLoginRequired
 from e2r.pro_first.config import (
     ProAuthorityRuntimeConfig,
     ProDashboardRuntimeConfig,
@@ -24,6 +28,7 @@ from e2r.pro_first.static_audit import (
     audit_python_source,
     compile_pro_first_static_audit,
 )
+from e2r.cli.run_e2r_pro_first_shadow_check import _run as run_shadow_check
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +36,13 @@ EXAMPLE = ROOT / "configs/e2r_pro_first_local.example.yaml"
 
 
 class ProFirstOperationalConfigTest(unittest.TestCase):
+    def test_windows_directory_fsync_is_a_safe_noop(self) -> None:
+        with patch("e2r.pro_first.atomic_io.os.name", "nt"), patch(
+            "e2r.pro_first.atomic_io.os.open"
+        ) as opener:
+            fsync_directory("C:/runtime")
+        opener.assert_not_called()
+
     def test_example_config_is_safe_and_complete(self) -> None:
         config = load_pro_first_local_config(EXAMPLE)
         self.assertEqual(config.scheduler.morning_at, "05:30")
@@ -62,6 +74,23 @@ class ProFirstOperationalConfigTest(unittest.TestCase):
             path.write_text(json.dumps(payload), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "unknown"):
                 load_pro_first_local_config(path)
+
+    def test_active_port_file_requires_a_path_string(self) -> None:
+        with TemporaryDirectory() as temporary:
+            path = Path(temporary) / "config.yaml"
+            payload = json.loads(EXAMPLE.read_text(encoding="utf-8"))
+            payload["browser"]["cdp_active_port_file"] = {"unsafe": "value"}
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "path string"):
+                load_pro_first_local_config(path)
+
+    def test_windows_chrome_helper_is_loopback_and_origin_bounded(self) -> None:
+        helper = (ROOT / "scripts/start_e2r_pro_chrome.ps1").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("--remote-debugging-address=127.0.0.1", helper)
+        self.assertIn("--remote-allow-origins=http://127.0.0.1", helper)
+        self.assertNotIn("--remote-allow-origins=*", helper)
 
 
 class ProFirstOperationalStackTest(unittest.TestCase):
@@ -129,6 +158,107 @@ class ProFirstOperationalStackTest(unittest.TestCase):
         stopped = store.get_job(job.job_id)
         self.assertEqual(stopped.status, "USER_ATTENTION_REQUIRED")
         self.assertEqual(stopped.submit_count, 0)
+
+    def test_manual_login_pending_is_durable_and_never_submits(self) -> None:
+        store = ProFirstJobStore(self.config.database_path)
+        job = create_forced_validation_canary(
+            store,
+            symbol="000002",
+            company_name="수동로그인검증",
+            as_of_date="2026-08-22",
+        )
+        observed = {"closed": 0}
+
+        class Adapter:
+            async def prepare_without_submit(self, **_kwargs):
+                raise ManualLoginRequired("manual login required")
+
+        class Session:
+            adapter = Adapter()
+            browser_session_id = "BROWSER-manual-login-test"
+
+            async def close(self):
+                observed["closed"] += 1
+
+        async def open_session(_worker, *, job_id):
+            self.assertEqual(job_id, job.job_id)
+            return Session()
+
+        with patch(
+            "e2r.pro_first.operations.ProBrowserWorker.open",
+            new=open_session,
+        ):
+            with self.assertRaises(ManualLoginRequired):
+                asyncio.run(
+                    prepare_job_in_logged_in_browser(
+                        store,
+                        job_id=job.job_id,
+                        config=self.config,
+                        repo_root=ROOT,
+                    )
+                )
+        stopped = store.get_job(job.job_id)
+        self.assertEqual(stopped.status, "USER_ATTENTION_REQUIRED")
+        self.assertEqual(stopped.last_error_class, "ManualLoginRequired")
+        self.assertEqual(stopped.submit_count, 0)
+        self.assertEqual(observed["closed"], 1)
+
+    def test_shadow_reuses_durable_job_without_creating_duplicate_canary(self) -> None:
+        config_path = Path(self.temporary.name) / "config.json"
+        config_payload = json.loads(EXAMPLE.read_text(encoding="utf-8"))
+        config_payload["runtime"]["root"] = str(self.config.runtime_root)
+        config_path.write_text(json.dumps(config_payload), encoding="utf-8")
+        store = ProFirstJobStore(self.config.database_path)
+        job = create_forced_validation_canary(
+            store,
+            symbol="000660",
+            company_name="SK하이닉스",
+            as_of_date="2026-08-22",
+            archetype_ids=("C06_HBM_MEMORY_CUSTOMER_CAPACITY",),
+        )
+        observed = {}
+
+        class Prepared:
+            receipt = {
+                "schema_version": "e2r_pro_first_live_shadow_receipt_v1",
+                "status": "CHATGPT_WEB_SHADOW_COMPATIBILITY_PASS",
+                "submit_count": 0,
+            }
+
+            async def close(self) -> None:
+                observed["closed"] = True
+
+        async def prepare(store_arg, *, job_id, config, repo_root, screenshot_path):
+            observed.update(
+                {
+                    "job_id": job_id,
+                    "runtime_root": config.runtime_root,
+                    "screenshot_path": screenshot_path,
+                }
+            )
+            self.assertEqual(store_arg.get_job(job_id).symbol, "000660")
+            return Prepared()
+
+        args = Namespace(
+            config=str(config_path),
+            repo_root=str(ROOT),
+            job_id=job.job_id,
+            symbol=None,
+            company_name=None,
+            as_of_date=None,
+            archetype_id=[],
+            output=None,
+        )
+        with patch(
+            "e2r.cli.run_e2r_pro_first_shadow_check.prepare_job_in_logged_in_browser",
+            new=prepare,
+        ):
+            result = asyncio.run(run_shadow_check(args))
+        self.assertEqual(result["status"], "CHATGPT_WEB_SHADOW_COMPATIBILITY_PASS")
+        self.assertEqual(observed["job_id"], job.job_id)
+        self.assertEqual(observed["runtime_root"], self.config.runtime_root.resolve())
+        self.assertTrue(observed["closed"])
+        self.assertEqual(len(store.list_jobs(limit=10)), 1)
 
 
 class ProFirstStaticAuditTest(unittest.TestCase):

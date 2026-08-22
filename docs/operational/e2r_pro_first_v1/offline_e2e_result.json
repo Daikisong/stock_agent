@@ -1,9 +1,9 @@
 {
-  "elapsed_seconds": 13.721416,
+  "elapsed_seconds": 12.323189,
   "error_count": 0,
   "failure_count": 0,
   "label": "PRO_FIRST_OFFLINE_E2E",
-  "recorded_at": "2026-08-22T06:03:45.096125Z",
+  "recorded_at": "2026-08-22T08:32:33.488258Z",
   "schema_version": "e2r_pro_first_test_receipt_v1",
   "skip_count": 0,
   "status": "PASS",

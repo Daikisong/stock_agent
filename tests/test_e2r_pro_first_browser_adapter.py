@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import asyncio
 import socket
+import subprocess
+import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import json
@@ -123,6 +125,16 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
             await self.adapter.ensure_logged_in()
         self.assertEqual(await self.page.locator('a[href="/auth/login"]').count(), 1)
 
+    async def test_logged_out_landing_page_is_manual_login_not_ui_breakage(self) -> None:
+        await self.page.set_content(
+            "<html><body><main><h1>ChatGPT</h1>"
+            '<a href="/sign-up">Sign up</a></main></body></html>'
+        )
+        with self.assertRaises(ManualLoginRequired):
+            await self.adapter.ensure_logged_in()
+        inspection = await self.adapter.inspect_state()
+        self.assertEqual(inspection.state, BrowserUIState.LOGIN_REQUIRED)
+
     async def test_submit_path_is_unavailable_before_p5_approval_gate(self) -> None:
         with self.assertRaises(SubmitAuthorizationRequired):
             await self.adapter.submit_once(None)
@@ -182,6 +194,55 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
             ProBrowserConfig(hidden_api_access=True)
         with self.assertRaisesRegex(ValueError, "loopback-only"):
             ProBrowserConfig(cdp_url="http://remote.example:9222")
+
+    def test_package_import_does_not_eagerly_load_posix_research_provider(self) -> None:
+        completed = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                (
+                    "import sys, e2r.pro_first; "
+                    "print('e2r.research_brain.researcher_mode."
+                    "collaboration_provider_bridge' in sys.modules)"
+                ),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(completed.stdout.strip(), "False")
+
+    def test_worker_resolves_safe_active_port_file_only_in_memory(self) -> None:
+        active_port_file = Path(self.temporary_directory.name) / "DevToolsActivePort"
+        active_port_file.write_text(
+            "9222\n/devtools/browser/12345678-1234-1234-1234-123456789abc\n",
+            encoding="utf-8",
+        )
+        worker = ProBrowserWorker(
+            ProBrowserConfig(cdp_active_port_file=active_port_file)
+        )
+        self.assertEqual(
+            worker._resolve_cdp_endpoint(),
+            "ws://127.0.0.1:9222/devtools/browser/12345678-1234-1234-1234-123456789abc",
+        )
+        self.assertNotIn("12345678-1234", worker.config.cdp_url)
+
+    def test_worker_rejects_unsafe_active_port_file_values(self) -> None:
+        active_port_file = Path(self.temporary_directory.name) / "DevToolsActivePort"
+        worker = ProBrowserWorker(
+            ProBrowserConfig(cdp_active_port_file=active_port_file)
+        )
+        invalid_values = (
+            "0\n/devtools/browser/12345678-1234-1234-1234-123456789abc\n",
+            "9222\n/devtools/page/12345678-1234-1234-1234-123456789abc\n",
+            "9222\n/devtools/browser/../../etc/passwd\n",
+            "not-a-port\n/devtools/browser/12345678-1234-1234-1234-123456789abc\n",
+        )
+        for value in invalid_values:
+            with self.subTest(value=value.splitlines()[0]):
+                active_port_file.write_text(value, encoding="utf-8")
+                with self.assertRaisesRegex(RuntimeError, "invalid"):
+                    worker._resolve_cdp_endpoint()
 
 
 if __name__ == "__main__":

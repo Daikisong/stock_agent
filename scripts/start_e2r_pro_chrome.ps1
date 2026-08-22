@@ -25,6 +25,8 @@ if ($resolvedProfile -eq $defaultChromeProfile) {
 New-Item -ItemType Directory -Force -Path $resolvedProfile | Out-Null
 $arguments = @(
     "--remote-debugging-port=$RemoteDebuggingPort",
+    "--remote-debugging-address=127.0.0.1",
+    "--remote-allow-origins=http://127.0.0.1,http://localhost,http://127.0.0.1:$RemoteDebuggingPort,http://localhost:$RemoteDebuggingPort",
     "--user-data-dir=$resolvedProfile",
     "--no-first-run",
     $ChatGPTUrl

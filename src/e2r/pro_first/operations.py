@@ -286,8 +286,28 @@ async def prepare_job_in_logged_in_browser(
             prompt=prompt,
             receipt=receipt,
         )
-    except Exception:
+    except Exception as error:
         await session.close()
+        current = store.get_job(job_id)
+        if current.status == JobStatus.BROWSER_PREPARING.value:
+            store.transition(
+                job_id,
+                expected_version=current.state_version,
+                to_status=JobStatus.USER_ATTENTION_REQUIRED,
+                actor="pro-first-browser-worker",
+                idempotency_key=(
+                    f"browser-prepare-attention:{job_id}:{current.state_version}"
+                ),
+                payload={
+                    "automatic_login_allowed": False,
+                    "automatic_resubmit_allowed": False,
+                    "submit_count": current.submit_count,
+                },
+                updates={
+                    "last_error_class": type(error).__name__,
+                    "last_error_message": str(error),
+                },
+            )
         raise
 
 

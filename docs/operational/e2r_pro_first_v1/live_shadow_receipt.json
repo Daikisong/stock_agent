@@ -1,6 +1,19 @@
 {
   "schema_version": "e2r_pro_first_live_shadow_receipt_v1",
-  "status": "CHATGPT_WEB_SHADOW_NOT_YET_RUN",
+  "status": "CHATGPT_WEB_SHADOW_PENDING_USER_ENV",
+  "reason_code": "DEDICATED_PROFILE_MANUAL_LOGIN_REQUIRED",
+  "error_class": "ManualLoginRequired",
+  "job_id": "PROJOB-70e6a50ae757bd874e602a85",
+  "selection_mode": "FORCED_VALIDATION_CANARY",
+  "connection_mode": "CDP_ATTACH",
+  "dedicated_profile_only": true,
+  "cdp_attach_ok": true,
+  "prompt_editor_present": false,
+  "manual_login_required": true,
+  "default_profile_copy_count": 0,
+  "cookie_export_count": 0,
+  "duplicate_job_count": 0,
   "submit_count": 0,
-  "reason": "P14 tracked implementation receipt; P15 must replace this only after a real logged-in CDP shadow check"
+  "capture_count": 0,
+  "screenshot_committed": false
 }

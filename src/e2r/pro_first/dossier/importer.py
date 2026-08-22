@@ -11,6 +11,7 @@ from typing import Any, Callable, Mapping
 
 from ..capture.coordinator import CaptureCompleteEvent
 from ..capture.receipt import load_capture_receipt, verify_capture_bundle
+from ..atomic_io import fsync_directory
 from ..ids import canonical_hash, canonical_json, stable_id
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
@@ -217,11 +218,7 @@ class ProDossierImporter:
             stream.flush()
             os.fsync(stream.fileno())
         os.replace(part, path)
-        descriptor = os.open(path.parent, os.O_RDONLY)
-        try:
-            os.fsync(descriptor)
-        finally:
-            os.close(descriptor)
+        fsync_directory(path.parent)
 
     def _now_text(self) -> str:
         value = self._now()

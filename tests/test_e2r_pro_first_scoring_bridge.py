@@ -8,9 +8,19 @@ import unittest
 from unittest.mock import patch
 
 from e2r.pro_first.ids import canonical_hash, canonical_json
+from e2r.pro_first.gaps.service import ProGapAdjudicationService
 from e2r.pro_first.job_store import ProFirstJobStore
 from e2r.pro_first.models import JobStatus, ResearchMode, ScanWindow
+from e2r.pro_first.post_import import (
+    ProFirstPostImportCoordinator,
+    ProPostImportScoringInputs,
+    compile_conservative_gap_contexts,
+)
 from e2r.pro_first.scoring.component_bridge import ProComponentMemoCompiler
+from e2r.pro_first.scoring.codex_judge_provider import (
+    CodexEvidenceOnlyJudgeProvider,
+)
+from e2r.pro_first.scoring.impact_compiler import ProValidatedImpactCompiler
 from e2r.pro_first.scoring.judge_bridge import ProEvidenceOnlyJudgeBridge
 from e2r.pro_first.scoring.scorer_bridge import ProCalibratedScorerBridge
 from e2r.pro_first.scoring.service import ProScoringPipelineService
@@ -54,6 +64,92 @@ class _EvidenceOnlyProvider:
             "why_not_higher": "추가 검증 fact 없이는 상단을 넓히지 않는다.",
             "why_not_lower": "현재 검증 fact가 하단을 지지한다.",
         }
+
+
+class _ImpactProvider:
+    provider_name = "UNIT_STRUCTURED_IMPACT_PROVIDER"
+
+    def __init__(self) -> None:
+        self.calls = []
+
+    def complete(self, *, pass_name, payload):
+        self.calls.append((pass_name, dict(payload)))
+        if pass_name == "IMPACT_SKEPTIC":
+            return {"verdict": "APPROVE", "issues": []}
+        claim = payload["accepted_claim"]
+        mapping = next(
+            row
+            for row in claim["mapping_candidates"]
+            if row["primitive_id"] == "memory_price_increase_mentioned"
+        )
+        question = next(
+            row
+            for row in payload["question_impact_contracts"]
+            if row["question_family_id"] == "asp_pricing_actual"
+        )
+        subcriterion = next(
+            row
+            for row in payload["component_subcriteria"]["bottleneck_pricing"]
+            if row["question_family_id"] == "asp_pricing_actual"
+            and "memory_price_increase_mentioned"
+            in row.get("allowed_primitive_ids", ())
+        )
+        return {
+            "impacts": [
+                {
+                    "mapping_id": mapping["mapping_id"],
+                    "primitive_id": mapping["primitive_id"],
+                    "question_family_id": question["question_family_id"],
+                    "question_contract_hash": question["contract_hash"],
+                    "component_id": "bottleneck_pricing",
+                    "component_subcriterion_id": subcriterion["subcriterion_id"],
+                    "mechanism_scope_match": payload[
+                        "mechanism_scope_validation_by_component"
+                    ]["bottleneck_pricing"]["scope_match"],
+                    "direction": "SUPPORT",
+                    "support_type": "DIRECT_ACTUAL",
+                    "strength_band": "MODERATE",
+                    "completeness_band": "PARTIAL",
+                    "causal_distance": "DIRECT",
+                    "temporal_scope": "CURRENT",
+                    "source_family": "ISSUER_OFFICIAL",
+                    "evidence_family_id": "provider-cannot-own-this-id",
+                    "confidence": 0.8,
+                    "rationale": "검증 원문이 현재 가격 상승을 직접 확인한다.",
+                    "unsupported_aspects": ["FCF 전환은 별도 증거가 필요하다."],
+                    "counter_claim_ids": [],
+                }
+            ],
+            "unsupported_aspects": ["FCF 전환은 별도 증거가 필요하다."],
+            "counter_thesis": [],
+            "reasoning_summary": "bounded impact only",
+        }
+
+
+class _TamperingImpactProvider(_ImpactProvider):
+    def complete(self, *, pass_name, payload):
+        result = super().complete(pass_name=pass_name, payload=payload)
+        if pass_name == "IMPACT_PROPOSAL":
+            result["impacts"][0]["mapping_id"] = "PROVIDER-INVENTED-MAPPING"
+            result["impacts"][0]["source_family"] = "PROVIDER-INVENTED-SOURCE"
+            result["impacts"][0]["direction"] = "COUNTER"
+        return result
+
+
+class _JudgeTransport:
+    def __init__(self, payload):
+        self.payload = payload
+        self.calls = []
+
+    def complete(self, **kwargs):
+        self.calls.append(kwargs)
+
+        class Response:
+            pass
+
+        response = Response()
+        response.payload = self.payload
+        return response
 
 
 class ProFirstScoringBridgeTest(unittest.TestCase):
@@ -237,18 +333,6 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
                 TransitionContext(capture_receipt_verified=True),
                 {},
             ),
-            (
-                JobStatus.DOSSIER_IMPORTED,
-                TransitionContext(dossier_validated=True),
-                {"dossier_id": "PRODOSSIER-scoring-unit"},
-            ),
-            (JobStatus.VERIFYING_SOURCES, TransitionContext(), {}),
-            (
-                JobStatus.GAP_ADJUDICATION,
-                TransitionContext(source_verification_complete=True),
-                {},
-            ),
-            (JobStatus.COMPONENT_RESEARCH, TransitionContext(), {}),
         )
         for index, (target, context, updates) in enumerate(transition_rows):
             self.job = self.store.transition(
@@ -264,7 +348,43 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
         verification_root = root / "verification"
         import_root.mkdir(parents=True, exist_ok=True)
         verification_root.mkdir(parents=True, exist_ok=True)
-        dossier = {**self._dossier(), "job_id": self.job.job_id}
+        source_page = verification_root / "source_pages/PROSRC-verified.txt"
+        source_page.parent.mkdir(parents=True, exist_ok=True)
+        source_page.write_text(
+            "검증기업 MEMORY HBM 가격은 2026Q2에 10% 상승했다. " * 20,
+            encoding="utf-8",
+        )
+        dossier_fact = {
+            "dossier_fact_id": "PROFACT-verified",
+            "statement": "HBM 가격이 10% 상승했다.",
+            "direction": "POSITIVE",
+            "subject": "검증기업",
+            "target_id": self.job.symbol,
+            "issuer_scoped": True,
+            "business_segment": "MEMORY",
+            "product_family": "HBM",
+            "economic_mechanism": "PRICING_POWER",
+            "predicate": "MEMORY_PRICE_INCREASE_MENTIONED",
+            "value": 10,
+            "unit": "%",
+            "period": "2026Q2",
+            "event_date": "2026-08-20",
+            "current_status": "CURRENT",
+            "candidate_components": ["bottleneck_pricing"],
+            "source_url": "https://issuer.example/ir",
+            "source_title": "검증기업 IR",
+            "source_publisher": "검증기업",
+            "published_at": "2026-08-20",
+            "supporting_excerpt": "HBM 가격은 2026Q2에 10% 상승했다.",
+            "confidence": 0.9,
+        }
+        dossier = {
+            **self._dossier(),
+            "job_id": self.job.job_id,
+            "material_facts": [dossier_fact],
+            "counterfacts": [],
+            "unresolved_gaps": [],
+        }
         (import_root / "research_dossier.normalized.json").write_text(
             canonical_json(dossier) + "\n",
             encoding="utf-8",
@@ -276,6 +396,10 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
                     "dossier_fact_id": "PROFACT-verified",
                     "status": "ACCEPTED_CURRENT",
                     "compiled_claim_id": "C1",
+                    "source_url": "https://issuer.example/ir",
+                    "source_id": "PROSRC-verified",
+                    "content_hash": canonical_hash({"source": "verified"}),
+                    "document_path": "verification/source_pages/PROSRC-verified.txt",
                 },
                 {
                     "dossier_fact_id": "PROFACT-unverified",
@@ -284,7 +408,12 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
                 },
             ),
             "claim_fact_links.jsonl": (
-                {"claim_id": "C1", "fact_id": self.fact.fact_id},
+                {
+                    "claim_id": "C1",
+                    "fact_id": self.fact.fact_id,
+                    "link_role": "PRIMARY_FACT_CLAIM",
+                    "economic_fact_key": "HBM_PRICE_2026Q2",
+                },
             ),
         }
         for name, rows in artifact_rows.items():
@@ -292,6 +421,86 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
                 "".join(canonical_json(row) + "\n" for row in rows),
                 encoding="utf-8",
             )
+        dossier_id = "PRODOSSIER-" + canonical_hash(
+            {"job_id": self.job.job_id, "root": str(root)}
+        )[:24]
+        dossier_hash = canonical_hash(dossier)
+        self.job = self.store.record_dossier_import(
+            self.job.job_id,
+            expected_version=self.job.state_version,
+            dossier_id=dossier_id,
+            dossier_hash=dossier_hash,
+            import_receipt={
+                "schema_version": "e2r_pro_dossier_import_receipt_v1",
+                "job_id": self.job.job_id,
+                "normalized_dossier_hash": dossier_hash,
+                "validation_status": "PASS",
+                "component_ids": list(CANONICAL_COMPONENT_ORDER),
+                "score_authority": False,
+                "stage_authority": False,
+                "evidence_promoted_count": 0,
+            },
+            actor="scoring-integration-fixture",
+            idempotency_key="scoring-integration-dossier-imported",
+        )
+        self.job = self.store.transition(
+            self.job.job_id,
+            expected_version=self.job.state_version,
+            to_status=JobStatus.VERIFYING_SOURCES,
+            actor="scoring-integration-fixture",
+            idempotency_key="scoring-integration-verifying",
+        )
+        verification_id = "PROVERIFY-" + canonical_hash(
+            {"job_id": self.job.job_id, "root": str(root)}
+        )[:24]
+        verification_hash = canonical_hash(
+            {"job_id": self.job.job_id, "fact_ids": [self.fact.fact_id]}
+        )
+        verification_receipt = {
+            "schema_version": "e2r_pro_source_verification_receipt_v1",
+            "status": "SOURCE_VERIFICATION_COMPLETE",
+            "job_id": self.job.job_id,
+            "dossier_id": self.job.dossier_id,
+            "verification_id": verification_id,
+            "verification_hash": verification_hash,
+            "normalized_dossier_hash": canonical_hash(dossier),
+            "candidate_fact_count": 2,
+            "terminal_fact_count": 2,
+            "accepted_fact_candidate_count": 1,
+            "compiled_evidence_fact_count": 1,
+            "full_document_fetch_count": 1,
+            "document_cache_reuse_count": 0,
+            "source_document_count": 1,
+            "status_counts": {
+                "ACCEPTED_CURRENT": 1,
+                "REJECTED_QUOTE_MISMATCH": 1,
+            },
+            "fact_graph_ready": True,
+            "query_count": 0,
+            "search_count": 0,
+            "pro_score_authority": False,
+            "pro_stage_authority": False,
+        }
+        (verification_root / "source_verification_receipt.json").write_text(
+            canonical_json(verification_receipt) + "\n",
+            encoding="utf-8",
+        )
+        self.job = self.store.record_source_verification(
+            self.job.job_id,
+            expected_version=self.job.state_version,
+            verification_id=verification_id,
+            dossier_id=str(self.job.dossier_id),
+            verification_hash=verification_hash,
+            receipt=verification_receipt,
+            actor="scoring-integration-fixture",
+            idempotency_key="scoring-integration-source-verified",
+        )
+        self.job = ProGapAdjudicationService(self.store).adjudicate_job(
+            self.job.job_id,
+            job_root=root,
+            deterministic_contexts={},
+        ).job
+        self.assertEqual(self.job.status, JobStatus.COMPONENT_RESEARCH.value)
 
     def _run_durable_pipeline(
         self,
@@ -385,6 +594,231 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
         self.assertIsNone(scoring.score)
         self.assertFalse(scoring.score_valid)
         self.assertEqual(scoring.status, "JUDGING_PROVIDER_PENDING")
+
+    def test_judge_rejects_points_above_component_contract(self) -> None:
+        class OverRangeProvider(_EvidenceOnlyProvider):
+            def judge(self, request):
+                payload = super().judge(request)
+                maximum = float(request["component_memo"]["component_max_points"])
+                payload["proposed_points"] = maximum + 1.0
+                payload["allowed_range"] = [0.0, maximum + 1.0]
+                return payload
+
+        component = self._component_result()
+        result = ProEvidenceOnlyJudgeBridge(OverRangeProvider()).run(
+            memos=component.memos,
+            evidence_facts=(self.fact,),
+            historical_anchors=self.anchors,
+            gap_decisions=(),
+        )
+        self.assertEqual(result.status, "JUDGING_PROVIDER_PENDING")
+        self.assertIn("JUDGE_PROVIDER_ERROR", result.pending_reasons[0])
+
+    def test_codex_judge_provider_forwards_only_structured_request(self) -> None:
+        payload = {
+            "proposed_points": 1.0,
+            "allowed_range": [0.0, 2.0],
+            "rationale": "verified facts only",
+            "support_fact_ids": [],
+            "counter_fact_ids": [],
+            "nearest_anchor_ids": [],
+            "anchor_comparisons": [],
+            "disagreements": [],
+            "why_not_higher": "missing bridge",
+            "why_not_lower": "bounded evidence",
+        }
+        transport = _JudgeTransport(payload)
+        provider = CodexEvidenceOnlyJudgeProvider(transport)
+        result = provider.judge(
+            {
+                "mode": "EVIDENCE_ONLY_NO_SEARCH",
+                "role": "ANALYST",
+                "component_memo": {"component_max_points": 10.0},
+            }
+        )
+        self.assertEqual(result, payload)
+        self.assertEqual(len(transport.calls), 1)
+        prompt = transport.calls[0]["prompt"]
+        self.assertIn("Never browse", prompt)
+        self.assertNotIn("canonical_stage", prompt)
+
+    def test_operational_impact_compiler_stays_pending_without_seven_components(self) -> None:
+        runtime_root = Path(self.temporary_directory.name) / "impact-runtime"
+        job_root = runtime_root / "jobs" / self.job.job_id
+        self._prepare_durable_component_job(job_root)
+        provider = _ImpactProvider()
+        result = ProValidatedImpactCompiler(
+            provider,
+            repo_root=Path(__file__).resolve().parents[1],
+        ).compile(
+            job=self.store.get_job(self.job.job_id),
+            dossier={
+                **self._dossier(),
+                "material_facts": [
+                    {
+                        "dossier_fact_id": "PROFACT-verified",
+                        "statement": "HBM 가격이 10% 상승했다.",
+                        "supporting_excerpt": "HBM 가격은 2026Q2에 10% 상승했다.",
+                        "source_url": "https://issuer.example/ir",
+                        "source_publisher": "검증기업",
+                        "published_at": "2026-08-20",
+                        "event_date": "2026-08-20",
+                    }
+                ],
+                "counterfacts": [],
+            },
+            job_root=job_root,
+            selected_archetype_id=self.archetype_id,
+        )
+        self.assertEqual(
+            result.status, "PRO_VALIDATED_IMPACT_COMPILATION_PENDING"
+        )
+        self.assertEqual(len(result.impacts), 1)
+        self.assertFalse(result.ready_for_judging)
+        self.assertEqual([row[0] for row in provider.calls], [
+            "IMPACT_PROPOSAL",
+            "IMPACT_SKEPTIC",
+        ])
+        self.assertIn(
+            "COMPONENT_IMPACT_COVERAGE_PENDING",
+            result.pending_reasons[0],
+        )
+
+    def test_operational_impact_compiler_rejects_provider_owned_lineage(self) -> None:
+        runtime_root = Path(self.temporary_directory.name) / "tampered-impact-runtime"
+        job_root = runtime_root / "jobs" / self.job.job_id
+        self._prepare_durable_component_job(job_root)
+        result = ProValidatedImpactCompiler(
+            _TamperingImpactProvider(),
+            repo_root=Path(__file__).resolve().parents[1],
+        ).compile(
+            job=self.store.get_job(self.job.job_id),
+            dossier={
+                **self._dossier(),
+                "material_facts": [
+                    {
+                        "dossier_fact_id": "PROFACT-verified",
+                        "statement": "HBM 가격이 10% 상승했다.",
+                        "supporting_excerpt": "HBM 가격은 2026Q2에 10% 상승했다.",
+                        "source_url": "https://issuer.example/ir",
+                        "source_publisher": "검증기업",
+                        "published_at": "2026-08-20",
+                        "event_date": "2026-08-20",
+                    }
+                ],
+                "counterfacts": [],
+            },
+            job_root=job_root,
+            selected_archetype_id=self.archetype_id,
+        )
+        self.assertEqual(
+            result.status,
+            "PRO_VALIDATED_IMPACT_COMPILATION_PENDING",
+        )
+        self.assertEqual(result.impacts, ())
+        self.assertTrue(
+            any("IMPACT_" in reason for reason in result.pending_reasons)
+        )
+
+    def test_post_import_default_waits_at_judge_provider_without_zero_score(self) -> None:
+        runtime_root = Path(self.temporary_directory.name) / "runtime"
+        job_root = runtime_root / "jobs" / self.job.job_id
+        self._prepare_durable_component_job(job_root)
+
+        def pending_inputs(job, _dossier, _root):
+            return ProPostImportScoringInputs(
+                selected_archetype_id=self.archetype_id,
+                judge_provider=None,
+                historical_anchors=self.anchors,
+                terminal_evidence={
+                    component_id: {"status": "PROVIDER_PENDING"}
+                    for component_id in CANONICAL_COMPONENT_ORDER
+                },
+            )
+
+        coordinator = ProFirstPostImportCoordinator(
+            self.store,
+            runtime_root=runtime_root,
+            scoring_input_provider=pending_inputs,
+        )
+        advance = coordinator.advance_once(self.job.job_id)
+        current = self.store.get_job(self.job.job_id)
+        self.assertEqual(advance.before_status, JobStatus.COMPONENT_RESEARCH.value)
+        self.assertEqual(advance.after_status, JobStatus.JUDGING.value)
+        self.assertEqual(advance.wait_reason, "JUDGE_PROVIDER_UNAVAILABLE")
+        self.assertEqual(current.status, JobStatus.JUDGING.value)
+        self.assertIsNone(self.store.get_score_receipt(self.job.job_id))
+        self.assertIsNone(self.store.get_stagecourt_receipt(self.job.job_id))
+
+    def test_post_import_injected_validated_inputs_publish_final(self) -> None:
+        runtime_root = Path(self.temporary_directory.name) / "runtime-final"
+        job_root = runtime_root / "jobs" / self.job.job_id
+        self._prepare_durable_component_job(job_root)
+        provider = _EvidenceOnlyProvider()
+
+        def complete_inputs(job, _dossier, _root):
+            return ProPostImportScoringInputs(
+                selected_archetype_id=self.archetype_id,
+                judge_provider=provider,
+                historical_anchors=self.anchors,
+                validated_impacts=(supported_impact(),),
+                terminal_evidence=self._terminal_evidence(),
+                validity_evidence=passing_full_score_validity_evidence(
+                    "PRO-FIRST-POST-IMPORT-FINAL"
+                ),
+            )
+
+        coordinator = ProFirstPostImportCoordinator(
+            self.store,
+            runtime_root=runtime_root,
+            scoring_input_provider=complete_inputs,
+        )
+        advance = coordinator.advance_once(self.job.job_id)
+        current = self.store.get_job(self.job.job_id)
+        publication = self.store.get_publication(self.job.job_id)
+        self.assertEqual(current.status, JobStatus.FINAL.value)
+        self.assertTrue(advance.published)
+        self.assertEqual(advance.action, "SCORE_STAGECOURT_PUBLISH")
+        self.assertIsNotNone(publication)
+        self.assertEqual(len(provider.requests), 21)
+        self.assertEqual(publication["result"]["component_coverage"], "7/7")
+        self.assertEqual(publication["result"]["judge_coverage"], "21/21")
+
+    def test_conservative_gap_context_ignores_proposed_authority_flags(self) -> None:
+        gap = {
+            "dossier_gap_id": "PROGAP-POST-IMPORT",
+            "archetype_id": self.archetype_id,
+            "affected_component_ids": ["earnings_visibility"],
+            "required_source_families": ["CUSTOMER_OFFICIAL"],
+            "proposed_gap_class": "HARD_BREAK_GAP",
+            "proposed_could_change_hard_break": True,
+        }
+        context = compile_conservative_gap_contexts(
+            self.job,
+            {"unresolved_gaps": [gap]},
+            Path(self.temporary_directory.name),
+        )["PROGAP-POST-IMPORT"]
+        self.assertFalse(context.direct_contradiction_or_hard_break_unresolved)
+        self.assertIsNone(context.deterministic_lower_stage)
+        self.assertIsNone(context.deterministic_upper_stage)
+        self.assertEqual(context.component_lower_delta, {"earnings_visibility": 0.0})
+        self.assertGreater(context.component_upper_delta["earnings_visibility"], 0.0)
+        self.assertTrue(context.executable_new_source_route_signatures)
+
+    def test_general_web_gap_does_not_claim_unproved_official_first_attempt(self) -> None:
+        gap = {
+            "dossier_gap_id": "PROGAP-GENERAL-WEB",
+            "archetype_id": self.archetype_id,
+            "affected_component_ids": ["information_confidence"],
+            "required_source_families": ["GENERAL_WEB_DISCOVERY"],
+        }
+        context = compile_conservative_gap_contexts(
+            self.job,
+            {"unresolved_gaps": [gap]},
+            Path(self.temporary_directory.name),
+        )["PROGAP-GENERAL-WEB"]
+        self.assertFalse(context.official_first_attempted)
+        self.assertEqual(context.official_gap_reasons, ())
 
     def test_pro_score_ignored(self) -> None:
         scoring = self._score_result()

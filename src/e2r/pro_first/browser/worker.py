@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import re
 from typing import Any
 from urllib.parse import urlparse
 
@@ -44,7 +45,9 @@ class ProBrowserWorker:
         attached = self.config.mode is BrowserConnectionMode.CDP_ATTACH
         try:
             if attached:
-                browser = await playwright.chromium.connect_over_cdp(self.config.cdp_url)
+                browser = await playwright.chromium.connect_over_cdp(
+                    self._resolve_cdp_endpoint()
+                )
                 context = browser.contexts[0] if browser.contexts else await browser.new_context()
             else:
                 profile = Path(self.config.persistent_profile_path or "").resolve()
@@ -80,6 +83,32 @@ class ProBrowserWorker:
         except Exception:
             await playwright.stop()
             raise
+
+    def _resolve_cdp_endpoint(self) -> str:
+        """Resolve Chrome's ephemeral CDP capability without persisting it.
+
+        Chrome 151 can return 404 for the historical ``/json/version`` HTTP
+        discovery route while still publishing its loopback WebSocket path in
+        ``DevToolsActivePort``.  The second line is therefore read only at
+        connection time and is never copied into configuration or receipts.
+        """
+
+        active_port_file = self.config.cdp_active_port_file
+        if active_port_file is None:
+            return self.config.cdp_url
+        try:
+            lines = active_port_file.read_text(encoding="utf-8").splitlines()
+        except OSError as error:
+            raise RuntimeError("Chrome DevToolsActivePort is unavailable") from error
+        if len(lines) < 2 or not lines[0].isdigit():
+            raise RuntimeError("Chrome DevToolsActivePort has an invalid format")
+        port = int(lines[0])
+        path = lines[1]
+        if not 1 <= port <= 65_535:
+            raise RuntimeError("Chrome DevToolsActivePort has an invalid port")
+        if re.fullmatch(r"/devtools/browser/[A-Za-z0-9_-]{16,128}", path) is None:
+            raise RuntimeError("Chrome DevToolsActivePort has an invalid browser path")
+        return f"ws://127.0.0.1:{port}{path}"
 
     def _matching_page(self, pages: list[Any]) -> Any | None:
         for page in pages:

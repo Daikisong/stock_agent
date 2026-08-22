@@ -27,6 +27,7 @@ class BrowserConnectionMode(str, Enum):
 class ProBrowserConfig:
     mode: BrowserConnectionMode = BrowserConnectionMode.CDP_ATTACH
     cdp_url: str = "http://127.0.0.1:9222"
+    cdp_active_port_file: Path | None = None
     chatgpt_url: str = "https://chatgpt.com/"
     require_manual_login: bool = True
     require_user_start_approval: bool = True
@@ -40,6 +41,12 @@ class ProBrowserConfig:
     def __post_init__(self) -> None:
         if not isinstance(self.mode, BrowserConnectionMode):
             object.__setattr__(self, "mode", BrowserConnectionMode(self.mode))
+        if self.cdp_active_port_file is not None:
+            object.__setattr__(
+                self,
+                "cdp_active_port_file",
+                Path(self.cdp_active_port_file).expanduser().resolve(),
+            )
         if not self.require_manual_login:
             raise ValueError("ChatGPT login automation is forbidden")
         if not self.require_user_start_approval:
@@ -207,6 +214,11 @@ class ProFirstLocalConfig:
             "browser": {
                 "mode": self.browser.mode.value,
                 "cdp_url": self.browser.cdp_url,
+                "cdp_active_port_file": (
+                    str(self.browser.cdp_active_port_file)
+                    if self.browser.cdp_active_port_file is not None
+                    else None
+                ),
                 "chatgpt_url": self.browser.chatgpt_url,
                 "require_manual_login": self.browser.require_manual_login,
                 "require_user_start_approval": self.browser.require_user_start_approval,
@@ -261,6 +273,7 @@ def load_pro_first_local_config(path: str | Path) -> ProFirstLocalConfig:
         {
             "mode",
             "cdp_url",
+            "cdp_active_port_file",
             "chatgpt_url",
             "require_manual_login",
             "require_user_start_approval",
@@ -315,6 +328,12 @@ def load_pro_first_local_config(path: str | Path) -> ProFirstLocalConfig:
         browser=ProBrowserConfig(
             mode=BrowserConnectionMode(str(browser["mode"])),
             cdp_url=str(browser["cdp_url"]),
+            cdp_active_port_file=(
+                _optional_path(
+                    browser["cdp_active_port_file"],
+                    "browser.cdp_active_port_file",
+                )
+            ),
             chatgpt_url=str(browser["chatgpt_url"]),
             require_manual_login=_strict_bool(browser["require_manual_login"], "browser.require_manual_login"),
             require_user_start_approval=_strict_bool(browser["require_user_start_approval"], "browser.require_user_start_approval"),
@@ -372,6 +391,14 @@ def _optional_int(value: Any, label: str) -> int | None:
     if isinstance(value, bool) or not isinstance(value, int):
         raise ValueError(f"{label} must be an integer or null")
     return value
+
+
+def _optional_path(value: Any, label: str) -> Path | None:
+    if value is None:
+        return None
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"{label} must be a nonempty path string or null")
+    return Path(value)
 
 
 __all__ = [

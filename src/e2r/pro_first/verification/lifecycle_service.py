@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+from ..atomic_io import fsync_directory
 from ..ids import canonical_hash, canonical_json, stable_id
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
@@ -169,11 +170,7 @@ def _write_atomic(path: Path, payload: str) -> None:
         stream.flush()
         os.fsync(stream.fileno())
     os.replace(part, path)
-    descriptor = os.open(path.parent, os.O_RDONLY)
-    try:
-        os.fsync(descriptor)
-    finally:
-        os.close(descriptor)
+    fsync_directory(path.parent)
 
 
 __all__ = ["ProSourceVerificationService", "SourceVerificationRun"]

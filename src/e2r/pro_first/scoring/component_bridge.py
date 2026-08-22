@@ -70,6 +70,13 @@ class ProComponentMemoCompiler:
             for row in claim_fact_links
             if str(row.get("claim_id") or "") and str(row.get("fact_id") or "")
         }
+        supplemental_fact_ids = {
+            claim_to_fact[str(row.get("compiled_claim_id") or "")]
+            for row in source_verifications
+            if row.get("origin") == "PRO_SUPPLEMENTAL_MATERIAL_GAP"
+            and str(row.get("compiled_claim_id") or "") in claim_to_fact
+            and claim_to_fact[str(row.get("compiled_claim_id") or "")] in fact_by_id
+        }
         dossier_to_fact = {
             str(row.get("dossier_fact_id") or ""): claim_to_fact[
                 str(row.get("compiled_claim_id") or "")
@@ -135,6 +142,45 @@ class ProComponentMemoCompiler:
                     },
                 )
                 removed.update((*removed_positive, *removed_counter, *removed_resolution))
+                positive = tuple(
+                    dict.fromkeys(
+                        (
+                            *positive,
+                            *(
+                                fact_id
+                                for fact_id in supplemental_fact_ids
+                                if fact_id in eligible
+                                and fact_by_id[fact_id].direction == "POSITIVE"
+                            ),
+                        )
+                    )
+                )
+                counter = tuple(
+                    dict.fromkeys(
+                        (
+                            *counter,
+                            *(
+                                fact_id
+                                for fact_id in supplemental_fact_ids
+                                if fact_id in eligible
+                                and fact_by_id[fact_id].direction == "COUNTER"
+                            ),
+                        )
+                    )
+                )
+                resolution = tuple(
+                    dict.fromkeys(
+                        (
+                            *resolution,
+                            *(
+                                fact_id
+                                for fact_id in supplemental_fact_ids
+                                if fact_id in eligible
+                                and fact_by_id[fact_id].direction == "RESOLUTION"
+                            ),
+                        )
+                    )
+                )
             else:
                 positive = tuple(
                     fact.fact_id

@@ -12,15 +12,33 @@ from .supplemental_planner import (
     SupplementalPlan,
     SupplementalTaskBinding,
 )
+from .supplemental_service import (
+    CodexBoundedSupplementalExecutor,
+    ProSupplementalResearchService,
+    SupplementalResearchRun,
+    SupplementalTaskExecutor,
+    SupplementalTaskResult,
+    load_effective_dossier_facts,
+    load_effective_verified_evidence,
+    resolved_supplemental_gap_keys,
+)
 
 __all__ = [
     "DeterministicGapContext",
     "GapAdjudicationResult",
     "GapAdjudicationRun",
+    "CodexBoundedSupplementalExecutor",
     "MaterialGapSupplementalPlanner",
     "ProGapAdjudicationService",
     "ProGapAdjudicator",
     "ProGapDecision",
+    "ProSupplementalResearchService",
     "SupplementalPlan",
+    "SupplementalResearchRun",
     "SupplementalTaskBinding",
+    "SupplementalTaskExecutor",
+    "SupplementalTaskResult",
+    "load_effective_dossier_facts",
+    "load_effective_verified_evidence",
+    "resolved_supplemental_gap_keys",
 ]

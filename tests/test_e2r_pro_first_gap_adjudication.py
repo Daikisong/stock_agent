@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -12,6 +13,13 @@ from e2r.pro_first.gaps.adjudicator import (
 from e2r.pro_first.gaps.service import ProGapAdjudicationService
 from e2r.pro_first.gaps.supplemental_planner import (
     MaterialGapSupplementalPlanner,
+)
+from e2r.pro_first.gaps.supplemental_service import (
+    CodexBoundedSupplementalExecutor,
+    ProSupplementalResearchService,
+    SupplementalTaskResult,
+    load_effective_verified_evidence,
+    resolved_supplemental_gap_keys,
 )
 from e2r.pro_first.job_store import ProFirstJobStore
 from e2r.pro_first.ids import canonical_hash, canonical_json
@@ -362,6 +370,235 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
         self.assertIn('"max_queries":3', task_lines[0])
         self.assertIn('"max_candidates":20', task_lines[0])
         self.assertIn('"max_fetches":6', task_lines[0])
+
+    def test_resolved_bounded_supplement_releases_component_path_once(self) -> None:
+        root = Path(self.temporary_directory.name) / "durable-resolved-supplement"
+        gap = self._gap(
+            source_family="CASH_FLOW",
+            proposed_gap_class="MONITORING_GAP",
+        )
+        dossier = {
+            "job_id": self.job.job_id,
+            "unresolved_gaps": [gap],
+        }
+        self._prepare_source_verified(root=root, dossier=dossier)
+        context = self._context(routes=("CASH_FLOW:official",))
+        adjudicated = ProGapAdjudicationService(self.store).adjudicate_job(
+            self.job.job_id,
+            job_root=root,
+            deterministic_contexts={gap["dossier_gap_id"]: context},
+        )
+        self.assertEqual(
+            adjudicated.job.status,
+            JobStatus.SUPPLEMENTAL_RESEARCH.value,
+        )
+
+        class Executor:
+            calls = 0
+
+            def execute(inner_self, *, job, task_binding, gap_decision, **_kwargs):
+                inner_self.calls += 1
+                claim_id = "CLAIM-supplemental-cash-flow"
+                fact = {
+                    "fact_id": "EFACT-supplemental-cash-flow",
+                    "target_id": job.symbol,
+                    "as_of_date": job.as_of_date,
+                    "subject": job.company_name,
+                    "business_segment": "",
+                    "product_family": "",
+                    "economic_mechanism": "FREE_CASH_FLOW",
+                    "predicate": "FCF_ACTUAL",
+                    "value": 100,
+                    "unit": "KRW",
+                    "period": "2026Q2",
+                    "direction": "POSITIVE",
+                    "source_ids": ["PROSUPSRC-1"],
+                    "claim_ids": [claim_id],
+                    "quote_ids": ["PROSUPQUOTE-1"],
+                    "current_lifecycle": "CURRENT",
+                    "source_independence_group": "ISSUER-IR",
+                    "confidence": 0.8,
+                    "corroborating_independence_groups": ["ISSUER-IR"],
+                    "question_family_tags": [],
+                    "primitive_tags": ["cash_or_revision_conversion"],
+                    "allowed_component_ids": ["earnings_visibility"],
+                    "structured_evidence_roles": ["SUPPLEMENTAL_MATERIAL_GAP"],
+                }
+                return SupplementalTaskResult(
+                    evidence_gap_key=str(task_binding["evidence_gap_key"]),
+                    task_id=str(task_binding["source_task"]["task_id"]),
+                    status="RESOLVED",
+                    resolved=True,
+                    query_count=1,
+                    candidate_count=2,
+                    fetch_count=1,
+                    queries=("검증기업 2026 현금흐름 공식 공시",),
+                    provider_name="fixture-real-shape",
+                    dossier_facts=(
+                        {
+                            "dossier_fact_id": "PROSUPFACT-1",
+                            "supporting_excerpt": "검증기업의 2026년 FCF는 100원이다.",
+                            "source_url": "https://issuer.example/filing",
+                            "source_publisher": "검증기업",
+                            "published_at": "2026-08-20",
+                            "origin": "PRO_SUPPLEMENTAL_MATERIAL_GAP",
+                        },
+                    ),
+                    evidence_facts=(fact,),
+                    claim_fact_links=(
+                        {
+                            "link_id": "CFLINK-supplemental",
+                            "claim_id": claim_id,
+                            "fact_id": fact["fact_id"],
+                            "economic_fact_key": "EKEY-supplemental",
+                            "link_role": "PRIMARY_FACT_CLAIM",
+                            "source_ids": ["PROSUPSRC-1"],
+                            "source_independence_group": "ISSUER-IR",
+                            "claim_confidence": 0.8,
+                            "material_claim": True,
+                            "current_lifecycle": "CURRENT",
+                            "supersedes_fact_ids": [],
+                            "resolves_fact_ids": [],
+                            "input_index": 0,
+                            "production_score_authority": False,
+                        },
+                    ),
+                    source_verifications=(
+                        {
+                            "dossier_fact_id": "PROSUPFACT-1",
+                            "status": "ACCEPTED_CURRENT",
+                            "source_id": "PROSUPSRC-1",
+                            "compiled_claim_id": claim_id,
+                            "origin": "PRO_SUPPLEMENTAL_MATERIAL_GAP",
+                        },
+                    ),
+                    source_pages=(("supplemental/source_pages/PROSUPSRC-1.txt", "verified source text"),),
+                )
+
+        executor = Executor()
+        service = ProSupplementalResearchService(self.store, executor=executor)
+        first = service.run_job(self.job.job_id, job_root=root)
+        second = service.run_job(self.job.job_id, job_root=root)
+        self.assertEqual(first.job.status, JobStatus.COMPONENT_RESEARCH.value)
+        self.assertEqual(first.receipt["status"], "SUPPLEMENTAL_RESEARCH_COMPLETE")
+        self.assertEqual(first.receipt["query_count"], 1)
+        self.assertEqual(first.receipt["fetch_count"], 1)
+        self.assertEqual(first.receipt["full_research_restart_count"], 0)
+        self.assertEqual(executor.calls, 1)
+        self.assertTrue(second.reused)
+        self.assertEqual(executor.calls, 1)
+        effective_facts, effective_links, effective_sources = (
+            load_effective_verified_evidence(root)
+        )
+        self.assertEqual(len(effective_facts), 1)
+        self.assertEqual(len(effective_links), 1)
+        self.assertEqual(len(effective_sources), 1)
+        expected_gap_key = str(
+            self.store.get_gap_decisions(self.job.job_id)[0]["evidence_gap_key"]
+        )
+        self.assertEqual(
+            resolved_supplemental_gap_keys(root),
+            frozenset({expected_gap_key}),
+        )
+
+    def test_provider_pending_supplement_never_releases_score_path(self) -> None:
+        root = Path(self.temporary_directory.name) / "durable-pending-supplement"
+        gap = self._gap(source_family="CASH_FLOW")
+        dossier = {"job_id": self.job.job_id, "unresolved_gaps": [gap]}
+        self._prepare_source_verified(root=root, dossier=dossier)
+        ProGapAdjudicationService(self.store).adjudicate_job(
+            self.job.job_id,
+            job_root=root,
+            deterministic_contexts={
+                gap["dossier_gap_id"]: self._context(
+                    routes=("CASH_FLOW:official",)
+                )
+            },
+        )
+
+        class PendingExecutor:
+            def execute(inner_self, *, task_binding, **_kwargs):
+                return SupplementalTaskResult(
+                    evidence_gap_key=str(task_binding["evidence_gap_key"]),
+                    task_id=str(task_binding["source_task"]["task_id"]),
+                    status="PROVIDER_PENDING",
+                    resolved=False,
+                    query_count=0,
+                    candidate_count=0,
+                    fetch_count=0,
+                    provider_errors=("QUERY_PROVIDER_UNAVAILABLE",),
+                    stop_reason="llm_query_generation_pending",
+                )
+
+        result = ProSupplementalResearchService(
+            self.store,
+            executor=PendingExecutor(),
+        ).run_job(self.job.job_id, job_root=root)
+        self.assertEqual(
+            result.job.status,
+            JobStatus.SUPPLEMENTAL_RESEARCH.value,
+        )
+        self.assertEqual(
+            result.receipt["status"],
+            "SUPPLEMENTAL_RESEARCH_PROVIDER_PENDING",
+        )
+        self.assertEqual(result.receipt["query_count"], 0)
+        self.assertEqual(result.receipt["fetch_count"], 0)
+
+    def test_future_llm_query_is_rejected_before_any_source_execution(self) -> None:
+        task = self.planner.plan(
+            adjudication=self._adjudicate(
+                self._gap(source_family="CASH_FLOW"),
+                self._context(routes=("CASH_FLOW:official",)),
+                with_verified_fact=False,
+            ),
+            job=self.job,
+        ).tasks[0]
+
+        class QueryProvider:
+            provider_name = "UNIT_REAL_QUERY_PROVIDER"
+
+            def complete(inner_self, *, prompt, output_schema):
+                del output_schema
+                payload = json.loads(prompt.split("\n\n")[-1])
+
+                class Completion:
+                    pass
+
+                result = Completion()
+                result.payload = {
+                    "input_id": payload["input_id"],
+                    "literal_queries": ["검증기업 2027 현금흐름 공식 공시"],
+                    "generation_rationale": "원문 확인",
+                    "ambiguity_reasons": [],
+                    "abstain": False,
+                    "abstention_reason": "",
+                }
+                result.raw_response = canonical_json(result.payload)
+                return result
+
+        class NeverRunner:
+            def acquire(inner_self, **_kwargs):
+                raise AssertionError("future query must not reach source acquisition")
+
+        result = CodexBoundedSupplementalExecutor(
+            repo_root=Path(__file__).resolve().parents[1],
+            query_provider=QueryProvider(),
+            source_runner=NeverRunner(),
+            claim_extractor=object(),
+        ).execute(
+            job=self.job,
+            task_binding=task.to_dict(),
+            gap_decision=task.decision.to_dict(),
+            dossier={"target": {"aliases": ["검증기업"]}},
+            verified_facts=(),
+            job_root=Path(self.temporary_directory.name),
+        )
+        self.assertEqual(result.status, "PROVIDER_PENDING")
+        self.assertEqual(result.query_count, 0)
+        self.assertEqual(result.fetch_count, 0)
+        self.assertEqual(len(result.query_prompt_hashes), 3)
+        self.assertIn("QUERY_PROVIDER_OR_OUTPUT_ERROR", result.provider_errors[0])
 
     def _prepare_source_verified(
         self,
