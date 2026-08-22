@@ -1073,6 +1073,154 @@ class ProFirstJobStore:
             ).fetchone()
         return None if row is None else json.loads(row["receipt_json"])
 
+    def record_gap_adjudication(
+        self,
+        job_id: str,
+        *,
+        expected_version: int,
+        dossier_id: str,
+        decisions: Sequence[Mapping[str, Any]],
+        receipt: Mapping[str, Any],
+        actor: str,
+        idempotency_key: str,
+    ) -> ProResearchJob:
+        decision_rows = tuple(dict(row) for row in decisions)
+        decision_hashes = tuple(str(row.get("decision_hash") or "") for row in decision_rows)
+        evidence_gap_keys = tuple(
+            str(row.get("evidence_gap_key") or "") for row in decision_rows
+        )
+        supplemental_count = int(receipt.get("supplemental_task_count") or 0)
+        if (
+            receipt.get("schema_version")
+            != "e2r_pro_gap_adjudication_receipt_v1"
+            or receipt.get("status") != "GAP_ADJUDICATION_COMPLETE"
+            or receipt.get("job_id") != job_id
+            or receipt.get("dossier_id") != dossier_id
+            or receipt.get("decision_count") != len(decision_rows)
+            or receipt.get("gap_count") != len(decision_rows)
+            or receipt.get("supplemental_gap_count") != supplemental_count
+            or receipt.get("full_research_restart_count") != 0
+            or receipt.get("prohibited_gap_task_count") != 0
+            or receipt.get("pro_gap_class_authority") is not False
+            or receipt.get("pro_score_authority") is not False
+            or receipt.get("pro_stage_authority") is not False
+            or tuple(receipt.get("decision_hashes") or ()) != decision_hashes
+            or not all(len(value) == 64 for value in decision_hashes)
+            or not all(evidence_gap_keys)
+            or len(evidence_gap_keys) != len(set(evidence_gap_keys))
+        ):
+            raise ValueError("invalid gap adjudication receipt")
+        allowed_labels = {
+            "CORE_SCORE_BLOCKER",
+            "STAGE_BOUNDARY_GAP",
+            "HARD_BREAK_GAP",
+        }
+        prohibited_labels = {"CORROBORATION_CAP", "MONITORING_GAP"}
+        for row in decision_rows:
+            without_hash = {key: value for key, value in row.items() if key != "decision_hash"}
+            label = str(row.get("planner_label") or "")
+            supplemental_allowed = row.get("supplemental_allowed") is True
+            if (
+                row.get("schema_version") != "e2r_pro_gap_decision_v1"
+                or canonical_hash(without_hash) != row.get("decision_hash")
+                or label not in allowed_labels | prohibited_labels
+                or supplemental_allowed != (label in allowed_labels)
+                or row.get("pro_proposal_authoritative") is not False
+                or row.get("production_score_authority") is not False
+                or row.get("production_stage_authority") is not False
+                or row.get("full_research_restart_allowed") is not False
+            ):
+                raise ValueError("invalid durable gap decision")
+        target = (
+            JobStatus.SUPPLEMENTAL_RESEARCH
+            if supplemental_count
+            else JobStatus.COMPONENT_RESEARCH
+        )
+        if receipt.get("next_status") != target.value:
+            raise ValueError("gap adjudication next status disagrees with tasks")
+        payload = {
+            "dossier_id": dossier_id,
+            "gap_receipt_hash": canonical_hash(receipt),
+            "decision_roster_hash": canonical_hash(list(decision_hashes)),
+            "supplemental_task_count": supplemental_count,
+        }
+        with self._transaction() as connection:
+            if self._existing_idempotent_event(
+                connection,
+                job_id,
+                idempotency_key,
+                target,
+                payload,
+            ):
+                return self._job_from_row(self._require_job_row(connection, job_id))
+            row = self._require_job_row(connection, job_id)
+            self._require_version(row, expected_version)
+            source = JobStatus(row["status"])
+            if source is not JobStatus.GAP_ADJUDICATION or row["dossier_id"] != dossier_id:
+                raise ValueError("gap adjudication must match the verified dossier")
+            self.state_machine.validate(source, target)
+            created_at = self._now_text()
+            for decision in decision_rows:
+                decision_id = stable_id(
+                    "PROGAPDECISION",
+                    {
+                        "job_id": job_id,
+                        "evidence_gap_key": decision["evidence_gap_key"],
+                        "decision_hash": decision["decision_hash"],
+                    },
+                )
+                connection.execute(
+                    """
+                    INSERT INTO pro_gap_decisions (
+                        gap_decision_id, job_id, evidence_gap_key, disposition,
+                        decision_hash, receipt_json, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        decision_id,
+                        job_id,
+                        decision["evidence_gap_key"],
+                        decision["planner_label"],
+                        decision["decision_hash"],
+                        canonical_json(decision),
+                        created_at,
+                    ),
+                )
+            cursor = connection.execute(
+                """
+                UPDATE pro_research_jobs
+                SET status=?, last_error_class=NULL, last_error_message=NULL,
+                    state_version=state_version+1, updated_at=?
+                WHERE job_id=? AND state_version=?
+                """,
+                (target.value, created_at, job_id, expected_version),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict(f"gap adjudication changed concurrently: {job_id}")
+            self._insert_event(
+                connection,
+                job_id=job_id,
+                from_status=source,
+                to_status=target,
+                actor=actor,
+                idempotency_key=idempotency_key,
+                payload=payload,
+                created_at=created_at,
+            )
+            result = self._require_job_row(connection, job_id)
+        return self._job_from_row(result)
+
+    def get_gap_decisions(self, job_id: str) -> tuple[Mapping[str, Any], ...]:
+        with self._connect() as connection:
+            rows = connection.execute(
+                """
+                SELECT receipt_json FROM pro_gap_decisions
+                WHERE job_id=? ORDER BY created_at, gap_decision_id
+                """,
+                (job_id,),
+            ).fetchall()
+        return tuple(json.loads(row["receipt_json"]) for row in rows)
+
     def list_events(self, job_id: str) -> tuple[JobEvent, ...]:
         with self._connect() as connection:
             rows = connection.execute(

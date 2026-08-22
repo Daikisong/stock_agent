@@ -7,6 +7,7 @@ all EvidenceFact, score, and canonical Stage authority.
 from .approval import ExactlyOnceSubmitCoordinator, ProApprovalService
 from .capture import CaptureFilesystemReconciler, ProCaptureCoordinator
 from .dossier import ProDossierImporter
+from .gaps import ProGapAdjudicationService
 from .job_store import ProFirstJobStore
 from .models import (
     CandidateRecord,
@@ -29,6 +30,7 @@ __all__ = [
     "JobEvent",
     "JobStatus",
     "ProFirstJobStore",
+    "ProGapAdjudicationService",
     "ProJobStateMachine",
     "ProResearchJob",
     "ProSourceVerificationService",

@@ -40,6 +40,13 @@ JSON 최상위에는 다음 필드를 모두 둔다.
   `event_date`, `current_status`, `candidate_components`, `source_url`,
   `source_title`, `source_publisher`, `published_at`, `supporting_excerpt`,
   `confidence`를 모두 둔다.
+- 각 `unresolved_gaps` 항목에는 `dossier_gap_id`, `archetype_id`,
+  `stable_objective_id`, `affected_component_ids`, `required_source_families`,
+  `economic_mechanism_id`, `predicate_or_fact_need_id`, `economic_reason`,
+  `proposed_gap_class`, `proposed_missing_source_role`,
+  `proposed_could_change_score`, `proposed_could_change_stage`,
+  `proposed_could_change_hard_break`를 모두 둔다. 이 값은 연구자 제안일
+  뿐이며 E2R의 deterministic gap 판정을 덮어쓰지 않는다.
 - `sources`의 각 항목에는 최소한 `source_url`을 둔다.
 
 E2R_RESEARCH_DOSSIER_JSON_BEGIN

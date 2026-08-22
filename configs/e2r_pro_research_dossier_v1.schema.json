@@ -77,7 +77,11 @@
       }
     },
     "structured_metrics": {"type": "object"},
-    "unresolved_gaps": {"type": "array", "items": {"type": "object"}},
+    "unresolved_gaps": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/gap"}
+    },
     "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
     "research_saturation": {"type": "object"},
     "proposed_score_ranges": {"type": "object"},
@@ -96,6 +100,80 @@
         "published_at": {"type": ["string", "null"]}
       },
       "additionalProperties": true
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dossier_gap_id",
+        "archetype_id",
+        "stable_objective_id",
+        "affected_component_ids",
+        "required_source_families",
+        "economic_mechanism_id",
+        "predicate_or_fact_need_id",
+        "economic_reason",
+        "proposed_gap_class",
+        "proposed_missing_source_role",
+        "proposed_could_change_score",
+        "proposed_could_change_stage",
+        "proposed_could_change_hard_break"
+      ],
+      "properties": {
+        "dossier_gap_id": {"type": "string", "pattern": "^PROGAP-[A-Za-z0-9._:-]+$"},
+        "archetype_id": {"type": "string", "minLength": 1},
+        "stable_objective_id": {"type": ["string", "null"]},
+        "affected_component_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "eps_fcf_explosion",
+              "earnings_visibility",
+              "bottleneck_pricing",
+              "market_mispricing",
+              "valuation_rerating",
+              "capital_allocation",
+              "information_confidence"
+            ]
+          }
+        },
+        "required_source_families": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[A-Za-z0-9_.:/,+\\-\\[\\]]+$"}
+        },
+        "economic_mechanism_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:/,+\\-\\[\\]]+$"
+        },
+        "predicate_or_fact_need_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:/,+\\-\\[\\]]+$"
+        },
+        "economic_reason": {"type": "string", "minLength": 1},
+        "proposed_gap_class": {
+          "enum": [
+            "CORE_SCORE_BLOCKER",
+            "STAGE_BOUNDARY_GAP",
+            "HARD_BREAK_GAP",
+            "CORROBORATION_CAP",
+            "MONITORING_GAP"
+          ]
+        },
+        "proposed_missing_source_role": {
+          "enum": [
+            "CORE_SCORE_SOURCE",
+            "INDEPENDENT_CORROBORATION",
+            "MONITORING_ONLY"
+          ]
+        },
+        "proposed_could_change_score": {"type": "boolean"},
+        "proposed_could_change_stage": {"type": "boolean"},
+        "proposed_could_change_hard_break": {"type": "boolean"}
+      }
     },
     "fact": {
       "type": "object",
