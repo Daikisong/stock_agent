@@ -558,6 +558,82 @@ class ProFirstJobStore:
             raise RecordNotFound(f"job not found: {job_id}")
         return self._job_from_row(row)
 
+    def record_packet(
+        self,
+        job_id: str,
+        *,
+        expected_version: int,
+        packet_id: str,
+        packet_hash: str,
+        manifest: Mapping[str, Any],
+        actor: str,
+        idempotency_key: str,
+    ) -> ProResearchJob:
+        if len(packet_hash) != 64:
+            raise ValueError("packet_hash must be sha256")
+        payload = {
+            "packet_id": packet_id,
+            "packet_hash": packet_hash,
+            "manifest_hash": canonical_hash(manifest),
+        }
+        with self._transaction() as connection:
+            if self._existing_idempotent_event(
+                connection,
+                job_id,
+                idempotency_key,
+                JobStatus.PACKET_READY,
+                payload,
+            ):
+                return self._job_from_row(self._require_job_row(connection, job_id))
+            row = self._require_job_row(connection, job_id)
+            self._require_version(row, expected_version)
+            self.state_machine.validate(JobStatus(row["status"]), JobStatus.PACKET_READY)
+            created_at = self._now_text()
+            connection.execute(
+                """
+                INSERT INTO pro_packets (
+                    packet_id, job_id, packet_hash, manifest_json, created_at
+                ) VALUES (?, ?, ?, ?, ?)
+                """,
+                (
+                    packet_id,
+                    job_id,
+                    packet_hash,
+                    canonical_json(manifest),
+                    created_at,
+                ),
+            )
+            cursor = connection.execute(
+                """
+                UPDATE pro_research_jobs
+                SET status=?, packet_id=?, packet_hash=?,
+                    state_version=state_version+1, updated_at=?
+                WHERE job_id=? AND state_version=?
+                """,
+                (
+                    JobStatus.PACKET_READY.value,
+                    packet_id,
+                    packet_hash,
+                    created_at,
+                    job_id,
+                    expected_version,
+                ),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict(f"job version changed concurrently: {job_id}")
+            self._insert_event(
+                connection,
+                job_id=job_id,
+                from_status=JobStatus.PACKET_BUILDING,
+                to_status=JobStatus.PACKET_READY,
+                actor=actor,
+                idempotency_key=idempotency_key,
+                payload=payload,
+                created_at=created_at,
+            )
+            result = self._require_job_row(connection, job_id)
+        return self._job_from_row(result)
+
     def list_events(self, job_id: str) -> tuple[JobEvent, ...]:
         with self._connect() as connection:
             rows = connection.execute(

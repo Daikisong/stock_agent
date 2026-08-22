@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://e2r.local/schemas/e2r_pro_research_packet_v1.schema.json",
+  "title": "E2R Pro ResearchPacketV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "job_id",
+    "run_id",
+    "target",
+    "as_of_date",
+    "latest_trading_snapshot_date",
+    "research_mode",
+    "trigger_summary",
+    "candidate_archetypes",
+    "business_snapshot",
+    "structured_financial_snapshot",
+    "revision_valuation_snapshot",
+    "existing_thesis_digest",
+    "historical_anchor_digest",
+    "known_positive_facts",
+    "known_counterfacts",
+    "research_objectives",
+    "source_preferences",
+    "forbidden_inferences",
+    "delta_context",
+    "output_contract",
+    "score_authority",
+    "stage_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "e2r_pro_research_packet_v1"},
+    "job_id": {"type": "string", "pattern": "^PROJOB-[A-Fa-f0-9]+$"},
+    "run_id": {"type": "string", "pattern": "^PRORUN-[A-Fa-f0-9]+$"},
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["symbol", "company_name", "aliases"],
+      "properties": {
+        "symbol": {"type": "string", "minLength": 1},
+        "company_name": {"type": "string", "minLength": 1},
+        "aliases": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    },
+    "as_of_date": {"type": "string", "format": "date"},
+    "latest_trading_snapshot_date": {"type": "string", "format": "date"},
+    "research_mode": {
+      "enum": ["FULL_RESEARCH", "DELTA_RESEARCH", "FORCED_VALIDATION_CANARY"]
+    },
+    "trigger_summary": {"type": "array", "items": {"type": "object"}},
+    "candidate_archetypes": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "business_snapshot": {"type": "object"},
+    "structured_financial_snapshot": {"type": "object"},
+    "revision_valuation_snapshot": {"type": "object"},
+    "existing_thesis_digest": {"type": ["object", "null"]},
+    "historical_anchor_digest": {"type": "array", "items": {"type": "object"}},
+    "known_positive_facts": {"type": "array", "items": {"type": "object"}},
+    "known_counterfacts": {"type": "array", "items": {"type": "object"}},
+    "research_objectives": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "source_preferences": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "forbidden_inferences": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "delta_context": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "prior_receipt",
+            "new_events",
+            "new_or_superseding_facts",
+            "components_to_revisit",
+            "prior_receipt_is_current_authority"
+          ],
+          "properties": {
+            "prior_receipt": {"type": ["object", "null"]},
+            "new_events": {"type": "array", "items": {"type": "object"}},
+            "new_or_superseding_facts": {"type": "array", "items": {"type": "object"}},
+            "components_to_revisit": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "prior_receipt_is_current_authority": {"const": false}
+          }
+        }
+      ]
+    },
+    "output_contract": {"const": "e2r_pro_research_dossier_v1"},
+    "score_authority": {"const": false},
+    "stage_authority": {"const": false}
+  }
+}
