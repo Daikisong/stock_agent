@@ -19,6 +19,7 @@ from .models import (
     ScanWindow,
 )
 from .packet import PacketBuildInput, ResearchPacketBuilder, ResearchPacketV1
+from .publication import ProPublishedResult, ProResultPublisher
 from .prompt_contract import ProResearchPromptContract
 from .scheduler import FrozenClock, PersistentKrxScheduler, SystemClock
 from .scoring import ProScoringPipelineService
@@ -34,6 +35,8 @@ __all__ = [
     "ProGapAdjudicationService",
     "ProJobStateMachine",
     "ProResearchJob",
+    "ProPublishedResult",
+    "ProResultPublisher",
     "ProScoringPipelineService",
     "ProSourceVerificationService",
     "ResearchMode",

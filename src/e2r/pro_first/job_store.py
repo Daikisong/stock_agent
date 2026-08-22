@@ -390,6 +390,19 @@ class ProFirstJobStore:
             ).fetchone()
         return None if row is None else self._scan_run_from_row(row)
 
+    def list_scan_runs(self, *, limit: int = 200) -> tuple[ScanRunRecord, ...]:
+        if not 1 <= limit <= 1_000:
+            raise ValueError("scan list limit must be between 1 and 1000")
+        with self._connect() as connection:
+            rows = connection.execute(
+                """
+                SELECT * FROM pro_scan_runs
+                ORDER BY scheduled_for DESC, scan_run_id DESC LIMIT ?
+                """,
+                (limit,),
+            ).fetchall()
+        return tuple(self._scan_run_from_row(row) for row in rows)
+
     def create_candidate(
         self,
         *,
@@ -469,6 +482,29 @@ class ProFirstJobStore:
                 "SELECT * FROM pro_candidates WHERE dedupe_key=?", (dedupe_key,)
             ).fetchone()
         return None if row is None else self._candidate_from_row(row)
+
+    def get_candidate(self, candidate_id: str) -> CandidateRecord:
+        with self._connect() as connection:
+            row = connection.execute(
+                "SELECT * FROM pro_candidates WHERE candidate_id=?",
+                (candidate_id,),
+            ).fetchone()
+        if row is None:
+            raise RecordNotFound(f"candidate not found: {candidate_id}")
+        return self._candidate_from_row(row)
+
+    def list_candidates(self, *, limit: int = 200) -> tuple[CandidateRecord, ...]:
+        if not 1 <= limit <= 1_000:
+            raise ValueError("candidate list limit must be between 1 and 1000")
+        with self._connect() as connection:
+            rows = connection.execute(
+                """
+                SELECT * FROM pro_candidates
+                ORDER BY created_at DESC, candidate_id DESC LIMIT ?
+                """,
+                (limit,),
+            ).fetchall()
+        return tuple(self._candidate_from_row(row) for row in rows)
 
     def get_job_by_candidate(self, candidate_id: str) -> ProResearchJob | None:
         with self._connect() as connection:
@@ -557,6 +593,108 @@ class ProFirstJobStore:
         if row is None:
             raise RecordNotFound(f"job not found: {job_id}")
         return self._job_from_row(row)
+
+    def list_jobs(
+        self,
+        *,
+        statuses: Sequence[str | JobStatus] = (),
+        limit: int = 500,
+    ) -> tuple[ProResearchJob, ...]:
+        if not 1 <= limit <= 2_000:
+            raise ValueError("job list limit must be between 1 and 2000")
+        status_values = tuple(dict.fromkeys(JobStatus(value).value for value in statuses))
+        with self._connect() as connection:
+            if status_values:
+                placeholders = ",".join("?" for _ in status_values)
+                rows = connection.execute(
+                    f"""
+                    SELECT * FROM pro_research_jobs
+                    WHERE status IN ({placeholders})
+                    ORDER BY priority DESC, updated_at DESC, job_id DESC LIMIT ?
+                    """,
+                    (*status_values, limit),
+                ).fetchall()
+            else:
+                rows = connection.execute(
+                    """
+                    SELECT * FROM pro_research_jobs
+                    ORDER BY priority DESC, updated_at DESC, job_id DESC LIMIT ?
+                    """,
+                    (limit,),
+                ).fetchall()
+        return tuple(self._job_from_row(row) for row in rows)
+
+    def get_packet_manifest(self, job_id: str) -> Mapping[str, Any] | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                "SELECT manifest_json FROM pro_packets WHERE job_id=?",
+                (job_id,),
+            ).fetchone()
+        return None if row is None else json.loads(row["manifest_json"])
+
+    def get_browser_session_state(self, job_id: str) -> Mapping[str, Any] | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT browser_session_id, adapter_name, conversation_id,
+                       state_json, created_at, updated_at
+                FROM pro_browser_sessions WHERE job_id=?
+                ORDER BY updated_at DESC LIMIT 1
+                """,
+                (job_id,),
+            ).fetchone()
+        if row is None:
+            return None
+        return {
+            "browser_session_id": row["browser_session_id"],
+            "adapter_name": row["adapter_name"],
+            "conversation_id": row["conversation_id"],
+            "state": json.loads(row["state_json"]),
+            "created_at": row["created_at"],
+            "updated_at": row["updated_at"],
+        }
+
+    def list_artifacts(self, job_id: str) -> tuple[Mapping[str, Any], ...]:
+        self.get_job(job_id)
+        with self._connect() as connection:
+            rows = connection.execute(
+                """
+                SELECT artifact_id, artifact_kind, relative_path, content_hash,
+                       byte_count, metadata_json, created_at
+                FROM pro_artifacts WHERE job_id=?
+                ORDER BY created_at, artifact_id
+                """,
+                (job_id,),
+            ).fetchall()
+        return tuple(
+            {
+                "artifact_id": row["artifact_id"],
+                "artifact_kind": row["artifact_kind"],
+                "relative_path": row["relative_path"],
+                "content_hash": row["content_hash"],
+                "byte_count": int(row["byte_count"]),
+                "metadata": json.loads(row["metadata_json"]),
+                "created_at": row["created_at"],
+            }
+            for row in rows
+        )
+
+    def cancel_job(
+        self,
+        job_id: str,
+        *,
+        actor: str = "dashboard-user",
+        reason: str = "USER_CANCELLED",
+    ) -> ProResearchJob:
+        job = self.get_job(job_id)
+        return self.transition(
+            job_id,
+            expected_version=job.state_version,
+            to_status=JobStatus.CANCELLED,
+            actor=actor,
+            idempotency_key=f"cancelled:{job_id}:{job.state_version}",
+            payload={"reason": str(reason or "USER_CANCELLED")},
+        )
 
     def record_packet(
         self,
@@ -1465,6 +1603,146 @@ class ProFirstJobStore:
         with self._connect() as connection:
             row = connection.execute(
                 "SELECT receipt_json FROM pro_stagecourt_receipts WHERE job_id=?",
+                (job_id,),
+            ).fetchone()
+        return None if row is None else json.loads(row["receipt_json"])
+
+    def record_publication(
+        self,
+        job_id: str,
+        *,
+        expected_version: int,
+        publication_id: str,
+        publication_hash: str,
+        receipt: Mapping[str, Any],
+    ) -> ProResearchJob:
+        receipt_without_identity = {
+            key: value
+            for key, value in receipt.items()
+            if key not in {"publication_id", "publication_hash"}
+        }
+        result = receipt.get("result") or {}
+        canonical_stages = {
+            "0",
+            "1",
+            "2",
+            "3-Green",
+            "3-Yellow",
+            "3-Red",
+            "4A",
+            "4B",
+            "4C",
+            "5",
+        }
+        if (
+            len(publication_hash) != 64
+            or receipt.get("schema_version")
+            != "e2r_pro_result_publication_receipt_v1"
+            or receipt.get("status") != "PUBLISHED"
+            or receipt.get("job_id") != job_id
+            or receipt.get("publication_id") != publication_id
+            or receipt.get("publication_hash") != publication_hash
+            or canonical_hash(receipt_without_identity) != publication_hash
+            or receipt.get("investment_recommendation_count") != 0
+            or receipt.get("score_authority") != "ResearchCalibratedComponentScorer"
+            or receipt.get("stage_authority") != "AtomicStageCourtV2"
+            or not isinstance(result, Mapping)
+            or result.get("schema_version") != "e2r_pro_published_result_v1"
+            or result.get("job_id") != job_id
+            or result.get("investment_recommendation") is not False
+            or len(result.get("component_vector") or {}) != 7
+            or result.get("judge_coverage") != "21/21"
+            or result.get("component_coverage") != "7/7"
+            or result.get("canonical_stage") not in canonical_stages
+            or not isinstance(result.get("score_valid"), bool)
+        ):
+            raise ValueError("invalid Pro-first result publication")
+        created_at = self._now_text()
+        with self._transaction() as connection:
+            existing = connection.execute(
+                "SELECT * FROM pro_publications WHERE job_id=?",
+                (job_id,),
+            ).fetchone()
+            if existing is not None:
+                if (
+                    existing["publication_id"] != publication_id
+                    or existing["publication_hash"] != publication_hash
+                    or canonical_json(json.loads(existing["receipt_json"]))
+                    != canonical_json(receipt)
+                ):
+                    raise IdempotencyConflict(
+                        "published result changed for an already published job"
+                    )
+                return self._job_from_row(
+                    self._require_job_row(connection, job_id)
+                )
+            row = self._require_job_row(connection, job_id)
+            self._require_version(row, expected_version)
+            if JobStatus(row["status"]) is not JobStatus.FINAL:
+                raise ValueError("only a FINAL deterministic result may be published")
+            score_row = connection.execute(
+                "SELECT receipt_json FROM pro_score_receipts WHERE job_id=?",
+                (job_id,),
+            ).fetchone()
+            stage_row = connection.execute(
+                "SELECT receipt_json FROM pro_stagecourt_receipts WHERE job_id=?",
+                (job_id,),
+            ).fetchone()
+            if score_row is None or stage_row is None:
+                raise ValueError("publication requires score and StageCourt receipts")
+            score_receipt = json.loads(score_row["receipt_json"])
+            stage_receipt = json.loads(stage_row["receipt_json"])
+            if (
+                receipt.get("score_receipt_id") != row["score_receipt_id"]
+                or receipt.get("stagecourt_receipt_id")
+                != row["stagecourt_receipt_id"]
+                or result.get("score_receipt_id") != row["score_receipt_id"]
+                or result.get("stagecourt_receipt_id")
+                != row["stagecourt_receipt_id"]
+                or score_receipt.get("score_receipt_id")
+                != row["score_receipt_id"]
+                or stage_receipt.get("stagecourt_receipt_id")
+                != row["stagecourt_receipt_id"]
+            ):
+                raise ValueError("publication receipt lineage differs from FINAL")
+            connection.execute(
+                """
+                INSERT INTO pro_publications (
+                    publication_id, job_id, publication_hash,
+                    receipt_json, created_at
+                ) VALUES (?, ?, ?, ?, ?)
+                """,
+                (
+                    publication_id,
+                    job_id,
+                    publication_hash,
+                    canonical_json(receipt),
+                    created_at,
+                ),
+            )
+            cursor = connection.execute(
+                """
+                UPDATE pro_research_jobs
+                SET published_at=?, state_version=state_version+1, updated_at=?
+                WHERE job_id=? AND state_version=? AND status=?
+                """,
+                (
+                    created_at,
+                    created_at,
+                    job_id,
+                    expected_version,
+                    JobStatus.FINAL.value,
+                ),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict(f"publication changed concurrently: {job_id}")
+            result_row = self._require_job_row(connection, job_id)
+        return self._job_from_row(result_row)
+
+    def get_publication(self, job_id: str) -> Mapping[str, Any] | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                "SELECT receipt_json FROM pro_publications WHERE job_id=?",
                 (job_id,),
             ).fetchone()
         return None if row is None else json.loads(row["receipt_json"])
