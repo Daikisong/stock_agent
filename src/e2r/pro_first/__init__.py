@@ -21,6 +21,7 @@ from .packet import PacketBuildInput, ResearchPacketBuilder, ResearchPacketV1
 from .prompt_contract import ProResearchPromptContract
 from .scheduler import FrozenClock, PersistentKrxScheduler, SystemClock
 from .state_machine import ProJobStateMachine
+from .verification import ProSourceVerificationService
 
 __all__ = [
     "CandidateRecord",
@@ -30,6 +31,7 @@ __all__ = [
     "ProFirstJobStore",
     "ProJobStateMachine",
     "ProResearchJob",
+    "ProSourceVerificationService",
     "ResearchMode",
     "ScanRunRecord",
     "ScanWindow",

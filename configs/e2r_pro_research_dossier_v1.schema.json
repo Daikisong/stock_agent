@@ -139,7 +139,7 @@
         "unit": {"type": ["string", "null"]},
         "period": {"type": ["string", "null"]},
         "event_date": {"type": ["string", "null"]},
-        "current_status": {"enum": ["CURRENT", "OPEN", "RESOLVED", "SUPERSEDED", "UNKNOWN"]},
+        "current_status": {"enum": ["CURRENT", "OPEN", "RESOLVED", "SUPERSEDED", "HISTORICAL", "UNKNOWN"]},
         "candidate_components": {
           "type": "array",
           "uniqueItems": true,

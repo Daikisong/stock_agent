@@ -964,6 +964,115 @@ class ProFirstJobStore:
             ).fetchone()
         return None if row is None else json.loads(row["import_receipt_json"])
 
+    def record_source_verification(
+        self,
+        job_id: str,
+        *,
+        expected_version: int,
+        verification_id: str,
+        dossier_id: str,
+        verification_hash: str,
+        receipt: Mapping[str, Any],
+        actor: str,
+        idempotency_key: str,
+    ) -> ProResearchJob:
+        if len(verification_hash) != 64:
+            raise ValueError("verification_hash must be sha256")
+        if (
+            receipt.get("schema_version")
+            != "e2r_pro_source_verification_receipt_v1"
+            or receipt.get("status") != "SOURCE_VERIFICATION_COMPLETE"
+            or receipt.get("job_id") != job_id
+            or receipt.get("dossier_id") != dossier_id
+            or receipt.get("verification_hash") != verification_hash
+            or receipt.get("terminal_fact_count") != receipt.get("candidate_fact_count")
+            or receipt.get("pro_score_authority") is not False
+            or receipt.get("pro_stage_authority") is not False
+            or receipt.get("query_count") != 0
+            or receipt.get("search_count") != 0
+        ):
+            raise ValueError("invalid source verification receipt")
+        payload = {
+            "verification_id": verification_id,
+            "verification_hash": verification_hash,
+            "candidate_fact_count": receipt.get("candidate_fact_count"),
+            "compiled_evidence_fact_count": receipt.get(
+                "compiled_evidence_fact_count"
+            ),
+        }
+        with self._transaction() as connection:
+            if self._existing_idempotent_event(
+                connection,
+                job_id,
+                idempotency_key,
+                JobStatus.GAP_ADJUDICATION,
+                payload,
+            ):
+                return self._job_from_row(self._require_job_row(connection, job_id))
+            row = self._require_job_row(connection, job_id)
+            self._require_version(row, expected_version)
+            source = JobStatus(row["status"])
+            if source is not JobStatus.VERIFYING_SOURCES or row["dossier_id"] != dossier_id:
+                raise ValueError("source verification must match VERIFYING_SOURCES dossier")
+            self.state_machine.validate(
+                source,
+                JobStatus.GAP_ADJUDICATION,
+                context=TransitionContext(source_verification_complete=True),
+            )
+            created_at = self._now_text()
+            connection.execute(
+                """
+                INSERT INTO pro_source_verifications (
+                    verification_id, job_id, dossier_id, verification_hash,
+                    receipt_json, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    verification_id,
+                    job_id,
+                    dossier_id,
+                    verification_hash,
+                    canonical_json(receipt),
+                    created_at,
+                ),
+            )
+            cursor = connection.execute(
+                """
+                UPDATE pro_research_jobs
+                SET status=?, last_error_class=NULL, last_error_message=NULL,
+                    state_version=state_version+1, updated_at=?
+                WHERE job_id=? AND state_version=?
+                """,
+                (
+                    JobStatus.GAP_ADJUDICATION.value,
+                    created_at,
+                    job_id,
+                    expected_version,
+                ),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict(f"source verification changed concurrently: {job_id}")
+            self._insert_event(
+                connection,
+                job_id=job_id,
+                from_status=source,
+                to_status=JobStatus.GAP_ADJUDICATION,
+                actor=actor,
+                idempotency_key=idempotency_key,
+                payload=payload,
+                created_at=created_at,
+            )
+            result = self._require_job_row(connection, job_id)
+        return self._job_from_row(result)
+
+    def get_source_verification_receipt(self, job_id: str) -> Mapping[str, Any] | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                "SELECT receipt_json FROM pro_source_verifications WHERE job_id=?",
+                (job_id,),
+            ).fetchone()
+        return None if row is None else json.loads(row["receipt_json"])
+
     def list_events(self, job_id: str) -> tuple[JobEvent, ...]:
         with self._connect() as connection:
             rows = connection.execute(
