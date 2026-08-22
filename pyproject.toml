@@ -9,6 +9,13 @@ dependencies = [
     "pypdf>=4.0.0",
 ]
 
+[project.optional-dependencies]
+pro-first = [
+    "fastapi>=0.141.1,<1",
+    "uvicorn>=0.52.1,<1",
+    "playwright>=1.62.0,<2",
+]
+
 [tool.pyright]
 pythonVersion = "3.10"
 typeCheckingMode = "basic"
