@@ -1,0 +1,47 @@
+{
+  "accepted_fact_deletion_allowed": false,
+  "allowed_repair_action_count": 4,
+  "allowed_repair_actions": [
+    "CORRECTED",
+    "NARROWED",
+    "REPLACED",
+    "WITHDRAWN"
+  ],
+  "captured_full_dossier_delta_derivation_required": true,
+  "completed_pass_response_hash_required": true,
+  "critical_count": 0,
+  "deterministic_reverification_required": true,
+  "focused_test_count": 14,
+  "invented_url_or_quote_can_self_authorize": false,
+  "phase": "P6",
+  "rejection_categories": [
+    "DATE_UNRESOLVED",
+    "DUPLICATE_LINEAGE",
+    "FUTURE_SOURCE",
+    "QUOTE_MISMATCH",
+    "SNIPPET_ONLY",
+    "SOURCE_UNAVAILABLE",
+    "UNSUPPORTED_DERIVATION",
+    "WRONG_PRODUCT",
+    "WRONG_SEGMENT",
+    "WRONG_SUBJECT",
+    "WRONG_TARGET"
+  ],
+  "rejection_category_count": 11,
+  "required_test_count": 6,
+  "required_test_names": [
+    "test_quote_mismatch_opens_repair",
+    "test_wrong_subject_opens_repair",
+    "test_repair_can_withdraw_fact",
+    "test_repair_cannot_invent_url_or_quote",
+    "test_unrepaired_material_fact_blocks_full_thesis",
+    "test_repaired_fact_is_reverified"
+  ],
+  "same_conversation_required": true,
+  "schema_version": "e2r_pro_first_v2_verifier_repair_audit_v1",
+  "score_authority": false,
+  "source_excerpt_hash_verification_required": true,
+  "stage_authority": false,
+  "status": "VERIFIER_REPAIR_CONTRACT_READY",
+  "unresolved_material_rejection_blocks_full_thesis": true
+}

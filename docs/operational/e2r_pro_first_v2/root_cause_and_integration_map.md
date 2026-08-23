@@ -203,8 +203,10 @@ phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는
 | P1 | 완료 | 36/36 contract, 233 question family, critical 0 |
 | P2 | 완료 | 6종 동적 prompt template와 36 snapshot audit |
 | P3 | 완료 | ResearchDossierV2, question/route/status 장부, V1 read-only 호환 |
-| P4 | 구현·검문 완료 | 동일 conversation follow-up, 최초 승인 scope, pass별 exactly-once, parent lineage |
-| P5~P10 | 미완료 | saturation, repair, publication gate, all-archetype/replay/CI가 남음 |
+| P4 | 완료 | 동일 conversation follow-up, 최초 승인 scope, pass별 exactly-once, parent lineage |
+| P5 | 완료 | question/source-role 단위 adequacy, semantic fixpoint, cap/monitoring/core blocker 분리 |
+| P6 | 완료 | 11종 verifier rejection packet, 동일 대화 repair/withdraw, deterministic re-verification |
+| P7~P10 | 미완료 | publication gate, all-archetype/known-bad, replay/live canary, CI·최종 receipt가 남음 |
 
 P4의 최초 전송과 후속 전송은 브라우저 send 버튼을 두 군데서 누르지 않는다. DOM에는
 기존 `submit_once()` 한 경로만 있고, 최초 pass는 기존 job의 `submit_count`, 후속
@@ -214,5 +216,8 @@ pass는 `pro_research_passes.submit_count`를 각각 DB에서 먼저 `0→1`로 
 않는다. 첫 전송 장부는 계속 1이고, 두 번째 질문은 별도 pass 장부에서 1이다. 대상,
 기준일, 선택 contract 또는 conversation이 바뀌면 기존 승인을 재사용할 수 없다.
 
-P4 leaf receipt는 `multi_pass_orchestration_audit.json`이다. 아직 P5 saturation gate와
-P7 score/publication gate가 없으므로 이 시점에도 full-thesis score 게시 자격은 없다.
+P4 leaf receipt는 `multi_pass_orchestration_audit.json`, P5 leaf receipt는
+`saturation_semantics_audit.json`, P6 leaf receipt는 `verifier_repair_audit.json`이다.
+P6까지의 관련 회귀시험 82개와 Pro-first 전체 시험 271개가 통과했고 production static
+audit의 critical finding은 0이다. 다만 아직 P7 score/publication gate가 없으므로 이
+시점에도 full-thesis score 게시 자격은 없다.

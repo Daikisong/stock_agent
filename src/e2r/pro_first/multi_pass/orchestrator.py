@@ -92,6 +92,28 @@ class ProMultiPassResearchOrchestrator:
         primary_archetype_ids: Sequence[str],
     ) -> FollowupPassPlan | TransportPendingDecision | None:
         questions = tuple(dossier.get("question_family_results") or ())
+        repair = tuple(
+            row
+            for row in questions
+            if str(row.get("status") or "") == "VERIFIER_REPAIR_REQUIRED"
+        )
+        if repair:
+            return self.plan_followup(
+                job_id=job_id,
+                packet=packet,
+                primary_archetype_ids=primary_archetype_ids,
+                pass_name="VERIFIER_REPAIR",
+                unresolved_question_state=repair,
+                pass_inputs={
+                    "route_reason": "MATERIAL_FACT_VERIFIER_REJECTION",
+                    "question_family_ids": [
+                        str(row.get("question_family_id") or "") for row in repair
+                    ],
+                    "verification_repair_register": list(
+                        dossier.get("verification_repair_register") or ()
+                    ),
+                },
+            )
         public = tuple(
             row
             for row in questions

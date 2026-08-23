@@ -276,8 +276,6 @@ class ProSourceVerifier:
             as_of_date=job.as_of_date,
             accepted_claims=accepted_claims,
         )
-        if not compilation.fact_graph_ready:
-            raise ValueError("verified Pro claims did not compile into a complete EvidenceFact graph")
         return SourceVerificationResult(
             verifications=tuple(verifications),
             fact_compilation=compilation,
