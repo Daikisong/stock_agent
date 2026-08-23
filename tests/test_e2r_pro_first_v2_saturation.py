@@ -199,7 +199,7 @@ class ProFirstV2SaturationTest(unittest.TestCase):
                 "known_hynix_like_stage_boundary_gap_count": 1,
                 "known_hynix_like_hard_break_gap_count": 7,
                 "known_hynix_like_corroboration_cap_count": 0,
-                "focused_test_count": 19,
+                "focused_test_count": 20,
             }
         )
         path = (
@@ -505,6 +505,28 @@ class ProFirstV2SaturationTest(unittest.TestCase):
             fixpoint_confirmations=confirmations,
         )
         self.assertTrue(_decision(receipt, question_id).route_adequacy.semantic_fixpoint)
+
+    def test_provider_failure_cannot_prove_fixpoint(self) -> None:
+        dossier, question_id, confirmations, bound = self._likely_nonpublic_fixture()
+        failed = tuple(
+            NoNewRouteConfirmation(
+                **{
+                    **row.__dict__,
+                    "provider_status": "ERROR",
+                }
+            )
+            for row in confirmations
+        )
+        fixpoint = evaluate_semantic_no_new_route_fixpoint(failed)
+        self.assertFalse(fixpoint.reached)
+        self.assertIn("PROVIDER_NOT_NORMAL", fixpoint.failure_codes)
+        receipt = self._adjudicate(
+            dossier,
+            deterministic_bounds={question_id: bound},
+            fixpoint_confirmations=failed,
+        )
+        self.assertFalse(_decision(receipt, question_id).route_adequacy.semantic_fixpoint)
+        self.assertFalse(receipt.research_saturation_valid)
 
     def test_unrelated_or_stale_confirmations_do_not_close_current_gap(self) -> None:
         dossier, question_id, confirmations, bound = self._likely_nonpublic_fixture()

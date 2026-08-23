@@ -207,7 +207,8 @@ phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는
 | P5 | 완료 | question/source-role 단위 adequacy, semantic fixpoint, cap/monitoring/core blocker 분리 |
 | P6 | 완료 | 11종 verifier rejection packet, 동일 대화 repair/withdraw, deterministic re-verification |
 | P7 | 완료 | saturation 선행 gate, diagnostic/full score 분리, Stage/publication withheld, 기존 scorer/StageCourt 재사용 |
-| P8~P10 | 미완료 | all-archetype/known-bad, replay/live canary, CI·최종 receipt가 남음 |
+| P8 | 완료 | 36 prompt snapshot, 13 mechanism golden, known-bad 30종·detector 29개 |
+| P9~P10 | 미완료 | frozen MD replay/live canary와 CI·최종 receipt가 남음 |
 
 P4의 최초 전송과 후속 전송은 브라우저 send 버튼을 두 군데서 누르지 않는다. DOM에는
 기존 `submit_once()` 한 경로만 있고, 최초 pass는 기존 job의 `submit_count`, 후속
@@ -228,3 +229,15 @@ C17 fixture는 component와 Judge를 모두 만들었지만 deterministic score 
 pending이므로 기존처럼 `Stage 0`을 FINAL로 내보내지 않는다. 대신 진단 component
 vector와 부분점수만 별도 보존하고 `canonical_stage=null`, `score_valid=false`,
 `publication_status=WITHHELD_PENDING_RESEARCH_SATURATION`으로 남긴다.
+
+P8 leaf receipt는 `generalization_acceptance.json`이다. 저장소의 36개 prompt snapshot과
+13개 필수 mechanism family golden replay가 모두 통과했고, master goal에 열거된 known-bad
+30개는 실제 회귀시험 29개와 연결되어 전부 실행·통과했다. P8 추가 수용시험은 8/8,
+관련 핵심 시험은 81/81, Pro-first 전체 시험은 288/288이며 production static audit의
+critical finding은 0이다. golden replay는 live query/fetch를 하지 않아 0/0이고 Pro의
+score·Stage 권한도 모두 false다.
+
+쉬운 예로 C28 software golden은 보안이라는 단어 하나를 ARR로 간주하지 않는다.
+ARR·RPO와 GRR/NRR·renewal 질문, source role, positive/counter fact 연결이 모두 닫혀야
+통과한다. 첫 공개 material 질문을 다시 `PUBLIC_SEARCHABLE`로 열면 같은 fixture도 즉시
+saturation invalid가 되는 것까지 함께 검증한다.

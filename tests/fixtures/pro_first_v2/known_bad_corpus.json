@@ -1,0 +1,276 @@
+{
+  "schema_version": "e2r_pro_v2_known_bad_corpus_v1",
+  "production_runtime_ready": false,
+  "cases": [
+    {
+      "case_id": "generic_component_only_prompt",
+      "category": "PROMPT",
+      "mutation": "mandatory question contract를 빼고 generic 7-component prompt만 생성",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_prompt_compiler.ProFirstV2PromptCompilerTest.test_compile_all_36_prompt_snapshots"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "forced_complete_status",
+      "category": "PROMPT",
+      "mutation": "Pro 응답에 research_status COMPLETE를 강제",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_prompt_compiler.ProFirstV2PromptCompilerTest.test_prompt_does_not_force_complete"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "one_pass_full_thesis_publication",
+      "category": "PUBLICATION",
+      "mutation": "initial one-pass dossier를 saturation receipt 없이 full thesis로 게시",
+      "expected_outcome": "WITHHELD",
+      "detector_test_ids": ["tests.test_e2r_pro_first_scoring_bridge.ProFirstScoringBridgeTest.test_full_thesis_requires_saturation"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "component_one_fact_completeness",
+      "category": "SATURATION",
+      "mutation": "component마다 fact 하나가 있다는 이유로 research complete 처리",
+      "expected_outcome": "BLOCKED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_saturation.ProFirstV2SaturationTest.test_component_fact_count_is_not_adequacy"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "one_fact_seven_component_completeness",
+      "category": "SATURATION",
+      "mutation": "한 fact가 7 component에 닿으면 전체 질문을 complete 처리",
+      "expected_outcome": "BLOCKED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_saturation.ProFirstV2SaturationTest.test_one_fact_touching_seven_components_not_full_coverage"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "public_gap_corroboration_downgrade",
+      "category": "GAP",
+      "mutation": "PUBLIC_SEARCHABLE core source gap을 corroboration cap으로 하향",
+      "expected_outcome": "BLOCKED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_saturation.ProFirstV2SaturationTest.test_core_primary_role_missing_is_not_corroboration"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "thirteen_material_gaps_zero_followup",
+      "category": "GAP",
+      "mutation": "high-materiality gap 13개를 전부 cap 처리하고 follow-up 0으로 종료",
+      "expected_outcome": "BLOCKED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_saturation.ProFirstV2SaturationTest.test_hynix_13_gaps_not_all_silently_downgraded"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "verifier_rejection_score_only",
+      "category": "REPAIR",
+      "mutation": "material verifier rejection 뒤 repair 없이 점수만 낮추고 종료",
+      "expected_outcome": "BLOCKED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_verifier_repair.ProFirstV2VerifierRepairTest.test_unrepaired_material_fact_blocks_full_thesis"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "quote_mismatch_repack",
+      "category": "REPAIR",
+      "mutation": "같은 잘못된 URL에 quote mismatch 문장만 바꿔 재제출",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_verifier_repair.ProFirstV2VerifierRepairTest.test_repair_cannot_invent_quote_on_real_url"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "wrong_subject_repack",
+      "category": "REPAIR",
+      "mutation": "다른 회사 fact를 표현만 바꿔 target fact로 재포장",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_verifier_repair.ProFirstV2VerifierRepairTest.test_wrong_subject_opens_repair"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "likely_nonpublic_absent_zero",
+      "category": "SATURATION",
+      "mutation": "LIKELY_NONPUBLIC을 fact ABSENT와 component 0점으로 확정",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_saturation.ProFirstV2SaturationTest.test_likely_nonpublic_gap_caps_without_zeroing"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "future_event_current_failure",
+      "category": "TEMPORAL",
+      "mutation": "FUTURE_EVENT_ONLY를 현재 실패 fact로 확정",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_saturation.ProFirstV2SaturationTest.test_future_event_only_is_terminal_monitoring"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "provider_failure_fixpoint",
+      "category": "FIXPOINT",
+      "mutation": "provider failure를 독립 no-new-route confirmation으로 사용",
+      "expected_outcome": "BLOCKED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_saturation.ProFirstV2SaturationTest.test_provider_failure_cannot_prove_fixpoint"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "transport_limit_saturation",
+      "category": "TRANSPORT",
+      "mutation": "transport safety limit 도달을 saturation COMPLETE로 기록",
+      "expected_outcome": "PENDING",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_multi_pass.ProFirstV2MultiPassTest.test_transport_limit_does_not_mark_complete"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "same_gap_infinite_reopen",
+      "category": "FIXPOINT",
+      "mutation": "같은 semantic gap을 progress 없이 무한 재개방",
+      "expected_outcome": "BLOCKED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_multi_pass.ProFirstV2MultiPassTest.test_same_gap_third_reopen_hard_fails"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "pro_score_authority",
+      "category": "AUTHORITY",
+      "mutation": "Pro proposed score를 production score로 사용",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_scoring_bridge.ProFirstScoringBridgeTest.test_pro_score_stage_fields_ignored"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "pro_stage_authority",
+      "category": "AUTHORITY",
+      "mutation": "Pro proposed Stage를 canonical Stage로 사용",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_scoring_bridge.ProFirstScoringBridgeTest.test_pro_score_stage_fields_ignored"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "historical_price_outcome_leakage",
+      "category": "TEMPORAL",
+      "mutation": "historical price outcome을 production Pro prompt에 노출",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_prompt_compiler.ProFirstV2PromptCompilerTest.test_prompt_does_not_expose_score_stage_gold"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "c06_questions_in_c28",
+      "category": "PROMPT",
+      "mutation": "C06 HBM 고유 질문을 C28 software prompt에 그대로 주입",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_prompt_compiler.ProFirstV2PromptCompilerTest.test_non_c06_prompt_not_polluted_by_hbm_literals"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "security_keyword_arr",
+      "category": "SEMANTIC",
+      "mutation": "software security 키워드만으로 ARR/retention을 확정",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_census_v4_all_archetype_replay_matrix.CensusV4AllArchetypeReplayMatrixTests.test_c28_source_backed_semantic_replay_passes_security_keyword_guard"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "bio_headline_endpoint_success",
+      "category": "SEMANTIC",
+      "mutation": "bio headline만으로 endpoint 성공과 상업화를 확정",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_round35_score_weight_v20.Round35ScoreWeightV20Tests.test_biosimilar_requires_uptake_payer_and_margin_not_approval_only"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "commodity_headline_realized_margin",
+      "category": "SEMANTIC",
+      "mutation": "commodity 가격 headline만으로 issuer realized margin을 확정",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_census_v4_all_archetype_replay_matrix.CensusV4AllArchetypeReplayMatrixTests.test_c15_source_backed_semantic_replay_passes_raw_commodity_guard"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "policy_headline_direct_cash",
+      "category": "SEMANTIC",
+      "mutation": "정책 headline만으로 issuer 직접 cash와 Green bridge를 확정",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_round202_r11_loop7_policy_geopolitical_event_price_validation.Round202R11Loop7PolicyGeopoliticalEventPriceValidationTests.test_policy_to_contract_cases_are_stage2_watch_until_orders"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "low_pbr_capital_return_execution",
+      "category": "SEMANTIC",
+      "mutation": "낮은 PBR만으로 자본환원 실제 실행을 확정",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_round197_r6_loop7_financial_capital_digital_price_validation.Round197R6Loop7FinancialCapitalDigitalPriceValidationTests.test_green_gate_requires_roe_capital_return_and_blocks_policy_buzz"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "old_accounting_risk_current_hard_break",
+      "category": "LIFECYCLE",
+      "mutation": "해소된 과거 회계 risk를 현재 OPEN hard break로 유지",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_census_v4_known_bad_regression.CensusV4KnownBadRegressionTests.test_old_risk_resolved_case_is_required_known_bad"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "partial_score_dashboard_current",
+      "category": "PUBLICATION",
+      "mutation": "diagnostic partial score를 dashboard current full score로 게시",
+      "expected_outcome": "WITHHELD",
+      "detector_test_ids": ["tests.test_e2r_pro_first_scoring_bridge.ProFirstScoringBridgeTest.test_partial_diagnostic_score_not_published"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "v1_canary_receipt_overwrite",
+      "category": "LINEAGE",
+      "mutation": "legacy V1 canary receipt를 수정해 V2 full thesis처럼 덮어쓰기",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_e2r_pro_first_v2_readiness_view.ProFirstV2ReadinessViewTest.test_legacy_live_canary_is_diagnostic_until_v2_saturation_exists"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "fixture_answer_live_injection",
+      "category": "GOLD",
+      "mutation": "fixture expected archetype/score/Stage 답안을 live corpus에 주입",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_e2r_v5_full_thesis_gold_benchmark.E2RV5FullThesisGoldBenchmarkTests.test_production_baseline_has_no_gold_input_injection"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "symbol_specific_branch",
+      "category": "GENERALIZATION",
+      "mutation": "target symbol별 scoring/search 특별 branch 추가",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_contract_semantic_classifier.ContractSemanticClassifierTests.test_facility_investment_correction_guard_is_not_symbol_specific"],
+      "score_authority": false,
+      "stage_authority": false
+    },
+    {
+      "case_id": "deterministic_query_literal",
+      "category": "GENERALIZATION",
+      "mutation": "아키타입별 literal query를 deterministic recipe 코드에 하드코딩",
+      "expected_outcome": "REJECTED",
+      "detector_test_ids": ["tests.test_e2r_reconstruction_phase4_acceptance.E2RReconstructionPhase4AcceptanceTest.test_literal_query_generation_is_not_owned_by_recipe_code"],
+      "score_authority": false,
+      "stage_authority": false
+    }
+  ]
+}
