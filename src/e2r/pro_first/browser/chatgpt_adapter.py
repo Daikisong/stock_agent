@@ -18,6 +18,7 @@ from .protocol import (
     BrowserUIState,
     ManualLoginRequired,
     PreparedBrowserJob,
+    PreparedFollowupPass,
     RawBrowserCapture,
     SubmitAuthorizationRequired,
 )
@@ -183,6 +184,7 @@ class PlaywrightChatGPTWebAdapter:
         if send is None:
             raise BrowserUIIncompatible("ChatGPT send button is not ready after packet preparation")
         self._prepared_binding = {
+            "authorization_kind": "INITIAL_USER_APPROVAL",
             "browser_session_id": browser_session_id,
             "packet_hash": packet_hash,
             "prompt_hash": prompt_hash,
@@ -190,6 +192,7 @@ class PlaywrightChatGPTWebAdapter:
         self._preexisting_attachment_keys = frozenset(row.stable_key for row in preexisting)
         self._prepared_job_id = self._marker_value(prompt, "E2R_PRO_JOB_ID")
         self._prepared_run_id = self._marker_value(prompt, "E2R_PRO_RUN_ID")
+        self._submit_attempted = False
         return PreparedBrowserJob(
             browser_session_id=browser_session_id,
             conversation_id=self.conversation_id(),
@@ -205,19 +208,94 @@ class PlaywrightChatGPTWebAdapter:
             submit_count=0,
         )
 
+    async def prepare_followup_without_submit(
+        self,
+        *,
+        browser_session_id: str,
+        conversation_id: str,
+        job_id: str,
+        pass_id: str,
+        parent_pass_id: str,
+        prompt: str,
+        prompt_hash: str,
+    ) -> PreparedFollowupPass:
+        if canonical_hash({"prompt": prompt}) != prompt_hash:
+            raise BrowserUIIncompatible("follow-up prompt differs from durable compiled hash")
+        await self.ensure_logged_in()
+        if self.conversation_id() != conversation_id:
+            raise BrowserUIIncompatible("follow-up must reuse the approved ChatGPT conversation")
+        await self.ensure_deep_research_mode()
+        await self.set_prompt(prompt)
+        current = await first_visible(self.page, EDITOR_SELECTORS)
+        current_prompt = await editor_text(current) if current is not None else ""
+        required = (
+            f"[[E2R_PRO_JOB_ID:{job_id}]]",
+            f"[[E2R_PRO_PASS_ID:{pass_id}]]",
+            f"[[E2R_PRO_PARENT_PASS_ID:{parent_pass_id}]]",
+        )
+        if any(marker not in current_prompt for marker in required):
+            raise BrowserUIIncompatible("follow-up prompt lineage markers were not retained")
+        preexisting = await self.snapshot_attachment_keys()
+        send = await self._wait_for_send_ready()
+        if send is None:
+            raise BrowserUIIncompatible("ChatGPT send button is not ready for follow-up")
+        self._prepared_binding = {
+            "authorization_kind": "SCOPED_FOLLOWUP",
+            "browser_session_id": browser_session_id,
+            "conversation_id": conversation_id,
+            "job_id": job_id,
+            "pass_id": pass_id,
+            "parent_pass_id": parent_pass_id,
+            "prompt_hash": prompt_hash,
+        }
+        self._preexisting_attachment_keys = frozenset(
+            row.stable_key for row in preexisting
+        )
+        self._prepared_job_id = job_id
+        self._prepared_run_id = self._marker_value(prompt, "E2R_PRO_RUN_ID")
+        self._submit_attempted = False
+        return PreparedFollowupPass(
+            browser_session_id=browser_session_id,
+            conversation_id=conversation_id,
+            state=BrowserUIState.AWAITING_USER_APPROVAL,
+            job_id=job_id,
+            pass_id=pass_id,
+            parent_pass_id=parent_pass_id,
+            prompt_hash=prompt_hash,
+            prompt_preview=prompt[:500],
+            send_ready=True,
+            preexisting_attachment_keys=preexisting,
+            submit_count=0,
+        )
+
     async def submit_once(self, approval_proof: Any) -> BrowserInspection:
         from ..approval import ConsumedApprovalProof
+        from ..multi_pass.orchestrator import ScopedFollowupProof
 
-        if not isinstance(approval_proof, ConsumedApprovalProof) or not approval_proof.ledger_verified:
+        if not isinstance(
+            approval_proof, (ConsumedApprovalProof, ScopedFollowupProof)
+        ) or not approval_proof.ledger_verified:
             raise SubmitAuthorizationRequired("DOM send requires a consumed durable approval proof")
         if self._submit_attempted:
             raise SubmitAuthorizationRequired("this prepared browser adapter already attempted submit")
         expected = self._prepared_binding
-        actual = {
-            "browser_session_id": approval_proof.browser_session_id,
-            "packet_hash": approval_proof.packet_hash,
-            "prompt_hash": approval_proof.prompt_hash,
-        }
+        if isinstance(approval_proof, ConsumedApprovalProof):
+            actual = {
+                "authorization_kind": "INITIAL_USER_APPROVAL",
+                "browser_session_id": approval_proof.browser_session_id,
+                "packet_hash": approval_proof.packet_hash,
+                "prompt_hash": approval_proof.prompt_hash,
+            }
+        else:
+            actual = {
+                "authorization_kind": "SCOPED_FOLLOWUP",
+                "browser_session_id": approval_proof.browser_session_id,
+                "conversation_id": approval_proof.conversation_id,
+                "job_id": approval_proof.job_id,
+                "pass_id": approval_proof.pass_id,
+                "parent_pass_id": approval_proof.parent_pass_id,
+                "prompt_hash": approval_proof.prompt_hash,
+            }
         if expected is None or expected != actual:
             raise SubmitAuthorizationRequired("approval proof does not match prepared browser content")
         editor = await first_visible(self.page, EDITOR_SELECTORS)
@@ -226,6 +304,12 @@ class PlaywrightChatGPTWebAdapter:
         current_prompt = await editor_text(editor)
         if f"[[E2R_PRO_JOB_ID:{approval_proof.job_id}]]" not in current_prompt:
             raise SubmitAuthorizationRequired("prepared prompt job marker differs from approval proof")
+        if isinstance(approval_proof, ScopedFollowupProof) and (
+            f"[[E2R_PRO_PASS_ID:{approval_proof.pass_id}]]" not in current_prompt
+            or f"[[E2R_PRO_PARENT_PASS_ID:{approval_proof.parent_pass_id}]]"
+            not in current_prompt
+        ):
+            raise SubmitAuthorizationRequired("prepared follow-up lineage differs from durable pass")
         if approval_proof.conversation_id != self.conversation_id():
             raise SubmitAuthorizationRequired("conversation changed after approval")
         send = await first_visible(self.page, SEND_SELECTORS)

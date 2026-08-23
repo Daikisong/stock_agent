@@ -8,6 +8,7 @@ from .protocol import (
     BrowserUIState,
     ChatGPTWebAdapter,
     PreparedBrowserJob,
+    PreparedFollowupPass,
     RawBrowserCapture,
 )
 from .worker import ProBrowserWorker
@@ -20,6 +21,7 @@ __all__ = [
     "ChatGPTWebAdapter",
     "PlaywrightChatGPTWebAdapter",
     "PreparedBrowserJob",
+    "PreparedFollowupPass",
     "ProCompletionStateService",
     "ProBrowserWorker",
     "RawBrowserCapture",

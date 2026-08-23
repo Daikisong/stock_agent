@@ -26,6 +26,7 @@ from .models import (
     ScanRunRecord,
     ScanWindow,
 )
+from .schemas import PRO_V2_MULTI_PASS_SCHEMA
 from .state_machine import NoProgressDetected, ProgressSnapshot, ProJobStateMachine, TransitionContext
 
 
@@ -253,6 +254,8 @@ BEGIN
     SELECT RAISE(ABORT, 'pro_job_events is append-only');
 END;
 """
+
+_SCHEMA += PRO_V2_MULTI_PASS_SCHEMA
 
 
 class ProFirstJobStore:

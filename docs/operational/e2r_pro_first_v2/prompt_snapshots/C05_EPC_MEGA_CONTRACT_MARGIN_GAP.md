@@ -40,12 +40,16 @@ research_status는 실제 결과에 따라 `NEEDS_PUBLIC_GAP_CLOSURE`, `NEEDS_CO
 - target: `BLIND-SAMPLE 블라인드 예시 대상`
 - as_of_date: `2026-08-22`
 - conversation_id: `TO_BE_BOUND_BY_ORCHESTRATOR`
+- research_pass_id: `TO_BE_BOUND_BY_ORCHESTRATOR`
+- parent_pass_id: `NONE`
 - same_conversation_scope_required: `true`
 - output_schema: `e2r_pro_research_dossier_v2`
 - score_authority: `false`
 - stage_authority: `false`
 - future_source_allowed: `false`
 - investment_recommendation_allowed: `false`
+
+최종 응답에는 `[[E2R_PRO_PASS_ID:TO_BE_BOUND_BY_ORCHESTRATOR]]`와 `[[E2R_PRO_PARENT_PASS_ID:NONE]]`를 각각 정확히 한 번 출력한다.
 
 packet의 candidate 밖 ID가 더 적합하면 새 ID를 만들지 말고 `ARCHETYPE_RESELECTION_REQUIRED`와 registry ID 및 source-backed 근거를 반환한다.
 

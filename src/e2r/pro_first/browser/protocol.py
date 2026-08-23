@@ -72,6 +72,27 @@ class PreparedBrowserJob:
 
 
 @dataclass(frozen=True)
+class PreparedFollowupPass:
+    browser_session_id: str
+    conversation_id: str
+    state: BrowserUIState
+    job_id: str
+    pass_id: str
+    parent_pass_id: str
+    prompt_hash: str
+    prompt_preview: str
+    send_ready: bool
+    preexisting_attachment_keys: tuple[AttachmentKey, ...]
+    submit_count: int = 0
+
+    def __post_init__(self) -> None:
+        if self.state is not BrowserUIState.AWAITING_USER_APPROVAL:
+            raise ValueError("prepared follow-up must remain unsent")
+        if self.submit_count != 0:
+            raise ValueError("follow-up preparation must never submit")
+
+
+@dataclass(frozen=True)
 class BrowserResultSnapshot:
     conversation_id: str | None
     assistant_turn_id: str | None
@@ -138,6 +159,18 @@ class ChatGPTWebAdapter(Protocol):
 
     async def submit_once(self, approval_proof: Any) -> BrowserInspection: ...
 
+    async def prepare_followup_without_submit(
+        self,
+        *,
+        browser_session_id: str,
+        conversation_id: str,
+        job_id: str,
+        pass_id: str,
+        parent_pass_id: str,
+        prompt: str,
+        prompt_hash: str,
+    ) -> PreparedFollowupPass: ...
+
     async def inspect_state(self) -> BrowserInspection: ...
 
     async def inspect_result(self, *, job_id: str, run_id: str) -> BrowserResultSnapshot: ...
@@ -167,6 +200,7 @@ __all__ = [
     "ChatGPTWebAdapter",
     "ManualLoginRequired",
     "PreparedBrowserJob",
+    "PreparedFollowupPass",
     "RawBrowserCapture",
     "SubmitAuthorizationRequired",
 ]

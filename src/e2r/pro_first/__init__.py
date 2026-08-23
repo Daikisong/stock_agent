@@ -30,6 +30,11 @@ _PUBLIC_SYMBOLS = {
     "ProFirstJobStore": (".job_store", "ProFirstJobStore"),
     "ProGapAdjudicationService": (".gaps", "ProGapAdjudicationService"),
     "ProJobStateMachine": (".state_machine", "ProJobStateMachine"),
+    "ProMultiPassLedger": (".multi_pass", "ProMultiPassLedger"),
+    "ProMultiPassResearchOrchestrator": (
+        ".multi_pass",
+        "ProMultiPassResearchOrchestrator",
+    ),
     "ProPublishedResult": (".publication", "ProPublishedResult"),
     "ProResearchJob": (".models", "ProResearchJob"),
     "ProResearchPromptContract": (".prompt_contract", "ProResearchPromptContract"),

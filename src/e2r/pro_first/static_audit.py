@@ -104,9 +104,24 @@ class _PythonSurfaceVisitor(ast.NodeVisitor):
         name = _call_name(node.func)
         lowered = name.casefold()
         if lowered.endswith(".submit_once"):
-            allowed = self.relative_path == "src/e2r/pro_first/approval.py" and "ExactlyOnceSubmitCoordinator" in self.scope and "submit" in self.scope
+            allowed_initial = (
+                self.relative_path == "src/e2r/pro_first/approval.py"
+                and "ExactlyOnceSubmitCoordinator" in self.scope
+                and "submit" in self.scope
+            )
+            allowed_scoped_followup = (
+                self.relative_path
+                == "src/e2r/pro_first/multi_pass/orchestrator.py"
+                and "ProMultiPassResearchOrchestrator" in self.scope
+                and "submit_followup" in self.scope
+            )
+            allowed = allowed_initial or allowed_scoped_followup
             if not allowed:
-                self._add("submit_without_approval_count", node, "submit_once outside exactly-once coordinator")
+                self._add(
+                    "submit_without_approval_count",
+                    node,
+                    "submit_once outside initial/scoped exactly-once coordinator",
+                )
         if lowered.endswith(".click") and isinstance(node.func, ast.Attribute):
             owner = _expression_name(node.func.value).casefold()
             if owner in {"send", "send_button", "submit_button"}:

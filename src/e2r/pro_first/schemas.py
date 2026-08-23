@@ -18,8 +18,77 @@ PRO_FIRST_TABLES = frozenset(
         "pro_score_receipts",
         "pro_stagecourt_receipts",
         "pro_publications",
+        "pro_research_approval_scopes",
+        "pro_research_passes",
+        "pro_gap_reopen_ledger",
     }
 )
+
+
+PRO_V2_MULTI_PASS_SCHEMA = """
+CREATE TABLE IF NOT EXISTS pro_research_approval_scopes (
+    approval_scope_id TEXT PRIMARY KEY,
+    job_id TEXT NOT NULL UNIQUE REFERENCES pro_research_jobs(job_id),
+    target_id TEXT NOT NULL,
+    as_of_date TEXT NOT NULL,
+    primary_archetype_ids_json TEXT NOT NULL,
+    contract_ids_json TEXT NOT NULL,
+    allowed_followup_pass_names_json TEXT NOT NULL,
+    browser_session_id TEXT NOT NULL,
+    conversation_id TEXT NOT NULL,
+    initial_pass_id TEXT NOT NULL,
+    initial_prompt_hash TEXT NOT NULL,
+    initial_response_hash TEXT NOT NULL,
+    scope_hash TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS pro_research_passes (
+    pass_id TEXT PRIMARY KEY,
+    job_id TEXT NOT NULL REFERENCES pro_research_jobs(job_id),
+    approval_scope_id TEXT NOT NULL REFERENCES pro_research_approval_scopes(approval_scope_id),
+    pass_name TEXT NOT NULL,
+    pass_ordinal INTEGER NOT NULL CHECK (pass_ordinal >= 1),
+    parent_pass_id TEXT REFERENCES pro_research_passes(pass_id),
+    conversation_id TEXT NOT NULL,
+    prompt_hash TEXT NOT NULL,
+    response_hash TEXT,
+    pass_input_hash TEXT NOT NULL,
+    status TEXT NOT NULL,
+    submit_count INTEGER NOT NULL DEFAULT 0 CHECK (submit_count IN (0, 1)),
+    score_valid INTEGER NOT NULL DEFAULT 0 CHECK (score_valid = 0),
+    publication_withheld INTEGER NOT NULL DEFAULT 1 CHECK (publication_withheld = 1),
+    detail_json TEXT NOT NULL DEFAULT '{}',
+    created_at TEXT NOT NULL,
+    prepared_at TEXT,
+    submitted_at TEXT,
+    completed_at TEXT,
+    UNIQUE(job_id, pass_ordinal),
+    UNIQUE(job_id, pass_name, parent_pass_id, pass_input_hash)
+);
+
+CREATE TABLE IF NOT EXISTS pro_gap_reopen_ledger (
+    reopen_id TEXT PRIMARY KEY,
+    job_id TEXT NOT NULL REFERENCES pro_research_jobs(job_id),
+    stable_gap_key TEXT NOT NULL,
+    reopen_ordinal INTEGER NOT NULL,
+    fact_snapshot_hash TEXT NOT NULL,
+    accepted_lineage_roster_hash TEXT NOT NULL,
+    attempted_source_roles_hash TEXT NOT NULL,
+    supervisor_text_hash TEXT NOT NULL,
+    disposition TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    UNIQUE(job_id, stable_gap_key, reopen_ordinal),
+    UNIQUE(job_id, stable_gap_key, fact_snapshot_hash,
+           accepted_lineage_roster_hash, attempted_source_roles_hash,
+           supervisor_text_hash)
+);
+
+CREATE INDEX IF NOT EXISTS idx_pro_research_passes_job_ordinal
+    ON pro_research_passes(job_id, pass_ordinal);
+CREATE INDEX IF NOT EXISTS idx_pro_gap_reopen_job_gap
+    ON pro_gap_reopen_ledger(job_id, stable_gap_key, reopen_ordinal);
+"""
 
 
 PRO_RESEARCH_JOB_REQUIRED_FIELDS = (
@@ -72,4 +141,5 @@ __all__ = [
     "PRO_FIRST_TABLES",
     "PRO_JOB_EVENT_REQUIRED_FIELDS",
     "PRO_RESEARCH_JOB_REQUIRED_FIELDS",
+    "PRO_V2_MULTI_PASS_SCHEMA",
 ]

@@ -190,3 +190,29 @@ mandatory question nonterminal > 0
 
 기존 V1 파일은 append-only 감사 증거로 보존한다. 새 의미는
 `canary_reclassification_receipt.json`과 `readiness_view.py`가 제공한다.
+
+## 구현 진행 장부
+
+2026-08-23 현재 PR #7의 단계별 구현 상태는 다음과 같다. 이 표의 `완료`는 해당
+phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는 뜻이며, 전체 V2 운영
+완료를 뜻하지 않는다.
+
+| Phase | 상태 | 현재 증거 |
+| --- | --- | --- |
+| P0 | 완료 | 기존 one-pass canary를 partial diagnostic으로 재분류 |
+| P1 | 완료 | 36/36 contract, 233 question family, critical 0 |
+| P2 | 완료 | 6종 동적 prompt template와 36 snapshot audit |
+| P3 | 완료 | ResearchDossierV2, question/route/status 장부, V1 read-only 호환 |
+| P4 | 구현·검문 완료 | 동일 conversation follow-up, 최초 승인 scope, pass별 exactly-once, parent lineage |
+| P5~P10 | 미완료 | saturation, repair, publication gate, all-archetype/replay/CI가 남음 |
+
+P4의 최초 전송과 후속 전송은 브라우저 send 버튼을 두 군데서 누르지 않는다. DOM에는
+기존 `submit_once()` 한 경로만 있고, 최초 pass는 기존 job의 `submit_count`, 후속
+pass는 `pro_research_passes.submit_count`를 각각 DB에서 먼저 `0→1`로 원자 청구한다.
+
+쉬운 예로 같은 채팅에서 두 번째 질문을 보내더라도 첫 질문을 다시 보낸 것으로 세지
+않는다. 첫 전송 장부는 계속 1이고, 두 번째 질문은 별도 pass 장부에서 1이다. 대상,
+기준일, 선택 contract 또는 conversation이 바뀌면 기존 승인을 재사용할 수 없다.
+
+P4 leaf receipt는 `multi_pass_orchestration_audit.json`이다. 아직 P5 saturation gate와
+P7 score/publication gate가 없으므로 이 시점에도 full-thesis score 게시 자격은 없다.

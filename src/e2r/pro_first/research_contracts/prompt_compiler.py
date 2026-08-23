@@ -83,6 +83,8 @@ class ProResearchPromptCompilerV2:
         unresolved_question_state: Sequence[Mapping[str, Any]] = (),
         pass_inputs: Mapping[str, Any] | None = None,
         conversation_id: str | None = None,
+        research_pass_id: str | None = None,
+        parent_pass_id: str | None = None,
     ) -> CompiledProResearchPromptV2:
         if pass_name not in PASS_TEMPLATE_FILES:
             raise ValueError(f"unsupported Pro V2 research pass: {pass_name}")
@@ -110,6 +112,8 @@ class ProResearchPromptCompilerV2:
             unresolved_question_state=unresolved_question_state,
             pass_inputs=pass_inputs or {},
             conversation_id=conversation_id,
+            research_pass_id=research_pass_id,
+            parent_pass_id=parent_pass_id,
         )
         template_path = self.template_root / PASS_TEMPLATE_FILES[pass_name]
         template = template_path.read_text(encoding="utf-8")
@@ -124,7 +128,7 @@ class ProResearchPromptCompilerV2:
             contract_ids=plan.bundle.contract_ids,
             mandatory_question_ids=plan.mandatory_question_ids,
             prompt_text=prompt,
-            prompt_hash=canonical_hash({"prompt_text": prompt}),
+            prompt_hash=canonical_hash({"prompt": prompt}),
         )
 
     def compile_contract_snapshot(
@@ -182,7 +186,7 @@ class ProResearchPromptCompilerV2:
             contract_ids=(archetype_id,),
             mandatory_question_ids=mandatory_ids,
             prompt_text=prompt,
-            prompt_hash=canonical_hash({"prompt_text": prompt}),
+            prompt_hash=canonical_hash({"prompt": prompt}),
         )
 
     def _render_context(
@@ -195,6 +199,8 @@ class ProResearchPromptCompilerV2:
         unresolved_question_state: Sequence[Mapping[str, Any]],
         pass_inputs: Mapping[str, Any],
         conversation_id: str | None,
+        research_pass_id: str | None,
+        parent_pass_id: str | None,
     ) -> str:
         target = packet["target"]
         lines = [
@@ -207,12 +213,16 @@ class ProResearchPromptCompilerV2:
             f"- target: `{target.get('symbol') or target.get('target_id')} {target.get('company_name')}`",
             f"- as_of_date: `{packet.get('as_of_date')}`",
             f"- conversation_id: `{conversation_id or 'TO_BE_BOUND_BY_ORCHESTRATOR'}`",
+            f"- research_pass_id: `{research_pass_id or 'TO_BE_BOUND_BY_ORCHESTRATOR'}`",
+            f"- parent_pass_id: `{parent_pass_id or 'NONE'}`",
             "- same_conversation_scope_required: `true`",
             "- output_schema: `e2r_pro_research_dossier_v2`",
             "- score_authority: `false`",
             "- stage_authority: `false`",
             "- future_source_allowed: `false`",
             "- investment_recommendation_allowed: `false`",
+            "",
+            f"최종 응답에는 `[[E2R_PRO_PASS_ID:{research_pass_id or 'TO_BE_BOUND_BY_ORCHESTRATOR'}]]`와 `[[E2R_PRO_PARENT_PASS_ID:{parent_pass_id or 'NONE'}]]`를 각각 정확히 한 번 출력한다.",
             "",
             "packet의 candidate 밖 ID가 더 적합하면 새 ID를 만들지 말고 `ARCHETYPE_RESELECTION_REQUIRED`와 registry ID 및 source-backed 근거를 반환한다.",
             "",
