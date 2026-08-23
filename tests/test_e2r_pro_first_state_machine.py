@@ -152,7 +152,10 @@ class ProFirstStateMachineTest(unittest.TestCase):
         self._transition(
             JobStatus.JUDGING,
             "judging",
-            context=TransitionContext(component_coverage_complete=True),
+            context=TransitionContext(
+                component_coverage_complete=True,
+                research_saturation_valid=True,
+            ),
         )
         self._transition(
             JobStatus.SCORING,

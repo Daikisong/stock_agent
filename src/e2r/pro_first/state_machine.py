@@ -23,6 +23,7 @@ class TransitionContext:
     capture_receipt_verified: bool = False
     dossier_validated: bool = False
     source_verification_complete: bool = False
+    research_saturation_valid: bool = False
     component_coverage_complete: bool = False
     judge_coverage_complete: bool = False
     deterministic_score_present: bool = False
@@ -108,8 +109,13 @@ class ProJobStateMachine:
             raise InvalidJobTransition("DOSSIER_IMPORTED requires strict dossier validation")
         if source is JobStatus.VERIFYING_SOURCES and target is JobStatus.GAP_ADJUDICATION and not context.source_verification_complete:
             raise InvalidJobTransition("gap adjudication requires completed source verification")
-        if source is JobStatus.COMPONENT_RESEARCH and target is JobStatus.JUDGING and not context.component_coverage_complete:
-            raise InvalidJobTransition("JUDGING requires seven component memos")
+        if source is JobStatus.COMPONENT_RESEARCH and target is JobStatus.JUDGING:
+            if not context.research_saturation_valid:
+                raise InvalidJobTransition(
+                    "JUDGING requires a valid V2 research saturation receipt"
+                )
+            if not context.component_coverage_complete:
+                raise InvalidJobTransition("JUDGING requires seven component memos")
         if source is JobStatus.JUDGING and target is JobStatus.SCORING and not context.judge_coverage_complete:
             raise InvalidJobTransition("SCORING requires twenty-one judge decisions")
         if source is JobStatus.SCORING and target is JobStatus.STAGECOURT and not context.deterministic_score_present:

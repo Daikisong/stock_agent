@@ -17,6 +17,7 @@ from e2r.pro_first.ids import canonical_hash, canonical_json, stable_id
 from e2r.pro_first.job_store import ProFirstJobStore
 from e2r.pro_first.models import JobStatus, ResearchMode, ScanWindow
 from e2r.pro_first.publication import ProResultPublisher
+from e2r.pro_first.scoring.publication_gate import FullThesisEligibilityReceipt
 from e2r.pro_first.reuse import ProSameInputReuseGate
 from e2r.pro_first.state_machine import TransitionContext
 from e2r.research_brain.researcher_mode.schemas import CANONICAL_COMPONENT_ORDER
@@ -181,7 +182,10 @@ class ProFirstDashboardTest(unittest.TestCase):
         self._transition(JobStatus.COMPONENT_RESEARCH)
         self._transition(
             JobStatus.JUDGING,
-            context=TransitionContext(component_coverage_complete=True),
+            context=TransitionContext(
+                component_coverage_complete=True,
+                research_saturation_valid=True,
+            ),
         )
         self._transition(
             JobStatus.SCORING,
@@ -195,6 +199,21 @@ class ProFirstDashboardTest(unittest.TestCase):
             for component_id in component_ids
         ]
         vector = {component_id: 0.0 for component_id in component_ids}
+        eligibility = FullThesisEligibilityReceipt(
+            job_id=self.job.job_id,
+            selected_archetype_id=self.archetype_id,
+            research_eligibility_hash=canonical_hash({"research": "complete"}),
+            saturation_receipt_hash=canonical_hash({"saturation": "complete"}),
+            verified_fact_roster_hash=canonical_hash([]),
+            claim_lineage_roster_hash=canonical_hash([]),
+            component_memo_hash=canonical_hash(component_ids),
+            judge_decision_hash=canonical_hash({"judge_count": 21}),
+            component_count=7,
+            component_terminal_count=7,
+            judge_count=21,
+            claim_lineage_count=0,
+            impact_count=0,
+        ).to_dict()
         score_base = {
             "schema_version": "e2r_pro_calibrated_score_bridge_receipt_v1",
             "status": "DETERMINISTIC_SCORE_COMPLETE",
@@ -224,6 +243,8 @@ class ProFirstDashboardTest(unittest.TestCase):
             "production_stage_authority": False,
             "judge_decision_count": 21,
             "accepted_claim_count": 0,
+            "full_thesis_eligibility_hash": eligibility["eligibility_hash"],
+            "full_thesis_eligibility": eligibility,
         }
         score_hash = canonical_hash(score_base)
         score_receipt_id = stable_id(
@@ -272,6 +293,7 @@ class ProFirstDashboardTest(unittest.TestCase):
             "new_stage_engine_count": 0,
             "production_score_authority": False,
             "production_stage_authority": True,
+            "full_thesis_eligibility_hash": eligibility["eligibility_hash"],
         }
         stage_hash = canonical_hash(stage_base)
         stage_id = stable_id(
@@ -297,6 +319,10 @@ class ProFirstDashboardTest(unittest.TestCase):
         verification_root = job_root / "verification"
         scoring_root.mkdir(parents=True, exist_ok=True)
         verification_root.mkdir(parents=True, exist_ok=True)
+        (scoring_root / "full_thesis_eligibility_receipt.json").write_text(
+            canonical_json(eligibility) + "\n",
+            encoding="utf-8",
+        )
         (scoring_root / "component_memos.jsonl").write_text(
             "".join(
                 canonical_json({"component_id": component_id}) + "\n"

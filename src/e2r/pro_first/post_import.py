@@ -66,6 +66,7 @@ class ProPostImportScoringInputs:
     validity_evidence: FullScoreValidityEvidenceV2 | None = None
     event_overlay_input: EventOverlayInput | None = None
     hard_break_claim_ids: tuple[str, ...] = ()
+    research_saturation_receipt: Mapping[str, Any] | None = None
 
     def __post_init__(self) -> None:
         if not self.selected_archetype_id.strip():
@@ -243,6 +244,7 @@ class ProFirstPostImportCoordinator:
                 validity_evidence=inputs.validity_evidence,
                 event_overlay_input=inputs.event_overlay_input,
                 hard_break_claim_ids=inputs.hard_break_claim_ids,
+                research_saturation_receipt=inputs.research_saturation_receipt,
             )
             if run.job.status == JobStatus.FINAL.value:
                 ProResultPublisher(self.store).publish(job_id, job_root=root)
@@ -254,9 +256,19 @@ class ProFirstPostImportCoordinator:
                     published=True,
                 )
             pending = tuple(
-                run.judge_result.pending_reasons
-                if run.judge_result is not None
-                else ()
+                run.research_eligibility.withhold_reasons
+                if run.research_eligibility is not None
+                and not run.research_eligibility.research_saturation_valid
+                else (
+                    run.score_result.pending_reasons
+                    if run.score_result is not None
+                    and not run.score_result.score_valid
+                    else (
+                        run.judge_result.pending_reasons
+                        if run.judge_result is not None
+                        else ()
+                    )
+                )
             )
             return ProPostImportAdvance(
                 job_id,

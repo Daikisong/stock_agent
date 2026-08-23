@@ -1403,6 +1403,16 @@ class ProFirstJobStore:
     ) -> ProResearchJob:
         score = receipt.get("score") or {}
         assessments = receipt.get("component_assessments") or ()
+        full_thesis_eligibility = receipt.get("full_thesis_eligibility") or {}
+        from .scoring.publication_gate import (
+            validate_full_thesis_eligibility_receipt,
+        )
+
+        if isinstance(full_thesis_eligibility, Mapping):
+            validate_full_thesis_eligibility_receipt(
+                full_thesis_eligibility,
+                expected_job_id=job_id,
+            )
         receipt_without_identity = {
             key: value
             for key, value in receipt.items()
@@ -1434,6 +1444,11 @@ class ProFirstJobStore:
                 "information_confidence",
             }
             or not isinstance(score, Mapping)
+            or score.get("full_score_valid") is not True
+            or receipt.get("score_valid") is not True
+            or not isinstance(full_thesis_eligibility, Mapping)
+            or receipt.get("full_thesis_eligibility_hash")
+            != full_thesis_eligibility.get("eligibility_hash")
         ):
             raise ValueError("invalid calibrated score receipt")
         payload = {
@@ -1558,6 +1573,9 @@ class ProFirstJobStore:
             or not isinstance(decision, Mapping)
             or decision.get("canonical_stage") not in canonical_stages
             or len(decision.get("component_assessment_ids") or ()) != 7
+            or decision.get("full_score_valid") is not True
+            or not isinstance(receipt.get("full_thesis_eligibility_hash"), str)
+            or len(str(receipt.get("full_thesis_eligibility_hash") or "")) != 64
         ):
             raise ValueError("invalid AtomicStageCourtV2 receipt")
         payload = {
@@ -1580,6 +1598,19 @@ class ProFirstJobStore:
             source = JobStatus(row["status"])
             if source is not JobStatus.STAGECOURT:
                 raise ValueError("StageCourt receipt may only close STAGECOURT")
+            score_row = connection.execute(
+                "SELECT receipt_json FROM pro_score_receipts WHERE job_id=?",
+                (job_id,),
+            ).fetchone()
+            if score_row is None:
+                raise ValueError("StageCourt requires the durable full-thesis score")
+            score_receipt = json.loads(score_row["receipt_json"])
+            if (
+                score_receipt.get("full_thesis_eligibility_hash")
+                != receipt.get("full_thesis_eligibility_hash")
+                or score_receipt.get("score_valid") is not True
+            ):
+                raise ValueError("StageCourt is detached from full-thesis eligibility")
             self.state_machine.validate(
                 source,
                 JobStatus.FINAL,
@@ -1686,6 +1717,12 @@ class ProFirstJobStore:
             or result.get("component_coverage") != "7/7"
             or result.get("canonical_stage") not in canonical_stages
             or not isinstance(result.get("score_valid"), bool)
+            or result.get("score_valid") is not True
+            or result.get("research_saturation_valid") is not True
+            or result.get("research_status") != "FULL_THESIS_READY"
+            or result.get("publication_status") != "FULL_THESIS_PUBLISHED"
+            or receipt.get("full_thesis_eligibility_hash")
+            != result.get("full_thesis_eligibility_hash")
         ):
             raise ValueError("invalid Pro-first result publication")
         created_at = self._now_text()
@@ -1734,6 +1771,11 @@ class ProFirstJobStore:
                 != row["score_receipt_id"]
                 or stage_receipt.get("stagecourt_receipt_id")
                 != row["stagecourt_receipt_id"]
+                or score_receipt.get("full_thesis_eligibility_hash")
+                != receipt.get("full_thesis_eligibility_hash")
+                or stage_receipt.get("full_thesis_eligibility_hash")
+                != receipt.get("full_thesis_eligibility_hash")
+                or score_receipt.get("score_valid") is not True
             ):
                 raise ValueError("publication receipt lineage differs from FINAL")
             connection.execute(

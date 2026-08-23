@@ -4,6 +4,7 @@ from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 from tempfile import TemporaryDirectory
+import json
 import unittest
 from unittest.mock import patch
 
@@ -17,6 +18,7 @@ from e2r.pro_first.post_import import (
     compile_conservative_gap_contexts,
 )
 from e2r.pro_first.scoring.component_bridge import ProComponentMemoCompiler
+from e2r.pro_first.scoring.audit import audit_scoring_publication_gate
 from e2r.pro_first.scoring.codex_judge_provider import (
     CodexEvidenceOnlyJudgeProvider,
 )
@@ -35,6 +37,10 @@ from e2r.research_brain.researcher_mode.schemas import (
     EvidenceFact,
 )
 from tests.full_score_validity_fixture import passing_full_score_validity_evidence
+from tests.research_saturation_fixture import (
+    passing_research_saturation_receipt,
+    v2_scoring_dossier,
+)
 from tests.test_component_assessment_states import supported_impact
 
 
@@ -416,13 +422,17 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
             "supporting_excerpt": "HBM 가격은 2026Q2에 10% 상승했다.",
             "confidence": 0.9,
         }
-        dossier = {
-            **self._dossier(),
-            "job_id": self.job.job_id,
-            "material_facts": [dossier_fact],
-            "counterfacts": [],
-            "unresolved_gaps": [],
-        }
+        dossier = v2_scoring_dossier(
+            {
+                **self._dossier(),
+                "material_facts": [dossier_fact],
+                "counterfacts": [],
+                "unresolved_gaps": [],
+                "source_lineages": [],
+            },
+            job=self.job,
+            selected_archetype_ids=(self.archetype_id,),
+        )
         (import_root / "research_dossier.normalized.json").write_text(
             canonical_json(dossier) + "\n",
             encoding="utf-8",
@@ -539,6 +549,19 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
             deterministic_contexts={},
         ).job
         self.assertEqual(self.job.status, JobStatus.COMPONENT_RESEARCH.value)
+        saturation_root = root / "saturation"
+        saturation_root.mkdir(parents=True, exist_ok=True)
+        saturation_root.joinpath("research_saturation_receipt.json").write_text(
+            canonical_json(
+                passing_research_saturation_receipt(
+                    job=self.job,
+                    dossier=dossier,
+                    selected_archetype_ids=(self.archetype_id,),
+                )
+            )
+            + "\n",
+            encoding="utf-8",
+        )
 
     def _run_durable_pipeline(
         self,
@@ -1172,6 +1195,115 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
                 claim_fact_lineage={"C1": ("EFACT-not-in-memo",)}
             )
 
+    def test_partial_diagnostic_score_not_published(self) -> None:
+        root = Path(self.temporary_directory.name) / "diagnostic-score-job"
+        self._prepare_durable_component_job(root)
+        invalid_validity = replace(
+            passing_full_score_validity_evidence("P7-DIAGNOSTIC-PENDING"),
+            pending_state_count=1,
+        )
+        run = ProScoringPipelineService(self.store).run_job(
+            self.job.job_id,
+            job_root=root,
+            selected_archetype_id=self.archetype_id,
+            judge_provider=_EvidenceOnlyProvider(),
+            historical_anchors=self.anchors,
+            validated_impacts=(supported_impact(),),
+            terminal_evidence=self._terminal_evidence(),
+            validity_evidence=invalid_validity,
+        )
+        diagnostic = run.research_incomplete_result or {}
+        self.assertEqual(run.job.status, JobStatus.SCORING.value)
+        self.assertFalse(diagnostic["score_valid"])
+        self.assertIsNone(diagnostic["full_thesis_score"])
+        self.assertEqual(
+            diagnostic["publication_status"],
+            "WITHHELD_PENDING_RESEARCH_SATURATION",
+        )
+        self.assertIsNone(self.store.get_score_receipt(self.job.job_id))
+        self.assertIsNone(self.store.get_stagecourt_receipt(self.job.job_id))
+        self.assertIsNone(self.store.get_publication(self.job.job_id))
+
+    def test_stage0_final_not_used_for_research_incomplete(self) -> None:
+        root = Path(self.temporary_directory.name) / "missing-saturation-stage-job"
+        self._prepare_durable_component_job(root)
+        (root / "saturation/research_saturation_receipt.json").unlink()
+        run = self._run_durable_pipeline(root, _EvidenceOnlyProvider())
+        diagnostic = run.research_incomplete_result or {}
+        self.assertEqual(run.job.status, JobStatus.COMPONENT_RESEARCH.value)
+        self.assertEqual(diagnostic["stage_status"], "RESEARCH_INCOMPLETE")
+        self.assertIsNone(diagnostic["canonical_stage"])
+        self.assertNotEqual(diagnostic["stage_status"], "FINAL")
+
+    def test_full_thesis_requires_saturation(self) -> None:
+        root = Path(self.temporary_directory.name) / "missing-saturation-gate-job"
+        self._prepare_durable_component_job(root)
+        (root / "saturation/research_saturation_receipt.json").unlink()
+        run = self._run_durable_pipeline(root, _EvidenceOnlyProvider())
+        self.assertFalse(run.research_eligibility.research_saturation_valid)
+        self.assertIsNone(run.component_result)
+        self.assertFalse((root / "scoring/component_memos.jsonl").exists())
+        self.assertIsNone(run.score_receipt)
+        self.assertIsNone(run.stagecourt_receipt)
+
+    def test_pro_score_stage_fields_ignored(self) -> None:
+        scoring = self._score_result()
+        stage = ProAtomicStageCourtBridge().decide(
+            target_id=self.job.symbol,
+            as_of_date=self.job.as_of_date,
+            selected_archetype_id=self.archetype_id,
+            score_result=scoring,
+            accepted_claim_ids=("C1",),
+            evidence_facts=(self.fact,),
+            ignored_proposed_stage="5",
+        )
+        self.assertNotEqual(scoring.score.full_e2r_score, 99.0)
+        self.assertNotEqual(stage.decision.canonical_stage, "5")
+        self.assertTrue(scoring.receipt_payload["pro_score_ignored"])
+        self.assertTrue(stage.receipt_payload["pro_stage_ignored"])
+
+    def test_existing_component_scorer_used(self) -> None:
+        receipt = self._score_result().receipt_payload
+        self.assertEqual(
+            receipt["scorer_class"],
+            "ResearchCalibratedComponentScorer",
+        )
+        self.assertEqual(receipt["new_score_engine_count"], 0)
+
+    def test_existing_atomic_stagecourt_used(self) -> None:
+        stage = ProAtomicStageCourtBridge().decide(
+            target_id=self.job.symbol,
+            as_of_date=self.job.as_of_date,
+            selected_archetype_id=self.archetype_id,
+            score_result=self._score_result(),
+            accepted_claim_ids=("C1",),
+            evidence_facts=(self.fact,),
+        )
+        self.assertEqual(stage.receipt_payload["stagecourt_class"], "AtomicStageCourtV2")
+        self.assertEqual(stage.receipt_payload["new_stage_engine_count"], 0)
+
+    def test_nonzero_score_requires_claim_lineage(self) -> None:
+        scoring = self._score_result()
+        self.assertGreater(scoring.score.full_e2r_score, 0.0)
+        self.assertEqual(scoring.impact_fact_lineage, {"C1": (self.fact.fact_id,)})
+        with self.assertRaisesRegex(ValueError, "lacks fact lineage"):
+            self._score_result(
+                claim_fact_lineage={"C1": ("EFACT-not-in-memo",)}
+            )
+
+    def test_tracked_scoring_publication_gate_audit_matches_contract(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        tracked = json.loads(
+            (
+                root
+                / "docs/operational/e2r_pro_first_v2/scoring_publication_gate_audit.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            canonical_json(tracked),
+            canonical_json(audit_scoring_publication_gate(root)),
+        )
+
     def test_durable_pipeline_reaches_final_exactly_once(self) -> None:
         root = Path(self.temporary_directory.name) / "durable-scoring-job"
         self._prepare_durable_component_job(root)
@@ -1266,7 +1398,11 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
             claim_ids=("C2",),
             quote_ids=("PROQUOTE-delta-pricing",),
         )
-        dossier = {**self._dossier(), "job_id": self.job.job_id}
+        dossier = v2_scoring_dossier(
+            self._dossier(),
+            job=self.job,
+            selected_archetype_ids=(self.archetype_id,),
+        )
         dossier["component_research"]["bottleneck_pricing"][
             "positive_fact_ids"
         ].append("PROFACT-delta-pricing")
@@ -1299,6 +1435,17 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
                 "".join(canonical_json(row) + "\n" for row in rows),
                 encoding="utf-8",
             )
+        (delta_root / "saturation/research_saturation_receipt.json").write_text(
+            canonical_json(
+                passing_research_saturation_receipt(
+                    job=self.job,
+                    dossier=dossier,
+                    selected_archetype_ids=(self.archetype_id,),
+                )
+            )
+            + "\n",
+            encoding="utf-8",
+        )
         provider = _EvidenceOnlyProvider()
         result = self._run_durable_pipeline(
             delta_root,

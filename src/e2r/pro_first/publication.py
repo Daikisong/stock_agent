@@ -14,6 +14,7 @@ from .ids import canonical_hash, canonical_json, stable_id
 from .job_store import ProFirstJobStore
 from .models import JobStatus, ProResearchJob
 from .gaps.supplemental_service import load_effective_verified_evidence
+from .scoring.publication_gate import validate_full_thesis_eligibility_receipt
 
 
 _DIRECTIVE_PATTERN = re.compile(
@@ -49,14 +50,28 @@ class ProResultPublisher:
         job = self.store.get_job(job_id)
         existing = self.store.get_publication(job_id)
         if existing is not None:
-            if not result_path.is_file() or not receipt_path.is_file():
+            eligibility_path = root / "scoring/full_thesis_eligibility_receipt.json"
+            if (
+                not result_path.is_file()
+                or not receipt_path.is_file()
+                or not eligibility_path.is_file()
+            ):
                 raise ValueError("published database row lacks local result artifacts")
             durable_file = _read_json(receipt_path)
             result_file = _read_json(result_path)
+            eligibility = _read_json(eligibility_path)
+            validate_full_thesis_eligibility_receipt(
+                eligibility,
+                expected_job_id=job_id,
+            )
             if (
                 canonical_json(durable_file) != canonical_json(existing)
                 or canonical_json(result_file)
                 != canonical_json(existing.get("result") or {})
+                or result_file.get("research_saturation_valid") is not True
+                or result_file.get("score_valid") is not True
+                or result_file.get("full_thesis_eligibility_hash")
+                != eligibility.get("eligibility_hash")
             ):
                 raise ValueError("published files differ from the durable ledger")
             return ProPublishedResult(
@@ -74,11 +89,26 @@ class ProResultPublisher:
             raise ValueError(
                 "publication requires source verification, score, and StageCourt receipts"
             )
+        eligibility_path = root / "scoring/full_thesis_eligibility_receipt.json"
+        if not eligibility_path.is_file():
+            raise ValueError("publication requires full-thesis eligibility evidence")
+        eligibility = _read_json(eligibility_path)
+        validate_full_thesis_eligibility_receipt(
+            eligibility,
+            expected_job_id=job_id,
+        )
+        eligibility_hash = str(eligibility.get("eligibility_hash") or "")
         if (
             job.score_receipt_id != score_receipt.get("score_receipt_id")
             or job.stagecourt_receipt_id
             != stage_receipt.get("stagecourt_receipt_id")
             or stage_receipt.get("score_receipt_id") != job.score_receipt_id
+            or score_receipt.get("full_thesis_eligibility_hash")
+            != eligibility_hash
+            or stage_receipt.get("full_thesis_eligibility_hash")
+            != eligibility_hash
+            or canonical_json(score_receipt.get("full_thesis_eligibility") or {})
+            != canonical_json(eligibility)
         ):
             raise ValueError("FINAL result receipt lineage is inconsistent")
         score = score_receipt.get("score") or {}
@@ -113,6 +143,8 @@ class ProResultPublisher:
             or stage.get("full_e2r_score") != score.get("full_e2r_score")
             or (stage.get("full_score_valid") is True)
             != (score.get("full_score_valid") is True)
+            or score.get("full_score_valid") is not True
+            or score_receipt.get("score_valid") is not True
         ):
             raise ValueError("publication component/Judge/score/Stage lineage is inconsistent")
         gap_decisions = self.store.get_gap_decisions(job_id)
@@ -176,6 +208,10 @@ class ProResultPublisher:
                 "full_score": score.get("full_e2r_score"),
                 "score_valid": score.get("full_score_valid") is True,
                 "score_type": score.get("score_type"),
+                "research_saturation_valid": True,
+                "research_status": "FULL_THESIS_READY",
+                "publication_status": "FULL_THESIS_PUBLISHED",
+                "full_thesis_eligibility_hash": eligibility_hash,
                 "canonical_stage": stage.get("canonical_stage"),
                 "stage_status": stage.get("decision_status"),
                 "stage_signal": stage.get("stage_signal"),
@@ -205,6 +241,7 @@ class ProResultPublisher:
             "result": result,
             "score_receipt_id": job.score_receipt_id,
             "stagecourt_receipt_id": job.stagecourt_receipt_id,
+            "full_thesis_eligibility_hash": eligibility_hash,
             "score_authority": "ResearchCalibratedComponentScorer",
             "stage_authority": "AtomicStageCourtV2",
             "investment_recommendation_count": 0,

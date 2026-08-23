@@ -40,6 +40,10 @@ from e2r.research.page_fetcher import PageFetcher
 from e2r.research_brain.researcher_mode.schemas import CANONICAL_COMPONENT_ORDER
 from e2r.research_brain.scoring import CreditValidatedImpact
 from tests.full_score_validity_fixture import passing_full_score_validity_evidence
+from tests.research_saturation_fixture import (
+    passing_research_saturation_receipt,
+    v2_scoring_dossier,
+)
 
 
 FIXTURE_ROOT = Path(__file__).parent / "fixtures/pro_first"
@@ -135,7 +139,12 @@ class ProFirstBrowserGoldenE2ETest(unittest.IsolatedAsyncioTestCase):
             sum(row["status"] == "ACCEPTED_COUNTER" for row in run.source_rows),
             1,
         )
-        self.assertEqual(run.result["canonical_stage"], "0")
+        self.assertIsNone(run.result["canonical_stage"])
+        self.assertEqual(run.result["stage_status"], "RESEARCH_INCOMPLETE")
+        self.assertEqual(
+            run.result["publication_status"],
+            "WITHHELD_PENDING_RESEARCH_SATURATION",
+        )
         self.assertEqual(
             run.score_receipt["pending_reasons"], ["bottleneck_pricing"]
         )
@@ -532,6 +541,20 @@ class ProFirstBrowserGoldenE2ETest(unittest.IsolatedAsyncioTestCase):
             for component_id in CANONICAL_COMPONENT_ORDER
         )
         judge_provider = _GoldenEvidenceOnlyJudgeProvider()
+        scoring_dossier = v2_scoring_dossier(
+            imported.normalized_dossier,
+            job=gap_run.job,
+            selected_archetype_ids=(archetype_id,),
+        )
+        (job_root / "import/research_dossier.normalized.json").write_text(
+            canonical_json(scoring_dossier) + "\n",
+            encoding="utf-8",
+        )
+        saturation_receipt = passing_research_saturation_receipt(
+            job=gap_run.job,
+            dossier=scoring_dossier,
+            selected_archetype_ids=(archetype_id,),
+        )
         scoring = ProScoringPipelineService(store).run_job(
             job.job_id,
             job_root=job_root,
@@ -543,13 +566,27 @@ class ProFirstBrowserGoldenE2ETest(unittest.IsolatedAsyncioTestCase):
             validity_evidence=passing_full_score_validity_evidence(
                 f"{invariants['bundle_id']}:FULL_SCORE_VALIDITY"
             ),
+            research_saturation_receipt=saturation_receipt,
         )
-        self.assertEqual(scoring.job.status, JobStatus.FINAL.value)
-        published = ProResultPublisher(store).publish(job.job_id, job_root=job_root)
+        if scoring.job.status == JobStatus.FINAL.value:
+            published = ProResultPublisher(store).publish(job.job_id, job_root=job_root)
+            result = dict(published.result)
+            score_receipt = dict(scoring.score_receipt or {})
+        else:
+            self.assertEqual(scoring.job.status, JobStatus.SCORING.value)
+            self.assertIsNone(store.get_publication(job.job_id))
+            result = dict(scoring.research_incomplete_result or {})
+            score_receipt = {
+                **dict(scoring.score_result.receipt_payload if scoring.score_result else {}),
+                "judge_decision_count": len(
+                    scoring.judge_result.decisions if scoring.judge_result else ()
+                ),
+                "reuse_receipt": dict(scoring.reuse_receipt),
+            }
         final_job = store.get_job(job.job_id)
         return _GoldenRun(
-            result=dict(published.result),
-            score_receipt=dict(scoring.score_receipt or {}),
+            result=result,
+            score_receipt=score_receipt,
             stagecourt_receipt=dict(scoring.stagecourt_receipt or {}),
             source_rows=source_rows,
             gap_rows=tuple(dict(row) for row in store.get_gap_decisions(job.job_id)),
@@ -578,13 +615,19 @@ class ProFirstBrowserGoldenE2ETest(unittest.IsolatedAsyncioTestCase):
         )
         if invariants["decision_must_be_final"]:
             self.assertEqual(run.result["stage_status"], "FINAL")
+            vector = run.result["component_vector"]
         else:
-            self.assertTrue(str(run.result["stage_status"]).startswith("PENDING"))
+            self.assertEqual(run.result["stage_status"], "RESEARCH_INCOMPLETE")
+            self.assertIsNone(run.result["canonical_stage"])
+            self.assertEqual(
+                run.result["publication_status"],
+                "WITHHELD_PENDING_RESEARCH_SATURATION",
+            )
+            vector = run.result["diagnostic_component_vector"]
         self.assertEqual(
             {row["planner_label"] for row in run.gap_rows},
             set(invariants["gap_labels"]),
         )
-        vector = run.result["component_vector"]
         self.assertEqual(set(vector), set(CANONICAL_COMPONENT_ORDER))
         self.assertEqual(
             {component for component, points in vector.items() if float(points) > 0},

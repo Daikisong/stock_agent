@@ -42,6 +42,13 @@ from .judge_bridge import (
     JudgeCallReceipt,
     ProEvidenceOnlyJudgeBridge,
 )
+from .publication_gate import (
+    FullThesisEligibilityReceipt,
+    FullThesisPublicationGate,
+    ResearchEligibilityDecision,
+    research_incomplete_result,
+    validate_full_thesis_eligibility_receipt,
+)
 from .scorer_bridge import CalibratedScoreBridgeResult, ProCalibratedScorerBridge
 from .stagecourt_bridge import ProAtomicStageCourtBridge, StageCourtBridgeResult
 
@@ -57,6 +64,9 @@ class ProScoringPipelineRun:
     stagecourt_receipt: Mapping[str, Any] | None
     reuse_receipt: Mapping[str, Any]
     scoring_root: Path
+    research_eligibility: ResearchEligibilityDecision | None = None
+    full_thesis_eligibility: FullThesisEligibilityReceipt | None = None
+    research_incomplete_result: Mapping[str, Any] | None = None
 
 
 @dataclass(frozen=True)
@@ -91,6 +101,7 @@ class ProScoringPipelineService:
         validity_evidence: FullScoreValidityEvidenceV2,
         event_overlay_input: EventOverlayInput | None = None,
         hard_break_claim_ids: Sequence[str] = (),
+        research_saturation_receipt: Mapping[str, Any] | None = None,
         delta_reuse_context: DeltaScoringReuseContext | None = None,
     ) -> ProScoringPipelineRun:
         root = Path(job_root).resolve()
@@ -98,6 +109,9 @@ class ProScoringPipelineService:
         score_receipt_path = scoring_root / "score_receipt.json"
         stage_receipt_path = scoring_root / "stagecourt_receipt.json"
         reuse_receipt_path = scoring_root / "reuse_receipt.json"
+        research_gate_path = scoring_root / "research_eligibility_receipt.json"
+        full_gate_path = scoring_root / "full_thesis_eligibility_receipt.json"
+        incomplete_result_path = scoring_root / "research_incomplete_result.json"
         job = self.store.get_job(job_id)
         if job.status == JobStatus.FINAL.value:
             durable_score = self.store.get_score_receipt(job_id)
@@ -113,6 +127,7 @@ class ProScoringPipelineService:
                 or not score_receipt_path.is_file()
                 or not stage_receipt_path.is_file()
                 or not reuse_receipt_path.is_file()
+                or not full_gate_path.is_file()
                 or canonical_json(_read_json(score_receipt_path))
                 != canonical_json(durable_score)
                 or canonical_json(_read_json(stage_receipt_path))
@@ -127,6 +142,20 @@ class ProScoringPipelineService:
                 != canonical_json(durable_score.get("reuse_receipt") or {})
             ):
                 raise ValueError("FINAL scoring artifacts differ from the durable ledger")
+            full_gate = _read_json(full_gate_path)
+            validate_full_thesis_eligibility_receipt(
+                full_gate,
+                expected_job_id=job_id,
+            )
+            if (
+                durable_score.get("full_thesis_eligibility_hash")
+                != full_gate.get("eligibility_hash")
+                or canonical_json(
+                    durable_score.get("full_thesis_eligibility") or {}
+                )
+                != canonical_json(full_gate)
+            ):
+                raise ValueError("FINAL score is detached from full-thesis eligibility")
             return ProScoringPipelineRun(
                 job=job,
                 component_result=None,
@@ -137,6 +166,7 @@ class ProScoringPipelineService:
                 stagecourt_receipt=durable_stage,
                 reuse_receipt=reuse_receipt,
                 scoring_root=scoring_root,
+                full_thesis_eligibility=_full_eligibility_from_mapping(full_gate),
             )
         if job.status not in {
             JobStatus.COMPONENT_RESEARCH.value,
@@ -184,6 +214,53 @@ class ProScoringPipelineService:
             claim_fact_links = delta_inputs.claim_fact_links
             effective_impacts = delta_inputs.validated_impacts
             effective_terminal_evidence = dict(delta_inputs.terminal_evidence)
+        saturation_path = root / "saturation/research_saturation_receipt.json"
+        effective_saturation_receipt = research_saturation_receipt
+        if effective_saturation_receipt is None and saturation_path.is_file():
+            effective_saturation_receipt = _read_json(saturation_path)
+        research_eligibility = FullThesisPublicationGate().evaluate_research(
+            job=job,
+            dossier=dossier,
+            selected_archetype_id=selected_archetype_id,
+            saturation_receipt=effective_saturation_receipt,
+            evidence_facts=facts,
+            claim_fact_links=claim_fact_links,
+        )
+        self._write_json_atomic(
+            research_gate_path,
+            research_eligibility.to_dict(),
+        )
+        if not research_eligibility.component_entry_allowed:
+            if job.status != JobStatus.COMPONENT_RESEARCH.value:
+                raise ValueError(
+                    "research saturation became invalid after component entry"
+                )
+            incomplete = research_incomplete_result(
+                research_eligibility,
+                current_verified_fact_ids=tuple(row.fact_id for row in facts),
+            )
+            self._write_json_atomic(incomplete_result_path, incomplete)
+            reuse_receipt = {
+                "schema_version": "e2r_pro_scoring_reuse_receipt_v1",
+                "status": "RESEARCH_INCOMPLETE",
+                "job_id": job_id,
+                "scoring_query_count": 0,
+                "scoring_fetch_count": 0,
+                "research_eligibility_hash": research_eligibility.decision_hash,
+            }
+            return ProScoringPipelineRun(
+                job=job,
+                component_result=None,
+                judge_result=None,
+                score_result=None,
+                stagecourt_result=None,
+                score_receipt=None,
+                stagecourt_receipt=None,
+                reuse_receipt=reuse_receipt,
+                scoring_root=scoring_root,
+                research_eligibility=research_eligibility,
+                research_incomplete_result=incomplete,
+            )
         component = ProComponentMemoCompiler().compile(
             dossier=dossier,
             job=job,
@@ -231,7 +308,10 @@ class ProScoringPipelineService:
                 to_status=JobStatus.JUDGING,
                 actor="pro-component-bridge",
                 idempotency_key=f"component-bridge:{canonical_hash(component.receipt_payload)}",
-                context=TransitionContext(component_coverage_complete=True),
+                context=TransitionContext(
+                    component_coverage_complete=True,
+                    research_saturation_valid=True,
+                ),
                 payload={"component_count": len(component.memos)},
             )
         judges = self._load_complete_judges(
@@ -308,7 +388,18 @@ class ProScoringPipelineService:
                 stagecourt_receipt=None,
                 reuse_receipt=reuse_receipt,
                 scoring_root=scoring_root,
+                research_eligibility=research_eligibility,
             )
+        full_thesis_eligibility = FullThesisPublicationGate().evaluate_full_thesis(
+            research=research_eligibility,
+            memos=component.memos,
+            judges=judges,
+            evidence_facts=facts,
+            claim_fact_links=claim_fact_links,
+            validated_impacts=effective_impacts,
+        )
+        full_thesis_eligibility_payload = full_thesis_eligibility.to_dict()
+        self._write_or_verify_json(full_gate_path, full_thesis_eligibility_payload)
         if job.status == JobStatus.JUDGING.value:
             job = self.store.transition(
                 job_id,
@@ -354,6 +445,52 @@ class ProScoringPipelineService:
         )
         if score_result.score is None:
             raise ValueError("complete Judge coverage did not produce a deterministic score")
+        if not score_result.score_valid:
+            pending_decision = replace(
+                research_eligibility,
+                status="RESEARCH_INCOMPLETE",
+                research_status="RESEARCH_INCOMPLETE",
+                stage_status="RESEARCH_INCOMPLETE",
+                publication_status="WITHHELD_PENDING_RESEARCH_SATURATION",
+                withhold_reasons=tuple(
+                    dict.fromkeys(
+                        (
+                            *score_result.pending_reasons,
+                            "DETERMINISTIC_SCORE_VALIDITY_PENDING",
+                        )
+                    )
+                ),
+            )
+            incomplete = research_incomplete_result(
+                pending_decision,
+                diagnostic_partial_score=_diagnostic_score_value(score_result),
+                diagnostic_partial_stage=None,
+                diagnostic_component_vector=(
+                    score_result.score.component_score_vector
+                ),
+                diagnostic_score_interval={
+                    "lower": score_result.score.provisional_score_lower,
+                    "upper": score_result.score.provisional_score_upper,
+                },
+                component_coverage="7/7",
+                judge_coverage="21/21",
+                current_verified_fact_ids=tuple(row.fact_id for row in facts),
+            )
+            self._write_json_atomic(incomplete_result_path, incomplete)
+            return ProScoringPipelineRun(
+                job=job,
+                component_result=component,
+                judge_result=judges,
+                score_result=score_result,
+                stagecourt_result=None,
+                score_receipt=None,
+                stagecourt_receipt=None,
+                reuse_receipt=reuse_receipt,
+                scoring_root=scoring_root,
+                research_eligibility=pending_decision,
+                full_thesis_eligibility=full_thesis_eligibility,
+                research_incomplete_result=incomplete,
+            )
         score_base = {
             **score_result.receipt_payload,
             "job_id": job_id,
@@ -363,6 +500,10 @@ class ProScoringPipelineService:
             "reuse_receipt": reuse_receipt,
             "component_bridge_hash": canonical_hash(component_receipt),
             "judge_bridge_hash": canonical_hash(judge_receipt),
+            "full_thesis_eligibility_hash": (
+                full_thesis_eligibility.eligibility_hash
+            ),
+            "full_thesis_eligibility": full_thesis_eligibility_payload,
         }
         score_hash = canonical_hash(score_base)
         score_receipt_id = stable_id(
@@ -409,6 +550,9 @@ class ProScoringPipelineService:
             **stage_result.receipt_payload,
             "job_id": job_id,
             "score_receipt_id": score_receipt_id,
+            "full_thesis_eligibility_hash": (
+                full_thesis_eligibility.eligibility_hash
+            ),
         }
         stagecourt_hash = canonical_hash(stage_base)
         stagecourt_receipt_id = stable_id(
@@ -442,6 +586,8 @@ class ProScoringPipelineService:
             stagecourt_receipt=stage_receipt,
             reuse_receipt=reuse_receipt,
             scoring_root=scoring_root,
+            research_eligibility=research_eligibility,
+            full_thesis_eligibility=full_thesis_eligibility,
         )
 
     def _resolve_delta_inputs(
@@ -1140,6 +1286,51 @@ def _judge_bridge_receipt(
         "judge_decisions_hash": canonical_hash(decision_rows),
         "judge_calls_hash": canonical_hash(call_rows),
     }
+
+
+def _full_eligibility_from_mapping(
+    row: Mapping[str, Any],
+) -> FullThesisEligibilityReceipt:
+    validate_full_thesis_eligibility_receipt(
+        row,
+        expected_job_id=str(row.get("job_id") or ""),
+    )
+    return FullThesisEligibilityReceipt(
+        job_id=str(row.get("job_id") or ""),
+        selected_archetype_id=str(row.get("selected_archetype_id") or ""),
+        research_eligibility_hash=str(row.get("research_eligibility_hash") or ""),
+        saturation_receipt_hash=str(row.get("saturation_receipt_hash") or ""),
+        verified_fact_roster_hash=str(row.get("verified_fact_roster_hash") or ""),
+        claim_lineage_roster_hash=str(row.get("claim_lineage_roster_hash") or ""),
+        component_memo_hash=str(row.get("component_memo_hash") or ""),
+        judge_decision_hash=str(row.get("judge_decision_hash") or ""),
+        component_count=int(row.get("component_count") or 0),
+        component_terminal_count=int(row.get("component_terminal_count") or 0),
+        judge_count=int(row.get("judge_count") or 0),
+        claim_lineage_count=int(row.get("claim_lineage_count") or 0),
+        impact_count=int(row.get("impact_count") or 0),
+        query_count=int(row.get("query_count") or 0),
+        fetch_count=int(row.get("fetch_count") or 0),
+        score_authority=row.get("score_authority") is True,
+        stage_authority=row.get("stage_authority") is True,
+    )
+
+
+def _diagnostic_score_value(
+    result: CalibratedScoreBridgeResult,
+) -> float | None:
+    if result.score is None:
+        return None
+    payload = result.score.to_dict()
+    for key in (
+        "full_e2r_score",
+        "verified_supported_score",
+        "provisional_score_lower",
+    ):
+        value = payload.get(key)
+        if isinstance(value, (int, float)):
+            return float(value)
+    return None
 
 
 def _read_json(path: Path) -> Mapping[str, Any]:

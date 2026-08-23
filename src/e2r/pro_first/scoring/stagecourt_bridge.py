@@ -54,8 +54,14 @@ class ProAtomicStageCourtBridge:
         hard_break_claim_ids: Sequence[str] = (),
         ignored_proposed_stage: str | None = None,
     ) -> StageCourtBridgeResult:
-        if score_result.score is None or not score_result.assessments:
-            raise ValueError("StageCourt requires a deterministic calibrated score result")
+        if (
+            score_result.score is None
+            or not score_result.score_valid
+            or not score_result.assessments
+        ):
+            raise ValueError(
+                "StageCourt requires a valid full-thesis deterministic score result"
+            )
         accepted = tuple(dict.fromkeys(str(value) for value in accepted_claim_ids))
         counter_open_claims = tuple(
             dict.fromkeys(
