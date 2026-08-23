@@ -38,6 +38,13 @@ _CORE_AUTHORITY_PREFIXES = (
     "KRX",
     "GOVERNMENT_",
 )
+_CORE_AUTHORITY_FRAGMENTS = (
+    "MARKET_DATA",
+    "REVISION_DATA",
+    "FINANCIAL_STATEMENT",
+    "CASH_FLOW",
+    "REGULATORY_FILING",
+)
 
 
 def normalized_source_family(value: str) -> str:
@@ -51,6 +58,8 @@ def source_family_evidence_role(value: str) -> str:
     if any(family.startswith(prefix) for prefix in _SUPPORTING_AUTHORITY_PREFIXES):
         return "SUPPORTING"
     if any(family.startswith(prefix) for prefix in _CORE_AUTHORITY_PREFIXES):
+        return "CORE"
+    if any(fragment in family for fragment in _CORE_AUTHORITY_FRAGMENTS):
         return "CORE"
     return "UNKNOWN"
 

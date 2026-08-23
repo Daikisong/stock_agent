@@ -13,15 +13,12 @@ from e2r.research_brain.researcher_mode.evidence_gap import (
     GapScoreMaterialityAssessment,
     MissingSourceRole,
     accepted_lineage_profile,
-    classify_missing_source_role,
     derive_objective_identity,
     guard_source_query_generation,
 )
-from e2r.research_brain.researcher_mode.schemas import CANONICAL_COMPONENT_ORDER
 
 from ..ids import canonical_hash
 from ..models import ProResearchJob
-from .source_family_policy import canonical_gap_source_family
 
 
 SUPPLEMENTAL_ALLOWED_LABELS = frozenset(
@@ -56,6 +53,14 @@ class DeterministicGapContext:
     new_current_event: bool = False
     official_first_attempted: bool = True
     official_gap_reasons: tuple[str, ...] = ()
+    question_family_id: str | None = None
+    mandatory_primary_source_roles: tuple[str, ...] = ()
+    verified_primary_source_roles: tuple[str, ...] = ()
+    missing_route_is_independent_corroboration: bool = False
+    missing_predicate_is_new_core: bool = True
+    public_route_fixpoint_reached: bool = False
+    hard_break_polarity_resolved: bool = False
+    score_stage_range_bounded: bool = False
     rationale: str = "deterministic gap materiality bounds"
 
     def __post_init__(self) -> None:
@@ -83,6 +88,32 @@ class DeterministicGapContext:
             )
         )
         object.__setattr__(self, "official_gap_reasons", reasons)
+        question_family_id = str(self.question_family_id or "").strip() or None
+        object.__setattr__(self, "question_family_id", question_family_id)
+        mandatory_roles = tuple(
+            dict.fromkeys(
+                str(value).strip()
+                for value in self.mandatory_primary_source_roles
+                if str(value).strip()
+            )
+        )
+        verified_roles = tuple(
+            dict.fromkeys(
+                str(value).strip()
+                for value in self.verified_primary_source_roles
+                if str(value).strip()
+            )
+        )
+        object.__setattr__(self, "mandatory_primary_source_roles", mandatory_roles)
+        object.__setattr__(self, "verified_primary_source_roles", verified_roles)
+        if set(verified_roles) - set(mandatory_roles):
+            raise ValueError(
+                "verified primary roles must belong to the mandatory primary roster"
+            )
+        if self.missing_route_is_independent_corroboration and not question_family_id:
+            raise ValueError(
+                "independent corroboration requires an exact question-family id"
+            )
         if reasons and not self.official_first_attempted and not all(
             reason.startswith("NO_DIRECT_CONNECTOR_FOR_REQUESTED_OFFICIAL_FAMILY:")
             for reason in reasons
@@ -99,6 +130,37 @@ class DeterministicGapContext:
             )
         ):
             raise ValueError("monitoring-only context cannot carry material blockers")
+
+    @property
+    def primary_question_supported(self) -> bool:
+        mandatory = set(self.mandatory_primary_source_roles)
+        verified = set(self.verified_primary_source_roles)
+        return bool(self.question_family_id and mandatory and mandatory.issubset(verified))
+
+    @property
+    def corroboration_cap_eligible(self) -> bool:
+        """Whether question-level evidence proves a true corroboration remainder.
+
+        Component fact counts are deliberately absent.  A cap is allowed only
+        after the exact mandatory question's primary roles and deterministic
+        score/Stage/hard-break bounds have been established.
+        """
+
+        no_public_route_remaining = bool(
+            not self.executable_new_source_route_signatures
+            or self.public_route_fixpoint_reached
+        )
+        return bool(
+            self.primary_question_supported
+            and self.missing_route_is_independent_corroboration
+            and not self.missing_predicate_is_new_core
+            and no_public_route_remaining
+            and self.hard_break_polarity_resolved
+            and self.score_stage_range_bounded
+            and not self.provider_or_parser_failure
+            and not self.direct_contradiction_or_hard_break_unresolved
+            and not self.required_red_team_evidence_missing
+        )
 
 
 @dataclass(frozen=True)
@@ -243,7 +305,6 @@ class ProGapAdjudicator:
         }
         if len(previous_by_semantic_id) != len(tuple(prior_dispositions)):
             raise ValueError("multiple prior dispositions exist for one semantic gap")
-        core_counts = _core_role_counts(facts)
         decisions: list[ProGapDecision] = []
         for gap in gap_rows:
             gap_id = str(gap["dossier_gap_id"])
@@ -285,28 +346,19 @@ class ProGapAdjudicator:
                 fact_snapshot_hash=fact_snapshot_hash,
                 accepted_lineage_roster_hash=lineage_hash,
             )
-            source_backed = tuple(
-                component_id
-                for component_id in CANONICAL_COMPONENT_ORDER
-                if int(core_counts.get(component_id, 0)) > 0
+            explicitly_nonblocking = bool(
+                context.monitoring_only or context.corroboration_cap_eligible
             )
-            range_bounded = set(key.affected_component_ids).issubset(source_backed)
+            source_backed = (
+                key.affected_component_ids if explicitly_nonblocking else ()
+            )
+            range_bounded = explicitly_nonblocking
             missing_role = (
                 MissingSourceRole.MONITORING_ONLY
                 if context.monitoring_only
                 else MissingSourceRole.INDEPENDENT_CORROBORATION
-                if range_bounded
-                and not context.provider_or_parser_failure
-                and not context.direct_contradiction_or_hard_break_unresolved
-                and not context.required_red_team_evidence_missing
-                else classify_missing_source_role(
-                    required_source_families=tuple(
-                        canonical_gap_source_family(value)
-                        for value in required_families
-                    ),
-                    affected_component_ids=key.affected_component_ids,
-                    core_economic_role_fact_count_by_component=core_counts,
-                )
+                if context.corroboration_cap_eligible
+                else MissingSourceRole.CORE_SCORE_SOURCE
             )
             assessment = EvidenceGapAssessment.classify(
                 key=key,
@@ -418,26 +470,6 @@ def _mapping(row: Mapping[str, Any] | Any) -> Mapping[str, Any]:
         if isinstance(value, Mapping):
             return value
     raise TypeError("verified fact lineage rows must be mappings or expose to_dict")
-
-
-def _core_role_counts(facts: Sequence[Mapping[str, Any]]) -> Mapping[str, int]:
-    """Count Pro facts whose component mechanism already passed validation.
-
-    ``allowed_component_ids`` in this lane is not the model's proposal.  The
-    source verifier writes it only after ``MechanismScopeValidator`` accepts
-    the fact against the selected archetype contract.  Re-parsing arbitrary
-    predicate words here would discard open-ended Pro facts a second time.
-    """
-
-    counts = {component_id: 0 for component_id in CANONICAL_COMPONENT_ORDER}
-    for fact in facts:
-        if str(fact.get("current_lifecycle") or "") in {"RESOLVED", "SUPERSEDED"}:
-            continue
-        for component_id in fact.get("allowed_component_ids") or ():
-            component = str(component_id)
-            if component in counts:
-                counts[component] += 1
-    return counts
 
 
 def _planner_label(

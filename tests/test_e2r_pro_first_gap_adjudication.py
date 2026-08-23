@@ -137,6 +137,7 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
         monitoring_only: bool = False,
         provider_failure: bool = False,
         official_gap_reasons: tuple[str, ...] = (),
+        corroboration_eligible: bool = False,
     ) -> DeterministicGapContext:
         return DeterministicGapContext(
             dossier_gap_id=gap_id,
@@ -150,6 +151,22 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
             could_change_score=not monitoring_only,
             monitoring_only=monitoring_only,
             official_gap_reasons=official_gap_reasons,
+            question_family_id=(
+                "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q01"
+                if corroboration_eligible
+                else None
+            ),
+            mandatory_primary_source_roles=(
+                ("ISSUER_OFFICIAL",) if corroboration_eligible else ()
+            ),
+            verified_primary_source_roles=(
+                ("ISSUER_OFFICIAL",) if corroboration_eligible else ()
+            ),
+            missing_route_is_independent_corroboration=corroboration_eligible,
+            missing_predicate_is_new_core=not corroboration_eligible,
+            public_route_fixpoint_reached=corroboration_eligible,
+            hard_break_polarity_resolved=corroboration_eligible,
+            score_stage_range_bounded=corroboration_eligible,
             rationale="기존 deterministic score/Stage 경계 계산 결과",
         )
 
@@ -203,6 +220,7 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
             official_gap_reasons=(
                 "NO_DIRECT_CONNECTOR_FOR_REQUESTED_OFFICIAL_FAMILY:CUSTOMER_OFFICIAL",
             ),
+            corroboration_eligible=True,
         )
         result = self._adjudicate(gap, context, with_verified_fact=True)
         decision = result.decisions[0]
@@ -238,7 +256,7 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
         gap = self._gap(proposed_gap_class="CORE_SCORE_BLOCKER")
         result = self._adjudicate(
             gap,
-            self._context(),
+            self._context(corroboration_eligible=True),
             with_verified_fact=True,
         )
         decision = result.decisions[0]
@@ -253,7 +271,7 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
         gap = self._gap(source_family="PEER_CAPACITY_GUIDANCE")
         result = self._adjudicate(
             gap,
-            self._context(),
+            self._context(corroboration_eligible=True),
             with_verified_fact=True,
         )
         self.assertEqual(
@@ -272,7 +290,11 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
             job=self.job,
             verified_facts=[fact],
             claim_fact_links=[self._claim_link("earnings_visibility")],
-            deterministic_contexts={gap["dossier_gap_id"]: self._context()},
+            deterministic_contexts={
+                gap["dossier_gap_id"]: self._context(
+                    corroboration_eligible=True
+                )
+            },
         )
         self.assertEqual(
             result.decisions[0].assessment.gap_class.value,
@@ -292,11 +314,16 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
         )
         self.assertTrue(result.decisions[0].supplemental_allowed)
 
-    def test_additional_issuer_detail_is_cap_after_validated_scope(self) -> None:
+    def test_additional_issuer_detail_requires_question_level_primary_support(
+        self,
+    ) -> None:
         gap = self._gap(source_family="ISSUER_CAPACITY_KPI")
         result = self._adjudicate(
             gap,
-            self._context(routes=("issuer-capacity",)),
+            self._context(
+                routes=("issuer-capacity",),
+                corroboration_eligible=True,
+            ),
             with_verified_fact=True,
         )
         self.assertEqual(
@@ -321,6 +348,19 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
             result.decisions[0].assessment.gap_class.value,
             "CORE_SCORE_BLOCKER",
         )
+
+    def test_component_fact_without_question_coverage_remains_core(self) -> None:
+        gap = self._gap(source_family="PEER_CAPACITY_GUIDANCE")
+        result = self._adjudicate(
+            gap,
+            self._context(),
+            with_verified_fact=True,
+        )
+        self.assertEqual(
+            result.decisions[0].assessment.gap_class.value,
+            "CORE_SCORE_BLOCKER",
+        )
+        self.assertTrue(result.decisions[0].supplemental_allowed)
 
     def test_open_ended_authority_routes_use_existing_bounded_connectors(self) -> None:
         self.assertEqual(

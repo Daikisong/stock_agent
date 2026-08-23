@@ -479,6 +479,16 @@ class ProFirstBrowserGoldenE2ETest(unittest.IsolatedAsyncioTestCase):
                 deterministic_upper_stage="2",
                 executable_new_source_route_signatures=(),
                 could_change_score=True,
+                question_family_id=(
+                    f"{archetype_id}:LEGACY_V1:{gap['stable_objective_id']}"
+                ),
+                mandatory_primary_source_roles=("ISSUER_OFFICIAL",),
+                verified_primary_source_roles=("ISSUER_OFFICIAL",),
+                missing_route_is_independent_corroboration=True,
+                missing_predicate_is_new_core=False,
+                public_route_fixpoint_reached=True,
+                hard_break_polarity_resolved=True,
+                score_stage_range_bounded=True,
                 rationale="동일 deterministic Stage 범위의 독립 corroboration 공백",
             )
         gap_run = ProGapAdjudicationService(store).adjudicate_job(
