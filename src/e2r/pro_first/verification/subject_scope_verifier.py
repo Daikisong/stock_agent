@@ -45,7 +45,16 @@ class SubjectScopeVerifier:
             # alias rejects legitimate bilingual filings wholesale.
             if matched is None or not subject:
                 return SubjectScopeVerification(False, "WRONG_SUBJECT", matched)
-        elif not subject or not _contains(document, subject):
+        elif not subject or not any(
+            _contains(document, candidate)
+            for candidate in (
+                subject,
+                *(
+                    str(value)
+                    for value in fact.get("preflight_subject_aliases") or ()
+                ),
+            )
+        ):
             # A peer/customer/partner counterfact need not name the target in
             # the peer document, but its stated subject must be literal.
             return SubjectScopeVerification(False, "WRONG_SUBJECT", matched)

@@ -14,6 +14,7 @@ from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
 from ..state_machine import NoProgressDetected
 from ..multi_pass import load_effective_research_dossier
+from ..preflight import LocalEvidencePreflightService
 from .source_verifier import ProSourceVerifier, SourceVerificationResult
 
 
@@ -31,9 +32,13 @@ class ProSourceVerificationService:
         store: ProFirstJobStore,
         *,
         verifier: ProSourceVerifier | None = None,
+        preflight_service: LocalEvidencePreflightService | None = None,
     ) -> None:
         self.store = store
         self.verifier = verifier or ProSourceVerifier()
+        self.preflight_service = preflight_service or LocalEvidencePreflightService(
+            page_fetcher=self.verifier.page_fetcher
+        )
 
     def request_reverification(
         self,
@@ -216,8 +221,32 @@ class ProSourceVerificationService:
                 payload={"dossier_id": job.dossier_id},
             )
         try:
-            result = self.verifier.verify(dossier=dossier, job=job, job_root=root)
+            target = dossier.get("target") or {}
+            preflight = self.preflight_service.run(
+                dossier=dossier,
+                target_id=job.symbol,
+                company_name=job.company_name,
+                target_aliases=tuple(target.get("aliases") or ()),
+                as_of_date=job.as_of_date,
+                archetype_ids=job.archetype_ids,
+                job_root=root,
+            )
+            result = self.verifier.verify(
+                dossier=preflight.verifier_dossier,
+                job=job,
+                job_root=root,
+                preflight=preflight,
+            )
             verification_rows = [row.to_dict() for row in result.verifications]
+            rejection_classification = (
+                self.preflight_service.classify_verifications(
+                    preflight=preflight,
+                    verification_rows=verification_rows,
+                )
+            )
+            rejection_rows = [
+                row.to_dict() for row in rejection_classification.rows
+            ]
             compilation = result.fact_compilation.to_dict()
             verification_hash = canonical_hash(
                 {
@@ -226,7 +255,11 @@ class ProSourceVerificationService:
                     "verification_semantics_version": (
                         self.verifier.semantics_version
                     ),
+                    "preflight_receipt_hash": preflight.receipt.get(
+                        "receipt_hash"
+                    ),
                     "verifications": verification_rows,
+                    "rejection_classifications": rejection_rows,
                     "fact_compilation": compilation,
                 }
             )
@@ -241,6 +274,36 @@ class ProSourceVerificationService:
                 "verification_id": verification_id,
                 "verification_hash": verification_hash,
                 "normalized_dossier_hash": canonical_hash(dossier),
+                "preflight_receipt_hash": preflight.receipt.get(
+                    "receipt_hash"
+                ),
+                "preflight_semantics_version": preflight.receipt.get(
+                    "semantics_version"
+                ),
+                "preflight_applicable": preflight.applicable,
+                "preflight_operation_count": preflight.receipt.get(
+                    "operation_count", 0
+                ),
+                "preflight_local_normalized_count": preflight.receipt.get(
+                    "local_normalized_count", 0
+                ),
+                "preflight_source_representation_resolved_count": (
+                    preflight.receipt.get(
+                        "source_representation_resolved_count", 0
+                    )
+                ),
+                "rejection_root_cause_counts": dict(
+                    rejection_classification.root_cause_counts
+                ),
+                "local_normalizable_sent_to_pro_count": (
+                    rejection_classification.local_normalizable_sent_to_pro_count
+                ),
+                "source_representation_sent_to_pro_count": (
+                    rejection_classification.source_representation_sent_to_pro_count
+                ),
+                "unclassified_rejection_count": (
+                    rejection_classification.unclassified_rejection_count
+                ),
                 "verification_semantics_version": self.verifier.semantics_version,
                 "verification_attempt": (
                     self.store.source_verification_attempt_count(job_id) + 1
@@ -258,6 +321,10 @@ class ProSourceVerificationService:
                 )
             self._write_jsonl_atomic(
                 verification_root / "source_verifications.jsonl", verification_rows
+            )
+            self._write_jsonl_atomic(
+                verification_root / "rejection_classifications.jsonl",
+                rejection_rows,
             )
             self._write_jsonl_atomic(
                 verification_root / "evidence_facts.jsonl",

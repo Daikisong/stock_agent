@@ -9,7 +9,7 @@ import json
 import os
 from pathlib import Path
 import re
-from typing import Any, Mapping, Sequence
+from typing import TYPE_CHECKING, Any, Mapping, Sequence
 from urllib.parse import urlparse
 
 from e2r.research.page_fetcher import FetchResult, PageFetcher
@@ -32,8 +32,11 @@ from .mechanism_scope_mapper import MechanismScopeMapper, MechanismScopeMappingR
 from .quote_verifier import ExactQuoteVerifier
 from .subject_scope_verifier import SubjectScopeVerifier
 
+if TYPE_CHECKING:
+    from ..preflight import EvidencePreflightResult
 
-SOURCE_VERIFICATION_SEMANTICS_VERSION = "e2r_pro_source_verification_v8"
+
+SOURCE_VERIFICATION_SEMANTICS_VERSION = "e2r_pro_source_verification_v9"
 
 
 TERMINAL_SOURCE_STATUSES = frozenset(
@@ -200,7 +203,14 @@ class ProSourceVerifier:
         dossier: Mapping[str, Any],
         job: ProResearchJob,
         job_root: str | Path,
+        preflight: "EvidencePreflightResult | None" = None,
     ) -> SourceVerificationResult:
+        if dossier.get("schema_version") == "e2r_pro_research_dossier_v3" and (
+            preflight is None or not preflight.applicable
+        ):
+            raise ValueError(
+                "ResearchDossierV3 must pass LocalEvidencePreflight before source verification"
+            )
         root = Path(job_root).resolve()
         source_pages = root / "verification/source_pages"
         source_pages.mkdir(parents=True, exist_ok=True)
@@ -224,7 +234,11 @@ class ProSourceVerifier:
             as_of_date=job.as_of_date,
             allowed_urls={str(fact.get("source_url") or "") for fact in facts},
         )
-        fetch_count = 0
+        fetch_count = int(
+            (preflight.receipt.get("source_fetch_count") or 0)
+            if preflight is not None and preflight.applicable
+            else 0
+        )
         cache_reuse_count = 0
         verifications: list[FactSourceVerification] = []
         accepted_claims: list[Mapping[str, Any]] = []
@@ -249,6 +263,23 @@ class ProSourceVerifier:
             if cache_reused:
                 cache_reuse_count += 1
                 fetched = fetch_cache[cache_key]
+            elif preflight is not None and preflight.applicable:
+                representation = preflight.resolved_fact_documents.get(
+                    str(fact.get("dossier_fact_id") or "")
+                )
+                if representation is None:
+                    fetched = FetchResult(
+                        url=url,
+                        ok=False,
+                        reason="preflight source representation is missing",
+                    )
+                else:
+                    fetched = self._materialize_document(
+                        representation.fetch_result,
+                        url=url,
+                        source_pages=source_pages,
+                    )
+                fetch_cache[cache_key] = fetched
             else:
                 result = self.page_fetcher.fetch(url, as_of_date=date.fromisoformat(job.as_of_date))
                 fetch_count += 1
@@ -485,6 +516,14 @@ class ProSourceVerifier:
                 compiled_claim_id=claim_id,
             )
 
+        blocked = str(fact.get("preflight_blocked_reason") or "").strip()
+        if blocked:
+            return terminal(
+                "UNVERIFIED_PENDING",
+                f"LOCAL_PREFLIGHT_BLOCKED:{blocked}",
+                document=(fetched if isinstance(fetched, _FetchedDocument) else None),
+            ), None
+
         if not isinstance(fetched, _FetchedDocument):
             return terminal(
                 "REJECTED_SOURCE_UNAVAILABLE",
@@ -628,6 +667,10 @@ class ProSourceVerifier:
             # and the model's self-reported confidence must not own scoring.
             "confidence": 1.0,
             "allowed_component_ids": list(allowed),
+            "question_family_tags": list(
+                fact.get("question_family_ids") or ()
+            ),
+            "primitive_tags": [str(fact.get("predicate") or "")],
             "supersedes_fact_ids": list(fact.get("supersedes_fact_ids") or ()),
             "resolves_fact_ids": list(fact.get("resolves_fact_ids") or ()),
         }

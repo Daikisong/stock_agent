@@ -16,6 +16,7 @@ from ..ids import canonical_hash, canonical_json, stable_id
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
 from ..state_machine import TransitionContext
+from ..preflight import PreSchemaV3Normalizer
 from .dialect_adapter import ResearchDossierDialectAdapter
 from .identity_binding import bind_dossier_transport_identity
 from .normalizer import ResearchDossierNormalizer
@@ -42,6 +43,7 @@ class ProDossierImporter:
         dialect_adapter: ResearchDossierDialectAdapter | None = None,
         validator: ResearchDossierValidator | None = None,
         normalizer: ResearchDossierNormalizer | None = None,
+        pre_schema_v3_normalizer: PreSchemaV3Normalizer | None = None,
         now: Callable[[], datetime] | None = None,
     ) -> None:
         self.store = store
@@ -49,6 +51,9 @@ class ProDossierImporter:
         self.dialect_adapter = dialect_adapter or ResearchDossierDialectAdapter()
         self.validator = validator or ResearchDossierValidator()
         self.normalizer = normalizer or ResearchDossierNormalizer()
+        self.pre_schema_v3_normalizer = (
+            pre_schema_v3_normalizer or PreSchemaV3Normalizer()
+        )
         self._now = now or (lambda: datetime.now(timezone.utc))
 
     async def handle_capture_event(self, event: CaptureCompleteEvent) -> DossierImportResult:
@@ -129,6 +134,10 @@ class ProDossierImporter:
                 final_response_text=final_response_text,
             )
             adapted = self.dialect_adapter.adapt(parsed.payload)
+            pre_schema = self.pre_schema_v3_normalizer.normalize(
+                adapted.payload,
+                archetype_ids=job.archetype_ids,
+            )
             browser_state = self.store.get_browser_session_state(job_id) or {}
             durable_browser_detail = browser_state.get("state") or {}
             durable_initial_pass_id = str(
@@ -137,7 +146,7 @@ class ProDossierImporter:
                 or ""
             ) or None
             identity_bound = bind_dossier_transport_identity(
-                adapted.payload,
+                pre_schema.payload,
                 conversation_id=receipt.conversation_id or "",
                 research_pass_id=durable_initial_pass_id,
                 parent_pass_id=expected_parent_pass_id,
@@ -190,6 +199,14 @@ class ProDossierImporter:
                 "dialect_after_hash": adapted.after_hash,
                 "dialect_operations": list(adapted.operations),
                 "dialect_id_map": dict(adapted.id_map),
+                "pre_schema_preflight_before_hash": pre_schema.before_hash,
+                "pre_schema_preflight_after_hash": pre_schema.after_hash,
+                "pre_schema_preflight_operations": [
+                    row.to_dict() for row in pre_schema.operations
+                ],
+                "pre_schema_local_normalized_count": len(
+                    pre_schema.operations
+                ),
                 "identity_binding_before_hash": identity_bound.before_hash,
                 "identity_binding_after_hash": identity_bound.after_hash,
                 "identity_binding_operations": list(identity_bound.operations),

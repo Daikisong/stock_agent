@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-25 P3 완료 시점`
+기준 시각: `2026-08-25 P4 완료 검증 시점`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_1_fresh_session_verifier_ready_master_goal.md`
@@ -13,7 +13,8 @@ phase commit 계보:
 P0 b6c30eb9  기존 repair-heavy Pro 실행을 진단 자료로 봉인
 P1 10c7269b  Pro fact 반려 원인을 최초 출력·로컬 결함·의미 결함으로 분해
 P2 152db6a7  source 문서와 atomic fact를 분리한 검증 친화 dossier를 도입
-P3 이 문서와 함께 Initial Prompt V3 phase commit으로 고정
+P3 d5d62bc2  최초 Pro 조사에서 verifier-ready 증거를 생성하도록 계약 강화
+P4 이 문서와 함께 local evidence preflight phase commit으로 고정
 ```
 
 PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지 않는다.
@@ -25,7 +26,7 @@ P0 old run freeze                         COMPLETE
 P1 rejection A/B/C taxonomy              COMPLETE
 P2 ResearchDossierV3                      COMPLETE
 P3 Initial Prompt V3                      COMPLETE
-P4 local preflight                        PENDING
+P4 local preflight                        COMPLETE
 P5 compact RepairDeltaV3                  PENDING
 P6 fresh-session orchestration            PENDING
 P7 000660 fresh canary                    PENDING
@@ -313,8 +314,84 @@ git diff --check                     PASS
 PASS는 “Pro 답변이 좋았다”는 뜻이 아니라 “최초 요청부터 verifier가 읽을 구조를 모든
 contract에 동일하게 요구한다”는 뜻이다.
 
-## 다음 단계 P4
+## P4 — Local Evidence Preflight
 
-ResearchDossierV3를 source verifier에 넘기기 전에 URL, source representation, quote, issuer
-alias, segment/product, date, atomic fact를 정규화하고 A/B/C rejection을 분류하는 local
-preflight pipeline을 구현한다. fresh conversation 생성이나 browser 전송은 아직 하지 않는다.
+`ResearchDossierV3`를 source verifier에 바로 넘기지 않고 다음 경계를 강제했다.
+
+```text
+V3 사전 정규화
+→ URL/source representation/text/alias/scope/date/atomic fact preflight
+→ deterministic source verifier
+→ rejection root-cause classifier
+```
+
+V3의 canonical source/fact 분리는 유지하면서 기존 verifier만 읽는 projection을 별도로 만든다.
+preflight가 가져온 원문은 verifier가 다시 fetch하지 않는다. V3가 preflight를 우회해 verifier를
+직접 호출하면 명시적으로 실패한다.
+
+로컬에서 닫는 대표 사례:
+
+```text
+tracking URL/fragment/query/trailing slash
+redirect final URL
+CRLF/HTML entity/Unicode quote·dash·whitespace
+issuer 및 주입된 publisher alias
+V2/V3 field, source ID, lineage ID alias
+segment/product closed enum
+published date와 HTTP Last-Modified 충돌
+동일 official lineage의 alternate representation
+```
+
+quote는 byte/Unicode/locator/alternate official representation의 literal exact 순서만 허용한다.
+semantic similarity로 검문을 통과시키지 않는다. compound fact도 각 part에 독립 literal quote
+span이 있을 때만 쪼갠다.
+
+모든 verifier rejection은 5개 root cause 중 하나로 분류한다.
+
+```text
+LOCAL_NORMALIZABLE
+SOURCE_REPRESENTATION_RESOLVABLE
+INITIAL_PROMPT_OUTPUT_DEFECT
+GENUINE_SEMANTIC_OR_SOURCE_DEFECT
+NONMATERIAL_AUXILIARY_REJECTION
+```
+
+앞의 두 분류는 Pro 전송이 항상 0이다. 현재 P4는 분류·영속 receipt까지만 구현했으며 실제
+compact repair 전송은 P5 범위다.
+
+영속 runtime 산출물:
+
+```text
+verification/preflight/research_dossier.preflight.json
+verification/preflight/verifier_projection.json
+verification/preflight/preflight_operations.jsonl
+verification/preflight/preflight_issues.jsonl
+verification/preflight/preflight_receipt.json
+verification/rejection_classifications.jsonl
+```
+
+상세 설계와 외부 검수용 경계는 `local_evidence_preflight.md`에 기록했다. 이 단계에서도 fresh
+ChatGPT conversation 생성, browser 전송, 새 web search는 하지 않았다.
+
+검증:
+
+```text
+P4 local preflight regression                 17/17 PASS
+영속 V3 preflight → verifier lifecycle         PASS
+P0~P4 + dossier import + source verifier       91/91 PASS
+production static audit                        1/1 PASS / critical 0
+focused 합계                                  92/92 PASS
+compileall / git diff --check                   PASS
+실제 Pro·query·search 호출                      0/0/0
+```
+
+P3 head `d5d62bc2`의 GitHub Actions는 P4 커밋 직전에도 장시간 `in_progress`였고 실패로
+판정되지 않았다. P4 push로 새 head CI를 시작하며 그 결과는 다음 phase 장부에서 head SHA와
+run URL로 이어서 기록한다.
+
+## 다음 단계 P5
+
+전체 dossier를 다시 출력시키는 기존 repair 계약을 제거하고, P4가
+`INITIAL_PROMPT_OUTPUT_DEFECT` 또는 `GENUINE_SEMANTIC_OR_SOURCE_DEFECT`로 분류한 material
+candidate만 source별로 묶은 `RepairDeltaV3`로 수리한다. 로컬/representation 결함은 repair
+payload에 들어가지 않으며 아직 실제 fresh Pro 전송은 하지 않는다.

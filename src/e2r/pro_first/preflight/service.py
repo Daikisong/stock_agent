@@ -1,0 +1,777 @@
+"""ResearchDossierV3 local normalization and pre-verifier orchestration."""
+
+from __future__ import annotations
+
+from copy import deepcopy
+import os
+from pathlib import Path
+from typing import Any, Mapping, Sequence
+
+from e2r.research.page_fetcher import FetchResult, PageFetcher
+
+from ..atomic_io import fsync_directory
+from ..ids import canonical_hash, canonical_json, stable_id
+from .atomic_fact import AtomicFactPreflight
+from .canonical_url import CanonicalURLResolver
+from .date_resolver import DatePrecedenceResolver
+from .issuer_alias import IssuerAliasResolver
+from .models import (
+    EvidencePreflightResult,
+    PreflightIssue,
+    PreflightOperation,
+    RejectionRootCauseClass,
+    RejectionRouting,
+    ResolvedSourceRepresentation,
+    StaticPreflightNormalization,
+)
+from .rejection_classifier import ClassifiedRejections, RejectionClassifier
+from .scope_mapper import ClosedEnumScopeMapper
+from .source_representation import SourceRepresentationResolver
+from .text_normalizer import TextQuoteNormalizer
+
+
+PREFLIGHT_SEMANTICS_VERSION = "e2r_local_evidence_preflight_v1"
+DOSSIER_V3 = "e2r_pro_research_dossier_v3"
+_FACT_COLLECTIONS = ("material_facts", "counterfacts", "resolution_facts")
+
+_SOURCE_DOCUMENT_FIELD_ALIASES = {
+    "url": "canonical_url",
+    "final_url": "opened_url",
+    "title": "source_title",
+    "publisher": "source_publisher",
+    "published_at": "publication_date",
+    "available_at": "availability_date",
+    "source_roles": "source_role_ids",
+    "source_lineage_id": "lineage_id",
+}
+_FACT_FIELD_ALIASES = {
+    "predicate": "predicate_id",
+    "candidate_components": "candidate_component_ids",
+    "source_id": "source_document_id",
+    "source_document_ref": "source_document_id",
+    "exact_quote": "supporting_excerpt",
+    "excerpt": "supporting_excerpt",
+    "economic_mechanism": "economic_mechanism_id",
+    "lifecycle": "current_status",
+    "question_ids": "question_family_ids",
+}
+_LINEAGE_FIELD_ALIASES = {"source_lineage_id": "lineage_id"}
+_LIFECYCLE_ALIASES = {"HISTORICAL": "HISTORICAL_ONLY"}
+_DIRECTION_ALIASES = {"COUNTER": "NEGATIVE"}
+
+
+class PreSchemaV3Normalizer:
+    """Apply only explicit mechanical fixes before strict V3 validation."""
+
+    def __init__(
+        self,
+        *,
+        url_resolver: CanonicalURLResolver | None = None,
+        text_normalizer: TextQuoteNormalizer | None = None,
+        issuer_alias_resolver: IssuerAliasResolver | None = None,
+        scope_mapper: ClosedEnumScopeMapper | None = None,
+    ) -> None:
+        self.url_resolver = url_resolver or CanonicalURLResolver()
+        self.text_normalizer = text_normalizer or TextQuoteNormalizer()
+        self.issuer_alias_resolver = issuer_alias_resolver or IssuerAliasResolver()
+        self.scope_mapper = scope_mapper or ClosedEnumScopeMapper()
+
+    def normalize(
+        self,
+        payload: Mapping[str, Any],
+        *,
+        archetype_ids: Sequence[str],
+    ) -> StaticPreflightNormalization:
+        before_hash = canonical_hash(payload)
+        normalized = deepcopy(dict(payload))
+        if normalized.get("schema_version") != DOSSIER_V3:
+            return StaticPreflightNormalization(
+                payload=normalized,
+                before_hash=before_hash,
+                after_hash=before_hash,
+                operations=(),
+            )
+        operations: list[PreflightOperation] = []
+        source_aliases = _consume_identity_aliases(
+            normalized,
+            "source_document_aliases",
+        )
+        lineage_aliases = _consume_identity_aliases(
+            normalized,
+            "source_lineage_aliases",
+        )
+        if source_aliases:
+            normalized = _rewrite_exact_values(normalized, source_aliases)
+            operations.append(
+                _operation(
+                    "RESOLVE_SOURCE_DOCUMENT_ID_ALIASES",
+                    "DOSSIER",
+                    str(normalized.get("job_id") or ""),
+                    detail=f"alias_count={len(source_aliases)}",
+                )
+            )
+        if lineage_aliases:
+            normalized = _rewrite_exact_values(normalized, lineage_aliases)
+            operations.append(
+                _operation(
+                    "RESOLVE_SOURCE_LINEAGE_ID_ALIASES",
+                    "DOSSIER",
+                    str(normalized.get("job_id") or ""),
+                    detail=f"alias_count={len(lineage_aliases)}",
+                )
+            )
+
+        for document in normalized.get("source_documents") or ():
+            if not isinstance(document, dict):
+                continue
+            document_id = str(document.get("source_document_id") or "")
+            _apply_field_aliases(
+                document,
+                _SOURCE_DOCUMENT_FIELD_ALIASES,
+                object_type="SOURCE_DOCUMENT",
+                object_id=document_id,
+                operations=operations,
+            )
+            for field in ("canonical_url", "opened_url"):
+                if not str(document.get(field) or "").strip():
+                    continue
+                before = str(document[field])
+                resolved = self.url_resolver.resolve(before)
+                if resolved.changed:
+                    document[field] = resolved.canonical_url
+                    operations.append(
+                        _operation(
+                            "CANONICALIZE_SOURCE_URL",
+                            "SOURCE_DOCUMENT",
+                            document_id,
+                            field_name=field,
+                            before=before,
+                            after=resolved.canonical_url,
+                            detail=(
+                                "removed_query_keys="
+                                + ",".join(resolved.removed_query_keys)
+                            ),
+                        )
+                    )
+            publisher, changed = self.issuer_alias_resolver.normalize_publisher(
+                str(document.get("source_publisher") or "")
+            )
+            if changed:
+                before = document.get("source_publisher")
+                document["source_publisher"] = publisher
+                operations.append(
+                    _operation(
+                        "NORMALIZE_KNOWN_SOURCE_PUBLISHER_ALIAS",
+                        "SOURCE_DOCUMENT",
+                        document_id,
+                        field_name="source_publisher",
+                        before=before,
+                        after=publisher,
+                    )
+                )
+            _normalize_text_fields(
+                document,
+                ("source_title", "locator_value"),
+                object_type="SOURCE_DOCUMENT",
+                object_id=document_id,
+                normalizer=self.text_normalizer,
+                operations=operations,
+            )
+
+        source_by_id = {
+            str(row.get("source_document_id") or ""): row
+            for row in normalized.get("source_documents") or ()
+            if isinstance(row, Mapping)
+        }
+        expected_kind = {
+            "material_facts": "MATERIAL",
+            "counterfacts": "COUNTER",
+            "resolution_facts": "RESOLUTION",
+        }
+        for collection in _FACT_COLLECTIONS:
+            for fact in normalized.get(collection) or ():
+                if not isinstance(fact, dict):
+                    continue
+                fact_id = str(fact.get("dossier_fact_id") or "")
+                _apply_field_aliases(
+                    fact,
+                    _FACT_FIELD_ALIASES,
+                    object_type="ATOMIC_FACT",
+                    object_id=fact_id,
+                    operations=operations,
+                )
+                if not fact.get("fact_kind"):
+                    fact["fact_kind"] = expected_kind[collection]
+                    operations.append(
+                        _operation(
+                            "INFER_FACT_KIND_FROM_COLLECTION",
+                            "ATOMIC_FACT",
+                            fact_id,
+                            field_name="fact_kind",
+                            before=None,
+                            after=expected_kind[collection],
+                        )
+                    )
+                lifecycle = str(fact.get("current_status") or "").upper()
+                if lifecycle in _LIFECYCLE_ALIASES:
+                    fact["current_status"] = _LIFECYCLE_ALIASES[lifecycle]
+                    operations.append(
+                        _operation(
+                            "MAP_CLOSED_LIFECYCLE_ENUM",
+                            "ATOMIC_FACT",
+                            fact_id,
+                            field_name="current_status",
+                            before=lifecycle,
+                            after=fact["current_status"],
+                        )
+                    )
+                direction = str(fact.get("direction") or "").upper()
+                if direction in _DIRECTION_ALIASES:
+                    fact["direction"] = _DIRECTION_ALIASES[direction]
+                    operations.append(
+                        _operation(
+                            "MAP_CLOSED_DIRECTION_ENUM",
+                            "ATOMIC_FACT",
+                            fact_id,
+                            field_name="direction",
+                            before=direction,
+                            after=fact["direction"],
+                        )
+                    )
+                _normalize_text_fields(
+                    fact,
+                    ("statement", "supporting_excerpt", "source_locator"),
+                    object_type="ATOMIC_FACT",
+                    object_id=fact_id,
+                    normalizer=self.text_normalizer,
+                    operations=operations,
+                )
+                source_document = source_by_id.get(
+                    str(fact.get("source_document_id") or "")
+                )
+                if source_document is not None:
+                    mapping = self.scope_mapper.map_fact(
+                        fact=fact,
+                        source_document=source_document,
+                        archetype_ids=archetype_ids,
+                    )
+                    for field, value, changed, code in (
+                        (
+                            "business_segment",
+                            mapping.business_segment,
+                            mapping.segment_changed,
+                            "MAP_SEGMENT_CLOSED_ENUM",
+                        ),
+                        (
+                            "product_family",
+                            mapping.product_family,
+                            mapping.product_changed,
+                            "MAP_PRODUCT_CLOSED_ENUM",
+                        ),
+                    ):
+                        if changed:
+                            before = fact.get(field)
+                            fact[field] = value
+                            operations.append(
+                                _operation(
+                                    code,
+                                    "ATOMIC_FACT",
+                                    fact_id,
+                                    field_name=field,
+                                    before=before,
+                                    after=value,
+                                )
+                            )
+
+        for lineage in normalized.get("source_lineages") or ():
+            if isinstance(lineage, dict):
+                _apply_field_aliases(
+                    lineage,
+                    _LINEAGE_FIELD_ALIASES,
+                    object_type="SOURCE_LINEAGE",
+                    object_id=str(
+                        lineage.get("lineage_id")
+                        or lineage.get("source_lineage_id")
+                        or ""
+                    ),
+                    operations=operations,
+                )
+        for route in normalized.get("search_route_receipts") or ():
+            if not isinstance(route, dict):
+                continue
+            rewritten: list[str] = []
+            changed = False
+            for url in route.get("opened_source_urls") or ():
+                resolved = self.url_resolver.resolve(str(url))
+                rewritten.append(resolved.canonical_url)
+                changed = changed or resolved.changed
+            if changed:
+                before = route.get("opened_source_urls")
+                route["opened_source_urls"] = list(dict.fromkeys(rewritten))
+                operations.append(
+                    _operation(
+                        "CANONICALIZE_ROUTE_SOURCE_URLS",
+                        "SEARCH_ROUTE_RECEIPT",
+                        str(route.get("route_receipt_id") or ""),
+                        field_name="opened_source_urls",
+                        before=before,
+                        after=route["opened_source_urls"],
+                    )
+                )
+        return StaticPreflightNormalization(
+            payload=normalized,
+            before_hash=before_hash,
+            after_hash=canonical_hash(normalized),
+            operations=tuple(operations),
+        )
+
+
+class LocalEvidencePreflightService:
+    def __init__(
+        self,
+        *,
+        page_fetcher: PageFetcher | None = None,
+        static_normalizer: PreSchemaV3Normalizer | None = None,
+        issuer_alias_resolver: IssuerAliasResolver | None = None,
+        scope_mapper: ClosedEnumScopeMapper | None = None,
+        date_resolver: DatePrecedenceResolver | None = None,
+        atomic_preflight: AtomicFactPreflight | None = None,
+        classifier: RejectionClassifier | None = None,
+    ) -> None:
+        self.page_fetcher = page_fetcher or PageFetcher(
+            live_enabled=False, max_text_chars=None
+        )
+        self.issuer_alias_resolver = issuer_alias_resolver or IssuerAliasResolver()
+        self.scope_mapper = scope_mapper or ClosedEnumScopeMapper()
+        self.static_normalizer = static_normalizer or PreSchemaV3Normalizer(
+            issuer_alias_resolver=self.issuer_alias_resolver,
+            scope_mapper=self.scope_mapper,
+        )
+        self.date_resolver = date_resolver or DatePrecedenceResolver()
+        self.atomic_preflight = atomic_preflight or AtomicFactPreflight()
+        self.classifier = classifier or RejectionClassifier()
+
+    def run(
+        self,
+        *,
+        dossier: Mapping[str, Any],
+        target_id: str,
+        company_name: str,
+        target_aliases: Sequence[str],
+        as_of_date: str,
+        archetype_ids: Sequence[str],
+        job_root: str | Path,
+    ) -> EvidencePreflightResult:
+        root = Path(job_root).resolve() / "verification/preflight"
+        static = self.static_normalizer.normalize(
+            dossier,
+            archetype_ids=archetype_ids,
+        )
+        canonical = static.payload
+        if canonical.get("schema_version") != DOSSIER_V3:
+            receipt = self._receipt(
+                applicable=False,
+                canonical_dossier=canonical,
+                verifier_dossier=canonical,
+                operations=(),
+                issues=(),
+                representation_counts={},
+            )
+            self._persist(root, canonical, canonical, (), (), receipt)
+            return EvidencePreflightResult(
+                applicable=False,
+                canonical_dossier=canonical,
+                verifier_dossier=canonical,
+                resolved_fact_documents={},
+                operations=(),
+                issues=(),
+                receipt=receipt,
+            )
+        source_documents = tuple(canonical.get("source_documents") or ())
+        source_by_id = {
+            str(row.get("source_document_id") or ""): row
+            for row in source_documents
+        }
+        facts_with_collections = tuple(
+            (collection, fact)
+            for collection in _FACT_COLLECTIONS
+            for fact in canonical.get(collection) or ()
+        )
+        facts = tuple(fact for _, fact in facts_with_collections)
+        representations = SourceRepresentationResolver(
+            fetcher=self.page_fetcher
+        ).resolve(
+            source_documents=source_documents,
+            facts=facts,
+            as_of_date=as_of_date,
+        )
+        operations = list(static.operations)
+        issues = [_local_issue(row) for row in static.operations]
+        verifier = deepcopy(dict(canonical))
+        projected_by_collection: dict[str, list[Mapping[str, Any]]] = {
+            key: [] for key in _FACT_COLLECTIONS
+        }
+        for collection, fact in facts_with_collections:
+            fact_id = str(fact.get("dossier_fact_id") or "")
+            source_document_id = str(fact.get("source_document_id") or "")
+            source_document = source_by_id.get(source_document_id)
+            representation = representations.representations_by_fact_id.get(fact_id)
+            if source_document is None or representation is None:
+                failed = FetchResult(
+                    url="",
+                    ok=False,
+                    reason="fact references an unresolved source document",
+                )
+                representation = ResolvedSourceRepresentation(
+                    source_document_id=source_document_id,
+                    lineage_id="",
+                    requested_url="",
+                    resolved_url="",
+                    representation_source_document_id=source_document_id,
+                    fetch_result=failed,
+                    normalized_text="",
+                    text_hash=None,
+                )
+                source_document = source_document or {}
+            date_resolution = self.date_resolver.resolve(
+                source_document=source_document,
+                fetch_result=representation.fetch_result,
+                as_of_date=as_of_date,
+            )
+            alias_resolution = self.issuer_alias_resolver.resolve(
+                target_id=target_id,
+                company_name=company_name,
+                target_aliases=target_aliases,
+                fact=fact,
+                source_document=source_document,
+                document_text=representation.normalized_text,
+            )
+            scope_mapping = self.scope_mapper.map_fact(
+                fact=fact,
+                source_document=source_document,
+                archetype_ids=archetype_ids,
+            )
+            result = self.atomic_preflight.project_and_check(
+                fact=fact,
+                source_document=source_document,
+                representation=representation,
+                alias_resolution=alias_resolution,
+                scope_mapping=scope_mapping,
+                date_resolution=date_resolution,
+                material=True,
+            )
+            projected_by_collection[collection].append(result.verifier_fact)
+            operations.extend(result.operations)
+            issues.extend(_local_issue(row) for row in result.operations)
+            issues.extend(result.issues)
+            if representation.fetch_result.url and (
+                representation.resolved_url != representation.requested_url
+            ):
+                operation = _operation(
+                    "RESOLVE_REDIRECT_FINAL_URL",
+                    "SOURCE_DOCUMENT",
+                    source_document_id,
+                    field_name="canonical_url",
+                    before=representation.requested_url,
+                    after=representation.resolved_url,
+                )
+                operations.append(operation)
+                issues.append(_local_issue(operation))
+            if date_resolution.last_modified_ignored:
+                operation = _operation(
+                    "PUBLISHED_DATE_PRECEDES_HTTP_LAST_MODIFIED",
+                    "SOURCE_DOCUMENT",
+                    source_document_id,
+                    field_name="publication_date",
+                    detail=(
+                        f"published={date_resolution.publication_date};"
+                        f"last_modified={date_resolution.last_modified_date}"
+                    ),
+                )
+                operations.append(operation)
+                issues.append(_local_issue(operation))
+        for collection, rows in projected_by_collection.items():
+            verifier[collection] = rows
+        receipt = self._receipt(
+            applicable=True,
+            canonical_dossier=canonical,
+            verifier_dossier=verifier,
+            operations=tuple(operations),
+            issues=tuple(issues),
+            representation_counts={
+                "source_fetch_count": representations.attempted_url_count,
+                "source_fetch_success_count": representations.successful_url_count,
+                "redirect_resolution_count": representations.redirect_resolution_count,
+                "alternate_representation_fact_count": (
+                    representations.alternate_representation_fact_count
+                ),
+            },
+        )
+        self._persist(
+            root,
+            canonical,
+            verifier,
+            tuple(operations),
+            tuple(issues),
+            receipt,
+        )
+        return EvidencePreflightResult(
+            applicable=True,
+            canonical_dossier=canonical,
+            verifier_dossier=verifier,
+            resolved_fact_documents=(
+                representations.representations_by_fact_id
+            ),
+            operations=tuple(operations),
+            issues=tuple(issues),
+            receipt=receipt,
+        )
+
+    def classify_verifications(
+        self,
+        *,
+        preflight: EvidencePreflightResult,
+        verification_rows: Sequence[Mapping[str, Any]],
+    ) -> ClassifiedRejections:
+        facts_by_id = {
+            str(row.get("dossier_fact_id") or ""): row
+            for collection in _FACT_COLLECTIONS
+            for row in preflight.verifier_dossier.get(collection) or ()
+        }
+        material_ids = tuple(facts_by_id)
+        return self.classifier.classify(
+            verifications=verification_rows,
+            facts_by_id=facts_by_id,
+            preflight_issues=preflight.issues,
+            material_fact_ids=material_ids,
+        )
+
+    @staticmethod
+    def _receipt(
+        *,
+        applicable: bool,
+        canonical_dossier: Mapping[str, Any],
+        verifier_dossier: Mapping[str, Any],
+        operations: Sequence[PreflightOperation],
+        issues: Sequence[PreflightIssue],
+        representation_counts: Mapping[str, int],
+    ) -> Mapping[str, Any]:
+        resolved_issues = tuple(row for row in issues if row.locally_resolved)
+        unresolved_issues = tuple(row for row in issues if not row.locally_resolved)
+        payload = {
+            "schema_version": "e2r_local_evidence_preflight_receipt_v1",
+            "semantics_version": PREFLIGHT_SEMANTICS_VERSION,
+            "status": "PREFLIGHT_COMPLETE" if applicable else "LEGACY_NOT_APPLICABLE",
+            "applicable": applicable,
+            "canonical_dossier_hash": canonical_hash(canonical_dossier),
+            "verifier_dossier_hash": canonical_hash(verifier_dossier),
+            "operation_count": len(operations),
+            "local_normalized_count": sum(
+                row.operation_code
+                not in {
+                    "RESOLVE_REDIRECT_FINAL_URL",
+                    "PUBLISHED_DATE_PRECEDES_HTTP_LAST_MODIFIED",
+                }
+                for row in operations
+            ),
+            "source_representation_resolved_count": sum(
+                row.cause_class
+                is RejectionRootCauseClass.SOURCE_REPRESENTATION_RESOLVABLE
+                and row.locally_resolved
+                for row in issues
+            ),
+            "resolved_issue_count": len(resolved_issues),
+            "unresolved_issue_count": len(unresolved_issues),
+            "local_normalizable_sent_to_pro_count": 0,
+            "source_representation_sent_to_pro_count": 0,
+            "query_count": 0,
+            "search_count": 0,
+            "score_authority": False,
+            "stage_authority": False,
+            **dict(representation_counts),
+        }
+        return {**payload, "receipt_hash": canonical_hash(payload)}
+
+    @staticmethod
+    def _persist(
+        root: Path,
+        canonical: Mapping[str, Any],
+        verifier: Mapping[str, Any],
+        operations: Sequence[PreflightOperation],
+        issues: Sequence[PreflightIssue],
+        receipt: Mapping[str, Any],
+    ) -> None:
+        _write_atomic(
+            root / "research_dossier.preflight.json",
+            canonical_json(canonical) + "\n",
+        )
+        _write_atomic(
+            root / "verifier_projection.json",
+            canonical_json(verifier) + "\n",
+        )
+        _write_atomic(
+            root / "preflight_operations.jsonl",
+            "".join(canonical_json(row.to_dict()) + "\n" for row in operations),
+        )
+        _write_atomic(
+            root / "preflight_issues.jsonl",
+            "".join(canonical_json(row.to_dict()) + "\n" for row in issues),
+        )
+        _write_atomic(root / "preflight_receipt.json", canonical_json(receipt) + "\n")
+
+
+def _apply_field_aliases(
+    row: dict[str, Any],
+    aliases: Mapping[str, str],
+    *,
+    object_type: str,
+    object_id: str,
+    operations: list[PreflightOperation],
+) -> None:
+    for alias, canonical in aliases.items():
+        if alias not in row:
+            continue
+        alias_value = row[alias]
+        if canonical in row and row[canonical] != alias_value:
+            raise ValueError(
+                f"conflicting V3 field alias {alias!r}/{canonical!r}: {object_id}"
+            )
+        if canonical not in row:
+            row[canonical] = alias_value
+        row.pop(alias)
+        operations.append(
+            _operation(
+                "MAP_V2_V3_FIELD_ALIAS",
+                object_type,
+                object_id,
+                field_name=canonical,
+                before={alias: alias_value},
+                after={canonical: alias_value},
+            )
+        )
+
+
+def _normalize_text_fields(
+    row: dict[str, Any],
+    fields: Sequence[str],
+    *,
+    object_type: str,
+    object_id: str,
+    normalizer: TextQuoteNormalizer,
+    operations: list[PreflightOperation],
+) -> None:
+    for field in fields:
+        if field not in row or not isinstance(row[field], str):
+            continue
+        before = row[field]
+        result = normalizer.normalize_text(before)
+        if result.normalized_text != before:
+            row[field] = result.normalized_text
+            operations.append(
+                _operation(
+                    "+".join(result.operations),
+                    object_type,
+                    object_id,
+                    field_name=field,
+                    before=before,
+                    after=result.normalized_text,
+                )
+            )
+
+
+def _consume_identity_aliases(
+    payload: dict[str, Any], key: str
+) -> Mapping[str, str]:
+    raw = payload.pop(key, {})
+    if not raw:
+        return {}
+    if not isinstance(raw, Mapping):
+        raise ValueError(f"{key} must be an alias-to-canonical object")
+    aliases = {str(alias): str(canonical) for alias, canonical in raw.items()}
+    if any(not alias or not canonical or alias == canonical for alias, canonical in aliases.items()):
+        raise ValueError(f"{key} contains an invalid identity alias")
+    return aliases
+
+
+def _rewrite_exact_values(value: Any, aliases: Mapping[str, str]) -> Any:
+    if isinstance(value, Mapping):
+        return {
+            key: _rewrite_exact_values(child, aliases)
+            for key, child in value.items()
+        }
+    if isinstance(value, list):
+        return [_rewrite_exact_values(child, aliases) for child in value]
+    if isinstance(value, str):
+        return aliases.get(value, value)
+    return value
+
+
+def _operation(
+    code: str,
+    object_type: str,
+    object_id: str,
+    *,
+    field_name: str | None = None,
+    before: object | None = None,
+    after: object | None = None,
+    detail: str | None = None,
+) -> PreflightOperation:
+    return PreflightOperation(
+        operation_code=code,
+        object_type=object_type,
+        object_id=object_id,
+        field_name=field_name,
+        before_hash=canonical_hash(before) if before is not None else None,
+        after_hash=canonical_hash(after) if after is not None else None,
+        detail=detail,
+    )
+
+
+def _local_issue(operation: PreflightOperation) -> PreflightIssue:
+    return PreflightIssue(
+        issue_id=stable_id(
+            "PREFLIGHTISSUE",
+            {
+                "operation": operation.operation_code,
+                "object_type": operation.object_type,
+                "object_id": operation.object_id,
+                "field": operation.field_name,
+            },
+        ),
+        candidate_id=(
+            operation.object_id if operation.object_type == "ATOMIC_FACT" else None
+        ),
+        source_document_id=(
+            operation.object_id
+            if operation.object_type == "SOURCE_DOCUMENT"
+            else None
+        ),
+        cause_class=RejectionRootCauseClass.LOCAL_NORMALIZABLE,
+        cause_code=operation.operation_code,
+        detail=operation.detail or "deterministic local normalization applied",
+        routing=RejectionRouting.LOCAL_FIX_AND_REVERIFY,
+        locally_resolved=True,
+        material=operation.object_type == "ATOMIC_FACT",
+    )
+
+
+def _write_atomic(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    part = path.with_suffix(path.suffix + f".{os.getpid()}.part")
+    try:
+        with part.open("x", encoding="utf-8", newline="\n") as stream:
+            stream.write(text)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(part, path)
+        fsync_directory(path.parent)
+    finally:
+        part.unlink(missing_ok=True)
+
+
+__all__ = [
+    "DOSSIER_V3",
+    "LocalEvidencePreflightService",
+    "PREFLIGHT_SEMANTICS_VERSION",
+    "PreSchemaV3Normalizer",
+]
