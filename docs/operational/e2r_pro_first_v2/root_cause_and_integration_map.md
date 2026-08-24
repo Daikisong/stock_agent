@@ -208,7 +208,7 @@ phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는
 | P6 | 완료 | 11종 verifier rejection packet, 동일 대화 repair/withdraw, deterministic re-verification |
 | P7 | 완료 | saturation 선행 gate, diagnostic/full score 분리, Stage/publication withheld, 기존 scorer/StageCourt 재사용 |
 | P8 | 완료 | 36 prompt snapshot, 13 mechanism golden, known-bad 30종·detector 29개 |
-| P9 | 진행 중 | 000660 pass 8 revision 2와 최신 111-fact verifier attempt 4 완료(accepted 49, query/search 0/0). pass 11은 COMPLETE/submit 1, read-only 합성 122 facts/211 routes PASS. durable repair snapshot/reverify/saturation/score, C17/C28가 남음 |
+| P9 | 진행 중 | 000660 pass 11 first repair 완료. 111-15+11=107 facts/211 routes, replacement accepted 4/rejected 7/withdrawn 4, compiled 53. pending repair 42와 saturation/score, C17/C28가 남음 |
 | P10 | 부분 완료 | V2 static audit 20/20 zero·critical 0 구현. P9 완료 뒤 full CI·최종 receipt가 남음 |
 
 ### 2026-08-24 live P9 진행 기록
@@ -669,3 +669,22 @@ runtime 보조물이다. 이를 전체 recovery 실패로 취급하면 이미 �
 실패 class/message는 남기지만 workflow·score·Stage 권한은 없다. 예를 들어 송장번호와 봉인이
 맞는 택배를 현관 사진 카메라가 멈췄다는 이유로 재주문하지 않는 것과 같다. live-runtime
 `27/27`, operational acceptance `18/18 PASS`로 이 경계를 고정했다.
+
+### repair preflight fact 수와 실제 replacement 적용 fact 수를 구분한다
+
+pass 11 capture를 단순 append하면 prior 111 + new 11 = 122 facts다. 그러나 verifier repair의
+실제 의미는 반려 원본 15개를 유지한 채 새 fact를 더하는 것이 아니다. 원본 15개를 score
+후보 roster에서 제거하고 4개는 withdrawn, 11개는 replacement로 넣는다.
+
+```text
+111 - 15 + 11 = 107 durable effective facts
+```
+
+replacement 11개 중 deterministic verifier 승인 4, 반려 7이며 기존 승인 49는 보존돼 compiled
+evidence가 53개가 됐다. snapshot은
+`PRODOSSIERSNAPSHOT-cc57432e88b8eb100c7f3655`, hash
+`50ec0efa8d5b48944b8ce762263cd1017af681f7a5637aefa4c21c18d612b351`다.
+
+최신 pending repair 42개는 next 16 + deferred 26으로 다시 batch됐다. max follow-up 7의 pass 12는
+submit 0인 cap-only 영수증이며, 상한 10 재개 때 기존 row를 보존하고 새 pass를 만든다. 아직
+repair pending이 있으므로 canonical score/Stage/publication gate는 계속 닫혀 있다.

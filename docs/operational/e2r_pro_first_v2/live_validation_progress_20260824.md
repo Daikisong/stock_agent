@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 02:52 KST`
+기준 시각: `2026-08-25 03:01 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-이번 기록의 부모 HEAD: `21f7dea5dcadcf1ab39205b1f62cd86d65eecb79`
+이번 기록의 부모 HEAD: `49befad7f6df840ba3aaee343244a938ef198a6b`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -49,6 +49,11 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → 실제 pass 11 response schema 재검증 PASS / NEEDS_VERIFIER_REPAIR / facts 11
 → 다음 재개는 선택적 runtime screenshot timeout으로 repair 진입 전에 중단, 전송 0
 → screenshot은 authority가 아니므로 실패 영수증만 남기고 exact capture 재사용은 계속 허용
+→ pass 11 repair 영속 완료: 기존 15 제거 + 4 withdraw + 11 replacement = 107 facts
+→ replacement 재검증 accepted 4 / rejected 7, 기존 accepted 49 보존, compiled 53
+→ 누적 107 facts / 211 routes / 28 questions / NEEDS_VERIFIER_REPAIR
+→ 다음 repair pending 42 = next batch 16 + deferred 26
+→ pass 12는 max 7 cap에서 TRANSPORT_PENDING / submit_count=0, 아직 미전송
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -72,7 +77,9 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 | pass 8 corrected preflight hash | `ad7ddf67b76eabddb210cd1d5b6d2c1d6b01433c8565e0bfd7769016036f7f5c` |
 | pass 8 revision lineage | revision 1 `PRODOSSIERSNAPSHOT-a6eca08aa35d81fd9f461b6d` → revision 2 `PRODOSSIERSNAPSHOT-d29e57e360f0db59c43f4f2b` |
 | pass 11 capture hash | report `9de8a9ba2b8666d41ffd535cb7c75ad9fe5f6575f3ac3e558f28c66977f1c7a1` / dossier `ee5d14a341093c312be0781199200b71d5a8b09cef15aeb12e662293e33a0e62` |
-| pass 11 read-only merged hash | `458676ae69defbe3054a981defde831ed8da1532b6189f7999e25761a7a29480` (아직 미영속) |
+| pass 11 pre-repair append preflight | hash `458676ae69defbe3054a981defde831ed8da1532b6189f7999e25761a7a29480` / 122 facts. repair action 적용 전 중간값이라 영속하지 않음 |
+| pass 11 effective snapshot | `PRODOSSIERSNAPSHOT-cc57432e88b8eb100c7f3655` / hash `50ec0efa8d5b48944b8ce762263cd1017af681f7a5637aefa4c21c18d612b351` |
+| pass 11 repair receipt | hash `9250299d7717db0b9ac89d246bcb30ece2f4db3c03da997b7c87462d2e81d8c7` / source verification hash `a2700b1139f692b786ded7a7db3f7c45fb945cec7edea16f3ff15400781efb7b` |
 | runtime root | `C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\live_v2\20260823T145430Z` |
 
 runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 있어 Git에 복제하지
@@ -93,7 +100,8 @@ runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 �
 | 8 | `PROPASS-7392f80853f11b8cdde93640` | `PUBLIC_GAP_CLOSURE` | `COMPLETE` | 1 | 재제출 없이 기존 결과 회수. 새 fact 0 / 새 route 28. availability correction은 append-only revision 2, 누적 111 facts / 161 routes |
 | 9 | `PROPASS-19f49da97db889f081930dec` | `PUBLIC_GAP_CLOSURE` | `TRANSPORT_PENDING` | 0 | bounded follow-up 안전 한도 6에서 생성만 되고 미전송. corrected routing에서는 공개검색 대상이 0이므로 제출하지 않음 |
 | 10 | `PROPASS-2c64ccb7b9a86a8e7cbd5922` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | 최신 51개 repair packet의 첫 15개 계획. 당시 상한 6에서 미전송 보존 |
-| 11 | `PROPASS-7a551c28c37e8ca775a056a4` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | pass 10 cap 영수증을 append-only supersede. click 완료 뒤 navigation-wait timeout을 재전송 없이 복구했고 capture 재사용으로 response hash 고정. repair effective snapshot 반영 전 |
+| 11 | `PROPASS-7a551c28c37e8ca775a056a4` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | pass 10 cap 영수증을 append-only supersede. capture 재사용, repair/reverify, effective snapshot까지 완료. 107 facts / 211 routes / accepted 4 / rejected 7 / withdrawn 4 |
+| 12 | `PROPASS-e677c79c63041ec3ee5c77fe` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | pass 11 재검증 뒤 남은 42개 중 next 16개 계획. 점검용 max 7에서 미전송 보존 |
 
 pass 5는 실패한 연구 답변이 아니라 실제 제출 전 transport 계획이다. 삭제하거나
 `COMPLETE`로 바꾸지 않았고, `submit_count=0`, `prepared_at=null`, `submitted_at=null`을
@@ -489,22 +497,19 @@ revision 2 parent snapshot을 사용했다. 이 검증은 DB와 snapshot 파일�
 
 다음 순서를 모두 완료하기 전 Goal 완료를 선언하지 않는다.
 
-1. 현재 코드·문서 커밋을 푸시한 뒤 completed pass 11의 READY bundle을 다시 읽어 repair
-   delta를 적용한다. ChatGPT composer 준비·click·재전송은 하지 않는다.
-2. read-only에서 확인한 `+11 facts / +50 routes / 18 questions updated`를 append-only
-   snapshot으로 영속하고 pass 11을 `COMPLETE / submit_count=1 / response_hash exact`로
-   고정한다.
-3. pass 11 replacement 11건을 포함한 최신 effective dossier 전체를 deterministic verifier로
-   다시 검사한다. Pro의 `REPLACED/WITHDRAWN` 문구만으로 승인하지 않는다.
-4. 첫 15개 뒤 남은 mandatory-linked repair packet을 최신 roster 기준으로 다시 계산하고,
+1. 현재 코드·문서 커밋을 푸시한 뒤 명시적 max follow-up 10으로 pass 12 cap-only 영수증을
+   append-only supersede하고 next repair batch 16개를 같은 대화에 exactly once 처리한다.
+2. 다음 응답마다 replacement/withdrawal을 deterministic verifier로 다시 검사한다. Pro의
+   `REPLACED/WITHDRAWN` 문구만으로 승인하지 않는다.
+3. 첫 15개 뒤 남은 mandatory-linked repair packet을 최신 roster 기준으로 다시 계산하고,
    실제 pending만 같은 승인 범위의 bounded repair pass로 처리한다. follow-up 상한 10 안에서
    모두 끝나지 않으면 `CAP_BLOCKED`를 숨기지 않는다.
-5. `000660` mandatory questions terminal, public material gap 0, repair pending 0을 확인한다.
-6. saturation audit와 deterministic 7 component / 21 Judge / score / StageCourt를 실행한다.
-7. `011170 / C17`, `053800 / C28` live canary를 완료한다.
-8. 서로 다른 3개 mechanism canary receipt와 no hidden authority를 검증한다.
-9. full unit test, Phase100, production static audit, forbidden path audit를 실행한다.
-10. 최종 P9/P10 receipt·운영 문서·Draft PR 상태를 갱신한다.
+4. `000660` mandatory questions terminal, public material gap 0, repair pending 0을 확인한다.
+5. saturation audit와 deterministic 7 component / 21 Judge / score / StageCourt를 실행한다.
+6. `011170 / C17`, `053800 / C28` live canary를 완료한다.
+7. 서로 다른 3개 mechanism canary receipt와 no hidden authority를 검증한다.
+8. full unit test, Phase100, production static audit, forbidden path audit를 실행한다.
+9. 최종 P9/P10 receipt·운영 문서·Draft PR 상태를 갱신한다.
 
 pass 8까지의 공개검색 포화와 최신 111-fact verifier, pass 11의 실제 Pro 결과 capture는 끝났다.
 지금 남은 첫 단계는 새 연구가 아니라 이미 capture한 pass 11을 durable snapshot으로 입고하고
@@ -1472,3 +1477,62 @@ NOT_REQUESTED
 특히 이 경로는 submit coordinator를 호출하지 않으며, screenshot 실패가 재전송 권한으로
 바뀌지 않는다. timeout fixture를 포함한 live-runtime `27/27`, operational acceptance
 `18/18 PASS`로 고정했다.
+
+### 18.11 pass 11 첫 15개 repair의 deterministic 적용 결과
+
+49befad7 이후 재개에서는 같은 screenshot timeout이
+`OPTIONAL_CAPTURE_FAILED`로 기록된 뒤 workflow가 계속 진행됐다. pass 11 READY capture를
+다시 읽었고 browser submit은 없었다. repair action 15개와 replacement 11개를 기존 packet에
+결박한 뒤 전체 source verifier를 다시 실행했다.
+
+raw append-only merge preflight의 122 facts는 repair 적용 전 중간 장부다. 실제 repair는 원래
+반려 candidate 15개를 제거하고 `WITHDRAWN 4 + replacement 11`을 넣는다.
+
+```text
+prior effective facts                 111
+removed rejected candidates           -15
+replacement facts                     +11
+durable effective facts               107
+route receipts                        211
+question families                      28
+research_status               NEEDS_VERIFIER_REPAIR
+```
+
+그래서 122를 최종 사실 수로 쓰지 않는다. 쉬운 예로 불량품 15개를 창고에서 빼고 그중 11개만
+교환품으로 넣었으므로 총재고는 4개 줄어든 107개다.
+
+repair 결과:
+
+```text
+repair actions/resolutions             15 / 15
+withdrawn                               4
+replacement reverified accepted         4
+replacement reverified rejected         7
+prior accepted preserved               49
+compiled evidence facts                53
+material rejection unresolved           7
+source document cache reuse          105 / 107
+full document fetch                     2
+score_valid                          false
+publication                       withheld
+```
+
+Pro가 교체했다고 쓴 11개를 모두 승인하지 않았다. deterministic verifier가 source/date/quote/scope
+전체를 통과시킨 4개만 accepted가 됐고 7개는 다음 repair 대상으로 남았다. withdrawn 4개도
+원본 history에서 삭제하는 대신 repair receipt에 명시적으로 남는다.
+
+append-only snapshot:
+
+```text
+snapshot id       PRODOSSIERSNAPSHOT-cc57432e88b8eb100c7f3655
+parent snapshot   PRODOSSIERSNAPSHOT-d29e57e360f0db59c43f4f2b
+dossier hash      50ec0efa8d5b48944b8ce762263cd1017af681f7a5637aefa4c21c18d612b351
+facts/routes      107 / 211
+repair receipt    9250299d7717db0b9ac89d246bcb30ece2f4db3c03da997b7c87462d2e81d8c7
+```
+
+최신 roster에서 mandatory-linked pending repair는 42개다. 21만 자 prompt 예산으로 다음
+16개가 203,001자에 선택됐고 26개는 deferred다. 점검용 max follow-up 7 때문에 pass 12
+`PROPASS-e677c79c63041ec3ee5c77fe`는
+`TRANSPORT_PENDING / submit_count=0`으로 생성만 됐다. 다음 실행은 사용자가 이미 허용한
+상한 10에서 이 cap-only 영수증을 보존하고 새 pass로 exactly-once 전송한다.
