@@ -1,13 +1,13 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-25 04:30 KST`
+기준 시각: `2026-08-25 P1 완료 시점`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_1_fresh_session_verifier_ready_master_goal.md`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-부모 HEAD: `49adcb4056821d7e6a24b58e9c068dbf2092e542`
+현재 기준 HEAD: `b6c30eb90ec802e12bc0b06d946072c7c7fcd983`
 
 PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지 않는다.
 
@@ -15,7 +15,7 @@ PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지
 
 ```text
 P0 old run freeze                         COMPLETE
-P1 rejection A/B/C taxonomy              PENDING
+P1 rejection A/B/C taxonomy              COMPLETE
 P2 ResearchDossierV3                      PENDING
 P3 Initial Prompt V3                      PENDING
 P4 local preflight                        PENDING
@@ -132,16 +132,58 @@ Windows 전체 live-runtime 묶음에서 `git rev-parse`가 WSL UNC 경로를 re
 못한 환경 오류는 코드 회귀로 세지 않는다. 같은 테스트는 Linux에서 통과했고 실제 browser
 mock test는 Windows 환경에서 성공했다. 최종 판단은 push 뒤 Linux GitHub Actions 결과로 한다.
 
-## 다음 단계 P1
+## P1 — rejection taxonomy
 
-old runtime의 전체 rejection packet을 삭제·샘플링하지 않고 읽어 다음을 생성한다.
+old runtime의 전체 rejection register를 삭제·샘플링하지 않고 읽어 다음을 생성했다.
 
 ```text
 old_run_rejection_taxonomy.json
 old_run_rejection_taxonomy.md
 ```
 
-각 candidate를 A `INITIAL_PROMPT_OUTPUT_DEFECT`, B `LOCAL_NORMALIZATION_OR_VERIFIER_DEFECT`,
-C `GENUINE_SEMANTIC_OR_SOURCE_DEFECT`로 분류하고, 같은 source/중복 mechanical rejection과
-실제 Pro semantic repair 수를 따로 집계한다. 이 taxonomy가 끝나기 전 fresh conversation은
-만들지 않는다.
+append-only snapshot의 register 302행을 `candidate_id + original_candidate_hash`로 결박해
+고유 후보 74개로 환원했다. 원문 statement와 quote는 runtime에만 두고 Git 문서에는 식별자,
+canonical source document ID, 원인, routing, generic 수정 위치, regression test ID만 넣었다.
+
+```text
+고유 rejection                               74
+A INITIAL_PROMPT_OUTPUT_DEFECT               50 / 67.57%
+B LOCAL_NORMALIZATION_OR_VERIFIER_DEFECT      24 / 32.43%
+C GENUINE_SEMANTIC_OR_SOURCE_DEFECT            0 / 0.00%
+같은 source가 반복된 후보                    63 / 17 source groups
+중복 mechanical rejection                     8
+old audit에서 확인된 genuine semantic repair   0
+```
+
+가장 큰 원인은 source 부족이 아니라 lifecycle 계약이었다. `UNSUPPORTED_DERIVATION` 38건은
+모두 `current_status=UNKNOWN`이어서 old lifecycle bridge가 `UNVERIFIED_PENDING`으로 만든
+후보였다. 쉬운 예로 “소송이 해결됐다”는 resolution fact를 가져왔는데 상태 필드가 비어 있으면,
+자료를 다시 찾을 문제가 아니라 V3가 `RESOLVED/OPEN/...` 중 하나를 반드시 출력하게 해야 한다.
+
+다음 24건은 Pro에게 다시 물으면 안 되는 로컬 결함이다.
+
+```text
+nonissuer subject alias/scope resolver       14
+compact repair segment/product 상속           5
+same-source quote representation              2
+unavailable source representation             3
+```
+
+C가 0이라는 수치는 old fact가 전부 의미적으로 정답이라는 뜻이 아니다. old verifier가 A/B에서
+먼저 막았기 때문에, P2~P4 수정 뒤 fresh run의 재검문에서 실제 C가 새로 드러날 수 있다.
+그때만 compact Pro semantic repair에 보낸다.
+
+검증:
+
+```text
+taxonomy unit test                           3/3 PASS
+고유 candidate / required field             74/74 PASS
+original_candidate_hash binding             74/74 PASS
+원문 statement/quote Git 복제                0 PASS
+deterministic CLI replay                     PASS
+```
+
+## 다음 단계 P2
+
+이제 source document와 atomic fact를 분리하는 append-only `ResearchDossierV3`를 구현한다.
+fresh conversation 생성이나 browser 전송은 아직 하지 않는다.
