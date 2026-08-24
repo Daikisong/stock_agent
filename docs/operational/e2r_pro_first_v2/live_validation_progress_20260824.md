@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 01:54 KST`
+기준 시각: `2026-08-25 02:35 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-이번 기록의 부모 HEAD: `030223ab6125623ab1c6c9be19c2787887d5c645`
+이번 기록의 부모 HEAD: `a356ba4035015a034cf68442e69fc6b7959aab56`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -37,7 +37,13 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → pass 10 VERIFIER_REPAIR는 상한에서 TRANSPORT_PENDING / submit_count=0, 아직 미전송
 → 명시적 상한 증가 때 cap 영수증만 append-only supersede하고 실제 UI failure는 재전송 금지
 → pass 11 first repair batch DOM click 1회 실행, Playwright navigation wait timeout
-→ pass 11 TRANSPORT_PENDING / submit_count=1: 재전송 금지, exact visible result recovery만 허용
+→ pass 11은 click을 다시 하지 않고 exact visible result만 약 31분 감시해 capture 완료
+→ pass 11 RESEARCH_RUNNING / submit_count=1 / READY 존재: parser 실패 뒤에도 재전송 금지
+→ compact repair replacement 11건의 publisher 생략은 exact prior URL+lineage identity로만 복원
+→ repair register의 `replacement_dossier_fact_id` 별칭을 실행용 replacement에 결박
+→ gap 18개의 attempted source role은 같은 question row의 exact roster로만 복원
+→ 실제 capture read-only 전체 합성 PASS: +11 facts / +50 routes / 18 questions updated
+→ 예상 effective dossier 122 facts / 211 routes / 28 questions, 아직 runtime write 전
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -60,6 +66,8 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 | pass 8 response hash | `3f4dcdbb3c196a8f19e3f4b52ee2b0823aabdd59c1eab6a5711f89d712b648bf` |
 | pass 8 corrected preflight hash | `ad7ddf67b76eabddb210cd1d5b6d2c1d6b01433c8565e0bfd7769016036f7f5c` |
 | pass 8 revision lineage | revision 1 `PRODOSSIERSNAPSHOT-a6eca08aa35d81fd9f461b6d` → revision 2 `PRODOSSIERSNAPSHOT-d29e57e360f0db59c43f4f2b` |
+| pass 11 capture hash | report `9de8a9ba2b8666d41ffd535cb7c75ad9fe5f6575f3ac3e558f28c66977f1c7a1` / dossier `ee5d14a341093c312be0781199200b71d5a8b09cef15aeb12e662293e33a0e62` |
+| pass 11 read-only merged hash | `458676ae69defbe3054a981defde831ed8da1532b6189f7999e25761a7a29480` (아직 미영속) |
 | runtime root | `C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\live_v2\20260823T145430Z` |
 
 runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 있어 Git에 복제하지
@@ -79,12 +87,16 @@ runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 �
 | 7 | `PROPASS-5c7b3b52569b6744cc2686d9` | `PUBLIC_GAP_CLOSURE` | `COMPLETE` | 1 | 기존 capture를 재전송 없이 입고. snapshot `PRODOSSIERSNAPSHOT-6273c68ce026516e4cb600ce`, 111 facts / 133 routes |
 | 8 | `PROPASS-7392f80853f11b8cdde93640` | `PUBLIC_GAP_CLOSURE` | `COMPLETE` | 1 | 재제출 없이 기존 결과 회수. 새 fact 0 / 새 route 28. availability correction은 append-only revision 2, 누적 111 facts / 161 routes |
 | 9 | `PROPASS-19f49da97db889f081930dec` | `PUBLIC_GAP_CLOSURE` | `TRANSPORT_PENDING` | 0 | bounded follow-up 안전 한도 6에서 생성만 되고 미전송. corrected routing에서는 공개검색 대상이 0이므로 제출하지 않음 |
+| 10 | `PROPASS-2c64ccb7b9a86a8e7cbd5922` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | 최신 51개 repair packet의 첫 15개 계획. 당시 상한 6에서 미전송 보존 |
+| 11 | `PROPASS-7a551c28c37e8ca775a056a4` | `VERIFIER_REPAIR` | `RESEARCH_RUNNING` | 1 | pass 10 cap 영수증을 append-only supersede. click 완료 뒤 navigation-wait timeout을 재전송 없이 복구했고 visible 결과 capture·READY 완료. dialect 합성 검증 PASS, durable 반영 전 |
 
 pass 5는 실패한 연구 답변이 아니라 실제 제출 전 transport 계획이다. 삭제하거나
 `COMPLETE`로 바꾸지 않았고, `submit_count=0`, `prepared_at=null`, `submitted_at=null`을
 보존했다. pass 6~8은 각각 별도 prompt/input hash와 exactly-once claim으로 1회만 제출됐다.
-pass 7과 pass 8은 durable 완료됐으므로 어느 쪽도 두 번째 제출을 허용하지 않는다. pass 9는
-prompt 전송 전 안전 정지된 계획 영수증이며 `submit_count=0`을 그대로 보존한다.
+pass 7과 pass 8은 durable 완료됐으므로 어느 쪽도 두 번째 제출을 허용하지 않는다. pass 9와
+pass 10은 prompt 전송 전 안전 정지된 계획 영수증이며 `submit_count=0`을 그대로 보존한다.
+pass 11은 이미 click claim과 실제 visible 결과가 있으므로 현재 status가 아직
+`RESEARCH_RUNNING`이어도 `REUSE_CAPTURE`만 허용하고 composer 입력·click은 다시 하지 않는다.
 
 ## 4. dossier 누적 결과
 
@@ -424,6 +436,25 @@ Windows approval suite의 첫 실행은 assertion이 아니라 임시 SQLite 파
 connection 21곳을 `contextlib.closing`으로 명시 종료하도록 고쳤고, Linux state machine
 13/13과 Windows approval/submit 8/8을 다시 통과했다.
 
+2026-08-25 02:35 KST 현재 미영속 pass 11 capture와 이번 dialect 보강을 대상으로 다시
+실행한 focused 결과는 다음과 같다.
+
+```text
+dossier status/dialect          17 / 17 PASS
+live runtime recovery           27 / 27 PASS
+verifier repair                 18 / 18 PASS
+V2 static audit tests            2 /  2 PASS
+focused 합계                    64 / 64 PASS
+production static audit         20 / 20 zero
+critical_count                   0
+actual pass 11 read-only merge   PASS
+browser submit/search/fetch       0 / 0 / 0
+```
+
+실제 pass 11 read-only merge는 fixture가 아니라 원본 runtime의 READY bundle과 pass 8
+revision 2 parent snapshot을 사용했다. 이 검증은 DB와 snapshot 파일을 쓰지 않았으므로
+예상 hash `458676ae...`를 완료 snapshot으로 주장하지 않는다.
+
 ## 10. 이번 커밋에 포함되는 핵심 변경
 
 - Pro compact/full dossier dialect adapter와 exact prior-snapshot anchoring
@@ -452,25 +483,27 @@ connection 21곳을 `contextlib.closing`으로 명시 종료하도록 고쳤고,
 
 다음 순서를 모두 완료하기 전 Goal 완료를 선언하지 않는다.
 
-1. 현재 코드·문서 커밋을 푸시한 뒤 pass 7을 `REUSE_CAPTURE`로 재개한다. 이미 저장된
-   READY/capture bundle만 읽고 ChatGPT에는 다시 보내지 않는다.
-2. pass 7의 예상 누적 `111 facts / 21 lineages / 133 routes / 28 questions`와 실제 durable
-   snapshot hash를 대조하고 `COMPLETE / response_hash`를 확인한다.
-3. pass 7 신규 fact를 deterministic source verifier에 통과시키고, pass 6에서 남은 12건과
-   deferred roster를 최신 검증 결과 기준의 bounded repair queue로 다시 계산한다.
-4. 남은 material verifier rejection만 같은 승인 범위의 bounded repair pass로 순차 처리한다.
-   이미 accepted된 fact나 likely-nonpublic remainder를 새 검색 부족으로 오인하지 않는다.
-5. 000660 mandatory questions terminal, public material gap 0, repair pending 0을 확인한다.
+1. 현재 코드·문서 커밋을 푸시한 뒤 pass 11을 `REUSE_CAPTURE`로 재개한다. READY bundle만
+   읽고 ChatGPT composer 준비·click·재전송을 하지 않는다.
+2. read-only에서 확인한 `+11 facts / +50 routes / 18 questions updated`를 append-only
+   snapshot으로 영속하고 pass 11을 `COMPLETE / submit_count=1 / response_hash exact`로
+   고정한다.
+3. pass 11 replacement 11건을 포함한 최신 effective dossier 전체를 deterministic verifier로
+   다시 검사한다. Pro의 `REPLACED/WITHDRAWN` 문구만으로 승인하지 않는다.
+4. 첫 15개 뒤 남은 mandatory-linked repair packet을 최신 roster 기준으로 다시 계산하고,
+   실제 pending만 같은 승인 범위의 bounded repair pass로 처리한다. follow-up 상한 10 안에서
+   모두 끝나지 않으면 `CAP_BLOCKED`를 숨기지 않는다.
+5. `000660` mandatory questions terminal, public material gap 0, repair pending 0을 확인한다.
 6. saturation audit와 deterministic 7 component / 21 Judge / score / StageCourt를 실행한다.
 7. `011170 / C17`, `053800 / C28` live canary를 완료한다.
 8. 서로 다른 3개 mechanism canary receipt와 no hidden authority를 검증한다.
 9. full unit test, Phase100, production static audit, forbidden path audit를 실행한다.
 10. 최종 P9/P10 receipt·운영 문서·Draft PR 상태를 갱신한다.
 
-pass 6 원본 revision 2 반영과 pass 7 외부 Pro 연구/capture는 끝났다. 지금 남은 첫 단계는
-새 연구가 아니라 이미 capture한 pass 7을 durable snapshot으로 입고하고 검문하는 일이다.
-그동안 score·Stage를 낮게 확정하지 않고 `score_valid=false / publication withheld`를
-유지한다.
+pass 8까지의 공개검색 포화와 최신 111-fact verifier, pass 11의 실제 Pro 결과 capture는 끝났다.
+지금 남은 첫 단계는 새 연구가 아니라 이미 capture한 pass 11을 durable snapshot으로 입고하고
+deterministic verifier에 다시 거는 일이다. 그동안 score·Stage를 낮게 확정하지 않고
+`score_valid=false / publication withheld`를 유지한다.
 
 ## 12. 외부 검수 체크리스트
 
@@ -500,6 +533,13 @@ pass 6 원본 revision 2 반영과 pass 7 외부 Pro 연구/capture는 끝났다
   status를 계산하는가
 - pass 7 capture가 존재하는 상태에서 resume이 `REUSE_CAPTURE`를 선택하고 submit_count를
   1보다 늘리지 않는가
+- pass 11 capture가 존재하는 상태에서 resume이 composer 입력·click 없이 `REUSE_CAPTURE`만
+  선택하는가
+- compact replacement의 누락 publisher/title을 exact prior candidate의 동일 URL+lineage일
+  때만 복원하고, 둘 중 하나가 바뀌면 hard fail하는가
+- `replacement_dossier_fact_id`가 current repair packet 안의 replacement에만 결박되는가
+- gap의 attempted source role이 다른 질문이나 하드코딩 목록이 아니라 동일 question row에서만
+  복원되는가
 
 ## 13. 23:05 KST 원본 재개와 public/repair queue 분리
 
@@ -1263,3 +1303,82 @@ production static audit           20 / 20 zero, critical_count=0, PASS
 
 이 시점의 pass 11 결과는 아직 durable capture되지 않았다. 다음 실행은 새 전송이 아니라
 현재 대화의 pass 11 결과만 회수한다. full-thesis score와 canonical Stage 권한은 없다.
+
+### 18.8 pass 11 visible 결과 capture와 compact repair dialect 합성 검증
+
+18.7 이후 recovery-only monitor는 composer를 다시 건드리지 않고 같은 conversation의
+assistant result만 읽었다. 약 31분, 마지막 관측 poll 345에서 visible 완료가 확인됐고 exact
+pass/parent marker를 각각 하나씩 검증한 뒤 capture bundle을 원자적으로 만들었다.
+
+```text
+pass id                    PROPASS-7a551c28c37e8ca775a056a4
+durable status             RESEARCH_RUNNING
+submit_count               1
+automatic resubmit         false
+assistant turn             request-6a8b09c3-bfcc-83ee-b15b-9f76eca52249-3
+capture source             DIRECT_REPORT_DOM
+captured_at                2026-08-24T17:27:18.828956Z
+report bytes/hash          112,008 / 9de8a9ba2b8666d41ffd535cb7c75ad9fe5f6575f3ac3e558f28c66977f1c7a1
+dossier bytes/hash         111,414 / ee5d14a341093c312be0781199200b71d5a8b09cef15aeb12e662293e33a0e62
+READY                      present
+```
+
+capture 뒤 첫 parser/adapter 시도는 replacement fact `PROFACT-MF064`에 publisher가 없다는
+이유로 fail-closed했다. 실제 compact repair payload를 조사한 결과 교체 fact 11개 모두
+statement, exact URL, exact quote, lineage ID, `repair_of_candidate_id`를 갖고 있었고, 생략된
+필드는 publisher였다. 11개 모두 교체 대상 prior candidate와 URL과 lineage가 정확히 같았다.
+
+따라서 다음 제한된 projection만 허용했다.
+
+```text
+repair_of_candidate_id가 exact prior dossier에 존재
++ replacement URL == prior URL
++ replacement lineage == prior lineage
++ replacement publisher가 비어 있음
+→ prior publisher와, 비어 있으면 prior title만 byte-for-byte 복원
+
+URL 또는 lineage가 하나라도 달라짐
+→ 새 source identity로 간주하고 hard fail
+```
+
+쉬운 예로 같은 공시의 문장만 바로잡으면서 발행기관 이름을 반복하지 않은 경우에는 기존
+공시의 발행기관 표찰을 붙일 수 있다. 하지만 URL이 다른 새 기사에 기존 공시의 발행기관을
+붙이는 것은 금지한다. 이 projection은 statement, quote, URL, lineage를 고치지 않는다.
+
+두 번째 차이는 실행 register의 replacement 필드명이
+`replacement_dossier_fact_id`였다는 점이다. adapter는 기존 별칭과 함께 이 필드를 current
+`VERIFIER_REPAIR` packet scope에서만 replacement identity로 읽는다. arbitrary Pro self-report는
+계속 diagnostics일 뿐 실행 권한이 없다.
+
+마지막으로 compact unresolved gap 18개는 gap row에서
+`attempted_source_role_ids`를 반복하지 않았지만 같은 response의 exact question row에는 해당
+목록이 모두 있었다. adapter는 동일 `question_family_id`의 목록만 복원한다. 다른 질문의 role,
+route 개수, 종목별 source template에서 role을 추론하지 않는다.
+
+원본 runtime을 쓰지 않은 전체 preflight 결과:
+
+```text
+parent snapshot             PRODOSSIERSNAPSHOT-d29e57e360f0db59c43f4f2b
+parent dossier hash         ad7ddf67b76eabddb210cd1d5b6d2c1d6b01433c8565e0bfd7769016036f7f5c
+new facts                   11
+new source lineages          0
+new route receipts          50
+updated questions           18
+effective facts            122
+effective routes           211
+effective questions         28
+preflight effective hash    458676ae69defbe3054a981defde831ed8da1532b6189f7999e25761a7a29480
+schema/delta/normalizer      PASS
+new submit/search/fetch      0 / 0 / 0
+```
+
+새 fact ID는 `MF064`, `MF065`, `CF026~CF033`, `RF041`의 canonical `PROFACT-*` 11개다.
+아직 이 결과를 DB/snapshot에 쓰지 않았으므로 pass 11 status는 `RESEARCH_RUNNING`이고 위
+effective hash는 완료 receipt가 아닌 재현 가능한 preflight 값이다. 다음 재개는 max follow-up
+7로 capture만 입고해 첫 batch의 deterministic 재검증 결과를 먼저 확인한다. 그 다음 새
+packet이 정말 남을 때만 사용자가 승인한 상한 10 범위에서 후속 repair를 계획한다.
+
+현재 변경을 직접 고정한 회귀는 dossier `17/17`, live runtime `27/27`, verifier repair
+`18/18`, V2 static audit `2/2`, 합계 `64/64 PASS`다. production static audit도
+`20/20 zero / critical_count=0 / PASS`이며, 테스트와 preflight 중 브라우저 전송·검색·fetch는
+없었다.

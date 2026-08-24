@@ -539,6 +539,12 @@ def _adapt_compact_v2(
     resolution_rows = adapted.get("resolution_facts") or []
     if not all(isinstance(rows, list) for rows in (material_rows, counter_rows, resolution_rows)):
         raise DossierDialectError("compact V2 fact collections must be arrays")
+    projected_repair_source_identity_count = (
+        _project_compact_repair_source_identity(
+            adapted,
+            prior_dossier=prior_dossier,
+        )
+    )
     raw_fact_ids: list[str] = []
     for collection, id_key in (
         (material_rows, "fact_id"),
@@ -772,6 +778,10 @@ def _adapt_compact_v2(
             f"PROJECT_COMPACT_V2_GAPS:{len(adapted['unresolved_gaps'])}",
             f"PROJECT_COMPACT_V2_ROUTE_RECEIPTS:{len(adapted['search_route_receipts'])}",
             (
+                "PROJECT_EXACT_PRIOR_REPAIR_SOURCE_IDENTITY:"
+                f"{projected_repair_source_identity_count}"
+            ),
+            (
                 "PROJECT_REFERENCED_PRIOR_LINEAGES_FOR_DELTA_VALIDATION:"
                 f"{projected_prior_lineage_count}"
             ),
@@ -821,6 +831,7 @@ def _scoped_verifier_repair_proposals(
         replacement_id = str(
             row.get("dossier_fact_id")
             or row.get("replacement_candidate_id")
+            or row.get("replacement_dossier_fact_id")
             or ""
         )
         if not _COMPACT_V2_FACT_ID.fullmatch(candidate_id):
@@ -837,6 +848,74 @@ def _scoped_verifier_repair_proposals(
             continue
         result.append(deepcopy(dict(row)))
     return result
+
+
+def _project_compact_repair_source_identity(
+    payload: Mapping[str, Any],
+    *,
+    prior_dossier: Mapping[str, Any] | None,
+) -> int:
+    """Fill only omitted source identity from the exact repaired candidate.
+
+    A compact repair replacement can repeat the immutable source URL,
+    lineage, and a corrected literal excerpt while omitting the publisher.
+    The publisher/title are source identity rather than new research claims,
+    so they may be copied byte-for-byte only when ``repair_of_candidate_id``
+    resolves in the exact prior dossier and URL plus lineage are unchanged.
+    Any changed source remains fail-closed.
+    """
+
+    rows = tuple(
+        row
+        for collection in ("material_facts", "counterfacts", "resolution_facts")
+        for row in payload.get(collection) or ()
+        if isinstance(row, dict)
+    )
+    candidates = tuple(
+        row
+        for row in rows
+        if str(row.get("repair_of_candidate_id") or "")
+        and not str(
+            row.get("source_publisher") or row.get("publisher") or ""
+        ).strip()
+    )
+    if not candidates:
+        return 0
+    if prior_dossier is None:
+        return 0
+    _validate_prior_dossier_scope(payload, prior_dossier)
+    prior_by_id = {
+        str(row.get("dossier_fact_id") or ""): row
+        for collection in ("material_facts", "counterfacts", "resolution_facts")
+        for row in prior_dossier.get(collection) or ()
+        if isinstance(row, Mapping)
+    }
+    projected = 0
+    for row in candidates:
+        repair_of = str(row.get("repair_of_candidate_id") or "")
+        canonical_repair_of = _canonical_compact_fact_id(repair_of)
+        prior = prior_by_id.get(canonical_repair_of)
+        if prior is None:
+            continue
+        source_url = str(row.get("source_url") or row.get("url") or "")
+        prior_url = str(prior.get("source_url") or prior.get("url") or "")
+        lineage_id = str(row.get("source_lineage_id") or "")
+        prior_lineage_id = str(prior.get("source_lineage_id") or "")
+        if source_url != prior_url or lineage_id != prior_lineage_id:
+            raise DossierDialectError(
+                "compact repair omitted publisher while changing prior source identity: "
+                f"{row.get('dossier_fact_id') or row.get('fact_id') or repair_of}"
+            )
+        prior_publisher = str(prior.get("source_publisher") or "")
+        if not prior_publisher:
+            continue
+        row["source_publisher"] = prior_publisher
+        if not str(row.get("source_title") or "").strip():
+            prior_title = str(prior.get("source_title") or "")
+            if prior_title:
+                row["source_title"] = prior_title
+        projected += 1
+    return projected
 
 
 def _compact_input_fact_id(row: Mapping[str, Any], *, id_key: str) -> str:
@@ -1395,6 +1474,14 @@ def _canonical_compact_gaps(
                     "availability_class": str(row.get("availability_class") or question.get("availability_class") or "UNKNOWN_ROUTE_NOT_YET_TESTED"),
                     "materiality": materiality,
                     "required_source_role_ids": list(question.get("required_source_roles_missing") or ()),
+                    # Compact Pro repair responses can omit this gap-level
+                    # duplicate while retaining the authoritative attempted
+                    # role roster on the exact same question row. Project
+                    # only that same-question value; never infer roles from a
+                    # different question or from a source-family template.
+                    "attempted_source_role_ids": list(
+                        question.get("attempted_source_role_ids") or ()
+                    ),
                     "affected_component_ids": list(question.get("affected_component_ids") or ()),
                     "could_change_score": could_score,
                     "could_change_stage": could_stage,

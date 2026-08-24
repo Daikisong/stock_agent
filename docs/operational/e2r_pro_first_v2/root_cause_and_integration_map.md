@@ -193,7 +193,7 @@ mandatory question nonterminal > 0
 
 ## 구현 진행 장부
 
-2026-08-24 현재 PR #7의 단계별 구현 상태는 다음과 같다. 이 표의 `완료`는 해당
+2026-08-25 현재 PR #7의 단계별 구현 상태는 다음과 같다. 이 표의 `완료`는 해당
 phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는 뜻이며, 전체 V2 운영
 완료를 뜻하지 않는다.
 
@@ -208,7 +208,7 @@ phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는
 | P6 | 완료 | 11종 verifier rejection packet, 동일 대화 repair/withdraw, deterministic re-verification |
 | P7 | 완료 | saturation 선행 gate, diagnostic/full score 분리, Stage/publication withheld, 기존 scorer/StageCourt 재사용 |
 | P8 | 완료 | 36 prompt snapshot, 13 mechanism golden, known-bad 30종·detector 29개 |
-| P9 | 진행 중 | 000660 pass 8 revision 2와 최신 111-fact verifier attempt 4 완료(accepted 49, query/search 0/0). mandatory-linked repair 51개는 15+36 bounded batching, pass 10은 submit 0. repair/saturation/score, C17/C28가 남음 |
+| P9 | 진행 중 | 000660 pass 8 revision 2와 최신 111-fact verifier attempt 4 완료(accepted 49, query/search 0/0). pass 11 첫 repair batch 결과 capture 완료, read-only 합성은 122 facts/211 routes PASS. durable repair/reverify/saturation/score, C17/C28가 남음 |
 | P10 | 부분 완료 | V2 static audit 20/20 zero·critical 0 구현. P9 완료 뒤 full CI·최종 receipt가 남음 |
 
 ### 2026-08-24 live P9 진행 기록
@@ -590,3 +590,53 @@ COMPLETE로 전이한다. marker가 없으면 pending을 유지하며 자동 sub
 inspection이 이미 RESEARCH_RUNNING을 증명하면 최초 submit 호출 자체를 성공 처리하지만,
 그 inspection도 단 한 번의 click 이후에만 실행한다. 이 경계는 Windows Chromium multi-pass
 `20/20`, live-runtime `27/27`, static critical `0`으로 고정했다.
+
+### pass 11 compact repair 결과는 evidence를 다시 발명하지 않고 장부 identity만 복원한다
+
+Recovery-only monitor는 두 번째 click 없이 pass 11 visible result를 완료까지 읽고 READY
+capture bundle을 만들었다. parser가 처음 멈춘 이유는 Pro가 사실을 0개 가져왔기 때문이
+아니다. 교체 fact 11개에 statement, URL, quote, lineage, repaired candidate는 있었지만 compact
+형식에서 publisher를 반복하지 않았고, unresolved gap 18개도 attempted role을 gap row에
+중복 기록하지 않았다.
+
+여기서 adapter의 권한을 다음처럼 제한한다.
+
+```text
+replacement candidate가 exact prior snapshot에 있음
++ URL exact match
++ source lineage exact match
+→ 생략된 publisher/title identity만 prior에서 복사 가능
+
+same question id
+→ question row의 attempted_source_role_ids를 gap row에 복사 가능
+
+다른 URL/lineage/question 또는 종목별 source template
+→ projection 금지 / hard fail
+```
+
+이는 LLM 내용을 deterministic parser가 다시 판단해 점수를 만드는 구조가 아니다. Pro가
+가져온 fact와 repair 제안을 evidence ledger에 손실 없이 넣되, immutable prior identity와 exact
+same-question 관계만 코드가 검문한다. 실제 source acceptance, component, score, Stage는 이후
+기존 deterministic verifier와 rule engine이 결정한다.
+
+쉬운 예: 같은 공시를 정정한 문서에서 회사 이름 표찰만 생략됐다면 기존 공시 표찰을 다시
+붙일 수 있다. 그러나 새 기사 URL에 옛 공시 표찰을 붙이거나, Q02의 검색 시도를 Q03에
+복사하는 것은 허용하지 않는다.
+
+원본 runtime write 없이 `pass8 revision2 parent + pass11 capture`를 전체 합성한 결과는
+다음과 같다.
+
+```text
+new facts / routes / updated questions    11 / 50 / 18
+effective facts / routes / questions     122 / 211 / 28
+new lineage                                0
+schema + delta merge + normalization      PASS
+preflight hash                            458676ae69defbe3054a981defde831ed8da1532b6189f7999e25761a7a29480
+new browser submit / search / fetch        0 / 0 / 0
+```
+
+이 hash는 아직 미영속 preflight다. pass 11은 `RESEARCH_RUNNING / submit_count=1 / READY`로
+남아 있고 다음 실행은 `REUSE_CAPTURE`만 허용한다. capture 입고 뒤 replacement 11건을 포함한
+전체 roster를 deterministic verifier로 다시 검사하기 전까지 score/Stage/publication gate는
+닫혀 있다. focused regression은 `64/64 PASS`, production static audit는
+`20/20 zero / critical_count=0 / PASS`다.

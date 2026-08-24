@@ -12,7 +12,9 @@ from e2r.pro_first.dossier import (
     ResearchDossierValidator,
 )
 from e2r.pro_first.dossier.dialect_adapter import (
+    _canonical_compact_gaps,
     _canonical_question_result,
+    _project_compact_repair_source_identity,
     _scoped_verifier_repair_proposals,
 )
 from e2r.pro_first.research_contracts import select_contract_bundle
@@ -189,6 +191,89 @@ class ProFirstV2DossierStatusTest(unittest.TestCase):
 
         self.assertEqual(canonical["status"], "NOT_APPLICABLE_WITH_REASON")
         self.assertEqual(canonical["availability_class"], "NOT_APPLICABLE")
+
+    def test_compact_repair_reuses_only_exact_prior_source_identity(self) -> None:
+        prior = _base_v2()
+        original = _canonical_v2_fact(
+            fact_id="PROFACT-MF056",
+            research_pass_id="PASS-1",
+        )
+        original.update(
+            {
+                "source_lineage_id": "SL13",
+                "source_url": "https://example.com/auditor",
+                "source_title": "감사인 선임 공시",
+                "source_publisher": "검증대상 / 거래소",
+            }
+        )
+        prior["material_facts"] = [original]
+        payload = deepcopy(_base_v2())
+        payload.update(
+            {
+                "research_pass_id": "PASS-2",
+                "parent_pass_id": "PASS-1",
+            }
+        )
+        replacement = {
+            "dossier_fact_id": "PROFACT-MF064",
+            "repair_of_candidate_id": "PROFACT-MF056",
+            "source_lineage_id": "SL13",
+            "source_url": "https://example.com/auditor",
+            "statement": "감사인 선임 사실만 좁게 확인한다.",
+            "supporting_excerpt": "외부감사인으로 선임하였습니다",
+        }
+        payload["material_facts"] = [replacement]
+
+        projected = _project_compact_repair_source_identity(
+            payload,
+            prior_dossier=prior,
+        )
+
+        self.assertEqual(projected, 1)
+        self.assertEqual(
+            replacement["source_publisher"],
+            "검증대상 / 거래소",
+        )
+        self.assertEqual(replacement["source_title"], "감사인 선임 공시")
+        self.assertEqual(
+            replacement["supporting_excerpt"],
+            "외부감사인으로 선임하였습니다",
+        )
+        changed = deepcopy(payload)
+        changed["material_facts"][0].pop("source_publisher")
+        changed["material_facts"][0]["source_url"] = "https://example.com/other"
+        with self.assertRaisesRegex(
+            DossierDialectError,
+            "changing prior source identity",
+        ):
+            _project_compact_repair_source_identity(
+                changed,
+                prior_dossier=prior,
+            )
+
+    def test_repair_register_accepts_replacement_dossier_fact_id_alias(self) -> None:
+        rows = [
+            {
+                "candidate_id": "PROFACT-MF056",
+                "question_family_id": "QUESTION-1",
+                "rejection_category": "QUOTE_MISMATCH",
+                "status": "CORRECTED",
+                "replacement_dossier_fact_id": "PROFACT-MF064",
+            }
+        ]
+
+        scoped = _scoped_verifier_repair_proposals(
+            rows,
+            research_pass_id="PASS-2",
+            research_passes=[
+                {
+                    "pass_id": "PASS-2",
+                    "pass_name": "VERIFIER_REPAIR",
+                }
+            ],
+        )
+
+        self.assertEqual(scoped, rows)
 
     def test_nonterminal_public_gap_preserved(self) -> None:
         payload = _base_v2()
@@ -494,6 +579,48 @@ class ProFirstV2DossierStatusTest(unittest.TestCase):
         self.assertEqual(len(saturation["pro_applied_cross_guards"]), 1)
         self.assertEqual(len(saturation["pro_self_reported_verification_repairs"]), 1)
         self.assertEqual(normalized.payload["verification_repair_register"], [])
+
+    def test_compact_gap_projects_attempted_roles_from_exact_same_question(self) -> None:
+        question_id = f"{ARCHETYPE}_Q01"
+        questions = {
+            question_id: {
+                "archetype_id": ARCHETYPE,
+                "question_family_id": question_id,
+                "attempted_source_role_ids": [
+                    "ISSUER_OFFICIAL",
+                    "OFFICIAL_FILING",
+                ],
+                "required_source_roles_missing": ["CUSTOMER_PARTNER_OFFICIAL"],
+                "affected_component_ids": ["earnings_visibility"],
+                "availability_class": "PUBLIC_SEARCHABLE",
+                "could_change_score": True,
+                "could_change_stage": False,
+                "could_change_hard_break": False,
+            },
+            f"{ARCHETYPE}_Q02": {
+                "attempted_source_role_ids": ["COMPETITOR_OFFICIAL"],
+            },
+        }
+
+        gaps = _canonical_compact_gaps(
+            [
+                {
+                    "gap_id": "GAP-EXACT-QUESTION",
+                    "question_family_ids": [question_id],
+                    "proposed_gap_class": "CORROBORATION_CAP",
+                    "proposed_missing_source_role": "INDEPENDENT_CORROBORATION",
+                }
+            ],
+            questions_by_id=questions,
+        )
+
+        self.assertEqual(len(gaps), 1)
+        self.assertEqual(gaps[0]["question_family_id"], question_id)
+        self.assertEqual(
+            gaps[0]["attempted_source_role_ids"],
+            ["ISSUER_OFFICIAL", "OFFICIAL_FILING"],
+        )
+        self.assertNotIn("COMPETITOR_OFFICIAL", gaps[0]["attempted_source_role_ids"])
 
     def test_compact_followup_can_anchor_relationship_to_exact_prior_fact(self) -> None:
         prior = _base_v2(complete=True)
