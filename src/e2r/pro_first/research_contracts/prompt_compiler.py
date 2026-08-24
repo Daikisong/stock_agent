@@ -16,7 +16,7 @@ from .loader import load_research_contract
 PASS_TEMPLATE_FILES = {
     "INITIAL_FULL_RESEARCH": "e2r_pro_v2_initial_full_research.md",
     "PUBLIC_GAP_CLOSURE": "e2r_pro_v2_public_gap_closure.md",
-    "COUNTER_SUPERSESSION": "e2r_pro_v2_counter_supersession.md",
+    "COUNTER_SUPERSESSION_CLOSURE": "e2r_pro_v2_counter_supersession.md",
     "VERIFIER_REPAIR": "e2r_pro_v2_verifier_repair.md",
     "SATURATION_AUDIT": "e2r_pro_v2_saturation_audit.md",
     "DELTA_RESEARCH": "e2r_pro_v2_delta_research.md",

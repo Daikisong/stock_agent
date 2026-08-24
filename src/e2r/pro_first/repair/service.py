@@ -31,6 +31,9 @@ from .rejection_packet import compile_rejection_packets
 from .response_delta import derive_repair_delta_from_dossier_response
 
 
+DEFAULT_REPAIR_PROMPT_PAYLOAD_CHAR_BUDGET = 210_000
+
+
 @dataclass(frozen=True)
 class VerifierRepairPlan:
     rejection_packets: tuple[VerifierRejectionPacket, ...]
@@ -68,17 +71,24 @@ class ProVerifierRepairService:
         fact_compilation_rejection_rows: Sequence[Mapping[str, Any]] = (),
         primary_archetype_ids: Sequence[str],
         existing_verified_ledger_digest: Mapping[str, Any] | None = None,
+        maximum_prompt_payload_chars: int = DEFAULT_REPAIR_PROMPT_PAYLOAD_CHAR_BUDGET,
     ) -> VerifierRepairPlan:
+        if maximum_prompt_payload_chars < 1:
+            raise ValueError("repair prompt payload budget must be positive")
         job = self.orchestrator.store.get_job(job_id)
         conversation_id = str(dossier.get("conversation_id") or "")
         if conversation_id != job.conversation_id:
             raise ValueError("verifier repair must reuse the durable Pro conversation")
-        packets = compile_rejection_packets(
+        pending_packets = compile_rejection_packets(
             dossier=dossier,
             verification_rows=verification_rows,
             fact_compilation_rejection_rows=fact_compilation_rejection_rows,
             job_root=job_root,
             conversation_id=conversation_id,
+        )
+        packets, prompt_payload_chars = _bounded_repair_packet_batch(
+            pending_packets,
+            maximum_chars=maximum_prompt_payload_chars,
         )
         question_ids = {
             value for row in packets for value in row.question_family_ids
@@ -124,6 +134,17 @@ class ProVerifierRepairService:
             "conversation_id": conversation_id,
             "rejection_packet_ids": [row.packet_id for row in packets],
             "rejection_packet_count": len(packets),
+            "pending_rejection_packet_ids": [
+                row.packet_id for row in pending_packets
+            ],
+            "pending_rejection_packet_count": len(pending_packets),
+            "deferred_rejection_packet_ids": [
+                row.packet_id for row in pending_packets[len(packets) :]
+            ],
+            "deferred_rejection_packet_count": len(pending_packets) - len(packets),
+            "prompt_payload_chars": prompt_payload_chars,
+            "prompt_payload_char_budget": maximum_prompt_payload_chars,
+            "transport_batching_only": len(pending_packets) > len(packets),
             "question_family_ids": sorted(question_ids),
             "research_pass_id": (
                 followup.research_pass.pass_id
@@ -141,13 +162,16 @@ class ProVerifierRepairService:
             repair_root / "rejection_packets.jsonl",
             [row.to_dict() for row in packets],
         )
+        _write_jsonl_atomic(
+            repair_root / "pending_rejection_packets.jsonl",
+            [row.to_dict() for row in pending_packets],
+        )
         _write_json_atomic(repair_root / "repair_plan_receipt.json", receipt)
         return VerifierRepairPlan(
             rejection_packets=packets,
             followup=followup,
             receipt=receipt,
         )
-
     def apply_and_reverify(
         self,
         *,
@@ -342,6 +366,18 @@ class ProVerifierRepairService:
             repair_root / "repair_source_verifications.jsonl",
             verification_rows,
         )
+        _write_jsonl_atomic(
+            repair_root / "evidence_facts.jsonl",
+            [row.to_dict() for row in verification.fact_compilation.facts],
+        )
+        _write_jsonl_atomic(
+            repair_root / "claim_fact_links.jsonl",
+            [row.to_dict() for row in verification.fact_compilation.claim_fact_links],
+        )
+        _write_jsonl_atomic(
+            repair_root / "fact_compilation_rejections.jsonl",
+            [row.to_dict() for row in verification.fact_compilation.rejected_claims],
+        )
         _write_json_atomic(
             repair_root / "repair_fact_compilation_receipt.json",
             verification.fact_compilation.to_dict(),
@@ -474,6 +510,29 @@ def _append_completed_repair_pass(
         rows.append(payload)
     elif dict(existing) != payload:
         raise ValueError("repair dossier pass ledger differs from durable research pass")
+
+
+def _bounded_repair_packet_batch(
+    packets: Sequence[VerifierRejectionPacket],
+    *,
+    maximum_chars: int,
+) -> tuple[tuple[VerifierRejectionPacket, ...], int]:
+    """Select a deterministic prefix for browser transport without dropping work.
+
+    The bound applies only to one visible ChatGPT composer payload.  Deferred
+    packets remain in ``pending_rejection_packets.jsonl`` and are reconsidered
+    after the selected prefix has been deterministically reverified.
+    """
+
+    selected: list[VerifierRejectionPacket] = []
+    used = 0
+    for packet in packets:
+        packet_chars = len(canonical_json(packet.to_prompt_dict()))
+        if selected and used + packet_chars > maximum_chars:
+            break
+        selected.append(packet)
+        used += packet_chars
+    return tuple(selected), used
 
 
 def _write_json_atomic(path: Path, payload: Mapping[str, Any]) -> None:

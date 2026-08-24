@@ -14,6 +14,7 @@ REQUIRED_REPAIR_TESTS = (
     "test_repair_cannot_invent_url_or_quote",
     "test_unrepaired_material_fact_blocks_full_thesis",
     "test_repaired_fact_is_reverified",
+    "test_large_repair_set_is_batched_without_dropping_deferred_packets",
 )
 
 
@@ -36,7 +37,10 @@ def compile_verifier_repair_contract_audit() -> Mapping[str, Any]:
         "required_test_names": list(REQUIRED_REPAIR_TESTS),
         "required_test_count": len(REQUIRED_REPAIR_TESTS),
         "captured_full_dossier_delta_derivation_required": True,
-        "focused_test_count": 14,
+        "browser_prompt_payload_budgeted": True,
+        "deferred_rejection_packets_persisted": True,
+        "transport_batching_changes_research_authority": False,
+        "focused_test_count": 16,
         "score_authority": False,
         "stage_authority": False,
         "critical_count": 0,

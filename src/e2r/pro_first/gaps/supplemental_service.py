@@ -696,9 +696,23 @@ def load_effective_verified_evidence(
     """Return base plus completed supplemental evidence without mutating base receipts."""
 
     root = Path(job_root).resolve()
-    facts = list(_read_jsonl(root / "verification/evidence_facts.jsonl"))
-    links = list(_read_jsonl(root / "verification/claim_fact_links.jsonl"))
-    verifications = list(_read_jsonl(root / "verification/source_verifications.jsonl"))
+    repair_receipt_path = root / "repair/verifier_repair_receipt.json"
+    if repair_receipt_path.is_file():
+        repair_receipt = _read_json(repair_receipt_path)
+        if repair_receipt.get("status") == "VERIFIER_REPAIR_COMPLETE":
+            facts = list(_read_jsonl(root / "repair/evidence_facts.jsonl"))
+            links = list(_read_jsonl(root / "repair/claim_fact_links.jsonl"))
+            verifications = list(
+                _read_jsonl(root / "repair/repair_source_verifications.jsonl")
+            )
+        else:
+            facts = list(_read_jsonl(root / "verification/evidence_facts.jsonl"))
+            links = list(_read_jsonl(root / "verification/claim_fact_links.jsonl"))
+            verifications = list(_read_jsonl(root / "verification/source_verifications.jsonl"))
+    else:
+        facts = list(_read_jsonl(root / "verification/evidence_facts.jsonl"))
+        links = list(_read_jsonl(root / "verification/claim_fact_links.jsonl"))
+        verifications = list(_read_jsonl(root / "verification/source_verifications.jsonl"))
     receipt_path = root / "supplemental/supplemental_execution_receipt.json"
     if not receipt_path.is_file():
         return tuple(facts), tuple(links), tuple(verifications)

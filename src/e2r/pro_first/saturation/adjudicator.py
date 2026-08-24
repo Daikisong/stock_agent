@@ -9,6 +9,7 @@ from ..research_contracts import select_contract_bundle
 from .fixpoint import NoNewRouteConfirmation
 from .models import DeterministicQuestionBound, ResearchSaturationReceipt
 from .question_closure import compile_question_closure_decision
+from .snapshots import compile_verified_research_snapshot
 
 
 class ResearchSaturationAdjudicator:
@@ -59,35 +60,12 @@ class ResearchSaturationAdjudicator:
         facts_by_id = {
             str(row.get("dossier_fact_id") or ""): row for row in fact_rows
         }
-        verified = frozenset(str(value) for value in verified_fact_ids)
-        if not verified.issubset(facts_by_id):
-            raise ValueError("verified fact roster contains an unknown dossier fact id")
+        snapshot = compile_verified_research_snapshot(dossier, verified_fact_ids)
+        verified = frozenset(snapshot.verified_fact_ids)
         lineages = tuple(dossier.get("source_lineages") or ())
         routes = tuple(dossier.get("search_route_receipts") or ())
-        fact_snapshot_hash = canonical_hash(
-            [facts_by_id[value] for value in sorted(verified)]
-        )
-        active_lineages = sorted(
-            (
-                {
-                    "source_lineage_id": row.get("source_lineage_id"),
-                    "source_urls": sorted(row.get("source_urls") or ()),
-                    "fact_ids": sorted(
-                        set(str(value) for value in row.get("fact_ids") or ()).intersection(
-                            verified
-                        )
-                    ),
-                    "independence_group_id": row.get("independence_group_id"),
-                }
-                for row in lineages
-                if row.get("status") == "ACTIVE"
-                and set(str(value) for value in row.get("fact_ids") or ()).intersection(
-                    verified
-                )
-            ),
-            key=lambda row: str(row["source_lineage_id"]),
-        )
-        lineage_roster_hash = canonical_hash(active_lineages)
+        fact_snapshot_hash = snapshot.fact_snapshot_hash
+        lineage_roster_hash = snapshot.accepted_lineage_roster_hash
         bounds = dict(deterministic_bounds or {})
         if set(bounds) - set(contracts_by_question):
             raise ValueError("deterministic bounds contain an unknown contract question")

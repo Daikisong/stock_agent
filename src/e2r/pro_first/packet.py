@@ -16,12 +16,16 @@ from e2r.research_brain.researcher_mode.schemas import (
     HistoricalResearchJudgment,
 )
 
+from .research_contracts import select_contract_bundle
+
 from .ids import canonical_hash, canonical_json, stable_id
 from .models import ResearchMode
 
 
 PACKET_SCHEMA_VERSION = "e2r_pro_research_packet_v1"
 DOSSIER_SCHEMA_VERSION = "e2r_pro_research_dossier_v1"
+PACKET_V2_SCHEMA_VERSION = "e2r_pro_research_packet_v2"
+DOSSIER_V2_SCHEMA_VERSION = "e2r_pro_research_dossier_v2"
 
 
 @dataclass(frozen=True)
@@ -83,7 +87,7 @@ class ResearchPacketV1:
     def to_markdown(self) -> str:
         target = self.payload["target"]
         return (
-            "# E2R Pro Research Packet\n\n"
+            f"# E2R Pro Research Packet ({self.payload['schema_version']})\n\n"
             f"- job_id: `{self.payload['job_id']}`\n"
             f"- run_id: `{self.payload['run_id']}`\n"
             f"- target: `{target['symbol']} {target['company_name']}`\n"
@@ -94,6 +98,11 @@ class ResearchPacketV1:
             "```json\n"
             f"{self.to_json()}```\n"
         )
+
+
+@dataclass(frozen=True)
+class ResearchPacketV2(ResearchPacketV1):
+    """Typed marker for a V2 packet with an immutable contract snapshot."""
 
 
 @dataclass(frozen=True)
@@ -197,6 +206,69 @@ class ResearchPacketBuilder:
             )
             raise ValueError(f"ResearchPacketV1 schema validation failed: {details}")
         return ResearchPacketV1(payload=payload, packet_hash=canonical_hash(payload))
+
+
+class ResearchPacketV2Builder:
+    """Build an attached, hash-bound V2 contract snapshot for live Pro jobs."""
+
+    def __init__(self, schema_path: str | Path | None = None) -> None:
+        default = (
+            Path(__file__).resolve().parents[3]
+            / "configs/e2r_pro_research_packet_v2.schema.json"
+        )
+        self.schema_path = Path(schema_path) if schema_path else default
+        self.schema = json.loads(self.schema_path.read_text(encoding="utf-8"))
+        Draft202012Validator.check_schema(self.schema)
+        self.validator = Draft202012Validator(
+            self.schema,
+            format_checker=FormatChecker(),
+        )
+        self.v1_builder = ResearchPacketBuilder()
+
+    def build(self, request: PacketBuildInput) -> ResearchPacketV2:
+        primary_ids = tuple(
+            dict.fromkeys(str(value) for value in request.candidate_archetypes)
+        )
+        if not primary_ids:
+            raise ValueError("ResearchPacketV2 requires selected candidate contracts")
+        v1 = self.v1_builder.build(request)
+        bundle = select_contract_bundle(primary_ids)
+        mandatory_question_ids = [
+            str(question["question_family_id"])
+            for contract in bundle.contracts
+            for question in contract["question_families"]
+            if question.get("mandatory_for_full_thesis") is True
+        ]
+        snapshot_base: Mapping[str, Any] = {
+            "catalog_schema_version": "e2r_archetype_research_contracts_v2",
+            "primary_archetype_ids": list(primary_ids),
+            "contract_ids": list(bundle.contract_ids),
+            "mandatory_question_ids": mandatory_question_ids,
+            "contracts": _json_copy(bundle.contracts),
+        }
+        snapshot = {
+            **snapshot_base,
+            "snapshot_hash": canonical_hash(snapshot_base),
+        }
+        payload = {
+            **dict(v1.payload),
+            "schema_version": PACKET_V2_SCHEMA_VERSION,
+            "research_contract_snapshot": snapshot,
+            "output_contract": DOSSIER_V2_SCHEMA_VERSION,
+        }
+        _assert_no_forbidden_answer_fields(payload)
+        _assert_as_of_dates(payload, date.fromisoformat(request.as_of_date))
+        errors = sorted(
+            self.validator.iter_errors(payload),
+            key=lambda row: tuple(row.path),
+        )
+        if errors:
+            details = "; ".join(
+                f"{'/'.join(str(item) for item in error.path) or '$'}: {error.message}"
+                for error in errors
+            )
+            raise ValueError(f"ResearchPacketV2 schema validation failed: {details}")
+        return ResearchPacketV2(payload=payload, packet_hash=canonical_hash(payload))
 
 
 def build_blind_historical_anchor_digest(
@@ -390,12 +462,16 @@ def _atomic_write_text(path: Path, content: str) -> None:
 
 __all__ = [
     "DOSSIER_SCHEMA_VERSION",
+    "DOSSIER_V2_SCHEMA_VERSION",
     "DeltaResearchContext",
     "PACKET_SCHEMA_VERSION",
+    "PACKET_V2_SCHEMA_VERSION",
     "PacketBuildInput",
     "PacketBundleReceipt",
     "ResearchPacketBuilder",
+    "ResearchPacketV2Builder",
     "ResearchPacketV1",
+    "ResearchPacketV2",
     "build_blind_historical_anchor_digest",
     "write_packet_bundle",
 ]

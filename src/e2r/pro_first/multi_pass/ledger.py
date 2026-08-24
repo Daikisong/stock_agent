@@ -17,6 +17,7 @@ from .models import (
     INITIAL_PASS_NAME,
     RepeatedGapReopenHardFail,
     ResearchApprovalScope,
+    ResearchDossierSnapshotRecord,
     ResearchPassRecord,
     ResearchPassStatus,
     ScopeApprovalRequired,
@@ -64,6 +65,7 @@ class ProMultiPassLedger:
         *,
         primary_archetype_ids: Sequence[str],
         initial_response_hash: str,
+        initial_pass_id: str | None = None,
     ) -> ResearchApprovalScope:
         job = self.store.get_job(job_id)
         primary_ids = tuple(dict.fromkeys(str(value) for value in primary_archetype_ids))
@@ -84,14 +86,17 @@ class ProMultiPassLedger:
                 "selected contracts escape the candidate roster approved for the initial job"
             )
         bundle = select_contract_bundle(primary_ids)
-        initial_pass_id = stable_id(
-            "PROPASS",
-            {
-                "job_id": job_id,
-                "pass_name": INITIAL_PASS_NAME,
-                "prompt_hash": job.approval_prompt_hash,
-            },
-        )
+        if initial_pass_id is None:
+            initial_pass_id = stable_id(
+                "PROPASS",
+                {
+                    "job_id": job_id,
+                    "pass_name": INITIAL_PASS_NAME,
+                    "prompt_hash": job.approval_prompt_hash,
+                },
+            )
+        elif not initial_pass_id.startswith("PROPASS-") or len(initial_pass_id) < 16:
+            raise ValueError("initial pass id must be a stable PROPASS identity")
         scope_payload = {
             "job_id": job_id,
             "target_id": job.symbol,
@@ -391,6 +396,111 @@ class ProMultiPassLedger:
             ).fetchall()
         return tuple(self._pass_from_row(row) for row in rows)
 
+    def record_dossier_snapshot(
+        self,
+        *,
+        job_id: str,
+        pass_id: str,
+        parent_snapshot_id: str | None,
+        dossier_hash: str,
+        relative_path: str,
+        fact_count: int,
+        question_count: int,
+        route_receipt_count: int,
+    ) -> ResearchDossierSnapshotRecord:
+        if len(dossier_hash) != 64 or not relative_path.strip():
+            raise ValueError("dossier snapshot requires a sha256 and relative path")
+        snapshot_id = stable_id(
+            "PRODOSSIERSNAPSHOT",
+            {"job_id": job_id, "pass_id": pass_id, "dossier_hash": dossier_hash},
+        )
+        created_at = self.store._now_text()
+        with self._transaction() as connection:
+            pass_row = connection.execute(
+                "SELECT status FROM pro_research_passes WHERE pass_id=? AND job_id=?",
+                (pass_id, job_id),
+            ).fetchone()
+            if pass_row is None or pass_row["status"] != ResearchPassStatus.COMPLETE.value:
+                raise FollowupSubmitBlocked(
+                    "effective dossier snapshot requires a completed research pass"
+                )
+            if parent_snapshot_id is not None:
+                parent = connection.execute(
+                    "SELECT job_id FROM pro_research_dossier_snapshots WHERE snapshot_id=?",
+                    (parent_snapshot_id,),
+                ).fetchone()
+                if parent is None or parent["job_id"] != job_id:
+                    raise FollowupSubmitBlocked("dossier snapshot parent is outside this job")
+            existing = connection.execute(
+                "SELECT * FROM pro_research_dossier_snapshots WHERE pass_id=?",
+                (pass_id,),
+            ).fetchone()
+            if existing is not None:
+                if (
+                    existing["dossier_hash"] != dossier_hash
+                    or existing["relative_path"] != relative_path
+                    or existing["parent_snapshot_id"] != parent_snapshot_id
+                ):
+                    raise FollowupSubmitBlocked(
+                        "completed pass is already bound to another dossier snapshot"
+                    )
+                return self._snapshot_from_row(existing)
+            connection.execute(
+                """
+                INSERT INTO pro_research_dossier_snapshots (
+                    snapshot_id, job_id, pass_id, parent_snapshot_id,
+                    dossier_hash, relative_path, fact_count, question_count,
+                    route_receipt_count, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    snapshot_id,
+                    job_id,
+                    pass_id,
+                    parent_snapshot_id,
+                    dossier_hash,
+                    relative_path,
+                    int(fact_count),
+                    int(question_count),
+                    int(route_receipt_count),
+                    created_at,
+                ),
+            )
+            row = connection.execute(
+                "SELECT * FROM pro_research_dossier_snapshots WHERE snapshot_id=?",
+                (snapshot_id,),
+            ).fetchone()
+        return self._snapshot_from_row(row)
+
+    def latest_dossier_snapshot(
+        self, job_id: str
+    ) -> ResearchDossierSnapshotRecord | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT snapshot.* FROM pro_research_dossier_snapshots AS snapshot
+                JOIN pro_research_passes AS pass ON pass.pass_id=snapshot.pass_id
+                WHERE snapshot.job_id=?
+                ORDER BY pass.pass_ordinal DESC LIMIT 1
+                """,
+                (job_id,),
+            ).fetchone()
+        return None if row is None else self._snapshot_from_row(row)
+
+    def list_dossier_snapshots(
+        self, job_id: str
+    ) -> tuple[ResearchDossierSnapshotRecord, ...]:
+        with self._connect() as connection:
+            rows = connection.execute(
+                """
+                SELECT snapshot.* FROM pro_research_dossier_snapshots AS snapshot
+                JOIN pro_research_passes AS pass ON pass.pass_id=snapshot.pass_id
+                WHERE snapshot.job_id=? ORDER BY pass.pass_ordinal
+                """,
+                (job_id,),
+            ).fetchall()
+        return tuple(self._snapshot_from_row(row) for row in rows)
+
     def register_gap_reopen(
         self,
         job_id: str,
@@ -555,6 +665,21 @@ class ProMultiPassLedger:
             prepared_at=row["prepared_at"],
             submitted_at=row["submitted_at"],
             completed_at=row["completed_at"],
+        )
+
+    @staticmethod
+    def _snapshot_from_row(row: sqlite3.Row) -> ResearchDossierSnapshotRecord:
+        return ResearchDossierSnapshotRecord(
+            snapshot_id=row["snapshot_id"],
+            job_id=row["job_id"],
+            pass_id=row["pass_id"],
+            parent_snapshot_id=row["parent_snapshot_id"],
+            dossier_hash=row["dossier_hash"],
+            relative_path=row["relative_path"],
+            fact_count=int(row["fact_count"]),
+            question_count=int(row["question_count"]),
+            route_receipt_count=int(row["route_receipt_count"]),
+            created_at=row["created_at"],
         )
 
 

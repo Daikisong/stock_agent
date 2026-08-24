@@ -8,6 +8,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 from typing import Any, Mapping, Sequence
 from urllib.parse import urlparse
 
@@ -32,7 +33,7 @@ from .quote_verifier import ExactQuoteVerifier
 from .subject_scope_verifier import SubjectScopeVerifier
 
 
-SOURCE_VERIFICATION_SEMANTICS_VERSION = "e2r_pro_source_verification_v6"
+SOURCE_VERIFICATION_SEMANTICS_VERSION = "e2r_pro_source_verification_v8"
 
 
 TERMINAL_SOURCE_STATUSES = frozenset(
@@ -203,8 +204,10 @@ class ProSourceVerifier:
         root = Path(job_root).resolve()
         source_pages = root / "verification/source_pages"
         source_pages.mkdir(parents=True, exist_ok=True)
-        facts = tuple(dossier.get("material_facts") or ()) + tuple(
-            dossier.get("counterfacts") or ()
+        facts = tuple(
+            row
+            for collection in ("material_facts", "counterfacts", "resolution_facts")
+            for row in dossier.get(collection) or ()
         )
         selected_scope_contracts = self._selected_scope_contracts(job)
         scope_mapping = None
@@ -234,6 +237,7 @@ class ProSourceVerifier:
                     target.get("english_name"),
                     target.get("symbol"),
                     target.get("target_id"),
+                    *_issuer_publisher_aliases(facts),
                 )
                 if str(value or "").strip()
             )
@@ -531,6 +535,7 @@ class ProSourceVerifier:
             target_id=job.symbol,
             company_name=job.company_name,
             target_aliases=target_aliases,
+            semantic_scope=explicit_scope,
         )
         if not scope.accepted:
             status = {
@@ -616,7 +621,12 @@ class ProSourceVerifier:
             "quote_ids": [quote_id],
             "exact_quote": str(fact.get("supporting_excerpt") or ""),
             "source_independence_group": source_group,
-            "confidence": float(fact.get("confidence", 0.0)),
+            # Confidence becomes deterministic only after the source document,
+            # as-of date, literal quote, issuer scope, and mechanism scope have
+            # all passed.  A structural placeholder (for example 0.0 in a
+            # compact Pro dossier) must not erase an otherwise verified fact,
+            # and the model's self-reported confidence must not own scoring.
+            "confidence": 1.0,
             "allowed_component_ids": list(allowed),
             "supersedes_fact_ids": list(fact.get("supersedes_fact_ids") or ()),
             "resolves_fact_ids": list(fact.get("resolves_fact_ids") or ()),
@@ -713,11 +723,68 @@ class ProSourceVerifier:
     @staticmethod
     def _write_text_atomic(path: Path, text: str) -> None:
         part = path.with_suffix(path.suffix + ".part")
-        with part.open("w", encoding="utf-8") as stream:
+        # Keep the exact UTF-8 bytes that were hashed above on Windows too;
+        # default text mode would translate LF to CRLF after hashing.
+        with part.open("w", encoding="utf-8", newline="") as stream:
             stream.write(text)
             stream.flush()
             os.fsync(stream.fileno())
         os.replace(part, path)
+
+
+_ISSUER_ALIAS_SOURCE_ROLES = frozenset(
+    {"ISSUER_OFFICIAL", "ISSUER_EARNINGS"}
+)
+_PUBLISHER_ORGANIZATION_WORDS = frozenset(
+    {
+        "company",
+        "corporation",
+        "corp",
+        "inc",
+        "incorporated",
+        "limited",
+        "ltd",
+        "plc",
+        "group",
+        "holdings",
+    }
+)
+
+
+def _issuer_publisher_aliases(
+    facts: Sequence[Mapping[str, Any]],
+) -> tuple[str, ...]:
+    """Derive issuer aliases only from issuer-role publisher/domain affinity.
+
+    This supports bilingual targets without a symbol/company lookup table.  A
+    publisher fragment is usable only when a meaningful token is also present
+    in that source hostname (for example ``SK hynix`` on ``skhynix.com``).
+    Generic regulator labels such as ``U.S. SEC`` on ``sec.gov`` are excluded
+    because they have no token of at least four characters.
+    """
+
+    aliases: list[str] = []
+    for fact in facts:
+        roles = {
+            str(value).strip().upper()
+            for value in fact.get("source_role_ids") or ()
+        }
+        if not roles.intersection(_ISSUER_ALIAS_SOURCE_ROLES):
+            continue
+        hostname = (urlparse(str(fact.get("source_url") or "")).hostname or "")
+        normalized_host = re.sub(r"[^a-z0-9]+", "", hostname.casefold())
+        publisher = str(fact.get("source_publisher") or "")
+        for fragment in re.split(r"\s*(?:/|\||;)\s*", publisher):
+            candidate = fragment.strip()
+            tokens = tuple(
+                value
+                for value in re.findall(r"[a-z0-9]+", candidate.casefold())
+                if len(value) >= 4
+                and value not in _PUBLISHER_ORGANIZATION_WORDS
+            )
+            if candidate and any(value in normalized_host for value in tokens):
+                aliases.append(candidate)
+    return tuple(dict.fromkeys(aliases))
 
 
 def _source_independence_group(url: str, publisher: str) -> str:

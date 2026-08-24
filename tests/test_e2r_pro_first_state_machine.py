@@ -70,7 +70,7 @@ class ProFirstStateMachineTest(unittest.TestCase):
         )
         return self.job
 
-    def _reach_approval(self) -> str:
+    def _reach_approval(self, *, conversation_id: str = "conversation-1") -> str:
         self._transition(JobStatus.PACKET_BUILDING, "packet-building")
         self.job = self.store.record_packet(
             self.job.job_id,
@@ -86,7 +86,7 @@ class ProFirstStateMachineTest(unittest.TestCase):
             self.job.job_id,
             expected_version=self.job.state_version,
             browser_session_id="browser-session-1",
-            conversation_id="conversation-1",
+            conversation_id=conversation_id,
             adapter_name="UnitBrowserAdapter",
             packet_hash="a" * 64,
             prompt_hash=self.prompt_hash,
@@ -104,8 +104,8 @@ class ProFirstStateMachineTest(unittest.TestCase):
         )
         return nonce
 
-    def _approve(self) -> None:
-        nonce = self._reach_approval()
+    def _approve(self, *, conversation_id: str = "conversation-1") -> None:
+        nonce = self._reach_approval(conversation_id=conversation_id)
         self.job = self.store.consume_approval_nonce(
             self.job.job_id,
             nonce,
@@ -227,6 +227,93 @@ class ProFirstStateMachineTest(unittest.TestCase):
                 idempotency_key="second-submit",
             )
         self.assertEqual(self.store.get_job(self.job.job_id).submit_count, 1)
+
+    def test_transient_conversation_rebind_preserves_running_and_submit_count(self) -> None:
+        self._approve(conversation_id="WEB:transient-conversation")
+        self.job = self.store.claim_submit(
+            self.job.job_id,
+            expected_version=self.job.state_version,
+            actor="browser-worker",
+            idempotency_key="recovery-submit",
+        )
+        self._transition(JobStatus.RESEARCH_RUNNING, "recovery-running")
+        version = self.job.state_version
+
+        rebound = self.store.rebind_recovered_conversation(
+            self.job.job_id,
+            expected_version=version,
+            conversation_id="canonical-conversation-1234",
+            run_id="PRORUN-recovery-1234",
+            report_hash="a" * 64,
+            job_marker_matches=True,
+            run_marker_matches=True,
+            actor="browser-history-recovery",
+            idempotency_key="conversation-recovered",
+        )
+
+        self.assertEqual(rebound.status, JobStatus.RESEARCH_RUNNING.value)
+        self.assertEqual(rebound.submit_count, 1)
+        self.assertEqual(rebound.conversation_id, "canonical-conversation-1234")
+        self.assertEqual(rebound.state_version, version + 1)
+        session = self.store.get_browser_session_state(self.job.job_id)
+        self.assertEqual(session["conversation_id"], "canonical-conversation-1234")
+        matching = [
+            event
+            for event in self.store.list_events(self.job.job_id)
+            if event.idempotency_key == "conversation-recovered"
+        ]
+        self.assertEqual(len(matching), 1)
+        self.assertEqual(matching[0].from_status, JobStatus.RESEARCH_RUNNING.value)
+        self.assertEqual(matching[0].to_status, JobStatus.RESEARCH_RUNNING.value)
+
+        repeated = self.store.rebind_recovered_conversation(
+            self.job.job_id,
+            expected_version=rebound.state_version,
+            conversation_id="canonical-conversation-1234",
+            run_id="PRORUN-recovery-1234",
+            report_hash="a" * 64,
+            job_marker_matches=True,
+            run_marker_matches=True,
+            actor="browser-history-recovery",
+            idempotency_key="conversation-recovered",
+        )
+        self.assertEqual(repeated.state_version, rebound.state_version)
+        self.assertEqual(
+            len(
+                [
+                    event
+                    for event in self.store.list_events(self.job.job_id)
+                    if event.idempotency_key == "conversation-recovered"
+                ]
+            ),
+            1,
+        )
+
+    def test_transient_conversation_rebind_requires_exact_markers(self) -> None:
+        self._approve(conversation_id="WEB:transient-conversation")
+        self.job = self.store.claim_submit(
+            self.job.job_id,
+            expected_version=self.job.state_version,
+            actor="browser-worker",
+            idempotency_key="unproven-submit",
+        )
+        self._transition(JobStatus.RESEARCH_RUNNING, "unproven-running")
+
+        with self.assertRaisesRegex(ApprovalInvalid, "markers"):
+            self.store.rebind_recovered_conversation(
+                self.job.job_id,
+                expected_version=self.job.state_version,
+                conversation_id="canonical-conversation-1234",
+                run_id="PRORUN-recovery-1234",
+                report_hash="a" * 64,
+                job_marker_matches=True,
+                run_marker_matches=False,
+                actor="browser-history-recovery",
+                idempotency_key="conversation-recovered",
+            )
+        unchanged = self.store.get_job(self.job.job_id)
+        self.assertEqual(unchanged.conversation_id, "WEB:transient-conversation")
+        self.assertEqual(unchanged.submit_count, 1)
 
     def test_capture_event_idempotent(self) -> None:
         self._approve()

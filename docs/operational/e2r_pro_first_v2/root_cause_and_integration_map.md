@@ -193,7 +193,7 @@ mandatory question nonterminal > 0
 
 ## 구현 진행 장부
 
-2026-08-23 현재 PR #7의 단계별 구현 상태는 다음과 같다. 이 표의 `완료`는 해당
+2026-08-24 현재 PR #7의 단계별 구현 상태는 다음과 같다. 이 표의 `완료`는 해당
 phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는 뜻이며, 전체 V2 운영
 완료를 뜻하지 않는다.
 
@@ -209,6 +209,47 @@ phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는
 | P7 | 완료 | saturation 선행 gate, diagnostic/full score 분리, Stage/publication withheld, 기존 scorer/StageCourt 재사용 |
 | P8 | 완료 | 36 prompt snapshot, 13 mechanism golden, known-bad 30종·detector 29개 |
 | P9~P10 | 미완료 | frozen MD replay/live canary와 CI·최종 receipt가 남음 |
+
+### 2026-08-24 live P9 진행 기록
+
+`000660 / C06 / as_of_date=2026-08-23`은 최초 승인된 같은 ChatGPT Pro 대화에서
+다음 append-only pass를 완료했다.
+
+```text
+initial full research                 COMPLETE
+public gap closure 1                  COMPLETE
+public gap closure 2                  COMPLETE
+counter/supersession closure          COMPLETE
+effective dossier                     97 facts / 28 questions / 98 routes
+source verifier v8                     43 accepted candidates
+```
+
+검증 반려 46개를 한 prompt에 넣은 최초 repair 계획은 약 51.8만 자였다. 이 계획은
+ChatGPT composer에서 처리되지 않았고 DB상 `submit_count=0`이었으므로 실제 Pro
+전송은 없었다. 해당 pass는 삭제하지 않고 `TRANSPORT_PENDING`으로 보존했다.
+
+repair transport는 이제 최대 21만 자의 deterministic prefix batch를 사용한다.
+선택되지 않은 packet은 `pending_rejection_packets.jsonl`과 plan receipt의
+`deferred_rejection_packet_ids`에 모두 남고, 선택 batch의 Pro 응답을 전체 dossier에
+재검증한 뒤 다음 pass에서 다시 계획한다. transport batch는 연구 누락이나
+`EVALUATED_ABSENT`로 간주하지 않는다.
+
+쉬운 예로 46개 반려가 한 입력창에 들어가지 않으면 46개를 버리는 것이 아니라
+`첫 묶음 → 전체 재검증 → 남은 묶음` 순서로 같은 대화에서 처리한다. 최종 gate는
+여전히 verifier repair pending 0을 요구한다.
+
+현재 첫 bounded repair pass `PROPASS-3ef919d661d3bfa39f201c4e`가 46개 중 17개를
+담아 정확히 1회 제출돼 `RESEARCH_RUNNING`이다. 나머지 29개 packet은 deferred
+roster에 보존돼 있다. 초대형 미전송 pass
+`PROPASS-7694a86ac9e996eeabd03394`는 `TRANSPORT_PENDING / submit_count=0`이다.
+이 시점에는 full-thesis score·Stage·publication 권한이 아직 없다.
+
+브라우저 안전 규칙도 함께 고정했다. 실제 ChatGPT 입력은 E2R 전용 Chrome의 exact
+conversation DOM/CDP만 사용하며 OS 전역 키보드, clipboard, window focus 자동화는
+사용하지 않는다. 중복으로 고착된 탭을 복구할 때도 exact canonical conversation URL과
+target id를 확인한 뒤 미전송 composer 탭만 닫고 정상 탭과 로그인 profile은 보존했다.
+실행 식별자, pass별 상태, verifier semantics 변화, 테스트와 잔여 작업은
+`live_validation_progress_20260824.md`에 계속 누적한다.
 
 P4의 최초 전송과 후속 전송은 브라우저 send 버튼을 두 군데서 누르지 않는다. DOM에는
 기존 `submit_once()` 한 경로만 있고, 최초 pass는 기존 job의 `submit_count`, 후속

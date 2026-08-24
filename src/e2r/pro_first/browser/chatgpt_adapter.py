@@ -20,6 +20,7 @@ from .protocol import (
     PreparedBrowserJob,
     PreparedFollowupPass,
     RawBrowserCapture,
+    RecoveredBrowserConversation,
     SubmitAuthorizationRequired,
 )
 from .selector_registry import (
@@ -27,10 +28,11 @@ from .selector_registry import (
     ATTACH_BUTTON_SELECTORS,
     CHAT_MODE_ACTIVE_SELECTORS,
     CHAT_MODE_CONTROL_SELECTORS,
+    CHAT_HISTORY_RESULT_LINK_SELECTORS,
+    CHAT_HISTORY_SEARCH_CONTROL_SELECTORS,
+    CHAT_HISTORY_SEARCH_INPUT_SELECTORS,
     CITATION_SELECTORS,
     DEEP_RESEARCH_ACTIVE_SELECTORS,
-    DEEP_RESEARCH_CONTROL_SELECTORS,
-    DEEP_RESEARCH_OPTION_SELECTORS,
     EDITOR_SELECTORS,
     FILE_INPUT_SELECTORS,
     LOGIN_INDICATOR_SELECTORS,
@@ -41,7 +43,7 @@ from .selector_registry import (
     PRO_REASONING_ACTIVE_SELECTORS,
     SEND_SELECTORS,
     STOP_SELECTORS,
-    TOOLS_BUTTON_SELECTORS,
+    WORK_MODE_ACTIVE_SELECTORS,
 )
 
 
@@ -74,11 +76,12 @@ class PlaywrightChatGPTWebAdapter:
         raise BrowserUIIncompatible("ChatGPT prompt editor was not found")
 
     async def ensure_deep_research_mode(self) -> BrowserInspection:
-        """Require the supported Pro research UI before packet preparation.
+        """Require the supported ordinary Chat composer with Pro selected.
 
-        The current public UI exposes this as ordinary ``Chat`` mode plus the
-        composer reasoning level ``Pro``.  Legacy Deep Research selectors are
-        retained for older DOM-contract fixtures and transitional deployments.
+        The public UI calls this ``Pro``.  It is deliberately distinct from
+        the legacy ``Deep research`` tool.  The method name remains stable for
+        the browser protocol, but this implementation never activates that
+        legacy tool.
         """
         await self.ensure_logged_in()
         if await self._deep_research_ready():
@@ -91,29 +94,9 @@ class PlaywrightChatGPTWebAdapter:
             if await self._deep_research_ready():
                 return await self.inspect_state()
 
-        control = await first_visible(self.page, DEEP_RESEARCH_CONTROL_SELECTORS)
-        if control is not None and await control.is_enabled():
-            await control.click()
-            await self.page.wait_for_timeout(100)
-            option = await first_visible(self.page, DEEP_RESEARCH_OPTION_SELECTORS)
-            if option is not None and await option.is_enabled():
-                await option.click()
-                await self.page.wait_for_timeout(100)
-            if await self._deep_research_ready():
-                return await self.inspect_state()
-
-        tools = await first_visible(self.page, TOOLS_BUTTON_SELECTORS)
-        if tools is not None and await tools.is_enabled():
-            await tools.click()
-            option = await first_visible(self.page, DEEP_RESEARCH_OPTION_SELECTORS)
-            if option is not None and await option.is_enabled():
-                await option.click()
-                await self.page.wait_for_timeout(100)
-            if await self._deep_research_ready():
-                return await self.inspect_state()
         raise BrowserUIIncompatible(
-            "Chat + Pro research mode was not active and no supported legacy "
-            "Deep Research control could be activated"
+            "ordinary Chat composer + Pro mode is not active; legacy Deep "
+            "Research is not an accepted substitute"
         )
 
     async def upload_packet(self, packet_path: str | Path) -> str:
@@ -145,12 +128,47 @@ class PlaywrightChatGPTWebAdapter:
         editor = await first_visible(self.page, EDITOR_SELECTORS)
         if editor is None:
             raise BrowserUIIncompatible("ChatGPT prompt editor was not found")
-        await editor.fill(prompt)
+        if len(prompt) >= 20_000:
+            # Playwright ``fill`` and ``document.execCommand('insertText')`` can
+            # spend their entire action timeout making ProseMirror process a
+            # full-thesis prompt character by character.  Replace the editor's
+            # text node directly, then emit one browser-local input event.  The
+            # operation is scoped to the located ChatGPT editor: it does not use
+            # the OS keyboard, clipboard, window focus, or a hidden ChatGPT API.
+            await editor.evaluate(
+                """
+                (element, text) => {
+                    const fragment = document.createDocumentFragment();
+                    const lines = text.split('\\n');
+                    for (let index = 0; index < lines.length; index += 1) {
+                        fragment.appendChild(document.createTextNode(lines[index]));
+                        if (index + 1 < lines.length) {
+                            fragment.appendChild(document.createElement('br'));
+                        }
+                    }
+                    element.replaceChildren(fragment);
+                    element.dispatchEvent(new InputEvent('input', {
+                        bubbles: true,
+                        cancelable: false,
+                        inputType: 'insertText',
+                        data: null,
+                    }));
+                }
+                """,
+                prompt,
+            )
+            await self.page.wait_for_timeout(250)
+        else:
+            await editor.fill(prompt, timeout=60_000)
         current = await editor_text(editor)
         required_markers = tuple(
             marker for marker in ("[[E2R_PRO_RUN_ID:", "[[E2R_PRO_JOB_ID:") if marker in prompt
         )
-        if not current or any(marker not in current for marker in required_markers):
+        if (
+            not current
+            or len(current) < len(prompt.strip()) * 0.95
+            or any(marker not in current for marker in required_markers)
+        ):
             raise BrowserUIIncompatible("prompt text was not retained by the ChatGPT editor")
 
     async def prepare_without_submit(
@@ -431,6 +449,105 @@ class PlaywrightChatGPTWebAdapter:
             new_attachment_keys=new_keys,
         )
 
+    async def recover_conversation_without_submit(
+        self,
+        *,
+        job_id: str,
+        run_id: str,
+        search_terms: tuple[str, ...] = (),
+    ) -> RecoveredBrowserConversation:
+        """Recover a completed submitted job through visible chat history only.
+
+        This path exists specifically for a closed tab or restarted browser.
+        It never prepares the composer, uploads a packet, or invokes send.
+        Search snippets are only routing hints; exact durable job/run markers
+        in the opened assistant result are required before recovery succeeds.
+        """
+
+        await self.ensure_logged_in()
+        current = await self.inspect_result(job_id=job_id, run_id=run_id)
+        if current.structurally_complete and self.conversation_id():
+            return RecoveredBrowserConversation(
+                conversation_id=str(self.conversation_id()),
+                inspection=await self.inspect_state(),
+                result=current,
+                search_query="CURRENT_PAGE",
+                result_href=self.page.url,
+            )
+
+        queries = tuple(
+            dict.fromkeys(
+                value.strip()
+                for value in (job_id, *search_terms)
+                if value and value.strip()
+            )
+        )
+        for query in queries:
+            search_input = await first_visible(
+                self.page, CHAT_HISTORY_SEARCH_INPUT_SELECTORS
+            )
+            if search_input is None:
+                control = await first_visible(
+                    self.page, CHAT_HISTORY_SEARCH_CONTROL_SELECTORS
+                )
+                if control is None or not await control.is_enabled():
+                    raise BrowserUIIncompatible(
+                        "visible ChatGPT history search control was not found"
+                    )
+                await control.click()
+                await self.page.wait_for_timeout(300)
+                search_input = await first_visible(
+                    self.page, CHAT_HISTORY_SEARCH_INPUT_SELECTORS
+                )
+            if search_input is None:
+                raise BrowserUIIncompatible(
+                    "visible ChatGPT history search input was not found"
+                )
+            await search_input.fill(query)
+
+            match = None
+            for attempt in range(60):
+                for selector in CHAT_HISTORY_RESULT_LINK_SELECTORS:
+                    links = self.page.locator(selector)
+                    for index in range(await links.count()):
+                        link = links.nth(index)
+                        if not await link.is_visible():
+                            continue
+                        snippet = (await link.inner_text()).strip()
+                        if job_id in snippet:
+                            match = link
+                            break
+                    if match is not None:
+                        break
+                if match is not None:
+                    break
+                if attempt < 59:
+                    await self.page.wait_for_timeout(100)
+            if match is None:
+                continue
+
+            result_href = str(await match.get_attribute("href") or "")
+            await match.click()
+            for attempt in range(120):
+                result = await self.inspect_result(job_id=job_id, run_id=run_id)
+                conversation_id = self.conversation_id()
+                if result.structurally_complete and conversation_id:
+                    return RecoveredBrowserConversation(
+                        conversation_id=conversation_id,
+                        inspection=await self.inspect_state(),
+                        result=result,
+                        search_query=query,
+                        result_href=result_href,
+                    )
+                if attempt < 119:
+                    await self.page.wait_for_timeout(100)
+            raise BrowserUIIncompatible(
+                "history result opened but exact job/run markers did not validate"
+            )
+        raise BrowserUIIncompatible(
+            "submitted ChatGPT conversation was not found in visible history search"
+        )
+
     async def capture_result(self, request: BrowserCaptureRequest) -> RawBrowserCapture:
         snapshot = await self.inspect_result(job_id=request.job_id, run_id=request.run_id)
         if not snapshot.structurally_complete or snapshot.report_hash != request.expected_report_hash:
@@ -630,14 +747,28 @@ class PlaywrightChatGPTWebAdapter:
 
     async def _deep_research_ready(self) -> bool:
         chat_active = await first_visible(self.page, CHAT_MODE_ACTIVE_SELECTORS)
+        chat_control = await first_visible(self.page, CHAT_MODE_CONTROL_SELECTORS)
+        work_active = await first_visible(self.page, WORK_MODE_ACTIVE_SELECTORS)
         pro_active = await first_visible(self.page, PRO_REASONING_ACTIVE_SELECTORS)
-        if chat_active is not None and pro_active is not None:
+        editor = await first_visible(self.page, EDITOR_SELECTORS)
+        legacy_deep_research = await first_visible(
+            self.page, DEEP_RESEARCH_ACTIVE_SELECTORS
+        )
+        if (
+            editor is not None
+            and pro_active is not None
+            and (chat_control is None or chat_active is not None)
+            and work_active is None
+            and legacy_deep_research is None
+        ):
             # ``:has-text`` is deliberately followed by an exact text check so
             # a future button such as ``Upgrade to Pro`` cannot satisfy the
-            # production readiness gate.
+            # production readiness gate.  ``chat_active`` may be absent in the
+            # current compact composer; when it exists, the Work exclusion
+            # above makes the old two-tab UI equally strict.
             if " ".join((await pro_active.inner_text()).split()) == "Pro":
                 return True
-        return await first_visible(self.page, DEEP_RESEARCH_ACTIVE_SELECTORS) is not None
+        return False
 
     async def _wait_for_send_ready(self) -> Any | None:
         # ChatGPT can show the uploaded filename before its attachment scan is

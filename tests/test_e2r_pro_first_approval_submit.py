@@ -224,6 +224,99 @@ class ProFirstApprovalSubmitTest(unittest.IsolatedAsyncioTestCase):
             await ExactlyOnceSubmitCoordinator(self.store).submit(job.job_id, self.adapter)
         self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
 
+    async def test_recovered_canonical_conversation_rebind_is_audited_without_resubmit(self) -> None:
+        await self.page.goto(
+            f"{self.server.base_url}/c/WEB:transient-conversation",
+            wait_until="domcontentloaded",
+        )
+        self.adapter = PlaywrightChatGPTWebAdapter(self.page)
+        job, prompt_hash = await self._prepare_durable_job()
+        service = ProApprovalService(self.store, now=lambda: self.now)
+        grant = service.issue(job.job_id, prompt_hash=prompt_hash)
+        service.approve(grant)
+        running = await ExactlyOnceSubmitCoordinator(self.store).submit(
+            job.job_id, self.adapter
+        )
+        self.assertEqual(running.job.conversation_id, "WEB:transient-conversation")
+        self.assertEqual(running.job.submit_count, 1)
+        version_before_recovery = running.job.state_version
+
+        rebound = self.store.rebind_recovered_conversation(
+            job.job_id,
+            expected_version=version_before_recovery,
+            conversation_id="canonical-conversation-1234",
+            run_id="PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb",
+            report_hash="a" * 64,
+            job_marker_matches=True,
+            run_marker_matches=True,
+            actor="browser-history-recovery",
+            idempotency_key=f"conversation-recovered:{job.job_id}",
+        )
+
+        self.assertEqual(rebound.status, JobStatus.RESEARCH_RUNNING.value)
+        self.assertEqual(rebound.state_version, version_before_recovery + 1)
+        self.assertEqual(rebound.conversation_id, "canonical-conversation-1234")
+        self.assertEqual(rebound.submit_count, 1)
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 1)
+        session = self.store.get_browser_session_state(job.job_id)
+        self.assertEqual(session["conversation_id"], "canonical-conversation-1234")
+        self.assertEqual(
+            session["state"]["conversation_recovery"]["marker_proof"],
+            "EXACT_JOB_AND_RUN_MARKERS",
+        )
+        recovery = next(
+            event
+            for event in self.store.list_events(job.job_id)
+            if event.idempotency_key == f"conversation-recovered:{job.job_id}"
+        )
+        self.assertEqual(recovery.from_status, JobStatus.RESEARCH_RUNNING.value)
+        self.assertEqual(recovery.to_status, JobStatus.RESEARCH_RUNNING.value)
+
+        repeated = self.store.rebind_recovered_conversation(
+            job.job_id,
+            expected_version=rebound.state_version,
+            conversation_id="canonical-conversation-1234",
+            run_id="PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb",
+            report_hash="a" * 64,
+            job_marker_matches=True,
+            run_marker_matches=True,
+            actor="browser-history-recovery",
+            idempotency_key=f"conversation-recovered:{job.job_id}",
+        )
+        self.assertEqual(repeated.state_version, rebound.state_version)
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 1)
+
+    async def test_conversation_rebind_rejects_unproven_markers(self) -> None:
+        await self.page.goto(
+            f"{self.server.base_url}/c/WEB:transient-conversation",
+            wait_until="domcontentloaded",
+        )
+        self.adapter = PlaywrightChatGPTWebAdapter(self.page)
+        job, prompt_hash = await self._prepare_durable_job()
+        service = ProApprovalService(self.store, now=lambda: self.now)
+        grant = service.issue(job.job_id, prompt_hash=prompt_hash)
+        service.approve(grant)
+        running = await ExactlyOnceSubmitCoordinator(self.store).submit(
+            job.job_id, self.adapter
+        )
+        with self.assertRaisesRegex(ApprovalInvalid, "markers"):
+            self.store.rebind_recovered_conversation(
+                job.job_id,
+                expected_version=running.job.state_version,
+                conversation_id="canonical-conversation-1234",
+                run_id="PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb",
+                report_hash="a" * 64,
+                job_marker_matches=True,
+                run_marker_matches=False,
+                actor="browser-history-recovery",
+                idempotency_key=f"conversation-recovered:{job.job_id}",
+            )
+        self.assertEqual(
+            self.store.get_job(job.job_id).conversation_id,
+            "WEB:transient-conversation",
+        )
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 1)
+
 
 if __name__ == "__main__":
     unittest.main()

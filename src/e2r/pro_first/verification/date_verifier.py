@@ -55,16 +55,34 @@ class AsOfDateVerifier:
             if fetch_result.response_last_modified_at is not None
             else None
         )
-        dates = tuple(value for value in (claimed, inferred, event, last_modified) if value)
-        if any(value > cutoff for value in dates):
+        # An HTTP Last-Modified header describes the currently served object,
+        # not necessarily the original publication date.  A CDN touching a
+        # March filing on the day after the cutoff must not turn that filing
+        # into future evidence when its claimed/content date is established.
+        authoritative_dates = tuple(
+            value for value in (claimed, inferred, event) if value
+        )
+        if any(value > cutoff for value in authoritative_dates):
             return SourceDateVerification(
                 False,
                 "FUTURE_SOURCE",
                 claimed.isoformat() if claimed else None,
                 inferred.isoformat() if inferred else None,
-                max(dates).isoformat() if dates else None,
+                max(authoritative_dates).isoformat()
+                if authoritative_dates
+                else None,
             )
         publication_dates = tuple(value for value in (claimed, inferred) if value)
+        if not publication_dates and last_modified is not None:
+            if last_modified > cutoff:
+                return SourceDateVerification(
+                    False,
+                    "UNKNOWN_PUBLICATION_DATE",
+                    None,
+                    None,
+                    None,
+                )
+            publication_dates = (last_modified,)
         if not publication_dates:
             return SourceDateVerification(False, "UNKNOWN_PUBLICATION_DATE", None, None, None)
         effective = max(publication_dates)

@@ -11,6 +11,8 @@ from e2r.pro_first.saturation import (
     DeterministicQuestionBound,
     NoNewRouteConfirmation,
     ResearchSaturationAdjudicator,
+    compile_fixpoint_confirmations,
+    compile_route_snapshot_bindings,
     compile_saturation_audit,
     evaluate_semantic_no_new_route_fixpoint,
 )
@@ -146,6 +148,39 @@ def _decision(receipt, question_id: str):
     )
 
 
+def _pass_snapshots_for_routes(
+    final_dossier: dict,
+    route_receipt_ids: list[str],
+) -> tuple[dict, ...]:
+    """Build cumulative pass snapshots for exact-route binding tests."""
+
+    snapshots: list[dict] = []
+    selected: list[str] = []
+    for route_id in route_receipt_ids:
+        selected.append(route_id)
+        snapshot = deepcopy(final_dossier)
+        current_route = next(
+            row
+            for row in snapshot["search_route_receipts"]
+            if row["route_receipt_id"] == route_id
+        )
+        snapshot["research_pass_id"] = current_route["pass_id"]
+        snapshot["search_route_receipts"] = [
+            row
+            for row in snapshot["search_route_receipts"]
+            if row["route_receipt_id"] not in set(route_receipt_ids)
+            or row["route_receipt_id"] in set(selected)
+        ]
+        for result in snapshot["question_family_results"]:
+            result["search_route_receipt_ids"] = [
+                value
+                for value in result["search_route_receipt_ids"]
+                if value not in set(route_receipt_ids) or value in set(selected)
+            ]
+        snapshots.append(snapshot)
+    return tuple(snapshots)
+
+
 class ProFirstV2SaturationTest(unittest.TestCase):
     def setUp(self) -> None:
         self.adjudicator = ResearchSaturationAdjudicator()
@@ -199,7 +234,7 @@ class ProFirstV2SaturationTest(unittest.TestCase):
                 "known_hynix_like_stage_boundary_gap_count": 1,
                 "known_hynix_like_hard_break_gap_count": 7,
                 "known_hynix_like_corroboration_cap_count": 0,
-                "focused_test_count": 20,
+                "focused_test_count": 23,
             }
         )
         path = (
@@ -505,6 +540,123 @@ class ProFirstV2SaturationTest(unittest.TestCase):
             fixpoint_confirmations=confirmations,
         )
         self.assertTrue(_decision(receipt, question_id).route_adequacy.semantic_fixpoint)
+
+    def test_runtime_compiler_binds_confirmations_to_exact_question_snapshots(self) -> None:
+        dossier, question_id, _manual, bound = self._likely_nonpublic_fixture()
+        route_ids = [
+            row["route_receipt_id"]
+            for row in dossier["search_route_receipts"]
+            if row["question_family_id"] == question_id
+            and not row["accepted_fact_ids"]
+        ]
+        historical = _pass_snapshots_for_routes(dossier, route_ids)
+        bindings = compile_route_snapshot_bindings(
+            historical,
+            verified_fact_ids=self.verified,
+        )
+        compiled = compile_fixpoint_confirmations(
+            dossier,
+            verified_fact_ids=self.verified,
+            route_snapshot_bindings=bindings.bindings_by_route_receipt_id,
+        )
+        confirmations = compiled.for_question(question_id)
+        self.assertEqual(len(confirmations), 2)
+        self.assertEqual(len({row.stable_gap_key for row in confirmations}), 1)
+        self.assertEqual(len({row.pass_id for row in confirmations}), 2)
+        self.assertTrue(
+            all(
+                row.fact_snapshot_hash == compiled.fact_snapshot_hash
+                and row.accepted_lineage_roster_hash
+                == compiled.accepted_lineage_roster_hash
+                for row in confirmations
+            )
+        )
+        receipt = self._adjudicate(
+            dossier,
+            deterministic_bounds={question_id: bound},
+            fixpoint_confirmations=compiled.confirmations,
+        )
+        self.assertTrue(_decision(receipt, question_id).route_adequacy.semantic_fixpoint)
+
+    def test_runtime_compiler_does_not_relabel_other_question_routes(self) -> None:
+        dossier, question_id, _manual, _bound = self._likely_nonpublic_fixture()
+        other = next(
+            row
+            for row in dossier["question_family_results"]
+            if row["question_family_id"] != question_id
+        )
+        other_route_id = other["search_route_receipt_ids"][0]
+        route_ids = [
+            row["route_receipt_id"]
+            for row in dossier["search_route_receipts"]
+            if row["question_family_id"] == question_id
+            and not row["accepted_fact_ids"]
+        ]
+        bindings = compile_route_snapshot_bindings(
+            _pass_snapshots_for_routes(dossier, route_ids),
+            verified_fact_ids=self.verified,
+        )
+        compiled = compile_fixpoint_confirmations(
+            dossier,
+            verified_fact_ids=self.verified,
+            route_snapshot_bindings=bindings.bindings_by_route_receipt_id,
+        )
+        current_ids = {
+            row.route_receipt_id for row in compiled.for_question(question_id)
+        }
+        self.assertNotIn(other_route_id, current_ids)
+
+    def test_old_empty_route_is_not_rebound_after_new_fact_snapshot(self) -> None:
+        dossier, question_id, _manual, bound = self._likely_nonpublic_fixture()
+        empty_routes = [
+            row
+            for row in dossier["search_route_receipts"]
+            if row["question_family_id"] == question_id
+            and not row["accepted_fact_ids"]
+        ]
+        snapshots = list(
+            _pass_snapshots_for_routes(
+                dossier,
+                [row["route_receipt_id"] for row in empty_routes],
+            )
+        )
+        new_fact = deepcopy(dossier["material_facts"][0])
+        new_fact["dossier_fact_id"] = "PROFACT-NEW-BETWEEN-CONFIRMATIONS"
+        new_fact["source_lineage_id"] = "LINEAGE-NEW-BETWEEN-CONFIRMATIONS"
+        snapshots[0]["material_facts"] = [
+            row
+            for row in snapshots[0]["material_facts"]
+            if row["dossier_fact_id"] != new_fact["dossier_fact_id"]
+        ]
+        for snapshot in snapshots[1:]:
+            snapshot["material_facts"].append(deepcopy(new_fact))
+            snapshot["source_lineages"].append(
+                {
+                    "source_lineage_id": new_fact["source_lineage_id"],
+                    "source_urls": ["https://issuer.example/new-between"],
+                    "fact_ids": [new_fact["dossier_fact_id"]],
+                    "independence_group_id": "GROUP-NEW-BETWEEN",
+                    "status": "ACTIVE",
+                }
+            )
+        final = snapshots[-1]
+        verified = set(self.verified) | {new_fact["dossier_fact_id"]}
+        bindings = compile_route_snapshot_bindings(
+            snapshots,
+            verified_fact_ids=verified,
+        )
+        compiled = compile_fixpoint_confirmations(
+            final,
+            verified_fact_ids=verified,
+            route_snapshot_bindings=bindings.bindings_by_route_receipt_id,
+        )
+        receipt = self._adjudicate(
+            final,
+            verified_fact_ids=verified,
+            deterministic_bounds={question_id: bound},
+            fixpoint_confirmations=compiled.confirmations,
+        )
+        self.assertFalse(_decision(receipt, question_id).route_adequacy.semantic_fixpoint)
 
     def test_provider_failure_cannot_prove_fixpoint(self) -> None:
         dossier, question_id, confirmations, bound = self._likely_nonpublic_fixture()

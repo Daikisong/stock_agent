@@ -22,9 +22,28 @@ STOP_SELECTORS = (
     'button[aria-label*="Stop"]',
 )
 
-# Current ChatGPT Pro UI (2026-08): research runs from the ordinary Chat
-# composer with the reasoning level shown as ``Pro``.  Both controls must be
-# visible and active; ``Work + Pro`` and ``Chat + Light`` are not equivalent.
+CHAT_HISTORY_SEARCH_CONTROL_SELECTORS = (
+    'button[aria-label="검색"]',
+    'button[aria-label*="채팅 검색"]',
+    'button[aria-label*="Search chats" i]',
+    'button[aria-label="Search"]',
+)
+
+CHAT_HISTORY_SEARCH_INPUT_SELECTORS = (
+    'input[placeholder*="검색"]:visible',
+    'input[placeholder*="Search" i]:visible',
+    '[role="dialog"] input:visible',
+)
+
+CHAT_HISTORY_RESULT_LINK_SELECTORS = (
+    'a[href*="/c/"]',
+)
+
+# Current ChatGPT Pro UI (2026-08): research runs from the ordinary composer
+# with the reasoning level shown as ``Pro``.  Some deployments no longer
+# render the former top-level ``Chat``/``Work`` radio group, so the visible
+# prompt editor is the durable Chat surface.  If the older group is present,
+# an active Work control still excludes the page from this path.
 CHAT_MODE_ACTIVE_SELECTORS = (
     'button[role="radio"][data-state="on"]:has-text("Chat")',
     'button[role="radio"][aria-checked="true"]:has-text("Chat")',
@@ -32,6 +51,11 @@ CHAT_MODE_ACTIVE_SELECTORS = (
 
 CHAT_MODE_CONTROL_SELECTORS = (
     'button[role="radio"]:has-text("Chat")',
+)
+
+WORK_MODE_ACTIVE_SELECTORS = (
+    'button[role="radio"][data-state="on"]:has-text("Work")',
+    'button[role="radio"][aria-checked="true"]:has-text("Work")',
 )
 
 PRO_REASONING_ACTIVE_SELECTORS = (

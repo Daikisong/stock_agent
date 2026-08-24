@@ -20,6 +20,7 @@ PRO_FIRST_TABLES = frozenset(
         "pro_publications",
         "pro_research_approval_scopes",
         "pro_research_passes",
+        "pro_research_dossier_snapshots",
         "pro_gap_reopen_ledger",
     }
 )
@@ -84,10 +85,26 @@ CREATE TABLE IF NOT EXISTS pro_gap_reopen_ledger (
            supervisor_text_hash)
 );
 
+CREATE TABLE IF NOT EXISTS pro_research_dossier_snapshots (
+    snapshot_id TEXT PRIMARY KEY,
+    job_id TEXT NOT NULL REFERENCES pro_research_jobs(job_id),
+    pass_id TEXT NOT NULL UNIQUE REFERENCES pro_research_passes(pass_id),
+    parent_snapshot_id TEXT REFERENCES pro_research_dossier_snapshots(snapshot_id),
+    dossier_hash TEXT NOT NULL,
+    relative_path TEXT NOT NULL,
+    fact_count INTEGER NOT NULL CHECK (fact_count >= 0),
+    question_count INTEGER NOT NULL CHECK (question_count >= 0),
+    route_receipt_count INTEGER NOT NULL CHECK (route_receipt_count >= 0),
+    created_at TEXT NOT NULL,
+    UNIQUE(job_id, dossier_hash)
+);
+
 CREATE INDEX IF NOT EXISTS idx_pro_research_passes_job_ordinal
     ON pro_research_passes(job_id, pass_ordinal);
 CREATE INDEX IF NOT EXISTS idx_pro_gap_reopen_job_gap
     ON pro_gap_reopen_ledger(job_id, stable_gap_key, reopen_ordinal);
+CREATE INDEX IF NOT EXISTS idx_pro_dossier_snapshots_job_created
+    ON pro_research_dossier_snapshots(job_id, created_at, snapshot_id);
 """
 
 

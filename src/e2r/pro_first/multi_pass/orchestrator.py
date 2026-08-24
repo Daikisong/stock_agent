@@ -16,6 +16,7 @@ from ..job_store import ProFirstJobStore
 from ..research_contracts import ProResearchPromptCompilerV2
 from .ledger import ProMultiPassLedger
 from .models import (
+    COUNTER_SUPERSESSION_PASS_NAME,
     FollowupPassPlan,
     ResearchApprovalScope,
     ResearchPassRecord,
@@ -76,11 +77,13 @@ class ProMultiPassResearchOrchestrator:
         *,
         primary_archetype_ids: Sequence[str],
         response_hash: str,
+        initial_pass_id: str | None = None,
     ) -> ResearchApprovalScope:
         return self.ledger.establish_initial_scope(
             job_id,
             primary_archetype_ids=primary_archetype_ids,
             initial_response_hash=response_hash,
+            initial_pass_id=initial_pass_id,
         )
 
     def plan_next_material_pass(
@@ -147,7 +150,7 @@ class ProMultiPassResearchOrchestrator:
                 job_id=job_id,
                 packet=packet,
                 primary_archetype_ids=primary_archetype_ids,
-                pass_name="COUNTER_SUPERSESSION",
+                pass_name=COUNTER_SUPERSESSION_PASS_NAME,
                 unresolved_question_state=contradicted,
                 pass_inputs={
                     "route_reason": "COUNTER_OR_SUPERSESSION_UNRESOLVED",
@@ -254,7 +257,18 @@ class ProMultiPassResearchOrchestrator:
                 prompt_text=compiled.prompt_text,
                 prompt_hash=compiled.prompt_hash,
             )
-        followup_count = sum(row.pass_name != "INITIAL_FULL_RESEARCH" for row in passes)
+        # A payload can be rejected by the visible browser transport before it
+        # is ever submitted (for example, an oversized verifier-repair batch).
+        # Preserve that TRANSPORT_PENDING row for audit, but do not let a zero-
+        # submit transport plan consume the bounded count of actual follow-ups.
+        followup_count = sum(
+            row.pass_name != "INITIAL_FULL_RESEARCH"
+            and not (
+                row.status == ResearchPassStatus.TRANSPORT_PENDING.value
+                and row.submit_count == 0
+            )
+            for row in passes
+        )
         if followup_count >= self.max_followup_passes:
             reason = (
                 f"bounded browser pass limit {self.max_followup_passes} reached; "

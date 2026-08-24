@@ -74,6 +74,19 @@ def derive_repair_delta_from_dossier_response(
         str(row.get("source_lineage_id") or ""): row
         for row in response_dossier.get("source_lineages") or ()
     }
+    original_route_ids = {
+        str(row.get("route_receipt_id") or "")
+        for row in original_dossier.get("search_route_receipts") or ()
+    }
+    new_routes = tuple(
+        row
+        for row in response_dossier.get("search_route_receipts") or ()
+        if str(row.get("route_receipt_id") or "") not in original_route_ids
+    )
+    if len({str(row.get("route_receipt_id") or "") for row in new_routes}) != len(
+        new_routes
+    ):
+        raise ValueError("repair response contains duplicate new route receipts")
     actions: list[Mapping[str, Any]] = []
     for candidate_id, packet in packets.items():
         register_rows = register_by_candidate.get(candidate_id) or []
@@ -113,6 +126,22 @@ def derive_repair_delta_from_dossier_response(
                 if lineage is None:
                     raise ValueError("replacement fact lacks a source lineage receipt")
                 action_row["new_source_lineage"] = lineage
+            replacement_id = str(corrected.get("dossier_fact_id") or "")
+            scoped_routes = tuple(
+                row
+                for row in new_routes
+                if row.get("pass_id") == pass_id
+                and str(row.get("question_family_id") or "") in set(question_ids)
+                and replacement_id
+                in {
+                    str(value) for value in row.get("accepted_fact_ids") or ()
+                }
+            )
+            if not scoped_routes:
+                raise ValueError(
+                    "replacement fact lacks a current-pass accepted route receipt"
+                )
+            action_row["new_route_receipts"] = list(scoped_routes)
         actions.append(action_row)
     return {
         "schema_version": "e2r_pro_verifier_repair_delta_v1",

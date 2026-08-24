@@ -120,12 +120,8 @@ def compile_dossier_v2_closure_summary(
         value
         for value in expected
         if value in by_id
-        and (
-            by_id[value].get("status")
-            in {"PUBLIC_SEARCHABLE", "UNKNOWN_ROUTE_NOT_YET_TESTED", "SOURCE_PENDING"}
-            or by_id[value].get("availability_class")
-            in {"PUBLIC_SEARCHABLE", "UNKNOWN_ROUTE_NOT_YET_TESTED"}
-        )
+        and by_id[value].get("status")
+        in {"PUBLIC_SEARCHABLE", "UNKNOWN_ROUTE_NOT_YET_TESTED", "SOURCE_PENDING"}
     )
     counter = tuple(
         value
@@ -150,7 +146,11 @@ def compile_dossier_v2_closure_summary(
     likely = tuple(
         value
         for value in expected
-        if value in by_id and by_id[value].get("status") == "LIKELY_NONPUBLIC"
+        if value in by_id
+        and (
+            by_id[value].get("status") == "LIKELY_NONPUBLIC"
+            or by_id[value].get("availability_class") == "LIKELY_NONPUBLIC"
+        )
     )
     return DossierV2ClosureSummary(
         expected_mandatory_question_ids=expected,

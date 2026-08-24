@@ -40,6 +40,9 @@ class DossierValidationContext:
     as_of_date: str
     conversation_id: str | None = None
     candidate_archetype_ids: tuple[str, ...] = ()
+    research_pass_id: str | None = None
+    parent_pass_id: str | None = None
+    enforce_parent_pass_id: bool = False
 
 
 @dataclass(frozen=True)
@@ -183,6 +186,17 @@ class ResearchDossierValidator:
         conversation_id = str(payload.get("conversation_id") or "")
         if context.conversation_id and conversation_id != context.conversation_id:
             raise DossierValidationError("dossier conversation_id mismatch")
+        if (
+            context.research_pass_id
+            and str(payload.get("research_pass_id") or "")
+            != context.research_pass_id
+        ):
+            raise DossierValidationError("dossier research_pass_id mismatch")
+        if (
+            context.enforce_parent_pass_id
+            and payload.get("parent_pass_id") != context.parent_pass_id
+        ):
+            raise DossierValidationError("dossier parent_pass_id mismatch")
         candidate_ids = tuple(str(value) for value in payload["candidate_archetypes"])
         selected_ids = tuple(str(value) for value in payload["selected_archetypes"])
         if not set(selected_ids).issubset(candidate_ids):

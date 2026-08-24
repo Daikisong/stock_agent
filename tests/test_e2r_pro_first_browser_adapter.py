@@ -168,12 +168,20 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual((await editor.inner_text()).strip(), self.prompt)
         self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
 
-    async def test_deep_research_mode_uses_visible_dom_control(self) -> None:
+    async def test_large_prompt_uses_editor_local_dom_input_without_submitting(self) -> None:
+        large = self.prompt + "\n" + ("긴 full-thesis 검증 문장\n" * 25_000)
+        self.assertGreater(len(large), 500_000)
+        await self.adapter.set_prompt(large)
+        editor = self.page.locator('#prompt-textarea')
+        self.assertEqual((await editor.inner_text()).strip(), large.strip())
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
+
+    async def test_pro_mode_uses_visible_ordinary_chat_composer(self) -> None:
         inspection = await self.adapter.ensure_deep_research_mode()
         self.assertTrue(inspection.deep_research_ready)
         self.assertEqual(
-            await self.page.locator('#deep-research').get_attribute('aria-pressed'),
-            "true",
+            await self.page.locator('#reasoning-mode').inner_text(),
+            "Pro",
         )
 
     async def test_current_chat_plus_pro_mode_is_research_ready(self) -> None:
@@ -193,6 +201,31 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(await self.page.locator("#chat").get_attribute("data-state"), "on")
         self.assertEqual(await self.page.locator("#work").get_attribute("data-state"), "off")
 
+    async def test_compact_composer_plus_pro_is_research_ready_without_old_tabs(self) -> None:
+        await self.page.set_content(
+            "<html><body><form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button type="button">Pro</button>'
+            "</form></body></html>"
+        )
+        inspection = await self.adapter.ensure_deep_research_mode()
+        self.assertTrue(inspection.deep_research_ready)
+
+    async def test_legacy_deep_research_is_not_a_pro_substitute(self) -> None:
+        await self.page.set_content(
+            "<html><body>"
+            '<button data-testid="deep-research-toggle" '
+            'aria-pressed="true">Deep research</button>'
+            "<form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button type="button">Pro</button>'
+            "</form></body></html>"
+        )
+        with self.assertRaisesRegex(BrowserUIIncompatible, "legacy Deep Research"):
+            await self.adapter.ensure_deep_research_mode()
+
     async def test_chat_plus_light_does_not_pass_as_pro_mode(self) -> None:
         await self.page.set_content(
             "<html><body>"
@@ -203,7 +236,7 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
             '<button type="button" data-state="closed">Light</button>'
             "</form></body></html>"
         )
-        with self.assertRaisesRegex(BrowserUIIncompatible, "Chat \\+ Pro"):
+        with self.assertRaisesRegex(BrowserUIIncompatible, "Pro mode is not active"):
             await self.adapter.ensure_deep_research_mode()
         self.assertFalse((await self.adapter.inspect_state()).deep_research_ready)
 
@@ -243,6 +276,95 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
             await self.adapter.ensure_logged_in()
         inspection = await self.adapter.inspect_state()
         self.assertEqual(inspection.state, BrowserUIState.LOGIN_REQUIRED)
+
+    async def test_history_recovery_opens_exact_marked_result_without_submit(self) -> None:
+        job_id = "PROJOB-aaaaaaaaaaaaaaaaaaaaaaaa"
+        run_id = "PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb"
+        report = "\n".join(
+            (
+                f"[[E2R_PRO_JOB_ID:{job_id}]]",
+                f"[[E2R_PRO_RUN_ID:{run_id}]]",
+                "E2R_RESEARCH_DOSSIER_JSON_BEGIN",
+                "{}",
+                "E2R_RESEARCH_DOSSIER_JSON_END",
+            )
+        )
+        await self.page.set_content(
+            "<html><body>"
+            '<form><div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div><button type="button">Pro</button></form>'
+            '<input placeholder="채팅 검색" />'
+            f'<a id="recovered" href="/c/canonical-conversation">{job_id} 독립 조사 보고서</a>'
+            '<section id="conversation-results"></section>'
+            '<script>window.__submitCount=0;</script>'
+            "</body></html>"
+        )
+        await self.page.locator("#recovered").evaluate(
+            """(link, report) => link.addEventListener('click', event => {
+                event.preventDefault();
+                history.pushState({}, '', link.getAttribute('href'));
+                const turn = document.createElement('article');
+                turn.dataset.messageAuthorRole = 'assistant';
+                turn.dataset.messageId = 'recovered-final-turn';
+                turn.textContent = report;
+                document.querySelector('#conversation-results').appendChild(turn);
+            })""",
+            report,
+        )
+
+        recovered = await self.adapter.recover_conversation_without_submit(
+            job_id=job_id,
+            run_id=run_id,
+            search_terms=("검증기업",),
+        )
+
+        self.assertEqual(recovered.conversation_id, "canonical-conversation")
+        self.assertEqual(recovered.search_query, job_id)
+        self.assertTrue(recovered.result.structurally_complete)
+        self.assertEqual(recovered.submit_count, 0)
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
+
+    async def test_history_recovery_rejects_wrong_run_marker(self) -> None:
+        job_id = "PROJOB-aaaaaaaaaaaaaaaaaaaaaaaa"
+        run_id = "PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb"
+        wrong_report = "\n".join(
+            (
+                f"[[E2R_PRO_JOB_ID:{job_id}]]",
+                "[[E2R_PRO_RUN_ID:PRORUN-wrongwrongwrongwrongwrong]]",
+                "E2R_RESEARCH_DOSSIER_JSON_BEGIN",
+                "{}",
+                "E2R_RESEARCH_DOSSIER_JSON_END",
+            )
+        )
+        await self.page.set_content(
+            "<html><body>"
+            '<form><div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div><button type="button">Pro</button></form>'
+            '<input placeholder="채팅 검색" />'
+            f'<a id="recovered" href="/c/wrong-conversation">{job_id} 독립 조사 보고서</a>'
+            '<section id="conversation-results"></section>'
+            '<script>window.__submitCount=0;</script>'
+            "</body></html>"
+        )
+        await self.page.locator("#recovered").evaluate(
+            """(link, report) => link.addEventListener('click', event => {
+                event.preventDefault();
+                history.pushState({}, '', link.getAttribute('href'));
+                const turn = document.createElement('article');
+                turn.dataset.messageAuthorRole = 'assistant';
+                turn.dataset.messageId = 'wrong-final-turn';
+                turn.textContent = report;
+                document.querySelector('#conversation-results').appendChild(turn);
+            })""",
+            wrong_report,
+        )
+
+        with self.assertRaisesRegex(BrowserUIIncompatible, "job/run markers"):
+            await self.adapter.recover_conversation_without_submit(
+                job_id=job_id,
+                run_id=run_id,
+            )
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
 
     async def test_submit_path_is_unavailable_before_p5_approval_gate(self) -> None:
         with self.assertRaises(SubmitAuthorizationRequired):

@@ -8,10 +8,11 @@ from typing import Any, Mapping
 
 
 INITIAL_PASS_NAME = "INITIAL_FULL_RESEARCH"
+COUNTER_SUPERSESSION_PASS_NAME = "COUNTER_SUPERSESSION_CLOSURE"
 BOUNDED_FOLLOWUP_PASS_NAMES = frozenset(
     {
         "PUBLIC_GAP_CLOSURE",
-        "COUNTER_SUPERSESSION",
+        COUNTER_SUPERSESSION_PASS_NAME,
         "VERIFIER_REPAIR",
         "SATURATION_AUDIT",
     }
@@ -116,13 +117,35 @@ class TransportPendingDecision:
             raise ValueError("transport pending cannot authorize score/publication")
 
 
+@dataclass(frozen=True)
+class ResearchDossierSnapshotRecord:
+    snapshot_id: str
+    job_id: str
+    pass_id: str
+    parent_snapshot_id: str | None
+    dossier_hash: str
+    relative_path: str
+    fact_count: int
+    question_count: int
+    route_receipt_count: int
+    created_at: str
+
+    def __post_init__(self) -> None:
+        if len(self.dossier_hash) != 64:
+            raise ValueError("dossier snapshot hash must be sha256")
+        if min(self.fact_count, self.question_count, self.route_receipt_count) < 0:
+            raise ValueError("dossier snapshot counts must be nonnegative")
+
+
 __all__ = [
     "BOUNDED_FOLLOWUP_PASS_NAMES",
+    "COUNTER_SUPERSESSION_PASS_NAME",
     "FollowupPassPlan",
     "FollowupSubmitBlocked",
     "INITIAL_PASS_NAME",
     "RepeatedGapReopenHardFail",
     "ResearchApprovalScope",
+    "ResearchDossierSnapshotRecord",
     "ResearchPassRecord",
     "ResearchPassStatus",
     "ScopeApprovalRequired",

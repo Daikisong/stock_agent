@@ -78,6 +78,12 @@ def compile_rejection_packets(
                 if str(value).strip()
             )
         )
+        # Repair is required only when a rejected candidate can make a
+        # mandatory question non-terminal.  Unbound auxiliary facts remain in
+        # the verifier ledger as rejected diagnostics; inventing a question
+        # binding here would widen their research authority.
+        if not question_ids:
+            continue
         document_path = str(verification.get("document_path") or "") or None
         content_hash = str(verification.get("content_hash") or "") or None
         source_excerpt = _load_hash_verified_excerpt(

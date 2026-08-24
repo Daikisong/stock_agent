@@ -12,6 +12,7 @@ from e2r.pro_first.models import JobStatus, ResearchMode, ScanWindow
 from e2r.pro_first.multi_pass import FollowupPassPlan, ProMultiPassResearchOrchestrator
 from e2r.pro_first.repair import (
     ProVerifierRepairService,
+    compile_rejection_packets,
     compile_verifier_repair_contract_audit,
 )
 from e2r.pro_first.saturation import ResearchSaturationAdjudicator
@@ -279,7 +280,13 @@ class ProFirstV2VerifierRepairTest(unittest.TestCase):
             )
         )
 
-    def _verify_and_plan(self, dossier: dict, verifier: ProSourceVerifier):
+    def _verify_and_plan(
+        self,
+        dossier: dict,
+        verifier: ProSourceVerifier,
+        *,
+        maximum_prompt_payload_chars: int = 210_000,
+    ):
         verification = verifier.verify(
             dossier=dossier,
             job=self.job,
@@ -294,6 +301,7 @@ class ProFirstV2VerifierRepairTest(unittest.TestCase):
             dossier=dossier,
             verification_rows=rows,
             primary_archetype_ids=(ARCHETYPE,),
+            maximum_prompt_payload_chars=maximum_prompt_payload_chars,
         )
         return verification, rows, service, plan
 
@@ -418,6 +426,48 @@ class ProFirstV2VerifierRepairTest(unittest.TestCase):
         )
         self.assertEqual(plan.receipt["question_family_ids"], [QUESTION])
 
+    def test_rejected_auxiliary_fact_without_question_binding_is_diagnostic_only(self) -> None:
+        linked = self._fact()
+        dossier = self._dossier([linked])
+        orphan_url = "https://issuer.example/auxiliary"
+        orphan = self._fact(
+            candidate_id="PROFACT-AUXILIARY",
+            excerpt="원문에 존재하지 않는 보조 문장",
+            source_url=orphan_url,
+            source_lineage_id="LINEAGE-AUXILIARY",
+        )
+        orphan["question_family_ids"] = []
+        dossier["material_facts"].append(orphan)
+        dossier["source_lineages"].append(
+            {
+                "source_lineage_id": "LINEAGE-AUXILIARY",
+                "source_urls": [orphan_url],
+                "fact_ids": [orphan["dossier_fact_id"]],
+                "independence_group_id": "LINEAGE-AUXILIARY",
+                "status": "ACTIVE",
+            }
+        )
+        verifier = self._verifier(
+            {
+                self.url: self._document(),
+                orphan_url: self._document(),
+            }
+        )
+        verification = verifier.verify(
+            dossier=dossier,
+            job=self.job,
+            job_root=self.root,
+        )
+        rows = tuple(row.to_dict() for row in verification.verifications)
+        self.assertEqual(rows[1]["status"], "REJECTED_QUOTE_MISMATCH")
+        packets = compile_rejection_packets(
+            dossier=dossier,
+            verification_rows=rows,
+            job_root=self.root,
+            conversation_id=self.scope.conversation_id,
+        )
+        self.assertEqual(packets, ())
+
     def test_duplicate_lineage_compiler_rejection_opens_repair(self) -> None:
         fact = self._fact()
         dossier = self._dossier([fact])
@@ -540,6 +590,33 @@ class ProFirstV2VerifierRepairTest(unittest.TestCase):
             == "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q02"
         )
         self.assertEqual(second_question["status"], "VERIFIER_REPAIR_REQUIRED")
+
+    def test_large_repair_set_is_batched_without_dropping_deferred_packets(self) -> None:
+        first = self._fact(excerpt="원문에 없는 첫 번째 문장")
+        second = self._fact(
+            candidate_id="PROFACT-REPAIR-002",
+            question_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q02",
+            excerpt="원문에 없는 두 번째 문장",
+            source_lineage_id="LINEAGE-REPAIR-002",
+        )
+        dossier = self._dossier([first, second])
+        _verification, _rows, _service, plan = self._verify_and_plan(
+            dossier,
+            self._verifier(),
+            maximum_prompt_payload_chars=1,
+        )
+        self.assertEqual(len(plan.rejection_packets), 1)
+        self.assertEqual(plan.receipt["pending_rejection_packet_count"], 2)
+        self.assertEqual(plan.receipt["deferred_rejection_packet_count"], 1)
+        self.assertTrue(plan.receipt["transport_batching_only"])
+        selected_lines = (
+            self.root / "repair/rejection_packets.jsonl"
+        ).read_text(encoding="utf-8").splitlines()
+        pending_lines = (
+            self.root / "repair/pending_rejection_packets.jsonl"
+        ).read_text(encoding="utf-8").splitlines()
+        self.assertEqual(len(selected_lines), 1)
+        self.assertEqual(len(pending_lines), 2)
 
     def test_repair_cannot_invent_url_or_quote(self) -> None:
         fact = self._fact(excerpt="원문에 없는 과장된 HBM 계약 문장")
@@ -756,7 +833,27 @@ class ProFirstV2VerifierRepairTest(unittest.TestCase):
             {
                 "status": "VERIFIER_REPAIR_REQUIRED",
                 "support_fact_ids": [corrected["dossier_fact_id"]],
+                "search_route_receipt_ids": ["ROUTE-REPAIR-CAPTURED-001"],
                 "closure_reason": "수정 candidate의 deterministic 재검증이 남았다.",
+            }
+        )
+        response_dossier["search_route_receipts"].append(
+            {
+                "route_receipt_id": "ROUTE-REPAIR-CAPTURED-001",
+                "pass_id": plan.followup.research_pass.pass_id,
+                "archetype_id": ARCHETYPE,
+                "question_family_id": QUESTION,
+                "gap_id": "GAP-REPAIR-CAPTURED-001",
+                "source_role_id": "ISSUER_OFFICIAL",
+                "query_or_navigation_objective": "수정 원문 exact quote 재확인",
+                "query_text": "검증기업 HBM 공식 보고서 exact quote",
+                "result_count_seen": 1,
+                "opened_source_urls": [corrected["source_url"]],
+                "accepted_fact_ids": [corrected["dossier_fact_id"]],
+                "rejected_candidate_ids": [],
+                "provider_status": "SUCCESS",
+                "no_new_route_reason": None,
+                "performed_at": "2026-08-22T04:00:00Z",
             }
         )
         response_dossier["research_passes"].append(
@@ -792,6 +889,12 @@ class ProFirstV2VerifierRepairTest(unittest.TestCase):
             "REVERIFIED_ACCEPTED",
         )
         self.assertEqual(run.application.actions[0].action, "NARROWED")
+        self.assertIn(
+            "ROUTE-REPAIR-CAPTURED-001",
+            run.effective_dossier["question_family_results"][0][
+                "search_route_receipt_ids"
+            ],
+        )
 
     def test_existing_accepted_fact_cannot_be_targeted_or_deleted(self) -> None:
         accepted = self._fact(candidate_id="PROFACT-ACCEPTED")

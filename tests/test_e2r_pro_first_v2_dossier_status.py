@@ -4,8 +4,11 @@ from copy import deepcopy
 import unittest
 
 from e2r.pro_first.dossier import (
+    DossierDialectError,
     DossierValidationContext,
     DossierValidationError,
+    ResearchDossierDialectAdapter,
+    ResearchDossierNormalizer,
     ResearchDossierValidator,
 )
 from e2r.pro_first.research_contracts import select_contract_bundle
@@ -224,6 +227,318 @@ class ProFirstV2DossierStatusTest(unittest.TestCase):
         )
         self.assertEqual(receipt.schema_version, "e2r_pro_research_dossier_v1")
         self.assertEqual(v1["research_status"], "COMPLETE")
+
+    def test_compact_visible_pro_dialect_preserves_evidence_and_relationships(self) -> None:
+        payload = _base_v2(complete=True)
+        question = payload["question_family_results"][0]
+        question_id = question["question_family_id"]
+        question.update(
+            {
+                "status": "SUPPORTED_SCORING",
+                "support_fact_ids": ["MF-000660-001"],
+                "counter_fact_ids": ["CF-000660-001"],
+                "resolution_fact_ids": ["RF-000660-001"],
+                "attempted_source_role_ids": ["ISSUER_OFFICIAL"],
+                "search_route_receipt_ids": ["ROUTE-001"],
+                "required_source_roles_satisfied": ["ISSUER_OFFICIAL"],
+                "required_source_roles_missing": [],
+                "availability_class": "PUBLIC_SEARCHABLE",
+                "affected_component_ids": ["eps_fcf_explosion"],
+                "adequate_search_proven": True,
+            }
+        )
+        payload["candidate_archetypes"] = [
+            {"archetype_id": ARCHETYPE, "reason": "primary candidate"}
+        ]
+        payload["selected_archetypes"] = [
+            {"archetype_id": ARCHETYPE, "role": "PRIMARY"},
+            {"archetype_id": "R13_EXECUTION_CROSS_GUARD", "role": "CROSS_GUARD"},
+        ]
+        payload["material_facts"] = [
+            {
+                "fact_id": "MF-000660-001",
+                "fact_type": "ISSUER_ACTUAL",
+                "url": "https://example.com/issuer",
+                "publisher": "검증대상",
+                "publication_date": "2026-08-01",
+                "availability_date": "2026-08-01",
+                "subject": "검증대상",
+                "target": "000660 검증대상",
+                "business_segment": "메모리",
+                "product_family": "HBM",
+                "current_status": "CURRENT",
+                "source_role_ids": ["ISSUER_OFFICIAL"],
+                "source_lineage_id": "LINEAGE-001",
+                "summary": "HBM 매출이 증가했다.",
+                "exact_short_excerpt": "HBM 매출이 증가했다.",
+            }
+        ]
+        payload["counterfacts"] = [
+            {
+                "counterfact_id": "CF-000660-001",
+                "fact_ids": ["MF-000660-001"],
+                "summary": "증가 속도에는 변동성이 있다.",
+                "status": "OPEN",
+                "current_status": "OPEN",
+                "affected_question_ids": [question_id],
+                "resolution_or_supersession": "RF-000660-001",
+            }
+        ]
+        payload["resolution_facts"] = [
+            {
+                "resolution_fact_id": "RF-000660-001",
+                "support_fact_ids": ["MF-000660-001"],
+                "resolved_or_superseded_fact_ids": ["CF-000660-001"],
+                "summary": "공식 실적으로 변동성 우려 일부가 해소됐다.",
+                "status": "RESOLVED",
+                "current_status": "RESOLVED",
+                "affected_question_ids": [question_id],
+            }
+        ]
+        component_ids = (
+            "eps_fcf_explosion",
+            "earnings_visibility",
+            "bottleneck_pricing",
+            "market_mispricing",
+            "valuation_rerating",
+            "capital_allocation",
+            "information_confidence",
+        )
+        payload["component_research"] = [
+            {
+                "component_id": component_id,
+                "positive_fact_ids": (
+                    ["MF-000660-001"] if component_id == "eps_fcf_explosion" else []
+                ),
+                "counter_fact_ids": (
+                    ["CF-000660-001"] if component_id == "eps_fcf_explosion" else []
+                ),
+                "resolution_fact_ids": (
+                    ["RF-000660-001"] if component_id == "eps_fcf_explosion" else []
+                ),
+            }
+            for component_id in component_ids
+        ]
+        payload["source_lineages"] = [
+            {
+                "source_lineage_id": "LINEAGE-001",
+                "canonical_source_urls": ["https://example.com/issuer"],
+                "fact_ids": ["MF-000660-001"],
+                "lineage_status": "ACCEPTED",
+            }
+        ]
+        payload["search_route_receipts"] = [
+            {
+                "route_receipt_id": "ROUTE-001",
+                "pass_id": "PASS-1",
+                "archetype_id": ARCHETYPE,
+                "question_family_id": question_id,
+                "source_role_id": "ISSUER_OFFICIAL",
+                "navigation_objective": "공식 실적 원문 확인",
+                "query": "검증대상 공식 실적",
+                "result_roster": ["https://example.com/issuer"],
+                "opened_url_roster": ["https://example.com/issuer"],
+                "accepted_fact_roster": ["MF-000660-001"],
+                "rejection_roster": [],
+                "provider_status": "NORMAL_AFTER_VERIFIER_REPAIR",
+                "performed_at": "2026-08-01T00:00:00Z",
+            }
+        ]
+        payload["research_passes"] = [
+            {
+                "research_pass_id": "PASS-1",
+                "parent_pass_id": "NONE",
+                "pass_name": "INITIAL_FULL_RESEARCH",
+                "status": "COMPLETE",
+                "prompt_hash": "prompt-hash",
+                "response_hash": "response-hash",
+            }
+        ]
+        payload["verification_repair_register"] = [
+            {"repair_id": "PRO-SELF-REPAIR-1", "status": "CLAIMED_COMPLETE"}
+        ]
+
+        adapted = ResearchDossierDialectAdapter().adapt(payload)
+        normalized = ResearchDossierNormalizer().normalize(adapted.payload)
+        receipt = self.validator.validate(normalized.payload, _context())
+
+        self.assertEqual(len(receipt.fact_ids), 3)
+        self.assertEqual(adapted.id_map["MF-000660-001"], "PROFACT-MF-000660-001")
+        self.assertEqual(
+            normalized.payload["material_facts"][0]["source_url"],
+            "https://example.com/issuer",
+        )
+        self.assertEqual(
+            normalized.payload["material_facts"][0]["supporting_excerpt"],
+            "HBM 매출이 증가했다.",
+        )
+        self.assertEqual(normalized.payload["selected_archetypes"], [ARCHETYPE])
+        self.assertEqual(normalized.payload["research_passes"][0]["parent_pass_id"], None)
+        self.assertEqual(
+            normalized.payload["search_route_receipts"][0]["provider_status"],
+            "SUCCESS",
+        )
+        saturation = normalized.payload["research_saturation"]
+        self.assertEqual(len(saturation["pro_applied_cross_guards"]), 1)
+        self.assertEqual(len(saturation["pro_self_reported_verification_repairs"]), 1)
+        self.assertEqual(normalized.payload["verification_repair_register"], [])
+
+    def test_compact_followup_can_anchor_relationship_to_exact_prior_fact(self) -> None:
+        prior = _base_v2(complete=True)
+        prior["research_pass_id"] = "PASS-PRIOR"
+        prior["material_facts"] = [
+            {
+                "dossier_fact_id": "PROFACT-MF-PRIOR-001",
+                "research_pass_id": "PASS-PRIOR",
+                "question_family_ids": [],
+                "statement": "이전 패스에서 확인한 영업현금흐름이다.",
+                "direction": "POSITIVE",
+                "target_id": "000660",
+                "issuer_scoped": True,
+                "economic_mechanism": "OPERATING_CASH_FLOW",
+                "predicate": "OPERATING_CASH_FLOW",
+                "value": None,
+                "unit": None,
+                "period": "AS_OF:2026-08-01",
+                "event_date": "2026-08-01",
+                "current_status": "CURRENT",
+                "candidate_components": ["eps_fcf_explosion"],
+                "source_url": "https://example.com/prior-filing",
+                "source_title": "이전 공시",
+                "source_publisher": "검증대상",
+                "published_at": "2026-08-01",
+                "supporting_excerpt": "영업활동현금흐름 100",
+                "source_lineage_id": "LINEAGE-PRIOR",
+            }
+        ]
+
+        delta = _base_v2(complete=True)
+        delta["research_pass_id"] = "PASS-NEXT"
+        delta["parent_pass_id"] = "PASS-PRIOR"
+        delta["candidate_archetypes"] = []
+        delta["selected_archetypes"] = []
+        delta["material_facts"] = []
+        delta["counterfacts"] = []
+        delta["resolution_facts"] = [
+            {
+                "resolution_fact_id": "RF-NEXT-001",
+                "prior_counterfact_ids": ["CF-PRIOR-001"],
+                "support_fact_ids": ["MF-PRIOR-001"],
+                "resolved_or_superseded_fact_ids": ["CF-PRIOR-001"],
+                "current_state_summary": "이전 현금흐름 근거로 우려를 해소했다.",
+                "status": "RESOLVED",
+                "current_status": "RESOLVED",
+                "affected_question_ids": [],
+            }
+        ]
+
+        with self.assertRaisesRegex(
+            DossierDialectError,
+            "lacks a source-fact anchor",
+        ):
+            ResearchDossierDialectAdapter().adapt(delta)
+
+        adapted = ResearchDossierDialectAdapter().adapt(
+            delta,
+            prior_dossier=prior,
+        )
+        relationship = adapted.payload["resolution_facts"][0]
+        self.assertEqual(
+            relationship["source_url"],
+            "https://example.com/prior-filing",
+        )
+        self.assertEqual(
+            relationship["supporting_excerpt"],
+            "영업활동현금흐름 100",
+        )
+        self.assertEqual(
+            relationship["statement"],
+            "이전 현금흐름 근거로 우려를 해소했다.",
+        )
+        self.assertEqual(
+            relationship["source_anchor_fact_ids"],
+            ["PROFACT-MF-PRIOR-001"],
+        )
+        self.assertEqual(
+            relationship["prior_counterfact_ids"],
+            ["PROFACT-CF-PRIOR-001"],
+        )
+
+    def test_compact_followup_rejects_prior_dossier_from_other_scope(self) -> None:
+        prior = _base_v2(complete=True)
+        prior["research_pass_id"] = "PASS-PRIOR"
+        delta = _base_v2(complete=True)
+        delta["research_pass_id"] = "PASS-NEXT"
+        delta["parent_pass_id"] = "PASS-PRIOR"
+        delta["conversation_id"] = "OTHER-CONVERSATION"
+        delta["material_facts"] = []
+        delta["counterfacts"] = []
+        delta["resolution_facts"] = []
+
+        with self.assertRaisesRegex(
+            DossierDialectError,
+            "scope: conversation_id",
+        ):
+            ResearchDossierDialectAdapter().adapt(
+                delta,
+                prior_dossier=prior,
+            )
+
+    def test_compact_question_keeps_only_route_owned_by_that_question(self) -> None:
+        payload = _base_v2(complete=True)
+        first = payload["question_family_results"][0]
+        second = payload["question_family_results"][1]
+        first["search_route_receipt_ids"] = ["ROUTE-FIRST", "ROUTE-SECOND"]
+        payload["search_route_receipts"] = [
+            {
+                "route_receipt_id": "ROUTE-FIRST",
+                "pass_id": "PASS-1",
+                "archetype_id": first["archetype_id"],
+                "question_family_id": first["question_family_id"],
+                "source_role_id": "ISSUER_OFFICIAL",
+                "navigation_objective": "첫 질문 경로",
+                "result_roster": [],
+                "opened_url_roster": [],
+                "accepted_fact_roster": [],
+                "rejection_roster": [],
+                "provider_status": "NORMAL",
+                "no_new_route_reason": "추가 결과 없음",
+                "performed_at": "2026-08-01T00:00:00Z",
+            },
+            {
+                "route_receipt_id": "ROUTE-SECOND",
+                "pass_id": "PASS-1",
+                "archetype_id": second["archetype_id"],
+                "question_family_id": second["question_family_id"],
+                "source_role_id": "ISSUER_OFFICIAL",
+                "navigation_objective": "둘째 질문 경로",
+                "result_roster": [],
+                "opened_url_roster": [],
+                "accepted_fact_roster": [],
+                "rejection_roster": [],
+                "provider_status": "NORMAL",
+                "no_new_route_reason": "추가 결과 없음",
+                "performed_at": "2026-08-01T00:00:00Z",
+            },
+        ]
+
+        adapted = ResearchDossierDialectAdapter().adapt(payload)
+        canonical = adapted.payload["question_family_results"][0]
+        self.assertEqual(
+            canonical["search_route_receipt_ids"],
+            ["ROUTE-FIRST"],
+        )
+        self.assertEqual(
+            adapted.payload["research_saturation"][
+                "pro_cross_question_route_references"
+            ],
+            [
+                {
+                    "question_family_id": first["question_family_id"],
+                    "route_receipt_ids": ["ROUTE-SECOND"],
+                }
+            ],
+        )
 
 
 if __name__ == "__main__":

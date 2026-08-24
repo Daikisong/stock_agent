@@ -158,6 +158,13 @@ def apply_repair_delta(
                 old_candidate_id=packet.candidate_id,
                 replacement_candidate_id=str(corrected["dossier_fact_id"]),
             )
+            _append_repair_route_receipts(
+                effective,
+                routes=action_row.get("new_route_receipts") or (),
+                pass_id=pass_id,
+                question_family_ids=packet.question_family_ids,
+                replacement_candidate_id=str(corrected["dossier_fact_id"]),
+            )
         else:
             _replace_source_lineage_reference(
                 effective,
@@ -289,6 +296,76 @@ def _replace_question_fact_reference(
                 for value in values
                 if value != old_candidate_id or replacement_candidate_id is not None
             ]
+
+
+def _append_repair_route_receipts(
+    dossier: dict[str, Any],
+    *,
+    routes: Sequence[Mapping[str, Any]],
+    pass_id: str,
+    question_family_ids: Sequence[str],
+    replacement_candidate_id: str,
+) -> None:
+    if not routes:
+        # Lower-level hand-authored repair deltas used by isolated unit tests
+        # remain supported. Captured full-dossier responses enforce this route
+        # in ``derive_repair_delta_from_dossier_response``.
+        return
+    allowed_questions = set(str(value) for value in question_family_ids)
+    existing = {
+        str(row.get("route_receipt_id") or "")
+        for row in dossier.get("search_route_receipts") or ()
+    }
+    new_ids: list[str] = []
+    role_by_question: dict[str, set[str]] = {}
+    for route in routes:
+        route_id = str(route.get("route_receipt_id") or "")
+        question_id = str(route.get("question_family_id") or "")
+        accepted = {
+            str(value) for value in route.get("accepted_fact_ids") or ()
+        }
+        if (
+            not route_id
+            or route_id in existing
+            or str(route.get("pass_id") or "") != pass_id
+            or question_id not in allowed_questions
+            or accepted != {replacement_candidate_id}
+        ):
+            raise ValueError("repair route receipt escapes its replacement fact scope")
+        dossier.setdefault("search_route_receipts", []).append(deepcopy(dict(route)))
+        existing.add(route_id)
+        new_ids.append(route_id)
+        role_by_question.setdefault(question_id, set()).add(
+            str(route.get("source_role_id") or "")
+        )
+    for question in dossier.get("question_family_results") or ():
+        question_id = str(question.get("question_family_id") or "")
+        if question_id not in role_by_question:
+            continue
+        question["search_route_receipt_ids"] = list(
+            dict.fromkeys(
+                (
+                    *(str(value) for value in question.get("search_route_receipt_ids") or ()),
+                    *(
+                        route_id
+                        for route_id in new_ids
+                        if any(
+                            str(route.get("route_receipt_id") or "") == route_id
+                            and str(route.get("question_family_id") or "") == question_id
+                            for route in routes
+                        )
+                    ),
+                )
+            )
+        )
+        question["attempted_source_role_ids"] = list(
+            dict.fromkeys(
+                (
+                    *(str(value) for value in question.get("attempted_source_role_ids") or ()),
+                    *sorted(role_by_question[question_id]),
+                )
+            )
+        )
 
 
 def _mark_questions_public_after_withdrawal(

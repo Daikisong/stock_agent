@@ -304,7 +304,10 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
             primary_archetype_ids=(ARCHETYPE,),
         )
         self.assertIsInstance(result, FollowupPassPlan)
-        self.assertEqual(result.research_pass.pass_name, "COUNTER_SUPERSESSION")
+        self.assertEqual(
+            result.research_pass.pass_name,
+            "COUNTER_SUPERSESSION_CLOSURE",
+        )
         self.assertEqual(result.research_pass.conversation_id, self.scope.conversation_id)
 
     def test_prompt_response_parent_lineage_persisted(self) -> None:
@@ -386,6 +389,34 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
 
     def test_transport_limit_is_pending_not_complete(self) -> None:
         self.test_transport_limit_does_not_mark_complete()
+
+    def test_unsubmitted_transport_pending_plan_does_not_consume_followup_budget(self) -> None:
+        bounded = ProMultiPassResearchOrchestrator(
+            self.store,
+            ledger=self.orchestrator.ledger,
+            max_followup_passes=1,
+        )
+        oversized = bounded.plan_followup(
+            job_id=self.job.job_id,
+            packet=self.packet,
+            primary_archetype_ids=(ARCHETYPE,),
+            pass_name="VERIFIER_REPAIR",
+            pass_inputs={"batch": "oversized"},
+        )
+        self.assertIsInstance(oversized, FollowupPassPlan)
+        pending = bounded.ledger.mark_transport_pending(
+            oversized.research_pass.pass_id,
+            reason="visible composer payload exceeded the transport budget",
+        )
+        self.assertEqual(pending.submit_count, 0)
+        replacement = bounded.plan_followup(
+            job_id=self.job.job_id,
+            packet=self.packet,
+            primary_archetype_ids=(ARCHETYPE,),
+            pass_name="VERIFIER_REPAIR",
+            pass_inputs={"batch": 1},
+        )
+        self.assertIsInstance(replacement, FollowupPassPlan)
 
 
 if __name__ == "__main__":

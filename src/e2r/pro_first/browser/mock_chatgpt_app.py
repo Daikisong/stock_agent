@@ -67,12 +67,14 @@ def render_mock_chatgpt(
     composer = "" if login else """
       <main>
         <div data-message-id="old-turn"><button id="old-md" class="entity-underline">old_result.md</button></div>
-        <button id="deep-research" data-testid="deep-research-toggle" aria-label="Deep research" aria-pressed="false">Deep research</button>
+        <button id="chat-mode" role="radio" data-state="on">Chat</button>
+        <button id="work-mode" role="radio" data-state="off">Work</button>
         <input id="packet-input" type="file" hidden>
         <div id="attachments"></div>
         <form id="composer-form">
           <div id="prompt-textarea" class="ProseMirror" contenteditable="true"></div>
           <button id="composer-submit-button" type="button" aria-label="Send">Send</button>
+          <button id="reasoning-mode" type="button">Pro</button>
           <button data-testid="stop-button" type="button" hidden>Stop</button>
         </form>
         <section id="conversation-results"></section>
@@ -177,8 +179,6 @@ def render_mock_chatgpt(
         results.appendChild(turn);
       }}
     }};
-    const deep = document.querySelector('#deep-research');
-    if (deep) deep.addEventListener('click', () => deep.setAttribute('aria-pressed', 'true'));
     const input = document.querySelector('#packet-input');
     if (input) input.addEventListener('change', () => {{
       const button = document.createElement('button');

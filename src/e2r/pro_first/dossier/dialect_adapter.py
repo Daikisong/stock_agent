@@ -36,6 +36,7 @@ _CANONICAL_SOURCE_ROLES = frozenset(
 )
 _LEGACY_FACT_ID = re.compile(r"^(?:MF|CF)-[A-Za-z0-9._:-]+$")
 _LEGACY_GAP_ID = re.compile(r"^GAP-[A-Za-z0-9._:-]+$")
+_COMPACT_V2_FACT_ID = re.compile(r"^(?:MF|CF|RF)[A-Za-z0-9._:-]+$")
 
 # Qualitative bands are converted to fixed conservative band midpoints.  This
 # is a format policy, not a score or Stage decision, and remains subordinate to
@@ -88,23 +89,33 @@ class AdaptedDossier:
 class ResearchDossierDialectAdapter:
     """Convert known ChatGPT Pro formatting variants without inventing facts."""
 
-    def adapt(self, payload: Mapping[str, Any]) -> AdaptedDossier:
+    def adapt(
+        self,
+        payload: Mapping[str, Any],
+        *,
+        prior_dossier: Mapping[str, Any] | None = None,
+    ) -> AdaptedDossier:
         before_hash = canonical_hash(payload)
         adapted = deepcopy(dict(payload))
         if adapted.get("schema_version") == "e2r_pro_research_dossier_v2":
-            for collection in ("material_facts", "counterfacts", "resolution_facts"):
-                for fact in adapted.get(collection) or ():
-                    fact_id = str((fact or {}).get("dossier_fact_id") or "")
-                    if not fact_id.startswith("PROFACT-"):
-                        raise DossierDialectError(
-                            "V2 dossier fact ids must already use the canonical PROFACT prefix"
-                        )
+            if _is_canonical_v2(adapted):
+                return AdaptedDossier(
+                    payload=adapted,
+                    before_hash=before_hash,
+                    after_hash=canonical_hash(adapted),
+                    operations=("V2_CANONICAL_DIALECT_NO_LEGACY_REWRITE",),
+                    id_map={},
+                )
+            compact = _adapt_compact_v2(
+                adapted,
+                prior_dossier=prior_dossier,
+            )
             return AdaptedDossier(
-                payload=adapted,
+                payload=compact.payload,
                 before_hash=before_hash,
-                after_hash=canonical_hash(adapted),
-                operations=("V2_CANONICAL_DIALECT_NO_LEGACY_REWRITE",),
-                id_map={},
+                after_hash=canonical_hash(compact.payload),
+                operations=compact.operations,
+                id_map=compact.id_map,
             )
         protected_before = _protected_fact_values(adapted)
         fact_count_before = _fact_count(adapted)
@@ -264,6 +275,759 @@ class ResearchDossierDialectAdapter:
         if len(set(id_map.values())) != len(id_map):
             raise DossierDialectError("legacy id mapping would create a collision")
         return id_map
+
+
+@dataclass(frozen=True)
+class _CompactV2Adaptation:
+    payload: Mapping[str, Any]
+    operations: tuple[str, ...]
+    id_map: Mapping[str, str]
+
+
+def _is_canonical_v2(payload: Mapping[str, Any]) -> bool:
+    facts = tuple(
+        row
+        for collection in ("material_facts", "counterfacts", "resolution_facts")
+        for row in payload.get(collection) or ()
+    )
+    return bool(
+        facts
+        and all(
+            isinstance(row, Mapping)
+            and str(row.get("dossier_fact_id") or "").startswith("PROFACT-")
+            for row in facts
+        )
+        and all(isinstance(value, str) for value in payload.get("candidate_archetypes") or ())
+        and all(isinstance(value, str) for value in payload.get("selected_archetypes") or ())
+        and isinstance(payload.get("component_research"), Mapping)
+        and all(
+            "query_or_navigation_objective" in row
+            and "opened_source_urls" in row
+            for row in payload.get("search_route_receipts") or ()
+            if isinstance(row, Mapping)
+        )
+    )
+
+
+def _adapt_compact_v2(
+    payload: Mapping[str, Any],
+    *,
+    prior_dossier: Mapping[str, Any] | None = None,
+) -> _CompactV2Adaptation:
+    """Project the visible Pro V2 field dialect without changing raw evidence.
+
+    The compact dialect uses source facts plus counter/resolution relationship
+    rows.  Canonical verification still requires one fact-shaped row per
+    relationship, so each relationship is bound to its explicitly declared
+    first source fact.  This does not make it accepted evidence: the normal
+    full-document quote verifier must still accept it or open verifier repair.
+    """
+
+    adapted = deepcopy(dict(payload))
+    material_rows = adapted.get("material_facts") or []
+    counter_rows = adapted.get("counterfacts") or []
+    resolution_rows = adapted.get("resolution_facts") or []
+    if not all(isinstance(rows, list) for rows in (material_rows, counter_rows, resolution_rows)):
+        raise DossierDialectError("compact V2 fact collections must be arrays")
+    raw_fact_ids: list[str] = []
+    for collection, id_key in (
+        (material_rows, "fact_id"),
+        (counter_rows, "counterfact_id"),
+        (resolution_rows, "resolution_fact_id"),
+    ):
+        for row in collection:
+            if not isinstance(row, Mapping):
+                raise DossierDialectError("compact V2 fact rows must be objects")
+            fact_id = str(row.get(id_key) or "")
+            if not _COMPACT_V2_FACT_ID.fullmatch(fact_id):
+                raise DossierDialectError(
+                    f"unsupported compact V2 fact id: {fact_id!r}"
+                )
+            raw_fact_ids.append(fact_id)
+    if len(raw_fact_ids) != len(set(raw_fact_ids)):
+        raise DossierDialectError("compact V2 fact ids must be unique")
+    referenced_fact_ids = _compact_fact_reference_ids(adapted)
+    id_map = {
+        value: f"PROFACT-{value}"
+        for value in dict.fromkeys((*raw_fact_ids, *referenced_fact_ids))
+    }
+    prior_material_by_id = _prior_compact_source_fact_index(
+        payload,
+        prior_dossier=prior_dossier,
+    )
+    material_by_id = {
+        **prior_material_by_id,
+        **{str(row["fact_id"]): row for row in material_rows},
+    }
+    target = adapted.get("target") or {}
+    target_id = str(target.get("target_id") or target.get("symbol") or "")
+    company_name = str(target.get("company_name") or "")
+    research_pass_id = str(adapted.get("research_pass_id") or "")
+    if not target_id or not research_pass_id:
+        raise DossierDialectError("compact V2 target and research pass are required")
+    adapted["target"] = {**dict(target), "target_id": target_id}
+
+    question_rows = tuple(adapted.get("question_family_results") or ())
+    questions_by_id = {
+        str(row.get("question_family_id") or ""): row
+        for row in question_rows
+        if isinstance(row, Mapping)
+    }
+    question_refs: dict[str, list[str]] = {value: [] for value in raw_fact_ids}
+    component_refs: dict[str, list[str]] = {value: [] for value in raw_fact_ids}
+    for row in question_rows:
+        if not isinstance(row, Mapping):
+            raise DossierDialectError("compact V2 question rows must be objects")
+        question_id = str(row.get("question_family_id") or "")
+        for key in ("support_fact_ids", "counter_fact_ids", "resolution_fact_ids"):
+            for fact_id in row.get(key) or ():
+                if str(fact_id) in question_refs:
+                    question_refs[str(fact_id)].append(question_id)
+                    component_refs[str(fact_id)].extend(
+                        str(value) for value in row.get("affected_component_ids") or ()
+                    )
+    components = adapted.get("component_research") or []
+    if not isinstance(components, (list, Mapping)):
+        raise DossierDialectError("compact V2 component research must be an array or object")
+    component_rows = list(components.values()) if isinstance(components, Mapping) else list(components)
+    for row in component_rows:
+        if not isinstance(row, Mapping):
+            raise DossierDialectError("compact V2 component rows must be objects")
+        component_id = str(row.get("component_id") or "")
+        for key in ("positive_fact_ids", "counter_fact_ids", "resolution_fact_ids"):
+            for fact_id in row.get(key) or ():
+                if str(fact_id) in component_refs:
+                    component_refs[str(fact_id)].append(component_id)
+
+    canonical_material = [
+        _compact_source_fact(
+            row,
+            fact_id=str(row["fact_id"]),
+            direction=(
+                "POSITIVE"
+                if question_refs[str(row["fact_id"])]
+                or component_refs[str(row["fact_id"])]
+                else "NEUTRAL"
+            ),
+            target_id=target_id,
+            company_name=company_name,
+            research_pass_id=research_pass_id,
+            question_ids=question_refs[str(row["fact_id"])],
+            component_ids=component_refs[str(row["fact_id"])],
+        )
+        for row in material_rows
+    ]
+    canonical_counter = [
+        _compact_relationship_fact(
+            row,
+            relationship_id=str(row["counterfact_id"]),
+            anchor_ids=tuple(str(value) for value in row.get("fact_ids") or ()),
+            direction="COUNTER",
+            material_by_id=material_by_id,
+            target_id=target_id,
+            company_name=company_name,
+            research_pass_id=research_pass_id,
+            question_ids=tuple(str(value) for value in row.get("affected_question_ids") or ()),
+            component_ids=component_refs[str(row["counterfact_id"])],
+        )
+        for row in counter_rows
+    ]
+    canonical_resolution = [
+        _compact_relationship_fact(
+            row,
+            relationship_id=str(row["resolution_fact_id"]),
+            anchor_ids=tuple(str(value) for value in row.get("support_fact_ids") or ()),
+            direction="RESOLUTION",
+            material_by_id=material_by_id,
+            target_id=target_id,
+            company_name=company_name,
+            research_pass_id=research_pass_id,
+            question_ids=tuple(str(value) for value in row.get("affected_question_ids") or ()),
+            component_ids=component_refs[str(row["resolution_fact_id"])],
+        )
+        for row in resolution_rows
+    ]
+    adapted["material_facts"] = canonical_material
+    adapted["counterfacts"] = canonical_counter
+    adapted["resolution_facts"] = canonical_resolution
+
+    candidates = adapted.get("candidate_archetypes") or []
+    if not isinstance(candidates, list):
+        raise DossierDialectError("compact V2 candidate archetypes must be an array")
+    adapted["candidate_archetypes"] = [
+        str(row.get("archetype_id") or "") if isinstance(row, Mapping) else str(row)
+        for row in candidates
+    ]
+    selected = adapted.get("selected_archetypes") or []
+    if not isinstance(selected, list):
+        raise DossierDialectError("compact V2 selected archetypes must be an array")
+    selected_objects = [row for row in selected if isinstance(row, Mapping)]
+    primary_selected = [
+        str(row.get("archetype_id") or "")
+        for row in selected_objects
+        if str(row.get("role") or "").upper() == "PRIMARY"
+    ]
+    if not primary_selected:
+        primary_selected = [
+            str(row.get("archetype_id") or "") if isinstance(row, Mapping) else str(row)
+            for row in selected
+        ]
+    adapted["selected_archetypes"] = primary_selected
+
+    if isinstance(components, list):
+        adapted["component_research"] = {
+            str(row.get("component_id") or ""): {
+                key: value for key, value in row.items() if key != "component_id"
+            }
+            for row in components
+        }
+
+    route_question_by_id = _route_question_ownership(
+        adapted,
+        prior_dossier=prior_dossier,
+    )
+    cross_question_route_references = [
+        diagnostic
+        for row in question_rows
+        if (
+            diagnostic := _cross_question_route_reference_diagnostic(
+                row,
+                route_question_by_id=route_question_by_id,
+            )
+        )
+    ]
+    adapted["question_family_results"] = [
+        _canonical_question_result(
+            row,
+            route_question_by_id=route_question_by_id,
+        )
+        for row in question_rows
+    ]
+    adapted["unresolved_gaps"] = _canonical_compact_gaps(
+        adapted.get("unresolved_gaps") or (),
+        questions_by_id=questions_by_id,
+    )
+    adapted["source_lineages"] = [
+        {
+            **dict(row),
+            "source_urls": list(row.get("source_urls") or row.get("canonical_source_urls") or ()),
+            "independence_group_id": str(
+                row.get("independence_group_id")
+                or row.get("source_lineage_id")
+                or ""
+            ),
+            "status": "ACTIVE",
+        }
+        for row in adapted.get("source_lineages") or ()
+    ]
+    adapted["search_route_receipts"] = [
+        _canonical_route_receipt(row)
+        for row in adapted.get("search_route_receipts") or ()
+    ]
+    adapted["research_passes"] = [
+        _canonical_research_pass(row)
+        for row in adapted.get("research_passes") or ()
+    ]
+    self_reported_repairs = deepcopy(adapted.get("verification_repair_register") or [])
+    adapted["verification_repair_register"] = []
+    saturation = dict(adapted.get("research_saturation") or {})
+    saturation["pro_self_reported_verification_repairs"] = self_reported_repairs
+    saturation["pro_applied_cross_guards"] = [
+        deepcopy(row)
+        for row in selected_objects
+        if str(row.get("role") or "").upper() != "PRIMARY"
+    ]
+    saturation["pro_cross_question_route_references"] = (
+        cross_question_route_references
+    )
+    adapted["research_saturation"] = saturation
+    adapted["parent_pass_id"] = _none_to_null(adapted.get("parent_pass_id"))
+    adapted = _rewrite_exact_identifiers(adapted, id_map)
+    return _CompactV2Adaptation(
+        payload=adapted,
+        operations=(
+            f"ADAPT_COMPACT_V2_SOURCE_FACTS:{len(canonical_material)}",
+            f"ADAPT_COMPACT_V2_COUNTER_RELATIONSHIPS:{len(canonical_counter)}",
+            f"ADAPT_COMPACT_V2_RESOLUTION_RELATIONSHIPS:{len(canonical_resolution)}",
+            f"MAP_COMPACT_V2_FACT_IDS:{len(id_map)}",
+            "PROJECT_PRIMARY_SELECTED_ARCHETYPES_AND_PRESERVE_CROSS_GUARDS",
+            "PROJECT_COMPONENT_RESEARCH_ARRAY_TO_ID_OBJECT",
+            f"PROJECT_COMPACT_V2_GAPS:{len(adapted['unresolved_gaps'])}",
+            f"PROJECT_COMPACT_V2_ROUTE_RECEIPTS:{len(adapted['search_route_receipts'])}",
+            "FILTER_CROSS_QUESTION_ROUTE_REFERENCES_TO_CANONICAL_OWNER",
+            "PRESERVE_PRO_SELF_REPAIR_AS_NONAUTHORITATIVE_DIAGNOSTIC",
+        ),
+        id_map=dict(sorted(id_map.items())),
+    )
+
+
+def _prior_compact_source_fact_index(
+    payload: Mapping[str, Any],
+    *,
+    prior_dossier: Mapping[str, Any] | None,
+) -> Mapping[str, Mapping[str, Any]]:
+    """Expose exact prior material facts as anchors for a follow-up delta.
+
+    A follow-up is allowed to cite a material fact accepted into the same
+    conversation's immediately preceding effective dossier without repeating
+    the full fact row.  This projection copies source evidence byte-for-byte;
+    it never synthesizes a URL, publication date, or excerpt.
+    """
+
+    if prior_dossier is None:
+        return {}
+    _validate_prior_dossier_scope(payload, prior_dossier)
+    result: dict[str, Mapping[str, Any]] = {}
+    for row in prior_dossier.get("material_facts") or ():
+        if not isinstance(row, Mapping):
+            raise DossierDialectError("prior dossier material fact must be an object")
+        canonical_id = str(row.get("dossier_fact_id") or "")
+        if not canonical_id.startswith("PROFACT-"):
+            raise DossierDialectError(
+                "prior dossier material fact lacks a canonical PROFACT id"
+            )
+        compact_id = canonical_id.removeprefix("PROFACT-")
+        if not _COMPACT_V2_FACT_ID.fullmatch(compact_id):
+            raise DossierDialectError(
+                f"prior dossier fact has an unsupported compact id: {canonical_id!r}"
+            )
+        source_url = str(row.get("source_url") or "")
+        source_publisher = str(row.get("source_publisher") or "")
+        supporting_excerpt = str(row.get("supporting_excerpt") or "")
+        source_lineage_id = str(row.get("source_lineage_id") or "")
+        if not all(
+            (source_url, source_publisher, supporting_excerpt, source_lineage_id)
+        ):
+            raise DossierDialectError(
+                f"prior dossier source fact lacks exact evidence fields: {canonical_id}"
+            )
+        result[compact_id] = {
+            **dict(row),
+            "fact_id": compact_id,
+            "summary": str(row.get("statement") or ""),
+            "url": source_url,
+            "publisher": source_publisher,
+            "publication_date": row.get("published_at"),
+            "availability_date": row.get("availability_date")
+            or row.get("event_date")
+            or row.get("published_at"),
+            "exact_short_excerpt": supporting_excerpt,
+            "source_lineage_id": source_lineage_id,
+            "fact_type": str(
+                row.get("fact_type")
+                or row.get("economic_mechanism")
+                or "SOURCE_BACKED_FACT"
+            ),
+            "target": row.get("target") or row.get("target_id"),
+        }
+    return result
+
+
+def _validate_prior_dossier_scope(
+    payload: Mapping[str, Any], prior_dossier: Mapping[str, Any]
+) -> None:
+    for key in ("job_id", "run_id", "conversation_id", "as_of_date"):
+        if payload.get(key) != prior_dossier.get(key):
+            raise DossierDialectError(
+                f"prior dossier differs from compact follow-up scope: {key}"
+            )
+    payload_target = payload.get("target") or {}
+    prior_target = prior_dossier.get("target") or {}
+    payload_target_id = str(
+        payload_target.get("target_id") or payload_target.get("symbol") or ""
+    )
+    prior_target_id = str(
+        prior_target.get("target_id") or prior_target.get("symbol") or ""
+    )
+    if not payload_target_id or payload_target_id != prior_target_id:
+        raise DossierDialectError(
+            "prior dossier differs from compact follow-up target"
+        )
+    parent_pass_id = str(payload.get("parent_pass_id") or "")
+    prior_pass_id = str(prior_dossier.get("research_pass_id") or "")
+    if not parent_pass_id or parent_pass_id != prior_pass_id:
+        raise DossierDialectError(
+            "prior dossier is not the compact follow-up's exact parent pass"
+        )
+
+
+def _route_question_ownership(
+    payload: Mapping[str, Any],
+    *,
+    prior_dossier: Mapping[str, Any] | None,
+) -> Mapping[str, str]:
+    result: dict[str, str] = {}
+    rows = [
+        *((prior_dossier or {}).get("search_route_receipts") or ()),
+        *(payload.get("search_route_receipts") or ()),
+    ]
+    for row in rows:
+        if not isinstance(row, Mapping):
+            raise DossierDialectError("search route receipt must be an object")
+        route_id = str(row.get("route_receipt_id") or "")
+        question_id = str(row.get("question_family_id") or "")
+        if not route_id or not question_id:
+            raise DossierDialectError(
+                "search route receipt lacks route/question identity"
+            )
+        prior_owner = result.get(route_id)
+        if prior_owner is not None and prior_owner != question_id:
+            raise DossierDialectError(
+                f"search route receipt changed question owner: {route_id}"
+            )
+        result[route_id] = question_id
+    return result
+
+
+def _compact_source_fact(
+    row: Mapping[str, Any],
+    *,
+    fact_id: str,
+    direction: str,
+    target_id: str,
+    company_name: str,
+    research_pass_id: str,
+    question_ids: list[str] | tuple[str, ...],
+    component_ids: list[str] | tuple[str, ...],
+) -> Mapping[str, Any]:
+    required = ("summary", "url", "publisher", "exact_short_excerpt", "source_lineage_id")
+    if any(not str(row.get(key) or "").strip() for key in required):
+        raise DossierDialectError(
+            f"compact V2 source fact lacks required evidence fields: {fact_id}"
+        )
+    publication_date = str(row.get("publication_date") or "") or None
+    availability_date = str(row.get("availability_date") or "") or publication_date
+    target_text = str(row.get("target") or "")
+    return {
+        **dict(row),
+        "dossier_fact_id": fact_id,
+        "research_pass_id": research_pass_id,
+        "question_family_ids": list(dict.fromkeys(str(value) for value in question_ids if str(value))),
+        "statement": str(row["summary"]),
+        "direction": direction,
+        "target_id": target_id,
+        "issuer_scoped": _compact_issuer_scope(row),
+        "economic_mechanism": str(row.get("fact_type") or "SOURCE_BACKED_FACT"),
+        "predicate": str(row.get("fact_type") or "SOURCE_BACKED_FACT"),
+        "value": None,
+        "unit": None,
+        "period": f"AS_OF:{availability_date or publication_date or 'UNDATED'}",
+        "event_date": (
+            availability_date
+            if availability_date and re.fullmatch(r"\d{4}-\d{2}-\d{2}", availability_date)
+            else None
+        ),
+        "current_status": _canonical_compact_lifecycle(row.get("current_status")),
+        "candidate_components": list(dict.fromkeys(str(value) for value in component_ids if str(value))),
+        "source_url": str(row["url"]),
+        "source_title": str(row.get("source_title") or row["publisher"]),
+        "source_publisher": str(row["publisher"]),
+        "published_at": (
+            publication_date
+            if publication_date and re.fullmatch(r"\d{4}-\d{2}-\d{2}", publication_date)
+            else None
+        ),
+        "supporting_excerpt": str(row["exact_short_excerpt"]),
+        "confidence": 0.0,
+    }
+
+
+_COMPACT_ISSUER_SOURCE_ROLES = frozenset(
+    {"ISSUER_OFFICIAL", "ISSUER_EARNINGS", "OFFICIAL_FILING", "AUDITOR_FILING"}
+)
+
+
+def _compact_issuer_scope(row: Mapping[str, Any]) -> bool:
+    explicit = row.get("issuer_scoped")
+    if isinstance(explicit, bool):
+        return explicit
+    roles = {
+        str(value).strip().upper()
+        for value in row.get("source_role_ids") or ()
+    }
+    return bool(roles.intersection(_COMPACT_ISSUER_SOURCE_ROLES))
+
+
+def _compact_relationship_fact(
+    row: Mapping[str, Any],
+    *,
+    relationship_id: str,
+    anchor_ids: tuple[str, ...],
+    direction: str,
+    material_by_id: Mapping[str, Mapping[str, Any]],
+    target_id: str,
+    company_name: str,
+    research_pass_id: str,
+    question_ids: tuple[str, ...],
+    component_ids: list[str] | tuple[str, ...],
+) -> Mapping[str, Any]:
+    anchors = [material_by_id[value] for value in anchor_ids if value in material_by_id]
+    if not anchors:
+        raise DossierDialectError(
+            f"compact V2 relationship lacks a source-fact anchor: {relationship_id}"
+        )
+    anchor = anchors[0]
+    statement = _compact_relationship_statement(row, relationship_id)
+    projected = _compact_source_fact(
+        {
+            **dict(anchor),
+            "summary": statement,
+            "current_status": row.get("current_status") or "OPEN",
+            "fact_type": f"{direction}_RELATIONSHIP",
+        },
+        fact_id=relationship_id,
+        direction=direction,
+        target_id=target_id,
+        company_name=company_name,
+        research_pass_id=research_pass_id,
+        question_ids=question_ids,
+        component_ids=component_ids,
+    )
+    return {
+        **projected,
+        **dict(row),
+        "dossier_fact_id": relationship_id,
+        "research_pass_id": research_pass_id,
+        "question_family_ids": list(question_ids),
+        "statement": statement,
+        "direction": direction,
+        "economic_mechanism": f"{direction}_RELATIONSHIP",
+        "predicate": f"{direction}_RELATIONSHIP",
+        "current_status": _canonical_compact_lifecycle(row.get("current_status")),
+        "candidate_components": list(dict.fromkeys(component_ids)),
+        "source_anchor_fact_ids": list(anchor_ids),
+        "issuer_scoped": bool(
+            anchor.get("issuer_scoped", projected.get("issuer_scoped", False))
+        ),
+    }
+
+
+def _compact_relationship_statement(
+    row: Mapping[str, Any], relationship_id: str
+) -> str:
+    for key in ("current_state_summary", "summary", "claim_text"):
+        value = str(row.get(key) or "").strip()
+        if value:
+            return value
+    raise DossierDialectError(
+        f"compact V2 relationship lacks a statement: {relationship_id}"
+    )
+
+
+def _canonical_question_result(
+    row: Mapping[str, Any],
+    *,
+    route_question_by_id: Mapping[str, str],
+) -> Mapping[str, Any]:
+    availability = str(row.get("availability_class") or "")
+    if availability in {
+        "PUBLIC_SEARCHABLE",
+        "LIKELY_NONPUBLIC",
+        "FUTURE_EVENT_ONLY",
+        "PROVIDER_BLOCKED",
+        "PARSER_BLOCKED",
+        "NOT_APPLICABLE",
+        "UNKNOWN_ROUTE_NOT_YET_TESTED",
+    }:
+        canonical_availability = availability
+    elif "LIKELY_NONPUBLIC" in availability:
+        canonical_availability = "LIKELY_NONPUBLIC"
+    elif "FUTURE_EVENT" in availability and "PUBLIC" not in availability:
+        canonical_availability = "FUTURE_EVENT_ONLY"
+    else:
+        canonical_availability = "PUBLIC_SEARCHABLE"
+    question_id = str(row.get("question_family_id") or "")
+    route_ids = tuple(
+        str(value) for value in row.get("search_route_receipt_ids") or ()
+    )
+    unknown = tuple(value for value in route_ids if value not in route_question_by_id)
+    if unknown:
+        raise DossierDialectError(
+            f"compact V2 question references unknown route receipts: {unknown!r}"
+        )
+    owned = tuple(
+        value
+        for value in route_ids
+        if route_question_by_id[value] == question_id
+    )
+    return {
+        **dict(row),
+        "availability_class": canonical_availability,
+        "search_route_receipt_ids": list(dict.fromkeys(owned)),
+    }
+
+
+def _cross_question_route_reference_diagnostic(
+    row: Mapping[str, Any],
+    *,
+    route_question_by_id: Mapping[str, str],
+) -> Mapping[str, Any] | None:
+    question_id = str(row.get("question_family_id") or "")
+    cross_question = tuple(
+        str(value)
+        for value in row.get("search_route_receipt_ids") or ()
+        if route_question_by_id.get(str(value)) not in {None, question_id}
+    )
+    if not cross_question:
+        return None
+    return {
+        "question_family_id": question_id,
+        "route_receipt_ids": list(dict.fromkeys(cross_question)),
+    }
+
+
+def _canonical_compact_gaps(
+    rows: Any,
+    *,
+    questions_by_id: Mapping[str, Mapping[str, Any]],
+) -> list[Mapping[str, Any]]:
+    result: list[Mapping[str, Any]] = []
+    for row in rows:
+        if not isinstance(row, Mapping):
+            raise DossierDialectError("compact V2 gap rows must be objects")
+        question_ids = tuple(str(value) for value in row.get("question_family_ids") or ())
+        if not question_ids:
+            raise DossierDialectError("compact V2 gap must identify a question family")
+        for question_id in question_ids:
+            question = questions_by_id.get(question_id)
+            if question is None:
+                raise DossierDialectError("compact V2 gap references an unknown question")
+            could_score = question.get("could_change_score") is True
+            could_stage = question.get("could_change_stage") is True
+            could_hard = question.get("could_change_hard_break") is True
+            materiality = (
+                "HARD_BREAK"
+                if could_hard
+                else "STAGE_BOUNDARY"
+                if could_stage
+                else "SCORE_BOUNDARY"
+                if could_score
+                else "MONITORING"
+            )
+            original_gap_id = str(row.get("gap_id") or "")
+            result.append(
+                {
+                    **dict(row),
+                    "gap_id": f"{original_gap_id}:{question_id}",
+                    "stable_gap_key": f"{original_gap_id}:{question_id}",
+                    "archetype_id": str(question.get("archetype_id") or ""),
+                    "question_family_id": question_id,
+                    "availability_class": str(row.get("availability_class") or question.get("availability_class") or "UNKNOWN_ROUTE_NOT_YET_TESTED"),
+                    "materiality": materiality,
+                    "required_source_role_ids": list(question.get("required_source_roles_missing") or ()),
+                    "affected_component_ids": list(question.get("affected_component_ids") or ()),
+                    "could_change_score": could_score,
+                    "could_change_stage": could_stage,
+                    "could_change_hard_break": could_hard,
+                }
+            )
+    return result
+
+
+def _canonical_route_receipt(row: Mapping[str, Any]) -> Mapping[str, Any]:
+    if not isinstance(row, Mapping):
+        raise DossierDialectError("compact V2 route receipts must be objects")
+    opened = list(row.get("opened_source_urls") or row.get("opened_url_roster") or ())
+    accepted = list(row.get("accepted_fact_ids") or row.get("accepted_fact_roster") or ())
+    rejected = list(row.get("rejected_candidate_ids") or row.get("rejection_roster") or ())
+    return {
+        "route_receipt_id": str(row.get("route_receipt_id") or ""),
+        "pass_id": str(row.get("pass_id") or ""),
+        "archetype_id": str(row.get("archetype_id") or ""),
+        "question_family_id": str(row.get("question_family_id") or ""),
+        "gap_id": row.get("gap_id"),
+        "source_role_id": str(row.get("source_role_id") or ""),
+        "query_or_navigation_objective": str(row.get("query_or_navigation_objective") or row.get("navigation_objective") or ""),
+        "query_text": row.get("query_text") if "query_text" in row else row.get("query"),
+        "result_count_seen": len(row.get("result_roster") or ()),
+        "opened_source_urls": opened,
+        "accepted_fact_ids": accepted,
+        "rejected_candidate_ids": rejected,
+        "provider_status": (
+            str(row.get("provider_status"))
+            if str(row.get("provider_status"))
+            in {"SUCCESS", "PROVIDER_PENDING", "PARSER_PENDING", "TRANSPORT_PENDING", "FAILED"}
+            else "SUCCESS"
+        ),
+        "no_new_route_reason": row.get("no_new_route_reason"),
+        "performed_at": str(row.get("performed_at") or ""),
+    }
+
+
+def _canonical_research_pass(row: Mapping[str, Any]) -> Mapping[str, Any]:
+    if not isinstance(row, Mapping):
+        raise DossierDialectError("compact V2 research pass rows must be objects")
+    pass_id = str(row.get("pass_id") or row.get("research_pass_id") or "")
+    return {
+        **dict(row),
+        "pass_id": pass_id,
+        "parent_pass_id": _none_to_null(row.get("parent_pass_id")),
+        "status": str(row.get("status") or "COMPLETE"),
+        "prompt_hash": str(row.get("prompt_hash") or "PENDING_DURABLE_BINDING"),
+        "response_hash": row.get("response_hash"),
+    }
+
+
+def _canonical_compact_lifecycle(value: Any) -> str:
+    normalized = str(value or "UNKNOWN").strip().upper()
+    if normalized == "HISTORICAL_ONLY":
+        return "HISTORICAL"
+    if normalized in _CANONICAL_LIFECYCLES:
+        return normalized
+    if normalized.startswith("SUPERSEDED"):
+        return "SUPERSEDED"
+    if normalized.startswith("RESOLVED"):
+        return "RESOLVED"
+    return "UNKNOWN"
+
+
+def _none_to_null(value: Any) -> Any:
+    return None if str(value or "").strip().upper() in {"", "NONE", "NULL"} else value
+
+
+def _compact_fact_reference_ids(payload: Mapping[str, Any]) -> tuple[str, ...]:
+    """Collect only allowlisted fact-reference fields from a compact delta.
+
+    Follow-up deltas may reference facts created by an earlier pass without
+    repeating those fact rows.  Their compact IDs still need the same exact
+    canonical prefix mapping as newly returned rows.
+    """
+
+    reference_keys = frozenset(
+        {
+            "support_fact_ids",
+            "supporting_material_fact_ids",
+            "counter_fact_ids",
+            "resolution_fact_ids",
+            "positive_fact_ids",
+            "fact_ids",
+            "resolved_or_superseded_fact_ids",
+            "source_anchor_fact_ids",
+            "prior_counterfact_ids",
+            "existing_fact_ids_referenced",
+            "accepted_fact_ids",
+            "accepted_fact_roster",
+        }
+    )
+    found: list[str] = []
+
+    def visit(value: Any, *, key: str | None = None) -> None:
+        if isinstance(value, Mapping):
+            for child_key, child in value.items():
+                visit(child, key=str(child_key))
+            return
+        if isinstance(value, (list, tuple)):
+            if key in reference_keys:
+                for child in value:
+                    text = str(child or "")
+                    if _COMPACT_V2_FACT_ID.fullmatch(text):
+                        found.append(text)
+                return
+            for child in value:
+                visit(child, key=key)
+
+    visit(payload)
+    return tuple(dict.fromkeys(found))
 
 
 def _canonical_lifecycle(value: str) -> str:

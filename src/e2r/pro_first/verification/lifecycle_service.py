@@ -13,6 +13,7 @@ from ..ids import canonical_hash, canonical_json, stable_id
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
 from ..state_machine import NoProgressDetected
+from ..multi_pass import load_effective_research_dossier
 from .source_verifier import ProSourceVerifier, SourceVerificationResult
 
 
@@ -84,20 +85,97 @@ class ProSourceVerificationService:
             },
         )
 
+    def request_effective_dossier_reverification(
+        self,
+        job_id: str,
+        *,
+        job_root: str | Path,
+        reason: str,
+        maximum_attempts: int = 4,
+    ) -> ProResearchJob:
+        """Reverify when a later completed Pro pass added a new dossier snapshot.
+
+        This is distinct from a verifier-semantics retry.  The same verifier is
+        allowed only when the hash-bound effective dossier changed after the
+        prior receipt; an unchanged snapshot remains a forbidden no-progress
+        loop.
+        """
+
+        if not reason.strip():
+            raise ValueError("effective-dossier reverification requires a reason")
+        root = Path(job_root).resolve()
+        job = self.store.get_job(job_id)
+        if job.status not in {
+            JobStatus.GAP_ADJUDICATION.value,
+            JobStatus.SUPPLEMENTAL_RESEARCH.value,
+            JobStatus.USER_ATTENTION_REQUIRED.value,
+            JobStatus.FAILED_RETRYABLE.value,
+        }:
+            raise ValueError("job is outside the effective-dossier reverification boundary")
+        previous = self.store.get_source_verification_receipt(job_id)
+        if previous is None:
+            raise ValueError("effective-dossier reverification requires a prior receipt")
+        pointer_path = root / "research_passes/effective_dossier.latest.json"
+        if not pointer_path.is_file():
+            raise ValueError("effective-dossier reverification requires a latest snapshot")
+        pointer = json.loads(pointer_path.read_text(encoding="utf-8"))
+        latest_hash = str(pointer.get("dossier_hash") or "")
+        prior_hash = str(
+            previous.get("effective_dossier_hash")
+            or previous.get("normalized_dossier_hash")
+            or ""
+        )
+        if len(latest_hash) != 64 or latest_hash == prior_hash:
+            raise NoProgressDetected(
+                "effective dossier is unchanged; same-semantics repeat is forbidden"
+            )
+        attempts = self.store.source_verification_attempt_count(job_id)
+        if attempts >= maximum_attempts:
+            raise NoProgressDetected("source verification attempt bound reached")
+        return self.store.transition(
+            job_id,
+            expected_version=job.state_version,
+            to_status=JobStatus.VERIFYING_SOURCES,
+            actor="pro-effective-dossier-verifier",
+            idempotency_key=(
+                f"effective-dossier-reverification:"
+                f"{previous.get('verification_hash')}:{latest_hash}"
+            ),
+            payload={
+                "reason": reason,
+                "prior_verification_hash": previous.get("verification_hash"),
+                "prior_effective_dossier_hash": prior_hash,
+                "next_effective_dossier_hash": latest_hash,
+                "next_effective_dossier_snapshot_id": pointer.get("snapshot_id"),
+                "next_attempt": attempts + 1,
+                "automatic_research_resubmit_allowed": False,
+            },
+        )
+
     def verify_job(self, job_id: str, *, job_root: str | Path) -> SourceVerificationRun:
         root = Path(job_root).resolve()
         verification_root = root / "verification"
-        normalized_path = root / "import/research_dossier.normalized.json"
-        dossier = json.loads(normalized_path.read_text(encoding="utf-8"))
+        dossier = load_effective_research_dossier(root)
         job = self.store.get_job(job_id)
         if not job.dossier_id:
             raise ValueError("source verification requires a durable dossier import")
         import_receipt = self.store.get_dossier_import_receipt(job_id)
-        if (
-            import_receipt is None
-            or canonical_hash(dossier) != import_receipt.get("normalized_dossier_hash")
+        latest_pointer_path = root / "research_passes/effective_dossier.latest.json"
+        latest_pointer = (
+            json.loads(latest_pointer_path.read_text(encoding="utf-8"))
+            if latest_pointer_path.is_file()
+            else None
+        )
+        if import_receipt is None:
+            raise ValueError("source verification requires a durable import receipt")
+        if latest_pointer is None:
+            if canonical_hash(dossier) != import_receipt.get("normalized_dossier_hash"):
+                raise ValueError("normalized dossier differs from the durable import ledger")
+        elif (
+            latest_pointer.get("job_id") != job_id
+            or latest_pointer.get("dossier_hash") != canonical_hash(dossier)
         ):
-            raise ValueError("normalized dossier differs from the durable import ledger")
+            raise ValueError("effective V2 dossier differs from its latest snapshot pointer")
         receipt_path = verification_root / "source_verification_receipt.json"
         if job.status not in {
             JobStatus.DOSSIER_IMPORTED.value,
@@ -159,6 +237,16 @@ class ProSourceVerificationService:
                     self.store.source_verification_attempt_count(job_id) + 1
                 ),
             }
+            if latest_pointer is not None:
+                receipt.update(
+                    {
+                        "effective_dossier_snapshot_id": latest_pointer.get(
+                            "snapshot_id"
+                        ),
+                        "effective_dossier_pass_id": latest_pointer.get("pass_id"),
+                        "effective_dossier_hash": latest_pointer.get("dossier_hash"),
+                    }
+                )
             self._write_jsonl_atomic(
                 verification_root / "source_verifications.jsonl", verification_rows
             )

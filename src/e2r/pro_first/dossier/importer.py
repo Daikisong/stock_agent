@@ -17,9 +17,11 @@ from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
 from ..state_machine import TransitionContext
 from .dialect_adapter import ResearchDossierDialectAdapter
+from .identity_binding import bind_dossier_transport_identity
 from .normalizer import ResearchDossierNormalizer
 from .parser import ResearchDossierParser
 from .validator import DossierValidationContext, ResearchDossierValidator
+from ..multi_pass.models import INITIAL_PASS_NAME
 
 
 @dataclass(frozen=True)
@@ -58,6 +60,8 @@ class ProDossierImporter:
         *,
         job_root: str | Path,
         final_response_text: str | None = None,
+        expected_research_pass_id: str | None = None,
+        expected_parent_pass_id: str | None = None,
     ) -> DossierImportResult:
         root = Path(job_root).resolve()
         incoming = root / "capture/incoming"
@@ -125,8 +129,33 @@ class ProDossierImporter:
                 final_response_text=final_response_text,
             )
             adapted = self.dialect_adapter.adapt(parsed.payload)
-            validation = self.validator.validate(
+            browser_state = self.store.get_browser_session_state(job_id) or {}
+            durable_browser_detail = browser_state.get("state") or {}
+            durable_initial_pass_id = str(
+                expected_research_pass_id
+                or durable_browser_detail.get("initial_pass_id")
+                or ""
+            ) or None
+            identity_bound = bind_dossier_transport_identity(
                 adapted.payload,
+                conversation_id=receipt.conversation_id or "",
+                research_pass_id=durable_initial_pass_id,
+                parent_pass_id=expected_parent_pass_id,
+                allow_initial_conversation_placeholder=(
+                    expected_parent_pass_id is None
+                ),
+                pass_name=(
+                    INITIAL_PASS_NAME if expected_parent_pass_id is None else None
+                ),
+                prompt_hash=(
+                    receipt.prompt_hash if expected_parent_pass_id is None else None
+                ),
+                response_hash=(
+                    receipt.report_md_hash if expected_parent_pass_id is None else None
+                ),
+            )
+            validation = self.validator.validate(
+                identity_bound.payload,
                 DossierValidationContext(
                     job_id=job_id,
                     run_id=receipt.run_id,
@@ -134,9 +163,12 @@ class ProDossierImporter:
                     as_of_date=job.as_of_date,
                     conversation_id=receipt.conversation_id,
                     candidate_archetype_ids=job.archetype_ids,
+                    research_pass_id=durable_initial_pass_id,
+                    parent_pass_id=expected_parent_pass_id,
+                    enforce_parent_pass_id=True,
                 ),
             )
-            normalized = self.normalizer.normalize(adapted.payload)
+            normalized = self.normalizer.normalize(identity_bound.payload)
             dossier_id = stable_id(
                 "DOSSIER",
                 {"job_id": job_id, "dossier_hash": normalized.after_hash},
@@ -158,6 +190,9 @@ class ProDossierImporter:
                 "dialect_after_hash": adapted.after_hash,
                 "dialect_operations": list(adapted.operations),
                 "dialect_id_map": dict(adapted.id_map),
+                "identity_binding_before_hash": identity_bound.before_hash,
+                "identity_binding_after_hash": identity_bound.after_hash,
+                "identity_binding_operations": list(identity_bound.operations),
                 "normalizer_before_hash": normalized.before_hash,
                 "normalized_dossier_hash": normalized.after_hash,
                 "normalizer_operations": list(normalized.operations),

@@ -30,6 +30,7 @@ from ..gaps.supplemental_service import (
     resolved_supplemental_gap_keys,
 )
 from ..reuse import DeltaScoringReuseContext
+from ..multi_pass import load_effective_research_dossier
 from ..state_machine import TransitionContext
 from .component_bridge import (
     ComponentBridgeResult,
@@ -185,7 +186,7 @@ class ProScoringPipelineService:
             and delta_reuse_context is not None
         ):
             raise ValueError("delta reuse context is only valid for DELTA_RESEARCH")
-        dossier = _read_json(root / "import/research_dossier.normalized.json")
+        dossier = load_effective_research_dossier(root)
         fact_rows, claim_fact_links, source_verifications = (
             load_effective_verified_evidence(root)
         )

@@ -6,6 +6,7 @@ import json
 import os
 import re
 import signal
+import shutil
 import subprocess
 import tempfile
 from dataclasses import dataclass
@@ -134,12 +135,30 @@ def run_codex_command(
     prompt: str,
     timeout: float,
 ) -> subprocess.CompletedProcess[str]:
+    process_command = list(command)
+    if os.name == "nt":
+        executable = shutil.which(process_command[0])
+        if executable is None:
+            raise FileNotFoundError(process_command[0])
+        if Path(executable).suffix.casefold() in {".cmd", ".bat"}:
+            process_command = [
+                os.environ.get("COMSPEC") or "cmd.exe",
+                "/d",
+                "/s",
+                "/c",
+                executable,
+                *process_command[1:],
+            ]
+        else:
+            process_command[0] = executable
     process = subprocess.Popen(
-        list(command),
+        process_command,
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         start_new_session=(os.name == "posix"),
         env=codex_subprocess_env(),
     )
@@ -149,7 +168,7 @@ def run_codex_command(
         terminate_process_tree(process)
         raise
     return subprocess.CompletedProcess(
-        list(command),
+        process_command,
         process.returncode,
         stdout,
         stderr,

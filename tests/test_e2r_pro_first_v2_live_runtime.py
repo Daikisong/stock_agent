@@ -1,0 +1,873 @@
+from __future__ import annotations
+
+from copy import deepcopy
+from datetime import datetime, timezone
+import asyncio
+import json
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from types import SimpleNamespace
+import unittest
+from unittest.mock import patch
+
+from e2r.pro_first.dossier import (
+    DossierDeltaMergeError,
+    DossierValidationContext,
+    DossierIdentityBindingError,
+    apply_research_dossier_delta,
+    bind_dossier_transport_identity,
+)
+from e2r.pro_first.ids import canonical_hash
+from e2r.pro_first.browser.protocol import (
+    BrowserInspection,
+    BrowserResultSnapshot,
+    BrowserUIState,
+    PreparedBrowserJob,
+    RecoveredBrowserConversation,
+)
+from e2r.pro_first.config import (
+    ProAuthorityRuntimeConfig,
+    ProBrowserConfig,
+    ProDashboardRuntimeConfig,
+    ProFirstLocalConfig,
+    ProScanRuntimeConfig,
+    ProScheduleRuntimeConfig,
+    ProSupplementRuntimeConfig,
+)
+from e2r.pro_first.job_store import ProFirstJobStore
+from e2r.pro_first.models import JobStatus, ResearchMode, ScanWindow
+from e2r.pro_first.multi_pass import (
+    ProMultiPassDossierStore,
+    ProMultiPassResearchOrchestrator,
+    load_effective_research_dossier,
+)
+from e2r.pro_first.operations import (
+    _git_head,
+    build_job_packet_v2,
+    create_forced_validation_canary,
+    prepare_v2_job_in_logged_in_browser,
+    recover_submitted_v2_job_in_logged_in_browser,
+)
+from e2r.pro_first.canary.live_v2 import (
+    _accepted_dossier_fact_ids,
+    _compile_question_bounds,
+    _has_snapshotted_completed_pass,
+    _load_recovered_snapshot_state,
+    _verification_artifact_rows,
+)
+from e2r.cli.run_e2r_pro_first_v2_live_canaries import _parse_spec
+from tests.test_e2r_pro_first_v2_saturation import _complete_dossier
+from tests.test_e2r_pro_first_v2_dossier_status import _base_v2
+
+
+ARCHETYPE = "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
+
+
+class ProFirstV2LiveRuntimeTest(unittest.TestCase):
+    now = datetime(2026, 8, 23, 1, 2, 3, tzinfo=timezone.utc)
+
+    def setUp(self) -> None:
+        self.temporary_directory = TemporaryDirectory()
+        self.addCleanup(self.temporary_directory.cleanup)
+        self.root = Path(self.temporary_directory.name)
+        self.runtime = self.root / "runtime"
+        self.store = ProFirstJobStore(
+            self.root / "pro-first.sqlite3",
+            now=lambda: self.now,
+        )
+
+    def test_windows_cmd_preserved_outer_quotes_are_removed_from_canary_spec(self) -> None:
+        spec = _parse_spec(
+            '"000660|SK하이닉스|C06_HBM_MEMORY_CUSTOMER_CAPACITY"',
+            as_of_date="2026-08-23",
+        )
+        self.assertEqual(spec.symbol, "000660")
+        self.assertEqual(spec.company_name, "SK하이닉스")
+        self.assertEqual(
+            spec.archetype_id,
+            "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        )
+
+    def test_explicit_source_commit_supports_cross_runtime_packet_build(self) -> None:
+        source_commit = "a" * 40
+        with patch.dict("os.environ", {"E2R_SOURCE_COMMIT_SHA": source_commit}):
+            self.assertEqual(_git_head(self.root / "not-a-git-repo"), source_commit)
+        with patch.dict("os.environ", {"E2R_SOURCE_COMMIT_SHA": "HEAD;bad"}):
+            with self.assertRaisesRegex(ValueError, "full hexadecimal"):
+                _git_head(self.root)
+
+    def _build(self):
+        job = create_forced_validation_canary(
+            self.store,
+            symbol="TEST28",
+            company_name="검증기업",
+            as_of_date="2026-08-23",
+            archetype_ids=(ARCHETYPE,),
+        )
+        return build_job_packet_v2(
+            self.store,
+            job_id=job.job_id,
+            runtime_root=self.runtime,
+            config_hash="c" * 64,
+            repo_root=Path(__file__).resolve().parents[1],
+        )
+
+    def test_v2_packet_attaches_hash_bound_contracts_and_initial_pass(self) -> None:
+        built = self._build()
+        payload = built.packet_payload
+        snapshot = payload["research_contract_snapshot"]
+        unsigned = {
+            key: value for key, value in snapshot.items() if key != "snapshot_hash"
+        }
+        self.assertEqual(payload["schema_version"], "e2r_pro_research_packet_v2")
+        self.assertEqual(payload["output_contract"], "e2r_pro_research_dossier_v2")
+        self.assertEqual(len(snapshot["contracts"]), 5)
+        self.assertEqual(snapshot["snapshot_hash"], canonical_hash(unsigned))
+        self.assertIn(f"[[E2R_PRO_PASS_ID:{built.initial_pass_id}]]", built.prompt.prompt_text)
+        self.assertIn("PENDING_INITIAL_CONVERSATION", built.prompt.prompt_text)
+        self.assertNotIn("expected_score", built.prompt.prompt_text.casefold())
+        self.assertNotIn("expected_stage", built.prompt.prompt_text.casefold())
+
+    def test_v2_packet_and_initial_pass_are_idempotent(self) -> None:
+        first = self._build()
+        second = build_job_packet_v2(
+            self.store,
+            job_id=first.job.job_id,
+            runtime_root=self.runtime,
+            config_hash="c" * 64,
+            repo_root=Path(__file__).resolve().parents[1],
+        )
+        self.assertEqual(first.packet_bundle.packet_hash, second.packet_bundle.packet_hash)
+        self.assertEqual(first.initial_pass_id, second.initial_pass_id)
+        self.assertEqual(first.prompt.prompt_hash, second.prompt.prompt_hash)
+
+    def test_initial_conversation_binding_changes_only_transport_identity(self) -> None:
+        built = self._build()
+        payload = {
+            "schema_version": "e2r_pro_research_dossier_v2",
+            "conversation_id": "PENDING_INITIAL_CONVERSATION",
+            "research_pass_id": built.initial_pass_id,
+            "parent_pass_id": None,
+            "material_facts": [
+                {
+                    "dossier_fact_id": "PROFACT-1",
+                    "statement": "변경되면 안 되는 사실",
+                    "source_url": "https://example.com/source",
+                    "supporting_excerpt": "변경되면 안 되는 인용문",
+                }
+            ],
+        }
+        facts_before = deepcopy(payload["material_facts"])
+        bound = bind_dossier_transport_identity(
+            payload,
+            conversation_id="CONVERSATION-LIVE-1",
+            research_pass_id=built.initial_pass_id,
+            parent_pass_id=None,
+            allow_initial_conversation_placeholder=True,
+        )
+        self.assertEqual(bound.payload["conversation_id"], "CONVERSATION-LIVE-1")
+        self.assertEqual(bound.payload["material_facts"], facts_before)
+        self.assertEqual(
+            bound.operations[0],
+            "BIND_INITIAL_CONVERSATION_ID_FROM_CAPTURE_RECEIPT",
+        )
+
+    def test_identity_binding_rejects_arbitrary_or_nested_placeholder(self) -> None:
+        built = self._build()
+        base = {
+            "schema_version": "e2r_pro_research_dossier_v2",
+            "conversation_id": "UNRELATED-CONVERSATION",
+            "research_pass_id": built.initial_pass_id,
+            "parent_pass_id": None,
+        }
+        with self.assertRaises(DossierIdentityBindingError):
+            bind_dossier_transport_identity(
+                base,
+                conversation_id="CONVERSATION-LIVE-1",
+                research_pass_id=built.initial_pass_id,
+                parent_pass_id=None,
+                allow_initial_conversation_placeholder=True,
+            )
+        nested = {
+            **base,
+            "conversation_id": "PENDING_INITIAL_CONVERSATION",
+            "business_model": {"note": "PENDING_INITIAL_CONVERSATION"},
+        }
+        with self.assertRaises(DossierIdentityBindingError):
+            bind_dossier_transport_identity(
+                nested,
+                conversation_id="CONVERSATION-LIVE-1",
+                research_pass_id=built.initial_pass_id,
+                parent_pass_id=None,
+                allow_initial_conversation_placeholder=True,
+            )
+
+    def test_precomputed_initial_pass_id_is_preserved_in_approval_scope(self) -> None:
+        built = self._build()
+        job = self._approve_and_mark_running(built)
+        scope = ProMultiPassResearchOrchestrator(self.store).record_completed_initial_pass(
+            job.job_id,
+            primary_archetype_ids=(ARCHETYPE,),
+            response_hash="d" * 64,
+            initial_pass_id=built.initial_pass_id,
+        )
+        self.assertEqual(scope.initial_pass_id, built.initial_pass_id)
+
+    def test_submitted_v2_recovery_reuses_packet_and_never_resubmits(self) -> None:
+        built = self._build()
+        running = self._approve_and_mark_running(
+            built,
+            conversation_id="WEB:transient-conversation",
+        )
+        report_text = "\n".join(
+            (
+                f"[[E2R_PRO_JOB_ID:{running.job_id}]]",
+                f"[[E2R_PRO_RUN_ID:{built.packet_payload['run_id']}]]",
+                "E2R_RESEARCH_DOSSIER_JSON_BEGIN",
+                "{}",
+                "E2R_RESEARCH_DOSSIER_JSON_END",
+            )
+        )
+        snapshot = BrowserResultSnapshot(
+            conversation_id="canonical-conversation-1234",
+            assistant_turn_id="assistant-final",
+            report_text=report_text,
+            report_hash="a" * 64,
+            has_citations=False,
+            has_dossier_marker=True,
+            job_marker_matches=True,
+            run_marker_matches=True,
+            new_attachment_keys=(),
+        )
+
+        class FakeAdapter:
+            recovery_count = 0
+            submit_count = 0
+
+            async def recover_conversation_without_submit(self, **kwargs):
+                self.recovery_count += 1
+                if kwargs["job_id"] != running.job_id:
+                    raise AssertionError("wrong recovery job")
+                return RecoveredBrowserConversation(
+                    conversation_id="canonical-conversation-1234",
+                    inspection=BrowserInspection(
+                        state=BrowserUIState.READY_FOR_INPUT,
+                        conversation_id="canonical-conversation-1234",
+                        editor_ready=True,
+                        deep_research_ready=True,
+                        packet_uploaded=False,
+                        prompt_ready=False,
+                        send_ready=False,
+                        stop_visible=False,
+                    ),
+                    result=snapshot,
+                    search_query="검증기업",
+                    result_href="/c/canonical-conversation-1234",
+                )
+
+        adapter = FakeAdapter()
+
+        class FakeSession:
+            def __init__(self):
+                self.adapter = adapter
+
+            async def close(self):
+                return None
+
+        class FakeWorker:
+            def __init__(self, _config):
+                pass
+
+            async def open(self, *, job_id):
+                if job_id != running.job_id:
+                    raise AssertionError("wrong worker job")
+                return FakeSession()
+
+        config = ProFirstLocalConfig(
+            runtime_root=self.runtime,
+            dashboard=ProDashboardRuntimeConfig(),
+            scheduler=ProScheduleRuntimeConfig(),
+            browser=ProBrowserConfig(),
+            scan=ProScanRuntimeConfig(),
+            supplement=ProSupplementRuntimeConfig(),
+            authority=ProAuthorityRuntimeConfig(),
+        )
+        with patch("e2r.pro_first.operations.ProBrowserWorker", FakeWorker):
+            recovered = asyncio.run(
+                recover_submitted_v2_job_in_logged_in_browser(
+                    self.store,
+                    job_id=running.job_id,
+                    config=config,
+                    repo_root=self.root,
+                    search_terms=("검증기업",),
+                )
+            )
+
+        self.assertEqual(adapter.recovery_count, 1)
+        self.assertEqual(adapter.submit_count, 0)
+        self.assertEqual(recovered.receipt["recovery_submit_count"], 0)
+        self.assertEqual(recovered.job.submit_count, 1)
+        self.assertEqual(recovered.job.status, JobStatus.RESEARCH_RUNNING.value)
+        self.assertEqual(
+            recovered.job.conversation_id,
+            "canonical-conversation-1234",
+        )
+        self.assertEqual(
+            recovered.prompt.prompt_hash,
+            built.prompt.prompt_hash,
+        )
+
+        attention = self.store.transition(
+            recovered.job.job_id,
+            expected_version=recovered.job.state_version,
+            to_status=JobStatus.USER_ATTENTION_REQUIRED,
+            actor="test-import-failure",
+            idempotency_key="captured-import-failure",
+            updates={
+                "capture_count": 1,
+                "last_error_class": "DOSSIER_INVALID",
+                "last_error_message": "compact dialect retry fixture",
+            },
+        )
+        with patch("e2r.pro_first.operations.ProBrowserWorker", FakeWorker):
+            captured_retry = asyncio.run(
+                recover_submitted_v2_job_in_logged_in_browser(
+                    self.store,
+                    job_id=attention.job_id,
+                    config=config,
+                    repo_root=self.root,
+                    search_terms=("검증기업",),
+                )
+            )
+        self.assertEqual(adapter.recovery_count, 2)
+        self.assertEqual(captured_retry.job.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(captured_retry.job.submit_count, 1)
+        self.assertEqual(captured_retry.job.capture_count, 1)
+        self.assertTrue(captured_retry.receipt["capture_reused"])
+        self.assertEqual(captured_retry.receipt["recovery_submit_count"], 0)
+
+    def test_initial_v2_prepare_returns_runtime_without_submitting(self) -> None:
+        built = self._build()
+
+        class FakePage:
+            url = "https://chatgpt.com/"
+
+            async def goto(self, *_args, **_kwargs):
+                raise AssertionError("already-open ChatGPT page must be reused")
+
+        class FakeAdapter:
+            submit_count = 0
+
+            async def prepare_without_submit(inner_self, **kwargs):
+                self.assertEqual(
+                    Path(kwargs["packet_path"]),
+                    built.packet_bundle.research_packet_json,
+                )
+                self.assertEqual(kwargs["prompt_hash"], built.prompt.prompt_hash)
+                return PreparedBrowserJob(
+                    browser_session_id=kwargs["browser_session_id"],
+                    conversation_id="WEB:prepared-v2",
+                    state=BrowserUIState.AWAITING_USER_APPROVAL,
+                    packet_path=Path(kwargs["packet_path"]),
+                    packet_hash=kwargs["packet_hash"],
+                    prompt_hash=kwargs["prompt_hash"],
+                    uploaded_filename=Path(kwargs["packet_path"]).name,
+                    prompt_preview=kwargs["prompt"][:120],
+                    deep_research_ready=True,
+                    send_ready=True,
+                    preexisting_attachment_keys=(),
+                )
+
+        adapter = FakeAdapter()
+
+        class FakeSession:
+            browser_session_id = "BROWSER-PREPARE-V2"
+            page = FakePage()
+
+            def __init__(inner_self):
+                inner_self.adapter = adapter
+
+            async def close(inner_self):
+                return None
+
+        class FakeWorker:
+            def __init__(inner_self, _config):
+                pass
+
+            async def open(inner_self, *, job_id):
+                self.assertEqual(job_id, built.job.job_id)
+                return FakeSession()
+
+        config = ProFirstLocalConfig(
+            runtime_root=self.runtime,
+            dashboard=ProDashboardRuntimeConfig(),
+            scheduler=ProScheduleRuntimeConfig(),
+            browser=ProBrowserConfig(),
+            scan=ProScanRuntimeConfig(),
+            supplement=ProSupplementRuntimeConfig(),
+            authority=ProAuthorityRuntimeConfig(),
+        )
+        with patch("e2r.pro_first.operations.ProBrowserWorker", FakeWorker):
+            prepared = asyncio.run(
+                prepare_v2_job_in_logged_in_browser(
+                    self.store,
+                    job_id=built.job.job_id,
+                    config=config,
+                    repo_root=self.root,
+                )
+            )
+
+        self.assertEqual(prepared.job.status, JobStatus.AWAITING_USER_APPROVAL.value)
+        self.assertEqual(prepared.job.submit_count, 0)
+        self.assertEqual(adapter.submit_count, 0)
+        self.assertEqual(
+            prepared.receipt["status"],
+            "CHATGPT_PRO_V2_PREPARED_AWAITING_APPROVAL",
+        )
+
+    def test_effective_dossier_snapshot_is_hash_bound_and_reusable(self) -> None:
+        built = self._build()
+        job = self._approve_and_mark_running(built)
+        orchestrator = ProMultiPassResearchOrchestrator(self.store)
+        orchestrator.record_completed_initial_pass(
+            job.job_id,
+            primary_archetype_ids=(ARCHETYPE,),
+            response_hash="d" * 64,
+            initial_pass_id=built.initial_pass_id,
+        )
+        dossier = {
+            "job_id": job.job_id,
+            "research_pass_id": built.initial_pass_id,
+            "material_facts": [],
+            "counterfacts": [],
+            "resolution_facts": [],
+            "question_family_results": [],
+            "search_route_receipts": [],
+        }
+        snapshot_store = ProMultiPassDossierStore(orchestrator.ledger)
+        first = snapshot_store.persist(
+            job_id=job.job_id,
+            pass_id=built.initial_pass_id,
+            dossier=dossier,
+            job_root=self.runtime / "jobs" / job.job_id,
+        )
+        second = snapshot_store.persist(
+            job_id=job.job_id,
+            pass_id=built.initial_pass_id,
+            dossier=dossier,
+            job_root=self.runtime / "jobs" / job.job_id,
+        )
+        self.assertEqual(first.record.snapshot_id, second.record.snapshot_id)
+        self.assertEqual(
+            load_effective_research_dossier(self.runtime / "jobs" / job.job_id),
+            dossier,
+        )
+        recovered = _load_recovered_snapshot_state(
+            orchestrator.ledger,
+            job_id=job.job_id,
+            job_root=self.runtime / "jobs" / job.job_id,
+        )
+        self.assertIsNotNone(recovered)
+        recovered_dossier, outcomes = recovered
+        self.assertEqual(recovered_dossier, dossier)
+        self.assertEqual(len(outcomes), 1)
+        self.assertTrue(outcomes[0]["recovered_from_durable_snapshot"])
+        self.assertTrue(
+            _has_snapshotted_completed_pass(
+                orchestrator.ledger,
+                job_id=job.job_id,
+                pass_name="INITIAL_FULL_RESEARCH",
+            )
+        )
+
+    def test_dossier_schema_accepts_canonical_initial_pass_name(self) -> None:
+        schema = json.loads(
+            (
+                Path(__file__).resolve().parents[1]
+                / "configs/e2r_pro_research_dossier_v2.schema.json"
+            ).read_text(encoding="utf-8")
+        )
+        values = schema["$defs"]["researchPass"]["properties"]["pass_name"]["enum"]
+        self.assertIn("INITIAL_FULL_RESEARCH", values)
+        self.assertIn("COUNTER_SUPERSESSION_CLOSURE", values)
+
+    def test_recovered_verification_rows_are_hash_bound_to_receipt(self) -> None:
+        root = self.root / "verification"
+        root.mkdir(parents=True)
+        rows = ({"dossier_fact_id": "PROFACT-1", "status": "ACCEPTED_CURRENT"},)
+        links = ({"claim_id": "CLAIM-1", "fact_id": "FACT-1"},)
+        rejections: tuple[dict, ...] = ()
+        compilation = {"facts": [], "claim_fact_links": list(links)}
+        for name, values in (
+            ("source_verifications.jsonl", rows),
+            ("claim_fact_links.jsonl", links),
+            ("fact_compilation_rejections.jsonl", rejections),
+        ):
+            (root / name).write_text(
+                "".join(json.dumps(value, sort_keys=True) + "\n" for value in values),
+                encoding="utf-8",
+            )
+        (root / "fact_compilation_receipt.json").write_text(
+            json.dumps(compilation),
+            encoding="utf-8",
+        )
+        receipt = {
+            "job_id": "JOB-1",
+            "dossier_id": "DOSSIER-1",
+            "verification_semantics_version": "v7",
+        }
+        receipt["verification_hash"] = canonical_hash(
+            {
+                **receipt,
+                "verifications": rows,
+                "fact_compilation": compilation,
+            }
+        )
+        recovered = _verification_artifact_rows(
+            SimpleNamespace(
+                result=None,
+                receipt=receipt,
+                verification_root=root,
+            )
+        )
+        self.assertEqual(recovered, (rows, links, rejections))
+
+    def test_followup_delta_merges_append_only_into_full_dossier(self) -> None:
+        original = _base_v2()
+        original["question_family_results"][0]["attempted_source_role_ids"] = [
+            "ISSUER_OFFICIAL"
+        ]
+        response = deepcopy(original)
+        response["research_pass_id"] = "PASS-2"
+        response["parent_pass_id"] = "PASS-1"
+        response["candidate_archetypes"] = []
+        response["selected_archetypes"] = []
+        changed = deepcopy(original["question_family_results"][0])
+        changed["closure_reason"] = "두 번째 pass에서 공개 경로를 추가 확인했다."
+        changed["attempted_source_role_ids"] = ["CUSTOMER_PARTNER_OFFICIAL"]
+        response["question_family_results"] = [changed]
+        response["research_passes"] = [
+            {
+                "pass_id": "PASS-2",
+                "parent_pass_id": "PASS-1",
+                "pass_name": "PUBLIC_GAP_CLOSURE",
+                "status": "COMPLETE",
+                "prompt_hash": "a" * 64,
+                "response_hash": "b" * 64,
+            }
+        ]
+        result = apply_research_dossier_delta(
+            original_dossier=original,
+            response_dossier=response,
+            validation_context=DossierValidationContext(
+                job_id="JOB-V2",
+                run_id="RUN-V2",
+                target_id="000660",
+                as_of_date="2026-08-22",
+                conversation_id="CONVERSATION-V2",
+                candidate_archetype_ids=(
+                    "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                ),
+                research_pass_id="PASS-2",
+                parent_pass_id="PASS-1",
+                enforce_parent_pass_id=True,
+            ),
+        )
+        self.assertEqual(len(result.effective_dossier["research_passes"]), 2)
+        self.assertEqual(result.updated_question_family_ids, (changed["question_family_id"],))
+        self.assertEqual(result.effective_dossier["research_pass_id"], "PASS-2")
+        self.assertEqual(
+            result.effective_dossier["selected_archetypes"],
+            original["selected_archetypes"],
+        )
+        self.assertEqual(
+            result.effective_dossier["question_family_results"][0][
+                "attempted_source_role_ids"
+            ],
+            ["ISSUER_OFFICIAL", "CUSTOMER_PARTNER_OFFICIAL"],
+        )
+
+    def test_followup_delta_cannot_rewrite_prior_route_receipt(self) -> None:
+        original = _base_v2()
+        question = original["question_family_results"][0]
+        route = {
+            "route_receipt_id": "ROUTE-IMMUTABLE",
+            "pass_id": "PASS-1",
+            "archetype_id": question["archetype_id"],
+            "question_family_id": question["question_family_id"],
+            "gap_id": "GAP-1",
+            "source_role_id": "ISSUER_OFFICIAL",
+            "query_or_navigation_objective": "최초 공식 경로",
+            "query_text": "최초 질의",
+            "result_count_seen": 0,
+            "opened_source_urls": [],
+            "accepted_fact_ids": [],
+            "rejected_candidate_ids": [],
+            "provider_status": "SUCCESS",
+            "no_new_route_reason": "결과 없음",
+            "performed_at": "2026-08-22T01:00:00Z",
+        }
+        original["search_route_receipts"] = [route]
+        question["search_route_receipt_ids"] = [route["route_receipt_id"]]
+        question["attempted_source_role_ids"] = ["ISSUER_OFFICIAL"]
+        response = deepcopy(original)
+        response["research_pass_id"] = "PASS-2"
+        response["parent_pass_id"] = "PASS-1"
+        response["research_passes"].append(
+            {
+                "pass_id": "PASS-2",
+                "parent_pass_id": "PASS-1",
+                "pass_name": "PUBLIC_GAP_CLOSURE",
+                "status": "COMPLETE",
+                "prompt_hash": "a" * 64,
+                "response_hash": "b" * 64,
+            }
+        )
+        response["search_route_receipts"][0]["query_text"] = "조용히 바꾼 질의"
+        with self.assertRaises(DossierDeltaMergeError):
+            apply_research_dossier_delta(
+                original_dossier=original,
+                response_dossier=response,
+                validation_context=DossierValidationContext(
+                    job_id="JOB-V2",
+                    run_id="RUN-V2",
+                    target_id="000660",
+                    as_of_date="2026-08-22",
+                    conversation_id="CONVERSATION-V2",
+                    candidate_archetype_ids=(
+                        "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                    ),
+                    research_pass_id="PASS-2",
+                    parent_pass_id="PASS-1",
+                    enforce_parent_pass_id=True,
+                ),
+            )
+
+    def test_followup_delta_extends_existing_source_lineage_append_only(self) -> None:
+        original = _base_v2()
+        original["source_lineages"] = [
+            {
+                "source_lineage_id": "LINEAGE-1",
+                "source_urls": ["https://example.com/old"],
+                "canonical_source_urls": ["https://example.com/old"],
+                "fact_ids": [],
+                "independence_group_id": "ISSUER-1",
+                "lineage_subject": "동일 실적 발표 계보",
+                "publisher_roster": ["검증대상"],
+                "same_fact_reprints_collapsed": ["기존 전재"],
+                "lineage_status": "OPEN",
+                "status": "ACTIVE",
+            }
+        ]
+        response = deepcopy(original)
+        response["research_pass_id"] = "PASS-2"
+        response["parent_pass_id"] = "PASS-1"
+        response["candidate_archetypes"] = []
+        response["selected_archetypes"] = []
+        response["source_lineages"] = [
+            {
+                "source_lineage_id": "LINEAGE-1",
+                "source_urls": ["https://example.com/new"],
+                "canonical_source_urls": ["https://example.com/new"],
+                "fact_ids": [],
+                "independence_group_id": "ISSUER-1",
+                "lineage_subject": "동일 실적 발표 계보",
+                "publisher_roster": ["검증대상"],
+                "same_fact_reprints_collapsed": ["새 전재"],
+                "lineage_status": "RESOLVED",
+                "lineage_operation": "APPEND_UPDATE",
+                "status": "ACTIVE",
+            }
+        ]
+        response["research_passes"] = [
+            {
+                "pass_id": "PASS-2",
+                "parent_pass_id": "PASS-1",
+                "pass_name": "PUBLIC_GAP_CLOSURE",
+                "status": "COMPLETE",
+                "prompt_hash": "a" * 64,
+                "response_hash": "b" * 64,
+            }
+        ]
+
+        result = apply_research_dossier_delta(
+            original_dossier=original,
+            response_dossier=response,
+            validation_context=DossierValidationContext(
+                job_id="JOB-V2",
+                run_id="RUN-V2",
+                target_id="000660",
+                as_of_date="2026-08-22",
+                conversation_id="CONVERSATION-V2",
+                candidate_archetype_ids=(
+                    "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                ),
+                research_pass_id="PASS-2",
+                parent_pass_id="PASS-1",
+                enforce_parent_pass_id=True,
+            ),
+        )
+        lineage = result.effective_dossier["source_lineages"][0]
+        self.assertEqual(
+            lineage["source_urls"],
+            ["https://example.com/old", "https://example.com/new"],
+        )
+        self.assertEqual(lineage["lineage_status"], "RESOLVED")
+        self.assertEqual(lineage["lineage_status_history"], ["OPEN", "RESOLVED"])
+        self.assertEqual(result.new_source_lineage_ids, ())
+
+    def test_followup_delta_cannot_rebind_existing_source_lineage(self) -> None:
+        original = _base_v2()
+        original["source_lineages"] = [
+            {
+                "source_lineage_id": "LINEAGE-1",
+                "source_urls": ["https://example.com/old"],
+                "fact_ids": [],
+                "independence_group_id": "ISSUER-1",
+                "lineage_subject": "동일 실적 발표 계보",
+                "status": "ACTIVE",
+            }
+        ]
+        response = deepcopy(original)
+        response["research_pass_id"] = "PASS-2"
+        response["parent_pass_id"] = "PASS-1"
+        response["source_lineages"][0]["independence_group_id"] = "OTHER"
+        response["research_passes"].append(
+            {
+                "pass_id": "PASS-2",
+                "parent_pass_id": "PASS-1",
+                "pass_name": "PUBLIC_GAP_CLOSURE",
+                "status": "COMPLETE",
+                "prompt_hash": "a" * 64,
+                "response_hash": "b" * 64,
+            }
+        )
+        with self.assertRaisesRegex(
+            DossierDeltaMergeError,
+            "rewrote source lineage identity",
+        ):
+            apply_research_dossier_delta(
+                original_dossier=original,
+                response_dossier=response,
+                validation_context=DossierValidationContext(
+                    job_id="JOB-V2",
+                    run_id="RUN-V2",
+                    target_id="000660",
+                    as_of_date="2026-08-22",
+                    conversation_id="CONVERSATION-V2",
+                    candidate_archetype_ids=(
+                        "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                    ),
+                    research_pass_id="PASS-2",
+                    parent_pass_id="PASS-1",
+                    enforce_parent_pass_id=True,
+                ),
+            )
+
+    def test_live_bound_compiler_is_target_blind_and_source_role_aware(self) -> None:
+        dossier, verified = _complete_dossier()
+        first = _compile_question_bounds(
+            dossier,
+            verified_fact_ids=verified,
+        )
+        changed_target = deepcopy(dossier)
+        changed_target["target"] = {
+            "target_id": "UNRELATED-TARGET",
+            "company_name": "다른 검증기업",
+        }
+        second = _compile_question_bounds(
+            changed_target,
+            verified_fact_ids=verified,
+        )
+        self.assertEqual(first, second)
+        self.assertEqual(
+            set(first),
+            {
+                row["question_family_id"]
+                for row in dossier["question_family_results"]
+            },
+        )
+
+    def test_accepted_candidate_roster_requires_compiled_claim_link(self) -> None:
+        rows = (
+            {
+                "dossier_fact_id": "PROFACT-ACCEPTED",
+                "status": "ACCEPTED_CURRENT",
+                "compiled_claim_id": "CLAIM-ACCEPTED",
+            },
+            {
+                "dossier_fact_id": "PROFACT-COMPILER-REJECTED",
+                "status": "ACCEPTED_CURRENT",
+                "compiled_claim_id": "CLAIM-REJECTED",
+            },
+            {
+                "dossier_fact_id": "PROFACT-QUOTE-REJECTED",
+                "status": "REJECTED_QUOTE_MISMATCH",
+                "compiled_claim_id": None,
+            },
+        )
+        accepted = _accepted_dossier_fact_ids(
+            rows,
+            ({"claim_id": "CLAIM-ACCEPTED", "fact_id": "FACT-1"},),
+        )
+        self.assertEqual(accepted, ("PROFACT-ACCEPTED",))
+
+    def _approve_and_mark_running(
+        self,
+        built,
+        *,
+        conversation_id: str = "CONVERSATION-LIVE-V2",
+    ):
+        job = self.store.get_job(built.job.job_id)
+        job = self.store.transition(
+            job.job_id,
+            expected_version=job.state_version,
+            to_status=JobStatus.BROWSER_PREPARING,
+            actor="test",
+            idempotency_key="browser-preparing",
+        )
+        job = self.store.record_browser_prepared(
+            job.job_id,
+            expected_version=job.state_version,
+            browser_session_id="BROWSER-LIVE-V2",
+            conversation_id=conversation_id,
+            adapter_name="FakeV2Adapter",
+            packet_hash=built.packet_bundle.packet_hash,
+            prompt_hash=built.prompt.prompt_hash,
+            state={"state": "AWAITING_USER_APPROVAL", "initial_pass_id": built.initial_pass_id},
+            actor="test",
+            idempotency_key="browser-prepared",
+        )
+        job, nonce = self.store.issue_approval_nonce(
+            job.job_id,
+            expected_version=job.state_version,
+            actor="test",
+            idempotency_key="approval-issued",
+            prompt_hash=built.prompt.prompt_hash,
+            expires_at="2026-08-24T01:02:03Z",
+        )
+        job = self.store.consume_approval_nonce(
+            job.job_id,
+            nonce,
+            expected_version=job.state_version,
+            actor="user-approved-in-thread",
+            idempotency_key="approval-consumed",
+            prompt_hash=built.prompt.prompt_hash,
+        )
+        job = self.store.claim_submit(
+            job.job_id,
+            expected_version=job.state_version,
+            actor="test",
+            idempotency_key="initial-submit",
+        )
+        return self.store.transition(
+            job.job_id,
+            expected_version=job.state_version,
+            to_status=JobStatus.RESEARCH_RUNNING,
+            actor="test",
+            idempotency_key="initial-running",
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()

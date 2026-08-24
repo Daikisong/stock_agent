@@ -117,6 +117,26 @@ class BrowserResultSnapshot:
 
 
 @dataclass(frozen=True)
+class RecoveredBrowserConversation:
+    conversation_id: str
+    inspection: BrowserInspection
+    result: BrowserResultSnapshot
+    search_query: str
+    result_href: str
+    submit_count: int = 0
+
+    def __post_init__(self) -> None:
+        if not self.conversation_id.strip():
+            raise ValueError("recovered conversation id must be nonempty")
+        if not self.result.structurally_complete:
+            raise ValueError("recovered conversation must contain a complete result")
+        if not self.result.job_marker_matches or not self.result.run_marker_matches:
+            raise ValueError("recovered conversation markers must match the durable job")
+        if self.submit_count != 0:
+            raise ValueError("conversation recovery must never submit")
+
+
+@dataclass(frozen=True)
 class BrowserCaptureRequest:
     job_id: str
     run_id: str
@@ -175,6 +195,14 @@ class ChatGPTWebAdapter(Protocol):
 
     async def inspect_result(self, *, job_id: str, run_id: str) -> BrowserResultSnapshot: ...
 
+    async def recover_conversation_without_submit(
+        self,
+        *,
+        job_id: str,
+        run_id: str,
+        search_terms: tuple[str, ...] = (),
+    ) -> RecoveredBrowserConversation: ...
+
     async def capture_result(self, request: BrowserCaptureRequest) -> RawBrowserCapture: ...
 
 
@@ -202,5 +230,6 @@ __all__ = [
     "PreparedBrowserJob",
     "PreparedFollowupPass",
     "RawBrowserCapture",
+    "RecoveredBrowserConversation",
     "SubmitAuthorizationRequired",
 ]

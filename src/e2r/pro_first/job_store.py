@@ -6,12 +6,13 @@ written to an append-only, idempotent event ledger in the same transaction.
 
 from __future__ import annotations
 
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 from datetime import datetime, timezone
 import hashlib
 import hmac
 import json
 from pathlib import Path
+import re
 import secrets
 import sqlite3
 from typing import Any, Callable, Iterator, Mapping, Sequence
@@ -303,7 +304,7 @@ class ProFirstJobStore:
             connection.close()
 
     def initialize(self) -> None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             connection.execute("PRAGMA journal_mode=WAL")
             connection.executescript(_SCHEMA)
             columns = {
@@ -319,7 +320,7 @@ class ProFirstJobStore:
                 )
 
     def pragma_snapshot(self) -> Mapping[str, Any]:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             return {
                 "journal_mode": str(connection.execute("PRAGMA journal_mode").fetchone()[0]).lower(),
                 "foreign_keys": int(connection.execute("PRAGMA foreign_keys").fetchone()[0]),
@@ -399,7 +400,7 @@ class ProFirstJobStore:
         self, as_of_date: str, scan_window: str | ScanWindow
     ) -> ScanRunRecord | None:
         window_key = f"{as_of_date}:{ScanWindow(scan_window).value}"
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 "SELECT * FROM pro_scan_runs WHERE window_key=?", (window_key,)
             ).fetchone()
@@ -408,7 +409,7 @@ class ProFirstJobStore:
     def list_scan_runs(self, *, limit: int = 200) -> tuple[ScanRunRecord, ...]:
         if not 1 <= limit <= 1_000:
             raise ValueError("scan list limit must be between 1 and 1000")
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             rows = connection.execute(
                 """
                 SELECT * FROM pro_scan_runs
@@ -492,14 +493,14 @@ class ProFirstJobStore:
         return record
 
     def get_candidate_by_dedupe(self, dedupe_key: str) -> CandidateRecord | None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 "SELECT * FROM pro_candidates WHERE dedupe_key=?", (dedupe_key,)
             ).fetchone()
         return None if row is None else self._candidate_from_row(row)
 
     def get_candidate(self, candidate_id: str) -> CandidateRecord:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 "SELECT * FROM pro_candidates WHERE candidate_id=?",
                 (candidate_id,),
@@ -511,7 +512,7 @@ class ProFirstJobStore:
     def list_candidates(self, *, limit: int = 200) -> tuple[CandidateRecord, ...]:
         if not 1 <= limit <= 1_000:
             raise ValueError("candidate list limit must be between 1 and 1000")
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             rows = connection.execute(
                 """
                 SELECT * FROM pro_candidates
@@ -522,7 +523,7 @@ class ProFirstJobStore:
         return tuple(self._candidate_from_row(row) for row in rows)
 
     def get_job_by_candidate(self, candidate_id: str) -> ProResearchJob | None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 "SELECT * FROM pro_research_jobs WHERE candidate_id=? ORDER BY created_at LIMIT 1",
                 (candidate_id,),
@@ -603,7 +604,7 @@ class ProFirstJobStore:
         return self._job_from_row(row)
 
     def get_job(self, job_id: str) -> ProResearchJob:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute("SELECT * FROM pro_research_jobs WHERE job_id=?", (job_id,)).fetchone()
         if row is None:
             raise RecordNotFound(f"job not found: {job_id}")
@@ -618,7 +619,7 @@ class ProFirstJobStore:
         if not 1 <= limit <= 2_000:
             raise ValueError("job list limit must be between 1 and 2000")
         status_values = tuple(dict.fromkeys(JobStatus(value).value for value in statuses))
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             if status_values:
                 placeholders = ",".join("?" for _ in status_values)
                 rows = connection.execute(
@@ -640,7 +641,7 @@ class ProFirstJobStore:
         return tuple(self._job_from_row(row) for row in rows)
 
     def get_packet_manifest(self, job_id: str) -> Mapping[str, Any] | None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 "SELECT manifest_json FROM pro_packets WHERE job_id=?",
                 (job_id,),
@@ -648,7 +649,7 @@ class ProFirstJobStore:
         return None if row is None else json.loads(row["manifest_json"])
 
     def get_browser_session_state(self, job_id: str) -> Mapping[str, Any] | None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 """
                 SELECT browser_session_id, adapter_name, conversation_id,
@@ -671,7 +672,7 @@ class ProFirstJobStore:
 
     def list_artifacts(self, job_id: str) -> tuple[Mapping[str, Any], ...]:
         self.get_job(job_id)
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             rows = connection.execute(
                 """
                 SELECT artifact_id, artifact_kind, relative_path, content_hash,
@@ -875,6 +876,146 @@ class ProFirstJobStore:
                 idempotency_key=idempotency_key,
                 payload=payload,
                 created_at=created_at,
+            )
+            result = self._require_job_row(connection, job_id)
+        return self._job_from_row(result)
+
+    def rebind_recovered_conversation(
+        self,
+        job_id: str,
+        *,
+        expected_version: int,
+        conversation_id: str,
+        run_id: str,
+        report_hash: str,
+        job_marker_matches: bool,
+        run_marker_matches: bool,
+        actor: str,
+        idempotency_key: str,
+    ) -> ProResearchJob:
+        """Bind a recovered canonical chat without changing job status.
+
+        A browser restart can leave the durable job bound to ChatGPT's
+        transient ``WEB:...`` URL even though the completed chat later appears
+        under a canonical ``/c/<id>`` URL.  Recovery is deliberately narrower
+        than submission: it may only update identity after both durable
+        markers have been observed in the completed assistant result.
+        """
+
+        canonical_conversation_id = conversation_id.strip()
+        if not re.fullmatch(
+            r"[A-Za-z0-9][A-Za-z0-9_-]{7,127}", canonical_conversation_id
+        ) or canonical_conversation_id.startswith("WEB:"):
+            raise ApprovalInvalid("recovered conversation id is not canonical")
+        if not run_id.strip():
+            raise ApprovalInvalid("recovered conversation run id is required")
+        if len(report_hash) != 64 or not re.fullmatch(r"[0-9a-f]{64}", report_hash):
+            raise ApprovalInvalid("recovered result hash must be sha256")
+        if not job_marker_matches or not run_marker_matches:
+            raise ApprovalInvalid("recovered result markers do not match the durable job")
+        payload = {
+            "conversation_id": canonical_conversation_id,
+            "run_id": run_id,
+            "report_hash": report_hash,
+            "job_marker_matches": True,
+            "run_marker_matches": True,
+            "automatic_resubmit_allowed": False,
+            "submit_count": 1,
+        }
+        with self._transaction() as connection:
+            row = self._require_job_row(connection, job_id)
+            if row["conversation_id"] == canonical_conversation_id:
+                existing = connection.execute(
+                    "SELECT to_status, payload_hash FROM pro_job_events "
+                    "WHERE job_id=? AND idempotency_key=?",
+                    (job_id, idempotency_key),
+                ).fetchone()
+                if existing is not None and (
+                    existing["to_status"] != row["status"]
+                    or existing["payload_hash"] != canonical_hash(payload)
+                ):
+                    raise IdempotencyConflict(
+                        "conversation recovery idempotency key was reused"
+                    )
+                return self._job_from_row(row)
+            self._require_version(row, expected_version)
+            status = JobStatus(row["status"])
+            if status not in {JobStatus.RESEARCH_RUNNING, JobStatus.RESULT_DETECTED}:
+                raise ApprovalInvalid(
+                    "conversation recovery requires RESEARCH_RUNNING or RESULT_DETECTED"
+                )
+            if int(row["submit_count"]) != 1:
+                raise ApprovalInvalid("conversation recovery requires exactly one prior submit")
+            prior_conversation_id = str(row["conversation_id"] or "")
+            if prior_conversation_id and not prior_conversation_id.startswith("WEB:"):
+                raise ApprovalInvalid(
+                    "only an empty or transient WEB conversation id may be rebound"
+                )
+            existing = connection.execute(
+                "SELECT to_status, payload_hash FROM pro_job_events "
+                "WHERE job_id=? AND idempotency_key=?",
+                (job_id, idempotency_key),
+            ).fetchone()
+            if existing is not None:
+                if (
+                    existing["to_status"] != status.value
+                    or existing["payload_hash"] != canonical_hash(payload)
+                ):
+                    raise IdempotencyConflict(
+                        "conversation recovery idempotency key was reused"
+                    )
+                return self._job_from_row(row)
+            browser_session_id = str(row["browser_session_id"] or "")
+            session = connection.execute(
+                "SELECT state_json FROM pro_browser_sessions "
+                "WHERE browser_session_id=? AND job_id=?",
+                (browser_session_id, job_id),
+            ).fetchone()
+            if session is None:
+                raise ApprovalInvalid("durable browser session is missing")
+            state = json.loads(session["state_json"])
+            state["conversation_recovery"] = {
+                "canonical_conversation_id": canonical_conversation_id,
+                "run_id": run_id,
+                "report_hash": report_hash,
+                "marker_proof": "EXACT_JOB_AND_RUN_MARKERS",
+                "automatic_resubmit_allowed": False,
+            }
+            updated_at = self._now_text()
+            connection.execute(
+                "UPDATE pro_browser_sessions "
+                "SET conversation_id=?, state_json=?, updated_at=? "
+                "WHERE browser_session_id=? AND job_id=?",
+                (
+                    canonical_conversation_id,
+                    canonical_json(state),
+                    updated_at,
+                    browser_session_id,
+                    job_id,
+                ),
+            )
+            cursor = connection.execute(
+                "UPDATE pro_research_jobs "
+                "SET conversation_id=?, state_version=state_version+1, updated_at=? "
+                "WHERE job_id=? AND state_version=?",
+                (
+                    canonical_conversation_id,
+                    updated_at,
+                    job_id,
+                    expected_version,
+                ),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict(f"job version changed concurrently: {job_id}")
+            self._insert_event(
+                connection,
+                job_id=job_id,
+                from_status=status,
+                to_status=status,
+                actor=actor,
+                idempotency_key=idempotency_key,
+                payload=payload,
+                created_at=updated_at,
             )
             result = self._require_job_row(connection, job_id)
         return self._job_from_row(result)
@@ -1110,7 +1251,7 @@ class ProFirstJobStore:
         return self._job_from_row(result)
 
     def get_dossier_import_receipt(self, job_id: str) -> Mapping[str, Any] | None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 "SELECT import_receipt_json FROM pro_dossier_imports WHERE job_id=?",
                 (job_id,),
@@ -1219,7 +1360,7 @@ class ProFirstJobStore:
         return self._job_from_row(result)
 
     def get_source_verification_receipt(self, job_id: str) -> Mapping[str, Any] | None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 "SELECT receipt_json FROM pro_source_verifications "
                 "WHERE job_id=? ORDER BY rowid DESC LIMIT 1",
@@ -1228,7 +1369,7 @@ class ProFirstJobStore:
         return None if row is None else json.loads(row["receipt_json"])
 
     def source_verification_attempt_count(self, job_id: str) -> int:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 "SELECT COUNT(*) AS attempt_count FROM pro_source_verifications "
                 "WHERE job_id=?",
@@ -1376,7 +1517,7 @@ class ProFirstJobStore:
         return self._job_from_row(result)
 
     def get_gap_decisions(self, job_id: str) -> tuple[Mapping[str, Any], ...]:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             rows = connection.execute(
                 """
                 SELECT receipt_json FROM pro_gap_decisions
@@ -1520,7 +1661,7 @@ class ProFirstJobStore:
         return self._job_from_row(result)
 
     def get_score_receipt(self, job_id: str) -> Mapping[str, Any] | None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 "SELECT receipt_json FROM pro_score_receipts WHERE job_id=?",
                 (job_id,),
@@ -1662,7 +1803,7 @@ class ProFirstJobStore:
         return self._job_from_row(result)
 
     def get_stagecourt_receipt(self, job_id: str) -> Mapping[str, Any] | None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 "SELECT receipt_json FROM pro_stagecourt_receipts WHERE job_id=?",
                 (job_id,),
@@ -1813,7 +1954,7 @@ class ProFirstJobStore:
         return self._job_from_row(result_row)
 
     def get_publication(self, job_id: str) -> Mapping[str, Any] | None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 "SELECT receipt_json FROM pro_publications WHERE job_id=?",
                 (job_id,),
@@ -1821,7 +1962,7 @@ class ProFirstJobStore:
         return None if row is None else json.loads(row["receipt_json"])
 
     def list_events(self, job_id: str) -> tuple[JobEvent, ...]:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             rows = connection.execute(
                 "SELECT * FROM pro_job_events WHERE job_id=? ORDER BY created_at, event_id",
                 (job_id,),

@@ -24,6 +24,7 @@ class SubjectScopeVerifier:
         target_id: str,
         company_name: str,
         target_aliases: Sequence[str] = (),
+        semantic_scope: Mapping[str, object] | None = None,
     ) -> SubjectScopeVerification:
         document = _scope_text(document_text)
         aliases = tuple(
@@ -37,15 +38,12 @@ class SubjectScopeVerifier:
         issuer_scoped = fact.get("issuer_scoped") is True
         matched = next((alias for alias in aliases if _contains(document, alias)), None)
         if issuer_scoped:
-            if matched is None or not any(
-                _contains(_scope_text(subject), alias) for alias in aliases
-            ):
-                return SubjectScopeVerification(False, "WRONG_SUBJECT", matched)
-            if not _issuer_subject_supported(
-                subject=subject,
-                document=document,
-                aliases=aliases,
-            ):
+            # ``subject`` is a structured economic label (for example,
+            # ``operating cash flow``), not a second company-name field.  The
+            # target is already bound by target_id and must occur literally in
+            # the document; requiring the label itself to repeat an issuer
+            # alias rejects legitimate bilingual filings wholesale.
+            if matched is None or not subject:
                 return SubjectScopeVerification(False, "WRONG_SUBJECT", matched)
         elif not subject or not _contains(document, subject):
             # A peer/customer/partner counterfact need not name the target in
@@ -54,18 +52,43 @@ class SubjectScopeVerifier:
         segment = str(fact.get("business_segment") or "").strip()
         if not segment:
             return SubjectScopeVerification(False, "WRONG_SEGMENT", matched)
-        if segment != "CORPORATE_GENERIC" and not _descriptor_supported(
-            document, segment
-        ):
-            return SubjectScopeVerification(False, "WRONG_SEGMENT", matched)
         product = str(fact.get("product_family") or "").strip()
         if not product:
             return SubjectScopeVerification(False, "WRONG_PRODUCT", matched)
-        if product != "CORPORATE_GENERIC" and not _descriptor_supported(
-            document, product
-        ):
-            return SubjectScopeVerification(False, "WRONG_PRODUCT", matched)
+        if not _has_complete_semantic_scope(semantic_scope):
+            if segment != "CORPORATE_GENERIC" and not _descriptor_supported(
+                document, segment
+            ):
+                return SubjectScopeVerification(False, "WRONG_SEGMENT", matched)
+            if product != "CORPORATE_GENERIC" and not _descriptor_supported(
+                document, product
+            ):
+                return SubjectScopeVerification(False, "WRONG_PRODUCT", matched)
         return SubjectScopeVerification(True, "SUBJECT_SCOPE_ACCEPTED", matched)
+
+
+_SEMANTIC_SCOPE_FIELDS = frozenset(
+    {
+        "scope_business_segment",
+        "scope_product_family",
+        "scope_technology_family",
+        "scope_transaction_type",
+        "scope_economic_mechanism",
+        "scope_confidence",
+    }
+)
+
+
+def _has_complete_semantic_scope(value: Mapping[str, object] | None) -> bool:
+    if not isinstance(value, Mapping) or not _SEMANTIC_SCOPE_FIELDS.issubset(value):
+        return False
+    confidence = value.get("scope_confidence")
+    if isinstance(confidence, bool) or not isinstance(confidence, (int, float)):
+        return False
+    return 0 <= float(confidence) <= 1 and all(
+        str(value.get(key) or "").strip()
+        for key in _SEMANTIC_SCOPE_FIELDS - {"scope_confidence"}
+    )
 
 
 def _scope_text(value: object) -> str:
@@ -80,34 +103,6 @@ def _scope_text(value: object) -> str:
 def _contains(normalized_document: str, value: str) -> bool:
     needle = _scope_text(value)
     return bool(needle and needle in normalized_document)
-
-
-def _issuer_subject_supported(
-    *,
-    subject: str,
-    document: str,
-    aliases: Sequence[str],
-) -> bool:
-    """Accept issuer or joint-subject labels only when every party is literal."""
-
-    normalized_subject = _scope_text(subject)
-    if not normalized_subject:
-        return False
-    if normalized_subject in document:
-        return True
-    alias_needles = tuple(
-        sorted(
-            (_scope_text(value) for value in aliases if _scope_text(value)),
-            key=len,
-            reverse=True,
-        )
-    )
-    remainder = normalized_subject
-    for alias in alias_needles:
-        remainder = remainder.replace(alias, " ")
-    remainder = re.sub(r"\b(?:and|with|및|와|과|주식회사|inc|incorporated|co|ltd)\b", " ", remainder)
-    parties = tuple(value for value in re.split(r"\s+", remainder) if len(value) >= 2)
-    return all(value in document for value in parties)
 
 
 _DESCRIPTOR_GRAMMAR_WORDS = frozenset(

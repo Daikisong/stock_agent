@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from datetime import date, datetime, timezone
+import hashlib
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -189,10 +191,81 @@ class ProFirstSourceVerificationTest(unittest.TestCase):
         self.assertEqual(evidence.allowed_component_ids, ("bottleneck_pricing",))
         self.assertEqual(len(evidence.claim_ids), 1)
         self.assertEqual(len(evidence.quote_ids), 1)
+        self.assertEqual(evidence.confidence, 1.0)
+
+    def test_issuer_economic_subject_label_need_not_repeat_company_name(self) -> None:
+        result = self._verify(
+            self._fact(subject="영업현금흐름 전환")
+        )
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
+
+    def test_issuer_publisher_domain_supplies_bilingual_target_alias(self) -> None:
+        url = "https://news.globalissuer.com/results"
+        excerpt = "GlobalIssuer reported MEMORY HBM capacity allocation."
+        fact = self._fact(
+            subject="고객 배정",
+            source_url=url,
+            source_publisher="GlobalIssuer",
+            source_role_ids=["ISSUER_OFFICIAL"],
+            supporting_excerpt=excerpt,
+        )
+        dossier = self._dossier(fact)
+        document = " ".join(
+            (
+                "GlobalIssuer official results dated August 1, 2026.",
+                excerpt,
+                "The MEMORY HBM report contains the complete management",
+                "discussion, capacity plan, customer allocation and risks.",
+            )
+        )
+        result = ProSourceVerifier(
+            page_fetcher=PageFetcher(
+                fixture_text_by_url={url: document},
+                live_enabled=False,
+                max_text_chars=None,
+            )
+        ).verify(dossier=dossier, job=self.job, job_root=self.root)
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
+
+    def test_future_http_last_modified_does_not_override_past_publication(self) -> None:
+        document = self._document()
+        result = self._verify(
+            self._fact(),
+            fetch_result=FetchResult(
+                url=self.url,
+                ok=True,
+                text=document,
+                content_type="text/html",
+                fetched_at=datetime(2026, 8, 24, tzinfo=timezone.utc),
+                response_last_modified_at=datetime(
+                    2026, 8, 24, tzinfo=timezone.utc
+                ),
+                text_complete=True,
+                original_text_chars=len(document),
+                returned_text_chars=len(document),
+            ),
+        )
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
+
+    def test_materialized_document_bytes_match_verifier_hash(self) -> None:
+        result = self._verify(self._fact())
+        row = result.verifications[0]
+        document = self.root / str(row.document_path)
+        self.assertEqual(
+            hashlib.sha256(document.read_bytes()).hexdigest(),
+            row.content_hash,
+        )
+
+    def test_verified_source_owns_confidence_not_pro_placeholder(self) -> None:
+        result = self._verify(self._fact(confidence=0.0))
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
+        self.assertEqual(result.fact_compilation.facts[0].confidence, 1.0)
 
     def test_open_ended_pro_scope_is_structured_before_existing_validator(self) -> None:
         fact = self._fact(
             predicate="novel_open_ended_capacity_predicate",
+            business_segment="메모리 반도체",
+            product_family="고대역폭 메모리",
         )
         for field in (
             "scope_business_segment",
@@ -243,6 +316,7 @@ class ProFirstSourceVerificationTest(unittest.TestCase):
             result.verifications[0].allowed_component_ids,
             ("bottleneck_pricing",),
         )
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
         self.assertEqual(result.receipt_payload["mechanism_scope_mapping_count"], 1)
         self.assertEqual(
             result.receipt_payload["mechanism_scope_provider_name"],
@@ -661,6 +735,78 @@ class ProFirstSourceVerificationTest(unittest.TestCase):
         with self.assertRaisesRegex(NoProgressDetected, "unchanged"):
             changed_service.request_reverification(
                 self.job.job_id, reason="same semantics must not repeat"
+            )
+
+    def test_changed_effective_dossier_allows_same_semantics_reverification(self) -> None:
+        dossier = self._dossier(self._fact())
+        self.job = self._advance_to_importing(self.job)
+        dossier["job_id"] = self.job.job_id
+        normalized_hash = canonical_hash(dossier)
+        import_root = self.root / "import"
+        import_root.mkdir(parents=True, exist_ok=True)
+        (import_root / "research_dossier.normalized.json").write_text(
+            canonical_json(dossier) + "\n", encoding="utf-8"
+        )
+        self.job = self.store.record_dossier_import(
+            self.job.job_id,
+            expected_version=self.job.state_version,
+            dossier_id="PRODOSSIER-effective-reverification",
+            dossier_hash=normalized_hash,
+            import_receipt={
+                "schema_version": "e2r_pro_dossier_import_receipt_v1",
+                "job_id": self.job.job_id,
+                "normalized_dossier_hash": normalized_hash,
+                "validation_status": "PASS",
+                "score_authority": False,
+                "stage_authority": False,
+                "evidence_promoted_count": 0,
+                "component_ids": list(CANONICAL_COMPONENT_IDS),
+            },
+            actor="test",
+            idempotency_key="dossier-imported-effective-reverification",
+        )
+        service = ProSourceVerificationService(
+            self.store,
+            verifier=ProSourceVerifier(
+                page_fetcher=PageFetcher(
+                    fixture_text_by_url={self.url: self._document()},
+                    live_enabled=False,
+                    max_text_chars=None,
+                )
+            ),
+        )
+        first = service.verify_job(self.job.job_id, job_root=self.root)
+        changed = deepcopy(dossier)
+        changed["research_status"] = "NEEDS_PUBLIC_GAP_CLOSURE"
+        changed_hash = canonical_hash(changed)
+        effective_path = self.root / "research_passes/02_test/effective_dossier.json"
+        effective_path.parent.mkdir(parents=True, exist_ok=True)
+        effective_path.write_text(canonical_json(changed) + "\n", encoding="utf-8")
+        pointer = {
+            "schema_version": "e2r_pro_effective_dossier_pointer_v1",
+            "job_id": self.job.job_id,
+            "snapshot_id": "SNAPSHOT-EFFECTIVE-2",
+            "pass_id": "PASS-EFFECTIVE-2",
+            "dossier_hash": changed_hash,
+            "relative_path": effective_path.relative_to(self.root).as_posix(),
+        }
+        pointer_path = self.root / "research_passes/effective_dossier.latest.json"
+        pointer_path.write_text(canonical_json(pointer) + "\n", encoding="utf-8")
+        reopened = service.request_effective_dossier_reverification(
+            self.job.job_id,
+            job_root=self.root,
+            reason="completed saturation audit changed the effective dossier",
+        )
+        self.assertEqual(reopened.status, JobStatus.VERIFYING_SOURCES.value)
+        second = service.verify_job(self.job.job_id, job_root=self.root)
+        self.assertEqual(second.job.status, JobStatus.GAP_ADJUDICATION.value)
+        self.assertEqual(second.receipt["effective_dossier_hash"], changed_hash)
+        self.assertEqual(self.store.source_verification_attempt_count(self.job.job_id), 2)
+        with self.assertRaisesRegex(NoProgressDetected, "unchanged"):
+            service.request_effective_dossier_reverification(
+                self.job.job_id,
+                job_root=self.root,
+                reason="unchanged effective dossier must not loop",
             )
 
     def _advance_to_importing(self, job):

@@ -114,7 +114,7 @@ class ProFirstV2PromptCompilerTest(unittest.TestCase):
         for pass_name in (
             "INITIAL_FULL_RESEARCH",
             "PUBLIC_GAP_CLOSURE",
-            "COUNTER_SUPERSESSION",
+            "COUNTER_SUPERSESSION_CLOSURE",
             "VERIFIER_REPAIR",
             "SATURATION_AUDIT",
             "DELTA_RESEARCH",
