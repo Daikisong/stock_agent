@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-25 P4 완료 검증 시점`
+기준 시각: `2026-08-25 P5 완료 검증 시점`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_1_fresh_session_verifier_ready_master_goal.md`
@@ -14,7 +14,8 @@ P0 b6c30eb9  기존 repair-heavy Pro 실행을 진단 자료로 봉인
 P1 10c7269b  Pro fact 반려 원인을 최초 출력·로컬 결함·의미 결함으로 분해
 P2 152db6a7  source 문서와 atomic fact를 분리한 검증 친화 dossier를 도입
 P3 d5d62bc2  최초 Pro 조사에서 verifier-ready 증거를 생성하도록 계약 강화
-P4 이 문서와 함께 local evidence preflight phase commit으로 고정
+P4 788e14d2  URL 날짜 인용 alias scope의 기계적 결함을 로컬에서 자동 정규화
+P5 이 문서와 함께 compact RepairDeltaV3 phase commit으로 고정
 ```
 
 PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지 않는다.
@@ -27,7 +28,7 @@ P1 rejection A/B/C taxonomy              COMPLETE
 P2 ResearchDossierV3                      COMPLETE
 P3 Initial Prompt V3                      COMPLETE
 P4 local preflight                        COMPLETE
-P5 compact RepairDeltaV3                  PENDING
+P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            PENDING
 P7 000660 fresh canary                    PENDING
 P8 C17/C28 fresh canary                   PENDING
@@ -389,9 +390,75 @@ P3 head `d5d62bc2`의 GitHub Actions는 P4 커밋 직전에도 장시간 `in_pro
 판정되지 않았다. P4 push로 새 head CI를 시작하며 그 결과는 다음 phase 장부에서 head SHA와
 run URL로 이어서 기록한다.
 
-## 다음 단계 P5
+## P5 — Compact RepairDeltaV3
 
-전체 dossier를 다시 출력시키는 기존 repair 계약을 제거하고, P4가
-`INITIAL_PROMPT_OUTPUT_DEFECT` 또는 `GENUINE_SEMANTIC_OR_SOURCE_DEFECT`로 분류한 material
-candidate만 source별로 묶은 `RepairDeltaV3`로 수리한다. 로컬/representation 결함은 repair
-payload에 들어가지 않으며 아직 실제 fresh Pro 전송은 하지 않는다.
+기존 V2 old-run repair 경로는 과거 receipt 호환을 위해 그대로 두고, V3 전용 compact repair를
+별도 경로로 추가했다. 새 경로는 전체 dossier를 prompt/response에 다시 넣지 않는다.
+
+```text
+P4 rejection classifications
+→ Pro-repairable material candidate만 선택
+→ same source + same root cause + same question scope grouping
+→ RepairDeltaV3 prompt
+→ CORRECT|REPLACE|NARROW|WITHDRAW
+→ V3 graph validation
+→ local preflight
+→ deterministic source reverification
+```
+
+prompt와 output의 강제 경계:
+
+```text
+target prompt chars                        <= 60,000
+hard max                                   <= 100,000
+hard 초과 transport batching 성공 처리        금지
+full dossier re-output                     0
+accepted fact delete/modify                 0
+score/Stage authority                       false/false
+repair pass ordinal                         1만 허용
+```
+
+`fetched_excerpt`는 반려된 claimed quote가 아니라 실제 fetched source에서 literal locator로
+잘라낸 문장이다. locator도 없으면 빈 값이며 semantic similarity로 문장을 만들지 않는다.
+
+`WITHDRAW`는 replacement 없이 public gap을 다시 열고, `CORRECT/NARROW/REPLACE`는 새 atomic
+fact와 current-pass route receipt를 요구한다. replacement는 Initial V3 preflight 계약을 그대로
+만족해야 하며 full effective dossier graph validation과 source verifier를 모두 다시 통과해야 한다.
+repair 전 accepted fact는 hash가 동일해야 하고 재검문에서도 accepted여야 한다.
+
+새 source lineage의 independence group은 publisher + URL host로 보수적으로 생성해 같은
+publisher의 여러 문서를 독립 증거로 부풀리지 않는다.
+
+영속 runtime 산출물:
+
+```text
+repair_v3/compact_repair_prompt.md
+repair_v3/compact_repair_prompt_receipt.json
+repair_v3/repair_delta_v3.json
+repair_v3/repair_actions.jsonl
+repair_v3/reverification_rows.jsonl
+repair_v3/research_dossier.repaired.json
+repair_v3/compact_repair_receipt.json
+```
+
+검증:
+
+```text
+P5 compact RepairDeltaV3 regression            13/13 PASS
+P5 + legacy V2 repair + P4 + source verifier   77/77 PASS
+production static audit                          1/1 PASS / critical 0
+focused 합계                                    78/78 PASS
+compileall / schema self-check / diff check       PASS
+실제 Pro·query·search 호출                        0/0/0
+```
+
+상세 설계는 `compact_repair_delta_v3.md`에 기록했다. 현재 P5 서비스는 deterministic
+compiler/parser/apply/reverify까지 완성했지만 browser pass에 아직 연결하지 않았다. 따라서
+실제 fresh Pro 전송은 여전히 0이다.
+
+## 다음 단계 P6
+
+old conversation과 old fact answer를 fresh packet에서 배제하고, 새 job/run/pass/conversation을
+발급한다. Initial Prompt V3와 compact repair를 production browser adapter의 exactly-once
+submit/capture 경계에 연결한다. Mock browser에서 old frozen → fresh initial → preflight → compact
+repair 최대 1회 → saturation 흐름을 검증한 뒤에만 실제 000660 fresh canary로 넘어간다.
