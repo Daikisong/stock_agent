@@ -699,3 +699,14 @@ guard는 job 전체 attempt가 4라는 이유로 새 hash 검문을 막았다. �
 계속 증가하지만 새 append-only snapshot은 새 verifier input으로 취급한다. 예를 들어 같은 시험지
 재채점은 막고, 정정된 새 시험지는 다시 채점한다. source verification `29/29`, live runtime
 `27/27`, V2 static audit `2/2 PASS`로 고정했다. 이 수정 중 pass 12 browser submit은 0이었다.
+
+### latest snapshot 검증 뒤에만 다음 repair를 전송한다
+
+pass 11의 107-fact snapshot을 verification attempt 5로 등록한 결과 accepted/compiled는 53,
+query/search는 0/0이다. 그 exact roster에서 다음 repair를 계획한 뒤 pass 13
+`PROPASS-10e3c63062359e4fe27642e0`을 같은 conversation에 정확히 1회 전송했다.
+
+pass 12의 cap-only `submit_count=0` row는 그대로 남고 pass 13은
+`RESEARCH_RUNNING / submit_count=1`이다. 즉 새 dossier를 검문하지 않은 채 stale 111-fact
+roster로 다음 Pro 요청을 보내지 않았다. 현재는 pass 13 visible result만 감시하며 후속 pass는
+아직 준비·전송하지 않는다.

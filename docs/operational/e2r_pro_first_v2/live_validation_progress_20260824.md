@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 03:09 KST`
+기준 시각: `2026-08-25 03:12 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-이번 기록의 부모 HEAD: `e1760f53e73138eba17aae205136e9cd1e41ea1c`
+이번 기록의 부모 HEAD: `ef87f56fa87aa85306cf230079b10f21c1bc909c`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -57,6 +57,9 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → max 10 재개는 새 107-fact snapshot 검증 전 job 누적 attempt 4 cap에 중단, 전송 0
 → no-progress cap을 job lifetime이 아니라 exact dossier hash별로 결박
 → 동일 hash 반복은 계속 금지, 새 append-only snapshot은 새 verifier input으로 허용
+→ latest 107-fact canonical verification attempt 5 완료: accepted/compiled 53, query/search 0/0
+→ pass 13 next repair batch same-conversation exactly-once submit 완료
+→ pass 13 RESEARCH_RUNNING / submit_count=1, 현재 visible result 감시 중
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -83,6 +86,7 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 | pass 11 pre-repair append preflight | hash `458676ae69defbe3054a981defde831ed8da1532b6189f7999e25761a7a29480` / 122 facts. repair action 적용 전 중간값이라 영속하지 않음 |
 | pass 11 effective snapshot | `PRODOSSIERSNAPSHOT-cc57432e88b8eb100c7f3655` / hash `50ec0efa8d5b48944b8ce762263cd1017af681f7a5637aefa4c21c18d612b351` |
 | pass 11 repair receipt | hash `9250299d7717db0b9ac89d246bcb30ece2f4db3c03da997b7c87462d2e81d8c7` / source verification hash `a2700b1139f692b786ded7a7db3f7c45fb945cec7edea16f3ff15400781efb7b` |
+| canonical verification attempt 5 | `PROVERIFY-7913ef1dd902b450732f5e65` / hash `d7bcaefa1cc48dd1cac1bf9854cd83e2baedfd5336790ae59425491828cd6693` / exact pass 11 snapshot hash |
 | runtime root | `C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\live_v2\20260823T145430Z` |
 
 runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 있어 Git에 복제하지
@@ -105,6 +109,7 @@ runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 �
 | 10 | `PROPASS-2c64ccb7b9a86a8e7cbd5922` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | 최신 51개 repair packet의 첫 15개 계획. 당시 상한 6에서 미전송 보존 |
 | 11 | `PROPASS-7a551c28c37e8ca775a056a4` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | pass 10 cap 영수증을 append-only supersede. capture 재사용, repair/reverify, effective snapshot까지 완료. 107 facts / 211 routes / accepted 4 / rejected 7 / withdrawn 4 |
 | 12 | `PROPASS-e677c79c63041ec3ee5c77fe` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | pass 11 재검증 뒤 남은 42개 중 next 16개 계획. 점검용 max 7에서 미전송 보존 |
+| 13 | `PROPASS-10e3c63062359e4fe27642e0` | `VERIFIER_REPAIR` | `RESEARCH_RUNNING` | 1 | pass 12 cap-only 영수증을 보존하고 max 10에서 next batch를 exactly once submit. 현재 visible result recovery poll 중 |
 
 pass 5는 실패한 연구 답변이 아니라 실제 제출 전 transport 계획이다. 삭제하거나
 `COMPLETE`로 바꾸지 않았고, `submit_count=0`, `prepared_at=null`, `submitted_at=null`을
@@ -1578,3 +1583,36 @@ latest dossier hash != prior verified hash
 `normalized_dossier_hash`로 exact-input attempt를 센다. source verification focused
 `29/29`, live runtime `27/27`, V2 static audit `2/2 PASS`다. 회귀시험은 서로 다른 immutable
 hash 여섯 개가 연속 검증되고 unchanged hash 반복은 계속 거절되는 것을 확인한다.
+
+### 18.13 pass 11 canonical verification 등록과 pass 13 next batch 제출
+
+ef87f56f를 푸시한 뒤 max follow-up 10으로 재개했다. pass 11의 exact latest snapshot을
+canonical verification 경로에 attempt 5로 등록했다.
+
+```text
+verification id             PROVERIFY-7913ef1dd902b450732f5e65
+verification attempt        5
+effective snapshot          PRODOSSIERSNAPSHOT-cc57432e88b8eb100c7f3655
+effective dossier hash      50ec0efa8d5b48944b8ce762263cd1017af681f7a5637aefa4c21c18d612b351
+candidate / compiled        107 / 53
+document cache reuse        105
+full document fetch         2
+query / search              0 / 0
+verification hash           d7bcaefa1cc48dd1cac1bf9854cd83e2baedfd5336790ae59425491828cd6693
+```
+
+그 뒤 pass 12의 `submit_count=0` cap-only row는 삭제·변경하지 않고 새 pass 13을 append했다.
+
+```text
+pass id                     PROPASS-10e3c63062359e4fe27642e0
+parent                      PROPASS-7a551c28c37e8ca775a056a4
+pass name                   VERIFIER_REPAIR
+status                      RESEARCH_RUNNING
+submit_count                1
+prompt hash                 e34466069014a31b81a49f96453783e8a0fc21dc60adc1b1851e93e42763978b
+same conversation           6a8b09c3-bfcc-83ee-b15b-9f76eca52249
+```
+
+`FOLLOWUP_SUBMITTED`은 1회만 발생했고 첫 poll부터 `RESEARCH_RUNNING`을 확인했다. 현재는 같은
+assistant result만 감시하며 pass 14 composer 준비·click은 없다. 완료 뒤 capture와
+deterministic repair 결과가 생기면 이 절에 후속 영수증을 append한다.
