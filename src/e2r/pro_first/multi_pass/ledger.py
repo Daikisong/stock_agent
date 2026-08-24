@@ -432,31 +432,50 @@ class ProMultiPassLedger:
                 if parent is None or parent["job_id"] != job_id:
                     raise FollowupSubmitBlocked("dossier snapshot parent is outside this job")
             existing = connection.execute(
-                "SELECT * FROM pro_research_dossier_snapshots WHERE pass_id=?",
-                (pass_id,),
+                """
+                SELECT * FROM pro_research_dossier_snapshots
+                WHERE job_id=? AND dossier_hash=?
+                """,
+                (job_id, dossier_hash),
             ).fetchone()
             if existing is not None:
                 if (
-                    existing["dossier_hash"] != dossier_hash
+                    existing["pass_id"] != pass_id
                     or existing["relative_path"] != relative_path
                     or existing["parent_snapshot_id"] != parent_snapshot_id
                 ):
                     raise FollowupSubmitBlocked(
-                        "completed pass is already bound to another dossier snapshot"
+                        "dossier hash is already bound to another snapshot identity"
                     )
                 return self._snapshot_from_row(existing)
+            revision_ordinal = int(
+                connection.execute(
+                    """
+                    SELECT COALESCE(MAX(revision_ordinal), 0) + 1
+                    FROM pro_research_dossier_snapshots
+                    WHERE pass_id=?
+                    """,
+                    (pass_id,),
+                ).fetchone()[0]
+            )
+            if revision_ordinal > 1 and parent_snapshot_id is None:
+                raise FollowupSubmitBlocked(
+                    "same-pass snapshot revision requires an append-only parent"
+                )
             connection.execute(
                 """
                 INSERT INTO pro_research_dossier_snapshots (
-                    snapshot_id, job_id, pass_id, parent_snapshot_id,
+                    snapshot_id, job_id, pass_id, revision_ordinal,
+                    parent_snapshot_id,
                     dossier_hash, relative_path, fact_count, question_count,
                     route_receipt_count, created_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     snapshot_id,
                     job_id,
                     pass_id,
+                    revision_ordinal,
                     parent_snapshot_id,
                     dossier_hash,
                     relative_path,
@@ -481,9 +500,24 @@ class ProMultiPassLedger:
                 SELECT snapshot.* FROM pro_research_dossier_snapshots AS snapshot
                 JOIN pro_research_passes AS pass ON pass.pass_id=snapshot.pass_id
                 WHERE snapshot.job_id=?
-                ORDER BY pass.pass_ordinal DESC LIMIT 1
+                ORDER BY pass.pass_ordinal DESC,
+                         snapshot.revision_ordinal DESC LIMIT 1
                 """,
                 (job_id,),
+            ).fetchone()
+        return None if row is None else self._snapshot_from_row(row)
+
+    def latest_dossier_snapshot_for_pass(
+        self, *, job_id: str, pass_id: str
+    ) -> ResearchDossierSnapshotRecord | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT * FROM pro_research_dossier_snapshots
+                WHERE job_id=? AND pass_id=?
+                ORDER BY revision_ordinal DESC LIMIT 1
+                """,
+                (job_id, pass_id),
             ).fetchone()
         return None if row is None else self._snapshot_from_row(row)
 
@@ -495,7 +529,8 @@ class ProMultiPassLedger:
                 """
                 SELECT snapshot.* FROM pro_research_dossier_snapshots AS snapshot
                 JOIN pro_research_passes AS pass ON pass.pass_id=snapshot.pass_id
-                WHERE snapshot.job_id=? ORDER BY pass.pass_ordinal
+                WHERE snapshot.job_id=?
+                ORDER BY pass.pass_ordinal, snapshot.revision_ordinal
                 """,
                 (job_id,),
             ).fetchall()
@@ -673,6 +708,7 @@ class ProMultiPassLedger:
             snapshot_id=row["snapshot_id"],
             job_id=row["job_id"],
             pass_id=row["pass_id"],
+            revision_ordinal=int(row["revision_ordinal"]),
             parent_snapshot_id=row["parent_snapshot_id"],
             dossier_hash=row["dossier_hash"],
             relative_path=row["relative_path"],

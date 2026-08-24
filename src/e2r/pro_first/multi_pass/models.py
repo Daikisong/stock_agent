@@ -122,6 +122,7 @@ class ResearchDossierSnapshotRecord:
     snapshot_id: str
     job_id: str
     pass_id: str
+    revision_ordinal: int
     parent_snapshot_id: str | None
     dossier_hash: str
     relative_path: str
@@ -131,6 +132,8 @@ class ResearchDossierSnapshotRecord:
     created_at: str
 
     def __post_init__(self) -> None:
+        if self.revision_ordinal < 1:
+            raise ValueError("dossier snapshot revision ordinal must be positive")
         if len(self.dossier_hash) != 64:
             raise ValueError("dossier snapshot hash must be sha256")
         if min(self.fact_count, self.question_count, self.route_receipt_count) < 0:

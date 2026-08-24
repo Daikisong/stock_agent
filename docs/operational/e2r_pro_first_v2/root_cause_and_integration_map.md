@@ -251,21 +251,34 @@ normalized MD를 서로 다른 hash로 함께 보존했다. pass는 `COMPLETE / 
 candidate/question/category/action/replacement 형식만 보존하도록 교정했고, 실제 capture의
 adapter/schema replay는 17 facts, 17 proposals, 10 lineages, 17 routes로 통과했다.
 
-아직 자동 적용하지 않은 이유는 17개 중 14개 rejection packet이 원래 2~6개 question에
-걸려 있는데 Pro register는 대표 question 한 개만 적었기 때문이다. candidate-level
-repair를 원래 packet scope 전체의 deterministic 재검증 입력으로 확장할지, 미기재
-question을 pending으로 둘지 generic 정책과 회귀시험이 필요하다. 이것은 Pro의 repair를
-score/Stage authority로 인정하는 문제가 아니며, 어느 경우든 deterministic verifier가
-최종 acceptance를 결정한다.
+14개 multi-question mismatch는 generic 정책과 회귀시험으로 해결했다. Pro가 선언한 대표
+question과 replacement fact의 question은 모두 immutable rejection packet roster의 부분집합이어야
+한다. packet 밖 question은 hard fail하고, packet 안이면 원래 전체 roster를 자동 승인 범위가
+아닌 deterministic reverification scope로만 복원한다. 원본 Pro response는 수정하지 않는다.
+
+원본과 분리한 실제 runtime 전체 복제본에서 pass 6을 무전송 재처리한 결과, 17개 repair
+action이 모두 verifier로 전달됐고 5개는 accepted, 12개는 pending으로 남았다. 반려 사유는
+`WRONG_SUBJECT 8 / HISTORICAL_ONLY 3 / QUOTE_MISMATCH 1`이다. 즉 adapter가 17건을 0건으로
+버리는 결함은 해소했지만 source 검문을 통과하지 않은 12건을 Pro 권위만으로 채택하지 않았다.
+
+same-pass correction은 기존 schema의 `pass_id UNIQUE`를 없애고 `(pass_id,
+revision_ordinal)` lineage로 추가한다. legacy row는 revision 1로 보존하고, 새 hash는 별도
+`effective_dossier.revision-{hash}.json`과 revision 2 DB row로 기록한다. rehearsal에서는
+revision 1 no-op snapshot `PRODOSSIERSNAPSHOT-374eb7b04d924c725676a390`과 revision 2
+snapshot `PRODOSSIERSNAPSHOT-235d2b608cbda1622f500445`가 함께 남았고
+`foreign_key_check=[]`를 확인했다. 원본 runtime에는 아직 rehearsal 결과를 적용하지 않았다.
 
 첫 no-op 적용이 만든 pass 6 snapshot과 `resolution 0 / unresolved 17` receipt는 감사
-증거이므로 삭제·덮어쓰기하지 않는다. 교정 재처리는 exact parent인 pass 4에서 시작해 새
-append-only revision artifact로 기록해야 한다. capture 전 관측은
+증거이므로 삭제·덮어쓰기하지 않는다. 교정 재처리 경로는 exact parent인 pass 4에서 response
+delta를 다시 만들고, 기존 revision 1을 부모로 한 새 append-only revision artifact를 남긴다.
+capture 전 관측은
 `live_repair_capture_pending_20260824.json`, 복구 후 상태는
 `live_repair_capture_recovered_20260824.json`에 고정했다. 나머지 29개 packet은 deferred
 roster에 보존돼 있다. 초대형 미전송 pass
 `PROPASS-7694a86ac9e996eeabd03394`는 `TRANSPORT_PENDING / submit_count=0`이다.
-이 시점에는 full-thesis score·Stage·publication 권한이 아직 없다.
+이 시점에는 full-thesis score·Stage·publication 권한이 아직 없다. 다음 단계는 원본
+runtime에 같은 무전송 revision 경로를 적용한 뒤, deterministic verifier가 남긴 12건과
+deferred 29건을 bounded repair로 계속 처리하는 것이다.
 
 브라우저 안전 규칙도 함께 고정했다. 실제 ChatGPT 입력은 E2R 전용 Chrome의 exact
 conversation DOM/CDP만 사용하며 OS 전역 키보드, clipboard, window focus 자동화는

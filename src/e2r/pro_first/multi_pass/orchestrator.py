@@ -236,8 +236,7 @@ class ProMultiPassResearchOrchestrator:
         )
         if existing is not None:
             if (
-                existing.prompt_hash != compiled.prompt_hash
-                or existing.pass_input_hash != pass_input_hash
+                existing.pass_input_hash != pass_input_hash
                 or existing.parent_pass_id != parent.pass_id
             ):
                 raise RuntimeError("existing pass id has different prompt/input lineage")
@@ -250,6 +249,29 @@ class ProMultiPassResearchOrchestrator:
                         existing.detail.get("transport_pending_reason")
                         or "bounded browser pass limit reached; research remains incomplete"
                     ),
+                )
+            if existing.prompt_hash != compiled.prompt_hash:
+                if (
+                    existing.submit_count != 1
+                    or existing.status
+                    not in {
+                        ResearchPassStatus.RESEARCH_RUNNING.value,
+                        ResearchPassStatus.COMPLETE.value,
+                    }
+                ):
+                    raise RuntimeError(
+                        "unsubmitted existing pass differs from the current prompt contract"
+                    )
+                # A transmitted pass is immutable.  Template evolution may
+                # change today's compilation, but crash recovery needs only
+                # the durable hash to bind an already-visible/captured result;
+                # this empty text can never enter PREPARE_AND_SUBMIT because
+                # submit_count is already one.
+                return FollowupPassPlan(
+                    scope=scope,
+                    research_pass=existing,
+                    prompt_text="",
+                    prompt_hash=existing.prompt_hash,
                 )
             return FollowupPassPlan(
                 scope=scope,

@@ -259,6 +259,83 @@ END;
 _SCHEMA += PRO_V2_MULTI_PASS_SCHEMA
 
 
+def _ensure_dossier_snapshot_revision_schema(
+    connection: sqlite3.Connection,
+) -> None:
+    """Migrate the original one-snapshot-per-pass table without rewriting rows."""
+
+    columns = {
+        str(row[1])
+        for row in connection.execute(
+            "PRAGMA table_info(pro_research_dossier_snapshots)"
+        ).fetchall()
+    }
+    if "revision_ordinal" in columns:
+        return
+    connection.execute("PRAGMA foreign_keys=OFF")
+    try:
+        connection.execute("BEGIN IMMEDIATE")
+        connection.execute(
+            "ALTER TABLE pro_research_dossier_snapshots "
+            "RENAME TO pro_research_dossier_snapshots_legacy"
+        )
+        connection.execute(
+            """
+            CREATE TABLE pro_research_dossier_snapshots (
+                snapshot_id TEXT PRIMARY KEY,
+                job_id TEXT NOT NULL REFERENCES pro_research_jobs(job_id),
+                pass_id TEXT NOT NULL REFERENCES pro_research_passes(pass_id),
+                revision_ordinal INTEGER NOT NULL DEFAULT 1
+                    CHECK (revision_ordinal >= 1),
+                parent_snapshot_id TEXT
+                    REFERENCES pro_research_dossier_snapshots(snapshot_id),
+                dossier_hash TEXT NOT NULL,
+                relative_path TEXT NOT NULL,
+                fact_count INTEGER NOT NULL CHECK (fact_count >= 0),
+                question_count INTEGER NOT NULL CHECK (question_count >= 0),
+                route_receipt_count INTEGER NOT NULL
+                    CHECK (route_receipt_count >= 0),
+                created_at TEXT NOT NULL,
+                UNIQUE(pass_id, revision_ordinal),
+                UNIQUE(job_id, dossier_hash)
+            )
+            """
+        )
+        connection.execute(
+            """
+            INSERT INTO pro_research_dossier_snapshots (
+                snapshot_id, job_id, pass_id, revision_ordinal,
+                parent_snapshot_id, dossier_hash, relative_path,
+                fact_count, question_count, route_receipt_count, created_at
+            )
+            SELECT snapshot_id, job_id, pass_id, 1,
+                   parent_snapshot_id, dossier_hash, relative_path,
+                   fact_count, question_count, route_receipt_count, created_at
+            FROM pro_research_dossier_snapshots_legacy
+            """
+        )
+        connection.execute("DROP TABLE pro_research_dossier_snapshots_legacy")
+        connection.execute(
+            """
+            CREATE INDEX idx_pro_dossier_snapshots_job_created
+            ON pro_research_dossier_snapshots(
+                job_id, created_at, snapshot_id
+            )
+            """
+        )
+        connection.commit()
+    except Exception:
+        connection.rollback()
+        raise
+    finally:
+        connection.execute("PRAGMA foreign_keys=ON")
+    violations = connection.execute("PRAGMA foreign_key_check").fetchall()
+    if violations:
+        raise RuntimeError(
+            "dossier snapshot revision migration broke foreign-key integrity"
+        )
+
+
 class ProFirstJobStore:
     """SQLite-backed source of truth for Pro-first orchestration state."""
 
@@ -307,6 +384,7 @@ class ProFirstJobStore:
         with closing(self._connect()) as connection:
             connection.execute("PRAGMA journal_mode=WAL")
             connection.executescript(_SCHEMA)
+            _ensure_dossier_snapshot_revision_schema(connection)
             columns = {
                 str(row[1])
                 for row in connection.execute(

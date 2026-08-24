@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 import asyncio
 import json
 from pathlib import Path
+import sqlite3
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 import unittest
@@ -34,7 +35,10 @@ from e2r.pro_first.config import (
     ProScheduleRuntimeConfig,
     ProSupplementRuntimeConfig,
 )
-from e2r.pro_first.job_store import ProFirstJobStore
+from e2r.pro_first.job_store import (
+    ProFirstJobStore,
+    _ensure_dossier_snapshot_revision_schema,
+)
 from e2r.pro_first.models import JobStatus, ResearchMode, ScanWindow
 from e2r.pro_first.multi_pass import (
     ProMultiPassDossierStore,
@@ -556,9 +560,43 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
             job_root=self.runtime / "jobs" / job.job_id,
         )
         self.assertEqual(first.record.snapshot_id, second.record.snapshot_id)
+        self.assertEqual(first.record.revision_ordinal, 1)
         self.assertEqual(
             load_effective_research_dossier(self.runtime / "jobs" / job.job_id),
             dossier,
+        )
+        revision_dossier = deepcopy(dossier)
+        revision_dossier["material_facts"] = [
+            {"dossier_fact_id": "PROFACT-APPEND-ONLY-REVISION"}
+        ]
+        revision = snapshot_store.persist(
+            job_id=job.job_id,
+            pass_id=built.initial_pass_id,
+            dossier=revision_dossier,
+            job_root=self.runtime / "jobs" / job.job_id,
+        )
+        revision_again = snapshot_store.persist(
+            job_id=job.job_id,
+            pass_id=built.initial_pass_id,
+            dossier=revision_dossier,
+            job_root=self.runtime / "jobs" / job.job_id,
+        )
+        self.assertEqual(revision.record.revision_ordinal, 2)
+        self.assertEqual(revision.record.parent_snapshot_id, first.record.snapshot_id)
+        self.assertEqual(revision_again.record.snapshot_id, revision.record.snapshot_id)
+        self.assertNotEqual(first.path, revision.path)
+        self.assertEqual(
+            json.loads(first.path.read_text(encoding="utf-8")),
+            dossier,
+        )
+        self.assertEqual(
+            load_effective_research_dossier(self.runtime / "jobs" / job.job_id),
+            revision_dossier,
+        )
+        snapshots = orchestrator.ledger.list_dossier_snapshots(job.job_id)
+        self.assertEqual(
+            [row.revision_ordinal for row in snapshots],
+            [1, 2],
         )
         recovered = _load_recovered_snapshot_state(
             orchestrator.ledger,
@@ -567,9 +605,9 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
         )
         self.assertIsNotNone(recovered)
         recovered_dossier, outcomes = recovered
-        self.assertEqual(recovered_dossier, dossier)
-        self.assertEqual(len(outcomes), 1)
-        self.assertTrue(outcomes[0]["recovered_from_durable_snapshot"])
+        self.assertEqual(recovered_dossier, revision_dossier)
+        self.assertEqual(len(outcomes), 2)
+        self.assertTrue(all(row["recovered_from_durable_snapshot"] for row in outcomes))
         self.assertTrue(
             _has_snapshotted_completed_pass(
                 orchestrator.ledger,
@@ -577,6 +615,94 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
                 pass_name="INITIAL_FULL_RESEARCH",
             )
         )
+
+    def test_legacy_snapshot_table_migrates_without_rewriting_existing_row(
+        self,
+    ) -> None:
+        path = self.root / "legacy-snapshot.sqlite3"
+        connection = sqlite3.connect(path)
+        self.addCleanup(connection.close)
+        connection.execute("PRAGMA foreign_keys=ON")
+        connection.executescript(
+            """
+            CREATE TABLE pro_research_jobs (job_id TEXT PRIMARY KEY);
+            CREATE TABLE pro_research_passes (
+                pass_id TEXT PRIMARY KEY,
+                job_id TEXT NOT NULL REFERENCES pro_research_jobs(job_id)
+            );
+            CREATE TABLE pro_research_dossier_snapshots (
+                snapshot_id TEXT PRIMARY KEY,
+                job_id TEXT NOT NULL REFERENCES pro_research_jobs(job_id),
+                pass_id TEXT NOT NULL UNIQUE
+                    REFERENCES pro_research_passes(pass_id),
+                parent_snapshot_id TEXT
+                    REFERENCES pro_research_dossier_snapshots(snapshot_id),
+                dossier_hash TEXT NOT NULL,
+                relative_path TEXT NOT NULL,
+                fact_count INTEGER NOT NULL,
+                question_count INTEGER NOT NULL,
+                route_receipt_count INTEGER NOT NULL,
+                created_at TEXT NOT NULL,
+                UNIQUE(job_id, dossier_hash)
+            );
+            CREATE INDEX idx_pro_dossier_snapshots_job_created
+                ON pro_research_dossier_snapshots(
+                    job_id, created_at, snapshot_id
+                );
+            INSERT INTO pro_research_jobs VALUES ('JOB-LEGACY');
+            INSERT INTO pro_research_passes VALUES ('PASS-LEGACY', 'JOB-LEGACY');
+            INSERT INTO pro_research_dossier_snapshots VALUES (
+                'SNAPSHOT-LEGACY', 'JOB-LEGACY', 'PASS-LEGACY', NULL,
+                'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                'research_passes/01/effective_dossier.json', 97, 28, 98,
+                '2026-08-24T00:00:00Z'
+            );
+            """
+        )
+
+        _ensure_dossier_snapshot_revision_schema(connection)
+
+        columns = {
+            str(row[1])
+            for row in connection.execute(
+                "PRAGMA table_info(pro_research_dossier_snapshots)"
+            )
+        }
+        migrated = connection.execute(
+            "SELECT * FROM pro_research_dossier_snapshots"
+        ).fetchone()
+        self.assertIn("revision_ordinal", columns)
+        self.assertEqual(migrated[0], "SNAPSHOT-LEGACY")
+        self.assertEqual(migrated[3], 1)
+        connection.execute(
+            """
+            INSERT INTO pro_research_dossier_snapshots (
+                snapshot_id, job_id, pass_id, revision_ordinal,
+                parent_snapshot_id, dossier_hash, relative_path,
+                fact_count, question_count, route_receipt_count, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                "SNAPSHOT-REVISION-2",
+                "JOB-LEGACY",
+                "PASS-LEGACY",
+                2,
+                "SNAPSHOT-LEGACY",
+                "b" * 64,
+                "research_passes/01/effective_dossier.revision-b.json",
+                114,
+                28,
+                115,
+                "2026-08-24T01:00:00Z",
+            ),
+        )
+        self.assertEqual(
+            connection.execute(
+                "SELECT COUNT(*) FROM pro_research_dossier_snapshots"
+            ).fetchone()[0],
+            2,
+        )
+        self.assertEqual(connection.execute("PRAGMA foreign_key_check").fetchall(), [])
 
     def test_dossier_schema_accepts_canonical_initial_pass_name(self) -> None:
         schema = json.loads(

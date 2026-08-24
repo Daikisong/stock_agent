@@ -15,6 +15,9 @@ from e2r.pro_first.repair import (
     compile_rejection_packets,
     compile_verifier_repair_contract_audit,
 )
+from e2r.pro_first.repair.response_delta import (
+    derive_repair_delta_from_dossier_response,
+)
 from e2r.pro_first.saturation import ResearchSaturationAdjudicator
 from e2r.pro_first.verification.source_verifier import ProSourceVerifier
 from e2r.research.page_fetcher import PageFetcher
@@ -895,6 +898,87 @@ class ProFirstV2VerifierRepairTest(unittest.TestCase):
                 "search_route_receipt_ids"
             ],
         )
+
+    def test_candidate_level_repair_restores_packet_scope_only_for_reverification(
+        self,
+    ) -> None:
+        second_question = "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q02"
+        fact = self._fact(excerpt="원문에 없는 과장된 HBM 계약 문장")
+        fact["question_family_ids"] = [QUESTION, second_question]
+        dossier = self._dossier([fact])
+        second_result = deepcopy(dossier["question_family_results"][0])
+        second_result["question_family_id"] = second_question
+        dossier["question_family_results"].append(second_result)
+        _verification, _rows, _service, plan = self._verify_and_plan(
+            dossier, self._verifier()
+        )
+        response_hash = self._complete_repair_pass(plan)
+        packet = plan.rejection_packets[0]
+        self.assertEqual(set(packet.question_family_ids), {QUESTION, second_question})
+        corrected = self._corrected_fact(fact, plan)
+        # The Pro register and replacement fact may each name a different
+        # representative question, but neither may escape the packet roster.
+        corrected["question_family_ids"] = [second_question]
+        response = deepcopy(dossier)
+        response.update(
+            {
+                "research_pass_id": plan.followup.research_pass.pass_id,
+                "parent_pass_id": plan.followup.research_pass.parent_pass_id,
+            }
+        )
+        response["material_facts"].append(corrected)
+        response["search_route_receipts"].append(
+            {
+                "route_receipt_id": "ROUTE-MULTI-QUESTION-REPAIR",
+                "pass_id": plan.followup.research_pass.pass_id,
+                "question_family_id": QUESTION,
+                "accepted_fact_ids": [corrected["dossier_fact_id"]],
+            }
+        )
+        response["verification_repair_register"] = [
+            {
+                "candidate_id": fact["dossier_fact_id"],
+                "question_family_id": QUESTION,
+                "rejection_category": packet.rejection_category,
+                "status": "NARROWED",
+                "replacement_candidate_id": corrected["dossier_fact_id"],
+            }
+        ]
+
+        delta = derive_repair_delta_from_dossier_response(
+            original_dossier=dossier,
+            response_dossier=response,
+            rejection_packets=plan.rejection_packets,
+            response_hash=response_hash,
+        )
+
+        action = delta["actions"][0]
+        self.assertEqual(
+            set(action["question_family_ids"]),
+            {QUESTION, second_question},
+        )
+        self.assertEqual(action["pro_declared_question_family_ids"], [QUESTION])
+        self.assertEqual(
+            action["question_scope_binding"],
+            "PACKET_SCOPE_RESTORED_FOR_DETERMINISTIC_REVERIFICATION",
+        )
+        self.assertEqual(
+            set(action["corrected_fact"]["question_family_ids"]),
+            {QUESTION, second_question},
+        )
+        self.assertEqual(corrected["question_family_ids"], [second_question])
+
+        escaped = deepcopy(response)
+        escaped["verification_repair_register"][0]["question_family_id"] = (
+            "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q03"
+        )
+        with self.assertRaisesRegex(ValueError, "escapes the rejection packet"):
+            derive_repair_delta_from_dossier_response(
+                original_dossier=dossier,
+                response_dossier=escaped,
+                rejection_packets=plan.rejection_packets,
+                response_hash=response_hash,
+            )
 
     def test_existing_accepted_fact_cannot_be_targeted_or_deleted(self) -> None:
         accepted = self._fact(candidate_id="PROFACT-ACCEPTED")

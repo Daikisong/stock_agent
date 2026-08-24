@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-24 22:18 KST`
+기준 시각: `2026-08-24 22:55 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-기록 직전 HEAD: `b793f620130c0bb6bdf8670dc352a38103855283`
+기록 직전 HEAD: `c7878aafdc6836b7ea257419f4723ca422734455`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -23,9 +23,10 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → raw MD와 종료 marker 1자만 복구한 normalized MD를 모두 append-only 보존
 → Pro 응답: 새 fact 17 / repair 제안 17(NARROWED 13, REPLACED 4)
 → dialect adapter가 실행 register를 비워 0건 처리한 원인 확인·코드 교정
-→ 14개 candidate의 multi-question packet과 Pro 단일 question row 불일치가 다음 blocker
-→ 기존 no-op snapshot은 덮어쓰지 않고 append-only revision 재처리 대기
-→ 나머지 29개는 다음 batch로 이월 대기
+→ representative question을 packet 전체 deterministic 재검증 scope로만 복원하는 정책·시험 완료
+→ 원본의 완전한 복제본에서 pass 6을 무전송 재처리: 17건 처리 / 5건 accepted / 12건 pending
+→ 기존 no-op snapshot은 그대로 두고 revision 2 snapshot·별도 파일·DB lineage 생성 확인
+→ 원본 runtime 반영 전이며, rejected 12건과 deferred 29건은 다음 bounded repair 대상으로 대기
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -40,8 +41,11 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 | job | `PROJOB-cdd91020f15891533e61431f` |
 | run | `PRORUN-a7dacadb7088fc23535bfdde` |
 | canonical conversation | `6a8b09c3-bfcc-83ee-b15b-9f76eca52249` |
-| effective snapshot | `PRODOSSIERSNAPSHOT-2c8a29d511db4f97ffb922b3` |
-| effective dossier hash | `fee5aebe...` |
+| 원본 runtime latest snapshot | `PRODOSSIERSNAPSHOT-374eb7b04d924c725676a390` (pass 6 revision 1 no-op) |
+| 원본 runtime latest dossier hash | `6802144873d3fbec2bbb17bafd009feadd5d46213183103eed7f408e16da6acb` |
+| pass 6 exact repair parent | `PRODOSSIERSNAPSHOT-2c8a29d511db4f97ffb922b3` (pass 4) |
+| 복제 rehearsal revision | `PRODOSSIERSNAPSHOT-235d2b608cbda1622f500445` / revision 2 |
+| 복제 rehearsal dossier hash | `20919dfa73dce80c58c7be860bdb5aa03a0d95d87d5c097c7a91b37791cf1848` |
 | runtime root | `C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\live_v2\20260823T145430Z` |
 
 runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 있어 Git에 복제하지
@@ -57,7 +61,7 @@ runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 �
 | 3 | `PROPASS-b806a55651acd4e6dfbf87bf` | `PUBLIC_GAP_CLOSURE` | `COMPLETE` | 1 | 공개 material gap 보충 2 |
 | 4 | `PROPASS-ab2d8bd7520a8ce7de71f306` | `COUNTER_SUPERSESSION_CLOSURE` | `COMPLETE` | 1 | counter·supersession 감사 |
 | 5 | `PROPASS-7694a86ac9e996eeabd03394` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | 51.8만 자 prompt가 visible composer transport 한도를 초과, 미전송 보존 |
-| 6 | `PROPASS-3ef919d661d3bfa39f201c4e` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | 동일 응답을 재전송하지 않고 raw/normalized capture 완료. repair 적용 revision은 아직 대기 |
+| 6 | `PROPASS-3ef919d661d3bfa39f201c4e` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | 동일 응답을 재전송하지 않고 raw/normalized capture 완료. 복제 rehearsal에서 append-only revision 2 검증, 원본 반영 전 |
 
 pass 5는 실패한 연구 답변이 아니라 실제 제출 전 transport 계획이다. 삭제하거나
 `COMPLETE`로 바꾸지 않았고, `submit_count=0`, `prepared_at=null`, `submitted_at=null`을
@@ -158,7 +162,7 @@ prompt를 다시 제출하지 않았다.
 `repair/pending_rejection_packets.jsonl`에는 선택 전 전체 pending roster를 기록한다.
 receipt에도 selected/deferred packet id를 모두 기록하므로 packet이 조용히 사라질 수 없다.
 
-## 7. 첫 repair 응답 capture 복구와 다음 import blocker
+## 7. 첫 repair 응답 capture 복구와 append-only 재처리 rehearsal
 
 입력·클릭·다운로드 없이 canonical conversation DOM을 읽어 다음을 확인했다.
 
@@ -231,15 +235,42 @@ NARROWED / REPLACED             13 / 4
 source lineages / routes        10 / 17
 ```
 
-다음 blocker는 parser가 아니라 packet scope 계약이다. 17개 중 14개 rejection packet은
-원래 candidate가 2~6개 question에 연결돼 있지만 Pro register는 대표 question 한 개만
-기록했다. 현재 strict delta builder는 exact question set을 요구하므로 이를 그대로
-통과시키지 않았다.
+multi-question packet 계약은 다음처럼 고정했다. Pro가 선언한 대표 question과 replacement
+fact의 question은 모두 immutable rejection packet roster 안에 있어야 한다. 둘 중 하나라도
+packet 밖이면 hard fail한다. packet 안이라면 원래 packet의 전체 question roster를
+`승인 범위`가 아니라 deterministic reverification scope로만 복원한다. 이후 각 question의
+실제 acceptance는 기존 source verifier가 다시 결정한다.
 
-쉬운 예: 원래 반려 fact 하나가 질문 A·B·C에 걸려 있는데 Pro가 “A를 고쳤다”는 row 하나만
-보냈다. A의 수정을 B·C까지 자동 승인하면 안 된다. candidate-level repair를 A·B·C의
-deterministic 재검증 입력으로 확장할지, 나머지를 pending으로 둘지 generic 정책과
-회귀시험을 먼저 고정해야 한다.
+쉬운 예: 원래 반려 fact 하나가 질문 A·B·C에 걸려 있고 Pro가 A를 대표로 적고 replacement
+fact에 B를 적었다면, A와 B가 모두 원래 packet 안인지 먼저 확인한다. 맞으면 A·B·C를 다시
+검문하지만 세 질문을 자동 통과시키지는 않는다. 반대로 Pro가 원래 packet에 없던 D를 적으면
+즉시 거절한다. 이 정책은 원본 응답 객체를 수정하지 않고 derived repair action에만 기록된다.
+
+실제 pass 6 capture를 원본과 분리한 전체 runtime 복제본에서 무전송 재처리했다. 복제본은
+원본 DB, pass artifact, capture bundle과 source page cache를 포함하지만 ChatGPT browser를
+열거나 prompt를 제출하지 않는다. 결과는 다음과 같다.
+
+```text
+repair actions/resolutions       17 / 17
+REVERIFIED_ACCEPTED               5
+REVERIFIED_REJECTED              12
+prior accepted preserved         43
+facts                            97 (17 rejected 원본을 17 replacement로 교체)
+route receipts                  115 (기존 98 + repair route 17)
+score_valid                    false
+publication                 withheld
+```
+
+accepted replacement는 `MF051`, `MF054`, `CF018`, `RF034`, `RF035`다. 남은 12건은
+`WRONG_SUBJECT 8`, `HISTORICAL_ONLY 3`, `QUOTE_MISMATCH 1`로 deterministic verifier가
+거절했다. 특히 `WRONG_SUBJECT`는 영문 원문에 한국어 설명형 subject를 넣은 사례가 섞여
+있다. source quote가 그럴듯하다는 이유로 verifier를 느슨하게 하지 않고, 다음 Pro repair가
+원문 언어의 실제 entity/economic object를 subject에 쓰도록 prompt 계약을 보강했다.
+
+이는 “Pro가 가져온 17건을 parser가 0건으로 버림”과 다르다. 현재는 17건 모두 repair
+action으로 전달됐고, 5건은 실제 점수 입력 후보로 복구됐으며, 12건은 구체적인 반려 사유와
+함께 다음 pass에 남았다. 예를 들어 과거 KRX 문서가 quote를 지지해도 기준일 현재성을
+충족하지 않으면 `HISTORICAL_ONLY`이지 현재 사실로 자동 승인하지 않는다.
 
 첫 0건 적용으로 생성된 아래 파일도 감사 증거라 삭제·덮어쓰기하지 않는다.
 
@@ -252,9 +283,23 @@ score_valid       false
 publication       withheld
 ```
 
-교정된 pass 6 재처리는 exact parent인 pass 4 snapshot에서 시작해 별도 revision artifact와
-새 hash를 append해야 한다. 기존 pass 6 `effective_dossier.json`이나 capture bundle을
-제자리 수정하면 안 된다.
+append-only 저장도 복제본에서 확인했다.
+
+```text
+revision 1 snapshot  PRODOSSIERSNAPSHOT-374eb7b04d924c725676a390
+revision 1 hash      6802144873d3fbec2bbb17bafd009feadd5d46213183103eed7f408e16da6acb
+revision 2 snapshot  PRODOSSIERSNAPSHOT-235d2b608cbda1622f500445
+revision 2 hash      20919dfa73dce80c58c7be860bdb5aa03a0d95d87d5c097c7a91b37791cf1848
+revision 2 parent    revision 1 snapshot
+DB foreign_key_check []
+```
+
+기존 `effective_dossier.json`과 새
+`effective_dossier.revision-20919dfa...json`은 서로 다른 SHA-256을 가지며 동시에 남아
+있다. schema migration은 legacy snapshot row를 revision 1로 byte-for-byte 보존하고,
+같은 pass의 새 hash만 revision 2로 추가한다. latest pointer만 revision 2를 가리킨다.
+원본 runtime에는 아직 이 rehearsal을 적용하지 않았으므로, 원본 최신 상태를 revision 2로
+오해하면 안 된다.
 
 안전한 후속 원칙:
 
@@ -265,7 +310,8 @@ publication       withheld
   source lineage 내용은 수정하지 않는다.
 - normalization 전후 hash와 적용 사유를 receipt로 남기고 deterministic verifier 전체를
   다시 실행한다.
-- exact multi-question scope 정책과 회귀시험이 통과하기 전 repair를 승인하지 않는다.
+- exact packet 밖 question은 hard fail하고 packet 전체는 재검증 scope로만 복원한다.
+- source verifier가 거절한 replacement는 다음 repair 대상으로 남기고 자동 승인하지 않는다.
 - 검증이 끝나기 전 score, Stage, publication gate를 열지 않는다.
 
 capture 전 관측 영수증은 `live_repair_capture_pending_20260824.json`, capture·import 후
@@ -335,16 +381,18 @@ verifier repair/batching
 submit_count=0 TRANSPORT_PENDING 계획은 실제 follow-up 예산을 소비하지 않음
 ```
 
-이번 미커밋 변경을 직접 대상으로 다시 실행한 결과:
+이번 변경을 직접 대상으로 다시 실행한 결과:
 
 ```text
-tests.test_e2r_pro_first_v2_dossier_status
-tests.test_e2r_pro_first_v2_live_runtime
-tests.test_e2r_pro_first_v2_verifier_repair
-48 tests / OK
+multi_pass + prompt_compiler + dossier_status + live_runtime + verifier_repair
+78 tests / 77 PASS / code assertion failure 0
+1 environment error: WSL Chromium launch 전에 libnspr4.so 부재
 
 actual captured pass 6 adapter/schema read-only replay
 17 facts / 17 scoped proposals / PASS
+
+actual runtime full clone pass 6 reprocess
+17 actions / 5 accepted / 12 pending / append-only revision 2 / PASS
 ```
 
 WSL Playwright 전체 실행은 코드 오류가 아니라 local headless Chromium의 `libnspr4.so`
@@ -372,6 +420,12 @@ connection 21곳을 `contextlib.closing`으로 명시 종료하도록 고쳤고,
 - 한 글자 삭제 end sentinel의 bounded normalization과 raw/normalized 이중 보존
 - actual Pro hybrid fact ID·direct-source counter/resolution·prior lineage projection
 - current verifier-repair pass의 scoped proposal을 deterministic repair 단계까지 보존
+- representative question을 immutable packet 전체 deterministic 재검증 scope로 복원하되
+  packet 밖 question은 거절
+- 동일 pass의 교정 결과를 기존 snapshot을 덮어쓰지 않고 revision ordinal·별도 artifact로 추가
+- 이미 제출된 pass의 template가 진화해도 durable original prompt hash로 capture/reprocess 재개
+- 이미 COMPLETE인 repair pass를 재개할 때 latest no-op이 아니라 exact parent snapshot에서
+  response delta를 재구성
 - read-only SQLite connection 명시 종료와 Windows cleanup 회귀 확인
 - frozen V1 replay와 old diagnostic 의미 보존
 
@@ -379,23 +433,21 @@ connection 21곳을 `contextlib.closing`으로 명시 종료하도록 고쳤고,
 
 다음 순서를 모두 완료하기 전 Goal 완료를 선언하지 않는다.
 
-1. multi-question rejection packet과 단일 Pro register row의 generic scope 정책 및
-   회귀시험을 고정한다. 승인 범위를 넓히지 않고 deterministic reverification에만 전달한다.
-2. pass 4 exact parent에서 pass 6 capture를 append-only revision으로 재처리한다. 기존
-   no-op snapshot과 raw capture를 덮어쓰지 않는다.
-3. deferred 29개와 재검증 후 남은 rejection을 bounded repair pass로 0까지 처리한다.
-4. 000660 mandatory questions terminal, public material gap 0, repair pending 0을 확인한다.
-5. saturation audit pass와 deterministic 7 component / 21 Judge / score / StageCourt를 실행한다.
-6. `011170 / C17`, `053800 / C28` live canary를 완료한다.
-7. 서로 다른 3개 mechanism canary receipt와 no hidden authority를 검증한다.
-8. full unit test, Phase100, production static audit, forbidden path audit를 실행한다.
-9. 최종 P9/P10 receipt·운영 문서·Draft PR 상태를 갱신한다.
+1. 복제 rehearsal과 같은 경로로 원본 runtime의 pass 6 capture를 무전송 재처리한다. 기존
+   revision 1 no-op snapshot과 raw capture를 덮어쓰지 않는다.
+2. 재검증에서 남은 12개와 deferred 29개를 bounded repair pass로 순차 처리한다. 다음 prompt는
+   candidate별 모든 packet question row와 원문 언어 subject를 요구한다.
+3. 000660 mandatory questions terminal, public material gap 0, repair pending 0을 확인한다.
+4. saturation audit pass와 deterministic 7 component / 21 Judge / score / StageCourt를 실행한다.
+5. `011170 / C17`, `053800 / C28` live canary를 완료한다.
+6. 서로 다른 3개 mechanism canary receipt와 no hidden authority를 검증한다.
+7. full unit test, Phase100, production static audit, forbidden path audit를 실행한다.
+8. 최종 P9/P10 receipt·운영 문서·Draft PR 상태를 갱신한다.
 
-현재 외부 Pro 연구 생성과 capture는 끝났다. 새 연구나 같은 pass 재전송은 필요하지 않다.
-즉시 blocker는 marker가 아니라 `한 candidate의 원래 multi-question scope`와 `Pro가 적은
-대표 question 한 개`를 안전하게 결박하는 deterministic import 정책이다. 이 정책이
-실패하면 score·Stage를 낮게 확정하지 않고 `score_valid=false / publication withheld`를
-유지한다.
+현재 pass 6 외부 Pro 연구 생성과 capture는 끝났으며 같은 pass 재전송은 필요하지 않다.
+즉시 남은 일은 원본에 검증된 append-only 재처리 경로를 적용하고, 구체적인 검문 사유가
+남은 12건과 deferred 29건을 다음 bounded repair로 넘기는 것이다. 그동안 score·Stage를
+낮게 확정하지 않고 `score_valid=false / publication withheld`를 유지한다.
 
 ## 12. 외부 검수 체크리스트
 
@@ -412,6 +464,10 @@ connection 21곳을 `contextlib.closing`으로 명시 종료하도록 고쳤고,
 - current repair에 속하지 않은 초기 MD 첨부를 새 결과로 잘못 capture하지 않는가
 - scoped repair proposal은 current `VERIFIER_REPAIR` pass에서만 남고 arbitrary self-report는
   diagnostics에만 남는가
-- multi-question scope mismatch가 자동 acceptance로 바뀌지 않고 deterministic verifier
-  앞에서 명시적으로 처리되는가
-- pass 6 no-op snapshot을 삭제·덮어쓰기하지 않고 correction을 새 revision으로 남기는가
+- representative question과 replacement question이 모두 immutable packet 안인지 검사하고,
+  packet 전체 복원이 자동 acceptance가 아닌 deterministic 재검증 scope에만 쓰이는가
+- same-pass revision schema migration이 기존 row를 revision 1로 보존하고 correction을
+  revision 2·별도 파일로 추가하는가
+- 이미 제출된 pass의 현재 prompt template가 바뀌어도 original durable prompt hash를
+  유지하고 재전송하지 않는가
+- 복제 rehearsal의 5 accepted / 12 pending을 원본 runtime 반영 완료로 과장하지 않는가

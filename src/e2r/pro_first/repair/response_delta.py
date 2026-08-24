@@ -96,13 +96,17 @@ def derive_repair_delta_from_dossier_response(
         if len(action_values) != 1 or not action_values.issubset(REPAIR_ACTIONS):
             raise ValueError("repair register has conflicting or invalid actions")
         action = next(iter(action_values))
-        question_ids = tuple(
+        pro_declared_question_ids = tuple(
             dict.fromkeys(
                 str(row.get("question_family_id") or "") for row in register_rows
             )
         )
-        if set(question_ids) != set(packet.question_family_ids):
-            raise ValueError("repair register does not cover the exact question scope")
+        packet_question_ids = tuple(packet.question_family_ids)
+        if (
+            not pro_declared_question_ids
+            or not set(pro_declared_question_ids).issubset(packet_question_ids)
+        ):
+            raise ValueError("repair register escapes the rejection packet question scope")
         replacements = replacement_by_original.get(candidate_id) or []
         if action == "WITHDRAWN":
             if replacements:
@@ -111,11 +115,48 @@ def derive_repair_delta_from_dossier_response(
         else:
             if len(replacements) != 1:
                 raise ValueError("repair action requires exactly one scoped replacement")
-            corrected = replacements[0]
+            corrected = dict(replacements[0])
+            replacement_question_ids = tuple(
+                dict.fromkeys(
+                    str(value)
+                    for value in corrected.get("question_family_ids") or ()
+                    if str(value)
+                )
+            )
+            if (
+                not replacement_question_ids
+                or not set(replacement_question_ids).issubset(
+                    packet_question_ids
+                )
+            ):
+                raise ValueError(
+                    "replacement fact escapes its declared packet question scope"
+                )
+            # A repair action targets one rejected candidate, while the schema
+            # records one question per register row.  Pro may emit only a
+            # representative in-packet question.  Restore the immutable
+            # packet roster solely as the deterministic reverification scope;
+            # this does not accept the fact or grant score/Stage authority.
+            corrected["question_family_ids"] = list(packet_question_ids)
         action_row: dict[str, Any] = {
             "packet_id": packet.packet_id,
             "candidate_id": candidate_id,
-            "question_family_ids": list(question_ids),
+            "question_family_ids": list(packet_question_ids),
+            "pro_declared_question_family_ids": list(
+                pro_declared_question_ids
+            ),
+            "pro_reported_replacement_question_family_ids": (
+                list(replacement_question_ids) if corrected is not None else []
+            ),
+            "question_scope_binding": (
+                "EXACT_PACKET_SCOPE"
+                if set(pro_declared_question_ids) == set(packet_question_ids)
+                and (
+                    corrected is None
+                    or set(replacement_question_ids) == set(packet_question_ids)
+                )
+                else "PACKET_SCOPE_RESTORED_FOR_DETERMINISTIC_REVERIFICATION"
+            ),
             "action": action,
             "corrected_fact": corrected,
         }
@@ -131,7 +172,8 @@ def derive_repair_delta_from_dossier_response(
                 row
                 for row in new_routes
                 if row.get("pass_id") == pass_id
-                and str(row.get("question_family_id") or "") in set(question_ids)
+                and str(row.get("question_family_id") or "")
+                in set(packet_question_ids)
                 and replacement_id
                 in {
                     str(value) for value in row.get("accepted_fact_ids") or ()

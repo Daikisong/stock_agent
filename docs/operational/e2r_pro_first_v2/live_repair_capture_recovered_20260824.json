@@ -1,12 +1,65 @@
 {
   "actual_adapter_replay": {
+    "derive_repair_delta": "PASS",
+    "exact_question_scope_candidate_count": 3,
     "fact_count": 17,
     "narrowed_count": 13,
+    "packet_scope_restored_for_reverification_count": 14,
     "replaced_count": 4,
     "route_receipt_count": 17,
     "scoped_repair_proposal_count": 17,
     "source_lineage_count": 10,
     "strict_schema_validation": "PASS"
+  },
+  "append_only_clone_rehearsal": {
+    "automatic_browser_opened": false,
+    "automatic_resubmit_performed": false,
+    "database_foreign_key_check": [],
+    "effective_fact_count": 97,
+    "effective_route_receipt_count": 115,
+    "latest_pointer_revision_ordinal": 2,
+    "original_runtime_mutated": false,
+    "preserved_prior_accepted_candidate_count": 43,
+    "publication_withheld": true,
+    "repair_action_count": 17,
+    "repair_resolution_count": 17,
+    "reverified_accepted_candidate_ids": [
+      "PROFACT-MF051",
+      "PROFACT-MF054",
+      "PROFACT-CF018",
+      "PROFACT-RF034",
+      "PROFACT-RF035"
+    ],
+    "reverified_accepted_count": 5,
+    "reverified_pending": [
+      {"candidate_id": "PROFACT-MF052", "reason": "WRONG_SUBJECT", "status": "REJECTED_WRONG_SUBJECT"},
+      {"candidate_id": "PROFACT-MF053", "reason": "WRONG_SUBJECT", "status": "REJECTED_WRONG_SUBJECT"},
+      {"candidate_id": "PROFACT-MF055", "reason": "lifecycle=HISTORICAL", "status": "HISTORICAL_ONLY"},
+      {"candidate_id": "PROFACT-MF056", "reason": "supporting excerpt is not a literal normalized substring of the document", "status": "REJECTED_QUOTE_MISMATCH"},
+      {"candidate_id": "PROFACT-MF057", "reason": "lifecycle=HISTORICAL", "status": "HISTORICAL_ONLY"},
+      {"candidate_id": "PROFACT-MF058", "reason": "lifecycle=HISTORICAL", "status": "HISTORICAL_ONLY"},
+      {"candidate_id": "PROFACT-MF059", "reason": "WRONG_SUBJECT", "status": "REJECTED_WRONG_SUBJECT"},
+      {"candidate_id": "PROFACT-CF016", "reason": "WRONG_SUBJECT", "status": "REJECTED_WRONG_SUBJECT"},
+      {"candidate_id": "PROFACT-CF017", "reason": "WRONG_SUBJECT", "status": "REJECTED_WRONG_SUBJECT"},
+      {"candidate_id": "PROFACT-CF019", "reason": "WRONG_SUBJECT", "status": "REJECTED_WRONG_SUBJECT"},
+      {"candidate_id": "PROFACT-CF020", "reason": "WRONG_SUBJECT", "status": "REJECTED_WRONG_SUBJECT"},
+      {"candidate_id": "PROFACT-RF033", "reason": "WRONG_SUBJECT", "status": "REJECTED_WRONG_SUBJECT"}
+    ],
+    "reverified_pending_count": 12,
+    "revision_1": {
+      "dossier_hash": "6802144873d3fbec2bbb17bafd009feadd5d46213183103eed7f408e16da6acb",
+      "fact_count": 97,
+      "route_receipt_count": 98,
+      "snapshot_id": "PRODOSSIERSNAPSHOT-374eb7b04d924c725676a390"
+    },
+    "revision_2": {
+      "dossier_hash": "20919dfa73dce80c58c7be860bdb5aa03a0d95d87d5c097c7a91b37791cf1848",
+      "fact_count": 97,
+      "parent_snapshot_id": "PRODOSSIERSNAPSHOT-374eb7b04d924c725676a390",
+      "route_receipt_count": 115,
+      "snapshot_id": "PRODOSSIERSNAPSHOT-235d2b608cbda1622f500445"
+    },
+    "score_valid": false
   },
   "automatic_resubmit_performed": false,
   "capture": {
@@ -21,11 +74,11 @@
   },
   "conversation_id": "6a8b09c3-bfcc-83ee-b15b-9f76eca52249",
   "current_blocker": {
-    "derive_repair_delta": "BLOCKED_EXACT_QUESTION_SCOPE_MISMATCH",
-    "exact_scope_match_candidate_count": 3,
-    "mismatched_candidate_count": 14,
-    "reason": "원래 rejection packet은 candidate별 2~6개 question을 포함할 수 있으나 Pro register는 대표 question_family_id 한 개만 기록했다.",
-    "safe_default": "score_valid=false와 publication withheld를 유지하고 generic scope policy 및 회귀시험 전에는 자동 승인하지 않는다."
+    "deferred_original_rejection_packet_count": 29,
+    "next_action": "APPLY_VERIFIED_APPEND_ONLY_REPROCESS_TO_ORIGINAL_RUNTIME_THEN_RUN_BOUNDED_REPAIR_FOR_12_REVERIFIED_PENDING_AND_29_DEFERRED",
+    "original_runtime_revision_2_applied": false,
+    "reverified_pending_count": 12,
+    "safe_default": "score_valid=false와 publication withheld를 유지하고 source verifier가 거절한 replacement를 자동 승인하지 않는다."
   },
   "job_id": "PROJOB-cdd91020f15891533e61431f",
   "no_op_snapshot_preserved": {
@@ -38,7 +91,7 @@
     "route_receipt_count": 98,
     "snapshot_id": "PRODOSSIERSNAPSHOT-374eb7b04d924c725676a390"
   },
-  "observed_at": "2026-08-24T13:18:57Z",
+  "observed_at": "2026-08-24T13:55:01Z",
   "parent_pass_id": "PROPASS-ab2d8bd7520a8ce7de71f306",
   "pass_id": "PROPASS-3ef919d661d3bfa39f201c4e",
   "pass_status": "COMPLETE",
@@ -49,17 +102,18 @@
     "resolution_fact_count": 3,
     "total_fact_count": 17
   },
-  "required_next_action": "PRESERVE_NO_OP_SNAPSHOT_AND_REPROCESS_CAPTURE_FROM_EXACT_PARENT_AS_NEW_APPEND_ONLY_REVISION_AFTER_SCOPE_POLICY_TESTS_PASS",
+  "required_next_action": "PRESERVE_REVISION_1_AND_APPLY_CLONE_VERIFIED_REVISION_2_PATH_TO_ORIGINAL_RUNTIME_WITHOUT_RESUBMIT",
   "run_id": "PRORUN-a7dacadb7088fc23535bfdde",
-  "schema_version": "e2r_pro_first_v2_live_capture_recovered_receipt_v1",
+  "schema_version": "e2r_pro_first_v2_live_capture_recovered_receipt_v2",
   "score_authority": false,
   "score_valid": false,
-  "source_commit_before_documentation": "b793f620130c0bb6bdf8670dc352a38103855283",
+  "source_commit_before_documentation": "c7878aafdc6836b7ea257419f4723ca422734455",
   "stage_authority": false,
   "submit_count": 1,
   "target_id": "000660",
   "test_evidence": {
-    "linux_dossier_live_runtime_and_repair": "48/48 PASS",
+    "combined_linux_logic_suites": "77 PASS / 0 assertion failures / 1 WSL environment error before Chromium launch (missing libnspr4.so)",
+    "focused_revision_and_scope_regressions": "PASS",
     "windows_completion_capture": "20/20 PASS"
   }
 }

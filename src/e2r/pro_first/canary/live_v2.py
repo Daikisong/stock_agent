@@ -1288,19 +1288,53 @@ class ProV2LiveCanaryRunner:
                     current_rejections,
                 )
             followup = _require_plan(plan.followup, "VERIFIER_REPAIR")
+            repair_base = current
+            durable_followup = orchestrator.ledger.get_pass(
+                followup.research_pass.pass_id
+            )
+            if (
+                durable_followup.status == "COMPLETE"
+                and str(current.get("research_pass_id") or "")
+                == durable_followup.pass_id
+                and durable_followup.parent_pass_id
+            ):
+                parent_snapshot = dossier_store.load_latest_for_pass(
+                    job_id=prepared.job.job_id,
+                    pass_id=durable_followup.parent_pass_id,
+                    job_root=job_root,
+                )
+                if parent_snapshot is None:
+                    raise RuntimeError(
+                        "captured repair reprocessing lacks its exact parent snapshot"
+                    )
+                repair_base = dict(parent_snapshot.dossier)
+                self._emit(
+                    self.store.get_job(prepared.job.job_id),
+                    "VERIFIER_REPAIR_CAPTURE_REPROCESSING_FROM_EXACT_PARENT",
+                    {
+                        "pass_id": durable_followup.pass_id,
+                        "parent_pass_id": durable_followup.parent_pass_id,
+                        "parent_snapshot_id": parent_snapshot.record.snapshot_id,
+                        "parent_snapshot_revision_ordinal": (
+                            parent_snapshot.record.revision_ordinal
+                        ),
+                        "automatic_resubmit_allowed": False,
+                        "prior_effective_snapshot_preserved": True,
+                    },
+                )
             captured = await self._execute_followup(
                 prepared=prepared,
                 orchestrator=orchestrator,
                 dossier_store=dossier_store,
                 plan=followup,
-                original_dossier=current,
+                original_dossier=repair_base,
                 job_root=job_root,
                 persist_effective=False,
             )
             repaired = repair_service.apply_response_dossier_and_reverify(
                 job=self.store.get_job(prepared.job.job_id),
                 job_root=job_root,
-                original_dossier=current,
+                original_dossier=repair_base,
                 response_dossier=captured.response_dossier,
                 response_hash=captured.response_hash,
                 plan=plan,

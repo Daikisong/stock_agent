@@ -88,7 +88,8 @@ CREATE TABLE IF NOT EXISTS pro_gap_reopen_ledger (
 CREATE TABLE IF NOT EXISTS pro_research_dossier_snapshots (
     snapshot_id TEXT PRIMARY KEY,
     job_id TEXT NOT NULL REFERENCES pro_research_jobs(job_id),
-    pass_id TEXT NOT NULL UNIQUE REFERENCES pro_research_passes(pass_id),
+    pass_id TEXT NOT NULL REFERENCES pro_research_passes(pass_id),
+    revision_ordinal INTEGER NOT NULL DEFAULT 1 CHECK (revision_ordinal >= 1),
     parent_snapshot_id TEXT REFERENCES pro_research_dossier_snapshots(snapshot_id),
     dossier_hash TEXT NOT NULL,
     relative_path TEXT NOT NULL,
@@ -96,6 +97,7 @@ CREATE TABLE IF NOT EXISTS pro_research_dossier_snapshots (
     question_count INTEGER NOT NULL CHECK (question_count >= 0),
     route_receipt_count INTEGER NOT NULL CHECK (route_receipt_count >= 0),
     created_at TEXT NOT NULL,
+    UNIQUE(pass_id, revision_ordinal),
     UNIQUE(job_id, dossier_hash)
 );
 

@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 from e2r.pro_first.browser.protocol import (
     BrowserInspection,
@@ -323,6 +325,38 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
         second = self._public_plan()
         self.assertEqual(first.research_pass.pass_id, second.research_pass.pass_id)
         self.assertEqual(len(self.orchestrator.ledger.list_passes(self.job.job_id)), 2)
+
+    def test_submitted_pass_recovery_keeps_durable_prompt_after_template_change(
+        self,
+    ) -> None:
+        first = self._public_plan()
+        pass_id = first.research_pass.pass_id
+        self.orchestrator.ledger.mark_prepared(pass_id)
+        self.orchestrator.ledger.claim_submit(pass_id)
+        self.orchestrator.ledger.mark_running(pass_id)
+        self.orchestrator.ledger.complete_pass(pass_id, response_hash="d" * 64)
+        original_compile = self.orchestrator.compiler.compile
+
+        def changed_compile(**kwargs):
+            compiled = original_compile(**kwargs)
+            changed_text = compiled.prompt_text + "\n계약 템플릿 새 버전\n"
+            return replace(
+                compiled,
+                prompt_text=changed_text,
+                prompt_hash=canonical_hash({"prompt": changed_text}),
+            )
+
+        with patch.object(
+            self.orchestrator.compiler,
+            "compile",
+            side_effect=changed_compile,
+        ):
+            recovered = self._public_plan()
+
+        self.assertEqual(recovered.research_pass.pass_id, pass_id)
+        self.assertEqual(recovered.prompt_hash, first.prompt_hash)
+        self.assertEqual(recovered.prompt_text, "")
+        self.assertEqual(recovered.research_pass.submit_count, 1)
 
     async def test_followup_submit_is_exactly_once_per_pass(self) -> None:
         plan = self._public_plan()

@@ -48,14 +48,43 @@ class ProMultiPassDossierStore:
             / "research_passes"
             / f"{research_pass.pass_ordinal:02d}_{pass_id}"
         )
-        path = pass_directory / "effective_dossier.json"
         dossier_hash = canonical_hash(dossier)
-        latest = self.ledger.latest_dossier_snapshot(job_id)
-        parent_snapshot_id = (
-            latest.snapshot_id if latest is not None and latest.pass_id != pass_id else None
+        snapshots = self.ledger.list_dossier_snapshots(job_id)
+        same_pass = tuple(row for row in snapshots if row.pass_id == pass_id)
+        existing = next(
+            (row for row in same_pass if row.dossier_hash == dossier_hash),
+            None,
         )
+        latest = self.ledger.latest_dossier_snapshot(job_id)
+        if existing is not None:
+            if latest is not None and latest.snapshot_id != existing.snapshot_id:
+                raise ValueError(
+                    "historical snapshot cannot replace the latest dossier pointer"
+                )
+            path = _resolve_runtime_path(root, existing.relative_path)
+            stored = _read_hash_verified_dossier(path, existing.dossier_hash)
+            return self._write_latest_pointer(
+                root=root,
+                record=existing,
+                dossier=stored,
+                path=path,
+            )
+        if same_pass and latest is not None and latest.pass_id != pass_id:
+            raise ValueError(
+                "historical pass cannot gain a revision after descendant snapshots"
+            )
+        path = (
+            pass_directory / "effective_dossier.json"
+            if not same_pass
+            else pass_directory
+            / f"effective_dossier.revision-{dossier_hash}.json"
+        )
+        parent_snapshot_id = latest.snapshot_id if latest is not None else None
         relative_path = path.relative_to(root).as_posix()
-        _write_json_atomic(path, dossier)
+        if path.exists():
+            _read_hash_verified_dossier(path, dossier_hash)
+        else:
+            _write_json_atomic(path, dossier)
         record = self.ledger.record_dossier_snapshot(
             job_id=job_id,
             pass_id=pass_id,
@@ -69,15 +98,31 @@ class ProMultiPassDossierStore:
             question_count=len(tuple(dossier.get("question_family_results") or ())),
             route_receipt_count=len(tuple(dossier.get("search_route_receipts") or ())),
         )
+        return self._write_latest_pointer(
+            root=root,
+            record=record,
+            dossier=dossier,
+            path=path,
+        )
+
+    def _write_latest_pointer(
+        self,
+        *,
+        root: Path,
+        record: ResearchDossierSnapshotRecord,
+        dossier: Mapping[str, Any],
+        path: Path,
+    ) -> EffectiveDossierSnapshot:
         latest_receipt_path = root / "research_passes/effective_dossier.latest.json"
         receipt = {
             "schema_version": "e2r_pro_effective_dossier_pointer_v1",
-            "job_id": job_id,
+            "job_id": record.job_id,
             "snapshot_id": record.snapshot_id,
-            "pass_id": pass_id,
+            "pass_id": record.pass_id,
+            "revision_ordinal": record.revision_ordinal,
             "parent_snapshot_id": record.parent_snapshot_id,
-            "dossier_hash": dossier_hash,
-            "relative_path": relative_path,
+            "dossier_hash": record.dossier_hash,
+            "relative_path": record.relative_path,
             "fact_count": record.fact_count,
             "question_count": record.question_count,
             "route_receipt_count": record.route_receipt_count,
@@ -107,9 +152,39 @@ class ProMultiPassDossierStore:
             receipt.get("snapshot_id") != record.snapshot_id
             or receipt.get("dossier_hash") != record.dossier_hash
             or receipt.get("relative_path") != record.relative_path
+            or (
+                receipt.get("revision_ordinal") is not None
+                and int(receipt.get("revision_ordinal"))
+                != record.revision_ordinal
+            )
         ):
             raise ValueError("effective dossier pointer differs from durable snapshot ledger")
         return EffectiveDossierSnapshot(record, dossier, path, receipt_path)
+
+    def load_latest_for_pass(
+        self,
+        *,
+        job_id: str,
+        pass_id: str,
+        job_root: str | Path,
+    ) -> EffectiveDossierSnapshot | None:
+        record = self.ledger.latest_dossier_snapshot_for_pass(
+            job_id=job_id,
+            pass_id=pass_id,
+        )
+        if record is None:
+            return None
+        root = Path(job_root).resolve()
+        path = _resolve_runtime_path(root, record.relative_path)
+        dossier = _read_hash_verified_dossier(path, record.dossier_hash)
+        return EffectiveDossierSnapshot(
+            record=record,
+            dossier=dossier,
+            path=path,
+            latest_receipt_path=(
+                root / "research_passes/effective_dossier.latest.json"
+            ),
+        )
 
 
 def load_effective_research_dossier(job_root: str | Path) -> Mapping[str, Any]:
