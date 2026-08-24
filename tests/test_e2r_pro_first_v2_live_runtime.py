@@ -722,6 +722,14 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
         self.assertEqual(revision_again.record.snapshot_id, revision.record.snapshot_id)
         self.assertNotEqual(first.path, revision.path)
         self.assertEqual(
+            revision.path.name,
+            (
+                "effective_dossier.r2-"
+                f"{revision.record.dossier_hash[:24]}.json"
+            ),
+        )
+        self.assertLess(len(revision.path.name), 64)
+        self.assertEqual(
             json.loads(first.path.read_text(encoding="utf-8")),
             dossier,
         )

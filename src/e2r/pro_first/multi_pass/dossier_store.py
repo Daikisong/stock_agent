@@ -77,7 +77,10 @@ class ProMultiPassDossierStore:
             pass_directory / "effective_dossier.json"
             if not same_pass
             else pass_directory
-            / f"effective_dossier.revision-{dossier_hash}.json"
+            / (
+                f"effective_dossier.r{len(same_pass) + 1}-"
+                f"{dossier_hash[:24]}.json"
+            )
         )
         parent_snapshot_id = latest.snapshot_id if latest is not None else None
         relative_path = path.relative_to(root).as_posix()

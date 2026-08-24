@@ -1,6 +1,6 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 00:04 KST`
+기준 시각: `2026-08-25 00:15 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
@@ -296,7 +296,7 @@ DB foreign_key_check []
 ```
 
 기존 `effective_dossier.json`과 새
-`effective_dossier.revision-20919dfa...json`은 서로 다른 SHA-256을 가지며 동시에 남아
+`effective_dossier.r2-20919dfa73dce80c58c7be86.json`은 서로 다른 SHA-256을 가지며 동시에 남아
 있다. schema migration은 legacy snapshot row를 revision 1로 byte-for-byte 보존하고,
 같은 pass의 새 hash만 revision 2로 추가한다. latest pointer만 revision 2를 가리킨다.
 원본 runtime에는 아직 이 rehearsal을 적용하지 않았으므로, 원본 최신 상태를 revision 2로
@@ -655,3 +655,43 @@ score_valid                false
 다음 재개는 이 커밋의 코드를 사용해 원본 pass 6 revision 2부터 추가한 뒤, 같은 canonical
 conversation의 pass 7 visible result만 capture한다. 그 전후 snapshot, DB foreign key,
 submit_count를 다시 기록한다.
+
+### Windows 원본 첫 적용에서 발견한 경로 길이 결함
+
+커밋 `cac977baafbbc20b340a43de589156e3c6e2518c`으로 원본을 재개해 exact-parent
+reprocess와 17건 source reverification까지 끝냈지만, revision 파일의 `.part`를 만드는
+마지막 단계에서 Windows `MAX_PATH` 경계에 걸렸다.
+
+```text
+실패 파일명  effective_dossier.revision-{64자 dossier hash}.json.part
+전체 길이    264자
+Windows 경계 260자
+DB revision  추가 전
+pass 7       RESEARCH_RUNNING / submit_count=1 / snapshot 없음
+new submit   0
+```
+
+따라서 원본에는 revision 2 row나 불완전 `.part` 파일이 남지 않았고 revision 1이 계속
+latest다. 해결은 full hash를 버리는 것이 아니다. ledger와 receipt에는 64자 full SHA-256을
+그대로 저장하고, 파일명만 `effective_dossier.r2-{앞 24자}.json`으로 줄인다. 같은 짧은
+파일이 이미 있으면 내용의 full hash 검증이 실패하므로 충돌을 조용히 재사용하지 않는다.
+revision ordinal과 full dossier hash의 DB unique constraint도 그대로다.
+
+쉬운 예: 긴 송장번호 64자는 장부에 모두 적되, 서랍 라벨은 `2번 정정-앞 24자`만 쓰고
+서랍을 열 때 전체 송장번호를 다시 대조하는 방식이다.
+
+원본과 동일한 길이의 Windows runtime 복제본
+`C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\live_v2\20260823T145431Z`에서 실제
+snapshot persist를 실행해 다음을 확인했다.
+
+```text
+revision path  research_passes/06_PROPASS-3ef919d661d3bfa39f201c4e/
+               effective_dossier.r2-20919dfa73dce80c58c7be86.json
+.part 포함 전체 길이  218자
+snapshot id             PRODOSSIERSNAPSHOT-235d2b608cbda1622f500445
+full dossier hash        20919dfa73dce80c58c7be860bdb5aa03a0d95d87d5c097c7a91b37791cf1848
+file exists              true
+```
+
+즉 filename은 짧아졌지만 snapshot ID와 full dossier hash는 Linux clone rehearsal과
+동일하며 Windows 실제 파일 생성도 통과했다.

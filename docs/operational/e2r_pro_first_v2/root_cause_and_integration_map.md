@@ -263,7 +263,7 @@ action이 모두 verifier로 전달됐고 5개는 accepted, 12개는 pending으�
 
 same-pass correction은 기존 schema의 `pass_id UNIQUE`를 없애고 `(pass_id,
 revision_ordinal)` lineage로 추가한다. legacy row는 revision 1로 보존하고, 새 hash는 별도
-`effective_dossier.revision-{hash}.json`과 revision 2 DB row로 기록한다. rehearsal에서는
+`effective_dossier.r{revision}-{hash 앞 24자}.json`과 full hash를 가진 revision 2 DB row로 기록한다. rehearsal에서는
 revision 1 no-op snapshot `PRODOSSIERSNAPSHOT-374eb7b04d924c725676a390`과 revision 2
 snapshot `PRODOSSIERSNAPSHOT-235d2b608cbda1622f500445`가 함께 남았고
 `foreign_key_check=[]`를 확인했다. 원본 runtime에는 아직 rehearsal 결과를 적용하지 않았다.
@@ -389,3 +389,8 @@ pass는 건드리지 않는다.
 이미 17개 채점표가 있거나 다음 시험 답안까지 제본된 뒤라면 자동으로 과거 장을 바꾸지
 않는다. 복제 rehearsal에서는 새 전송 없이 기존과 동일한 `5 accepted / 12 pending`과
 revision 2 dossier hash를 재현했다.
+
+Windows runtime의 전체 경로가 긴 경우 full 64자 hash를 파일명에도 반복하면 `.part`를
+포함해 260자를 넘을 수 있다. snapshot filename은
+`effective_dossier.r{revision}-{hash 앞 24자}.json`을 사용하고, ledger에는 full hash를
+계속 저장한다. 파일을 읽거나 기존 파일을 재사용할 때는 언제나 full hash를 검사한다.
