@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 03:01 KST`
+기준 시각: `2026-08-25 03:09 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-이번 기록의 부모 HEAD: `49befad7f6df840ba3aaee343244a938ef198a6b`
+이번 기록의 부모 HEAD: `e1760f53e73138eba17aae205136e9cd1e41ea1c`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -54,6 +54,9 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → 누적 107 facts / 211 routes / 28 questions / NEEDS_VERIFIER_REPAIR
 → 다음 repair pending 42 = next batch 16 + deferred 26
 → pass 12는 max 7 cap에서 TRANSPORT_PENDING / submit_count=0, 아직 미전송
+→ max 10 재개는 새 107-fact snapshot 검증 전 job 누적 attempt 4 cap에 중단, 전송 0
+→ no-progress cap을 job lifetime이 아니라 exact dossier hash별로 결박
+→ 동일 hash 반복은 계속 금지, 새 append-only snapshot은 새 verifier input으로 허용
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -1536,3 +1539,42 @@ repair receipt    9250299d7717db0b9ac89d246bcb30ece2f4db3c03da997b7c87462d2e81d8
 `PROPASS-e677c79c63041ec3ee5c77fe`는
 `TRANSPORT_PENDING / submit_count=0`으로 생성만 됐다. 다음 실행은 사용자가 이미 허용한
 상한 10에서 이 cap-only 영수증을 보존하고 새 pass로 exactly-once 전송한다.
+
+### 18.12 source verification no-progress cap은 exact dossier input에 결박한다
+
+e1760f53 이후 max follow-up 10으로 재개했지만 pass 12를 supersede하거나 browser에 입력하기
+전에 `NoProgressDetected: source verification attempt bound reached`로 멈췄다. 최신 effective
+dossier는 pass 8의 111 facts에서 pass 11의 107 facts로 바뀌었지만, 기존 guard가 job lifetime
+전체의 verification row 수 4를 세고 있었다.
+
+```text
+old receipt dossier hash   ad7ddf67... (111 facts)
+latest dossier hash        50ec0efa... (107 facts)
+job total attempts         4
+old decision               attempt cap → 새 input 검증 거절
+new browser submit         0
+```
+
+동일 input을 같은 semantics로 반복 검문하는 것은 latest receipt hash equality가 이미 막는다.
+실제 dossier hash가 바뀌었는데 lifetime count로 막으면 repair pass를 한 번 적용할 때마다 검문
+예산이 줄어 결국 정상 append-only 연구가 멈춘다.
+
+새 규칙:
+
+```text
+latest dossier hash == prior verified hash
+→ unchanged no-progress hard fail
+
+latest dossier hash != prior verified hash
+→ exact latest hash의 prior attempt 수를 계산
+→ 그 input의 bounded attempt 안에서 verification 허용
+→ job 전체 attempt ordinal은 감사용으로 계속 증가
+```
+
+쉬운 예로 같은 답안지를 다섯 번 채점하는 것은 막지만, 5번째 수정 답안지를 “앞에서 채점기를
+네 번 썼다”는 이유로 거절하지 않는다. 각 답안지 hash가 입력 identity다.
+
+`ProFirstJobStore`는 receipt의 `effective_dossier_hash` 또는 legacy
+`normalized_dossier_hash`로 exact-input attempt를 센다. source verification focused
+`29/29`, live runtime `27/27`, V2 static audit `2/2 PASS`다. 회귀시험은 서로 다른 immutable
+hash 여섯 개가 연속 검증되고 unchanged hash 반복은 계속 거절되는 것을 확인한다.

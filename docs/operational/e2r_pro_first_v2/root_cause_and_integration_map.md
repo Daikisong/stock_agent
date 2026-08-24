@@ -688,3 +688,14 @@ evidence가 53개가 됐다. snapshot은
 최신 pending repair 42개는 next 16 + deferred 26으로 다시 batch됐다. max follow-up 7의 pass 12는
 submit 0인 cap-only 영수증이며, 상한 10 재개 때 기존 row를 보존하고 새 pass를 만든다. 아직
 repair pending이 있으므로 canonical score/Stage/publication gate는 계속 닫혀 있다.
+
+### verifier attempt cap은 job 횟수가 아니라 immutable dossier hash별이다
+
+pass 11 뒤 latest dossier가 111 facts에서 107 facts로 바뀌었는데도 기존 source verification
+guard는 job 전체 attempt가 4라는 이유로 새 hash 검문을 막았다. 같은 hash·same semantics 반복은
+이미 prior/latest hash equality로 차단되므로, lifetime cap은 실제 연구 진행까지 막는 중복 guard다.
+
+이제 exact dossier hash별 attempt만 bounded로 센다. 전체 attempt ordinal은 감사 장부에서
+계속 증가하지만 새 append-only snapshot은 새 verifier input으로 취급한다. 예를 들어 같은 시험지
+재채점은 막고, 정정된 새 시험지는 다시 채점한다. source verification `29/29`, live runtime
+`27/27`, V2 static audit `2/2 PASS`로 고정했다. 이 수정 중 pass 12 browser submit은 0이었다.

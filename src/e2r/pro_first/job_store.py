@@ -1455,6 +1455,32 @@ class ProFirstJobStore:
             ).fetchone()
         return int(row["attempt_count"] if row is not None else 0)
 
+    def source_verification_attempt_count_for_dossier_hash(
+        self,
+        job_id: str,
+        dossier_hash: str,
+    ) -> int:
+        """Count attempts for one exact immutable dossier input only."""
+
+        if len(dossier_hash) != 64:
+            raise ValueError("source verification dossier hash must be sha256")
+        with closing(self._connect()) as connection:
+            rows = connection.execute(
+                "SELECT receipt_json FROM pro_source_verifications WHERE job_id=?",
+                (job_id,),
+            ).fetchall()
+        count = 0
+        for row in rows:
+            receipt = json.loads(row["receipt_json"])
+            verified_hash = str(
+                receipt.get("effective_dossier_hash")
+                or receipt.get("normalized_dossier_hash")
+                or ""
+            )
+            if verified_hash == dossier_hash:
+                count += 1
+        return count
+
     def record_gap_adjudication(
         self,
         job_id: str,

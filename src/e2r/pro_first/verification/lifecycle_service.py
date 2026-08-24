@@ -129,9 +129,17 @@ class ProSourceVerificationService:
             raise NoProgressDetected(
                 "effective dossier is unchanged; same-semantics repeat is forbidden"
             )
-        attempts = self.store.source_verification_attempt_count(job_id)
-        if attempts >= maximum_attempts:
-            raise NoProgressDetected("source verification attempt bound reached")
+        total_attempts = self.store.source_verification_attempt_count(job_id)
+        input_attempts = (
+            self.store.source_verification_attempt_count_for_dossier_hash(
+                job_id,
+                latest_hash,
+            )
+        )
+        if input_attempts >= maximum_attempts:
+            raise NoProgressDetected(
+                "effective dossier source verification attempt bound reached"
+            )
         return self.store.transition(
             job_id,
             expected_version=job.state_version,
@@ -147,7 +155,8 @@ class ProSourceVerificationService:
                 "prior_effective_dossier_hash": prior_hash,
                 "next_effective_dossier_hash": latest_hash,
                 "next_effective_dossier_snapshot_id": pointer.get("snapshot_id"),
-                "next_attempt": attempts + 1,
+                "next_attempt": total_attempts + 1,
+                "next_effective_dossier_attempt": input_attempts + 1,
                 "automatic_research_resubmit_allowed": False,
             },
         )

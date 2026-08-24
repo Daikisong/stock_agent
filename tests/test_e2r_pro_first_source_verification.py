@@ -809,6 +809,46 @@ class ProFirstSourceVerificationTest(unittest.TestCase):
                 reason="unchanged effective dossier must not loop",
             )
 
+        # The attempt guard belongs to one exact immutable dossier hash, not
+        # the lifetime of the job. Each append-only snapshot is new verifier
+        # input and must remain eligible for one bounded verification.
+        for revision in range(3, 7):
+            next_dossier = deepcopy(changed)
+            next_dossier["research_saturation"] = {"test_revision": revision}
+            next_dossier["material_facts"][0]["value"] = 100 + revision
+            next_hash = canonical_hash(next_dossier)
+            effective_path.write_text(
+                canonical_json(next_dossier) + "\n",
+                encoding="utf-8",
+            )
+            pointer.update(
+                {
+                    "snapshot_id": f"SNAPSHOT-EFFECTIVE-{revision}",
+                    "pass_id": f"PASS-EFFECTIVE-{revision}",
+                    "dossier_hash": next_hash,
+                }
+            )
+            pointer_path.write_text(
+                canonical_json(pointer) + "\n",
+                encoding="utf-8",
+            )
+            reopened = service.request_effective_dossier_reverification(
+                self.job.job_id,
+                job_root=self.root,
+                reason=f"append-only effective dossier revision {revision}",
+            )
+            self.assertEqual(reopened.status, JobStatus.VERIFYING_SOURCES.value)
+            verified = service.verify_job(self.job.job_id, job_root=self.root)
+            self.assertEqual(
+                verified.receipt["effective_dossier_hash"],
+                next_hash,
+            )
+
+        self.assertEqual(
+            self.store.source_verification_attempt_count(self.job.job_id),
+            6,
+        )
+
     def _advance_to_importing(self, job):
         contexts = {
             JobStatus.SUBMITTING: TransitionContext(approval_nonce_consumed=True),
