@@ -238,8 +238,19 @@ repair transport는 이제 최대 21만 자의 deterministic prefix batch를 사
 `첫 묶음 → 전체 재검증 → 남은 묶음` 순서로 같은 대화에서 처리한다. 최종 gate는
 여전히 verifier repair pending 0을 요구한다.
 
-현재 첫 bounded repair pass `PROPASS-3ef919d661d3bfa39f201c4e`가 46개 중 17개를
-담아 정확히 1회 제출돼 `RESEARCH_RUNNING`이다. 나머지 29개 packet은 deferred
+첫 bounded repair pass `PROPASS-3ef919d661d3bfa39f201c4e`는 46개 중 17개를
+담아 정확히 1회 제출됐고 Pro의 visible 생성은 끝났다. 마지막 assistant turn에는
+exact job/run/pass/parent marker가 각각 1개, dossier 본문 68,788자가 존재한다. 다만
+종료 marker가 `E2R_RESEARCH_DOSSIER_JSON_END`가 아니라
+`E2R_RESEARCH_DOSSIER_SON_END`로 한 글자 깨져 completion monitor가 capture 전
+대기 중이다. DB는 원자 capture/import가 끝나기 전까지 보수적으로
+`RESEARCH_RUNNING / submit_count=1`을 유지한다.
+
+이는 사실 0개나 Pro 연구 실패가 아니다. 같은 prompt를 다시 보내지 않고 exact current
+turn의 범위·JSON payload를 검증한 뒤 marker만 auditable transport normalization하고,
+전체 deterministic verifier를 재실행해야 한다. 초기 assistant turn에 속한 기존 MD
+버튼은 current repair 첨부로 사용하지 않는다. 관측값은
+`live_repair_capture_pending_20260824.json`에 고정했다. 나머지 29개 packet은 deferred
 roster에 보존돼 있다. 초대형 미전송 pass
 `PROPASS-7694a86ac9e996eeabd03394`는 `TRANSPORT_PENDING / submit_count=0`이다.
 이 시점에는 full-thesis score·Stage·publication 권한이 아직 없다.

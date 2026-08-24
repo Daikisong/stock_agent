@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-24 20:32 KST`
+기준 시각: `2026-08-24 21:27 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-기록 직전 HEAD: `7865714866a3bd957c8153423e82ef6e27fb803a`
+기록 직전 HEAD: `0755b085b96e482608ea5f8218996de6e0bb9f2d`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -19,7 +19,9 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → effective dossier 97 facts / 28 questions / 98 routes
 → source verifier v8: 43 accepted
 → verifier rejection 46개
-→ 17개 첫 bounded repair pass가 같은 Pro 대화에서 RESEARCH_RUNNING
+→ 17개 첫 bounded repair pass의 Pro 생성은 같은 대화에서 종료
+→ 본문 68,788자와 exact job/run/pass/parent marker를 확인
+→ 종료 marker 1자 누락(`...SON_END`)으로 자동 capture 전 대기
 → 나머지 29개는 다음 batch로 이월 대기
 ```
 
@@ -52,7 +54,7 @@ runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 �
 | 3 | `PROPASS-b806a55651acd4e6dfbf87bf` | `PUBLIC_GAP_CLOSURE` | `COMPLETE` | 1 | 공개 material gap 보충 2 |
 | 4 | `PROPASS-ab2d8bd7520a8ce7de71f306` | `COUNTER_SUPERSESSION_CLOSURE` | `COMPLETE` | 1 | counter·supersession 감사 |
 | 5 | `PROPASS-7694a86ac9e996eeabd03394` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | 51.8만 자 prompt가 visible composer transport 한도를 초과, 미전송 보존 |
-| 6 | `PROPASS-3ef919d661d3bfa39f201c4e` | `VERIFIER_REPAIR` | `RESEARCH_RUNNING` | 1 | 첫 bounded repair batch 17개 |
+| 6 | `PROPASS-3ef919d661d3bfa39f201c4e` | `VERIFIER_REPAIR` | `RESEARCH_RUNNING` | 1 | Pro 생성 종료, 형식 검문으로 capture 전 대기 중인 첫 bounded repair batch 17개 |
 
 pass 5는 실패한 연구 답변이 아니라 실제 제출 전 transport 계획이다. 삭제하거나
 `COMPLETE`로 바꾸지 않았고, `submit_count=0`, `prepared_at=null`, `submitted_at=null`을
@@ -144,11 +146,60 @@ transport batching    true
 publication withheld  true
 ```
 
+`2026-08-24 21:27 KST` 기준 Pro의 visible 생성은 끝났고 브라우저 상태도
+`DEEP_RESEARCH_MODE_READY`로 돌아왔다. 다만 DB pass는 capture/import가 원자적으로 끝나기
+전까지 의도적으로 `RESEARCH_RUNNING / submit_count=1`을 유지한다. 이를 `COMPLETE`로
+수동 변경하지 않았고 같은 prompt를 다시 제출하지도 않았다.
+
 `repair/rejection_packets.jsonl`에는 현재 선택 batch, 별도
 `repair/pending_rejection_packets.jsonl`에는 선택 전 전체 pending roster를 기록한다.
 receipt에도 selected/deferred packet id를 모두 기록하므로 packet이 조용히 사라질 수 없다.
 
-## 7. 브라우저 안전 사고와 재발 방지
+## 7. 첫 repair 응답의 capture 대기 진단
+
+입력·클릭·다운로드 없이 canonical conversation DOM을 읽어 다음을 확인했다.
+
+| 검사 | 결과 |
+| --- | --- |
+| assistant turn | `2be36aa2-e447-4460-8814-af29af0e733f` |
+| visible 본문 길이 | 68,788자 |
+| exact job marker | 1개 |
+| exact run marker | 1개 |
+| exact pass marker | 1개 |
+| exact parent marker | 1개 |
+| `E2R_RESEARCH_DOSSIER_JSON_BEGIN` | 1개 |
+| `E2R_RESEARCH_DOSSIER_JSON_END` | 0개 |
+| 실제 visible 종료 문자열 | `E2R_RESEARCH_DOSSIER_SON_END` 1개 |
+
+즉 Pro 연구가 비었거나 사실을 0개 반환한 상태가 아니다. 본문 끝의 정상 종료 문자열
+`JSON_END`에서 `J` 한 글자가 빠진 `SON_END`를 냈고, completion monitor는 exact
+`BEGIN/END` 쌍을 요구하므로 `structurally_complete=false`, `stable_observations=0`으로
+보수적으로 대기한다.
+
+쉬운 예: 택배 상자와 내용물, 송장번호는 모두 맞지만 봉인 스티커 글자 하나가 깨져 있어
+자동 입고기가 멈춘 상태다. 상자를 다시 주문하는 것이 아니라, 현재 상자가 exact
+job/run/pass/parent scope인지 확인한 뒤 내용물을 검증해 입고해야 한다.
+
+화면에 보이는 MD 버튼은 초기 응답 turn
+`263c5818-5bb0-4a31-9a0f-f31a24a5adcb`에 속한
+`E2R_SKHynix_2026-08-23_full_response.md`이며, 이번 repair turn의 새 첨부로 오인하지
+않는다. 이번 repair의 근거는 마지막 assistant turn에 직접 보이는 68,788자 본문이다.
+
+안전한 후속 원칙:
+
+- 같은 pass를 재전송하지 않는다. durable `submit_count=1`을 유지한다.
+- exact conversation과 assistant turn의 현재 본문만 capture 대상으로 삼는다.
+- job/run/pass/parent marker와 JSON payload 자체를 먼저 검증한다.
+- 한 글자 marker 복구는 transport normalization으로만 기록하며 fact, URL, quote,
+  source lineage 내용은 수정하지 않는다.
+- normalization 전후 hash와 적용 사유를 receipt로 남기고 deterministic verifier 전체를
+  다시 실행한다.
+- 검증이 끝나기 전 score, Stage, publication gate를 열지 않는다.
+
+기계 판독 가능한 관측 영수증은
+`live_repair_capture_pending_20260824.json`에 별도로 남겼다.
+
+## 8. 브라우저 안전 사고와 재발 방지
 
 이 작업 중 한 차례 OS 전역 키 입력 방식이 잘못된 window focus를 받아 다른 terminal에
 문자열을 입력한 사고가 있었다. 해당 방식은 즉시 폐기했다.
@@ -172,7 +223,7 @@ large prompt adapter 회귀시험은 50만 자 이상 원문과 줄바꿈을 edi
 submit 0회를 검증한다. actual repair에서는 이 기능에만 기대지 않고 payload batching도
 동시에 적용한다.
 
-## 8. 현재 테스트 증거
+## 9. 현재 테스트 증거
 
 ### Windows Playwright — 실제 live와 같은 runtime
 
@@ -217,7 +268,7 @@ Windows approval suite의 첫 실행은 assertion이 아니라 임시 SQLite 파
 connection 21곳을 `contextlib.closing`으로 명시 종료하도록 고쳤고, Linux state machine
 13/13과 Windows approval/submit 8/8을 다시 통과했다.
 
-## 9. 이번 커밋에 포함되는 핵심 변경
+## 10. 이번 커밋에 포함되는 핵심 변경
 
 - Pro compact/full dossier dialect adapter와 exact prior-snapshot anchoring
 - append-only source lineage·route ownership·resolution merge
@@ -231,11 +282,12 @@ connection 21곳을 `contextlib.closing`으로 명시 종료하도록 고쳤고,
 - read-only SQLite connection 명시 종료와 Windows cleanup 회귀 확인
 - frozen V1 replay와 old diagnostic 의미 보존
 
-## 10. 아직 남은 작업
+## 11. 아직 남은 작업
 
 다음 순서를 모두 완료하기 전 Goal 완료를 선언하지 않는다.
 
-1. 현재 17개 repair 응답 capture/import/reverify
+1. 현재 17개 repair visible 응답을 중복 전송 없이 capture하고 marker normalization
+   receipt를 남긴 뒤 import/reverify
 2. deferred 29개와 재검증 후 남은 rejection을 bounded repair pass로 0까지 처리
 3. 000660 mandatory questions terminal, public material gap 0, repair pending 0 확인
 4. saturation audit pass와 deterministic 7 component / 21 Judge / score / StageCourt 실행
@@ -245,10 +297,13 @@ connection 21곳을 `contextlib.closing`으로 명시 종료하도록 고쳤고,
 8. full unit test, Phase100, production static audit, forbidden path audit
 9. 최종 P9/P10 receipt·운영 문서·Draft PR 상태 갱신
 
-현재 blocker는 없다. 외부 Pro 연구 시간이 진행 중일 뿐이며, timeout limit 도달은
-`COMPLETE`가 아니라 `TRANSPORT_PENDING / score_valid=false`로 남는다.
+현재 외부 Pro 연구 생성은 끝났다. 남은 즉시 blocker는 visible 응답의 종료 marker
+`JSON_END`가 `SON_END`로 한 글자 깨진 transport 형식 문제다. 새 연구는 필요하지 않다.
+현재 pass를 중복 전송하지 않고 범위·payload 검증과 auditable normalization으로 복구해야
+한다. 복구 검증에 실패하면 `COMPLETE`가 아니라 `TRANSPORT_PENDING / score_valid=false`로
+남긴다.
 
-## 11. 외부 검수 체크리스트
+## 12. 외부 검수 체크리스트
 
 - pass 5의 `submit_count=0`과 pass 6의 `submit_count=1`이 분리돼 있는가
 - deferred 29개 packet id가 receipt와 pending JSONL 양쪽에 남는가
@@ -258,3 +313,6 @@ connection 21곳을 `contextlib.closing`으로 명시 종료하도록 고쳤고,
 - verifier repair가 끝나기 전 component/scoring/publication gate가 열리지 않는가
 - 다른 종목·다른 as_of_date에 현재 approval scope를 재사용할 수 없는가
 - 브라우저 입력이 exact E2R page DOM/CDP에만 한정되는가
+- `SON_END→JSON_END` 복구가 exact current turn과 marker 4종을 요구하며 payload 의미를
+  바꾸지 않는가
+- current repair에 속하지 않은 초기 MD 첨부를 새 결과로 잘못 capture하지 않는가
