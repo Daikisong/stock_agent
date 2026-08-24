@@ -961,13 +961,11 @@ class ProV2LiveCanaryRunner:
         capture_receipt_path = (
             pass_root / "capture/incoming/browser_capture_receipt.json"
         )
-        capture_reused = bool(
-            plan.research_pass.status == "RESEARCH_RUNNING"
-            and plan.research_pass.submit_count == 1
-            and (pass_root / "capture/incoming/READY.json").is_file()
-            and capture_receipt_path.is_file()
+        execution_mode = _followup_execution_mode(
+            plan.research_pass,
+            pass_root=pass_root,
         )
-        if capture_reused:
+        if execution_mode == "REUSE_CAPTURE":
             capture_receipt = load_capture_receipt(capture_receipt_path)
             verify_capture_bundle(pass_root, capture_receipt)
             if (
@@ -997,20 +995,32 @@ class ProV2LiveCanaryRunner:
                 },
             )
         else:
-            await orchestrator.prepare_followup(plan, prepared.session.adapter)
-            submitted = await orchestrator.submit_followup(
-                plan,
-                prepared.session.adapter,
-            )
-            self._emit(
-                self.store.get_job(plan.scope.job_id),
-                "FOLLOWUP_SUBMITTED",
-                {
-                    "pass_id": plan.research_pass.pass_id,
-                    "pass_name": plan.research_pass.pass_name,
-                    "pass_ordinal": submitted.research_pass.pass_ordinal,
-                },
-            )
+            if execution_mode == "RECOVER_SUBMITTED_RESULT":
+                self._emit(
+                    self.store.get_job(plan.scope.job_id),
+                    "FOLLOWUP_SUBMITTED_RESULT_RECOVERY",
+                    {
+                        "pass_id": plan.research_pass.pass_id,
+                        "pass_name": plan.research_pass.pass_name,
+                        "submit_count": plan.research_pass.submit_count,
+                        "automatic_resubmit_allowed": False,
+                    },
+                )
+            else:
+                await orchestrator.prepare_followup(plan, prepared.session.adapter)
+                submitted = await orchestrator.submit_followup(
+                    plan,
+                    prepared.session.adapter,
+                )
+                self._emit(
+                    self.store.get_job(plan.scope.job_id),
+                    "FOLLOWUP_SUBMITTED",
+                    {
+                        "pass_id": plan.research_pass.pass_id,
+                        "pass_name": plan.research_pass.pass_name,
+                        "pass_ordinal": submitted.research_pass.pass_ordinal,
+                    },
+                )
             result = await self._wait_for_followup_result(
                 prepared=prepared,
                 plan=plan,
@@ -1042,6 +1052,21 @@ class ProV2LiveCanaryRunner:
                 raw_capture=raw,
             )
             capture_receipt = capture.receipt
+            if capture_receipt.transport_normalization_operations:
+                self._emit(
+                    self.store.get_job(plan.scope.job_id),
+                    "FOLLOWUP_TRANSPORT_NORMALIZED",
+                    {
+                        "pass_id": plan.research_pass.pass_id,
+                        "assistant_turn_id": capture_receipt.assistant_turn_id,
+                        "raw_report_md_hash": capture_receipt.raw_report_md_hash,
+                        "normalized_report_md_hash": capture_receipt.report_md_hash,
+                        "operations": list(
+                            capture_receipt.transport_normalization_operations
+                        ),
+                        "fact_content_mutation_allowed": False,
+                    },
+                )
         if report_text.count(
             f"[[E2R_PRO_PASS_ID:{plan.research_pass.pass_id}]]"
         ) != 1:
@@ -1606,6 +1631,12 @@ def _durable_pass_rows(
     for record in ledger.list_passes(job_id):
         if record.pass_ordinal > ledger.get_pass(current_pass_id).pass_ordinal:
             continue
+        # A zero-submit TRANSPORT_PENDING row is an immutable browser-plan
+        # audit record, not a completed research response.  It remains in the
+        # SQL pass ledger but must not be fabricated into the dossier's list
+        # of actually executed passes.
+        if record.status == "TRANSPORT_PENDING" and record.submit_count == 0:
+            continue
         response_hash = (
             current_response_hash
             if record.pass_id == current_pass_id
@@ -1823,6 +1854,34 @@ def _research_semantic_hash(dossier: Mapping[str, Any]) -> str:
                 "verification_repair_register",
             )
         }
+    )
+
+
+def _followup_execution_mode(research_pass: Any, *, pass_root: Path) -> str:
+    """Choose a crash-safe follow-up path without ever guessing about submit.
+
+    A durable running pass with ``submit_count=1`` is already transmitted.
+    Missing capture files therefore mean "recover the visible result", never
+    "prepare and send again".
+    """
+
+    ready = (pass_root / "capture/incoming/READY.json").is_file()
+    receipt = (
+        pass_root / "capture/incoming/browser_capture_receipt.json"
+    ).is_file()
+    if ready != receipt:
+        raise RuntimeError("follow-up capture bundle is only partially committed")
+    status = str(research_pass.status)
+    submit_count = int(research_pass.submit_count)
+    if status == "RESEARCH_RUNNING" and submit_count == 1:
+        return "REUSE_CAPTURE" if ready else "RECOVER_SUBMITTED_RESULT"
+    if status == "COMPLETE" and submit_count == 1 and ready:
+        return "REUSE_CAPTURE"
+    if status in {"PLANNED", "PREPARED"} and submit_count == 0 and not ready:
+        return "PREPARE_AND_SUBMIT"
+    raise RuntimeError(
+        "follow-up pass has no unambiguous exactly-once execution path: "
+        f"status={status}, submit_count={submit_count}, capture_ready={ready}"
     )
 
 

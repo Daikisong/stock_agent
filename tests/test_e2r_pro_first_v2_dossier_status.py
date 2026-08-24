@@ -11,6 +11,9 @@ from e2r.pro_first.dossier import (
     ResearchDossierNormalizer,
     ResearchDossierValidator,
 )
+from e2r.pro_first.dossier.dialect_adapter import (
+    _scoped_verifier_repair_proposals,
+)
 from e2r.pro_first.research_contracts import select_contract_bundle
 
 
@@ -147,6 +150,48 @@ class ProFirstV2DossierStatusTest(unittest.TestCase):
         payload["research_status"] = "COMPLETE"
         with self.assertRaisesRegex(DossierValidationError, "non-terminal mandatory"):
             self.validator.validate(payload, _context())
+
+    def test_only_current_verifier_repair_packet_proposals_are_preserved(self) -> None:
+        rows = [
+            {
+                "candidate_id": "PROFACT-MF015",
+                "question_family_id": "R13_EXECUTION_CROSS_GUARD_Q04",
+                "rejection_category": "QUOTE_MISMATCH",
+                "status": "NARROWED",
+                "dossier_fact_id": "PROFACT-MF051",
+            },
+            {
+                "repair_id": "PRO-SELF-REPAIR-1",
+                "status": "CLAIMED_COMPLETE",
+            },
+        ]
+        passes = [
+            {
+                "pass_id": "PASS-REPAIR-1",
+                "pass_name": "VERIFIER_REPAIR",
+            }
+        ]
+
+        preserved = _scoped_verifier_repair_proposals(
+            rows,
+            research_pass_id="PASS-REPAIR-1",
+            research_passes=passes,
+        )
+
+        self.assertEqual(preserved, [rows[0]])
+        self.assertEqual(
+            _scoped_verifier_repair_proposals(
+                rows,
+                research_pass_id="PASS-INITIAL-1",
+                research_passes=[
+                    {
+                        "pass_id": "PASS-INITIAL-1",
+                        "pass_name": "INITIAL_FULL_RESEARCH",
+                    }
+                ],
+            ),
+            [],
+        )
 
     def test_likely_nonpublic_requires_adequacy(self) -> None:
         payload = _base_v2()

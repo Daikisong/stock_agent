@@ -71,6 +71,19 @@ class AtomicCaptureWriter:
         dossier_final = incoming / "research_dossier.json"
         os.replace(report_part, report_final)
         os.replace(dossier_part, dossier_final)
+        raw_report_final = None
+        if raw_capture.raw_report_md_part_path is not None:
+            raw_report_part = raw_capture.raw_report_md_part_path.resolve()
+            if raw_report_part != (staging / "pro_report.raw.md.part").resolve():
+                raise ValueError("browser capture must use the job staging raw MD path")
+            if not raw_report_part.is_file() or raw_report_part.stat().st_size == 0:
+                raise ValueError("staged immutable raw MD report is missing or empty")
+            if not raw_capture.transport_normalization_operations:
+                raise ValueError("raw MD requires transport normalization operations")
+            raw_report_final = incoming / "pro_report.raw.md"
+            os.replace(raw_report_part, raw_report_final)
+        elif raw_capture.transport_normalization_operations:
+            raise ValueError("transport normalization requires an immutable raw MD")
         pdf_final = None
         if raw_capture.report_pdf_part_path is not None:
             pdf_part = raw_capture.report_pdf_part_path.resolve()
@@ -105,6 +118,17 @@ class AtomicCaptureWriter:
             optional_pdf_error=raw_capture.optional_pdf_error,
             report_pdf_path=(
                 "capture/incoming/pro_report.pdf" if pdf_final is not None else None
+            ),
+            raw_report_md_hash=(
+                file_sha256(raw_report_final) if raw_report_final is not None else None
+            ),
+            raw_report_md_path=(
+                "capture/incoming/pro_report.raw.md"
+                if raw_report_final is not None
+                else None
+            ),
+            transport_normalization_operations=(
+                raw_capture.transport_normalization_operations
             ),
         )
         receipt_part = staging / "browser_capture_receipt.json.part"

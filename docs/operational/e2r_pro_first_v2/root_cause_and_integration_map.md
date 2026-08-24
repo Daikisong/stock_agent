@@ -239,18 +239,30 @@ repair transport는 이제 최대 21만 자의 deterministic prefix batch를 사
 여전히 verifier repair pending 0을 요구한다.
 
 첫 bounded repair pass `PROPASS-3ef919d661d3bfa39f201c4e`는 46개 중 17개를
-담아 정확히 1회 제출됐고 Pro의 visible 생성은 끝났다. 마지막 assistant turn에는
-exact job/run/pass/parent marker가 각각 1개, dossier 본문 68,788자가 존재한다. 다만
-종료 marker가 `E2R_RESEARCH_DOSSIER_JSON_END`가 아니라
-`E2R_RESEARCH_DOSSIER_SON_END`로 한 글자 깨져 completion monitor가 capture 전
-대기 중이다. DB는 원자 capture/import가 끝나기 전까지 보수적으로
-`RESEARCH_RUNNING / submit_count=1`을 유지한다.
+담아 정확히 1회 제출됐다. 마지막 assistant turn의 종료 marker 한 글자 누락은 exact
+scope marker와 strict JSON parse를 요구하는 bounded normalization으로 복구했고, raw MD와
+normalized MD를 서로 다른 hash로 함께 보존했다. pass는 `COMPLETE / submit_count=1`이며
+같은 prompt를 다시 제출하지 않았다.
 
-이는 사실 0개나 Pro 연구 실패가 아니다. 같은 prompt를 다시 보내지 않고 exact current
-turn의 범위·JSON payload를 검증한 뒤 marker만 auditable transport normalization하고,
-전체 deterministic verifier를 재실행해야 한다. 초기 assistant turn에 속한 기존 MD
-버튼은 current repair 첨부로 사용하지 않는다. 관측값은
-`live_repair_capture_pending_20260824.json`에 고정했다. 나머지 29개 packet은 deferred
+실제 응답에는 material 9, counter 5, resolution 3으로 새 fact 17개와
+`NARROWED 13 / REPLACED 4` repair 제안 17개가 있었다. 첫 적용이 0건이 된 원인은 Pro
+연구가 아니라 compact dialect adapter가 모든 repair register를 diagnostics로만 옮기고
+실행 register를 빈 배열로 만든 것이었다. current `VERIFIER_REPAIR` pass의 exact
+candidate/question/category/action/replacement 형식만 보존하도록 교정했고, 실제 capture의
+adapter/schema replay는 17 facts, 17 proposals, 10 lineages, 17 routes로 통과했다.
+
+아직 자동 적용하지 않은 이유는 17개 중 14개 rejection packet이 원래 2~6개 question에
+걸려 있는데 Pro register는 대표 question 한 개만 적었기 때문이다. candidate-level
+repair를 원래 packet scope 전체의 deterministic 재검증 입력으로 확장할지, 미기재
+question을 pending으로 둘지 generic 정책과 회귀시험이 필요하다. 이것은 Pro의 repair를
+score/Stage authority로 인정하는 문제가 아니며, 어느 경우든 deterministic verifier가
+최종 acceptance를 결정한다.
+
+첫 no-op 적용이 만든 pass 6 snapshot과 `resolution 0 / unresolved 17` receipt는 감사
+증거이므로 삭제·덮어쓰기하지 않는다. 교정 재처리는 exact parent인 pass 4에서 시작해 새
+append-only revision artifact로 기록해야 한다. capture 전 관측은
+`live_repair_capture_pending_20260824.json`, 복구 후 상태는
+`live_repair_capture_recovered_20260824.json`에 고정했다. 나머지 29개 packet은 deferred
 roster에 보존돼 있다. 초대형 미전송 pass
 `PROPASS-7694a86ac9e996eeabd03394`는 `TRANSPORT_PENDING / submit_count=0`이다.
 이 시점에는 full-thesis score·Stage·publication 권한이 아직 없다.

@@ -22,7 +22,11 @@ from e2r.pro_first.capture.coordinator import (
     CaptureFilesystemReconciler,
     ProCaptureCoordinator,
 )
-from e2r.pro_first.capture.receipt import file_sha256, load_capture_receipt
+from e2r.pro_first.capture.receipt import (
+    file_sha256,
+    load_capture_receipt,
+    verify_capture_bundle,
+)
 from e2r.pro_first.ids import canonical_hash
 from e2r.pro_first.job_store import ProFirstJobStore
 from e2r.pro_first.models import JobStatus, ResearchMode, ScanWindow
@@ -290,8 +294,100 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
             )
         )
         self.assertEqual(raw.source, "DIRECT_REPORT_DOM")
-        self.assertIn("E2R_RESEARCH_DOSSIER_JSON_BEGIN", raw.report_md_part_path.read_text())
+        self.assertIn(
+            "E2R_RESEARCH_DOSSIER_JSON_BEGIN",
+            raw.report_md_part_path.read_text(encoding="utf-8"),
+        )
         self.assertEqual(await self.page.evaluate("window.__downloadClicks"), [])
+
+    async def test_single_deleted_terminal_sentinel_is_audited_and_raw_preserved(self) -> None:
+        job, prompt_hash = await self._running_job()
+        await self._complete_page(job.job_id, direct=True)
+        await self.page.locator('[data-message-id="final-turn"] pre').evaluate(
+            "node => node.textContent = node.textContent.replace("
+            "'E2R_RESEARCH_DOSSIER_JSON_END', "
+            "'E2R_RESEARCH_DOSSIER_SON_END')"
+        )
+        observed = await self._stable_completion(job.job_id)
+        self.assertEqual(
+            observed.result.transport_normalization_operations,  # type: ignore[union-attr]
+            (
+                "RESTORE_SINGLE_DELETED_DOSSIER_END_SENTINEL:"
+                "E2R_RESEARCH_DOSSIER_SON_END->"
+                "E2R_RESEARCH_DOSSIER_JSON_END",
+            ),
+        )
+        root = Path(self.temporary_directory.name) / "normalized-direct"
+        raw = await self.adapter.capture_result(
+            BrowserCaptureRequest(
+                job_id=job.job_id,
+                run_id=self.run_id,
+                expected_filename=self._filename(job.job_id),
+                expected_report_hash=observed.result.report_hash,  # type: ignore[union-attr]
+                staging_directory=root / "capture/.staging",
+            )
+        )
+        self.assertEqual(raw.source, "DIRECT_REPORT_DOM_NORMALIZED")
+        result = AtomicCaptureWriter(now=lambda: self.now).finalize(
+            root,
+            identity=CaptureIdentity(
+                job_id=job.job_id,
+                run_id=self.run_id,
+                target_id=self.symbol,
+                as_of_date=self.as_of_date,
+                packet_hash=self.packet_hash,
+                prompt_hash=prompt_hash,
+                conversation_id=job.conversation_id,
+                capture_mode="DOM_CONTRACT_NORMALIZED_MOCK",
+            ),
+            raw_capture=raw,
+        )
+        receipt = result.receipt
+        self.assertIsNotNone(receipt.raw_report_md_hash)
+        self.assertEqual(
+            file_sha256(root / receipt.raw_report_md_path),  # type: ignore[arg-type]
+            receipt.raw_report_md_hash,
+        )
+        raw_text = (root / receipt.raw_report_md_path).read_text(encoding="utf-8")  # type: ignore[arg-type]
+        normalized_text = (root / receipt.report_md_path).read_text(encoding="utf-8")
+        self.assertIn("E2R_RESEARCH_DOSSIER_SON_END", raw_text)
+        self.assertNotIn("E2R_RESEARCH_DOSSIER_JSON_END", raw_text)
+        self.assertIn("E2R_RESEARCH_DOSSIER_JSON_END", normalized_text)
+        self.assertNotEqual(receipt.raw_report_md_hash, receipt.report_md_hash)
+        verify_capture_bundle(root, receipt)
+
+    async def test_multiple_character_terminal_damage_is_not_accepted(self) -> None:
+        job, _prompt_hash = await self._running_job()
+        await self._complete_page(job.job_id, direct=True)
+        await self.page.locator('[data-message-id="final-turn"] pre').evaluate(
+            "node => node.textContent = node.textContent.replace("
+            "'E2R_RESEARCH_DOSSIER_JSON_END', "
+            "'E2R_RESEARCH_DOSSIER_BROKEN_END')"
+        )
+        monitor = BrowserCompletionMonitor(
+            self.adapter, required_stable_observations=2, poll_interval_seconds=0.01
+        )
+        for _ in range(3):
+            observed = await monitor.observe(job_id=job.job_id, run_id=self.run_id)
+            self.assertFalse(observed.completion_confirmed)
+            self.assertEqual(observed.stable_observations, 0)
+
+    async def test_single_deleted_terminal_is_not_accepted_for_invalid_json(self) -> None:
+        job, _prompt_hash = await self._running_job()
+        await self._complete_page(job.job_id, direct=True)
+        await self.page.locator('[data-message-id="final-turn"] pre').evaluate(
+            "node => node.textContent = node.textContent"
+            ".replace('{\\\"schema_version\\\"', '{invalid')"
+            ".replace('E2R_RESEARCH_DOSSIER_JSON_END', "
+            "'E2R_RESEARCH_DOSSIER_SON_END')"
+        )
+        monitor = BrowserCompletionMonitor(
+            self.adapter, required_stable_observations=2, poll_interval_seconds=0.01
+        )
+        for _ in range(3):
+            observed = await monitor.observe(job_id=job.job_id, run_id=self.run_id)
+            self.assertFalse(observed.completion_confirmed)
+            self.assertEqual(observed.stable_observations, 0)
 
     async def test_optional_pdf_is_captured_when_matching_export_exists(self) -> None:
         job, prompt_hash = await self._running_job()
@@ -392,6 +488,9 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
         receipt = load_capture_receipt(result.receipt_path)
         self.assertEqual(file_sha256(root / receipt.report_md_path), receipt.report_md_hash)
         self.assertEqual(file_sha256(root / receipt.dossier_json_path), receipt.dossier_json_hash)
+        self.assertNotIn("raw_report_md_hash", receipt.to_dict())
+        self.assertNotIn("raw_report_md_path", receipt.to_dict())
+        self.assertNotIn("transport_normalization_operations", receipt.to_dict())
 
     async def test_partial_file_not_imported(self) -> None:
         root = Path(self.temporary_directory.name) / "partial"

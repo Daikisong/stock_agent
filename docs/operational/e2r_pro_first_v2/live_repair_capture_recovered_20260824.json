@@ -1,0 +1,65 @@
+{
+  "actual_adapter_replay": {
+    "fact_count": 17,
+    "narrowed_count": 13,
+    "replaced_count": 4,
+    "route_receipt_count": 17,
+    "scoped_repair_proposal_count": 17,
+    "source_lineage_count": 10,
+    "strict_schema_validation": "PASS"
+  },
+  "automatic_resubmit_performed": false,
+  "capture": {
+    "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+    "captured_at": "2026-08-24T12:47:35.791069Z",
+    "normalized_report_md_hash": "73ec0b51ec7630c56de500a4fa80280c9d28a39464482fdb71a38a6e4c140349",
+    "raw_report_md_hash": "89603d1d9e2c9458817959befcc4c8940662006575a136e851f007c3417632c2",
+    "ready_written": true,
+    "transport_normalization_operations": [
+      "RESTORE_SINGLE_DELETED_DOSSIER_END_SENTINEL:E2R_RESEARCH_DOSSIER_SON_END->E2R_RESEARCH_DOSSIER_JSON_END"
+    ]
+  },
+  "conversation_id": "6a8b09c3-bfcc-83ee-b15b-9f76eca52249",
+  "current_blocker": {
+    "derive_repair_delta": "BLOCKED_EXACT_QUESTION_SCOPE_MISMATCH",
+    "exact_scope_match_candidate_count": 3,
+    "mismatched_candidate_count": 14,
+    "reason": "원래 rejection packet은 candidate별 2~6개 question을 포함할 수 있으나 Pro register는 대표 question_family_id 한 개만 기록했다.",
+    "safe_default": "score_valid=false와 publication withheld를 유지하고 generic scope policy 및 회귀시험 전에는 자동 승인하지 않는다."
+  },
+  "job_id": "PROJOB-cdd91020f15891533e61431f",
+  "no_op_snapshot_preserved": {
+    "dossier_hash": "6802144873d3fbec2bbb17bafd009feadd5d46213183103eed7f408e16da6acb",
+    "fact_count": 97,
+    "overwrite_allowed": false,
+    "parent_snapshot_id": "PRODOSSIERSNAPSHOT-2c8a29d511db4f97ffb922b3",
+    "repair_resolution_count": 0,
+    "repair_unresolved_packet_count": 17,
+    "route_receipt_count": 98,
+    "snapshot_id": "PRODOSSIERSNAPSHOT-374eb7b04d924c725676a390"
+  },
+  "observed_at": "2026-08-24T13:18:57Z",
+  "parent_pass_id": "PROPASS-ab2d8bd7520a8ce7de71f306",
+  "pass_id": "PROPASS-3ef919d661d3bfa39f201c4e",
+  "pass_status": "COMPLETE",
+  "raw_response": {
+    "counterfact_count": 5,
+    "material_fact_count": 9,
+    "repair_proposal_count": 17,
+    "resolution_fact_count": 3,
+    "total_fact_count": 17
+  },
+  "required_next_action": "PRESERVE_NO_OP_SNAPSHOT_AND_REPROCESS_CAPTURE_FROM_EXACT_PARENT_AS_NEW_APPEND_ONLY_REVISION_AFTER_SCOPE_POLICY_TESTS_PASS",
+  "run_id": "PRORUN-a7dacadb7088fc23535bfdde",
+  "schema_version": "e2r_pro_first_v2_live_capture_recovered_receipt_v1",
+  "score_authority": false,
+  "score_valid": false,
+  "source_commit_before_documentation": "b793f620130c0bb6bdf8670dc352a38103855283",
+  "stage_authority": false,
+  "submit_count": 1,
+  "target_id": "000660",
+  "test_evidence": {
+    "linux_dossier_live_runtime_and_repair": "48/48 PASS",
+    "windows_completion_capture": "20/20 PASS"
+  }
+}

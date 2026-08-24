@@ -51,6 +51,8 @@ from e2r.pro_first.operations import (
 from e2r.pro_first.canary.live_v2 import (
     _accepted_dossier_fact_ids,
     _compile_question_bounds,
+    _durable_pass_rows,
+    _followup_execution_mode,
     _has_snapshotted_completed_pass,
     _load_recovered_snapshot_state,
     _verification_artifact_rows,
@@ -86,6 +88,102 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
         self.assertEqual(
             spec.archetype_id,
             "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        )
+
+    def test_running_submitted_followup_recovers_result_without_resubmit(self) -> None:
+        pass_root = self.root / "submitted-followup"
+        research_pass = SimpleNamespace(
+            status="RESEARCH_RUNNING",
+            submit_count=1,
+        )
+        self.assertEqual(
+            _followup_execution_mode(research_pass, pass_root=pass_root),
+            "RECOVER_SUBMITTED_RESULT",
+        )
+
+    def test_followup_execution_modes_distinguish_submit_capture_and_partial_bundle(self) -> None:
+        pass_root = self.root / "followup-modes"
+        planned = SimpleNamespace(status="PLANNED", submit_count=0)
+        self.assertEqual(
+            _followup_execution_mode(planned, pass_root=pass_root),
+            "PREPARE_AND_SUBMIT",
+        )
+        incoming = pass_root / "capture/incoming"
+        incoming.mkdir(parents=True)
+        (incoming / "READY.json").write_text("{}", encoding="utf-8")
+        with self.assertRaisesRegex(RuntimeError, "partially committed"):
+            _followup_execution_mode(
+                SimpleNamespace(status="RESEARCH_RUNNING", submit_count=1),
+                pass_root=pass_root,
+            )
+        (incoming / "browser_capture_receipt.json").write_text(
+            "{}", encoding="utf-8"
+        )
+        self.assertEqual(
+            _followup_execution_mode(
+                SimpleNamespace(status="RESEARCH_RUNNING", submit_count=1),
+                pass_root=pass_root,
+            ),
+            "REUSE_CAPTURE",
+        )
+        self.assertEqual(
+            _followup_execution_mode(
+                SimpleNamespace(status="COMPLETE", submit_count=1),
+                pass_root=pass_root,
+            ),
+            "REUSE_CAPTURE",
+        )
+
+    def test_durable_dossier_pass_rows_skip_only_unsubmitted_transport_plan(self) -> None:
+        rows = (
+            SimpleNamespace(
+                pass_ordinal=1,
+                pass_id="PASS-1",
+                parent_pass_id=None,
+                pass_name="INITIAL_FULL_RESEARCH",
+                status="COMPLETE",
+                submit_count=1,
+                prompt_hash="a" * 64,
+                response_hash="b" * 64,
+            ),
+            SimpleNamespace(
+                pass_ordinal=2,
+                pass_id="PASS-UNSENT",
+                parent_pass_id="PASS-1",
+                pass_name="VERIFIER_REPAIR",
+                status="TRANSPORT_PENDING",
+                submit_count=0,
+                prompt_hash="c" * 64,
+                response_hash=None,
+            ),
+            SimpleNamespace(
+                pass_ordinal=3,
+                pass_id="PASS-CURRENT",
+                parent_pass_id="PASS-1",
+                pass_name="VERIFIER_REPAIR",
+                status="RESEARCH_RUNNING",
+                submit_count=1,
+                prompt_hash="d" * 64,
+                response_hash=None,
+            ),
+        )
+
+        class FakeLedger:
+            def list_passes(self, _job_id):
+                return rows
+
+            def get_pass(self, pass_id):
+                return next(row for row in rows if row.pass_id == pass_id)
+
+        compiled = _durable_pass_rows(
+            FakeLedger(),  # type: ignore[arg-type]
+            "JOB-1",
+            current_pass_id="PASS-CURRENT",
+            current_response_hash="e" * 64,
+        )
+        self.assertEqual(
+            [row["pass_id"] for row in compiled],
+            ["PASS-1", "PASS-CURRENT"],
         )
 
     def test_explicit_source_commit_supports_cross_runtime_packet_build(self) -> None:

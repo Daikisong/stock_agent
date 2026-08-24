@@ -103,6 +103,9 @@ class BrowserResultSnapshot:
     job_marker_matches: bool
     run_marker_matches: bool
     new_attachment_keys: tuple[AttachmentKey, ...]
+    raw_report_text: str | None = None
+    raw_report_hash: str | None = None
+    transport_normalization_operations: tuple[str, ...] = ()
 
     @property
     def structurally_complete(self) -> bool:
@@ -156,6 +159,8 @@ class RawBrowserCapture:
     report_pdf_part_path: Path | None = None
     downloaded_pdf_filename: str | None = None
     optional_pdf_error: str | None = None
+    raw_report_md_part_path: Path | None = None
+    transport_normalization_operations: tuple[str, ...] = ()
 
 
 class ChatGPTWebAdapter(Protocol):

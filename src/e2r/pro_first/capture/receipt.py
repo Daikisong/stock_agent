@@ -48,6 +48,9 @@ class CaptureReceipt:
     report_md_path: str = "capture/incoming/pro_report.md"
     report_pdf_path: str | None = None
     dossier_json_path: str = "capture/incoming/research_dossier.json"
+    raw_report_md_hash: str | None = None
+    raw_report_md_path: str | None = None
+    transport_normalization_operations: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         if self.schema_version != CAPTURE_RECEIPT_SCHEMA:
@@ -76,13 +79,38 @@ class CaptureReceipt:
             raise ValueError("PDF path cannot exist without a PDF hash")
         if self.report_pdf_hash is not None and self.report_pdf_path is None:
             raise ValueError("PDF hash cannot exist without a PDF path")
+        object.__setattr__(
+            self,
+            "transport_normalization_operations",
+            tuple(self.transport_normalization_operations),
+        )
+        if (self.raw_report_md_hash is None) != (self.raw_report_md_path is None):
+            raise ValueError("raw MD hash and path must either both exist or both be null")
+        if self.raw_report_md_hash is not None:
+            if len(self.raw_report_md_hash) != 64:
+                raise ValueError("raw_report_md_hash must be sha256 or null")
+            if not self.transport_normalization_operations:
+                raise ValueError("raw MD capture requires a recorded normalization operation")
+            if self.raw_report_md_hash == self.report_md_hash:
+                raise ValueError("normalized and raw MD hashes must differ")
+        elif self.transport_normalization_operations:
+            raise ValueError("normalization operations require an immutable raw MD capture")
 
     @property
     def receipt_hash(self) -> str:
         return canonical_hash(self.to_dict())
 
     def to_dict(self) -> Mapping[str, Any]:
-        return asdict(self)
+        payload = asdict(self)
+        # V1 receipts created before transport normalization have no raw-MD
+        # fields.  Omitting empty extension fields preserves their canonical
+        # receipt hash and keeps already-written READY.json artifacts valid.
+        if self.raw_report_md_hash is None:
+            payload.pop("raw_report_md_hash", None)
+            payload.pop("raw_report_md_path", None)
+        if not self.transport_normalization_operations:
+            payload.pop("transport_normalization_operations", None)
+        return payload
 
     @classmethod
     def from_dict(cls, value: Mapping[str, Any]) -> "CaptureReceipt":
@@ -114,6 +142,12 @@ def verify_capture_bundle(job_root: str | Path, receipt: CaptureReceipt) -> None
             raise ValueError("capture PDF missing or outside job root")
         if file_sha256(path) != receipt.report_pdf_hash:
             raise ValueError("capture PDF hash mismatch")
+    if receipt.raw_report_md_path is not None and receipt.raw_report_md_hash is not None:
+        path = (root / receipt.raw_report_md_path).resolve()
+        if root not in path.parents or not path.is_file():
+            raise ValueError("capture raw MD missing or outside job root")
+        if file_sha256(path) != receipt.raw_report_md_hash:
+            raise ValueError("capture raw MD hash mismatch")
 
 
 __all__ = [

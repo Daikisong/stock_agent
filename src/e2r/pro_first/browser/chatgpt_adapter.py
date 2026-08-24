@@ -9,6 +9,7 @@ from typing import Any
 
 from ..ids import canonical_hash
 from .page_helpers import editor_text, first_existing, first_visible, locator_enabled
+from .result_transport import normalize_visible_dossier_transport
 from .protocol import (
     AttachmentKey,
     BrowserCaptureRequest,
@@ -417,7 +418,9 @@ class PlaywrightChatGPTWebAdapter:
                 new_attachment_keys=(),
             )
         turn = turns[-1]
-        report_text = (await turn.inner_text()).strip()
+        raw_report_text = (await turn.inner_text()).strip()
+        normalization = normalize_visible_dossier_transport(raw_report_text)
+        report_text = normalization.normalized_text
         turn_id = await self._turn_id(turn)
         has_dossier = (
             "E2R_RESEARCH_DOSSIER_JSON_BEGIN" in report_text
@@ -434,6 +437,12 @@ class PlaywrightChatGPTWebAdapter:
                 "conversation_id": self.conversation_id(),
                 "assistant_turn_id": turn_id,
                 "report_text": report_text,
+                "raw_report_hash": (
+                    normalization.raw_hash if normalization.applied else None
+                ),
+                "transport_normalization_operations": list(
+                    normalization.operations
+                ),
                 "attachment_keys": [row.stable_key for row in new_keys],
             }
         )
@@ -447,6 +456,9 @@ class PlaywrightChatGPTWebAdapter:
             job_marker_matches=f"[[E2R_PRO_JOB_ID:{job_id}]]" in report_text,
             run_marker_matches=f"[[E2R_PRO_RUN_ID:{run_id}]]" in report_text,
             new_attachment_keys=new_keys,
+            raw_report_text=(normalization.raw_text if normalization.applied else None),
+            raw_report_hash=(normalization.raw_hash if normalization.applied else None),
+            transport_normalization_operations=normalization.operations,
         )
 
     async def recover_conversation_without_submit(
@@ -554,6 +566,8 @@ class PlaywrightChatGPTWebAdapter:
             raise BrowserUIIncompatible("capture requires the same stable completed assistant result")
         request.staging_directory.mkdir(parents=True, exist_ok=True)
         part_path = request.staging_directory / "pro_report.md.part"
+        raw_part_path: Path | None = None
+        transport_operations: tuple[str, ...] = ()
         matching = [
             (key, locator)
             for key, locator in await self._new_md_candidates()
@@ -570,14 +584,39 @@ class PlaywrightChatGPTWebAdapter:
             await download.save_as(str(part_path))
             if not part_path.is_file() or part_path.stat().st_size == 0:
                 raise BrowserUIIncompatible("Playwright download produced an empty MD file")
-            source = "DOWNLOAD_MD"
+            downloaded_text = part_path.read_text(encoding="utf-8-sig")
+            downloaded_normalization = normalize_visible_dossier_transport(
+                downloaded_text
+            )
+            if downloaded_normalization.applied:
+                raw_part_path = request.staging_directory / "pro_report.raw.md.part"
+                part_path.replace(raw_part_path)
+                part_path.write_bytes(
+                    downloaded_normalization.normalized_text.encode("utf-8")
+                )
+                transport_operations = downloaded_normalization.operations
+                source = "DOWNLOAD_MD_NORMALIZED"
+            else:
+                source = "DOWNLOAD_MD"
             downloaded_filename = suggested
             attachment_key = key
         else:
             if not snapshot.has_dossier_marker:
                 raise BrowserUIIncompatible("no matching new MD and no complete direct report fallback")
-            part_path.write_text(snapshot.report_text + "\n", encoding="utf-8")
-            source = "DIRECT_REPORT_DOM"
+            part_path.write_bytes((snapshot.report_text + "\n").encode("utf-8"))
+            if snapshot.transport_normalization_operations:
+                if snapshot.raw_report_text is None:
+                    raise BrowserUIIncompatible(
+                        "normalized visible result is missing its immutable raw report"
+                    )
+                raw_part_path = request.staging_directory / "pro_report.raw.md.part"
+                raw_part_path.write_bytes(
+                    (snapshot.raw_report_text + "\n").encode("utf-8")
+                )
+                transport_operations = snapshot.transport_normalization_operations
+                source = "DIRECT_REPORT_DOM_NORMALIZED"
+            else:
+                source = "DIRECT_REPORT_DOM"
             downloaded_filename = None
             attachment_key = None
         expected_pdf = Path(request.expected_filename).with_suffix(".pdf").name
@@ -615,6 +654,8 @@ class PlaywrightChatGPTWebAdapter:
             report_pdf_part_path=pdf_part_path,
             downloaded_pdf_filename=downloaded_pdf_filename,
             optional_pdf_error=optional_pdf_error,
+            raw_report_md_part_path=raw_part_path,
+            transport_normalization_operations=transport_operations,
         )
 
     async def snapshot_attachment_keys(self) -> tuple[AttachmentKey, ...]:

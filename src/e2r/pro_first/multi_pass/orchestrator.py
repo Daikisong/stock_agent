@@ -335,7 +335,14 @@ class ProMultiPassResearchOrchestrator:
         )
         if prepared.conversation_id != plan.scope.conversation_id:
             raise RuntimeError("follow-up preparation escaped the approved conversation")
-        updated = self.ledger.mark_prepared(plan.research_pass.pass_id)
+        current = self.ledger.get_pass(plan.research_pass.pass_id)
+        if (
+            current.status == ResearchPassStatus.PREPARED.value
+            and current.submit_count == 0
+        ):
+            updated = current
+        else:
+            updated = self.ledger.mark_prepared(plan.research_pass.pass_id)
         if updated.prompt_hash != prepared.prompt_hash:
             raise RuntimeError("prepared follow-up prompt differs from durable pass")
         return prepared
