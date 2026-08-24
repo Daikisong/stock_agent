@@ -213,6 +213,15 @@ class CompactRepairPromptCompilerV3:
             + json.dumps(context, ensure_ascii=False, indent=2, sort_keys=True)
             + "\n```",
         ).rstrip() + "\n"
+        lineage_markers = "\n".join(
+            (
+                f"[[E2R_PRO_RUN_ID:{dossier.get('run_id')}]]",
+                f"[[E2R_PRO_JOB_ID:{dossier.get('job_id')}]]",
+                f"[[E2R_PRO_PASS_ID:{research_pass_id}]]",
+                f"[[E2R_PRO_PARENT_PASS_ID:{parent_pass_id}]]",
+            )
+        )
+        prompt = lineage_markers + "\n\n" + prompt
         if "{{" in prompt or "}}" in prompt:
             raise ValueError("compact repair prompt has an unresolved template variable")
         if len(prompt) > HARD_MAX_REPAIR_PROMPT_CHARS:

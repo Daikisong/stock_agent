@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-25 P5 완료 검증 시점`
+기준 시각: `2026-08-25 P6 완료 검증 시점`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_1_fresh_session_verifier_ready_master_goal.md`
@@ -15,7 +15,8 @@ P1 10c7269b  Pro fact 반려 원인을 최초 출력·로컬 결함·의미 결�
 P2 152db6a7  source 문서와 atomic fact를 분리한 검증 친화 dossier를 도입
 P3 d5d62bc2  최초 Pro 조사에서 verifier-ready 증거를 생성하도록 계약 강화
 P4 788e14d2  URL 날짜 인용 alias scope의 기계적 결함을 로컬에서 자동 정규화
-P5 이 문서와 함께 compact RepairDeltaV3 phase commit으로 고정
+P5 cad578af  전체 dossier 재출력을 제거하고 의미 오류만 compact delta로 수리
+P6 이 문서와 함께 fresh-session orchestration phase commit으로 고정
 ```
 
 PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지 않는다.
@@ -29,7 +30,7 @@ P2 ResearchDossierV3                      COMPLETE
 P3 Initial Prompt V3                      COMPLETE
 P4 local preflight                        COMPLETE
 P5 compact RepairDeltaV3                  COMPLETE
-P6 fresh-session orchestration            PENDING
+P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    PENDING
 P8 C17/C28 fresh canary                   PENDING
 P9 final CI/audit                         PENDING
@@ -456,9 +457,72 @@ compileall / schema self-check / diff check       PASS
 compiler/parser/apply/reverify까지 완성했지만 browser pass에 아직 연결하지 않았다. 따라서
 실제 fresh Pro 전송은 여전히 0이다.
 
-## 다음 단계 P6
+## P6 — Fresh-session orchestration
 
-old conversation과 old fact answer를 fresh packet에서 배제하고, 새 job/run/pass/conversation을
-발급한다. Initial Prompt V3와 compact repair를 production browser adapter의 exactly-once
-submit/capture 경계에 연결한다. Mock browser에서 old frozen → fresh initial → preflight → compact
-repair 최대 1회 → saturation 흐름을 검증한 뒤에만 실제 000660 fresh canary로 넘어간다.
+old conversation을 새 prompt의 답안지로 재사용하지 못하도록 runtime/job/run/pass/conversation
+identity를 하나의 경계로 묶었다.
+
+```text
+frozen old job
+→ disjoint fresh runtime root
+→ fresh_session_id가 포함된 새 candidate/job
+→ ResearchPacketV3 blind leakage audit
+→ ChatGPT new-chat route에서 V3 packet/prompt 준비
+→ user approval 뒤 exactly-once initial submit
+→ old와 다른 conversation ID 확인
+→ same-conversation bounded follow-up scope
+```
+
+ResearchPacketV3에는 old fact, route, rejection, question answer, score/Stage, expected URL/fact ID를
+담는 필드가 없다. 별도 `OldAnswerLeakageManifest`의 exact identity/token도 packet과 initial prompt에서
+다시 세어 0이 아니면 browser 준비 전에 실패한다.
+
+새 대화가 아닌 `/c/<old-id>`에서 준비하려 하면 입력 전에 `USER_ATTENTION_REQUIRED`로 돌아간다.
+사용자가 new-chat route로 이동한 뒤에는 submit_count 0인 같은 packet/prompt만 재준비할 수 있다.
+전송 뒤 old conversation ID가 다시 나오면 그 fresh run을 diagnostic-only로 봉인하고, 새
+fresh_session_id/runtime/job/run/pass를 가진 successor만 허용한다.
+
+initial approval이 허용하는 operational tail:
+
+```text
+public-gap/counter closure     합쳐서 0~1회
+semantic RepairDeltaV3        0~1회
+saturation                    1회
+```
+
+두 번째 repair/gap/saturation은 같은 conversation을 길게 끌지 않고
+`NEW_CONVERSATION_REQUIRED`로 차단한다. compact repair response는 MD attachment가 없어도 화면의
+`E2R_REPAIR_DELTA_JSON_BEGIN/END`를 production adapter가 완료 결과로 capture한다.
+
+production adapter mock E2E:
+
+```text
+old frozen → fresh V3 initial → local preflight → compact repair → saturation
+initial DOM submit                 1
+repair DOM submit                  1
+saturation DOM submit              1
+old conversation submit            0
+모든 fresh pass same conversation  true
+모든 pass submit_count             1
+```
+
+검증:
+
+```text
+P6 fresh identity/orchestration regression       13/13 PASS
+P6 production adapter browser E2E                 1/1 PASS
+large prompt DOM integrity + V2 browser regression 3/3 PASS
+P0~P6 phase regression                            60/60 PASS
+전체 Pro-first regression                         447/447 PASS
+실제 Pro·query·search 호출                         0/0/0
+```
+
+상세 설계와 runtime receipt는 `fresh_session_orchestration_v3.md`에 기록했다. P6는 offline
+orchestration proof이므로 아직 000660 initial acceptance 80%나 score/Stage를 주장하지 않는다.
+
+## 다음 단계 P7
+
+로그인된 사용자 전용 E2R Chrome/CDP의 ordinary Chat + visible Pro mode에서 완전히 새 conversation을
+만들고 000660 / `as_of_date=2026-08-23` / C06+R13 fresh blind packet을 정확히 한 번 전송한다.
+initial result에 local preflight와 source verification을 적용해 acceptance ratio를 계산한다. 80%
+미만이면 repair로 메워 PASS하지 않고 해당 conversation을 diagnostic-only로 봉인한다.

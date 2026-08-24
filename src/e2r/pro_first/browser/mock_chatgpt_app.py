@@ -91,7 +91,10 @@ def render_mock_chatgpt(
     window.__submitCount = 0;
     window.__downloadClicks = [];
     const defaultContext = {json.dumps({"job_id": job_id, "run_id": run_id, "target_id": target_id, "as_of_date": as_of_date, "filename": filename})};
-    const suppliedReport = {json.dumps(report_text, ensure_ascii=False)};
+    let suppliedReport = {json.dumps(report_text, ensure_ascii=False)};
+    window.__setSuppliedReport = (nextReport) => {{
+      suppliedReport = nextReport;
+    }};
     function reportText(context) {{
       if (suppliedReport !== null) return suppliedReport;
       const dossier = {{
@@ -170,7 +173,7 @@ def render_mock_chatgpt(
           turn.appendChild(file);
         }}
         if (nextState === 'COMPLETE_WITH_MD_AND_PDF') {{
-          const pdfContext = {{...context, filename: context.filename.replace(/\.md$/i, '.pdf')}};
+          const pdfContext = {{...context, filename: context.filename.replace(/\\.md$/i, '.pdf')}};
           const pdf = document.createElement('button');
           pdf.className = 'entity-underline'; pdf.textContent = pdfContext.filename;
           pdf.addEventListener('click', () => openPreview(pdfContext));
@@ -190,6 +193,10 @@ def render_mock_chatgpt(
     const send = document.querySelector('#composer-submit-button');
     if (send) send.addEventListener('click', () => {{
       window.__submitCount += 1;
+      if (!window.location.pathname.startsWith('/c/')) {{
+        const freshId = 'mock-' + defaultContext.job_id.toLowerCase();
+        window.history.pushState({{}}, '', '/c/' + freshId);
+      }}
       window.__setMockState('RUNNING');
     }});
     const oldMd = document.querySelector('#old-md');

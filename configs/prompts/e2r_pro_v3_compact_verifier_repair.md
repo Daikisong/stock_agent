@@ -27,6 +27,9 @@ replacement fact는 Initial V3 atomic evidence contract와 `verifier_preflight`�
 
 응답 형식:
 
+응답 맨 앞에 compiled context에 제시된 `E2R_PRO_RUN_ID`, `E2R_PRO_JOB_ID`,
+`E2R_PRO_PASS_ID`, `E2R_PRO_PARENT_PASS_ID` marker를 각각 정확히 한 번 출력한다.
+
 E2R_REPAIR_DELTA_JSON_BEGIN
 ```json
 {...e2r_pro_repair_delta_v3...}

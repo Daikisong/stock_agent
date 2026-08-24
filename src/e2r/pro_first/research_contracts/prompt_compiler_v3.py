@@ -298,8 +298,10 @@ class ProResearchPromptCompilerV3:
             "revision_valuation_snapshot": packet.get(
                 "revision_valuation_snapshot"
             ),
-            "known_positive_facts": packet.get("known_positive_facts"),
-            "known_counterfacts": packet.get("known_counterfacts"),
+            "research_objectives": packet.get("research_objectives"),
+            "source_preferences": packet.get("source_preferences"),
+            "forbidden_inferences": packet.get("forbidden_inferences"),
+            "fresh_blind_boundary": packet.get("fresh_blind_boundary"),
         }
         lines.extend(
             [

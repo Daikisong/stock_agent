@@ -129,7 +129,8 @@ class PlaywrightChatGPTWebAdapter:
         editor = await first_visible(self.page, EDITOR_SELECTORS)
         if editor is None:
             raise BrowserUIIncompatible("ChatGPT prompt editor was not found")
-        if len(prompt) >= 20_000:
+        used_direct_dom_input = len(prompt) >= 20_000
+        if used_direct_dom_input:
             # Playwright ``fill`` and ``document.execCommand('insertText')`` can
             # spend their entire action timeout making ProseMirror process a
             # full-thesis prompt character by character.  Replace the editor's
@@ -162,15 +163,53 @@ class PlaywrightChatGPTWebAdapter:
         else:
             await editor.fill(prompt, timeout=60_000)
         current = await editor_text(editor)
+        retained_dom_text = current
+        if used_direct_dom_input:
+            # ``innerText`` is a rendered view and collapses JSON indentation,
+            # so it can appear thousands of characters shorter even though
+            # the exact text nodes are present.  Reconstruct only the located
+            # editor's visible DOM, treating ``br`` as a newline.  This keeps
+            # the integrity check browser-local and exact without clipboard or
+            # OS keyboard access.
+            retained_dom_text = await editor.evaluate(
+                r"""
+                element => {
+                    const visit = node => {
+                        if (node.nodeType === Node.TEXT_NODE) {
+                            return node.nodeValue || '';
+                        }
+                        if (node.nodeType !== Node.ELEMENT_NODE) return '';
+                        if (node.tagName === 'BR') return '\n';
+                        return Array.from(node.childNodes).map(visit).join('');
+                    };
+                    return Array.from(element.childNodes).map(visit).join('');
+                }
+                """
+            )
         required_markers = tuple(
             marker for marker in ("[[E2R_PRO_RUN_ID:", "[[E2R_PRO_JOB_ID:") if marker in prompt
         )
+        retained_exactly = retained_dom_text.rstrip() == prompt.rstrip()
         if (
-            not current
-            or len(current) < len(prompt.strip()) * 0.95
-            or any(marker not in current for marker in required_markers)
+            not retained_dom_text
+            or (
+                not retained_exactly
+                and len(current) < len(prompt.strip()) * 0.95
+            )
+            or any(marker not in retained_dom_text for marker in required_markers)
         ):
-            raise BrowserUIIncompatible("prompt text was not retained by the ChatGPT editor")
+            missing_markers = [
+                marker
+                for marker in required_markers
+                if marker not in retained_dom_text
+            ]
+            raise BrowserUIIncompatible(
+                "prompt text was not retained by the ChatGPT editor: "
+                f"expected_chars={len(prompt.strip())}, "
+                f"retained_dom_chars={len(retained_dom_text)}, "
+                f"rendered_chars={len(current)}, "
+                f"missing_marker_prefixes={missing_markers}"
+            )
 
     async def prepare_without_submit(
         self,
@@ -441,6 +480,10 @@ class PlaywrightChatGPTWebAdapter:
             "E2R_RESEARCH_DOSSIER_JSON_BEGIN" in report_text
             and "E2R_RESEARCH_DOSSIER_JSON_END" in report_text
         )
+        has_repair_delta = (
+            "E2R_REPAIR_DELTA_JSON_BEGIN" in report_text
+            and "E2R_REPAIR_DELTA_JSON_END" in report_text
+        )
         citations = False
         for selector in CITATION_SELECTORS:
             if await turn.locator(selector).count() > 0:
@@ -474,6 +517,7 @@ class PlaywrightChatGPTWebAdapter:
             raw_report_text=(normalization.raw_text if normalization.applied else None),
             raw_report_hash=(normalization.raw_hash if normalization.applied else None),
             transport_normalization_operations=normalization.operations,
+            has_repair_delta_marker=has_repair_delta,
         )
 
     async def recover_conversation_without_submit(
@@ -616,7 +660,9 @@ class PlaywrightChatGPTWebAdapter:
             downloaded_filename = suggested
             attachment_key = key
         else:
-            if not snapshot.has_dossier_marker:
+            if not (
+                snapshot.has_dossier_marker or snapshot.has_repair_delta_marker
+            ):
                 raise BrowserUIIncompatible("no matching new MD and no complete direct report fallback")
             part_path.write_bytes((snapshot.report_text + "\n").encode("utf-8"))
             if snapshot.transport_normalization_operations:

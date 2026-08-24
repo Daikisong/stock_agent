@@ -106,16 +106,25 @@ class BrowserResultSnapshot:
     raw_report_text: str | None = None
     raw_report_hash: str | None = None
     transport_normalization_operations: tuple[str, ...] = ()
+    has_repair_delta_marker: bool = False
 
     @property
     def structurally_complete(self) -> bool:
         return bool(
             self.assistant_turn_id
             and self.report_text.strip()
-            and (self.has_citations or self.has_dossier_marker)
+            and (
+                self.has_citations
+                or self.has_dossier_marker
+                or self.has_repair_delta_marker
+            )
             and self.job_marker_matches
             and self.run_marker_matches
-            and (self.new_attachment_keys or self.has_dossier_marker)
+            and (
+                self.new_attachment_keys
+                or self.has_dossier_marker
+                or self.has_repair_delta_marker
+            )
         )
 
 

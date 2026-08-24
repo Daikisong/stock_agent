@@ -26,6 +26,8 @@ PACKET_SCHEMA_VERSION = "e2r_pro_research_packet_v1"
 DOSSIER_SCHEMA_VERSION = "e2r_pro_research_dossier_v1"
 PACKET_V2_SCHEMA_VERSION = "e2r_pro_research_packet_v2"
 DOSSIER_V2_SCHEMA_VERSION = "e2r_pro_research_dossier_v2"
+PACKET_V3_SCHEMA_VERSION = "e2r_pro_research_packet_v3"
+DOSSIER_V3_SCHEMA_VERSION = "e2r_pro_research_dossier_v3"
 
 
 @dataclass(frozen=True)
@@ -103,6 +105,11 @@ class ResearchPacketV1:
 @dataclass(frozen=True)
 class ResearchPacketV2(ResearchPacketV1):
     """Typed marker for a V2 packet with an immutable contract snapshot."""
+
+
+@dataclass(frozen=True)
+class ResearchPacketV3(ResearchPacketV1):
+    """Fresh-blind packet with no prior Pro answer-bearing fields."""
 
 
 @dataclass(frozen=True)
@@ -271,6 +278,143 @@ class ResearchPacketV2Builder:
         return ResearchPacketV2(payload=payload, packet_hash=canonical_hash(payload))
 
 
+class ResearchPacketV3Builder:
+    """Build a fresh-session packet that cannot carry old Pro answers."""
+
+    def __init__(self, schema_path: str | Path | None = None) -> None:
+        default = (
+            Path(__file__).resolve().parents[3]
+            / "configs/e2r_pro_research_packet_v3.schema.json"
+        )
+        self.schema_path = Path(schema_path) if schema_path else default
+        self.schema = json.loads(self.schema_path.read_text(encoding="utf-8"))
+        Draft202012Validator.check_schema(self.schema)
+        self.validator = Draft202012Validator(
+            self.schema,
+            format_checker=FormatChecker(),
+        )
+
+    def build(self, request: PacketBuildInput) -> ResearchPacketV3:
+        if ResearchMode(request.research_mode) is ResearchMode.DELTA_RESEARCH:
+            raise ValueError("fresh ResearchPacketV3 cannot be DELTA_RESEARCH")
+        prohibited_inputs = {
+            "existing_thesis_digest": request.existing_thesis_digest,
+            "historical_judgments": request.historical_judgments,
+            "component_anchors": request.component_anchors,
+            "known_positive_facts": request.known_positive_facts,
+            "known_counterfacts": request.known_counterfacts,
+            "delta_context": request.delta_context,
+        }
+        populated = sorted(key for key, value in prohibited_inputs.items() if value)
+        if populated:
+            raise ValueError(
+                "fresh ResearchPacketV3 rejects answer-bearing prior inputs: "
+                + ",".join(populated)
+            )
+        cutoff = date.fromisoformat(request.as_of_date)
+        trading_date = date.fromisoformat(request.latest_trading_snapshot_date)
+        if trading_date > cutoff:
+            raise ValueError("latest trading snapshot date exceeds as_of_date")
+        primary_ids = tuple(
+            dict.fromkeys(str(value) for value in request.candidate_archetypes)
+        )
+        if not 1 <= len(primary_ids) <= 3:
+            raise ValueError("fresh ResearchPacketV3 requires one to three contracts")
+        mode = ResearchMode(request.research_mode)
+        run_id = request.run_id or stable_id(
+            "PRORUN",
+            {
+                "job_id": request.job_id,
+                "as_of_date": request.as_of_date,
+                "research_mode": mode.value,
+                "fresh_packet_version": PACKET_V3_SCHEMA_VERSION,
+                "trigger_summary": request.trigger_summary,
+            },
+        )
+        bundle = select_contract_bundle(primary_ids)
+        mandatory_question_ids = [
+            str(question["question_family_id"])
+            for contract in bundle.contracts
+            for question in contract["question_families"]
+            if question.get("mandatory_for_full_thesis") is True
+        ]
+        snapshot_base: Mapping[str, Any] = {
+            "catalog_schema_version": "e2r_archetype_research_contracts_v2",
+            "primary_archetype_ids": list(primary_ids),
+            "contract_ids": list(bundle.contract_ids),
+            "mandatory_question_ids": mandatory_question_ids,
+            "contracts": _json_copy(bundle.contracts),
+        }
+        contract_snapshot = {
+            **snapshot_base,
+            "snapshot_hash": canonical_hash(snapshot_base),
+        }
+        payload = _json_copy(
+            {
+                "schema_version": PACKET_V3_SCHEMA_VERSION,
+                "job_id": request.job_id,
+                "run_id": run_id,
+                "target": {
+                    "target_id": request.symbol,
+                    "symbol": request.symbol,
+                    "company_name": request.company_name,
+                    "aliases": sorted(
+                        set((*request.aliases, request.company_name, request.symbol))
+                    ),
+                },
+                "as_of_date": request.as_of_date,
+                "latest_trading_snapshot_date": request.latest_trading_snapshot_date,
+                "research_mode": mode.value,
+                "trigger_summary": request.trigger_summary,
+                "candidate_archetypes": list(primary_ids),
+                "selected_archetypes": list(primary_ids),
+                "business_snapshot": request.business_snapshot,
+                "structured_financial_snapshot": (
+                    request.structured_financial_snapshot
+                ),
+                "revision_valuation_snapshot": request.revision_valuation_snapshot,
+                "research_objectives": list(
+                    dict.fromkeys(request.research_objectives)
+                ),
+                "source_preferences": list(
+                    dict.fromkeys(request.source_preferences)
+                ),
+                "forbidden_inferences": list(
+                    dict.fromkeys(request.forbidden_inferences)
+                ),
+                "research_contract_snapshot": contract_snapshot,
+                "fresh_blind_boundary": {
+                    "old_pro_fact_input_count": 0,
+                    "old_route_receipt_input_count": 0,
+                    "old_rejection_input_count": 0,
+                    "old_question_answer_input_count": 0,
+                    "old_score_stage_input_count": 0,
+                    "expected_source_input_count": 0,
+                    "expected_fact_id_input_count": 0,
+                },
+                "output_contract": DOSSIER_V3_SCHEMA_VERSION,
+                "score_authority": False,
+                "stage_authority": False,
+            }
+        )
+        _assert_no_forbidden_answer_fields(payload)
+        _assert_fresh_blind_packet(payload)
+        _assert_as_of_dates(payload, cutoff)
+        errors = sorted(
+            self.validator.iter_errors(payload), key=lambda row: tuple(row.path)
+        )
+        if errors:
+            details = "; ".join(
+                f"{'/'.join(str(item) for item in error.path) or '$'}: {error.message}"
+                for error in errors
+            )
+            raise ValueError(f"ResearchPacketV3 schema validation failed: {details}")
+        return ResearchPacketV3(
+            payload=payload,
+            packet_hash=canonical_hash(payload),
+        )
+
+
 def build_blind_historical_anchor_digest(
     judgments: Sequence[HistoricalResearchJudgment | Mapping[str, Any]],
     component_anchors: Sequence[ComponentAnchor | Mapping[str, Any]],
@@ -416,6 +560,55 @@ def _assert_no_forbidden_answer_fields(value: Any, path: tuple[str, ...] = ()) -
             _assert_no_forbidden_answer_fields(child, path + (str(index),))
 
 
+def _assert_fresh_blind_packet(value: Any, path: tuple[str, ...] = ()) -> None:
+    forbidden = {
+        "existing_thesis_digest",
+        "historical_anchor_digest",
+        "known_positive_facts",
+        "known_counterfacts",
+        "old_pro_accepted_facts",
+        "old_pro_route_receipts",
+        "old_pro_verifier_rejection_roster",
+        "old_pro_question_terminal_answers",
+        "verification_repair_register",
+        "proposed_score_ranges",
+        "gate1_score",
+        "gate_1_score",
+        "old_v2_prospective_score",
+        "expected_source_urls",
+        "expected_fact_ids",
+        "gold_fact_ids",
+        "gold_source_urls",
+    }
+    if isinstance(value, Mapping):
+        for key, child in value.items():
+            normalized = str(key).strip().casefold().replace("-", "_")
+            next_path = (*path, str(key))
+            if normalized in forbidden:
+                raise ValueError(
+                    "fresh ResearchPacketV3 contains an old-answer field: "
+                    + "/".join(next_path)
+                )
+            if normalized in {"score", "stage"}:
+                raise ValueError(
+                    "fresh ResearchPacketV3 contains score/Stage output: "
+                    + "/".join(next_path)
+                )
+            if normalized in {"score_authority", "stage_authority"}:
+                if child is not False:
+                    raise ValueError(
+                        "fresh packet score/Stage authority must be false: "
+                        + "/".join(next_path)
+                    )
+                continue
+            _assert_fresh_blind_packet(child, next_path)
+    elif isinstance(value, Sequence) and not isinstance(
+        value, (str, bytes, bytearray)
+    ):
+        for index, child in enumerate(value):
+            _assert_fresh_blind_packet(child, (*path, str(index)))
+
+
 def _assert_as_of_dates(value: Any, cutoff: date, path: tuple[str, ...] = ()) -> None:
     date_keys = {
         "as_of_date",
@@ -463,15 +656,19 @@ def _atomic_write_text(path: Path, content: str) -> None:
 __all__ = [
     "DOSSIER_SCHEMA_VERSION",
     "DOSSIER_V2_SCHEMA_VERSION",
+    "DOSSIER_V3_SCHEMA_VERSION",
     "DeltaResearchContext",
     "PACKET_SCHEMA_VERSION",
     "PACKET_V2_SCHEMA_VERSION",
+    "PACKET_V3_SCHEMA_VERSION",
     "PacketBuildInput",
     "PacketBundleReceipt",
     "ResearchPacketBuilder",
     "ResearchPacketV2Builder",
+    "ResearchPacketV3Builder",
     "ResearchPacketV1",
     "ResearchPacketV2",
+    "ResearchPacketV3",
     "build_blind_historical_anchor_digest",
     "write_packet_bundle",
 ]

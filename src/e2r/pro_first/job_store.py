@@ -761,6 +761,69 @@ class ProFirstJobStore:
             result = self._require_job_row(connection, job_id)
         return self._job_from_row(result)
 
+    def seal_fresh_efficiency_failure(
+        self,
+        job_id: str,
+        *,
+        expected_version: int,
+        reason: str,
+        actor: str,
+        idempotency_key: str,
+    ) -> ProResearchJob:
+        """Seal a failed fresh canary so its successor must use a new chat.
+
+        This deliberately reuses the durable ``old_job_frozen_at`` gate that
+        every browser submit path already enforces, but records a fresh-run
+        disposition instead of mislabelling the canary as the original V2
+        repair-heavy diagnostic run.
+        """
+
+        normalized_reason = reason.strip()
+        if not normalized_reason:
+            raise ValueError("fresh efficiency failure reason is required")
+        payload = {
+            "event": "FRESH_SESSION_EFFICIENCY_VALIDATION_FAILED_AND_FROZEN",
+            "reason": normalized_reason,
+            "dispositions": [
+                "FRESH_SESSION_DIAGNOSTIC_ONLY",
+                "OPERATIONAL_EFFICIENCY_GATE_FAILED",
+                "NEW_CONVERSATION_REQUIRED",
+            ],
+            "automatic_resubmit_allowed": False,
+            "score_authority": False,
+            "stage_authority": False,
+            "publication_withheld": True,
+        }
+        with self._transaction() as connection:
+            row = self._require_job_row(connection, job_id)
+            if row["old_job_frozen_at"] is not None:
+                return self._job_from_row(row)
+            self._require_version(row, expected_version)
+            frozen_at = self._now_text()
+            cursor = connection.execute(
+                """
+                UPDATE pro_research_jobs
+                SET old_job_frozen_at=?, state_version=state_version+1,
+                    updated_at=?
+                WHERE job_id=? AND state_version=? AND old_job_frozen_at IS NULL
+                """,
+                (frozen_at, frozen_at, job_id, expected_version),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict(f"fresh-run freeze raced: {job_id}")
+            self._insert_event(
+                connection,
+                job_id=job_id,
+                from_status=row["status"],
+                to_status=row["status"],
+                actor=actor,
+                idempotency_key=idempotency_key,
+                payload=payload,
+                created_at=frozen_at,
+            )
+            result = self._require_job_row(connection, job_id)
+        return self._job_from_row(result)
+
     def bind_superseding_fresh_job(
         self,
         old_job_id: str,
