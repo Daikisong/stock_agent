@@ -104,6 +104,24 @@ class ResearchDossierParser:
         ):
             repaired = "\n".join(lines[1:]).strip()
             operations.append("REMOVE_STANDALONE_JSON_LANGUAGE_LABEL")
+        key_fixed, removed_key_control_count = (
+            _remove_raw_control_characters_from_json_keys(repaired)
+        )
+        if removed_key_control_count:
+            repaired = key_fixed
+            operations.append(
+                "REMOVE_RAW_CONTROL_CHARACTERS_FROM_JSON_KEYS:"
+                f"{removed_key_control_count}"
+            )
+        value_fixed, escaped_value_control_count = (
+            _escape_raw_control_characters_in_json_string_values(repaired)
+        )
+        if escaped_value_control_count:
+            repaired = value_fixed
+            operations.append(
+                "ESCAPE_RAW_CONTROL_CHARACTERS_IN_JSON_STRING_VALUES:"
+                f"{escaped_value_control_count}"
+            )
         trailing_fixed, removed_count = _remove_trailing_commas(repaired)
         if removed_count:
             repaired = trailing_fixed
@@ -174,16 +192,156 @@ def _remove_trailing_commas(text: str) -> tuple[str, int]:
     return "".join(output), removed
 
 
+def _remove_raw_control_characters_from_json_keys(text: str) -> tuple[str, int]:
+    """Delete raw JSON control characters only from object member names.
+
+    Visible browser code blocks can insert a hard line break immediately before
+    a member-name closing quote, for example ``"issuer_scoped\n": true``.
+    JSON forbids that raw control character even though the key identity is
+    otherwise intact.  Values are deliberately left untouched: deleting a line
+    break from a statement or supporting excerpt would mutate evidence content.
+    The schema validator remains responsible for rejecting any repaired key that
+    is not part of the dossier contract.
+    """
+
+    output: list[str] = []
+    removed = 0
+    index = 0
+    while index < len(text):
+        if text[index] != '"':
+            output.append(text[index])
+            index += 1
+            continue
+
+        end = index + 1
+        escaped = False
+        while end < len(text):
+            character = text[end]
+            if escaped:
+                escaped = False
+            elif character == "\\":
+                escaped = True
+            elif character == '"':
+                break
+            end += 1
+        if end >= len(text):
+            output.append(text[index:])
+            break
+
+        lookahead = end + 1
+        while lookahead < len(text) and text[lookahead].isspace():
+            lookahead += 1
+        is_object_key = lookahead < len(text) and text[lookahead] == ":"
+        token = text[index : end + 1]
+        if is_object_key:
+            cleaned = "".join(
+                character
+                for character in token
+                if not (ord(character) < 0x20 and character not in {'"', "\\"})
+            )
+            removed += len(token) - len(cleaned)
+            output.append(cleaned)
+        else:
+            output.append(token)
+        index = end + 1
+    return "".join(output), removed
+
+
+def _escape_raw_control_characters_in_json_string_values(
+    text: str,
+) -> tuple[str, int]:
+    """Make raw controls JSON-safe while preserving decoded value content.
+
+    A raw newline inside a JSON string is invalid syntax.  Replacing that one
+    character with the two-byte JSON encoding ``\\n`` does not delete or infer
+    text: ``json.loads`` decodes it back to the same newline.  Object keys are
+    excluded because their schema identity is handled by the narrower key
+    normalizer above.
+    """
+
+    escapes = {
+        "\b": "\\b",
+        "\f": "\\f",
+        "\n": "\\n",
+        "\r": "\\r",
+        "\t": "\\t",
+    }
+    output: list[str] = []
+    escaped_count = 0
+    index = 0
+    while index < len(text):
+        if text[index] != '"':
+            output.append(text[index])
+            index += 1
+            continue
+
+        end = index + 1
+        escaped = False
+        while end < len(text):
+            character = text[end]
+            if escaped:
+                escaped = False
+            elif character == "\\":
+                escaped = True
+            elif character == '"':
+                break
+            end += 1
+        if end >= len(text):
+            output.append(text[index:])
+            break
+
+        lookahead = end + 1
+        while lookahead < len(text) and text[lookahead].isspace():
+            lookahead += 1
+        is_object_key = lookahead < len(text) and text[lookahead] == ":"
+        token = text[index : end + 1]
+        if not is_object_key:
+            repaired_token: list[str] = []
+            for character in token:
+                if ord(character) < 0x20:
+                    repaired_token.append(
+                        escapes.get(character, f"\\u{ord(character):04x}")
+                    )
+                    escaped_count += 1
+                else:
+                    repaired_token.append(character)
+            output.append("".join(repaired_token))
+        else:
+            output.append(token)
+        index = end + 1
+    return "".join(output), escaped_count
+
+
 def _protected_values(text: str) -> Mapping[str, tuple[str, ...]]:
     return {
         field: tuple(
-            match.group(1)
+            _decode_json_string_fragment(match.group(1))
             for match in re.finditer(
                 rf'"{re.escape(field)}"\s*:\s*"((?:\\.|[^"\\])*)"', text
             )
         )
         for field in _PROTECTED_FIELDS
     }
+
+
+def _decode_json_string_fragment(value: str) -> str:
+    encoded = "".join(
+        {
+            "\b": "\\b",
+            "\f": "\\f",
+            "\n": "\\n",
+            "\r": "\\r",
+            "\t": "\\t",
+        }.get(character, f"\\u{ord(character):04x}")
+        if ord(character) < 0x20
+        else character
+        for character in value
+    )
+    try:
+        decoded = json.loads(f'"{encoded}"')
+    except json.JSONDecodeError:
+        return value
+    return str(decoded)
 
 
 def _text_hash(text: str) -> str:

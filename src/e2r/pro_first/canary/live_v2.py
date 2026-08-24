@@ -402,6 +402,76 @@ class ProV2LiveCanaryRunner:
                     },
                 )
 
+            submitted_repair_recovery = _submitted_unsnapshotted_followup_plan(
+                orchestrator,
+                job_id=job.job_id,
+                pass_name="VERIFIER_REPAIR",
+            )
+            if submitted_repair_recovery is not None:
+                recovery_verification_service = ProSourceVerificationService(
+                    self.store,
+                    verifier=self.source_verifier,
+                )
+                recovery_verification = recovery_verification_service.verify_job(
+                    job.job_id,
+                    job_root=job_root,
+                )
+                if _verification_needs_effective_dossier_reverification(
+                    recovery_verification,
+                    dossier=dossier,
+                ):
+                    recovery_verification_service.request_effective_dossier_reverification(
+                        job.job_id,
+                        job_root=job_root,
+                        reason="SUBMITTED_REPAIR_RECOVERY_PARENT_DOSSIER_CHANGED",
+                    )
+                    recovery_verification = (
+                        recovery_verification_service.verify_job(
+                            job.job_id,
+                            job_root=job_root,
+                        )
+                    )
+                (
+                    recovery_verification_rows,
+                    recovery_claim_links,
+                    recovery_compilation_rejections,
+                ) = _verification_artifact_rows(recovery_verification)
+                (
+                    dossier,
+                    recovery_outcomes,
+                    _recovery_verification_rows,
+                    _recovery_claim_links,
+                    _recovery_compilation_rejections,
+                ) = await self._run_repairs(
+                    prepared=prepared,
+                    orchestrator=orchestrator,
+                    dossier_store=dossier_store,
+                    dossier=dossier,
+                    job_root=job_root,
+                    verification_rows=recovery_verification_rows,
+                    claim_links=recovery_claim_links,
+                    compilation_rejections=(
+                        recovery_compilation_rejections
+                    ),
+                    recover_submitted_pass_id=(
+                        submitted_repair_recovery.research_pass.pass_id
+                    ),
+                )
+                pass_outcomes.extend(recovery_outcomes)
+                self._emit(
+                    self.store.get_job(job.job_id),
+                    "SUBMITTED_REPAIR_CAPTURE_IMPORTED_BEFORE_ROUTING",
+                    {
+                        "pass_id": (
+                            submitted_repair_recovery.research_pass.pass_id
+                        ),
+                        "capture_reused": True,
+                        "automatic_resubmit_allowed": False,
+                        "recovered_outcome_count": len(recovery_outcomes),
+                        "latest_dossier_hash": canonical_hash(dossier),
+                    },
+                )
+
             counter_audit_recovered = _has_snapshotted_completed_pass(
                 orchestrator.ledger,
                 job_id=job.job_id,
@@ -1370,6 +1440,7 @@ class ProV2LiveCanaryRunner:
         claim_links: Sequence[Mapping[str, Any]],
         compilation_rejections: Sequence[Mapping[str, Any]],
         recover_completed_pass_id: str | None = None,
+        recover_submitted_pass_id: str | None = None,
     ) -> tuple[
         Mapping[str, Any],
         list[Mapping[str, Any]],
@@ -1386,6 +1457,11 @@ class ProV2LiveCanaryRunner:
             orchestrator,
             verifier=self.source_verifier,
         )
+        if (
+            recover_completed_pass_id is not None
+            and recover_submitted_pass_id is not None
+        ):
+            raise RuntimeError("repair recovery modes are mutually exclusive")
         if recover_completed_pass_id is not None and (
             str(current.get("research_pass_id") or "")
             != recover_completed_pass_id
@@ -1393,6 +1469,25 @@ class ProV2LiveCanaryRunner:
             raise RuntimeError(
                 "completed repair reprocessing requires the current dossier pass"
             )
+        if recover_submitted_pass_id is not None:
+            submitted_repair = orchestrator.ledger.get_pass(
+                recover_submitted_pass_id
+            )
+            if (
+                submitted_repair.job_id != prepared.job.job_id
+                or submitted_repair.pass_name != "VERIFIER_REPAIR"
+                or submitted_repair.submit_count != 1
+                or submitted_repair.status not in {
+                    "RESEARCH_RUNNING",
+                    "TRANSPORT_PENDING",
+                    "COMPLETE",
+                }
+                or submitted_repair.parent_pass_id
+                != str(current.get("research_pass_id") or "")
+            ):
+                raise RuntimeError(
+                    "submitted repair recovery is not bound to the current parent dossier"
+                )
         for repair_ordinal in range(1, self.repair_pass_limit + 1):
             plan = repair_service.plan_repair(
                 job_id=prepared.job.job_id,
@@ -1417,6 +1512,10 @@ class ProV2LiveCanaryRunner:
                 recover_research_pass_id=recover_completed_pass_id,
             )
             if not plan.rejection_packets:
+                if recover_submitted_pass_id is not None:
+                    raise RuntimeError(
+                        "submitted repair recovery no longer has its rejection packet roster"
+                    )
                 return (
                     current,
                     outcomes,
@@ -1425,6 +1524,13 @@ class ProV2LiveCanaryRunner:
                     current_rejections,
                 )
             followup = _require_plan(plan.followup, "VERIFIER_REPAIR")
+            if (
+                recover_submitted_pass_id is not None
+                and followup.research_pass.pass_id != recover_submitted_pass_id
+            ):
+                raise RuntimeError(
+                    "submitted repair recovery resolved to a different durable pass"
+                )
             repair_base = current
             durable_followup = orchestrator.ledger.get_pass(
                 followup.research_pass.pass_id
@@ -1509,7 +1615,10 @@ class ProV2LiveCanaryRunner:
                 }
             )
             outcomes.append(summary)
-            if recover_completed_pass_id is not None:
+            if (
+                recover_completed_pass_id is not None
+                or recover_submitted_pass_id is not None
+            ):
                 return (
                     current,
                     outcomes,

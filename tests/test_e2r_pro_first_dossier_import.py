@@ -417,6 +417,47 @@ class ProFirstDossierImportTest(unittest.IsolatedAsyncioTestCase):
             parsed.protected_values_after,
         )
 
+    def test_visible_dom_raw_line_break_in_json_key_is_deletion_only_repair(self) -> None:
+        payload = self._valid_dossier()
+        text = json.dumps(payload, ensure_ascii=False).replace(
+            '"issuer_scoped"', '"issuer_scoped\n"', 1
+        )
+        parsed = ResearchDossierParser().parse_text(
+            text, parser_source="DOWNLOADED_JSON"
+        )
+        self.assertEqual(parsed.payload, payload)
+        self.assertEqual(
+            parsed.repair_operations,
+            ("REMOVE_RAW_CONTROL_CHARACTERS_FROM_JSON_KEYS:1",),
+        )
+        self.assertEqual(
+            parsed.protected_values_before,
+            parsed.protected_values_after,
+        )
+
+    def test_visible_dom_raw_line_break_in_evidence_value_preserves_content(self) -> None:
+        payload = self._valid_dossier()
+        text = json.dumps(payload, ensure_ascii=False).replace(
+            "검증기업의 공식 수치가 개선됐다.",
+            "검증기업의\n공식 수치가 개선됐다.",
+            1,
+        )
+        parsed = ResearchDossierParser().parse_text(
+            text, parser_source="DOWNLOADED_JSON"
+        )
+        self.assertEqual(
+            parsed.payload["material_facts"][0]["statement"],
+            "검증기업의\n공식 수치가 개선됐다.",
+        )
+        self.assertEqual(
+            parsed.repair_operations,
+            ("ESCAPE_RAW_CONTROL_CHARACTERS_IN_JSON_STRING_VALUES:1",),
+        )
+        self.assertEqual(
+            parsed.protected_values_before,
+            parsed.protected_values_after,
+        )
+
     def test_parser_prefers_downloaded_json_then_falls_back_to_md(self) -> None:
         payload = self._valid_dossier()
         downloaded = Path(self.temporary_directory.name) / "downloaded.json"

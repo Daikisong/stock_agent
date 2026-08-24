@@ -728,3 +728,30 @@ exact 부모 주문서의 20번 항목 이름을 확인할 수 있다. 하지만
 실제 pass 13 capture는 facts 0, question rows 0, gap question refs 20, repair register 58,
 unique withdrawn candidates 16이며 수정 adapter schema PASS다. dossier focused `19/19 PASS`,
 browser 재전송은 0이다.
+
+### old repair-heavy 세션은 V2.1 fresh-session 검증으로 대체한다
+
+pass 14에서 20개를 전부 철회하고 pass 15의 마지막 6개 중 2개를 철회한 결과 old effective
+dossier는 69 facts / 28 questions / 211 routes다. pass 15의 나머지 4개는 verifier pending이지만
+같은 대화에 다시 보내지 않는다.
+
+이 실행이 보여준 핵심은 “repair를 충분히 반복하면 운영 준비가 된다”가 아니다. 최초 출력의
+compound fact·source 표현·JSON 포맷·local normalization 결함까지 Pro repair로 되돌리면
+prompt가 20만 자를 넘고 순차 batch가 늘어난다는 진단이다.
+
+새 V2.1 경로는 다음 순서다.
+
+```text
+old run diagnostic-only freeze
+→ rejection A/B/C 전수 taxonomy
+→ source registry + atomic fact DossierV3
+→ verifier-ready Initial Prompt V3
+→ local preflight normalization
+→ genuine semantic defect만 compact RepairDeltaV3 0~1회
+→ 완전히 새 conversation blind canary
+```
+
+쉬운 예로 송장 줄바꿈이나 URL tracking은 연구원에게 다시 조사시킬 문제가 아니라 입고
+시스템이 고칠 기계적 오류다. 반대로 인용문이 주장보다 좁거나 대상 회사가 틀린 경우만
+연구원에게 의미 수리를 요청한다. old run의 점수·Stage·accepted fact·route는 fresh canary의
+정답지로 재사용하지 않는다.

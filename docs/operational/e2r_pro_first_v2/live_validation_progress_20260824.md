@@ -1,6 +1,6 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 03:40 KST`
+기준 시각: `2026-08-25 04:22 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
@@ -65,7 +65,10 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → 실제 pass 13 response schema read-only PASS, 재전송 없이 durable 적용 대기
 → pass 13 COMPLETE: 16/16 withdrawn, unresolved 0, 107-16=91 facts / 211 routes
 → pass 14 next batch 20개 exactly-once submit, deferred 6
-→ pass 14 RESEARCH_RUNNING / submit_count=1, visible result 감시 중
+→ pass 14 COMPLETE: 20/20 withdrawn, unresolved 0, 91-20=71 facts / 211 routes
+→ pass 15 마지막 6개 exactly-once submit·capture·deterministic import 완료
+→ pass 15 WITHDRAWN 2 / unresolved 4 / 69 facts / 추가 browser submit 0
+→ V2.1 fresh-session Goal에 따라 old conversation 추가 follow-up 영구 중단
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -95,6 +98,8 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 | canonical verification attempt 5 | `PROVERIFY-7913ef1dd902b450732f5e65` / hash `d7bcaefa1cc48dd1cac1bf9854cd83e2baedfd5336790ae59425491828cd6693` / exact pass 11 snapshot hash |
 | pass 13 capture hash | report `4447c7c4b8cd73bf1b09f33844cd3a7e98b9994c8325b1216509fd51189b0ed9` / dossier `1e3d06c1f88c2ee4a8041052fb67518f0a3b39752b5720a3870428d9c1fe9627` |
 | pass 13 effective snapshot | `PRODOSSIERSNAPSHOT-9619bab2a47190c96ed5f19a` / hash `22883883e226d47d38efcbc920014f534e81e0b829578036242e4afe3c75c68b` / 91 facts |
+| pass 14 effective snapshot | `PRODOSSIERSNAPSHOT-c2c6c21f49041ae123fe3dce` / hash `a84fab402b19283af33310f7b6355679e72b5e403be687a1798ef5eb8dfd1144` / 71 facts |
+| pass 15 effective snapshot | `PRODOSSIERSNAPSHOT-05656ec8f80ad8d8e58fb94d` / hash `6e6fcc84784ba93be41589689e5f0c2d6952078396d016de33ae5ff22f83c675` / 69 facts |
 | runtime root | `C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\live_v2\20260823T145430Z` |
 
 runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 있어 Git에 복제하지
@@ -118,7 +123,8 @@ runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 �
 | 11 | `PROPASS-7a551c28c37e8ca775a056a4` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | pass 10 cap 영수증을 append-only supersede. capture 재사용, repair/reverify, effective snapshot까지 완료. 107 facts / 211 routes / accepted 4 / rejected 7 / withdrawn 4 |
 | 12 | `PROPASS-e677c79c63041ec3ee5c77fe` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | pass 11 재검증 뒤 남은 42개 중 next 16개 계획. 점검용 max 7에서 미전송 보존 |
 | 13 | `PROPASS-10e3c63062359e4fe27642e0` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | pass 12 cap-only 영수증을 보존하고 exactly once submit. 16 candidates 전부 WITHDRAWN, deterministic repair unresolved 0, snapshot 91 facts / 211 routes |
-| 14 | `PROPASS-2b9c5685c4e8b419b5752c3c` | `VERIFIER_REPAIR` | `RESEARCH_RUNNING` | 1 | 최신 pending 26개 중 20개를 204,475자에 exactly once submit. 6개 deferred, visible result 감시 중 |
+| 14 | `PROPASS-2b9c5685c4e8b419b5752c3c` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | pending 26개 중 20개 전부 WITHDRAWN, unresolved 0, snapshot 71 facts / 211 routes |
+| 15 | `PROPASS-5cafcd69a1577739808ba25b` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | 마지막 6개 응답을 exactly-once capture/import. WITHDRAWN 2, unresolved 4, snapshot 69 facts / 211 routes. 이후 old conversation 전송 금지 |
 
 pass 5는 실패한 연구 답변이 아니라 실제 제출 전 transport 계획이다. 삭제하거나
 `COMPLETE`로 바꾸지 않았고, `submit_count=0`, `prepared_at=null`, `submitted_at=null`을
@@ -1723,3 +1729,74 @@ status                      RESEARCH_RUNNING
 현재 runner는 해당 assistant turn의 완료 여부만 poll한다. pass 14를 다시 작성하거나 다시
 클릭하지 않으며, 다른 터미널·창·전역 키 입력도 사용하지 않는다. visible result가 안정화되기
 전에는 사실 수, verifier 판정, saturation, score 또는 Stage를 미리 확정하지 않는다.
+
+### 18.16 pass 14·15 완료와 V2.1 fresh-session 방향 전환
+
+pass 14는 선택된 20개 candidate를 전부 명시적 `WITHDRAWN`으로 반환했다. replacement가
+없으므로 deterministic repair는 20개를 roster에서 제거했고 unresolved는 0이다.
+
+```text
+pass 14 response hash        4d6739748d8cd58206a46b08475921ba4da7bdb757128c1335829d550d97f1b5
+repair withdrawn / unresolved                                 20 / 0
+facts before / after                                          91 / 71
+snapshot                    PRODOSSIERSNAPSHOT-c2c6c21f49041ae123fe3dce
+dossier hash                a84fab402b19283af33310f7b6355679e72b5e403be687a1798ef5eb8dfd1144
+```
+
+그 뒤 마지막 deferred 6개를 83,600자 prompt로 pass 15에 exactly once 제출했다. pass 15는
+poll 257에서 READY가 됐고 capture는 한 번만 발생했다.
+
+```text
+pass id                     PROPASS-5cafcd69a1577739808ba25b
+parent                      PROPASS-2b9c5685c4e8b419b5752c3c
+assistant turn              request-6a8b09c3-bfcc-83ee-b15b-9f76eca52249-6
+captured at                 2026-08-24T19:11:09.064909Z
+report hash                 570484b5d4d46921c2aa6bf064d768f7d4b3637e4cf6dcc3496302ab38d1e27e
+dossier capture hash        5ce78ae5614f7c95d73587dd586048420e5e368298db59fb049c38547da54f0b
+submit_count                1
+```
+
+visible DOM JSON에는 object key 내부 raw newline 4개와 string value 내부 raw newline 25개가
+있었다. parser는 key 제어문자만 삭제하고 value 제어문자는 JSON escape로 바꿔 decoded
+내용을 보존한다. statement·quote를 새로 쓰거나 의미를 추정하지 않는다. focused parser/live/
+repair 회귀시험은 `61/61 PASS`다.
+
+첫 resume은 pass 15보다 public-gap cap을 먼저 계산해 READY를 적용하지 못했다. 최신
+`submit_count=1 + snapshot 없음` verifier-repair를 routing보다 먼저 복구하도록 순서를
+고쳤다. 두 번째 resume은 `recovery_submit_count=0`으로 같은 capture를 재사용해 import했다.
+
+```text
+repair candidates / resolutions                              6 / 2
+withdrawn                                                        2
+unresolved                                                       4
+facts before / after                                         71 / 69
+repair receipt hash     6af35efcb45ba50746c7a42676cfea6704cd82f35dc786e06f216160accd4cf5
+snapshot               PRODOSSIERSNAPSHOT-05656ec8f80ad8d8e58fb94d
+dossier hash           6e6fcc84784ba93be41589689e5f0c2d6952078396d016de33ae5ff22f83c675
+question/routes                                                28 / 211
+new browser submit                                                    0
+```
+
+새 기준 문서
+`C:\Users\eorb9\Downloads\e2r_pro_first_v2_1_fresh_session_verifier_ready_master_goal.md`
+1,659줄 전체를 확인했다. 이 old run은 더 이상 repair로 완주할 운영 canary가 아니다.
+
+```text
+OLD_V2_REPAIR_HEAVY_DIAGNOSTIC_RUN
+SUPERSEDED_BY_FRESH_SESSION_EFFICIENCY_VALIDATION
+NOT_OPERATIONAL_EFFICIENCY_PROOF
+```
+
+따라서 unresolved 4개를 old conversation에 다시 보내지 않는다. 다음 단계는 old job freeze,
+전체 rejection A/B/C taxonomy, V3 atomic dossier·initial prompt·local preflight·compact repair를
+구현한 뒤 완전히 새 conversation의 blind 000660 canary를 실행하는 것이다. old score/Stage,
+accepted fact, route와 verifier 답안은 fresh packet에 넣지 않는다.
+
+문서 직전 HEAD `f8e03139e926013fcc56d94890ad356168188730`의 GitHub Actions는 다음과 같다.
+
+```text
+E2R Pro-first verification             SUCCESS
+https://github.com/Daikisong/stock_agent/actions/runs/32763808128
+E2R v6 operational cutover verification SUCCESS
+https://github.com/Daikisong/stock_agent/actions/runs/32763808119
+```
