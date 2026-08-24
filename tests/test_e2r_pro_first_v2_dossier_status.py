@@ -12,6 +12,7 @@ from e2r.pro_first.dossier import (
     ResearchDossierValidator,
 )
 from e2r.pro_first.dossier.dialect_adapter import (
+    _canonical_question_result,
     _scoped_verifier_repair_proposals,
 )
 from e2r.pro_first.research_contracts import select_contract_bundle
@@ -174,6 +175,20 @@ class ProFirstV2DossierStatusTest(unittest.TestCase):
         invalid["question_family_results"][0]["status"] = "PRO_SAYS_DONE"
         with self.assertRaisesRegex(DossierValidationError, "schema validation"):
             self.validator.validate(invalid, _context())
+
+    def test_compact_not_applicable_with_reason_availability_is_canonicalized(
+        self,
+    ) -> None:
+        row = _question_result(
+            ARCHETYPE,
+            "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_Q03",
+            availability="NOT_APPLICABLE_WITH_REASON",
+        )
+
+        canonical = _canonical_question_result(row, route_question_by_id={})
+
+        self.assertEqual(canonical["status"], "NOT_APPLICABLE_WITH_REASON")
+        self.assertEqual(canonical["availability_class"], "NOT_APPLICABLE")
 
     def test_nonterminal_public_gap_preserved(self) -> None:
         payload = _base_v2()

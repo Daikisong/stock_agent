@@ -304,6 +304,10 @@ def _route_bound_verified_fact_ids(
 
     One source fact can support several question families even though the
     acquisition receipt remains owned by the question that opened the source.
+    A currently verified direct fact is also bound when a normal route from
+    the same immutable research pass opened its exact source URL; this covers
+    a Pro receipt that acquired the document but omitted one fact id from its
+    accepted-id roster without permitting cross-pass URL rebinding.
     Derived counter/resolution relationship facts inherit route provenance
     only when every declared source anchor occurs in immutable accepted-route
     history.  The relationship fact itself must still be currently verified;
@@ -316,6 +320,33 @@ def _route_bound_verified_fact_ids(
         for value in route.get("accepted_fact_ids") or ()
         if str(value)
     }
+    normal_routes = tuple(
+        route
+        for route in route_receipts
+        if str(route.get("provider_status") or "") == "SUCCESS"
+        and str(route.get("parser_status") or "SUCCESS") == "SUCCESS"
+    )
+    for fact_id in verified_fact_ids:
+        fact = facts_by_id.get(fact_id) or {}
+        fact_url = str(fact.get("source_url") or fact.get("url") or "")
+        fact_pass_id = str(fact.get("research_pass_id") or "")
+        if (
+            not fact_url
+            or not fact_pass_id
+            or tuple(fact.get("source_anchor_fact_ids") or ())
+        ):
+            continue
+        if any(
+            str(route.get("pass_id") or "") == fact_pass_id
+            and fact_url
+            in {
+                str(value)
+                for value in route.get("opened_source_urls") or ()
+                if str(value)
+            }
+            for route in normal_routes
+        ):
+            acquisition_bound.add(fact_id)
     bound = set(verified_fact_ids).intersection(acquisition_bound)
     while True:
         added: set[str] = set()

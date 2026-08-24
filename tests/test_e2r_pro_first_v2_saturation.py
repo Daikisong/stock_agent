@@ -242,6 +242,70 @@ class ProFirstV2SaturationTest(unittest.TestCase):
             decision.failure_codes,
         )
 
+    def test_verified_fact_binds_to_exact_opened_url_in_same_pass(self) -> None:
+        dossier = deepcopy(self.dossier)
+        result = dossier["question_family_results"][0]
+        fact_id = result["support_fact_ids"][0]
+        fact = next(
+            row
+            for row in dossier["material_facts"]
+            if row["dossier_fact_id"] == fact_id
+        )
+        route = next(
+            row
+            for row in dossier["search_route_receipts"]
+            if row["route_receipt_id"] == result["search_route_receipt_ids"][0]
+        )
+        fact["research_pass_id"] = route["pass_id"]
+        fact["source_url"] = route["opened_source_urls"][0]
+        for row in dossier["search_route_receipts"]:
+            row["accepted_fact_ids"] = [
+                value for value in row["accepted_fact_ids"] if value != fact_id
+            ]
+
+        receipt = self._adjudicate(dossier)
+        decision = _decision(receipt, result["question_family_id"])
+
+        self.assertTrue(decision.question_to_source_linkage_complete)
+        self.assertNotIn(
+            decision.question_family_id,
+            receipt.verifier_repair_pending_ids,
+        )
+
+    def test_opened_url_from_different_pass_cannot_rebind_fact(self) -> None:
+        dossier = deepcopy(self.dossier)
+        result = dossier["question_family_results"][0]
+        fact_id = result["support_fact_ids"][0]
+        fact = next(
+            row
+            for row in dossier["material_facts"]
+            if row["dossier_fact_id"] == fact_id
+        )
+        route = next(
+            row
+            for row in dossier["search_route_receipts"]
+            if row["route_receipt_id"] == result["search_route_receipt_ids"][0]
+        )
+        fact["research_pass_id"] = "PASS-OTHER"
+        fact["source_url"] = route["opened_source_urls"][0]
+        for row in dossier["search_route_receipts"]:
+            row["accepted_fact_ids"] = [
+                value for value in row["accepted_fact_ids"] if value != fact_id
+            ]
+
+        receipt = self._adjudicate(dossier)
+        decision = _decision(receipt, result["question_family_id"])
+
+        self.assertFalse(decision.question_to_source_linkage_complete)
+        self.assertIn(
+            decision.question_family_id,
+            receipt.verifier_repair_pending_ids,
+        )
+        self.assertEqual(
+            receipt.deterministic_research_status,
+            "NEEDS_VERIFIER_REPAIR",
+        )
+
     def test_derived_relationship_inherits_verified_anchor_route(self) -> None:
         dossier = deepcopy(self.dossier)
         result = dossier["question_family_results"][0]
@@ -316,6 +380,10 @@ class ProFirstV2SaturationTest(unittest.TestCase):
             "QUESTION_FACT_NOT_BOUND_TO_ROUTE_RECEIPT",
             decision.failure_codes,
         )
+        self.assertIn(
+            decision.question_family_id,
+            receipt.verifier_repair_pending_ids,
+        )
 
     def test_tracked_saturation_audit_matches_current_engine(self) -> None:
         receipt = self._adjudicate()
@@ -335,7 +403,7 @@ class ProFirstV2SaturationTest(unittest.TestCase):
                 "known_hynix_like_stage_boundary_gap_count": 1,
                 "known_hynix_like_hard_break_gap_count": 7,
                 "known_hynix_like_corroboration_cap_count": 0,
-                "focused_test_count": 26,
+                "focused_test_count": 28,
             }
         )
         path = (

@@ -1312,6 +1312,8 @@ def _canonical_question_result(
         canonical_availability = "LIKELY_NONPUBLIC"
     elif "FUTURE_EVENT" in availability and "PUBLIC" not in availability:
         canonical_availability = "FUTURE_EVENT_ONLY"
+    elif availability == "NOT_APPLICABLE_WITH_REASON":
+        canonical_availability = "NOT_APPLICABLE"
     else:
         canonical_availability = "PUBLIC_SEARCHABLE"
     question_id = str(row.get("question_family_id") or "")

@@ -12,6 +12,17 @@ from .question_closure import compile_question_closure_decision
 from .snapshots import compile_verified_research_snapshot
 
 
+_FACT_BACKED_TERMINAL_STATUSES = frozenset(
+    {
+        "SUPPORTED_SCORING",
+        "PARTIALLY_SUPPORTED_SCORING",
+        "SUPPORTED_NON_SCORING",
+        "COUNTER_SUPPORTED",
+        "FUTURE_EVENT_ONLY",
+    }
+)
+
+
 class ResearchSaturationAdjudicator:
     def adjudicate(
         self,
@@ -123,6 +134,19 @@ class ResearchSaturationAdjudicator:
             in {"PUBLIC_SEARCHABLE", "UNKNOWN_ROUTE_NOT_YET_TESTED", "SOURCE_PENDING"}
             and row.materiality not in {"NON_MATERIAL", "MONITORING"}
         )
+        # A terminal fact-backed answer with adequate source search but broken
+        # fact/lineage provenance is verifier work, not another public web
+        # search.  Missing core source roles remain public acquisition gaps.
+        # This ordering prevents an integrity defect from opening an endless
+        # sequence of Pro searches that cannot repair the immutable ledger.
+        integrity_repair_pending = tuple(
+            row.question_family_id
+            for row in decisions
+            if row.status in _FACT_BACKED_TERMINAL_STATUSES
+            and row.route_adequacy.adequate
+            and not row.missing_core_source_roles
+            and not row.question_to_source_linkage_complete
+        )
         repair_pending = tuple(
             dict.fromkeys(
                 [str(value) for value in verifier_repair_pending_ids]
@@ -131,6 +155,7 @@ class ResearchSaturationAdjudicator:
                     for row in decisions
                     if row.deterministic_status == "VERIFIER_REPAIR_REQUIRED"
                 ]
+                + list(integrity_repair_pending)
             )
         )
         provider_parser = tuple(

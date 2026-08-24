@@ -208,7 +208,7 @@ phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는
 | P6 | 완료 | 11종 verifier rejection packet, 동일 대화 repair/withdraw, deterministic re-verification |
 | P7 | 완료 | saturation 선행 gate, diagnostic/full score 분리, Stage/publication withheld, 기존 scorer/StageCourt 재사용 |
 | P8 | 완료 | 36 prompt snapshot, 13 mechanism golden, known-bad 30종·detector 29개 |
-| P9 | 진행 중 | 000660 pass 6 revision 2와 pass 7 durable 입고 완료. 공유 fact route 계보 수정 후 공개 gap 28→10. pass 8은 1회 제출·연구 중이며 verifier/saturation/score, C17/C28가 남음 |
+| P9 | 진행 중 | 000660 pass 8을 재전송 없이 COMPLETE 입고. 누적 111 facts / 161 routes, 신규 공개검색 queue 0 / verifier repair 5로 분리. pass 8 revision 2, verifier/saturation/score, C17/C28가 남음 |
 | P10 | 부분 완료 | V2 static audit 20/20 zero·critical 0 구현. P9 완료 뒤 full CI·최종 receipt가 남음 |
 
 ### 2026-08-24 live P9 진행 기록
@@ -491,3 +491,47 @@ Windows mock 종료 시 발견된 multi-pass SQLite read connection 7곳도
 `contextlib.closing`으로 명시적으로 닫았다. 기능 assertion 뒤 임시 DB 삭제만 실패하던
 `WinError 32`가 사라졌고 동일 Windows Chromium mock은 `1/1 PASS`다. production static
 audit는 `20/20 zero / critical_count=0 / PASS`를 유지한다.
+
+## 공개자료 취득과 verifier 무결성 수리의 전이 분리
+
+Pass 8은 28개 질문별 공개 경로를 실제 조사하고 새 route 영수증 28개를 남겼지만 새 material
+fact는 0개였다. 이 상태에서 남은 질문을 availability 문자열만 보고 또 공개검색으로 보내면
+route만 계속 늘어나는 무한 반복이 된다. 공개 웹은 immutable ledger의 누락된 fact ID나 잘못
+연결된 subject를 고칠 수 없기 때문이다.
+
+그래서 terminal fact-backed 질문을 다음 두 갈래로 나눴다.
+
+```text
+route 부족 또는 core source role 부족
+→ PUBLIC_GAP_CLOSURE
+
+route 충분 + core source role 충족 + fact/lineage 결박 실패
+→ VERIFIER_REPAIR
+```
+
+Pass 8 read-only 재판정에서는 신규 공개 route queue가 `0`, verifier repair가 `5`다. 즉
+`새 자료를 못 믿으니 또 찾아라`가 아니라 `찾은 자료의 장부 연결을 승인·철회·교체하라`로
+전이가 바뀌었다. score와 Stage는 이 5건이 다시 deterministic verification을 통과하고
+saturation이 true가 된 뒤에만 계산한다.
+
+같은 pass에서 정상 route가 verified direct fact의 exact source URL을 열었으나
+`accepted_fact_ids`만 빠뜨린 경우에는 다음 불변식을 모두 확인해 acquisition provenance를
+복구한다.
+
+- fact `research_pass_id == route.pass_id`
+- provider/parser `SUCCESS`
+- exact opened source URL 일치
+- 현재 verified direct fact이며 derived relationship이 아님
+
+다른 pass의 같은 URL은 쓸 수 없다. derived relationship은 exact URL 지름길을 쓰지 않고
+모든 declared source anchor가 immutable accepted-route history에 있어야 한다.
+
+또 compact Pro dialect의 `NOT_APPLICABLE_WITH_REASON`은 raw 사유를 유지한 채 canonical
+availability `NOT_APPLICABLE`로만 정규화한다. 이를 `PUBLIC_SEARCHABLE`로 기본 변환하면
+원래 적용 불가능하다고 설명한 질문이 공개검색 queue로 되돌아가는 의미 손실이 생긴다.
+
+Pass 8 revision 1과 수정 adapter의 read-only 결과는 이 availability 한 leaf만 다르고 fact,
+statement, source, route count는 모두 같다. 기존 revision 1을 고치지 않고 same-pass revision 2를
+append해 두 의미를 모두 감사할 수 있게 한다. 관련 saturation focused test는 `28/28`, dossier
+status test는 `14/14`, Windows Chromium browser mock은 `1/1`, production static audit는
+`20/20 zero / critical_count=0 / PASS`다.

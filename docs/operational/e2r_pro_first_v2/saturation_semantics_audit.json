@@ -16,7 +16,7 @@
   "exact_question_source_role_semantics": true,
   "expected_mandatory_question_count": 28,
   "fixture_scope": "C06 plus four mandatory R13 cross-archetype guards",
-  "focused_test_count": 26,
+  "focused_test_count": 28,
   "gap_class_counts": {
     "CORE_SCORE_BLOCKER": 0,
     "CORROBORATION_CAP": 0,
