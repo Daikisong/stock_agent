@@ -657,3 +657,15 @@ V2 schema enum을 Pro 문구마다 늘리지 않는다. adapter는 원문을 sat
 실제 response schema 재검증은 facts 11개를 유지한 채 PASS했다. pass 11 repair snapshot은
 아직 미영속이므로 다음 재개에서 동일 capture를 다시 읽어 deterministic repair/reverification을
 수행한다. 이 구분 뒤 focused regression은 `65/65 PASS`, static audit는 critical `0`이다.
+
+### runtime-only screenshot 실패는 verified recovery를 뒤집지 않는다
+
+pass 11 재개 중 선택적 conversation screenshot이 renderer timeout으로 실패했다. exact URL,
+conversation, job/run marker, packet hash, capture hash 검증은 이미 끝났고 screenshot은 private
+runtime 보조물이다. 이를 전체 recovery 실패로 취급하면 이미 제출·capture된 pass를 영원히
+입고하지 못하거나 잘못된 재전송 압력을 만든다.
+
+따라서 screenshot은 `CAPTURED / OPTIONAL_CAPTURE_FAILED / NOT_REQUESTED` 영수증으로 분리한다.
+실패 class/message는 남기지만 workflow·score·Stage 권한은 없다. 예를 들어 송장번호와 봉인이
+맞는 택배를 현관 사진 카메라가 멈췄다는 이유로 재주문하지 않는 것과 같다. live-runtime
+`27/27`, operational acceptance `18/18 PASS`로 이 경계를 고정했다.

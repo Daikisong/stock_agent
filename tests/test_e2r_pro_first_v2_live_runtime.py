@@ -639,9 +639,14 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
 
         adapter = FakeAdapter()
 
+        class FakePage:
+            async def screenshot(self, **_kwargs):
+                raise TimeoutError("optional screenshot renderer timeout")
+
         class FakeSession:
             def __init__(self):
                 self.adapter = adapter
+                self.page = FakePage()
 
             async def close(self):
                 return None
@@ -709,6 +714,7 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
                     config=config,
                     repo_root=self.root,
                     search_terms=("검증기업",),
+                    screenshot_path=self.root / "private/recovery.png",
                 )
             )
         self.assertEqual(adapter.recovery_count, 2)
@@ -717,6 +723,15 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
         self.assertEqual(captured_retry.job.capture_count, 1)
         self.assertTrue(captured_retry.receipt["capture_reused"])
         self.assertEqual(captured_retry.receipt["recovery_submit_count"], 0)
+        self.assertTrue(captured_retry.receipt["screenshot_runtime_only"])
+        self.assertEqual(
+            captured_retry.receipt["screenshot_status"],
+            "OPTIONAL_CAPTURE_FAILED",
+        )
+        self.assertEqual(
+            captured_retry.receipt["screenshot_error_class"],
+            "TimeoutError",
+        )
 
     def test_initial_v2_prepare_returns_runtime_without_submitting(self) -> None:
         built = self._build()

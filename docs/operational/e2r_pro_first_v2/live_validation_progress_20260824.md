@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 02:46 KST`
+기준 시각: `2026-08-25 02:52 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-이번 기록의 부모 HEAD: `cb6e2cc684861efcea745b4e9e28f197d95a0369`
+이번 기록의 부모 HEAD: `21f7dea5dcadcf1ab39205b1f62cd86d65eecb79`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -47,6 +47,8 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → 첫 durable repair 적용은 Pro 자유형 workflow status를 schema enum으로 읽어 중단
 → Pro status는 diagnostics로 보존하고 canonical status는 질문 장부에서 deterministic 계산
 → 실제 pass 11 response schema 재검증 PASS / NEEDS_VERIFIER_REPAIR / facts 11
+→ 다음 재개는 선택적 runtime screenshot timeout으로 repair 진입 전에 중단, 전송 0
+→ screenshot은 authority가 아니므로 실패 영수증만 남기고 exact capture 재사용은 계속 허용
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -1439,3 +1441,34 @@ focused 합계                    65 / 65 PASS
 production static audit         20 / 20 zero / critical 0 / PASS
 new submit/search/fetch          0 / 0 / 0
 ```
+
+### 18.10 선택적 recovery screenshot은 durable capture 재사용 권한이 아니다
+
+21f7dea5를 푸시한 뒤 같은 max follow-up 7 재개를 시작했지만, repair adapter 이전의
+conversation recovery 단계에서 Playwright screenshot이 30초 timeout됐다.
+
+```text
+error             Page.screenshot timeout
+job status        GAP_ADJUDICATION 유지
+pass 11           COMPLETE / submit_count=1 유지
+new submit        0
+repair write      시작 전
+```
+
+conversation recovery는 exact canonical URL, conversation id, job/run marker, durable packet 및
+capture hash를 이미 검증한다. screenshot은 `private/v2_recovered_conversation.png`에 두는
+runtime-only 보조 감사물이고 Git·score·Stage 입력이 아니다. 따라서 screenshot renderer나
+로컬 파일 쓰기가 실패했다고 이미 있는 capture를 버리거나 prompt를 다시 보내면 안 된다.
+
+새 helper는 screenshot을 최대 10초의 best-effort로 시도하고 결과를 receipt에 명시한다.
+
+```text
+CAPTURED
+OPTIONAL_CAPTURE_FAILED + error class/message
+NOT_REQUESTED
+```
+
+실패를 숨기지는 않지만 exact URL/marker/hash 검증이 끝난 recovery workflow를 차단하지 않는다.
+특히 이 경로는 submit coordinator를 호출하지 않으며, screenshot 실패가 재전송 권한으로
+바뀌지 않는다. timeout fixture를 포함한 live-runtime `27/27`, operational acceptance
+`18/18 PASS`로 고정했다.

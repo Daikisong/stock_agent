@@ -89,6 +89,48 @@ class PreparedV2BrowserRuntime:
         await self.session.close()
 
 
+async def _capture_optional_runtime_screenshot(
+    page: Any,
+    screenshot_path: str | Path | None,
+) -> Mapping[str, Any]:
+    """Capture a runtime-only screenshot without owning workflow success.
+
+    Exact URL/marker/hash checks are the recovery authority. A screenshot is
+    only a local audit aid, so a renderer or filesystem timeout must be
+    recorded but cannot trigger a browser resubmit or block reuse of an
+    already durable capture.
+    """
+
+    if not screenshot_path:
+        return {
+            "screenshot_runtime_only": False,
+            "screenshot_status": "NOT_REQUESTED",
+            "screenshot_error_class": None,
+            "screenshot_error_message": None,
+        }
+    destination = Path(screenshot_path).expanduser().resolve()
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        await page.screenshot(
+            path=str(destination),
+            full_page=False,
+            timeout=10_000,
+        )
+    except Exception as error:
+        return {
+            "screenshot_runtime_only": True,
+            "screenshot_status": "OPTIONAL_CAPTURE_FAILED",
+            "screenshot_error_class": type(error).__name__,
+            "screenshot_error_message": str(error)[:1_000],
+        }
+    return {
+        "screenshot_runtime_only": True,
+        "screenshot_status": "CAPTURED",
+        "screenshot_error_class": None,
+        "screenshot_error_message": None,
+    }
+
+
 def create_forced_validation_canary(
     store: ProFirstJobStore,
     *,
@@ -423,10 +465,10 @@ async def prepare_v2_job_in_logged_in_browser(
             actor="pro-first-v2-browser-worker",
             idempotency_key=f"v2-browser-prepared:{job_id}:{prepared.prompt_hash}",
         )
-        if screenshot_path:
-            destination = Path(screenshot_path).expanduser().resolve()
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            await session.page.screenshot(path=str(destination), full_page=False)
+        screenshot_receipt = await _capture_optional_runtime_screenshot(
+            session.page,
+            screenshot_path,
+        )
         receipt = {
             "schema_version": "e2r_pro_first_v2_live_prepare_receipt_v1",
             "status": "CHATGPT_PRO_V2_PREPARED_AWAITING_APPROVAL",
@@ -444,7 +486,7 @@ async def prepare_v2_job_in_logged_in_browser(
             "deep_research_ready": prepared.deep_research_ready,
             "send_ready": prepared.send_ready,
             "submit_count": 0,
-            "screenshot_runtime_only": bool(screenshot_path),
+            **screenshot_receipt,
         }
         return PreparedV2BrowserRuntime(
             job=job,
@@ -575,10 +617,10 @@ async def recover_submitted_v2_job_in_logged_in_browser(
                     f"{recovered.conversation_id}:{recovered.result.report_hash}"
                 ),
             )
-        if screenshot_path:
-            destination = Path(screenshot_path).expanduser().resolve()
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            await session.page.screenshot(path=str(destination), full_page=False)
+        screenshot_receipt = await _capture_optional_runtime_screenshot(
+            session.page,
+            screenshot_path,
+        )
         receipt = {
             "schema_version": "e2r_pro_first_v2_recovery_receipt_v1",
             "status": (
@@ -599,7 +641,7 @@ async def recover_submitted_v2_job_in_logged_in_browser(
             "capture_count": rebound.capture_count,
             "capture_reused": captured_downstream_resume,
             "recovery_submit_count": recovered.submit_count,
-            "screenshot_runtime_only": bool(screenshot_path),
+            **screenshot_receipt,
         }
         return PreparedV2BrowserRuntime(
             job=rebound,
@@ -730,10 +772,10 @@ async def prepare_job_in_logged_in_browser(
             actor="pro-first-browser-worker",
             idempotency_key=f"browser-prepared:{job_id}:{prepared.prompt_hash}",
         )
-        if screenshot_path:
-            destination = Path(screenshot_path).expanduser().resolve()
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            await session.page.screenshot(path=str(destination), full_page=False)
+        screenshot_receipt = await _capture_optional_runtime_screenshot(
+            session.page,
+            screenshot_path,
+        )
         receipt = {
             "schema_version": "e2r_pro_first_live_shadow_receipt_v1",
             "status": "CHATGPT_WEB_SHADOW_COMPATIBILITY_PASS",
@@ -746,7 +788,7 @@ async def prepare_job_in_logged_in_browser(
             "deep_research_ready": prepared.deep_research_ready,
             "send_ready": prepared.send_ready,
             "submit_count": 0,
-            "screenshot_runtime_only": bool(screenshot_path),
+            **screenshot_receipt,
         }
         return PreparedBrowserRuntime(
             job=job,
