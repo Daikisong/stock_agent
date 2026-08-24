@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 02:35 KST`
+기준 시각: `2026-08-25 02:46 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-이번 기록의 부모 HEAD: `a356ba4035015a034cf68442e69fc6b7959aab56`
+이번 기록의 부모 HEAD: `cb6e2cc684861efcea745b4e9e28f197d95a0369`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -38,12 +38,15 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → 명시적 상한 증가 때 cap 영수증만 append-only supersede하고 실제 UI failure는 재전송 금지
 → pass 11 first repair batch DOM click 1회 실행, Playwright navigation wait timeout
 → pass 11은 click을 다시 하지 않고 exact visible result만 약 31분 감시해 capture 완료
-→ pass 11 RESEARCH_RUNNING / submit_count=1 / READY 존재: parser 실패 뒤에도 재전송 금지
+→ pass 11 READY를 재전송 없이 재사용해 COMPLETE / submit_count=1 / response hash 고정
 → compact repair replacement 11건의 publisher 생략은 exact prior URL+lineage identity로만 복원
 → repair register의 `replacement_dossier_fact_id` 별칭을 실행용 replacement에 결박
 → gap 18개의 attempted source role은 같은 question row의 exact roster로만 복원
 → 실제 capture read-only 전체 합성 PASS: +11 facts / +50 routes / 18 questions updated
 → 예상 effective dossier 122 facts / 211 routes / 28 questions, 아직 runtime write 전
+→ 첫 durable repair 적용은 Pro 자유형 workflow status를 schema enum으로 읽어 중단
+→ Pro status는 diagnostics로 보존하고 canonical status는 질문 장부에서 deterministic 계산
+→ 실제 pass 11 response schema 재검증 PASS / NEEDS_VERIFIER_REPAIR / facts 11
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -88,15 +91,16 @@ runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 �
 | 8 | `PROPASS-7392f80853f11b8cdde93640` | `PUBLIC_GAP_CLOSURE` | `COMPLETE` | 1 | 재제출 없이 기존 결과 회수. 새 fact 0 / 새 route 28. availability correction은 append-only revision 2, 누적 111 facts / 161 routes |
 | 9 | `PROPASS-19f49da97db889f081930dec` | `PUBLIC_GAP_CLOSURE` | `TRANSPORT_PENDING` | 0 | bounded follow-up 안전 한도 6에서 생성만 되고 미전송. corrected routing에서는 공개검색 대상이 0이므로 제출하지 않음 |
 | 10 | `PROPASS-2c64ccb7b9a86a8e7cbd5922` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | 최신 51개 repair packet의 첫 15개 계획. 당시 상한 6에서 미전송 보존 |
-| 11 | `PROPASS-7a551c28c37e8ca775a056a4` | `VERIFIER_REPAIR` | `RESEARCH_RUNNING` | 1 | pass 10 cap 영수증을 append-only supersede. click 완료 뒤 navigation-wait timeout을 재전송 없이 복구했고 visible 결과 capture·READY 완료. dialect 합성 검증 PASS, durable 반영 전 |
+| 11 | `PROPASS-7a551c28c37e8ca775a056a4` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | pass 10 cap 영수증을 append-only supersede. click 완료 뒤 navigation-wait timeout을 재전송 없이 복구했고 capture 재사용으로 response hash 고정. repair effective snapshot 반영 전 |
 
 pass 5는 실패한 연구 답변이 아니라 실제 제출 전 transport 계획이다. 삭제하거나
 `COMPLETE`로 바꾸지 않았고, `submit_count=0`, `prepared_at=null`, `submitted_at=null`을
 보존했다. pass 6~8은 각각 별도 prompt/input hash와 exactly-once claim으로 1회만 제출됐다.
 pass 7과 pass 8은 durable 완료됐으므로 어느 쪽도 두 번째 제출을 허용하지 않는다. pass 9와
 pass 10은 prompt 전송 전 안전 정지된 계획 영수증이며 `submit_count=0`을 그대로 보존한다.
-pass 11은 이미 click claim과 실제 visible 결과가 있으므로 현재 status가 아직
-`RESEARCH_RUNNING`이어도 `REUSE_CAPTURE`만 허용하고 composer 입력·click은 다시 하지 않는다.
+pass 11은 이미 click claim과 실제 visible 결과가 있고 durable `COMPLETE`다. 아직 repair
+effective snapshot이 없으므로 재개 시 기존 capture를 읽어 deterministic repair를 적용할 수
+있지만 composer 입력·click은 다시 하지 않는다.
 
 ## 4. dossier 누적 결과
 
@@ -440,11 +444,11 @@ connection 21곳을 `contextlib.closing`으로 명시 종료하도록 고쳤고,
 실행한 focused 결과는 다음과 같다.
 
 ```text
-dossier status/dialect          17 / 17 PASS
+dossier status/dialect          18 / 18 PASS
 live runtime recovery           27 / 27 PASS
 verifier repair                 18 / 18 PASS
 V2 static audit tests            2 /  2 PASS
-focused 합계                    64 / 64 PASS
+focused 합계                    65 / 65 PASS
 production static audit         20 / 20 zero
 critical_count                   0
 actual pass 11 read-only merge   PASS
@@ -483,8 +487,8 @@ revision 2 parent snapshot을 사용했다. 이 검증은 DB와 snapshot 파일�
 
 다음 순서를 모두 완료하기 전 Goal 완료를 선언하지 않는다.
 
-1. 현재 코드·문서 커밋을 푸시한 뒤 pass 11을 `REUSE_CAPTURE`로 재개한다. READY bundle만
-   읽고 ChatGPT composer 준비·click·재전송을 하지 않는다.
+1. 현재 코드·문서 커밋을 푸시한 뒤 completed pass 11의 READY bundle을 다시 읽어 repair
+   delta를 적용한다. ChatGPT composer 준비·click·재전송은 하지 않는다.
 2. read-only에서 확인한 `+11 facts / +50 routes / 18 questions updated`를 append-only
    snapshot으로 영속하고 pass 11을 `COMPLETE / submit_count=1 / response_hash exact`로
    고정한다.
@@ -1382,3 +1386,56 @@ packet이 정말 남을 때만 사용자가 승인한 상한 10 범위에서 후
 `18/18`, V2 static audit `2/2`, 합계 `64/64 PASS`다. production static audit도
 `20/20 zero / critical_count=0 / PASS`이며, 테스트와 preflight 중 브라우저 전송·검색·fetch는
 없었다.
+
+### 18.9 capture 재사용 뒤 Pro workflow status와 canonical research status 분리
+
+커밋 `cb6e2cc684861efcea745b4e9e28f197d95a0369`을 푸시한 뒤 max follow-up 7로
+원본 runtime을 재개했다. initial capture, pass 8 revision 2, verifier attempt 4를 재사용했고,
+pass 11도 `FOLLOWUP_CAPTURE_REUSED`로 처리됐다. 새 브라우저 submit은 0이었다.
+
+pass 11은 durable `COMPLETE / submit_count=1 / response_hash=9de8a9ba...`까지 정상 전이했다.
+그 다음 repair service의 full-response schema 검문이 top-level status에서 멈췄다.
+
+```text
+Pro reported status
+VERIFIER_REPAIR_DELTA_SUBMITTED_PENDING_DETERMINISTIC_REVERIFICATION
+
+canonical schema enum
+NEEDS_PUBLIC_GAP_CLOSURE / NEEDS_COUNTER_SUPERSESSION /
+NEEDS_VERIFIER_REPAIR / COMPLETE_WITH_LIKELY_NONPUBLIC_REMAINDER /
+COMPLETE / PROVIDER_PENDING / TRANSPORT_PENDING / BLOCKED_EXTERNAL
+```
+
+Pro 문구는 “repair delta를 냈고 deterministic 재검증 대기 중”이라는 workflow 설명이지
+canonical research 상태가 아니다. 이 문구를 enum에 추가하면 Pro가 operational gate 이름을
+발명할 수 있게 된다. 반대로 `COMPLETE`로 강제하면 아직 repair가 남은 상태를 닫게 된다.
+
+따라서 V2 dialect adapter가 다음처럼 처리한다.
+
+```text
+원문 research_status
+→ research_saturation.pro_reported_research_status에 보존
+
+현재 selected contract + 전체 question_family_results
+→ compile_dossier_v2_closure_summary()
+→ canonical research_status 결정
+```
+
+fact, question status, URL, quote, source lineage는 이 projection에서 바뀌지 않는다. 실제 pass 11
+response를 다시 검문한 결과는 `PASS`, canonical status는 `NEEDS_VERIFIER_REPAIR`, response
+fact는 11개다. 즉 Pro workflow 문구를 버리지 않으면서도 gate 권한은 deterministic engine에
+남겼다.
+
+현재 pass 11은 COMPLETE지만 repair effective snapshot은 아직 없다. 첫 재개가 status schema
+검문 전에 멈췄기 때문이다. 다음 재개는 같은 capture를 다시 읽어 repair delta와 source
+reverification을 수행하며, composer 입력·click은 없다.
+
+```text
+dossier status/dialect          18 / 18 PASS
+live runtime recovery           27 / 27 PASS
+verifier repair                 18 / 18 PASS
+V2 static audit                  2 /  2 PASS
+focused 합계                    65 / 65 PASS
+production static audit         20 / 20 zero / critical 0 / PASS
+new submit/search/fetch          0 / 0 / 0
+```

@@ -14,6 +14,7 @@ import re
 from typing import Any, Mapping
 
 from ..ids import canonical_hash
+from .v2 import compile_dossier_v2_closure_summary
 from .delta_merge import SOURCE_LINEAGE_IDENTITY_FIELDS
 
 
@@ -165,6 +166,10 @@ class ResearchDossierDialectAdapter:
                         )
                     )
                     operations.extend(lineage_operations)
+                adapted, status_operations = (
+                    _project_deterministic_v2_research_status(adapted)
+                )
+                operations.extend(status_operations)
                 return AdaptedDossier(
                     payload=adapted,
                     before_hash=before_hash,
@@ -193,6 +198,10 @@ class ResearchDossierDialectAdapter:
                     )
                 )
                 compact_operations.extend(lineage_operations)
+            compact_payload, status_operations = (
+                _project_deterministic_v2_research_status(compact_payload)
+            )
+            compact_operations.extend(status_operations)
             return AdaptedDossier(
                 payload=compact_payload,
                 before_hash=before_hash,
@@ -331,7 +340,6 @@ class ResearchDossierDialectAdapter:
             operations=tuple(operations),
             id_map=dict(sorted(id_map.items())),
         )
-
     @staticmethod
     def _build_id_map(payload: Mapping[str, Any]) -> dict[str, str]:
         id_map: dict[str, str] = {}
@@ -358,6 +366,35 @@ class ResearchDossierDialectAdapter:
         if len(set(id_map.values())) != len(id_map):
             raise DossierDialectError("legacy id mapping would create a collision")
         return id_map
+
+
+def _project_deterministic_v2_research_status(
+    payload: Mapping[str, Any],
+) -> tuple[dict[str, Any], tuple[str, ...]]:
+    """Keep Pro's status as diagnostics and derive the operational enum.
+
+    A repair response may describe its workflow state in free text, but Pro
+    never owns the score/stage readiness state. The canonical status is
+    therefore compiled from the complete question roster. Facts, question
+    states, and source evidence are not changed here.
+    """
+
+    projected = deepcopy(dict(payload))
+    reported = str(projected.get("research_status") or "")
+    deterministic = compile_dossier_v2_closure_summary(
+        projected
+    ).expected_research_status
+    if reported == deterministic:
+        return projected, ()
+    saturation = dict(projected.get("research_saturation") or {})
+    saturation["pro_reported_research_status"] = reported
+    saturation["deterministic_dialect_research_status"] = deterministic
+    projected["research_saturation"] = saturation
+    projected["research_status"] = deterministic
+    return projected, (
+        "PROJECT_PRO_REPORTED_RESEARCH_STATUS_TO_"
+        "DETERMINISTIC_QUESTION_CLOSURE",
+    )
 
 
 @dataclass(frozen=True)

@@ -167,6 +167,32 @@ class ProFirstV2DossierStatusTest(unittest.TestCase):
         self.assertEqual(receipt.research_status, "NEEDS_PUBLIC_GAP_CLOSURE")
         self.assertEqual(receipt.schema_version, "e2r_pro_research_dossier_v2")
 
+    def test_adapter_keeps_pro_workflow_status_only_as_diagnostic(self) -> None:
+        payload = _base_v2(complete=True)
+        payload["research_status"] = (
+            "VERIFIER_REPAIR_DELTA_SUBMITTED_PENDING_DETERMINISTIC_REVERIFICATION"
+        )
+
+        adapted = ResearchDossierDialectAdapter().adapt(payload)
+        receipt = self.validator.validate(adapted.payload, _context())
+
+        self.assertEqual(receipt.research_status, "COMPLETE")
+        self.assertEqual(
+            adapted.payload["research_saturation"]["pro_reported_research_status"],
+            "VERIFIER_REPAIR_DELTA_SUBMITTED_PENDING_DETERMINISTIC_REVERIFICATION",
+        )
+        self.assertEqual(
+            adapted.payload["research_saturation"][
+                "deterministic_dialect_research_status"
+            ],
+            "COMPLETE",
+        )
+        self.assertIn(
+            "PROJECT_PRO_REPORTED_RESEARCH_STATUS_TO_"
+            "DETERMINISTIC_QUESTION_CLOSURE",
+            adapted.operations,
+        )
+
     def test_question_terminal_status_schema(self) -> None:
         payload = _base_v2(complete=True)
         receipt = self.validator.validate(payload, _context())

@@ -208,7 +208,7 @@ phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는
 | P6 | 완료 | 11종 verifier rejection packet, 동일 대화 repair/withdraw, deterministic re-verification |
 | P7 | 완료 | saturation 선행 gate, diagnostic/full score 분리, Stage/publication withheld, 기존 scorer/StageCourt 재사용 |
 | P8 | 완료 | 36 prompt snapshot, 13 mechanism golden, known-bad 30종·detector 29개 |
-| P9 | 진행 중 | 000660 pass 8 revision 2와 최신 111-fact verifier attempt 4 완료(accepted 49, query/search 0/0). pass 11 첫 repair batch 결과 capture 완료, read-only 합성은 122 facts/211 routes PASS. durable repair/reverify/saturation/score, C17/C28가 남음 |
+| P9 | 진행 중 | 000660 pass 8 revision 2와 최신 111-fact verifier attempt 4 완료(accepted 49, query/search 0/0). pass 11은 COMPLETE/submit 1, read-only 합성 122 facts/211 routes PASS. durable repair snapshot/reverify/saturation/score, C17/C28가 남음 |
 | P10 | 부분 완료 | V2 static audit 20/20 zero·critical 0 구현. P9 완료 뒤 full CI·최종 receipt가 남음 |
 
 ### 2026-08-24 live P9 진행 기록
@@ -640,3 +640,20 @@ new browser submit / search / fetch        0 / 0 / 0
 전체 roster를 deterministic verifier로 다시 검사하기 전까지 score/Stage/publication gate는
 닫혀 있다. focused regression은 `64/64 PASS`, production static audit는
 `20/20 zero / critical_count=0 / PASS`다.
+
+### Pro의 자유형 workflow status는 canonical Stage 선행 상태가 아니다
+
+pass 11 capture를 무전송 재사용한 뒤 pass 자체는 `COMPLETE / submit_count=1`이 됐다. 다음
+repair 단계가 멈춘 이유는 fact가 아니라 Pro가 top-level `research_status`에 쓴 자유형 workflow
+문구였다.
+
+V2 schema enum을 Pro 문구마다 늘리지 않는다. adapter는 원문을 saturation diagnostics에
+보존하고, selected contract의 mandatory question 전체 상태로 canonical research status를 다시
+계산한다. 실제 pass 11에서는 canonical 결과가 `NEEDS_VERIFIER_REPAIR`다.
+
+쉬운 예로 택배 상자의 “검수팀 전달 완료” 메모는 창고 시스템의 `입고완료/반려/보류` 상태
+코드가 아니다. 메모는 감사란에 남기고, 상태코드는 실제 검수표에서 계산한다.
+
+실제 response schema 재검증은 facts 11개를 유지한 채 PASS했다. pass 11 repair snapshot은
+아직 미영속이므로 다음 재개에서 동일 capture를 다시 읽어 deterministic repair/reverification을
+수행한다. 이 구분 뒤 focused regression은 `65/65 PASS`, static audit는 critical `0`이다.
