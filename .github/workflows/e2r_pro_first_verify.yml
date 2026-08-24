@@ -7,6 +7,7 @@ name: E2R Pro-first verification
       - ".github/workflows/e2r_pro_first_verify.yml"
       - "configs/e2r_pro_first_*"
       - "docs/operational/e2r_pro_first_v1/**"
+      - "docs/operational/e2r_pro_first_v2/**"
       - "requirements/e2r_pro_first_py310_linux_x86_64.lock"
       - "scripts/*e2r_pro_first*"
       - "scripts/start_e2r_pro_chrome.ps1"
@@ -19,6 +20,7 @@ name: E2R Pro-first verification
       - ".github/workflows/e2r_pro_first_verify.yml"
       - "configs/e2r_pro_first_*"
       - "docs/operational/e2r_pro_first_v1/**"
+      - "docs/operational/e2r_pro_first_v2/**"
       - "requirements/e2r_pro_first_py310_linux_x86_64.lock"
       - "scripts/*e2r_pro_first*"
       - "scripts/start_e2r_pro_chrome.ps1"
@@ -135,6 +137,8 @@ jobs:
           fi
       - name: Recompute semantic security and authority audit
         run: python -m e2r.cli.audit_e2r_pro_first --repo-root . --output "${RUNNER_TEMP}/static_audit.json"
+      - name: Recompute all requirement-level V2 static counters
+        run: python -m e2r.cli.audit_e2r_pro_first_v2 --repo-root . --output "${RUNNER_TEMP}/v2_static_audit.json"
       - name: Prove CI has no live ChatGPT credential or login path
         run: |
           test "${E2R_RUN_LIVE_TESTS}" = "0"

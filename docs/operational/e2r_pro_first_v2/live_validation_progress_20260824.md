@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-24 23:36 KST`
+기준 시각: `2026-08-24 23:51 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-기록 직전 HEAD: `c7878aafdc6836b7ea257419f4723ca422734455`
+기록 직전 HEAD: `bb39967fc871bf4bd4e9178a39015815612a23bf`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -26,7 +26,8 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → representative question을 packet 전체 deterministic 재검증 scope로만 복원하는 정책·시험 완료
 → 원본의 완전한 복제본에서 pass 6을 무전송 재처리: 17건 처리 / 5건 accepted / 12건 pending
 → 기존 no-op snapshot은 그대로 두고 revision 2 snapshot·별도 파일·DB lineage 생성 확인
-→ 원본 runtime 반영 전이며, rejected 12건과 deferred 29건은 다음 bounded repair 대상으로 대기
+→ 원본 runtime 재개 중 잘못 계획된 pass 7을 이미 전송된 기록대로 1회만 회수하는 중
+→ pass 7은 ChatGPT Pro 연구 중이며, 재전송 없이 capture한 뒤 repair 전용 queue로 복귀 예정
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -523,3 +524,67 @@ full regression `7,560 tests`와 browser mock `57 tests`를 모두 SUCCESS로 �
 직접 full suite의 58개 error는 정확히 browser mock 57개와 multi-pass browser 1개이며,
 로컬 Chromium의 `libnspr4.so` 부재로 launch 전에 발생했다. 비브라우저 assertion failure는
 0이고, 별도 핵심 122개와 이번 관련 63개는 모두 통과했다.
+
+## 14. 23:51 KST 대기 중 상태와 V2 정적 판정 통합
+
+pass 7은 코드 교정 전 이미 ChatGPT Pro에 제출된 pass이므로 취소하거나 새 prompt로
+덮어쓰지 않는다. 현재 monitor는 동일 canonical conversation의 상태만 읽고 있다.
+
+```text
+pass id                 PROPASS-5c7b3b52569b6744cc2686d9
+pass name               PUBLIC_GAP_CLOSURE
+parent                  PROPASS-3ef919d661d3bfa39f201c4e
+submit_count            1
+automatic resubmit      false
+latest observed state   RESEARCH_RUNNING
+latest observed poll    132
+latest observed at      2026-08-24T14:51:07Z
+```
+
+쉬운 예로, 분류가 잘못된 택배 주문이라도 이미 배송 중이면 같은 주문을 다시 보내지 않는다.
+도착한 상자를 한 번 입고하고, 그 다음 주문부터 올바른 `public gap`과 `verifier repair`
+바구니를 적용한다. 그래서 현재 대기는 중복 전송이 아니라 이미 1회 전송된 결과의 안전한
+회수 대기다.
+
+master goal의 정적 판정을 기존 여러 audit 출력에서 사람이 손으로 합치지 않도록 전용
+명령을 추가했다.
+
+```bash
+PYTHONPATH=src python -m e2r.cli.audit_e2r_pro_first_v2 \
+  --repo-root . --output /tmp/e2r_pro_first_v2_static_audit.json
+```
+
+이 명령은 contract totality, prompt snapshot, production security/authority, scoring
+publication, verifier repair, generalization audit를 다시 실행하고 목표 문서가 요구한 아래
+20개 카운터를 하나의 receipt로 만든다.
+
+```text
+canonical/research contract missing
+required primitive/green gate/guard unmapped
+generic filler/prompt snapshot/forced complete/gold leakage
+component count adequacy/public-gap downgrade/material gap no-followup
+verifier repair skipped/partial score publication/research-incomplete final
+Pro score authority/Pro Stage authority/future leakage
+symbol-specific branch/deterministic query template
+```
+
+현재 실제 재계산 결과는 `20/20 zero`, `critical_count=0`, `status=PASS`다. 고의로
+`repair 뒤 scoring` 순서를 뒤집고 public gap을 corroboration보다 늦게 판정하며
+`component_fact_count`를 사용한 mutation 입력은 각각 nonzero로 검출하는 회귀시험도
+통과했다. GitHub workflow에는 이 명령을 `static-security` job의 필수 단계로 추가했고,
+V2 문서 변경도 workflow path filter가 놓치지 않도록 포함했다.
+
+현재 Git 상태와 외부 CI 상태:
+
+```text
+local HEAD/origin branch  bb39967fc871bf4bd4e9178a39015815612a23bf
+Draft PR                  #7 / OPEN / MERGEABLE / draft 유지
+last completed clean CI   32735981403 / SUCCESS / head 9d3ee28d
+newer bb39967 CI           32739985977, 32739981872 / pending
+new live research submit  0회 (pass 7 기존 submit_count=1 그대로)
+score/Stage authority      false / false
+```
+
+이 문서 커밋 이후 workflow의 새 V2 audit 단계까지 clean runner에서 통과하는지 다시
+확인한다. 아직 pass 7 capture, 원본 pass 6 revision 2 반영, 남은 bounded repair,
+000660 saturation과 점수, C17/C28 canary가 남아 있으므로 완료 표시는 하지 않는다.

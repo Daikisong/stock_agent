@@ -327,3 +327,35 @@ score·Stage 권한도 모두 false다.
 ARR·RPO와 GRR/NRR·renewal 질문, source role, positive/counter fact 연결이 모두 닫혀야
 통과한다. 첫 공개 material 질문을 다시 `PUBLIC_SEARCHABLE`로 열면 같은 fixture도 즉시
 saturation invalid가 되는 것까지 함께 검증한다.
+
+## P10 정적 판정의 단일 진입점
+
+목표 문서의 P10 정적 카운터는 이제 다음 명령 하나로 다시 계산한다.
+
+```bash
+PYTHONPATH=src python -m e2r.cli.audit_e2r_pro_first_v2 --repo-root .
+```
+
+내부적으로 새 기준을 별도 하드코딩해 기존 audit와 충돌시키는 방식이 아니다. 이미 구현된
+contract totality, 36 prompt snapshot, semantic security/authority, scoring publication,
+verifier repair, generalization acceptance를 실행한 뒤 목표의 20개 판정 이름으로 합성한다.
+추가로 live 상태기계의 순서를 검사해 repair보다 scoring이 먼저 오거나, public material
+gap이 corroboration으로 낮아지거나, material gap follow-up 경로가 없어지는 회귀를 잡는다.
+
+현재 워크트리 재계산은 다음과 같다.
+
+```text
+required counter roster  20/20
+zero counters            20/20
+critical_count           0
+status                   PASS
+mutation detection       PASS
+```
+
+쉬운 예로 각 검문소가 따로 `통과`라고 적힌 종이를 외부 검수자가 손으로 맞추는 대신,
+마지막 출구에서 20개 도장을 모두 다시 확인하고 하나라도 없으면 종료 코드 2로 실패한다.
+GitHub Actions의 `static-security`도 같은 명령을 실행하므로 로컬 보고와 clean runner의
+판정 경로가 같다.
+
+이 정적 PASS는 live 연구 완료를 뜻하지 않는다. 현재 pass 7은 기존 1회 전송을
+`RESEARCH_RUNNING` 상태로 회수 대기 중이며, 점수·Stage·publication은 계속 막혀 있다.
