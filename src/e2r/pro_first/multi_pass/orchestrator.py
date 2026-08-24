@@ -210,6 +210,7 @@ class ProMultiPassResearchOrchestrator:
                 row
                 for row in reversed(matching)
                 if row.status != ResearchPassStatus.TRANSPORT_PENDING.value
+                or row.submit_count == 1
             ),
             None,
         )
@@ -330,6 +331,16 @@ class ProMultiPassResearchOrchestrator:
             ):
                 raise RuntimeError("existing pass id has different prompt/input lineage")
             if existing.status == ResearchPassStatus.TRANSPORT_PENDING.value:
+                if existing.submit_count == 1:
+                    # The exactly-once claim is consumed.  This plan can only
+                    # enter result recovery; prompt_text is deliberately empty
+                    # so it cannot reach preparation or a second DOM click.
+                    return FollowupPassPlan(
+                        scope=scope,
+                        research_pass=existing,
+                        prompt_text="",
+                        prompt_hash=existing.prompt_hash,
+                    )
                 return TransportPendingDecision(
                     job_id=job_id,
                     requested_pass_name=pass_name,
@@ -501,6 +512,14 @@ class ProMultiPassResearchOrchestrator:
         if conversation_id != current.conversation_id:
             raise RuntimeError("follow-up completion came from another conversation")
         return self.ledger.complete_pass(pass_id, response_hash=response_hash)
+
+    def confirm_transport_pending_result_visible(
+        self,
+        pass_id: str,
+    ) -> ResearchPassRecord:
+        """Promote a claimed timeout only after its exact result is visible."""
+
+        return self.ledger.confirm_transport_pending_submit(pass_id)
 
     def _job_conversation(self, job_id: str) -> str:
         conversation_id = self.store.get_job(job_id).conversation_id

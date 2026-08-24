@@ -383,6 +383,44 @@ class ProMultiPassLedger:
             result = self._require_pass(connection, pass_id)
         return self._pass_from_row(result)
 
+    def confirm_transport_pending_submit(
+        self,
+        pass_id: str,
+    ) -> ResearchPassRecord:
+        """Recover a submit_count=1 pass after its exact visible result exists.
+
+        This transition never sends browser input.  The caller must first
+        validate the current conversation's pass and parent markers.
+        """
+
+        with self._transaction() as connection:
+            row = self._require_pass(connection, pass_id)
+            if (
+                row["status"] != ResearchPassStatus.TRANSPORT_PENDING.value
+                or int(row["submit_count"]) != 1
+            ):
+                raise FollowupSubmitBlocked(
+                    "only a claimed transport-pending pass can recover its visible result"
+                )
+            detail = json.loads(row["detail_json"])
+            detail["transport_pending_result_recovered"] = True
+            detail["automatic_resubmit_allowed"] = False
+            connection.execute(
+                """
+                UPDATE pro_research_passes
+                SET status=?, detail_json=?, completed_at=NULL
+                WHERE pass_id=? AND status=? AND submit_count=1
+                """,
+                (
+                    ResearchPassStatus.RESEARCH_RUNNING.value,
+                    canonical_json(detail),
+                    pass_id,
+                    ResearchPassStatus.TRANSPORT_PENDING.value,
+                ),
+            )
+            result = self._require_pass(connection, pass_id)
+        return self._pass_from_row(result)
+
     def get_pass(self, pass_id: str) -> ResearchPassRecord:
         with closing(self._connect()) as connection:
             row = self._require_pass(connection, pass_id)

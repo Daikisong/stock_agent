@@ -577,3 +577,16 @@ composer 초과나 UI incompatibility까지 중복 전송할 수 있다.
 함께 저장한다. 실제 transport failure는 상한을 올려도 pending 그대로다. 같은 호출의 반복은
 새 pass를 만들지 않는다. Windows Chromium을 포함한 multi-pass `19/19`, verifier-repair
 `18/18`로 이 경계를 고정했다.
+
+### DOM click 완료와 navigation wait timeout은 재전송 사유가 아니다
+
+첫 15개 repair batch의 pass 11은 visible send button click action이 완료된 뒤 Playwright가
+scheduled navigation을 기다리다 timeout됐다. exactly-once claim은 이미 소비돼
+`submit_count=1`이므로 다시 composer를 채우거나 click하면 안 된다.
+
+`TRANSPORT_PENDING / submit_count=1`은 recovery-only 상태로 다룬다. 같은 conversation에서
+exact pass/parent marker가 있는 visible result를 확인할 때만 RESEARCH_RUNNING으로 복구하고
+COMPLETE로 전이한다. marker가 없으면 pending을 유지하며 자동 submit은 없다. Post-click
+inspection이 이미 RESEARCH_RUNNING을 증명하면 최초 submit 호출 자체를 성공 처리하지만,
+그 inspection도 단 한 번의 click 이후에만 실행한다. 이 경계는 Windows Chromium multi-pass
+`20/20`, live-runtime `27/27`, static critical `0`으로 고정했다.

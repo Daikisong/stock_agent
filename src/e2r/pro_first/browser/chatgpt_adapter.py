@@ -335,7 +335,22 @@ class PlaywrightChatGPTWebAdapter:
         if not await locator_enabled(send):
             raise BrowserUIIncompatible("ChatGPT send button is not ready")
         self._submit_attempted = True
-        await send.click()
+        try:
+            await send.click()
+        except Exception:
+            # ChatGPT can start a same-page navigation after the DOM click and
+            # keep Playwright waiting until its click timeout even though the
+            # prompt is already visibly running.  Inspect once after that
+            # single click; never click again.  If the visible state does not
+            # prove submission, preserve the exception for recovery-only
+            # handling by the durable submit_count=1 ledger.
+            inspection = await self.inspect_state()
+            if (
+                inspection.state is BrowserUIState.RESEARCH_RUNNING
+                and inspection.conversation_id == approval_proof.conversation_id
+            ):
+                return inspection
+            raise
         for _attempt in range(50):
             inspection = await self.inspect_state()
             if inspection.state is BrowserUIState.RESEARCH_RUNNING:

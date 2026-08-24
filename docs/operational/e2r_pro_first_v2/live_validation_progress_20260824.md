@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 01:49 KST`
+기준 시각: `2026-08-25 01:54 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-이번 기록의 부모 HEAD: `c7405049ee5979dc36e2f33f5b0da9dfec0ab35a`
+이번 기록의 부모 HEAD: `030223ab6125623ab1c6c9be19c2787887d5c645`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -36,6 +36,8 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → mandatory-linked rejection packet 51개를 prompt budget에 따라 15 + 36으로 bounded batching
 → pass 10 VERIFIER_REPAIR는 상한에서 TRANSPORT_PENDING / submit_count=0, 아직 미전송
 → 명시적 상한 증가 때 cap 영수증만 append-only supersede하고 실제 UI failure는 재전송 금지
+→ pass 11 first repair batch DOM click 1회 실행, Playwright navigation wait timeout
+→ pass 11 TRANSPORT_PENDING / submit_count=1: 재전송 금지, exact visible result recovery만 허용
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -1214,3 +1216,50 @@ composer size / UI incompatibility 등 실제 transport failure
 
 이 시점의 다음 실제 작업은 명시적으로 follow-up 상한을 올려 first repair batch를 같은
 ChatGPT conversation에 exactly once 전송하는 것이다. 아직 score/Stage 권한은 없다.
+
+### 18.7 first repair click 뒤 navigation timeout의 exactly-once 복구
+
+Follow-up 상한을 10으로 명시해 pass 10의 cap-only 영수증을 보존하고 새 pass 11을 만들었다.
+첫 repair batch 15개 prompt는 exact 동일 conversation의 visible composer에 준비됐고 send
+button DOM click도 한 번 실행됐다.
+
+```text
+pass id                 PROPASS-7a551c28c37e8ca775a056a4
+pass name               VERIFIER_REPAIR
+parent                  PROPASS-7392f80853f11b8cdde93640
+supersedes cap receipt  PROPASS-2c64ccb7b9a86a8e7cbd5922
+DOM click               1
+submit_count            1
+durable status          TRANSPORT_PENDING
+error                   Locator.click navigation wait timeout after click action done
+automatic resubmit      forbidden
+```
+
+Playwright 로그는 element가 visible/enabled/stable인 상태에서 `click action done`까지 완료한
+뒤 scheduled navigation을 기다리다 30초 timeout이 났다고 기록한다. 이 경우 click 전 실패로
+간주해 다시 누르면 중복 전송 위험이 있다.
+
+다음 복구 규칙을 추가했다.
+
+```text
+TRANSPORT_PENDING + submit_count=1 + capture 없음
+→ RECOVER_SUBMITTED_RESULT
+→ prompt 준비·DOM click 경로 금지
+→ 같은 conversation의 result를 read-only poll
+→ exact PASS_ID와 PARENT_PASS_ID marker가 각각 1개일 때만
+   RESEARCH_RUNNING 복구 후 COMPLETE 가능
+```
+
+반대로 `submit_count=0`인 transport failure는 이 경로에 들어올 수 없다. 향후 click timeout
+자체도 한 번의 post-click visible state 검사에서 `RESEARCH_RUNNING`이 확인되면 성공으로
+처리하며, 상태가 증명되지 않으면 예외와 recovery-only 장부를 그대로 남긴다. 어느 경우에도
+두 번째 click은 없다.
+
+```text
+Windows Chromium multi-pass       20 / 20 PASS
+live-runtime recovery             27 / 27 PASS
+production static audit           20 / 20 zero, critical_count=0, PASS
+```
+
+이 시점의 pass 11 결과는 아직 durable capture되지 않았다. 다음 실행은 새 전송이 아니라
+현재 대화의 pass 11 결과만 회수한다. full-thesis score와 canonical Stage 권한은 없다.

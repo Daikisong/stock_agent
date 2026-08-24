@@ -367,6 +367,42 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
             await self.orchestrator.submit_followup(plan, adapter)
         self.assertEqual(adapter.submit_count, 1)
 
+    def test_claimed_transport_timeout_is_recovery_only_and_can_complete(self) -> None:
+        plan = self._public_plan()
+        self.orchestrator.ledger.mark_prepared(plan.research_pass.pass_id)
+        claimed = self.orchestrator.ledger.claim_submit(
+            plan.research_pass.pass_id
+        )
+        pending = self.orchestrator.ledger.mark_transport_pending(
+            claimed.pass_id,
+            reason="TimeoutError after DOM click",
+        )
+
+        recovered_plan = self.orchestrator.plan_next_material_pass(
+            job_id=self.job.job_id,
+            packet=self.packet,
+            dossier={"question_family_results": [self.question]},
+            primary_archetype_ids=(ARCHETYPE,),
+        )
+        self.assertIsInstance(recovered_plan, FollowupPassPlan)
+        self.assertEqual(recovered_plan.research_pass.pass_id, pending.pass_id)
+        self.assertEqual(recovered_plan.prompt_text, "")
+        running = self.orchestrator.confirm_transport_pending_result_visible(
+            pending.pass_id
+        )
+        self.assertEqual(running.status, "RESEARCH_RUNNING")
+        self.assertEqual(running.submit_count, 1)
+        self.assertTrue(
+            running.detail["transport_pending_result_recovered"]
+        )
+        completed = self.orchestrator.complete_followup(
+            running.pass_id,
+            response_hash="f" * 64,
+            conversation_id=self.scope.conversation_id,
+        )
+        self.assertEqual(completed.status, "COMPLETE")
+        self.assertEqual(completed.submit_count, 1)
+
     def test_same_gap_third_reopen_hard_fails(self) -> None:
         values = {
             "job_id": self.job.job_id,

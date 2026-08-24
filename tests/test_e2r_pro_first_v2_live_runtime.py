@@ -110,6 +110,18 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
             "RECOVER_SUBMITTED_RESULT",
         )
 
+    def test_claimed_transport_timeout_recovers_result_without_resubmit(self) -> None:
+        pass_root = self.root / "claimed-transport-timeout"
+        research_pass = SimpleNamespace(
+            status="TRANSPORT_PENDING",
+            submit_count=1,
+        )
+
+        self.assertEqual(
+            _followup_execution_mode(research_pass, pass_root=pass_root),
+            "RECOVER_SUBMITTED_RESULT",
+        )
+
     def test_stale_verifier_roster_is_refreshed_before_repair_packets(self) -> None:
         dossier = _base_v2()
         current_hash = canonical_hash(dossier)

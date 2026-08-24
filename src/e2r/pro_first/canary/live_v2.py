@@ -1186,6 +1186,28 @@ class ProV2LiveCanaryRunner:
                 "follow-up result lacks the exact parent pass marker",
                 status="TRANSPORT_PENDING",
             )
+        durable_after_capture = orchestrator.ledger.get_pass(
+            plan.research_pass.pass_id
+        )
+        if (
+            durable_after_capture.status == "TRANSPORT_PENDING"
+            and durable_after_capture.submit_count == 1
+        ):
+            recovered = orchestrator.confirm_transport_pending_result_visible(
+                durable_after_capture.pass_id
+            )
+            self._emit(
+                self.store.get_job(plan.scope.job_id),
+                "FOLLOWUP_TRANSPORT_TIMEOUT_RESULT_RECOVERED",
+                {
+                    "pass_id": recovered.pass_id,
+                    "pass_name": recovered.pass_name,
+                    "submit_count": recovered.submit_count,
+                    "automatic_resubmit_allowed": False,
+                    "pass_marker_verified": True,
+                    "parent_marker_verified": True,
+                },
+            )
         parsed = ResearchDossierParser().parse(
             downloaded_json_path=(
                 pass_root / "capture/incoming/research_dossier.json"
@@ -2193,7 +2215,7 @@ def _followup_execution_mode(research_pass: Any, *, pass_root: Path) -> str:
         raise RuntimeError("follow-up capture bundle is only partially committed")
     status = str(research_pass.status)
     submit_count = int(research_pass.submit_count)
-    if status == "RESEARCH_RUNNING" and submit_count == 1:
+    if status in {"RESEARCH_RUNNING", "TRANSPORT_PENDING"} and submit_count == 1:
         return "REUSE_CAPTURE" if ready else "RECOVER_SUBMITTED_RESULT"
     if status == "COMPLETE" and submit_count == 1 and ready:
         return "REUSE_CAPTURE"
