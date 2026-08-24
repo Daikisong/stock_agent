@@ -14,6 +14,7 @@ import re
 from typing import Any, Mapping
 
 from ..ids import canonical_hash
+from .delta_merge import SOURCE_LINEAGE_IDENTITY_FIELDS
 
 
 _CANONICAL_DIRECTIONS = frozenset(
@@ -91,6 +92,35 @@ _PROTECTED_FACT_FIELDS = (
     "published_at",
     "supporting_excerpt",
 )
+_CANONICAL_V2_FACT_REQUIRED_FIELDS = frozenset(
+    {
+        "dossier_fact_id",
+        "research_pass_id",
+        "source_lineage_id",
+        "question_family_ids",
+        "statement",
+        "direction",
+        "subject",
+        "target_id",
+        "issuer_scoped",
+        "business_segment",
+        "product_family",
+        "economic_mechanism",
+        "predicate",
+        "value",
+        "unit",
+        "period",
+        "event_date",
+        "current_status",
+        "candidate_components",
+        "source_url",
+        "source_title",
+        "source_publisher",
+        "published_at",
+        "supporting_excerpt",
+        "confidence",
+    }
+)
 
 
 class DossierDialectError(ValueError):
@@ -119,22 +149,55 @@ class ResearchDossierDialectAdapter:
         adapted = deepcopy(dict(payload))
         if adapted.get("schema_version") == "e2r_pro_research_dossier_v2":
             if _is_canonical_v2(adapted):
+                operations = ["V2_CANONICAL_DIALECT_NO_LEGACY_REWRITE"]
+                if prior_dossier is not None:
+                    adapted, scope_operations = (
+                        _project_canonical_followup_contract_scope(
+                            adapted,
+                            prior_dossier=prior_dossier,
+                        )
+                    )
+                    operations.extend(scope_operations)
+                    adapted, lineage_operations = (
+                        _project_existing_followup_lineage_identity(
+                            adapted,
+                            prior_dossier=prior_dossier,
+                        )
+                    )
+                    operations.extend(lineage_operations)
                 return AdaptedDossier(
                     payload=adapted,
                     before_hash=before_hash,
                     after_hash=canonical_hash(adapted),
-                    operations=("V2_CANONICAL_DIALECT_NO_LEGACY_REWRITE",),
+                    operations=tuple(operations),
                     id_map={},
                 )
             compact = _adapt_compact_v2(
                 adapted,
                 prior_dossier=prior_dossier,
             )
+            compact_payload = dict(compact.payload)
+            compact_operations = list(compact.operations)
+            if prior_dossier is not None:
+                compact_payload, scope_operations = (
+                    _project_canonical_followup_contract_scope(
+                        compact_payload,
+                        prior_dossier=prior_dossier,
+                    )
+                )
+                compact_operations.extend(scope_operations)
+                compact_payload, lineage_operations = (
+                    _project_existing_followup_lineage_identity(
+                        compact_payload,
+                        prior_dossier=prior_dossier,
+                    )
+                )
+                compact_operations.extend(lineage_operations)
             return AdaptedDossier(
-                payload=compact.payload,
+                payload=compact_payload,
                 before_hash=before_hash,
-                after_hash=canonical_hash(compact.payload),
-                operations=compact.operations,
+                after_hash=canonical_hash(compact_payload),
+                operations=tuple(compact_operations),
                 id_map=compact.id_map,
             )
         protected_before = _protected_fact_values(adapted)
@@ -304,6 +367,133 @@ class _CompactV2Adaptation:
     id_map: Mapping[str, str]
 
 
+def _project_canonical_followup_contract_scope(
+    payload: Mapping[str, Any],
+    *,
+    prior_dossier: Mapping[str, Any],
+) -> tuple[dict[str, Any], tuple[str, ...]]:
+    """Keep deterministic contract selection immutable across follow-ups.
+
+    A Pro follow-up may repeat the compiled R13 cross guards in its selected
+    roster.  Those guards remain diagnostics/questions; they cannot expand the
+    job's primary selected-archetype scope.
+    """
+
+    _validate_prior_dossier_scope(payload, prior_dossier)
+    adapted = deepcopy(dict(payload))
+    prior_candidates = tuple(
+        str(value) for value in prior_dossier.get("candidate_archetypes") or ()
+    )
+    prior_selected = tuple(
+        str(value) for value in prior_dossier.get("selected_archetypes") or ()
+    )
+    allowed_contracts = {
+        *prior_candidates,
+        *prior_selected,
+        *(
+            str(row.get("archetype_id") or "")
+            for row in prior_dossier.get("question_family_results") or ()
+            if isinstance(row, Mapping)
+        ),
+    }
+    allowed_contracts.discard("")
+    reported_candidates = tuple(
+        str(value) for value in adapted.get("candidate_archetypes") or ()
+    )
+    reported_selected = tuple(
+        str(value) for value in adapted.get("selected_archetypes") or ()
+    )
+    unknown = (set(reported_candidates) | set(reported_selected)) - allowed_contracts
+    if unknown:
+        raise DossierDialectError(
+            "canonical follow-up introduced an uncompiled contract: "
+            + ",".join(sorted(unknown))
+        )
+    if reported_selected and not set(prior_selected).issubset(reported_selected):
+        raise DossierDialectError(
+            "canonical follow-up omitted the immutable selected archetype"
+        )
+    reported_cross_guards = tuple(
+        value for value in reported_selected if value not in set(prior_selected)
+    )
+    adapted["candidate_archetypes"] = list(prior_candidates)
+    adapted["selected_archetypes"] = list(prior_selected)
+    saturation = dict(adapted.get("research_saturation") or {})
+    saturation["pro_reported_canonical_followup_candidates"] = list(
+        reported_candidates
+    )
+    saturation["pro_reported_canonical_followup_selected"] = list(
+        reported_selected
+    )
+    saturation["pro_reported_canonical_followup_cross_guards"] = list(
+        reported_cross_guards
+    )
+    adapted["research_saturation"] = saturation
+    return adapted, (
+        "PROJECT_CANONICAL_FOLLOWUP_TO_IMMUTABLE_CONTRACT_SCOPE",
+        (
+            "PRESERVE_PRO_REPORTED_CANONICAL_CROSS_GUARDS_AS_DIAGNOSTIC:"
+            f"{len(reported_cross_guards)}"
+        ),
+    )
+
+
+def _project_existing_followup_lineage_identity(
+    payload: Mapping[str, Any],
+    *,
+    prior_dossier: Mapping[str, Any],
+) -> tuple[dict[str, Any], tuple[str, ...]]:
+    """Project repeated lineage labels onto their immutable prior identity.
+
+    Pro may describe the same lineage more narrowly in a follow-up, for
+    example changing ``SK hynix earnings cycle`` to ``SK hynix 2Q26
+    earnings``.  The raw capture preserves that wording, while the effective
+    append-only dossier keeps the original entity identity and accepts only
+    the new URL/fact/current-state evidence through the delta merger.
+    """
+
+    _validate_prior_dossier_scope(payload, prior_dossier)
+    adapted = deepcopy(dict(payload))
+    prior_by_id = {
+        str(row.get("source_lineage_id") or ""): row
+        for row in prior_dossier.get("source_lineages") or ()
+        if isinstance(row, Mapping)
+    }
+    restatements: list[dict[str, Any]] = []
+    projected_rows: list[Any] = []
+    for raw_row in adapted.get("source_lineages") or ():
+        if not isinstance(raw_row, Mapping):
+            projected_rows.append(raw_row)
+            continue
+        row = deepcopy(dict(raw_row))
+        lineage_id = str(row.get("source_lineage_id") or "")
+        prior = prior_by_id.get(lineage_id)
+        changed_fields: list[str] = []
+        if prior is not None:
+            for key in sorted(SOURCE_LINEAGE_IDENTITY_FIELDS):
+                if key not in prior:
+                    continue
+                if key in row and canonical_hash(row[key]) != canonical_hash(prior[key]):
+                    changed_fields.append(key)
+                row[key] = deepcopy(prior[key])
+        if changed_fields:
+            restatements.append(
+                {
+                    "source_lineage_id": lineage_id,
+                    "projected_identity_fields": changed_fields,
+                }
+            )
+        projected_rows.append(row)
+    adapted["source_lineages"] = projected_rows
+    saturation = dict(adapted.get("research_saturation") or {})
+    saturation["pro_reported_source_lineage_identity_restatements"] = restatements
+    adapted["research_saturation"] = saturation
+    return adapted, (
+        "PROJECT_REPEATED_SOURCE_LINEAGES_TO_IMMUTABLE_PRIOR_IDENTITY:"
+        f"{len(restatements)}",
+    )
+
+
 def _is_canonical_v2(payload: Mapping[str, Any]) -> bool:
     facts = tuple(
         row
@@ -311,10 +501,10 @@ def _is_canonical_v2(payload: Mapping[str, Any]) -> bool:
         for row in payload.get(collection) or ()
     )
     return bool(
-        facts
-        and all(
+        all(
             isinstance(row, Mapping)
             and str(row.get("dossier_fact_id") or "").startswith("PROFACT-")
+            and _CANONICAL_V2_FACT_REQUIRED_FIELDS.issubset(row)
             for row in facts
         )
         and all(isinstance(value, str) for value in payload.get("candidate_archetypes") or ())
@@ -977,6 +1167,11 @@ def _compact_source_fact(
         row.get("availability_date") or row.get("event_date") or ""
     ) or publication_date
     target_text = str(row.get("target") or "")
+    subject = str(
+        row.get("subject")
+        or target_text
+        or source_publisher
+    )
     return {
         **dict(row),
         "dossier_fact_id": fact_id,
@@ -984,8 +1179,11 @@ def _compact_source_fact(
         "question_family_ids": list(dict.fromkeys(str(value) for value in question_ids if str(value))),
         "statement": statement,
         "direction": direction,
+        "subject": subject,
         "target_id": target_id,
         "issuer_scoped": _compact_issuer_scope(row),
+        "business_segment": row.get("business_segment"),
+        "product_family": row.get("product_family"),
         "economic_mechanism": str(row.get("fact_type") or "SOURCE_BACKED_FACT"),
         "predicate": str(row.get("fact_type") or "SOURCE_BACKED_FACT"),
         "value": None,

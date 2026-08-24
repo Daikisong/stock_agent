@@ -8,6 +8,7 @@ from typing import Any, Mapping, Sequence
 
 from ..ids import canonical_hash
 from .validator import DossierValidationContext, ResearchDossierValidator
+from .v2 import compile_dossier_v2_closure_summary
 
 
 class DossierDeltaMergeError(ValueError):
@@ -74,7 +75,6 @@ def apply_research_dossier_delta(
     for key in (
         "research_pass_id",
         "parent_pass_id",
-        "research_status",
         "research_saturation",
     ):
         effective[key] = deepcopy(response_dossier.get(key))
@@ -84,6 +84,21 @@ def apply_research_dossier_delta(
             current = dict(effective.get(key) or {})
             current.update(deepcopy(dict(incoming)))
             effective[key] = current
+    reported_research_status = response_dossier.get("research_status")
+    if not isinstance(reported_research_status, str) or not reported_research_status:
+        raise DossierDeltaMergeError(
+            "follow-up response lacks its reported research status"
+        )
+    deterministic_research_status = (
+        compile_dossier_v2_closure_summary(effective).expected_research_status
+    )
+    effective["research_status"] = deterministic_research_status
+    saturation = dict(effective.get("research_saturation") or {})
+    saturation["pro_reported_followup_research_status"] = reported_research_status
+    saturation["deterministic_effective_research_status"] = (
+        deterministic_research_status
+    )
+    effective["research_saturation"] = saturation
     effective["proposed_score_ranges"] = []
     effective["score_authority"] = False
     effective["stage_authority"] = False
@@ -197,7 +212,7 @@ def _append_immutable_rows(
     return tuple(added)
 
 
-_LINEAGE_UNION_FIELDS = frozenset(
+SOURCE_LINEAGE_UNION_FIELDS = frozenset(
     {
         "source_urls",
         "canonical_source_urls",
@@ -207,7 +222,7 @@ _LINEAGE_UNION_FIELDS = frozenset(
         "existing_fact_ids_referenced",
     }
 )
-_LINEAGE_IDENTITY_FIELDS = frozenset(
+SOURCE_LINEAGE_IDENTITY_FIELDS = frozenset(
     {
         "source_lineage_id",
         "independence_group_id",
@@ -215,7 +230,7 @@ _LINEAGE_IDENTITY_FIELDS = frozenset(
         "status",
     }
 )
-_LINEAGE_CURRENT_STATE_FIELDS = frozenset(
+SOURCE_LINEAGE_CURRENT_STATE_FIELDS = frozenset(
     {"lineage_status", "lineage_operation"}
 )
 
@@ -259,7 +274,7 @@ def _merge_source_lineages(
             continue
 
         prior = deepcopy(dict(rows[index[lineage_id]]))
-        for key in _LINEAGE_IDENTITY_FIELDS:
+        for key in SOURCE_LINEAGE_IDENTITY_FIELDS:
             before = prior.get(key)
             after = incoming.get(key)
             if before is not None and after is not None and before != after:
@@ -267,7 +282,7 @@ def _merge_source_lineages(
                     f"follow-up rewrote source lineage identity: {lineage_id}.{key}"
                 )
         merged = deepcopy(prior)
-        for key in _LINEAGE_UNION_FIELDS:
+        for key in SOURCE_LINEAGE_UNION_FIELDS:
             merged[key] = list(
                 dict.fromkeys(
                     str(value)
@@ -278,7 +293,7 @@ def _merge_source_lineages(
                     if str(value)
                 )
             )
-        for key in _LINEAGE_CURRENT_STATE_FIELDS:
+        for key in SOURCE_LINEAGE_CURRENT_STATE_FIELDS:
             before = prior.get(key)
             after = incoming.get(key)
             history_key = f"{key}_history"
@@ -296,10 +311,13 @@ def _merge_source_lineages(
             if after is not None:
                 merged[key] = deepcopy(after)
         handled = (
-            _LINEAGE_UNION_FIELDS
-            | _LINEAGE_IDENTITY_FIELDS
-            | _LINEAGE_CURRENT_STATE_FIELDS
-            | {f"{key}_history" for key in _LINEAGE_CURRENT_STATE_FIELDS}
+            SOURCE_LINEAGE_UNION_FIELDS
+            | SOURCE_LINEAGE_IDENTITY_FIELDS
+            | SOURCE_LINEAGE_CURRENT_STATE_FIELDS
+            | {
+                f"{key}_history"
+                for key in SOURCE_LINEAGE_CURRENT_STATE_FIELDS
+            }
         )
         for key, value in incoming.items():
             if key in handled:

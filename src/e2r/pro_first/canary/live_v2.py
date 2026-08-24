@@ -10,6 +10,7 @@ deterministic.
 from __future__ import annotations
 
 import asyncio
+from copy import deepcopy
 from dataclasses import dataclass
 from datetime import datetime, timezone
 import json
@@ -1192,6 +1193,7 @@ class ProV2LiveCanaryRunner:
             plan.scope.job_id,
             current_pass_id=plan.research_pass.pass_id,
             current_response_hash=capture_receipt.report_md_hash,
+            prior_dossier=original_dossier,
         )
         effective: Mapping[str, Any] | None = None
         new_fact_count = new_lineage_count = new_route_count = updated_question_count = 0
@@ -1762,7 +1764,13 @@ def _durable_pass_rows(
     *,
     current_pass_id: str,
     current_response_hash: str,
+    prior_dossier: Mapping[str, Any] | None = None,
 ) -> list[Mapping[str, Any]]:
+    prior_by_id = {
+        str(row.get("pass_id") or ""): row
+        for row in (prior_dossier or {}).get("research_passes") or ()
+        if isinstance(row, Mapping)
+    }
     rows = []
     for record in ledger.list_passes(job_id):
         if record.pass_ordinal > ledger.get_pass(current_pass_id).pass_ordinal:
@@ -1780,16 +1788,25 @@ def _durable_pass_rows(
         )
         if not response_hash:
             raise ValueError("durable prior pass is missing its response hash")
-        rows.append(
-            {
-                "pass_id": record.pass_id,
-                "parent_pass_id": record.parent_pass_id,
-                "pass_name": record.pass_name,
-                "status": "COMPLETE",
-                "prompt_hash": record.prompt_hash,
-                "response_hash": response_hash,
-            }
-        )
+        durable_row = {
+            "pass_id": record.pass_id,
+            "parent_pass_id": record.parent_pass_id,
+            "pass_name": record.pass_name,
+            "status": "COMPLETE",
+            "prompt_hash": record.prompt_hash,
+            "response_hash": response_hash,
+        }
+        prior = prior_by_id.get(record.pass_id)
+        if prior is not None and record.pass_id != current_pass_id:
+            for key, value in durable_row.items():
+                if prior.get(key) != value:
+                    raise ValueError(
+                        "effective dossier pass row differs from durable ledger: "
+                        f"{record.pass_id}.{key}"
+                    )
+            rows.append(deepcopy(dict(prior)))
+            continue
+        rows.append(durable_row)
     return rows
 
 

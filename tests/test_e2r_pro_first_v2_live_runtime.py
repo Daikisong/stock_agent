@@ -372,11 +372,45 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
             "JOB-1",
             current_pass_id="PASS-CURRENT",
             current_response_hash="e" * 64,
+            prior_dossier={
+                "research_passes": [
+                    {
+                        "pass_id": "PASS-1",
+                        "parent_pass_id": None,
+                        "pass_name": "INITIAL_FULL_RESEARCH",
+                        "status": "COMPLETE",
+                        "prompt_hash": "a" * 64,
+                        "response_hash": "b" * 64,
+                        "conversation_id": "CONVERSATION-1",
+                    }
+                ]
+            },
         )
         self.assertEqual(
             [row["pass_id"] for row in compiled],
             ["PASS-1", "PASS-CURRENT"],
         )
+        self.assertEqual(compiled[0]["conversation_id"], "CONVERSATION-1")
+
+        mismatched_prior = {
+            "research_passes": [
+                {
+                    **dict(compiled[0]),
+                    "response_hash": "f" * 64,
+                }
+            ]
+        }
+        with self.assertRaisesRegex(
+            ValueError,
+            "effective dossier pass row differs from durable ledger",
+        ):
+            _durable_pass_rows(
+                FakeLedger(),  # type: ignore[arg-type]
+                "JOB-1",
+                current_pass_id="PASS-CURRENT",
+                current_response_hash="e" * 64,
+                prior_dossier=mismatched_prior,
+            )
 
     def test_explicit_source_commit_supports_cross_runtime_packet_build(self) -> None:
         source_commit = "a" * 40
@@ -962,6 +996,7 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
         response["parent_pass_id"] = "PASS-1"
         response["candidate_archetypes"] = []
         response["selected_archetypes"] = []
+        response["research_status"] = "NEEDS_VERIFIER_REPAIR"
         changed = deepcopy(original["question_family_results"][0])
         changed["closure_reason"] = "두 번째 pass에서 공개 경로를 추가 확인했다."
         changed["attempted_source_role_ids"] = ["CUSTOMER_PARTNER_OFFICIAL"]
@@ -999,6 +1034,16 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
         self.assertEqual(
             result.effective_dossier["selected_archetypes"],
             original["selected_archetypes"],
+        )
+        self.assertEqual(
+            result.effective_dossier["research_status"],
+            "NEEDS_PUBLIC_GAP_CLOSURE",
+        )
+        self.assertEqual(
+            result.effective_dossier["research_saturation"][
+                "pro_reported_followup_research_status"
+            ],
+            "NEEDS_VERIFIER_REPAIR",
         )
         self.assertEqual(
             result.effective_dossier["question_family_results"][0][

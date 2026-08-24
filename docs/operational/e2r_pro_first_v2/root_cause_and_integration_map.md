@@ -208,7 +208,8 @@ phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는
 | P6 | 완료 | 11종 verifier rejection packet, 동일 대화 repair/withdraw, deterministic re-verification |
 | P7 | 완료 | saturation 선행 gate, diagnostic/full score 분리, Stage/publication withheld, 기존 scorer/StageCourt 재사용 |
 | P8 | 완료 | 36 prompt snapshot, 13 mechanism golden, known-bad 30종·detector 29개 |
-| P9~P10 | 미완료 | frozen MD replay/live canary와 CI·최종 receipt가 남음 |
+| P9 | 진행 중 | 000660 pass 6 원본 revision 2 반영, pass 7 capture·실제 merge replay PASS. durable 입고와 verifier/saturation/score, C17/C28가 남음 |
+| P10 | 부분 완료 | V2 static audit 20/20 zero·critical 0 구현. P9 완료 뒤 full CI·최종 receipt가 남음 |
 
 ### 2026-08-24 live P9 진행 기록
 
@@ -266,7 +267,9 @@ revision_ordinal)` lineage로 추가한다. legacy row는 revision 1로 보존�
 `effective_dossier.r{revision}-{hash 앞 24자}.json`과 full hash를 가진 revision 2 DB row로 기록한다. rehearsal에서는
 revision 1 no-op snapshot `PRODOSSIERSNAPSHOT-374eb7b04d924c725676a390`과 revision 2
 snapshot `PRODOSSIERSNAPSHOT-235d2b608cbda1622f500445`가 함께 남았고
-`foreign_key_check=[]`를 확인했다. 원본 runtime에는 아직 rehearsal 결과를 적용하지 않았다.
+`foreign_key_check=[]`를 확인했다. 이는 당시 rehearsal 기록이며, 이후 원본 runtime에도 같은
+snapshot ID/hash의 revision 2가 반영됐다. 최신 상태는 아래 “pass 7 actual capture 통합” 절을
+기준으로 한다.
 
 첫 no-op 적용이 만든 pass 6 snapshot과 `resolution 0 / unresolved 17` receipt는 감사
 증거이므로 삭제·덮어쓰기하지 않는다. 교정 재처리 경로는 exact parent인 pass 4에서 response
@@ -276,9 +279,9 @@ capture 전 관측은
 `live_repair_capture_recovered_20260824.json`에 고정했다. 나머지 29개 packet은 deferred
 roster에 보존돼 있다. 초대형 미전송 pass
 `PROPASS-7694a86ac9e996eeabd03394`는 `TRANSPORT_PENDING / submit_count=0`이다.
-이 시점에는 full-thesis score·Stage·publication 권한이 아직 없다. 다음 단계는 원본
-runtime에 같은 무전송 revision 경로를 적용한 뒤, deterministic verifier가 남긴 12건과
-deferred 29건을 bounded repair로 계속 처리하는 것이다.
+이 시점에는 full-thesis score·Stage·publication 권한이 아직 없다. 당시 다음 단계였던 원본
+revision 2 적용은 완료됐고, 현재는 pass 7 capture의 durable 입고와 최신 verifier 결과에
+따른 bounded repair가 남아 있다.
 
 원본 재개에서 추가로 `PUBLIC_GAP_CLOSURE` selector가 모든 non-terminal mandatory
 question을 가져가 `VERIFIER_REPAIR_REQUIRED`까지 public search pass에 넣는 순서 결함을
@@ -357,8 +360,9 @@ mutation detection       PASS
 GitHub Actions의 `static-security`도 같은 명령을 실행하므로 로컬 보고와 clean runner의
 판정 경로가 같다.
 
-이 정적 PASS는 live 연구 완료를 뜻하지 않는다. 현재 pass 7은 기존 1회 전송을
-`RESEARCH_RUNNING` 상태로 회수 대기 중이며, 점수·Stage·publication은 계속 막혀 있다.
+이 정적 PASS는 live 연구 완료를 뜻하지 않는다. pass 7 visible 결과와 capture bundle은
+회수됐지만 durable DB에는 아직 `RESEARCH_RUNNING`으로 남아 있다. 다음 resume은
+`REUSE_CAPTURE`만 허용하며 점수·Stage·publication은 계속 막혀 있다.
 
 ## completed repair와 descendant capture의 순서
 
@@ -399,3 +403,47 @@ repair receipt와 effective repaired artifact 기록 후 snapshot persist 전에
 종료되는 crash window도 별도로 판정한다. artifact full hash가 receipt와 같고 normalized
 hash가 latest snapshot과 다를 때만 미반영 recovery를 실행한다. 두 hash가 같으면 이미
 반영된 정상 repair이므로 재실행하지 않는다.
+
+## pass 7 actual capture 통합: parser가 아니라 evidence ledger adapter
+
+pass 7은 ChatGPT Pro가 자료를 못 가져온 사례가 아니다. 실제 capture에는 source-backed
+material 4개, counter 5개, resolution 5개와 route 18개가 있다. 문제는 자연어를 점수로
+바꾸는 parser가 아니라, 같은 대화의 후속 출력이 기존 immutable dossier 장부에 안전하게
+append되는 transport dialect 경계였다.
+
+```text
+raw capture                    14 facts / 5 lineages / 18 routes / 18 questions
+read-only append delta         14 facts / 2 new lineages / 18 new routes
+effective dossier             111 facts / 21 lineages / 133 routes / 28 questions
+deterministic research status COMPLETE_WITH_LIKELY_NONPUBLIC_REMAINDER
+score authority               false
+Stage authority               false
+new submit                    0
+```
+
+다음 다섯 규칙을 generic하게 통합했다.
+
+- canonical V2 여부는 `PROFACT-` ID 하나가 아니라 schema의 fact 필수 필드 전체로 판정한다.
+- follow-up이 R13 cross guard를 selected roster에 반복해도 prior primary contract scope를
+  바꾸지 않고 diagnostics로 남긴다.
+- 반복된 source lineage는 prior identity를 유지하고 URL/fact/publisher/current-state만
+  append한다. raw capture의 표현은 수정하지 않는다.
+- durable SQL 핵심 필드가 모두 같은 prior pass row는 보조 감사 필드까지 byte-for-byte
+  보존한다. 한 필드라도 다르면 hard fail한다.
+- top-level `research_status`는 Pro 문구를 직접 채택하지 않고 merged mandatory question
+  roster에서 다시 계산한다. Pro 문구는 saturation diagnostics에 남긴다.
+
+쉬운 예: Pro MD는 사람이 읽을 수 있는 조사 보고서이고, effective dossier는 주민등록번호가
+있는 장부다. 보고서가 기존 출처를 “2Q 실적”이라고 줄여 써도 장부의 기존 lineage identity를
+새 사람으로 바꾸지 않는다. 대신 새 공시 URL과 새 사실만 기존 사람의 최신 기록으로 붙인다.
+
+`subject`·segment·product를 코드가 종목별 문구로 발명하지 않는다. compact direct-source
+fact에 subject가 빠졌을 때만 응답 자체의 exact target 또는 publisher를 구조 식별자로 쓰고,
+segment/product 부재는 `null`로 명시한다. statement, URL, publisher, date, quote는 raw
+payload에서 가져온 값을 유지하고 이후 deterministic source verifier가 진위를 판정한다.
+
+실제 pass 7 capture를 DB write 없이 parser → adapter → identity binding → append-only merge
+→ schema validator → normalizer에 통과시켰고 focused regression은 `56/56 PASS`다. durable
+DB는 의도적으로 아직 pass 7 `RESEARCH_RUNNING / submit_count=1 / response_hash=null`이다.
+코드·문서 커밋 뒤 기존 READY bundle을 `REUSE_CAPTURE`로 입고한 다음 source verifier와
+saturation gate를 실행한다. 이 단계 전에는 full-thesis score와 canonical Stage가 없다.

@@ -124,6 +124,36 @@ def _context() -> DossierValidationContext:
     )
 
 
+def _canonical_v2_fact(*, fact_id: str, research_pass_id: str) -> dict:
+    return {
+        "dossier_fact_id": fact_id,
+        "research_pass_id": research_pass_id,
+        "source_lineage_id": "SL01",
+        "question_family_ids": [],
+        "statement": "검증 가능한 정식 V2 사실이다.",
+        "direction": "POSITIVE",
+        "subject": "검증대상",
+        "target_id": "000660",
+        "issuer_scoped": True,
+        "business_segment": "반도체",
+        "product_family": "메모리",
+        "economic_mechanism": "SOURCE_BACKED_FACT",
+        "predicate": "SOURCE_BACKED_FACT",
+        "value": None,
+        "unit": None,
+        "period": "AS_OF:2026-08-22",
+        "event_date": "2026-08-22",
+        "current_status": "CURRENT",
+        "candidate_components": [],
+        "source_url": "https://example.com/fact",
+        "source_title": "정식 V2 사실",
+        "source_publisher": "검증대상",
+        "published_at": "2026-08-22",
+        "supporting_excerpt": "검증 가능한 정식 V2 사실",
+        "confidence": 0.8,
+    }
+
+
 class ProFirstV2DossierStatusTest(unittest.TestCase):
     def setUp(self) -> None:
         self.validator = ResearchDossierValidator()
@@ -327,7 +357,19 @@ class ProFirstV2DossierStatusTest(unittest.TestCase):
                 "current_status": "OPEN",
                 "affected_question_ids": [question_id],
                 "resolution_or_supersession": "RF-000660-001",
-            }
+            },
+            {
+                "counterfact_id": "CF-000660-002",
+                "fact_type": "SOURCE_BACKED_COUNTER",
+                "url": "https://example.com/counter",
+                "publisher": "외부 검증기관",
+                "publication_date": "2026-08-01",
+                "exact_short_excerpt": "계약 세부 조건은 공개되지 않았다.",
+                "statement": "계약 세부 조건은 공개되지 않았다.",
+                "current_status": "OPEN",
+                "source_role_ids": ["INDEPENDENT_NEWS"],
+                "source_lineage_id": "LINEAGE-002",
+            },
         ]
         payload["resolution_facts"] = [
             {
@@ -370,7 +412,13 @@ class ProFirstV2DossierStatusTest(unittest.TestCase):
                 "canonical_source_urls": ["https://example.com/issuer"],
                 "fact_ids": ["MF-000660-001"],
                 "lineage_status": "ACCEPTED",
-            }
+            },
+            {
+                "source_lineage_id": "LINEAGE-002",
+                "canonical_source_urls": ["https://example.com/counter"],
+                "fact_ids": ["CF-000660-002"],
+                "lineage_status": "ACCEPTED",
+            },
         ]
         payload["search_route_receipts"] = [
             {
@@ -407,7 +455,7 @@ class ProFirstV2DossierStatusTest(unittest.TestCase):
         normalized = ResearchDossierNormalizer().normalize(adapted.payload)
         receipt = self.validator.validate(normalized.payload, _context())
 
-        self.assertEqual(len(receipt.fact_ids), 3)
+        self.assertEqual(len(receipt.fact_ids), 4)
         self.assertEqual(adapted.id_map["MF-000660-001"], "PROFACT-MF-000660-001")
         self.assertEqual(
             normalized.payload["material_facts"][0]["source_url"],
@@ -417,6 +465,10 @@ class ProFirstV2DossierStatusTest(unittest.TestCase):
             normalized.payload["material_facts"][0]["supporting_excerpt"],
             "HBM 매출이 증가했다.",
         )
+        direct_counter = normalized.payload["counterfacts"][1]
+        self.assertEqual(direct_counter["subject"], "외부 검증기관")
+        self.assertIsNone(direct_counter["business_segment"])
+        self.assertIsNone(direct_counter["product_family"])
         self.assertEqual(normalized.payload["selected_archetypes"], [ARCHETYPE])
         self.assertEqual(normalized.payload["research_passes"][0]["parent_pass_id"], None)
         self.assertEqual(
@@ -528,6 +580,127 @@ class ProFirstV2DossierStatusTest(unittest.TestCase):
                 delta,
                 prior_dossier=prior,
             )
+
+    def test_canonical_followup_keeps_cross_guard_as_diagnostic_only(self) -> None:
+        prior = _base_v2(complete=True)
+        prior["research_pass_id"] = "PASS-PRIOR"
+        prior["material_facts"] = [
+            _canonical_v2_fact(
+                fact_id="PROFACT-MF-PRIOR",
+                research_pass_id="PASS-PRIOR",
+            )
+        ]
+        guard = next(
+            row["archetype_id"]
+            for row in select_contract_bundle((ARCHETYPE,)).contracts
+            if row["archetype_id"] != ARCHETYPE
+        )
+        delta = deepcopy(prior)
+        delta["research_pass_id"] = "PASS-NEXT"
+        delta["parent_pass_id"] = "PASS-PRIOR"
+        delta["selected_archetypes"] = [ARCHETYPE, guard]
+
+        adapted = ResearchDossierDialectAdapter().adapt(
+            delta,
+            prior_dossier=prior,
+        )
+
+        self.assertEqual(adapted.payload["selected_archetypes"], [ARCHETYPE])
+        self.assertEqual(adapted.payload["candidate_archetypes"], [ARCHETYPE])
+        self.assertEqual(
+            adapted.payload["research_saturation"][
+                "pro_reported_canonical_followup_cross_guards"
+            ],
+            [guard],
+        )
+        self.assertEqual(
+            adapted.payload["research_saturation"][
+                "pro_reported_canonical_followup_selected"
+            ],
+            [ARCHETYPE, guard],
+        )
+        self.assertIn(
+            "PROJECT_CANONICAL_FOLLOWUP_TO_IMMUTABLE_CONTRACT_SCOPE",
+            adapted.operations,
+        )
+
+        delta["selected_archetypes"].append("UNCOMPILED_CONTRACT")
+        with self.assertRaisesRegex(
+            DossierDialectError,
+            "introduced an uncompiled contract",
+        ):
+            ResearchDossierDialectAdapter().adapt(
+                delta,
+                prior_dossier=prior,
+            )
+
+    def test_canonical_followup_keeps_existing_lineage_identity_append_only(
+        self,
+    ) -> None:
+        prior = _base_v2(complete=True)
+        prior["research_pass_id"] = "PASS-PRIOR"
+        prior["material_facts"] = [
+            _canonical_v2_fact(
+                fact_id="PROFACT-MF-PRIOR",
+                research_pass_id="PASS-PRIOR",
+            )
+        ]
+        prior["source_lineages"] = [
+            {
+                "source_lineage_id": "SL01",
+                "independence_group_id": "OFFICIAL_EARNINGS",
+                "lineage_subject": "issuer earnings cycle",
+                "status": "ACTIVE",
+                "source_urls": ["https://example.com/prior"],
+                "fact_ids": ["PROFACT-PRIOR"],
+            }
+        ]
+        delta = deepcopy(prior)
+        delta["research_pass_id"] = "PASS-NEXT"
+        delta["parent_pass_id"] = "PASS-PRIOR"
+        delta["source_lineages"] = [
+            {
+                "source_lineage_id": "SL01",
+                "independence_group_id": "SL01",
+                "lineage_subject": "2Q earnings update",
+                "status": "ACTIVE",
+                "source_urls": ["https://example.com/followup"],
+                "fact_ids": ["PROFACT-NEXT"],
+                "lineage_status": "CURRENT",
+                "lineage_operation": "APPEND_UPDATE",
+            }
+        ]
+
+        adapted = ResearchDossierDialectAdapter().adapt(
+            delta,
+            prior_dossier=prior,
+        )
+
+        lineage = adapted.payload["source_lineages"][0]
+        self.assertEqual(lineage["independence_group_id"], "OFFICIAL_EARNINGS")
+        self.assertEqual(lineage["lineage_subject"], "issuer earnings cycle")
+        self.assertEqual(
+            lineage["source_urls"],
+            ["https://example.com/followup"],
+        )
+        self.assertEqual(
+            adapted.payload["research_saturation"][
+                "pro_reported_source_lineage_identity_restatements"
+            ],
+            [
+                {
+                    "source_lineage_id": "SL01",
+                    "projected_identity_fields": [
+                        "independence_group_id",
+                        "lineage_subject",
+                    ],
+                }
+            ],
+        )
+        self.assertIn(
+            "PROJECT_REPEATED_SOURCE_LINEAGES_TO_IMMUTABLE_PRIOR_IDENTITY:1",
+            adapted.operations,
+        )
 
     def test_compact_question_keeps_only_route_owned_by_that_question(self) -> None:
         payload = _base_v2(complete=True)
