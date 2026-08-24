@@ -194,14 +194,101 @@ class ProMultiPassResearchOrchestrator:
                 "pass_inputs": normalized_inputs,
             }
         )
+        logical_pass_input_hash = pass_input_hash
+        matching = tuple(
+            row
+            for row in passes
+            if row.pass_name == pass_name
+            and (
+                row.pass_input_hash == pass_input_hash
+                or str(row.detail.get("logical_pass_input_hash") or "")
+                == pass_input_hash
+            )
+        )
         existing = next(
             (
                 row
-                for row in passes
-                if row.pass_name == pass_name and row.pass_input_hash == pass_input_hash
+                for row in reversed(matching)
+                if row.status != ResearchPassStatus.TRANSPORT_PENDING.value
             ),
             None,
         )
+        pending_existing = next(
+            (
+                row
+                for row in reversed(matching)
+                if row.status == ResearchPassStatus.TRANSPORT_PENDING.value
+            ),
+            None,
+        )
+        if (
+            existing is not None
+            and existing.pass_input_hash != pass_input_hash
+            and str(existing.detail.get("logical_pass_input_hash") or "")
+            == pass_input_hash
+        ):
+            stored_inputs = existing.detail.get("pass_inputs")
+            if not isinstance(stored_inputs, Mapping):
+                raise RuntimeError(
+                    "resumed transport pass lacks its immutable compiled inputs"
+                )
+            normalized_inputs = dict(stored_inputs)
+            pass_input_hash = existing.pass_input_hash
+        # Zero-submit cap receipts remain append-only evidence.  If a later
+        # invocation explicitly raises the browser-pass budget, it may create
+        # one new pass that supersedes only that policy-cap receipt.  A real UI
+        # transport failure (for example composer size) remains pending and is
+        # never auto-retried by changing this accounting bound.
+        followup_count = sum(
+            row.pass_name != "INITIAL_FULL_RESEARCH"
+            and not (
+                row.status == ResearchPassStatus.TRANSPORT_PENDING.value
+                and row.submit_count == 0
+            )
+            for row in passes
+        )
+        resumed_from_transport_pending: ResearchPassRecord | None = None
+        if existing is None and pending_existing is not None:
+            pending_reason = str(
+                pending_existing.detail.get("transport_pending_reason") or ""
+            )
+            cap_was_explicitly_raised = bool(
+                pending_existing.submit_count == 0
+                and pending_reason.startswith("bounded browser pass limit ")
+                and followup_count < self.max_followup_passes
+            )
+            if cap_was_explicitly_raised:
+                resumed_from_transport_pending = pending_existing
+                normalized_inputs = {
+                    **normalized_inputs,
+                    "transport_resume_receipt": {
+                        "supersedes_pass_id": pending_existing.pass_id,
+                        "prior_reason": pending_reason,
+                        "new_max_followup_passes": self.max_followup_passes,
+                    },
+                }
+                pass_input_hash = canonical_hash(
+                    {
+                        "pass_name": pass_name,
+                        "unresolved_question_state": list(
+                            unresolved_question_state
+                        ),
+                        "pass_inputs": normalized_inputs,
+                    }
+                )
+                existing = next(
+                    (
+                        row
+                        for row in reversed(passes)
+                        if row.pass_name == pass_name
+                        and row.pass_input_hash == pass_input_hash
+                        and row.status
+                        != ResearchPassStatus.TRANSPORT_PENDING.value
+                    ),
+                    None,
+                )
+            else:
+                existing = pending_existing
         if existing is not None:
             if not existing.parent_pass_id:
                 raise RuntimeError("follow-up pass is missing parent lineage")
@@ -214,15 +301,17 @@ class ProMultiPassResearchOrchestrator:
             if not completed:
                 raise RuntimeError("follow-up requires a completed parent pass")
             parent = completed[-1]
-            pass_id = stable_id(
-                "PROPASS",
-                {
-                    "job_id": job_id,
-                    "parent_pass_id": parent.pass_id,
-                    "pass_name": pass_name,
-                    "pass_input_hash": pass_input_hash,
-                },
-            )
+            pass_identity = {
+                "job_id": job_id,
+                "parent_pass_id": parent.pass_id,
+                "pass_name": pass_name,
+                "pass_input_hash": pass_input_hash,
+            }
+            if resumed_from_transport_pending is not None:
+                pass_identity["resumed_from_transport_pending_pass_id"] = (
+                    resumed_from_transport_pending.pass_id
+                )
+            pass_id = stable_id("PROPASS", pass_identity)
         compiled = self.compiler.compile(
             packet=packet,
             primary_archetype_ids=primary_archetype_ids,
@@ -283,14 +372,6 @@ class ProMultiPassResearchOrchestrator:
         # is ever submitted (for example, an oversized verifier-repair batch).
         # Preserve that TRANSPORT_PENDING row for audit, but do not let a zero-
         # submit transport plan consume the bounded count of actual follow-ups.
-        followup_count = sum(
-            row.pass_name != "INITIAL_FULL_RESEARCH"
-            and not (
-                row.status == ResearchPassStatus.TRANSPORT_PENDING.value
-                and row.submit_count == 0
-            )
-            for row in passes
-        )
         if followup_count >= self.max_followup_passes:
             reason = (
                 f"bounded browser pass limit {self.max_followup_passes} reached; "
@@ -332,6 +413,12 @@ class ProMultiPassResearchOrchestrator:
                     for row in unresolved_question_state
                 ],
                 "pass_inputs": normalized_inputs,
+                "logical_pass_input_hash": logical_pass_input_hash,
+                "resumed_from_transport_pending_pass_id": (
+                    resumed_from_transport_pending.pass_id
+                    if resumed_from_transport_pending is not None
+                    else None
+                ),
             },
         )
         return FollowupPassPlan(

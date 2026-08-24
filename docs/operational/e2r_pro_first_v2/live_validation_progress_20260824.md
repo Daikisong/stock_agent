@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 01:39 KST`
+기준 시각: `2026-08-25 01:49 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-이번 기록의 부모 HEAD: `656235b6176b3271f9aa623b7bb0ca607d0d5507`
+이번 기록의 부모 HEAD: `c7405049ee5979dc36e2f33f5b0da9dfec0ab35a`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -32,7 +32,10 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → 수정 코드로 read-only 재판정: 신규 공개검색 queue 0 / verifier repair 5
 → pass 8 revision 2 append 완료: 원본 revision 1 보존, facts/questions/routes 불변
 → 오래된 pass 4 verifier roster가 최신 dossier repair에 섞이는 결함을 재개 실행에서 차단
-→ 다음 단계는 최신 111-fact deterministic 재검증과 정확한 5건 verifier 수리
+→ 최신 111-fact deterministic 재검증 완료: accepted 49 / query·search 0/0
+→ mandatory-linked rejection packet 51개를 prompt budget에 따라 15 + 36으로 bounded batching
+→ pass 10 VERIFIER_REPAIR는 상한에서 TRANSPORT_PENDING / submit_count=0, 아직 미전송
+→ 명시적 상한 증가 때 cap 영수증만 append-only supersede하고 실제 UI failure는 재전송 금지
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -1150,5 +1153,64 @@ production static audit           20 / 20 zero, critical_count=0, PASS
 static audit hash                 438acfc0546f8bdcbc6d30d74780f546bf880bacde4a5540fde52abe7868ed14
 ```
 
-이 시점에도 full-thesis score와 canonical Stage 권한은 없다. 다음 순서는 최신 111-fact source
-재검증, 5건 verifier repair, saturation 재판정, deterministic score/Stage, C17/C28 canary다.
+이 시점에도 full-thesis score와 canonical Stage 권한은 없다. 최신 111-fact source 재검증은
+완료됐고 다음 순서는 51개 verifier packet의 최대 4회 bounded repair, saturation 재판정,
+deterministic score/Stage, C17/C28 canary다.
+
+### 18.6 최신 111-fact verification과 bounded repair batch
+
+Stale-roster gate를 적용한 재개 실행은 pass 8 revision 2의 exact hash를 verifier 입력으로
+사용했다. 새 검색 query는 없었고, 이미 알려진 source URL의 full document 검증만 수행했다.
+
+```text
+verification id          PROVERIFY-d426e1b62210ef2277a5272f
+verification attempt     4
+effective snapshot       PRODOSSIERSNAPSHOT-d29e57e360f0db59c43f4f2b
+effective dossier hash   ad7ddf67b76eabddb210cd1d5b6d2c1d6b01433c8565e0bfd7769016036f7f5c
+candidate / accepted     111 / 49
+compiled evidence facts  49
+document cache reuse     105
+full document fetch      6
+query / search           0 / 0
+verification hash        ec09bda0ad661fa9d4d0083c3a7b65f415a426b8dd883bdc8787615d4a2edfdc
+```
+
+111개 중 verifier 비승인 candidate가 모두 repair 대상은 아니다. mandatory question에 연결된
+51개만 packet이 됐다. 한 browser composer에 모두 넣지 않고 21만 자 예산으로 deterministic
+prefix를 고른다.
+
+```text
+pending repair packets   51
+first batch              15
+deferred                 36
+first payload chars      199,646 / 210,000
+repair pass limit        최대 4
+publication              withheld
+```
+
+첫 batch 계획은 pass 10 `PROPASS-2c64ccb7b9a86a8e7cbd5922`로 장부에 생겼지만, 실행을
+안전하게 조사하려고 follow-up 상한을 6으로 고정했기 때문에
+`TRANSPORT_PENDING / submit_count=0`에서 멈췄다. browser 전송은 없었다.
+
+기존 구현은 나중에 사용자가 상한을 명시적으로 높여도 동일 input의 pending row를 계속
+반환해 영원히 재개할 수 없었다. 반대로 pending row를 PLANNED로 되돌리면 append-only 감사
+규칙을 깬다. 다음과 같이 분리했다.
+
+```text
+사유가 bounded browser pass limit이고 submit_count=0
++ 새 max_followup_passes가 실제 제출 수보다 큼
+→ 기존 pending row 보존
+→ supersedes_pass_id를 가진 새 pass append
+
+composer size / UI incompatibility 등 실제 transport failure
+→ 상한을 높여도 기존 TRANSPORT_PENDING 유지
+→ 자동 재전송 금지
+```
+
+재개 pass는 original logical input hash와 transport-resume input hash를 둘 다 장부에 결박한다.
+같은 재개 호출을 반복해도 새 pass가 더 생기지 않고 이미 생성된 pass를 idempotent하게
+반환한다. 회귀 결과는 Windows 실제 Chromium을 포함한 multi-pass `19/19`, verifier repair
+`18/18 PASS`다.
+
+이 시점의 다음 실제 작업은 명시적으로 follow-up 상한을 올려 first repair batch를 같은
+ChatGPT conversation에 exactly once 전송하는 것이다. 아직 score/Stage 권한은 없다.

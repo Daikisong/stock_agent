@@ -208,7 +208,7 @@ phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는
 | P6 | 완료 | 11종 verifier rejection packet, 동일 대화 repair/withdraw, deterministic re-verification |
 | P7 | 완료 | saturation 선행 gate, diagnostic/full score 분리, Stage/publication withheld, 기존 scorer/StageCourt 재사용 |
 | P8 | 완료 | 36 prompt snapshot, 13 mechanism golden, known-bad 30종·detector 29개 |
-| P9 | 진행 중 | 000660 pass 8 revision 2까지 append-only 입고. 누적 111 facts / 161 routes, 신규 공개검색 queue 0 / verifier repair 5. stale verifier roster 차단 뒤 최신 재검증·repair/saturation/score, C17/C28가 남음 |
+| P9 | 진행 중 | 000660 pass 8 revision 2와 최신 111-fact verifier attempt 4 완료(accepted 49, query/search 0/0). mandatory-linked repair 51개는 15+36 bounded batching, pass 10은 submit 0. repair/saturation/score, C17/C28가 남음 |
 | P10 | 부분 완료 | V2 static audit 20/20 zero·critical 0 구현. P9 완료 뒤 full CI·최종 receipt가 남음 |
 
 ### 2026-08-24 live P9 진행 기록
@@ -559,3 +559,21 @@ receipt effective/normalized dossier hash == latest dossier hash
 검사해야 한다. 이 경계는 recovered durable result, current durable result, just-computed result
 세 경우의 회귀시험으로 고정했고 live-runtime `26/26`, source-verifier `29/29`, static audit
 critical `0`을 통과했다.
+
+### accounting cap의 미전송 영수증과 실제 transport failure를 구분한다
+
+최신 verifier는 111개 candidate 중 49개를 승인했고, mandatory question에 연결된 rejection
+51개를 repair packet으로 만들었다. 첫 15개는 199,646자로 composer 예산 210,000자 안이며,
+나머지 36개는 다음 batch에 그대로 보존된다. 첫 계획 pass 10은 점검용 follow-up 상한 6에서
+`TRANSPORT_PENDING / submit_count=0`으로 멈췄다.
+
+이 상한은 실제 UI 오류가 아니라 accounting policy다. 사용자가 뒤에 더 큰 상한을 명시해도
+기존 코드는 같은 pending row만 반환해 재개가 불가능했다. 반대로 모든 pending을 자동 재시도하면
+composer 초과나 UI incompatibility까지 중복 전송할 수 있다.
+
+수정 후에는 사유 문자열이 정확히 bounded pass limit이고 submit이 0이며 새 상한에 여유가
+있을 때만 새 pass를 append한다. 기존 pending row는 그대로 보존하고 새 pass detail에
+`resumed_from_transport_pending_pass_id`, original logical input hash, 새 transport-resume input을
+함께 저장한다. 실제 transport failure는 상한을 올려도 pending 그대로다. 같은 호출의 반복은
+새 pass를 만들지 않는다. Windows Chromium을 포함한 multi-pass `19/19`, verifier-repair
+`18/18`로 이 경계를 고정했다.

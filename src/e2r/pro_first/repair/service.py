@@ -486,7 +486,13 @@ def _require_exact_completed_repair_input(
             "pass_inputs": dict(pass_inputs),
         }
     )
-    if research_pass.pass_input_hash != expected_input_hash:
+    logical_input_hash = str(
+        research_pass.detail.get("logical_pass_input_hash") or ""
+    )
+    if expected_input_hash not in {
+        research_pass.pass_input_hash,
+        logical_input_hash,
+    }:
         raise ValueError(
             "repair recovery inputs differ from the immutable completed pass"
         )

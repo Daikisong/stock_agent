@@ -424,6 +424,107 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
     def test_transport_limit_is_pending_not_complete(self) -> None:
         self.test_transport_limit_does_not_mark_complete()
 
+    def test_explicitly_raised_limit_appends_pass_after_cap_pending(self) -> None:
+        bounded = ProMultiPassResearchOrchestrator(
+            self.store,
+            ledger=self.orchestrator.ledger,
+            max_followup_passes=1,
+        )
+        first = bounded.plan_followup(
+            job_id=self.job.job_id,
+            packet=self.packet,
+            primary_archetype_ids=(ARCHETYPE,),
+            pass_name="PUBLIC_GAP_CLOSURE",
+            pass_inputs={"round": 1},
+        )
+        self.assertIsInstance(first, FollowupPassPlan)
+        pending = bounded.plan_followup(
+            job_id=self.job.job_id,
+            packet=self.packet,
+            primary_archetype_ids=(ARCHETYPE,),
+            pass_name="VERIFIER_REPAIR",
+            pass_inputs={"round": 2},
+        )
+        self.assertIsInstance(pending, TransportPendingDecision)
+        cap_receipt = self.orchestrator.ledger.list_passes(self.job.job_id)[-1]
+        self.assertEqual(cap_receipt.status, "TRANSPORT_PENDING")
+        self.assertEqual(cap_receipt.submit_count, 0)
+
+        expanded = ProMultiPassResearchOrchestrator(
+            self.store,
+            ledger=self.orchestrator.ledger,
+            max_followup_passes=2,
+        )
+        resumed = expanded.plan_followup(
+            job_id=self.job.job_id,
+            packet=self.packet,
+            primary_archetype_ids=(ARCHETYPE,),
+            pass_name="VERIFIER_REPAIR",
+            pass_inputs={"round": 2},
+        )
+        resumed_again = expanded.plan_followup(
+            job_id=self.job.job_id,
+            packet=self.packet,
+            primary_archetype_ids=(ARCHETYPE,),
+            pass_name="VERIFIER_REPAIR",
+            pass_inputs={"round": 2},
+        )
+
+        self.assertIsInstance(resumed, FollowupPassPlan)
+        self.assertIsInstance(resumed_again, FollowupPassPlan)
+        self.assertNotEqual(resumed.research_pass.pass_id, cap_receipt.pass_id)
+        self.assertEqual(
+            resumed.research_pass.detail[
+                "resumed_from_transport_pending_pass_id"
+            ],
+            cap_receipt.pass_id,
+        )
+        self.assertEqual(
+            resumed_again.research_pass.pass_id,
+            resumed.research_pass.pass_id,
+        )
+        cap_after = self.orchestrator.ledger.get_pass(cap_receipt.pass_id)
+        self.assertEqual(cap_after.status, "TRANSPORT_PENDING")
+        self.assertEqual(cap_after.submit_count, 0)
+
+    def test_raised_limit_does_not_retry_real_transport_failure(self) -> None:
+        bounded = ProMultiPassResearchOrchestrator(
+            self.store,
+            ledger=self.orchestrator.ledger,
+            max_followup_passes=1,
+        )
+        planned = bounded.plan_followup(
+            job_id=self.job.job_id,
+            packet=self.packet,
+            primary_archetype_ids=(ARCHETYPE,),
+            pass_name="VERIFIER_REPAIR",
+            pass_inputs={"batch": "too-large"},
+        )
+        self.assertIsInstance(planned, FollowupPassPlan)
+        failed = bounded.ledger.mark_transport_pending(
+            planned.research_pass.pass_id,
+            reason="visible composer payload exceeded the transport budget",
+        )
+        expanded = ProMultiPassResearchOrchestrator(
+            self.store,
+            ledger=self.orchestrator.ledger,
+            max_followup_passes=8,
+        )
+
+        still_pending = expanded.plan_followup(
+            job_id=self.job.job_id,
+            packet=self.packet,
+            primary_archetype_ids=(ARCHETYPE,),
+            pass_name="VERIFIER_REPAIR",
+            pass_inputs={"batch": "too-large"},
+        )
+
+        self.assertIsInstance(still_pending, TransportPendingDecision)
+        self.assertEqual(
+            self.orchestrator.ledger.get_pass(failed.pass_id).status,
+            "TRANSPORT_PENDING",
+        )
+
     def test_unsubmitted_transport_pending_plan_does_not_consume_followup_budget(self) -> None:
         bounded = ProMultiPassResearchOrchestrator(
             self.store,
