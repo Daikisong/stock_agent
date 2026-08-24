@@ -208,7 +208,7 @@ phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는
 | P6 | 완료 | 11종 verifier rejection packet, 동일 대화 repair/withdraw, deterministic re-verification |
 | P7 | 완료 | saturation 선행 gate, diagnostic/full score 분리, Stage/publication withheld, 기존 scorer/StageCourt 재사용 |
 | P8 | 완료 | 36 prompt snapshot, 13 mechanism golden, known-bad 30종·detector 29개 |
-| P9 | 진행 중 | 000660 pass 8을 재전송 없이 COMPLETE 입고. 누적 111 facts / 161 routes, 신규 공개검색 queue 0 / verifier repair 5로 분리. pass 8 revision 2, verifier/saturation/score, C17/C28가 남음 |
+| P9 | 진행 중 | 000660 pass 8 revision 2까지 append-only 입고. 누적 111 facts / 161 routes, 신규 공개검색 queue 0 / verifier repair 5. stale verifier roster 차단 뒤 최신 재검증·repair/saturation/score, C17/C28가 남음 |
 | P10 | 부분 완료 | V2 static audit 20/20 zero·critical 0 구현. P9 완료 뒤 full CI·최종 receipt가 남음 |
 
 ### 2026-08-24 live P9 진행 기록
@@ -535,3 +535,27 @@ statement, source, route count는 모두 같다. 기존 revision 1을 고치지 
 append해 두 의미를 모두 감사할 수 있게 한다. 관련 saturation focused test는 `28/28`, dossier
 status test는 `14/14`, Windows Chromium browser mock은 `1/1`, production static audit는
 `20/20 zero / critical_count=0 / PASS`다.
+
+### recovered dossier는 같은 hash의 verifier roster만 사용할 수 있다
+
+Live process를 재시작하면 latest dossier snapshot은 pass 8 revision 2인데 source verification
+receipt는 pass 4에 머물 수 있다. pass 6 repair가 fact를 철회·교체했기 때문에 두 roster의
+개수가 우연히 비슷해도 identity는 같지 않다. 실제로 old 97-row verifier receipt에는 최신
+111-fact dossier에 없는 rejection candidate 8개가 남아 있었다.
+
+따라서 repair packet을 만들기 전 다음 hash gate가 필요하다.
+
+```text
+receipt effective/normalized dossier hash == latest dossier hash
+→ durable verifier artifact 재사용 가능
+
+두 hash가 다름
+→ latest effective snapshot을 bounded deterministic reverify
+→ 새 verification roster만 repair compiler에 전달
+```
+
+쉬운 예로, 반품·교환 뒤의 최신 재고표에 지난달 불량품 목록을 그대로 붙이면 존재하지 않는
+상품 번호가 나온다. 불량 판정 규칙을 바꾼 것이 아니라 최신 재고표를 같은 검사기로 다시
+검사해야 한다. 이 경계는 recovered durable result, current durable result, just-computed result
+세 경우의 회귀시험으로 고정했고 live-runtime `26/26`, source-verifier `29/29`, static audit
+critical `0`을 통과했다.

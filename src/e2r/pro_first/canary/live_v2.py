@@ -541,6 +541,25 @@ class ProV2LiveCanaryRunner:
                 job.job_id,
                 job_root=job_root,
             )
+            # A recovered completed follow-up snapshot can be newer than the
+            # durable verifier receipt even when this invocation produced no
+            # new public-pass outcome.  Reusing rejection rows from that old
+            # fact roster against the latest dossier can reference facts that
+            # a prior repair withdrew or replaced.  Refresh the exact latest
+            # hash-bound dossier before compiling any rejection packet.
+            if _verification_needs_effective_dossier_reverification(
+                verification,
+                dossier=dossier,
+            ):
+                verification_service.request_effective_dossier_reverification(
+                    job.job_id,
+                    job_root=job_root,
+                    reason="PRE_REPAIR_EFFECTIVE_DOSSIER_CHANGED",
+                )
+                verification = verification_service.verify_job(
+                    job.job_id,
+                    job_root=job_root,
+                )
             if (
                 verification.result is None
                 and str(
@@ -1872,6 +1891,24 @@ def _verification_artifact_rows(
     if expected != verification.receipt.get("verification_hash"):
         raise ValueError("durable verification artifacts differ from their receipt")
     return rows, links, rejections
+
+
+def _verification_needs_effective_dossier_reverification(
+    verification: Any,
+    *,
+    dossier: Mapping[str, Any],
+) -> bool:
+    """Detect a stale durable verifier roster before repair compilation."""
+
+    if verification.result is not None:
+        return False
+    receipt = verification.receipt
+    verified_hash = str(
+        receipt.get("effective_dossier_hash")
+        or receipt.get("normalized_dossier_hash")
+        or ""
+    )
+    return verified_hash != canonical_hash(dossier)
 
 
 def _load_recovered_snapshot_state(

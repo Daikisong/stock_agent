@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 01:30 KST`
+기준 시각: `2026-08-25 01:39 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-이번 기록의 부모 HEAD: `5e860eab88481ffebec7c5a9668eae22cdd554c2`
+이번 기록의 부모 HEAD: `656235b6176b3271f9aa623b7bb0ca607d0d5507`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -30,7 +30,9 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → pass 9는 follow-up 안전 한도에서 TRANSPORT_PENDING / submit_count=0으로 미전송 보존
 → N/A 별칭·same-pass direct fact 영수증·무결성 수리 분리의 generic 결함 3건 수정
 → 수정 코드로 read-only 재판정: 신규 공개검색 queue 0 / verifier repair 5
-→ 다음 단계는 공개검색 재전송이 아니라 pass 8 revision 2 보존과 5건 verifier 수리
+→ pass 8 revision 2 append 완료: 원본 revision 1 보존, facts/questions/routes 불변
+→ 오래된 pass 4 verifier roster가 최신 dossier repair에 섞이는 결함을 재개 실행에서 차단
+→ 다음 단계는 최신 111-fact deterministic 재검증과 정확한 5건 verifier 수리
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -45,13 +47,14 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 | job | `PROJOB-cdd91020f15891533e61431f` |
 | run | `PRORUN-a7dacadb7088fc23535bfdde` |
 | canonical conversation | `6a8b09c3-bfcc-83ee-b15b-9f76eca52249` |
-| 원본 runtime latest snapshot | `PRODOSSIERSNAPSHOT-a6eca08aa35d81fd9f461b6d` (pass 8 revision 1) |
-| 원본 runtime latest dossier hash | `9d0ee27056ec4561e89af7436d15c50378a2bcdd4aa0d37d6bbe5a131b2850e9` |
+| 원본 runtime latest snapshot | `PRODOSSIERSNAPSHOT-d29e57e360f0db59c43f4f2b` (pass 8 revision 2) |
+| 원본 runtime latest dossier hash | `ad7ddf67b76eabddb210cd1d5b6d2c1d6b01433c8565e0bfd7769016036f7f5c` |
 | pass 6 exact repair parent | `PRODOSSIERSNAPSHOT-2c8a29d511db4f97ffb922b3` (pass 4) |
 | 원본 pass 6 revision lineage | revision 1 `PRODOSSIERSNAPSHOT-374eb7b04d924c725676a390` → revision 2 `PRODOSSIERSNAPSHOT-235d2b608cbda1622f500445` |
 | pass 7 capture hash | report `b1d3a9b3d55a3bd2a3bd6c9d4363bc013a52c0fce43c52b00d8803ad8b7b06e9` / dossier `b59a49240140274580b9bb8a4c739b91d58accd98acee766f07756f042eefb2f` |
 | pass 8 response hash | `3f4dcdbb3c196a8f19e3f4b52ee2b0823aabdd59c1eab6a5711f89d712b648bf` |
 | pass 8 corrected preflight hash | `ad7ddf67b76eabddb210cd1d5b6d2c1d6b01433c8565e0bfd7769016036f7f5c` |
+| pass 8 revision lineage | revision 1 `PRODOSSIERSNAPSHOT-a6eca08aa35d81fd9f461b6d` → revision 2 `PRODOSSIERSNAPSHOT-d29e57e360f0db59c43f4f2b` |
 | runtime root | `C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\live_v2\20260823T145430Z` |
 
 runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 있어 Git에 복제하지
@@ -69,7 +72,7 @@ runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 �
 | 5 | `PROPASS-7694a86ac9e996eeabd03394` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | 51.8만 자 prompt가 visible composer transport 한도를 초과, 미전송 보존 |
 | 6 | `PROPASS-3ef919d661d3bfa39f201c4e` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | raw/normalized capture를 재전송 없이 재처리해 원본 revision 2 반영 완료. 5 accepted / 12 pending |
 | 7 | `PROPASS-5c7b3b52569b6744cc2686d9` | `PUBLIC_GAP_CLOSURE` | `COMPLETE` | 1 | 기존 capture를 재전송 없이 입고. snapshot `PRODOSSIERSNAPSHOT-6273c68ce026516e4cb600ce`, 111 facts / 133 routes |
-| 8 | `PROPASS-7392f80853f11b8cdde93640` | `PUBLIC_GAP_CLOSURE` | `COMPLETE` | 1 | 재제출 없이 기존 결과 회수. 새 fact 0 / 새 route 28, snapshot revision 1은 누적 111 facts / 161 routes |
+| 8 | `PROPASS-7392f80853f11b8cdde93640` | `PUBLIC_GAP_CLOSURE` | `COMPLETE` | 1 | 재제출 없이 기존 결과 회수. 새 fact 0 / 새 route 28. availability correction은 append-only revision 2, 누적 111 facts / 161 routes |
 | 9 | `PROPASS-19f49da97db889f081930dec` | `PUBLIC_GAP_CLOSURE` | `TRANSPORT_PENDING` | 0 | bounded follow-up 안전 한도 6에서 생성만 되고 미전송. corrected routing에서는 공개검색 대상이 0이므로 제출하지 않음 |
 
 pass 5는 실패한 연구 답변이 아니라 실제 제출 전 transport 계획이다. 삭제하거나
@@ -1058,8 +1061,18 @@ facts / routes          111 / 161, 변화 없음
 raw status              NOT_APPLICABLE_WITH_REASON, 변화 없음
 ```
 
-기존 snapshot을 덮어쓰지 않는다. 이 코드 커밋 뒤 같은 pass의 append-only revision 2로
-persist하고 revision 1을 감사 증거로 보존한다.
+기존 snapshot을 덮어쓰지 않고 같은 pass의 append-only revision 2로 persist했다.
+
+```text
+revision 2 snapshot     PRODOSSIERSNAPSHOT-d29e57e360f0db59c43f4f2b
+parent snapshot         PRODOSSIERSNAPSHOT-a6eca08aa35d81fd9f461b6d
+relative path           research_passes/08_PROPASS-7392f80853f11b8cdde93640/
+                        effective_dossier.r2-ad7ddf67b76eabddb210cd1d.json
+same-pass revisions     2
+foreign-key violations  0
+```
+
+revision 1과 raw capture는 감사 증거로 그대로 남아 있다.
 
 수정 코드로 DB write 없이 saturation을 다시 계산한 결과는 다음과 같다.
 
@@ -1096,5 +1109,46 @@ static audit hash                  575d42c5395ae28d65fa4628194f7b00e4b0096158015
 유일한 error는 Chromium 실행 전 shared library 부재이며 실제 live와 같은 Windows
 Chromium에서는 같은 browser mock이 통과했다.
 
-이 시점에도 full-thesis score와 canonical Stage 권한은 없다. 다음 순서는 pass 8 revision 2
-보존, 5건 verifier repair, saturation 재판정, deterministic score/Stage, C17/C28 canary다.
+### 18.5 recovered snapshot과 stale verifier receipt의 결박
+
+Revision 2 저장 뒤 browser submit 상한을 그대로 6에 잠그고 runner를 재개했다. 새 전송은
+없었지만 repair packet 생성 직전에 다음 오류가 났다.
+
+```text
+latest effective dossier hash     ad7ddf67b76eabddb210cd1d5b6d2c1d6b01433c8565e0bfd7769016036f7f5c
+reused verification dossier hash  fee5aebe622a97340f9199c5d11bf9cf26cbae1c051a4bb6482274498dbde4c6
+latest dossier facts              111
+stale verification rows           97
+stale rejected facts not current  8
+failure                            verifier rejection references an unknown dossier fact
+browser submit                     0
+```
+
+Pass 6 repair에서 철회·교체된 `MF015`, `MF016`, `MF017`, `MF048`, `CF003`, `CF004`,
+`CF005`, `CF007`의 예전 rejection이 pass 4 verification receipt에 남아 있었다. runner는
+recovered public pass가 이번 process에서 새로 실행되지 않았다는 이유로 old receipt를 그대로
+재사용했다. 최신 dossier에는 이 ID가 없으므로 repair compiler의 hard fail은 옳았고, 그 전에
+최신 dossier를 재검증하지 않은 orchestration이 문제였다.
+
+다음 generic gate를 repair packet 생성 앞에 추가했다.
+
+```text
+verification.result가 durable reuse이고
+receipt.effective_dossier_hash != canonical_hash(latest dossier)
+→ request_effective_dossier_reverification
+→ 최신 hash-bound dossier를 같은 deterministic verifier로 1회 검증
+→ 그 결과로만 rejection packet 생성
+```
+
+hash가 같으면 재검증하지 않고, verifier 결과가 이번 실행에서 이미 생성됐어도 반복하지 않는다.
+따라서 의미 없는 verifier loop도 열리지 않는다. 검증 결과는 다음과 같다.
+
+```text
+live-runtime regression           26 / 26 PASS
+source-verifier regression        29 / 29 PASS
+production static audit           20 / 20 zero, critical_count=0, PASS
+static audit hash                 438acfc0546f8bdcbc6d30d74780f546bf880bacde4a5540fde52abe7868ed14
+```
+
+이 시점에도 full-thesis score와 canonical Stage 권한은 없다. 다음 순서는 최신 111-fact source
+재검증, 5건 verifier repair, saturation 재판정, deterministic score/Stage, C17/C28 canary다.

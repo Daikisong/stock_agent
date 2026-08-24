@@ -64,6 +64,7 @@ from e2r.pro_first.canary.live_v2 import (
     _public_gap_followup_question_ids,
     _submitted_unsnapshotted_followup_plan,
     _verification_artifact_rows,
+    _verification_needs_effective_dossier_reverification,
 )
 from e2r.cli.run_e2r_pro_first_v2_live_canaries import _parse_spec
 from tests.test_e2r_pro_first_v2_saturation import _complete_dossier
@@ -107,6 +108,41 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
         self.assertEqual(
             _followup_execution_mode(research_pass, pass_root=pass_root),
             "RECOVER_SUBMITTED_RESULT",
+        )
+
+    def test_stale_verifier_roster_is_refreshed_before_repair_packets(self) -> None:
+        dossier = _base_v2()
+        current_hash = canonical_hash(dossier)
+        stale = SimpleNamespace(
+            result=None,
+            receipt={"effective_dossier_hash": "a" * 64},
+        )
+        current = SimpleNamespace(
+            result=None,
+            receipt={"effective_dossier_hash": current_hash},
+        )
+        just_verified = SimpleNamespace(
+            result=object(),
+            receipt={"effective_dossier_hash": "a" * 64},
+        )
+
+        self.assertTrue(
+            _verification_needs_effective_dossier_reverification(
+                stale,
+                dossier=dossier,
+            )
+        )
+        self.assertFalse(
+            _verification_needs_effective_dossier_reverification(
+                current,
+                dossier=dossier,
+            )
+        )
+        self.assertFalse(
+            _verification_needs_effective_dossier_reverification(
+                just_verified,
+                dossier=dossier,
+            )
         )
 
     def test_public_gap_followup_never_steals_verifier_repair_questions(self) -> None:
