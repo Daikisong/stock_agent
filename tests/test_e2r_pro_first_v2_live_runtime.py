@@ -15,6 +15,7 @@ from e2r.pro_first.dossier import (
     DossierDeltaMergeError,
     DossierValidationContext,
     DossierIdentityBindingError,
+    ResearchDossierNormalizer,
     apply_research_dossier_delta,
     bind_dossier_transport_identity,
 )
@@ -214,6 +215,7 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
         snapshot = SimpleNamespace(
             snapshot_id="SNAPSHOT-REPAIR-1",
             revision_ordinal=1,
+            dossier_hash=canonical_hash({"research_pass_id": pass_id}),
         )
         ledger = SimpleNamespace(
             get_pass=lambda _pass_id: research_pass,
@@ -229,6 +231,56 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
                 job_root=job_root,
             ),
             pass_id,
+        )
+
+        repaired = {
+            "research_pass_id": pass_id,
+            "verification_repair_register": [
+                {
+                    "packet_id": "PACKET-1",
+                    "status": "REVERIFIED_ACCEPTED",
+                }
+            ],
+        }
+        (receipt_root / "effective_repaired_dossier.json").write_text(
+            json.dumps(repaired),
+            encoding="utf-8",
+        )
+        receipt_path.write_text(
+            json.dumps(
+                {
+                    "research_pass_id": pass_id,
+                    "resolutions": [
+                        {
+                            "packet_id": "PACKET-1",
+                            "status": "REVERIFIED_ACCEPTED",
+                        }
+                    ],
+                    "effective_dossier_hash": canonical_hash(repaired),
+                }
+            ),
+            encoding="utf-8",
+        )
+        self.assertEqual(
+            _completed_current_repair_reprocess_pass_id(
+                ledger,
+                job_id=job_id,
+                dossier={"research_pass_id": pass_id},
+                job_root=job_root,
+            ),
+            pass_id,
+        )
+
+        snapshot.dossier_hash = canonical_hash(
+            ResearchDossierNormalizer().normalize(repaired).payload
+        )
+        self.assertIsNone(
+            _completed_current_repair_reprocess_pass_id(
+                ledger,
+                job_id=job_id,
+                dossier={"research_pass_id": pass_id},
+                job_root=job_root,
+            )
         )
 
         snapshot.revision_ordinal = 2

@@ -394,3 +394,8 @@ Windows runtime의 전체 경로가 긴 경우 full 64자 hash를 파일명에�
 포함해 260자를 넘을 수 있다. snapshot filename은
 `effective_dossier.r{revision}-{hash 앞 24자}.json`을 사용하고, ledger에는 full hash를
 계속 저장한다. 파일을 읽거나 기존 파일을 재사용할 때는 언제나 full hash를 검사한다.
+
+repair receipt와 effective repaired artifact 기록 후 snapshot persist 전에 process가
+종료되는 crash window도 별도로 판정한다. artifact full hash가 receipt와 같고 normalized
+hash가 latest snapshot과 다를 때만 미반영 recovery를 실행한다. 두 hash가 같으면 이미
+반영된 정상 repair이므로 재실행하지 않는다.

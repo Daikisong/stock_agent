@@ -2064,11 +2064,27 @@ def _completed_current_repair_reprocess_pass_id(
     if not repair_receipt_path.is_file():
         return None
     repair_receipt = json.loads(repair_receipt_path.read_text(encoding="utf-8"))
-    if (
-        str(repair_receipt.get("research_pass_id") or "") != pass_id
-        or tuple(repair_receipt.get("resolutions") or ())
-    ):
+    if str(repair_receipt.get("research_pass_id") or "") != pass_id:
         return None
+    resolutions = tuple(repair_receipt.get("resolutions") or ())
+    if resolutions:
+        repaired_path = job_root / "repair/effective_repaired_dossier.json"
+        if not repaired_path.is_file():
+            raise RuntimeError(
+                "completed repair receipt exists without its effective dossier"
+            )
+        repaired = json.loads(repaired_path.read_text(encoding="utf-8"))
+        if canonical_hash(repaired) != str(
+            repair_receipt.get("effective_dossier_hash") or ""
+        ):
+            raise RuntimeError(
+                "completed repair artifact differs from its durable receipt"
+            )
+        normalized_repaired = ResearchDossierNormalizer().normalize(
+            repaired
+        ).payload
+        if canonical_hash(normalized_repaired) == pass_snapshot.dossier_hash:
+            return None
     pass_root = (
         job_root
         / "research_passes"

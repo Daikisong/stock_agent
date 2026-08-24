@@ -1,6 +1,6 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 00:15 KST`
+기준 시각: `2026-08-25 00:14 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
@@ -695,3 +695,19 @@ file exists              true
 
 즉 filename은 짧아졌지만 snapshot ID와 full dossier hash는 Linux clone rehearsal과
 동일하며 Windows 실제 파일 생성도 통과했다.
+
+첫 원본 시도는 verifier receipt와 `effective_repaired_dossier.json`을 원자적으로 기록한
+뒤 snapshot persist에서 멈췄다. 따라서 다음 재개 감지는 resolution 0인 과거 adapter
+no-op뿐 아니라 다음 crash window도 처리한다.
+
+```text
+repair receipt resolutions > 0
++ effective repaired artifact full hash == receipt hash
++ normalized repaired hash != latest snapshot hash
+→ snapshot persist 전 crash로 판정
+→ exact completed pass를 무전송 재처리
+```
+
+반대로 normalized repaired hash가 latest snapshot full hash와 같으면 이미 반영된 정상
+repair이므로 반복하지 않는다. 원본 read-only 검사에서 pass 6이 다시 recovery candidate로
+정확히 검출됐고, 이 두 분기와 revision 2 반복 차단 회귀시험이 통과했다.
