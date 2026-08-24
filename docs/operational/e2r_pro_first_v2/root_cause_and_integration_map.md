@@ -710,3 +710,21 @@ pass 12의 cap-only `submit_count=0` row는 그대로 남고 pass 13은
 `RESEARCH_RUNNING / submit_count=1`이다. 즉 새 dossier를 검문하지 않은 채 stale 111-fact
 roster로 다음 Pro 요청을 보내지 않았다. 현재는 pass 13 visible result만 감시하며 후속 pass는
 아직 준비·전송하지 않는다.
+
+### withdrawal-only delta는 exact parent question identity를 참조할 수 있다
+
+pass 13은 새 fact 없이 16개 candidate를 전부 withdrawn으로 반환했고, gap 하나가 기존 질문
+20개를 참조했다. compact delta는 question row를 반복하지 않았지만 20개 모두 exact parent
+pass 11의 canonical question roster에 존재했다.
+
+adapter는 current response의 same question을 먼저 보고, 없을 때만 exact parent snapshot의
+same `question_family_id`를 gap 정규화에 사용한다. prior question을 current question result로
+복사하거나 score evidence로 승격하지 않는다. parent에도 없는 질문은 hard fail한다.
+
+쉬운 예로 반품서가 “기존 주문서 20번 항목”을 가리키면서 주문 내용을 다시 쓰지 않은 경우,
+exact 부모 주문서의 20번 항목 이름을 확인할 수 있다. 하지만 부모에도 없는 99번 항목을
+새로 만들어서는 안 된다.
+
+실제 pass 13 capture는 facts 0, question rows 0, gap question refs 20, repair register 58,
+unique withdrawn candidates 16이며 수정 adapter schema PASS다. dossier focused `19/19 PASS`,
+browser 재전송은 0이다.

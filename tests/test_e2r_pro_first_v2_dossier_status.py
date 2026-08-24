@@ -648,6 +648,67 @@ class ProFirstV2DossierStatusTest(unittest.TestCase):
         )
         self.assertNotIn("COMPETITOR_OFFICIAL", gaps[0]["attempted_source_role_ids"])
 
+    def test_compact_gap_can_reference_exact_prior_question_omitted_from_delta(
+        self,
+    ) -> None:
+        prior = _base_v2(complete=True)
+        prior["research_pass_id"] = "PASS-PRIOR"
+        prior_question = prior["question_family_results"][0]
+        question_id = prior_question["question_family_id"]
+        prior_question["attempted_source_role_ids"] = [
+            "ISSUER_OFFICIAL",
+            "OFFICIAL_FILING",
+        ]
+
+        delta = _base_v2(complete=True)
+        delta.update(
+            {
+                "research_pass_id": "PASS-NEXT",
+                "parent_pass_id": "PASS-PRIOR",
+                "candidate_archetypes": [{"archetype_id": ARCHETYPE}],
+                "selected_archetypes": [
+                    {"archetype_id": ARCHETYPE, "role": "PRIMARY"}
+                ],
+                "question_family_results": [],
+                "unresolved_gaps": [
+                    {
+                        "gap_id": "GAP-PRIOR-QUESTION",
+                        "question_family_ids": [question_id],
+                        "status": "VERIFIER_REPAIR_REQUIRED",
+                        "reason": "deterministic recomputation pending",
+                    }
+                ],
+            }
+        )
+
+        adapted = ResearchDossierDialectAdapter().adapt(
+            delta,
+            prior_dossier=prior,
+        )
+
+        self.assertEqual(len(adapted.payload["unresolved_gaps"]), 1)
+        gap = adapted.payload["unresolved_gaps"][0]
+        self.assertEqual(gap["question_family_id"], question_id)
+        self.assertEqual(
+            gap["attempted_source_role_ids"],
+            ["ISSUER_OFFICIAL", "OFFICIAL_FILING"],
+        )
+        self.assertEqual(adapted.payload["question_family_results"], [])
+        self.assertIn(
+            "PROJECT_EXACT_PRIOR_QUESTION_IDENTITY_FOR_COMPACT_GAPS:1",
+            adapted.operations,
+        )
+
+        escaped = deepcopy(delta)
+        escaped["unresolved_gaps"][0]["question_family_ids"] = [
+            "UNCOMPILED_QUESTION_Q99"
+        ]
+        with self.assertRaisesRegex(DossierDialectError, "unknown question"):
+            ResearchDossierDialectAdapter().adapt(
+                escaped,
+                prior_dossier=prior,
+            )
+
     def test_compact_followup_can_anchor_relationship_to_exact_prior_fact(self) -> None:
         prior = _base_v2(complete=True)
         prior["research_pass_id"] = "PASS-PRIOR"

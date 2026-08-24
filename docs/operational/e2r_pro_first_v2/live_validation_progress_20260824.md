@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 03:12 KST`
+기준 시각: `2026-08-25 03:31 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-이번 기록의 부모 HEAD: `ef87f56fa87aa85306cf230079b10f21c1bc909c`
+이번 기록의 부모 HEAD: `c003284f8a85f0a60cdd994e83da65425af8e561`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -59,7 +59,10 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → 동일 hash 반복은 계속 금지, 새 append-only snapshot은 새 verifier input으로 허용
 → latest 107-fact canonical verification attempt 5 완료: accepted/compiled 53, query/search 0/0
 → pass 13 next repair batch same-conversation exactly-once submit 완료
-→ pass 13 RESEARCH_RUNNING / submit_count=1, 현재 visible result 감시 중
+→ pass 13 visible result 254 polls 뒤 capture·READY 완료, submit_count=1 유지
+→ compact withdrawal delta는 question rows 0, prior question gap refs 20, WITHDRAWN 16
+→ exact parent 20/20 question identity로 gap만 복원, parent 밖 question은 hard fail
+→ 실제 pass 13 response schema read-only PASS, 재전송 없이 durable 적용 대기
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -87,6 +90,7 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 | pass 11 effective snapshot | `PRODOSSIERSNAPSHOT-cc57432e88b8eb100c7f3655` / hash `50ec0efa8d5b48944b8ce762263cd1017af681f7a5637aefa4c21c18d612b351` |
 | pass 11 repair receipt | hash `9250299d7717db0b9ac89d246bcb30ece2f4db3c03da997b7c87462d2e81d8c7` / source verification hash `a2700b1139f692b786ded7a7db3f7c45fb945cec7edea16f3ff15400781efb7b` |
 | canonical verification attempt 5 | `PROVERIFY-7913ef1dd902b450732f5e65` / hash `d7bcaefa1cc48dd1cac1bf9854cd83e2baedfd5336790ae59425491828cd6693` / exact pass 11 snapshot hash |
+| pass 13 capture hash | report `4447c7c4b8cd73bf1b09f33844cd3a7e98b9994c8325b1216509fd51189b0ed9` / dossier `1e3d06c1f88c2ee4a8041052fb67518f0a3b39752b5720a3870428d9c1fe9627` |
 | runtime root | `C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\live_v2\20260823T145430Z` |
 
 runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 있어 Git에 복제하지
@@ -109,7 +113,7 @@ runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 �
 | 10 | `PROPASS-2c64ccb7b9a86a8e7cbd5922` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | 최신 51개 repair packet의 첫 15개 계획. 당시 상한 6에서 미전송 보존 |
 | 11 | `PROPASS-7a551c28c37e8ca775a056a4` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | pass 10 cap 영수증을 append-only supersede. capture 재사용, repair/reverify, effective snapshot까지 완료. 107 facts / 211 routes / accepted 4 / rejected 7 / withdrawn 4 |
 | 12 | `PROPASS-e677c79c63041ec3ee5c77fe` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | pass 11 재검증 뒤 남은 42개 중 next 16개 계획. 점검용 max 7에서 미전송 보존 |
-| 13 | `PROPASS-10e3c63062359e4fe27642e0` | `VERIFIER_REPAIR` | `RESEARCH_RUNNING` | 1 | pass 12 cap-only 영수증을 보존하고 max 10에서 next batch를 exactly once submit. 현재 visible result recovery poll 중 |
+| 13 | `PROPASS-10e3c63062359e4fe27642e0` | `VERIFIER_REPAIR` | `RESEARCH_RUNNING` | 1 | pass 12 cap-only 영수증을 보존하고 exactly once submit. visible 결과 capture·READY 완료. 16 candidates 전부 WITHDRAWN, adapter 재검증 PASS, durable 적용 전 |
 
 pass 5는 실패한 연구 답변이 아니라 실제 제출 전 transport 계획이다. 삭제하거나
 `COMPLETE`로 바꾸지 않았고, `submit_count=0`, `prepared_at=null`, `submitted_at=null`을
@@ -1616,3 +1620,50 @@ same conversation           6a8b09c3-bfcc-83ee-b15b-9f76eca52249
 `FOLLOWUP_SUBMITTED`은 1회만 발생했고 첫 poll부터 `RESEARCH_RUNNING`을 확인했다. 현재는 같은
 assistant result만 감시하며 pass 14 composer 준비·click은 없다. 완료 뒤 capture와
 deterministic repair 결과가 생기면 이 절에 후속 영수증을 append한다.
+
+### 18.14 pass 13 withdrawal-only capture와 exact prior question projection
+
+pass 13은 poll 252에서 첫 안정 관측, poll 254에서 3회 연속 안정 관측을 채워 capture됐다.
+
+```text
+assistant turn        request-6a8b09c3-bfcc-83ee-b15b-9f76eca52249-4
+captured_at           2026-08-24T18:28:14.740524Z
+capture source        DIRECT_REPORT_DOM
+report bytes/hash     13,670 / 4447c7c4b8cd73bf1b09f33844cd3a7e98b9994c8325b1216509fd51189b0ed9
+dossier bytes/hash    13,049 / 1e3d06c1f88c2ee4a8041052fb67518f0a3b39752b5720a3870428d9c1fe9627
+READY                 present
+```
+
+이번 응답은 replacement fact를 만들지 않고 선택된 16개 rejected candidate를 전부
+`WITHDRAWN`으로 선언했다. 같은 candidate가 여러 질문에 결박돼 register row는 58개다.
+
+```text
+material/counter/resolution facts     0 / 0 / 0
+question rows                         0
+unresolved gap groups                 1
+gap question references              20 unique
+repair register rows                  58
+repair candidates                     16
+actions                               WITHDRAWN 16
+```
+
+첫 adapter 시도는 gap이 가리키는 20개 질문을 current delta의 빈 question rows에서만 찾아
+`unknown question`으로 멈췄다. exact parent pass 11 dossier를 대조하니 20개 모두 parent의
+28개 canonical question roster에 있었고 parent 밖 질문은 0개였다.
+
+따라서 gap 정규화에 필요한 question metadata만 다음 순서로 찾는다.
+
+```text
+current response의 exact question_family_id
+→ 없으면 exact parent snapshot의 same question_family_id
+→ 둘 다 없으면 hard fail
+```
+
+prior question row를 current response의 `question_family_results`에 복사하지 않는다. gap의
+archetype/materiality/attempted roles/affected components를 정규화하는 identity lookup에만 쓴다.
+다른 question, 종목별 template, route 개수로 값을 추정하지 않는다.
+
+실제 pass 13 capture read-only 결과는 gap 20개, repair candidates 16개,
+`WITHDRAWN` register 58개를 보존한 채 schema PASS다. focused dossier status는 `19/19 PASS`이며
+parent에 없는 `UNCOMPILED_QUESTION_Q99`는 계속 거절한다. pass 13은 READY capture가 있으므로
+다음 재개는 `REUSE_CAPTURE`로 완료·repair 적용만 수행하고 browser submit은 하지 않는다.

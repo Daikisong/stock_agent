@@ -630,6 +630,27 @@ def _adapt_compact_v2(
         for row in question_rows
         if isinstance(row, Mapping)
     }
+    gap_question_ids = {
+        str(question_id)
+        for gap in adapted.get("unresolved_gaps") or ()
+        if isinstance(gap, Mapping)
+        for question_id in gap.get("question_family_ids") or ()
+        if str(question_id)
+    }
+    projected_prior_gap_question_count = 0
+    if prior_dossier is not None and gap_question_ids - set(questions_by_id):
+        _validate_prior_dossier_scope(adapted, prior_dossier)
+        prior_questions_by_id = {
+            str(row.get("question_family_id") or ""): row
+            for row in prior_dossier.get("question_family_results") or ()
+            if isinstance(row, Mapping)
+        }
+        for question_id in sorted(gap_question_ids - set(questions_by_id)):
+            prior_question = prior_questions_by_id.get(question_id)
+            if prior_question is None:
+                continue
+            questions_by_id[question_id] = prior_question
+            projected_prior_gap_question_count += 1
     question_refs: dict[str, list[str]] = {value: [] for value in raw_fact_ids}
     component_refs: dict[str, list[str]] = {value: [] for value in raw_fact_ids}
     for row in question_rows:
@@ -813,6 +834,10 @@ def _adapt_compact_v2(
             "PROJECT_PRIMARY_SELECTED_ARCHETYPES_AND_PRESERVE_CROSS_GUARDS",
             "PROJECT_COMPONENT_RESEARCH_ARRAY_TO_ID_OBJECT",
             f"PROJECT_COMPACT_V2_GAPS:{len(adapted['unresolved_gaps'])}",
+            (
+                "PROJECT_EXACT_PRIOR_QUESTION_IDENTITY_FOR_COMPACT_GAPS:"
+                f"{projected_prior_gap_question_count}"
+            ),
             f"PROJECT_COMPACT_V2_ROUTE_RECEIPTS:{len(adapted['search_route_receipts'])}",
             (
                 "PROJECT_EXACT_PRIOR_REPAIR_SOURCE_IDENTITY:"
