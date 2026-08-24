@@ -208,7 +208,7 @@ phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는
 | P6 | 완료 | 11종 verifier rejection packet, 동일 대화 repair/withdraw, deterministic re-verification |
 | P7 | 완료 | saturation 선행 gate, diagnostic/full score 분리, Stage/publication withheld, 기존 scorer/StageCourt 재사용 |
 | P8 | 완료 | 36 prompt snapshot, 13 mechanism golden, known-bad 30종·detector 29개 |
-| P9 | 진행 중 | 000660 pass 6 원본 revision 2 반영, pass 7 capture·실제 merge replay PASS. durable 입고와 verifier/saturation/score, C17/C28가 남음 |
+| P9 | 진행 중 | 000660 pass 6 revision 2와 pass 7 durable 입고 완료. 공유 fact route 계보 수정 후 공개 gap 28→10. pass 8은 1회 제출·연구 중이며 verifier/saturation/score, C17/C28가 남음 |
 | P10 | 부분 완료 | V2 static audit 20/20 zero·critical 0 구현. P9 완료 뒤 full CI·최종 receipt가 남음 |
 
 ### 2026-08-24 live P9 진행 기록
@@ -360,9 +360,9 @@ mutation detection       PASS
 GitHub Actions의 `static-security`도 같은 명령을 실행하므로 로컬 보고와 clean runner의
 판정 경로가 같다.
 
-이 정적 PASS는 live 연구 완료를 뜻하지 않는다. pass 7 visible 결과와 capture bundle은
-회수됐지만 durable DB에는 아직 `RESEARCH_RUNNING`으로 남아 있다. 다음 resume은
-`REUSE_CAPTURE`만 허용하며 점수·Stage·publication은 계속 막혀 있다.
+이 정적 PASS는 live 연구 완료를 뜻하지 않는다. pass 7은 durable `COMPLETE`가 됐고 pass 8은
+동일 conversation에 딱 1회 제출된 `RESEARCH_RUNNING`이다. 다음 resume은 pass 8의 기존
+visible 결과 회수만 허용하며 점수·Stage·publication은 계속 막혀 있다.
 
 ## completed repair와 descendant capture의 순서
 
@@ -443,7 +443,51 @@ segment/product 부재는 `null`로 명시한다. statement, URL, publisher, dat
 payload에서 가져온 값을 유지하고 이후 deterministic source verifier가 진위를 판정한다.
 
 실제 pass 7 capture를 DB write 없이 parser → adapter → identity binding → append-only merge
-→ schema validator → normalizer에 통과시켰고 focused regression은 `56/56 PASS`다. durable
-DB는 의도적으로 아직 pass 7 `RESEARCH_RUNNING / submit_count=1 / response_hash=null`이다.
-코드·문서 커밋 뒤 기존 READY bundle을 `REUSE_CAPTURE`로 입고한 다음 source verifier와
-saturation gate를 실행한다. 이 단계 전에는 full-thesis score와 canonical Stage가 없다.
+→ schema validator → normalizer에 통과시켰고 focused regression은 `56/56 PASS`다. 그 뒤
+기존 READY bundle을 `REUSE_CAPTURE`로 입고해 pass 7은 durable `COMPLETE`, 누적 snapshot은
+`111 facts / 21 lineages / 133 routes / 28 questions`가 됐다. 이 단계에서도 full-thesis
+score와 canonical Stage는 없다.
+
+## 공유 fact의 acquisition provenance와 질문 route ownership 분리
+
+pass 7 뒤 public-gap 판정이 28개 mandatory question 전부를 다시 열었다. raw Pro 자료가
+비어서가 아니라 질문 closure가 “이 질문이 fact를 쓴다”와 “이 질문 소유 route가 fact를
+처음 취득했다”를 같은 조건으로 묶었기 때문이다.
+
+```text
+기존 조건
+Q2가 F1을 사용
+→ Q2 소유 route.accepted_fact_ids에도 F1이 있어야 함
+
+수정 조건
+F1이 durable route history 어디선가 실제 accepted됨
++ F1이 현재 verified됨
+→ Q2도 F1을 사용할 수 있음
+→ 원래 route ownership은 Q1으로 그대로 보존
+```
+
+이 분리는 route를 다른 질문으로 재라벨하는 완화가 아니다. route adequacy와 source-role
+coverage는 계속 현재 질문이 요청한 route만 본다. 오직 fact의 acquisition provenance만
+전체 immutable accepted-route history에서 확인한다.
+
+derived counter/resolution relationship은 직접 URL을 가진 새 원문 fact가 아닐 수 있다.
+따라서 현재 verified relationship이 선언한 `source_anchor_fact_ids` 전부가 immutable
+acquisition history에 있을 때만 계보를 상속한다. anchor가 후속 snapshot에서 superseded되어
+현재 verified roster에서 빠졌더라도 과거 accepted 영수증은 지우지 않는다. 반면 route와
+anchor가 없는 direct fact는 계속 차단한다.
+
+쉬운 예: 한 실적 공시에서 “매출 증가”와 “CAPA 잠김”을 동시에 읽었다면 공시 다운로드
+영수증은 한 장이면 된다. 두 번째 체크리스트 칸에 같은 공시를 사용한다고 영수증을 다시
+발급할 필요는 없다. 다만 영수증 없이 보고서에 새로 적힌 숫자는 여전히 근거로 인정하지
+않는다.
+
+실제 pass 7 provisional saturation을 동일 snapshot binding으로 재실행한 결과 잘못 열린
+public question은 `28→10`으로 줄었다. 남은 10개 가운데 9개는 실제 direct/anchor route 결박이
+없고 1개는 linked verified fact가 없어 그대로 보류했다. 이 경계는 공유 fact, archived
+anchor relationship, unrouted direct fact의 세 회귀시험으로 고정했고 saturation 시험은
+`26/26 PASS`다.
+
+Windows mock 종료 시 발견된 multi-pass SQLite read connection 7곳도
+`contextlib.closing`으로 명시적으로 닫았다. 기능 assertion 뒤 임시 DB 삭제만 실패하던
+`WinError 32`가 사라졌고 동일 Windows Chromium mock은 `1/1 PASS`다. production static
+audit는 `20/20 zero / critical_count=0 / PASS`를 유지한다.

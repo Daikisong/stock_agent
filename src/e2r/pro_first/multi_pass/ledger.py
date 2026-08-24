@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 import json
 import sqlite3
 from typing import Any, Iterator, Mapping, Sequence
@@ -56,7 +56,7 @@ class ProMultiPassLedger:
             connection.close()
 
     def initialize(self) -> None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             connection.executescript(PRO_V2_MULTI_PASS_SCHEMA)
 
     def establish_initial_scope(
@@ -185,7 +185,7 @@ class ProMultiPassLedger:
         return self._scope_from_row(row)
 
     def get_scope(self, job_id: str) -> ResearchApprovalScope | None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 "SELECT * FROM pro_research_approval_scopes WHERE job_id=?",
                 (job_id,),
@@ -384,12 +384,12 @@ class ProMultiPassLedger:
         return self._pass_from_row(result)
 
     def get_pass(self, pass_id: str) -> ResearchPassRecord:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = self._require_pass(connection, pass_id)
         return self._pass_from_row(row)
 
     def list_passes(self, job_id: str) -> tuple[ResearchPassRecord, ...]:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             rows = connection.execute(
                 "SELECT * FROM pro_research_passes WHERE job_id=? ORDER BY pass_ordinal",
                 (job_id,),
@@ -494,7 +494,7 @@ class ProMultiPassLedger:
     def latest_dossier_snapshot(
         self, job_id: str
     ) -> ResearchDossierSnapshotRecord | None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 """
                 SELECT snapshot.* FROM pro_research_dossier_snapshots AS snapshot
@@ -510,7 +510,7 @@ class ProMultiPassLedger:
     def latest_dossier_snapshot_for_pass(
         self, *, job_id: str, pass_id: str
     ) -> ResearchDossierSnapshotRecord | None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 """
                 SELECT * FROM pro_research_dossier_snapshots
@@ -524,7 +524,7 @@ class ProMultiPassLedger:
     def list_dossier_snapshots(
         self, job_id: str
     ) -> tuple[ResearchDossierSnapshotRecord, ...]:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             rows = connection.execute(
                 """
                 SELECT snapshot.* FROM pro_research_dossier_snapshots AS snapshot

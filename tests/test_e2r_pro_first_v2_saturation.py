@@ -216,6 +216,107 @@ class ProFirstV2SaturationTest(unittest.TestCase):
         self.assertEqual(receipt.deterministic_research_status, "COMPLETE")
         self.assertEqual(compile_saturation_audit(receipt)["critical_count_sum"], 0)
 
+    def test_verified_fact_keeps_acquisition_route_when_shared_by_question(
+        self,
+    ) -> None:
+        dossier = deepcopy(self.dossier)
+        first, second = dossier["question_family_results"][:2]
+        shared_id = first["support_fact_ids"][0]
+        shared = next(
+            row
+            for row in dossier["material_facts"]
+            if row["dossier_fact_id"] == shared_id
+        )
+        second_contract = self._contract_question(second["question_family_id"])
+        shared["source_role_ids"] = list(second_contract["required_source_roles"])
+        second["support_fact_ids"] = [shared_id]
+        second["counter_fact_ids"] = []
+        second["resolution_fact_ids"] = []
+
+        receipt = self._adjudicate(dossier)
+        decision = _decision(receipt, second["question_family_id"])
+
+        self.assertTrue(decision.question_to_source_linkage_complete)
+        self.assertNotIn(
+            "QUESTION_FACT_NOT_BOUND_TO_ROUTE_RECEIPT",
+            decision.failure_codes,
+        )
+
+    def test_derived_relationship_inherits_verified_anchor_route(self) -> None:
+        dossier = deepcopy(self.dossier)
+        result = dossier["question_family_results"][0]
+        anchor_id = result["support_fact_ids"][0]
+        anchor = next(
+            row
+            for row in dossier["material_facts"]
+            if row["dossier_fact_id"] == anchor_id
+        )
+        relationship_id = "PROFACT-DERIVED-COUNTER"
+        dossier["counterfacts"].append(
+            {
+                **deepcopy(anchor),
+                "dossier_fact_id": relationship_id,
+                "direction": "COUNTER",
+                "source_anchor_fact_ids": [anchor_id],
+            }
+        )
+        dossier["material_facts"] = [
+            row
+            for row in dossier["material_facts"]
+            if row["dossier_fact_id"] != anchor_id
+        ]
+        result["support_fact_ids"] = []
+        result["counter_fact_ids"] = [relationship_id]
+        verified = {*self.verified - {anchor_id}, relationship_id}
+
+        receipt = self._adjudicate(dossier, verified_fact_ids=verified)
+        decision = _decision(receipt, result["question_family_id"])
+
+        self.assertTrue(decision.question_to_source_linkage_complete)
+        self.assertNotIn(
+            "QUESTION_FACT_NOT_BOUND_TO_ROUTE_RECEIPT",
+            decision.failure_codes,
+        )
+
+    def test_verified_direct_fact_without_route_remains_blocked(self) -> None:
+        dossier = deepcopy(self.dossier)
+        result = dossier["question_family_results"][0]
+        anchor_id = result["support_fact_ids"][0]
+        anchor = next(
+            row
+            for row in dossier["material_facts"]
+            if row["dossier_fact_id"] == anchor_id
+        )
+        direct_id = "PROFACT-UNROUTED-DIRECT"
+        dossier["material_facts"].append(
+            {
+                **deepcopy(anchor),
+                "dossier_fact_id": direct_id,
+                "source_lineage_id": "LINEAGE-UNROUTED-DIRECT",
+                "source_anchor_fact_ids": [],
+            }
+        )
+        dossier["source_lineages"].append(
+            {
+                "source_lineage_id": "LINEAGE-UNROUTED-DIRECT",
+                "source_urls": ["https://issuer.example/unrouted"],
+                "fact_ids": [direct_id],
+                "independence_group_id": "GROUP-UNROUTED-DIRECT",
+                "status": "ACTIVE",
+            }
+        )
+        result["support_fact_ids"].append(direct_id)
+        verified = {*self.verified, direct_id}
+
+        receipt = self._adjudicate(dossier, verified_fact_ids=verified)
+        decision = _decision(receipt, result["question_family_id"])
+
+        self.assertFalse(decision.question_to_source_linkage_complete)
+        self.assertIn(
+            "QUESTION_FACT_NOT_BOUND_TO_ROUTE_RECEIPT",
+            decision.failure_codes,
+        )
+
     def test_tracked_saturation_audit_matches_current_engine(self) -> None:
         receipt = self._adjudicate()
         expected = dict(compile_saturation_audit(receipt))
@@ -234,7 +335,7 @@ class ProFirstV2SaturationTest(unittest.TestCase):
                 "known_hynix_like_stage_boundary_gap_count": 1,
                 "known_hynix_like_hard_break_gap_count": 7,
                 "known_hynix_like_corroboration_cap_count": 0,
-                "focused_test_count": 23,
+                "focused_test_count": 26,
             }
         )
         path = (

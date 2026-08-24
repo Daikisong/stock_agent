@@ -91,15 +91,18 @@ def compile_question_closure_decision(
         and str(row.get("question_family_id") or "") == question_id
         and str(row.get("archetype_id") or "") == archetype_id
     )
+    route_bound_verified = _route_bound_verified_fact_ids(
+        facts_by_id=facts_by_id,
+        route_receipts=route_receipts,
+        verified_fact_ids=verified_fact_ids,
+    )
     verified_roles: set[str] = set()
-    route_accepted_verified: set[str] = set()
     for route in linked_routes:
         accepted = {
             str(value) for value in route.get("accepted_fact_ids") or ()
         }.intersection(verified_fact_ids)
         if accepted:
             verified_roles.add(str(route.get("source_role_id") or ""))
-            route_accepted_verified.update(accepted)
     for fact_id in verified_linked:
         fact = facts_by_id.get(fact_id) or {}
         for key in ("source_role_id", "source_family"):
@@ -155,12 +158,12 @@ def compile_question_closure_decision(
     ).intersection(verified_fact_ids):
         failures.append("COUNTER_STATUS_HAS_NO_VERIFIED_COUNTERFACT")
     if status in _FACT_BACKED_STATUSES:
-        if not set(verified_linked).issubset(route_accepted_verified):
+        if not set(verified_linked).issubset(route_bound_verified):
             failures.append("QUESTION_FACT_NOT_BOUND_TO_ROUTE_RECEIPT")
         linkage_complete = bool(
             verified_linked
             and set(linked_lineages).issubset(active_lineage_ids)
-            and set(verified_linked).issubset(route_accepted_verified)
+            and set(verified_linked).issubset(route_bound_verified)
         )
     elif status in {
         "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH",
@@ -289,6 +292,46 @@ def compile_question_closure_decision(
         deterministic_materiality_diverged=proposal != deterministic_flags,
         failure_codes=tuple(dict.fromkeys(failures)),
     )
+
+
+def _route_bound_verified_fact_ids(
+    *,
+    facts_by_id: Mapping[str, Mapping[str, Any]],
+    route_receipts: Sequence[Mapping[str, Any]],
+    verified_fact_ids: frozenset[str],
+) -> frozenset[str]:
+    """Bind facts to immutable acquisition routes without relabelling routes.
+
+    One source fact can support several question families even though the
+    acquisition receipt remains owned by the question that opened the source.
+    Derived counter/resolution relationship facts inherit route provenance
+    only when every declared source anchor occurs in immutable accepted-route
+    history.  The relationship fact itself must still be currently verified;
+    direct facts without an accepted route remain unbound.
+    """
+
+    acquisition_bound = {
+        str(value)
+        for route in route_receipts
+        for value in route.get("accepted_fact_ids") or ()
+        if str(value)
+    }
+    bound = set(verified_fact_ids).intersection(acquisition_bound)
+    while True:
+        added: set[str] = set()
+        for fact_id in verified_fact_ids - bound:
+            fact = facts_by_id.get(fact_id) or {}
+            anchors = {
+                str(value)
+                for value in fact.get("source_anchor_fact_ids") or ()
+                if str(value)
+            }
+            if anchors and anchors.issubset(acquisition_bound):
+                added.add(fact_id)
+        if not added:
+            return frozenset(bound)
+        bound.update(added)
+        acquisition_bound.update(added)
 
 
 def _materiality(

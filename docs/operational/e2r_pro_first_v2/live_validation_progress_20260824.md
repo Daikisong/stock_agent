@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 00:37 KST`
+기준 시각: `2026-08-25 01:03 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-기록 직전 HEAD: `9f14e3e7bc7d7983511b1a2116d0fd0b8b0e62a9`
+이번 기록의 부모 HEAD: `d3fc875b134ebf09315c8a4042e16f8bd64d23ce`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -19,14 +19,14 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → pass 6 repair capture 17건을 원본 runtime에서 무전송 재처리
 → 원본 pass 6 revision 2: 97 facts / 28 questions / 115 routes
 → 5건 accepted / 12건 pending, 기존 revision 1 no-op 감사 증거 보존
-→ pass 7 ChatGPT Pro visible 결과를 재전송 없이 원자 capture 완료
-→ pass 7 raw response: 새 fact 14 / lineage 5 / route 18 / question 18
-→ compact/canonical 혼합 dialect, cross-guard scope, 기존 lineage 이름표, pass 장부 보조필드 교정
-→ 실제 capture의 read-only append-only merge 끝까지 PASS
-→ 예상 pass 7 누적: 111 facts / 21 lineages / 133 routes / 28 questions
-→ deterministic research status: COMPLETE_WITH_LIKELY_NONPUBLIC_REMAINDER
-→ durable DB는 아직 pass 7 RESEARCH_RUNNING이므로 다음 resume에서 REUSE_CAPTURE로만 반영
-→ pass 7 automatic resubmit=false, 신규 browser send=0
+→ pass 7 ChatGPT Pro visible 결과를 재전송 없이 durable 입고 완료
+→ pass 7 snapshot: 111 facts / 21 lineages / 133 routes / 28 questions
+→ pass 7 COMPLETE / submit_count=1 / response hash·snapshot hash 장부 고정
+→ 기존 판정기는 공유 fact를 질문마다 새 route로 다시 요구해 공개 gap을 28개로 잘못 열었음
+→ acquisition route와 question ownership을 분리한 generic 수정 후 실제 pass 7 재판정: 28개→10개
+→ pass 8은 잘못 넓은 28개 packet으로 이미 딱 1회 제출되어 ChatGPT Pro 연구 진행 중
+→ 로컬 monitor는 poll 84에서 중지; pass 8 submit_count=1, 재제출 금지
+→ 다음 resume은 기존 pass 8 결과만 회수하고 수정된 10개 기준으로 다시 판정
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -41,8 +41,8 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 | job | `PROJOB-cdd91020f15891533e61431f` |
 | run | `PRORUN-a7dacadb7088fc23535bfdde` |
 | canonical conversation | `6a8b09c3-bfcc-83ee-b15b-9f76eca52249` |
-| 원본 runtime latest snapshot | `PRODOSSIERSNAPSHOT-235d2b608cbda1622f500445` (pass 6 revision 2) |
-| 원본 runtime latest dossier hash | `20919dfa73dce80c58c7be860bdb5aa03a0d95d87d5c097c7a91b37791cf1848` |
+| 원본 runtime latest snapshot | `PRODOSSIERSNAPSHOT-6273c68ce026516e4cb600ce` (pass 7 revision 1) |
+| 원본 runtime latest dossier hash | `87e1a7abc73de8e739e3495d2735705043474b87d427e7abdf23a0bfc3b610be` |
 | pass 6 exact repair parent | `PRODOSSIERSNAPSHOT-2c8a29d511db4f97ffb922b3` (pass 4) |
 | 원본 pass 6 revision lineage | revision 1 `PRODOSSIERSNAPSHOT-374eb7b04d924c725676a390` → revision 2 `PRODOSSIERSNAPSHOT-235d2b608cbda1622f500445` |
 | pass 7 capture hash | report `b1d3a9b3d55a3bd2a3bd6c9d4363bc013a52c0fce43c52b00d8803ad8b7b06e9` / dossier `b59a49240140274580b9bb8a4c739b91d58accd98acee766f07756f042eefb2f` |
@@ -62,12 +62,14 @@ runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 �
 | 4 | `PROPASS-ab2d8bd7520a8ce7de71f306` | `COUNTER_SUPERSESSION_CLOSURE` | `COMPLETE` | 1 | counter·supersession 감사 |
 | 5 | `PROPASS-7694a86ac9e996eeabd03394` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | 51.8만 자 prompt가 visible composer transport 한도를 초과, 미전송 보존 |
 | 6 | `PROPASS-3ef919d661d3bfa39f201c4e` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | raw/normalized capture를 재전송 없이 재처리해 원본 revision 2 반영 완료. 5 accepted / 12 pending |
-| 7 | `PROPASS-5c7b3b52569b6744cc2686d9` | `PUBLIC_GAP_CLOSURE` | `RESEARCH_RUNNING` | 1 | visible Pro 결과와 READY/capture receipt는 완료. merge 사전검증 PASS, DB snapshot 반영 전이라 resume은 `REUSE_CAPTURE`만 허용 |
+| 7 | `PROPASS-5c7b3b52569b6744cc2686d9` | `PUBLIC_GAP_CLOSURE` | `COMPLETE` | 1 | 기존 capture를 재전송 없이 입고. snapshot `PRODOSSIERSNAPSHOT-6273c68ce026516e4cb600ce`, 111 facts / 133 routes |
+| 8 | `PROPASS-7392f80853f11b8cdde93640` | `PUBLIC_GAP_CLOSURE` | `RESEARCH_RUNNING` | 1 | pass 7 뒤 계획·제출된 동일 conversation 후속 연구. 로컬 monitor는 poll 84에서 중지했고 ChatGPT 연구는 계속됨. 회수 시 재제출 금지 |
 
 pass 5는 실패한 연구 답변이 아니라 실제 제출 전 transport 계획이다. 삭제하거나
 `COMPLETE`로 바꾸지 않았고, `submit_count=0`, `prepared_at=null`, `submitted_at=null`을
-보존했다. pass 6과 pass 7은 각각 별도 prompt/input hash와 exactly-once claim으로 1회만
-제출됐다. pass 7 capture가 이미 존재하므로 같은 pass의 두 번째 제출은 금지된다.
+보존했다. pass 6~8은 각각 별도 prompt/input hash와 exactly-once claim으로 1회만 제출됐다.
+pass 7은 durable 완료됐고 pass 8은 제출만 완료된 상태이므로 어느 쪽도 두 번째 제출을
+허용하지 않는다.
 
 ## 4. dossier 누적 결과
 
@@ -804,6 +806,157 @@ focused regression         56 / 56 PASS
 
 여기서 `COMPLETE_WITH_LIKELY_NONPUBLIC_REMAINDER`는 score/Stage 완료가 아니다. public
 question closure의 누적 상태이며, source verifier·repair pending·saturation gate는 다음
-단계에서 다시 판정한다. durable DB는 안전하게 아직 pass 7을
-`RESEARCH_RUNNING / submit_count=1 / response_hash=null`로 유지한다. 다음 resume은 저장된
-READY/capture bundle을 쓰는 `REUSE_CAPTURE`이며 새 browser send를 해서는 안 된다.
+단계에서 다시 판정한다. 이 절을 기록한 당시 durable DB는 pass 7을
+`RESEARCH_RUNNING / submit_count=1 / response_hash=null`로 유지했고, 다음 절에 기록한 resume이
+저장된 READY/capture bundle을 `REUSE_CAPTURE`로 입고했다.
+
+## 17. 01:03 KST pass 7 durable 입고, pass 8 exactly-once 제출, 공유 fact 계보 교정
+
+### 17.1 pass 7은 재전송 없이 COMPLETE가 됐다
+
+커밋 `d3fc875b134ebf09315c8a4042e16f8bd64d23ce`에서 원본 runner를 재개했다. runner는
+기존 pass 7 READY/capture bundle을 감지해 `FOLLOWUP_CAPTURE_REUSED`로 처리했고 browser에
+같은 prompt를 다시 보내지 않았다.
+
+```text
+pass id                 PROPASS-5c7b3b52569b6744cc2686d9
+status                  COMPLETE
+submit_count            1
+response hash           b1d3a9b3d55a3bd2a3bd6c9d4363bc013a52c0fce43c52b00d8803ad8b7b06e9
+snapshot id             PRODOSSIERSNAPSHOT-6273c68ce026516e4cb600ce
+snapshot parent         PRODOSSIERSNAPSHOT-235d2b608cbda1622f500445
+snapshot hash           87e1a7abc73de8e739e3495d2735705043474b87d427e7abdf23a0bfc3b610be
+facts / lineages        111 / 21
+routes / questions      133 / 28
+new browser submit      0
+```
+
+즉 16절의 read-only 사전검증 수치와 실제 durable snapshot이 일치했다. raw capture는
+수정하지 않았고, normalized effective dossier만 append-only 장부에 추가됐다.
+
+### 17.2 pass 8은 한 번만 제출됐고 로컬 monitor만 멈췄다
+
+pass 7 입고 직후 당시 saturation 판정이 28개 질문 모두를 공개 gap으로 열어 pass 8을
+계획·제출했다. 이 제출은 이미 승인된 동일 scope·conversation의 bounded follow-up이다.
+
+```text
+pass id                 PROPASS-7392f80853f11b8cdde93640
+ordinal / name          8 / PUBLIC_GAP_CLOSURE
+parent                  PROPASS-5c7b3b52569b6744cc2686d9
+status                  RESEARCH_RUNNING
+submit_count            1
+response_hash           null
+submitted_at            2026-08-24T15:45:03.074410Z
+last local poll         84 / 2026-08-24T15:52:39Z
+browser resubmit        금지
+```
+
+로컬 runner는 pass 8 결과를 기다리다가 후속 pass를 자동 제출하는 것을 막기 위해 poll 84에서
+중지했다. 중지한 것은 monitor process뿐이고, ChatGPT Pro의 이미 시작된 연구는 browser에서
+계속된다. 다음 실행은 durable `submit_count=1`을 우선 읽어 같은 pass의 visible 결과를
+회수해야 하며 새로운 submit으로 시작하면 안 된다.
+
+### 17.3 28개 전부를 다시 연 원인은 fact 부족이 아니라 계보 소유권 혼동이었다
+
+기존 질문 closure는 다음 두 조건을 동시에 같은 질문의 route에 요구했다.
+
+```text
+질문 Q가 fact F를 사용함
++ route.question_family_id == Q
++ route.accepted_fact_ids 안에 F가 있음
+```
+
+하지만 한 번 취득한 source fact는 여러 질문의 근거가 될 수 있다. 예를 들어 issuer 실적
+공시 하나에서 `HBM 매출 성장`과 `CAPA 잠김`을 함께 확인했다면, 공시를 연 route는 첫 질문
+소유로 남아도 같은 검증 fact를 두 번째 질문이 사용할 수 있다. 두 번째 질문을 위해 동일
+공시를 다시 검색·fetch하고 새 route를 만들 필요는 없다.
+
+또 counter/resolution relationship은 새 기사 문장이 아니라 기존 direct fact 사이의 관계다.
+이 관계 fact가 `source_anchor_fact_ids`로 두 원문 fact를 가리킬 때, 원문 fact가 현재 배열에서
+superseded되어도 immutable route history에 실제 accepted 기록이 있으면 acquisition provenance는
+사라지지 않는다.
+
+그래서 다음 두 축을 분리했다.
+
+- `route ownership`: 어느 질문이 그 검색을 열었는지는 그대로 유지한다. 다른 질문 route로
+  재라벨하지 않는다.
+- `acquisition provenance`: durable route 전체의 `accepted_fact_ids`를 합친 immutable 취득
+  장부로 현재 verified direct fact를 결박한다. derived relationship은 선언한 모든 anchor가
+  이 장부에 있을 때만 계보를 상속한다.
+
+반대로 route에도 없고 anchor도 없는 direct fact는 여전히 차단한다. 따라서 “Pro가 썼으니
+전부 믿는다”가 아니라, 한 번 검증된 영수증을 질문마다 중복 요구하지 않는 수정이다.
+
+### 17.4 실제 pass 7 재판정은 28개에서 10개로 줄었고 10개는 그대로 남았다
+
+public-gap planning과 동일하게 pass 7의 누적 111 facts를 provisional roster로 사용하고,
+7개 durable snapshot의 route binding과 exact fixpoint confirmation을 다시 컴파일했다.
+
+```text
+deterministic status     NEEDS_PUBLIC_GAP_CLOSURE
+research_saturation     false
+기존 잘못 열린 질문       28
+수정 후 공개 질문          10
+fact-route 결박 미완료       9
+question-source 미완료     10
+verified fact 자체 없음      1
+receipt hash             88c171334929933f48beefbdd3f4a77ea456f04d54dce83e78a7dc71e15846f8
+```
+
+남은 질문은 다음과 같다.
+
+```text
+C06 Q03, Q05, Q08
+R13 Stage2 false-positive Q03, Q05
+R13 4B/4C red-team Q03
+R13 accounting/trust/price Q01, Q03
+R13 high-MAE guardrail Q01, Q03
+```
+
+이 10개를 코드에서 억지로 terminal 처리하지 않았다. 9개는 direct/anchor fact가 immutable
+accepted route에 실제로 결박되지 않았고, 1개는 linked verified fact 자체가 없다. pass 8은
+이미 28개를 조사했으므로 결과를 한 번만 회수한 뒤 새 fact/route가 이 10개를 얼마나 닫았는지
+다시 판정한다. 이 순서는 추가 제출을 먼저 하는 것이 아니라 이미 발생한 전송의 결과를
+소비하는 것이다.
+
+### 17.5 회귀시험, Windows 자원 정리, 정적 감사
+
+세 가지 경계 시험을 추가했다.
+
+1. 첫 질문 소유 route에서 취득한 verified fact를 두 번째 질문이 공유해도 source linkage가
+   완성된다.
+2. 현재 목록에서 빠진 과거 anchor라도 immutable accepted-route history가 있으면 verified
+   derived relationship이 계보를 상속한다.
+3. route와 anchor가 모두 없는 direct fact는 계속
+   `QUESTION_FACT_NOT_BOUND_TO_ROUTE_RECEIPT`로 차단된다.
+
+Windows browser mock은 기능 assertion을 모두 통과한 뒤 임시 SQLite를 삭제할 때만
+`WinError 32`가 났다. `sqlite3.Connection`의 context manager는 commit/rollback은 하지만
+연결 자체를 닫지 않으므로, multi-pass ledger의 initialize/read 연결 7곳을
+`contextlib.closing`으로 닫았다. 같은 Windows mock 재실행은 `1/1 OK`다.
+
+```text
+saturation focused tests          26 / 26 PASS
+V2 WSL suite                      136 code tests PASS
+V2 WSL browser mock               1 environment ERROR: libnspr4.so 없음
+동일 browser mock / Windows       1 / 1 PASS
+Windows 전체 교차 실행            128 PASS / 9 environment ERROR
+Windows 9 errors 원인              UNC worktree에서 Windows git rev-parse 불가
+production static audit           20 / 20 zero, critical_count=0, PASS
+```
+
+WSL의 유일한 error는 Chromium 시작 전 shared library 부재이고 같은 테스트를 실제 Windows
+Chromium에서 통과시켰다. Windows 전체 교차 실행의 9개 error는 code assertion이 아니라
+Windows `git.exe`가 `\\wsl.localhost` UNC 작업 디렉터리에서 `rev-parse`를 거부한 환경 차이다.
+정식 Linux Git 경로에서 해당 9개를 포함한 나머지 136개는 통과했다.
+
+부모 HEAD `d3fc875b`의 GitHub Actions도 모두 끝까지 green이다.
+
+| workflow | run | conclusion |
+| --- | --- | --- |
+| E2R Pro-first verification | `32746543317` | `SUCCESS` |
+| E2R Pro-first verification | `32746545521` | `SUCCESS` |
+| E2R v6 operational cutover verification | `32746545416` | `SUCCESS` |
+
+이 절의 변경을 푸시한 뒤 새 head의 clean-runner CI를 다시 확인한다. 현재도 score/Stage 권한은
+없으며 P9 saturation, source verifier/repair, score/Stage, C17/C28 canary가 남아 있다.
