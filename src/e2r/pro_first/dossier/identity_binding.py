@@ -1,4 +1,4 @@
-"""Bounded V2 transport-identity binding without touching research evidence."""
+"""Bounded V2/V3 transport-identity binding without touching research evidence."""
 
 from __future__ import annotations
 
@@ -45,21 +45,25 @@ def bind_dossier_transport_identity(
     """
 
     before_hash = canonical_hash(payload)
-    if payload.get("schema_version") != "e2r_pro_research_dossier_v2":
+    schema_version = str(payload.get("schema_version") or "")
+    if schema_version not in {
+        "e2r_pro_research_dossier_v2",
+        "e2r_pro_research_dossier_v3",
+    }:
         return BoundDossierIdentity(
             payload=dict(payload),
             before_hash=before_hash,
             after_hash=before_hash,
-            operations=("NON_V2_IDENTITY_BINDING_NOT_APPLICABLE",),
+            operations=("NON_V2_V3_IDENTITY_BINDING_NOT_APPLICABLE",),
         )
     if not conversation_id.strip():
-        raise DossierIdentityBindingError("captured V2 conversation id is required")
+        raise DossierIdentityBindingError("captured V2/V3 conversation id is required")
     actual_pass_id = str(payload.get("research_pass_id") or "")
     if research_pass_id is None or actual_pass_id != research_pass_id:
-        raise DossierIdentityBindingError("V2 research pass id differs from durable pass")
+        raise DossierIdentityBindingError("V2/V3 research pass id differs from durable pass")
     actual_parent = payload.get("parent_pass_id")
     if actual_parent != parent_pass_id:
-        raise DossierIdentityBindingError("V2 parent pass id differs from durable lineage")
+        raise DossierIdentityBindingError("V2/V3 parent pass id differs from durable lineage")
 
     current = str(payload.get("conversation_id") or "")
     bound = deepcopy(dict(payload))
@@ -73,7 +77,7 @@ def bind_dossier_transport_identity(
             and current == INITIAL_CONVERSATION_PLACEHOLDER
         ):
             raise DossierIdentityBindingError(
-                "V2 conversation id is neither capture-bound nor the exact initial placeholder"
+                "V2/V3 conversation id is neither capture-bound nor the exact initial placeholder"
             )
         if _count_exact_string(payload, INITIAL_CONVERSATION_PLACEHOLDER) != 1:
             raise DossierIdentityBindingError(

@@ -1,4 +1,4 @@
-"""Strict ResearchDossier V1/V2 parsing, validation, normalization, and import."""
+"""Strict ResearchDossier V1/V2/V3 parsing, validation, normalization, and import."""
 
 from .importer import DossierImportResult, ProDossierImporter
 from .identity_binding import (
@@ -34,6 +34,13 @@ from .v2 import (
     validate_research_status,
     validate_route_bindings,
 )
+from .v3 import (
+    DOSSIER_V3_SCHEMA_VERSION,
+    DossierV3EvidenceSummary,
+    FactKindV3,
+    FactLifecycleV3,
+    validate_dossier_v3_evidence_graph,
+)
 
 __all__ = [
     "BoundDossierIdentity",
@@ -49,6 +56,10 @@ __all__ = [
     "DossierValidationContext",
     "DossierValidationError",
     "DossierV2ClosureSummary",
+    "DossierV3EvidenceSummary",
+    "DOSSIER_V3_SCHEMA_VERSION",
+    "FactKindV3",
+    "FactLifecycleV3",
     "INITIAL_CONVERSATION_PLACEHOLDER",
     "NormalizedDossier",
     "ParsedDossier",
@@ -62,6 +73,7 @@ __all__ = [
     "compile_dossier_v2_closure_summary",
     "validate_research_status",
     "validate_route_bindings",
+    "validate_dossier_v3_evidence_graph",
     "bind_dossier_transport_identity",
     "apply_research_dossier_delta",
 ]

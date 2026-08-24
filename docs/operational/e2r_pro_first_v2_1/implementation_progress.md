@@ -7,7 +7,7 @@
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-현재 기준 HEAD: `b6c30eb90ec802e12bc0b06d946072c7c7fcd983`
+현재 기준 HEAD: `10c7269b` (P1 원격 push 완료)
 
 PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지 않는다.
 
@@ -16,7 +16,7 @@ PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지
 ```text
 P0 old run freeze                         COMPLETE
 P1 rejection A/B/C taxonomy              COMPLETE
-P2 ResearchDossierV3                      PENDING
+P2 ResearchDossierV3                      COMPLETE
 P3 Initial Prompt V3                      PENDING
 P4 local preflight                        PENDING
 P5 compact RepairDeltaV3                  PENDING
@@ -185,5 +185,56 @@ deterministic CLI replay                     PASS
 
 ## 다음 단계 P2
 
-이제 source document와 atomic fact를 분리하는 append-only `ResearchDossierV3`를 구현한다.
-fresh conversation 생성이나 browser 전송은 아직 하지 않는다.
+source document와 atomic fact를 분리하는 append-only `ResearchDossierV3`를 구현했다.
+
+```text
+SourceDocumentV3 1개
+├─ AtomicFactV3 N개 (각각 predicate/quote/locator 1개)
+└─ SourceLineageV3 1개
+
+DerivedMetricV3
+└─ input_fact_ids로만 원천 fact를 참조
+```
+
+old taxonomy의 가장 큰 A 결함 38건을 막기 위해 V3 lifecycle에서 `UNKNOWN`을 제거했다.
+`CURRENT|OPEN|RESOLVED|SUPERSEDED|HISTORICAL_ONLY` 중 하나가 아니면 schema 단계에서
+거절된다. old B 결함처럼 compact replacement가 segment/product를 잃는 것도 V3에서는
+빈 값이 schema를 통과하지 못한다.
+
+추가 deterministic graph gate:
+
+```text
+fact 안 source URL 반복                          금지
+fact 안 derived metric 혼합                     금지
+source/predicate/subject/excerpt 동일 중복       금지
+tracking canonical URL / fragment                금지
+publication/availability/event 미래누수          금지
+source document/fact/lineage roster 불일치        금지
+fact_kind/collection 또는 question binding 불일치 금지
+failed verifier_preflight                        금지
+```
+
+provider failure는 예외적으로 빈 evidence graph + `PROVIDER_PENDING`으로 보존한다. 이는
+0점이나 정상 점수 확정이 아니다.
+
+V1/V2 schema·validator는 그대로 등록해 read/verification compatibility를 유지했다. 새 V3
+transport binding은 최초 conversation placeholder와 durable pass receipt만 바꾸며 fact,
+quote, source document는 바꾸지 않는다.
+
+검증:
+
+```text
+V3 schema/evidence graph test                   13/13 PASS
+P0/P1 + 기존 V1/V2 focused regression          99/99 PASS
+기존 dossier parser/import regression           16/16 PASS
+합계                                            128/128 PASS
+JSON Schema Draft 2020-12 self-check            PASS
+compileall / git diff --check                    PASS
+```
+
+상세 계약은 `research_dossier_v3_contract.md`에 기록했다.
+
+## 다음 단계 P3
+
+36개 canonical archetype에 공통인 Initial Prompt V3와 compiler를 구현한다. fresh
+conversation 생성이나 browser 전송은 아직 하지 않는다.

@@ -148,6 +148,14 @@ class ResearchDossierDialectAdapter:
     ) -> AdaptedDossier:
         before_hash = canonical_hash(payload)
         adapted = deepcopy(dict(payload))
+        if adapted.get("schema_version") == "e2r_pro_research_dossier_v3":
+            return AdaptedDossier(
+                payload=adapted,
+                before_hash=before_hash,
+                after_hash=before_hash,
+                operations=("V3_CANONICAL_DIALECT_NO_LEGACY_REWRITE",),
+                id_map={},
+            )
         if adapted.get("schema_version") == "e2r_pro_research_dossier_v2":
             if _is_canonical_v2(adapted):
                 operations = ["V2_CANONICAL_DIALECT_NO_LEGACY_REWRITE"]

@@ -1,4 +1,4 @@
-"""Strict identity, authority, closure, and URL checks for Dossier V1/V2."""
+"""Strict identity, authority, closure, and URL checks for Dossier V1/V2/V3."""
 
 from __future__ import annotations
 
@@ -18,6 +18,10 @@ from .v2 import (
     DOSSIER_V2_SCHEMA_VERSION,
     validate_research_status,
     validate_route_bindings,
+)
+from .v3 import (
+    DOSSIER_V3_SCHEMA_VERSION,
+    validate_dossier_v3_evidence_graph,
 )
 
 
@@ -63,6 +67,8 @@ class DossierValidationReceipt:
     question_family_ids: tuple[str, ...] = ()
     search_route_receipt_ids: tuple[str, ...] = ()
     research_status: str | None = None
+    source_document_ids: tuple[str, ...] = ()
+    derived_metric_ids: tuple[str, ...] = ()
 
 
 class ResearchDossierValidator:
@@ -74,6 +80,7 @@ class ResearchDossierValidator:
             else (
                 config_root / "e2r_pro_research_dossier_v1.schema.json",
                 config_root / "e2r_pro_research_dossier_v2.schema.json",
+                config_root / "e2r_pro_research_dossier_v3.schema.json",
             )
         )
         self.schemas: dict[str, Mapping[str, Any]] = {}
@@ -138,7 +145,9 @@ class ResearchDossierValidator:
             )
         if dossier_version == DOSSIER_SCHEMA_VERSION:
             return self._validate_v1(payload, context)
-        return self._validate_v2(payload, context)
+        if dossier_version == DOSSIER_V2_SCHEMA_VERSION:
+            return self._validate_v2(payload, context)
+        return self._validate_v3(payload, context)
 
     def _validate_v1(
         self,
@@ -327,6 +336,166 @@ class ResearchDossierValidator:
             question_family_ids=question_ids,
             search_route_receipt_ids=route_ids,
             research_status=str(payload["research_status"]),
+        )
+
+    def _validate_v3(
+        self,
+        payload: Mapping[str, Any],
+        context: DossierValidationContext,
+    ) -> DossierValidationReceipt:
+        conversation_id = str(payload.get("conversation_id") or "")
+        if context.conversation_id and conversation_id != context.conversation_id:
+            raise DossierValidationError("dossier conversation_id mismatch")
+        if (
+            context.research_pass_id
+            and str(payload.get("research_pass_id") or "")
+            != context.research_pass_id
+        ):
+            raise DossierValidationError("dossier research_pass_id mismatch")
+        if (
+            context.enforce_parent_pass_id
+            and payload.get("parent_pass_id") != context.parent_pass_id
+        ):
+            raise DossierValidationError("dossier parent_pass_id mismatch")
+
+        candidate_ids = tuple(str(value) for value in payload["candidate_archetypes"])
+        selected_ids = tuple(str(value) for value in payload["selected_archetypes"])
+        if not set(selected_ids).issubset(candidate_ids):
+            raise DossierValidationError("selected archetypes escape candidate roster")
+        if context.candidate_archetype_ids and not set(candidate_ids).issubset(
+            context.candidate_archetype_ids
+        ):
+            raise DossierValidationError("dossier candidate archetypes escape durable job")
+        try:
+            bundle = select_contract_bundle(selected_ids)
+        except (KeyError, ValueError) as error:
+            raise DossierValidationError(str(error)) from error
+        allowed_contracts = set(bundle.contract_ids)
+        contract_questions = {
+            str(question["question_family_id"]): str(contract["archetype_id"])
+            for contract in bundle.contracts
+            for question in contract["question_families"]
+        }
+        component_research = payload.get("component_research") or {}
+        if not set(component_research).issubset(CANONICAL_COMPONENT_IDS):
+            raise DossierValidationError("V3 component research contains an unknown component")
+
+        try:
+            evidence = validate_dossier_v3_evidence_graph(
+                payload,
+                target_id=context.target_id,
+                as_of_date=context.as_of_date,
+                allowed_question_ids=tuple(contract_questions),
+            )
+        except ValueError as error:
+            raise DossierValidationError(str(error)) from error
+        fact_id_set = set(evidence.fact_ids)
+        fact_by_id = {
+            str(row.get("dossier_fact_id") or ""): row
+            for collection in ("material_facts", "counterfacts", "resolution_facts")
+            for row in payload.get(collection) or ()
+        }
+        fact_sets = {
+            "support_fact_ids": set(evidence.material_fact_ids),
+            "counter_fact_ids": set(evidence.counter_fact_ids),
+            "resolution_fact_ids": set(evidence.resolution_fact_ids),
+        }
+
+        pass_rows = tuple(payload.get("research_passes") or ())
+        pass_ids = tuple(str(row.get("pass_id") or "") for row in pass_rows)
+        if len(pass_ids) != len(set(pass_ids)):
+            raise DossierValidationError("duplicate research pass ids are forbidden")
+        pass_id_set = set(pass_ids)
+        if str(payload["research_pass_id"]) not in pass_id_set:
+            raise DossierValidationError("current research pass is absent from pass ledger")
+        parent = payload.get("parent_pass_id")
+        if parent is not None and str(parent) not in pass_id_set:
+            raise DossierValidationError("parent research pass is absent from pass ledger")
+        for collection in ("material_facts", "counterfacts", "resolution_facts"):
+            for fact in payload.get(collection) or ():
+                if str(fact.get("research_pass_id") or "") not in pass_id_set:
+                    raise DossierValidationError(
+                        "atomic fact references an unknown research pass"
+                    )
+
+        question_rows = tuple(payload.get("question_family_results") or ())
+        question_ids = tuple(
+            str(row.get("question_family_id") or "") for row in question_rows
+        )
+        if len(question_ids) != len(set(question_ids)):
+            raise DossierValidationError("duplicate question-family result ids are forbidden")
+        unknown_questions = set(question_ids) - set(contract_questions)
+        if unknown_questions:
+            raise DossierValidationError(
+                f"question results escape selected contracts: {sorted(unknown_questions)}"
+            )
+        for row in question_rows:
+            question_id = str(row["question_family_id"])
+            if str(row["archetype_id"]) != contract_questions[question_id]:
+                raise DossierValidationError("question result archetype identity mismatch")
+            for key, allowed_fact_ids in fact_sets.items():
+                references = {str(value) for value in row.get(key) or ()}
+                if not references.issubset(allowed_fact_ids):
+                    raise DossierValidationError(
+                        f"question {key} references an unknown or wrong-kind fact"
+                    )
+                if any(
+                    question_id
+                    not in set(fact_by_id[fact_id].get("question_family_ids") or ())
+                    for fact_id in references
+                ):
+                    raise DossierValidationError(
+                        "question references a fact bound to another question"
+                    )
+            satisfied = set(row.get("required_source_roles_satisfied") or ())
+            missing = set(row.get("required_source_roles_missing") or ())
+            if satisfied.intersection(missing):
+                raise DossierValidationError(
+                    "source role cannot be both satisfied and missing"
+                )
+
+        for route in payload.get("search_route_receipts") or ():
+            if not {
+                str(value) for value in route.get("accepted_fact_ids") or ()
+            }.issubset(fact_id_set):
+                raise DossierValidationError(
+                    "search route references an unknown accepted fact"
+                )
+            for url in route.get("opened_source_urls") or ():
+                _validate_public_url(str(url))
+        try:
+            validate_route_bindings(payload)
+            validate_research_status(payload)
+        except ValueError as error:
+            raise DossierValidationError(str(error)) from error
+        if not set(
+            str(row.get("archetype_id") or "") for row in question_rows
+        ).issubset(allowed_contracts):
+            raise DossierValidationError("question result contains an unselected contract")
+
+        route_ids = tuple(
+            str(row.get("route_receipt_id") or "")
+            for row in payload.get("search_route_receipts") or ()
+        )
+        return DossierValidationReceipt(
+            schema_version=DOSSIER_V3_SCHEMA_VERSION,
+            job_id=context.job_id,
+            run_id=context.run_id,
+            target_id=context.target_id,
+            as_of_date=context.as_of_date,
+            component_ids=tuple(component_research),
+            fact_ids=evidence.fact_ids,
+            source_urls=evidence.canonical_source_urls,
+            score_authority=False,
+            stage_authority=False,
+            conversation_id=conversation_id,
+            research_pass_id=str(payload["research_pass_id"]),
+            selected_archetype_ids=selected_ids,
+            question_family_ids=question_ids,
+            search_route_receipt_ids=route_ids,
+            research_status=str(payload["research_status"]),
+            source_document_ids=evidence.source_document_ids,
+            derived_metric_ids=evidence.derived_metric_ids,
         )
 
 

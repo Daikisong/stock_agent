@@ -14,9 +14,12 @@ BEGIN = "E2R_RESEARCH_DOSSIER_JSON_BEGIN"
 END = "E2R_RESEARCH_DOSSIER_JSON_END"
 _PROTECTED_FIELDS = (
     "dossier_fact_id",
+    "source_document_id",
     "source_url",
+    "canonical_url",
     "supporting_excerpt",
     "statement",
+    "predicate_id",
 )
 
 
@@ -133,7 +136,7 @@ class ResearchDossierParser:
                 f"JSON syntax remains invalid at line {error.lineno} column {error.colno}"
             ) from error
         if not isinstance(payload, dict):
-            raise DossierParseError("ResearchDossierV1 must be a JSON object")
+            raise DossierParseError("ResearchDossier must be a JSON object")
         protected_after = _protected_values(repaired)
         for field in _PROTECTED_FIELDS:
             before_values = protected_before[field]

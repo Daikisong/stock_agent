@@ -34,8 +34,12 @@ class ResearchDossierNormalizer:
             normalized.get("counterfacts") or (),
             key=lambda row: str(row.get("dossier_fact_id") or ""),
         )
-        is_v2 = normalized.get("schema_version") == "e2r_pro_research_dossier_v2"
-        if is_v2:
+        version = str(normalized.get("schema_version") or "")
+        is_v2_or_v3 = version in {
+            "e2r_pro_research_dossier_v2",
+            "e2r_pro_research_dossier_v3",
+        }
+        if is_v2_or_v3:
             normalized["selected_archetypes"] = sorted(
                 normalized.get("selected_archetypes") or ()
             )
@@ -59,10 +63,20 @@ class ResearchDossierNormalizer:
                 normalized.get("research_passes") or (),
                 key=lambda row: str(row.get("pass_id") or ""),
             )
-            normalized["verification_repair_register"] = sorted(
-                normalized.get("verification_repair_register") or (),
-                key=lambda row: str(row.get("candidate_id") or ""),
-            )
+            if version == "e2r_pro_research_dossier_v2":
+                normalized["verification_repair_register"] = sorted(
+                    normalized.get("verification_repair_register") or (),
+                    key=lambda row: str(row.get("candidate_id") or ""),
+                )
+            else:
+                normalized["source_documents"] = sorted(
+                    normalized.get("source_documents") or (),
+                    key=lambda row: str(row.get("source_document_id") or ""),
+                )
+                normalized["derived_metrics"] = sorted(
+                    normalized.get("derived_metrics") or (),
+                    key=lambda row: str(row.get("derived_metric_id") or ""),
+                )
         if "sources" in normalized:
             normalized["sources"] = sorted(
                 normalized.get("sources") or (),
@@ -80,13 +94,22 @@ class ResearchDossierNormalizer:
             "SORT_FACTS_BY_DOSSIER_FACT_ID",
             "SORT_SOURCES_BY_URL_AND_ID",
         ]
-        if is_v2:
+        if is_v2_or_v3:
             operations.extend(
                 (
                     "SORT_SELECTED_ARCHETYPES",
                     "SORT_QUESTION_CLOSURE_RESULTS",
                     "SORT_SOURCE_LINEAGES_AND_ROUTE_RECEIPTS",
-                    "SORT_RESEARCH_PASS_AND_REPAIR_LEDGERS",
+                )
+            )
+        if version == "e2r_pro_research_dossier_v2":
+            operations.append("SORT_RESEARCH_PASS_AND_REPAIR_LEDGERS")
+        if version == "e2r_pro_research_dossier_v3":
+            operations.extend(
+                (
+                    "SORT_RESEARCH_PASS_LEDGER",
+                    "SORT_SOURCE_DOCUMENT_REGISTRY",
+                    "SORT_DERIVED_METRIC_REGISTRY",
                 )
             )
         return NormalizedDossier(
@@ -114,6 +137,11 @@ def _source_urls(payload: Mapping[str, Any]) -> tuple[str, ...]:
     source_urls = tuple(
         str(row.get("source_url") or "") for row in payload.get("sources") or ()
     )
+    document_urls = tuple(
+        str(row.get(key) or "")
+        for row in payload.get("source_documents") or ()
+        for key in ("canonical_url", "opened_url")
+    )
     lineage_urls = tuple(
         str(url)
         for row in payload.get("source_lineages") or ()
@@ -124,7 +152,7 @@ def _source_urls(payload: Mapping[str, Any]) -> tuple[str, ...]:
         for row in payload.get("search_route_receipts") or ()
         for url in row.get("opened_source_urls") or ()
     )
-    return fact_urls + source_urls + lineage_urls + route_urls
+    return fact_urls + source_urls + document_urls + lineage_urls + route_urls
 
 
 __all__ = ["NormalizedDossier", "ResearchDossierNormalizer"]
