@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-25 03:31 KST`
+기준 시각: `2026-08-25 03:40 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-이번 기록의 부모 HEAD: `c003284f8a85f0a60cdd994e83da65425af8e561`
+이번 기록의 부모 HEAD: `8112ef31093e2b1905947f859e361612a71e896b`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -63,6 +63,9 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 → compact withdrawal delta는 question rows 0, prior question gap refs 20, WITHDRAWN 16
 → exact parent 20/20 question identity로 gap만 복원, parent 밖 question은 hard fail
 → 실제 pass 13 response schema read-only PASS, 재전송 없이 durable 적용 대기
+→ pass 13 COMPLETE: 16/16 withdrawn, unresolved 0, 107-16=91 facts / 211 routes
+→ pass 14 next batch 20개 exactly-once submit, deferred 6
+→ pass 14 RESEARCH_RUNNING / submit_count=1, visible result 감시 중
 ```
 
 현재 full-thesis score, canonical Stage, publication 권한은 모두 없다.
@@ -91,6 +94,7 @@ PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 | pass 11 repair receipt | hash `9250299d7717db0b9ac89d246bcb30ece2f4db3c03da997b7c87462d2e81d8c7` / source verification hash `a2700b1139f692b786ded7a7db3f7c45fb945cec7edea16f3ff15400781efb7b` |
 | canonical verification attempt 5 | `PROVERIFY-7913ef1dd902b450732f5e65` / hash `d7bcaefa1cc48dd1cac1bf9854cd83e2baedfd5336790ae59425491828cd6693` / exact pass 11 snapshot hash |
 | pass 13 capture hash | report `4447c7c4b8cd73bf1b09f33844cd3a7e98b9994c8325b1216509fd51189b0ed9` / dossier `1e3d06c1f88c2ee4a8041052fb67518f0a3b39752b5720a3870428d9c1fe9627` |
+| pass 13 effective snapshot | `PRODOSSIERSNAPSHOT-9619bab2a47190c96ed5f19a` / hash `22883883e226d47d38efcbc920014f534e81e0b829578036242e4afe3c75c68b` / 91 facts |
 | runtime root | `C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\live_v2\20260823T145430Z` |
 
 runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 있어 Git에 복제하지
@@ -113,7 +117,8 @@ runtime root에는 ChatGPT 응답 원문과 fetched documents가 포함될 수 �
 | 10 | `PROPASS-2c64ccb7b9a86a8e7cbd5922` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | 최신 51개 repair packet의 첫 15개 계획. 당시 상한 6에서 미전송 보존 |
 | 11 | `PROPASS-7a551c28c37e8ca775a056a4` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | pass 10 cap 영수증을 append-only supersede. capture 재사용, repair/reverify, effective snapshot까지 완료. 107 facts / 211 routes / accepted 4 / rejected 7 / withdrawn 4 |
 | 12 | `PROPASS-e677c79c63041ec3ee5c77fe` | `VERIFIER_REPAIR` | `TRANSPORT_PENDING` | 0 | pass 11 재검증 뒤 남은 42개 중 next 16개 계획. 점검용 max 7에서 미전송 보존 |
-| 13 | `PROPASS-10e3c63062359e4fe27642e0` | `VERIFIER_REPAIR` | `RESEARCH_RUNNING` | 1 | pass 12 cap-only 영수증을 보존하고 exactly once submit. visible 결과 capture·READY 완료. 16 candidates 전부 WITHDRAWN, adapter 재검증 PASS, durable 적용 전 |
+| 13 | `PROPASS-10e3c63062359e4fe27642e0` | `VERIFIER_REPAIR` | `COMPLETE` | 1 | pass 12 cap-only 영수증을 보존하고 exactly once submit. 16 candidates 전부 WITHDRAWN, deterministic repair unresolved 0, snapshot 91 facts / 211 routes |
+| 14 | `PROPASS-2b9c5685c4e8b419b5752c3c` | `VERIFIER_REPAIR` | `RESEARCH_RUNNING` | 1 | 최신 pending 26개 중 20개를 204,475자에 exactly once submit. 6개 deferred, visible result 감시 중 |
 
 pass 5는 실패한 연구 답변이 아니라 실제 제출 전 transport 계획이다. 삭제하거나
 `COMPLETE`로 바꾸지 않았고, `submit_count=0`, `prepared_at=null`, `submitted_at=null`을
@@ -1667,3 +1672,54 @@ archetype/materiality/attempted roles/affected components를 정규화하는 ide
 `WITHDRAWN` register 58개를 보존한 채 schema PASS다. focused dossier status는 `19/19 PASS`이며
 parent에 없는 `UNCOMPILED_QUESTION_Q99`는 계속 거절한다. pass 13은 READY capture가 있으므로
 다음 재개는 `REUSE_CAPTURE`로 완료·repair 적용만 수행하고 browser submit은 하지 않는다.
+
+### 18.15 pass 13 deterministic 완료와 pass 14 exactly-once 제출
+
+8112ef31을 푸시한 뒤 같은 runtime에서 pass 13 READY capture를 재전송 없이 재사용했다.
+16개 선택 candidate는 모두 명시적 `WITHDRAWN`으로 적용됐고 replacement는 없었다.
+
+```text
+pass 13 status                         COMPLETE
+submit_count                                  1
+repair candidate / resolution           16 / 16
+withdrawn                                      16
+replacement accepted / rejected             0 / 0
+material rejection unresolved                  0
+prior effective facts                         107
+removed withdrawn candidates                  -16
+durable effective facts                        91
+question families / routes                28 / 211
+repair receipt hash     9b46e8343e4e73628d39047e8e9fec559eeb0e5ce2d0f3726851c9059df759c2
+```
+
+쉬운 예로 pass 11의 107개 재고 중 출처 검문을 통과시키지 못한 16개를 “확인된 사실”로
+억지 승격하지 않고 장부상 철회했다. 그래서 계산은 `107 - 16 = 91`이며, route 211개와
+질문 계보 28개는 감사 이력으로 그대로 남는다.
+
+새 append-only snapshot은 다음과 같다.
+
+```text
+snapshot id       PRODOSSIERSNAPSHOT-9619bab2a47190c96ed5f19a
+parent snapshot   PRODOSSIERSNAPSHOT-cc57432e88b8eb100c7f3655
+dossier hash      22883883e226d47d38efcbc920014f534e81e0b829578036242e4afe3c75c68b
+facts/routes      91 / 211
+```
+
+이 snapshot의 latest mandatory-linked verifier repair pending은 26개다. prompt 상한 안에
+20개를 204,475자로 선택했고 6개는 다음 batch로 deferred했다. pass 13을 부모로 새 pass 14를
+만들어 같은 ChatGPT Pro conversation에 한 번만 제출했다.
+
+```text
+pass id                     PROPASS-2b9c5685c4e8b419b5752c3c
+parent                      PROPASS-10e3c63062359e4fe27642e0
+pass name                   VERIFIER_REPAIR
+selected / deferred         20 / 6
+prompt bytes                204,475
+prompt hash                 bb770de3be9ba3d4496069482c7bd491e60ef0a1c9dc06b5f95d93af16d8799e
+submit_count                1
+status                      RESEARCH_RUNNING
+```
+
+현재 runner는 해당 assistant turn의 완료 여부만 poll한다. pass 14를 다시 작성하거나 다시
+클릭하지 않으며, 다른 터미널·창·전역 키 입력도 사용하지 않는다. visible result가 안정화되기
+전에는 사실 수, verifier 판정, saturation, score 또는 Stage를 미리 확정하지 않는다.
