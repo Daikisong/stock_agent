@@ -60,6 +60,7 @@ from e2r.pro_first.canary.live_v2 import (
     _has_snapshotted_completed_pass,
     _load_recovered_snapshot_state,
     _public_gap_followup_question_ids,
+    _submitted_unsnapshotted_followup_plan,
     _verification_artifact_rows,
 )
 from e2r.cli.run_e2r_pro_first_v2_live_canaries import _parse_spec
@@ -125,6 +126,43 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
         self.assertEqual(
             _public_gap_followup_question_ids(saturation),
             ("Q-MISSING", "Q-PUBLIC"),
+        )
+
+    def test_submitted_public_gap_is_recovered_before_routing_rules_change(self) -> None:
+        scope = SimpleNamespace(job_id="PROJOB-RECOVERY")
+        research_pass = SimpleNamespace(
+            pass_id="PROPASS-RUNNING",
+            pass_name="PUBLIC_GAP_CLOSURE",
+            submit_count=1,
+            status="RESEARCH_RUNNING",
+            prompt_hash="a" * 64,
+        )
+        ledger = SimpleNamespace(
+            list_passes=lambda _job_id: (research_pass,),
+            latest_dossier_snapshot_for_pass=lambda **_kwargs: None,
+            get_scope=lambda _job_id: scope,
+        )
+        orchestrator = SimpleNamespace(ledger=ledger)
+
+        recovered = _submitted_unsnapshotted_followup_plan(
+            orchestrator,
+            job_id="PROJOB-RECOVERY",
+            pass_name="PUBLIC_GAP_CLOSURE",
+        )
+
+        self.assertIsNotNone(recovered)
+        self.assertIs(recovered.scope, scope)
+        self.assertIs(recovered.research_pass, research_pass)
+        self.assertEqual(recovered.prompt_text, "")
+        self.assertEqual(recovered.prompt_hash, "a" * 64)
+
+        ledger.latest_dossier_snapshot_for_pass = lambda **_kwargs: object()
+        self.assertIsNone(
+            _submitted_unsnapshotted_followup_plan(
+                orchestrator,
+                job_id="PROJOB-RECOVERY",
+                pass_name="PUBLIC_GAP_CLOSURE",
+            )
         )
 
     def test_followup_execution_modes_distinguish_submit_capture_and_partial_bundle(self) -> None:

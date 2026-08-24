@@ -510,10 +510,14 @@ public gap queue = missing mandatory + deterministic public material gap
 
 이미 제출된 pass 7은 취소하거나 다시 보내지 않았다. ChatGPT 연구는 그대로 계속되고,
 monitor process만 종료했다. `submit_count=1 / RESEARCH_RUNNING`이므로 다음 재개는 visible
-result recovery만 가능하다. 새 helper와 회귀시험은 repair-required `Q-REPAIR`가 public
-queue로 들어가지 않고 `Q-MISSING`, `Q-PUBLIC`만 남는 것을 검증한다.
+result recovery만 가능하다. 새 routing 의미를 적용하기 전에 `submit_count=1`인데 effective
+snapshot이 없는 동일 pass를 먼저 찾고, 빈 prompt text와 durable original prompt hash로
+capture/import만 재개한다. 따라서 routing 코드를 고친 뒤에도 이미 전송된 pass 7을
+건너뛰거나 새 repair를 동시에 보내지 않는다. 새 helper와 회귀시험은 repair-required
+`Q-REPAIR`가 public queue로 들어가지 않고 `Q-MISSING`, `Q-PUBLIC`만 남으며, running pass는
+snapshot 생성 전 반드시 recovery plan으로 반환되는 것을 검증한다.
 
-교정 후 관련 `live_runtime + saturation + verifier_repair`는 `63/63 PASS`다. 같은 HEAD의
+교정 후 관련 `live_runtime + saturation + verifier_repair`는 `64/64 PASS`다. 같은 HEAD의
 GitHub Actions run `32735981403`은 Playwright system library를 설치한 clean runner에서
 full regression `7,560 tests`와 browser mock `57 tests`를 모두 SUCCESS로 완료했다. WSL
 직접 full suite의 58개 error는 정확히 browser mock 57개와 multi-pass browser 1개이며,

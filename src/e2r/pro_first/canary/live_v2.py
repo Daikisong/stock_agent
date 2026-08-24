@@ -836,6 +836,25 @@ class ProV2LiveCanaryRunner:
         outcomes: list[Mapping[str, Any]] = []
         current = dict(dossier)
         while True:
+            recovery_plan = _submitted_unsnapshotted_followup_plan(
+                orchestrator,
+                job_id=prepared.job.job_id,
+                pass_name="PUBLIC_GAP_CLOSURE",
+            )
+            if recovery_plan is not None:
+                outcome = await self._execute_followup(
+                    prepared=prepared,
+                    orchestrator=orchestrator,
+                    dossier_store=dossier_store,
+                    plan=recovery_plan,
+                    original_dossier=current,
+                    job_root=job_root,
+                    persist_effective=True,
+                )
+                next_dossier = dict(outcome.effective_dossier or current)
+                outcomes.append(_outcome_summary(outcome, next_dossier))
+                current = next_dossier
+                continue
             provisional_ids = _all_dossier_fact_ids(current)
             saturation = self._adjudicate_saturation(
                 orchestrator.ledger,
@@ -1873,6 +1892,38 @@ def _public_gap_followup_question_ids(
         )
     )
     return tuple(value for value in candidates if value not in blocked)
+
+
+def _submitted_unsnapshotted_followup_plan(
+    orchestrator: ProMultiPassResearchOrchestrator,
+    *,
+    job_id: str,
+    pass_name: str,
+) -> FollowupPassPlan | None:
+    """Recover a transmitted pass before applying newer routing semantics."""
+
+    for research_pass in reversed(orchestrator.ledger.list_passes(job_id)):
+        if (
+            research_pass.pass_name != pass_name
+            or research_pass.submit_count != 1
+            or research_pass.status not in {"RESEARCH_RUNNING", "COMPLETE"}
+            or orchestrator.ledger.latest_dossier_snapshot_for_pass(
+                job_id=job_id,
+                pass_id=research_pass.pass_id,
+            )
+            is not None
+        ):
+            continue
+        scope = orchestrator.ledger.get_scope(job_id)
+        if scope is None:
+            raise RuntimeError("submitted follow-up lacks its durable approval scope")
+        return FollowupPassPlan(
+            scope=scope,
+            research_pass=research_pass,
+            prompt_text="",
+            prompt_hash=research_pass.prompt_hash,
+        )
+    return None
 
 
 def _research_semantic_hash(dossier: Mapping[str, Any]) -> str:
