@@ -306,6 +306,16 @@ class ProMultiPassLedger:
         now = self.store._now_text()
         with self._transaction() as connection:
             row = self._require_pass(connection, pass_id)
+            job = connection.execute(
+                "SELECT old_job_frozen_at FROM pro_research_jobs WHERE job_id=?",
+                (row["job_id"],),
+            ).fetchone()
+            if job is None:
+                raise FollowupSubmitBlocked("follow-up job no longer exists")
+            if job["old_job_frozen_at"] is not None:
+                raise FollowupSubmitBlocked(
+                    "old diagnostic job is frozen; follow-up submit is forbidden"
+                )
             if (
                 row["status"] != ResearchPassStatus.PREPARED.value
                 or int(row["submit_count"]) != 0

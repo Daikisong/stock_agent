@@ -172,6 +172,17 @@ class ProMultiPassResearchOrchestrator:
         pass_inputs: Mapping[str, Any] | None = None,
         existing_verified_ledger_digest: Mapping[str, Any] | None = None,
     ) -> FollowupPassPlan | TransportPendingDecision:
+        job = self.store.get_job(job_id)
+        if job.old_job_frozen_at is not None:
+            return TransportPendingDecision(
+                job_id=job_id,
+                requested_pass_name=pass_name,
+                research_status="TRANSPORT_PENDING",
+                reason=(
+                    "SUPERSEDED_BY_FRESH_SESSION_EFFICIENCY_VALIDATION: "
+                    "old diagnostic conversation is frozen"
+                ),
+            )
         scope = self.ledger.require_authorized_scope(
             job_id,
             target_id=str(
@@ -444,6 +455,10 @@ class ProMultiPassResearchOrchestrator:
         plan: FollowupPassPlan,
         adapter: ChatGPTWebAdapter,
     ) -> PreparedFollowupPass:
+        if self.store.get_job(plan.scope.job_id).old_job_frozen_at is not None:
+            raise ScopeApprovalRequired(
+                "old diagnostic conversation is frozen; follow-up preparation is forbidden"
+            )
         prepared = await adapter.prepare_followup_without_submit(
             browser_session_id=plan.scope.browser_session_id,
             conversation_id=plan.scope.conversation_id,
@@ -472,6 +487,10 @@ class ProMultiPassResearchOrchestrator:
         plan: FollowupPassPlan,
         adapter: ChatGPTWebAdapter,
     ) -> FollowupSubmitResult:
+        if self.store.get_job(plan.scope.job_id).old_job_frozen_at is not None:
+            raise ScopeApprovalRequired(
+                "old diagnostic conversation is frozen; follow-up submit is forbidden"
+            )
         claimed = self.ledger.claim_submit(plan.research_pass.pass_id)
         proof = ScopedFollowupProof(
             job_id=claimed.job_id,

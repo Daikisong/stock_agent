@@ -55,6 +55,10 @@ class DuplicateSubmitBlocked(ProFirstStoreError):
     pass
 
 
+class OldDiagnosticRunFrozen(DuplicateSubmitBlocked):
+    """A diagnostic-only job cannot send another browser request."""
+
+
 _JOB_MUTABLE_COLUMNS = frozenset(
     {
         "packet_id",
@@ -137,7 +141,9 @@ CREATE TABLE IF NOT EXISTS pro_research_jobs (
     last_error_class TEXT,
     last_error_message TEXT,
     last_progress_actor TEXT,
-    last_progress_hash TEXT
+    last_progress_hash TEXT,
+    old_job_frozen_at TEXT,
+    superseded_by_fresh_job_id TEXT REFERENCES pro_research_jobs(job_id)
 );
 
 CREATE TABLE IF NOT EXISTS pro_job_events (
@@ -395,6 +401,22 @@ class ProFirstJobStore:
                 connection.execute(
                     "ALTER TABLE pro_gap_decisions ADD COLUMN "
                     "adjudication_batch_id TEXT NOT NULL DEFAULT ''"
+                )
+            job_columns = {
+                str(row[1])
+                for row in connection.execute(
+                    "PRAGMA table_info(pro_research_jobs)"
+                ).fetchall()
+            }
+            if "old_job_frozen_at" not in job_columns:
+                connection.execute(
+                    "ALTER TABLE pro_research_jobs ADD COLUMN "
+                    "old_job_frozen_at TEXT"
+                )
+            if "superseded_by_fresh_job_id" not in job_columns:
+                connection.execute(
+                    "ALTER TABLE pro_research_jobs ADD COLUMN "
+                    "superseded_by_fresh_job_id TEXT"
                 )
 
     def pragma_snapshot(self) -> Mapping[str, Any]:
@@ -687,6 +709,126 @@ class ProFirstJobStore:
         if row is None:
             raise RecordNotFound(f"job not found: {job_id}")
         return self._job_from_row(row)
+
+    def freeze_old_diagnostic_job(
+        self,
+        job_id: str,
+        *,
+        expected_version: int,
+        actor: str,
+        idempotency_key: str,
+    ) -> ProResearchJob:
+        """Irreversibly disable new browser submits for one diagnostic run."""
+
+        payload = {
+            "event": "OLD_V2_REPAIR_HEAVY_DIAGNOSTIC_RUN_FROZEN",
+            "dispositions": [
+                "OLD_V2_REPAIR_HEAVY_DIAGNOSTIC_RUN",
+                "SUPERSEDED_BY_FRESH_SESSION_EFFICIENCY_VALIDATION",
+                "NOT_OPERATIONAL_EFFICIENCY_PROOF",
+            ],
+            "score_authority": False,
+            "stage_authority": False,
+            "publication_withheld": True,
+        }
+        with self._transaction() as connection:
+            row = self._require_job_row(connection, job_id)
+            if row["old_job_frozen_at"] is not None:
+                return self._job_from_row(row)
+            self._require_version(row, expected_version)
+            frozen_at = self._now_text()
+            cursor = connection.execute(
+                """
+                UPDATE pro_research_jobs
+                SET old_job_frozen_at=?, state_version=state_version+1,
+                    updated_at=?
+                WHERE job_id=? AND state_version=? AND old_job_frozen_at IS NULL
+                """,
+                (frozen_at, frozen_at, job_id, expected_version),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict(f"old job freeze raced: {job_id}")
+            self._insert_event(
+                connection,
+                job_id=job_id,
+                from_status=row["status"],
+                to_status=row["status"],
+                actor=actor,
+                idempotency_key=idempotency_key,
+                payload=payload,
+                created_at=frozen_at,
+            )
+            result = self._require_job_row(connection, job_id)
+        return self._job_from_row(result)
+
+    def bind_superseding_fresh_job(
+        self,
+        old_job_id: str,
+        fresh_job_id: str,
+        *,
+        expected_version: int,
+        actor: str,
+        idempotency_key: str,
+    ) -> ProResearchJob:
+        """Bind a frozen old run to the distinct fresh job that replaces it."""
+
+        if old_job_id == fresh_job_id:
+            raise ValueError("fresh superseding job must differ from the old job")
+        with self._transaction() as connection:
+            old = self._require_job_row(connection, old_job_id)
+            fresh = self._require_job_row(connection, fresh_job_id)
+            existing = str(old["superseded_by_fresh_job_id"] or "")
+            if existing:
+                if existing != fresh_job_id:
+                    raise IdempotencyConflict(
+                        "old job is already bound to another fresh job"
+                    )
+                return self._job_from_row(old)
+            self._require_version(old, expected_version)
+            if old["old_job_frozen_at"] is None:
+                raise OldDiagnosticRunFrozen(
+                    "old job must be frozen before a fresh successor is bound"
+                )
+            if (
+                old["symbol"] != fresh["symbol"]
+                or old["as_of_date"] != fresh["as_of_date"]
+            ):
+                raise ValueError(
+                    "fresh successor must preserve target and as_of_date"
+                )
+            updated_at = self._now_text()
+            cursor = connection.execute(
+                """
+                UPDATE pro_research_jobs
+                SET superseded_by_fresh_job_id=?, state_version=state_version+1,
+                    updated_at=?
+                WHERE job_id=? AND state_version=?
+                  AND superseded_by_fresh_job_id IS NULL
+                """,
+                (
+                    fresh_job_id,
+                    updated_at,
+                    old_job_id,
+                    expected_version,
+                ),
+            )
+            if cursor.rowcount != 1:
+                raise VersionConflict(f"fresh successor binding raced: {old_job_id}")
+            self._insert_event(
+                connection,
+                job_id=old_job_id,
+                from_status=old["status"],
+                to_status=old["status"],
+                actor=actor,
+                idempotency_key=idempotency_key,
+                payload={
+                    "event": "SUPERSEDED_BY_FRESH_SESSION_EFFICIENCY_VALIDATION",
+                    "fresh_job_id": fresh_job_id,
+                },
+                created_at=updated_at,
+            )
+            result = self._require_job_row(connection, old_job_id)
+        return self._job_from_row(result)
 
     def list_jobs(
         self,
@@ -2287,6 +2429,10 @@ class ProFirstJobStore:
         with self._transaction() as connection:
             row = self._require_job_row(connection, job_id)
             self._require_version(row, expected_version)
+            if row["old_job_frozen_at"] is not None:
+                raise OldDiagnosticRunFrozen(
+                    "old diagnostic job is frozen; create a fresh job and conversation"
+                )
             if row["submit_count"] != 0 or JobStatus(row["status"]) is not JobStatus.APPROVED:
                 raise DuplicateSubmitBlocked("job has already been submitted or is not approved")
             if row["approval_consumed_at"] is None:
@@ -2565,6 +2711,8 @@ class ProFirstJobStore:
             last_error_message=row["last_error_message"],
             last_progress_actor=row["last_progress_actor"],
             last_progress_hash=row["last_progress_hash"],
+            old_job_frozen_at=row["old_job_frozen_at"],
+            superseded_by_fresh_job_id=row["superseded_by_fresh_job_id"],
         )
 
     @staticmethod
@@ -2586,6 +2734,7 @@ __all__ = [
     "ApprovalInvalid",
     "DuplicateSubmitBlocked",
     "IdempotencyConflict",
+    "OldDiagnosticRunFrozen",
     "ProFirstJobStore",
     "ProFirstStoreError",
     "RecordNotFound",

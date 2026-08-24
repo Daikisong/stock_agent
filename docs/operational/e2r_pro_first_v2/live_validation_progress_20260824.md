@@ -1800,3 +1800,21 @@ https://github.com/Daikisong/stock_agent/actions/runs/32763808128
 E2R v6 operational cutover verification SUCCESS
 https://github.com/Daikisong/stock_agent/actions/runs/32763808119
 ```
+
+### 18.17 old job P0 봉인
+
+pass 15 import 뒤 V2.1 P0 CLI로 old job을 실제 봉인했다.
+
+```text
+old_job_frozen_at       2026-08-24T19:28:25.387533Z
+freeze receipt hash     2e3daa189aa98b38dacd978cafdb744b1e8e7d6069362f869b0a35cdb0338d3d
+runtime preserved       true
+post-freeze submit      0
+superseding fresh job   null (아직 생성 전)
+```
+
+같은 CLI를 다시 실행해 동일 receipt가 반환되는 것을 확인했다. freeze 뒤 old
+`VERIFIER_REPAIR` 계획은 prompt compile이나 browser prepare로 가지 않고
+`TransportPendingDecision`을 반환한다. initial submit claim과 최종 ledger claim에도 독립
+차단을 두었다. 상세 외부 검수 장부는
+`docs/operational/e2r_pro_first_v2_1/implementation_progress.md`에 이어간다.

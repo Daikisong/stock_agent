@@ -188,6 +188,8 @@ class ProResearchJob:
     last_error_message: str | None
     last_progress_actor: str | None = None
     last_progress_hash: str | None = None
+    old_job_frozen_at: str | None = None
+    superseded_by_fresh_job_id: str | None = None
 
     def __post_init__(self) -> None:
         for value, label in (

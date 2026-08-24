@@ -1,0 +1,36 @@
+{
+  "archetype_ids": [
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
+  ],
+  "as_of_date": "2026-08-23",
+  "conversation_id": "6a8b09c3-bfcc-83ee-b15b-9f76eca52249",
+  "dispositions": [
+    "OLD_V2_REPAIR_HEAVY_DIAGNOSTIC_RUN",
+    "SUPERSEDED_BY_FRESH_SESSION_EFFICIENCY_VALIDATION",
+    "NOT_OPERATIONAL_EFFICIENCY_PROOF"
+  ],
+  "effective_dossier": {
+    "dossier_hash": "6e6fcc84784ba93be41589689e5f0c2d6952078396d016de33ae5ff22f83c675",
+    "fact_count": 69,
+    "question_count": 28,
+    "route_receipt_count": 211,
+    "snapshot_id": "PRODOSSIERSNAPSHOT-05656ec8f80ad8d8e58fb94d"
+  },
+  "followup_submit_count_at_freeze": 10,
+  "initial_submit_count_at_freeze": 1,
+  "job_id": "PROJOB-cdd91020f15891533e61431f",
+  "last_in_flight_pass_id": "PROPASS-5cafcd69a1577739808ba25b",
+  "new_submit_count_after_freeze": 0,
+  "old_job_frozen_at": "2026-08-24T19:28:25.387533Z",
+  "publication_withheld": true,
+  "run_id": "PRORUN-a7dacadb7088fc23535bfdde",
+  "runtime_file_sha256": "597f0924056d6a3def2b99aa35f7578ff14654859179135a47f4c551468b89ae",
+  "runtime_preserved": true,
+  "runtime_receipt_hash": "2e3daa189aa98b38dacd978cafdb744b1e8e7d6069362f869b0a35cdb0338d3d",
+  "schema_version": "e2r_pro_old_run_freeze_summary_v1",
+  "score_authority": false,
+  "stage_authority": false,
+  "superseded_by_fresh_job_id": null,
+  "target_id": "000660",
+  "unresolved_repair_packet_count": 4
+}
