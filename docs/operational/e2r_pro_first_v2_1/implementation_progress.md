@@ -1,13 +1,20 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-25 P1 완료 시점`
+기준 시각: `2026-08-25 P3 완료 시점`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_1_fresh_session_verifier_ready_master_goal.md`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-현재 기준 HEAD: `10c7269b` (P1 원격 push 완료)
+phase commit 계보:
+
+```text
+P0 b6c30eb9  기존 repair-heavy Pro 실행을 진단 자료로 봉인
+P1 10c7269b  Pro fact 반려 원인을 최초 출력·로컬 결함·의미 결함으로 분해
+P2 152db6a7  source 문서와 atomic fact를 분리한 검증 친화 dossier를 도입
+P3 이 문서와 함께 Initial Prompt V3 phase commit으로 고정
+```
 
 PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지 않는다.
 
@@ -17,7 +24,7 @@ PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지
 P0 old run freeze                         COMPLETE
 P1 rejection A/B/C taxonomy              COMPLETE
 P2 ResearchDossierV3                      COMPLETE
-P3 Initial Prompt V3                      PENDING
+P3 Initial Prompt V3                      COMPLETE
 P4 local preflight                        PENDING
 P5 compact RepairDeltaV3                  PENDING
 P6 fresh-session orchestration            PENDING
@@ -183,7 +190,7 @@ original_candidate_hash binding             74/74 PASS
 deterministic CLI replay                     PASS
 ```
 
-## 다음 단계 P2
+## P2 — ResearchDossierV3
 
 source document와 atomic fact를 분리하는 append-only `ResearchDossierV3`를 구현했다.
 
@@ -234,7 +241,80 @@ compileall / git diff --check                    PASS
 
 상세 계약은 `research_dossier_v3_contract.md`에 기록했다.
 
-## 다음 단계 P3
+## P3 — Initial Prompt V3와 36-contract compiler
 
-36개 canonical archetype에 공통인 Initial Prompt V3와 compiler를 구현한다. fresh
-conversation 생성이나 browser 전송은 아직 하지 않는다.
+master goal의 Initial Full Research Prompt V3를 별도 template으로 추가했다. V2 template과
+compiler는 바꾸지 않았으므로 기존 receipt와 snapshot의 의미도 유지된다.
+
+실제 V3 initial prompt는 다음을 동적으로 결합한다.
+
+```text
+공통 verifier-ready base prompt
++ target / as_of_date / ResearchPacketV3 context
++ 선택된 primary contract 1~3개
++ 모든 실제 job에 붙는 R13 cross guard 4개
++ mandatory question / source role policy
++ exact ResearchDossierV3 JSON Schema
+```
+
+쉬운 예로 C06 한 개를 선택하면 C06 질문과 공통 R13 질문만 들어간다. C17 질문은 들어가지
+않는다. C06 전용 검색어나 HBM 전용 규칙은 template/compiler에 없고, C17이나 C28도 같은
+코드가 해당 contract를 읽어 prompt를 만든다.
+
+V3 compiler의 강제 경계:
+
+```text
+입력 packet schema                  e2r_pro_research_packet_v3만 허용
+primary contract                    1~3개
+R13 cross guard                     실제 job마다 4개 자동 부착
+output                              exact e2r_pro_research_dossier_v3 schema
+atomic evidence                     16개 공통 규칙
+verifier_preflight                  9 true + derived 혼합 false
+score_authority / stage_authority   false
+gold/expected/future outcome input  compile 전에 거절
+initial prompt hard boundary        100,000 characters
+```
+
+36개 canonical contract마다 tracked snapshot을 다시 만들고 deterministic audit JSON/Markdown을
+함께 게시했다. primary 32개 snapshot은 실제 one-primary job과 똑같이 R13 4개를 포함하고,
+R13 4개 snapshot은 contract 자체의 unit coverage를 확인하는 감사 전용이다.
+
+```text
+36/36 compile                        PASS
+mandatory question missing           0
+atomic contract missing              0
+verifier preflight missing           0
+derived metric separation missing    0
+forced COMPLETE                      0
+score/Stage leakage                  0
+other-archetype question pollution   0
+source role policy missing           0
+output V3 schema missing             0
+prompt over 100k                     0
+prompt size range                    34,909~57,956 chars
+```
+
+검증:
+
+```text
+P3 전용 regression                   10/10 PASS
+P0/P1 + dossier import + V2/V3/P3    64/64 PASS
+36 snapshot audit CLI                PASS / critical 0
+production static audit              PASS / critical 0
+git diff --check                     PASS
+```
+
+더 넓은 local Pro-first discovery도 실행했지만 Playwright 사용 묶음은 test body 전에 Linux
+`libnspr4.so` 부재로 browser process를 시작하지 못했다. 이는 P2에서 기록한 같은 host 환경
+제약이며 P3 코드 실패로 PASS에 포함하지 않았다. push 뒤 의존성을 설치하는 GitHub Actions를
+최종 외부 실행 기준으로 확인한다.
+
+이 단계에서는 fresh ChatGPT conversation을 만들거나 Pro에 전송하지 않았다. 따라서 P3
+PASS는 “Pro 답변이 좋았다”는 뜻이 아니라 “최초 요청부터 verifier가 읽을 구조를 모든
+contract에 동일하게 요구한다”는 뜻이다.
+
+## 다음 단계 P4
+
+ResearchDossierV3를 source verifier에 넘기기 전에 URL, source representation, quote, issuer
+alias, segment/product, date, atomic fact를 정규화하고 A/B/C rejection을 분류하는 local
+preflight pipeline을 구현한다. fresh conversation 생성이나 browser 전송은 아직 하지 않는다.
