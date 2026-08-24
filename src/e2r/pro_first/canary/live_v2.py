@@ -441,6 +441,86 @@ class ProV2LiveCanaryRunner:
                     {"pass_name": "COUNTER_SUPERSESSION_CLOSURE"},
                 )
 
+            completed_repair_reprocess_id = (
+                _completed_current_repair_reprocess_pass_id(
+                    orchestrator.ledger,
+                    job_id=job.job_id,
+                    dossier=dossier,
+                    job_root=job_root,
+                )
+            )
+            if completed_repair_reprocess_id is not None:
+                recovery_verification_service = ProSourceVerificationService(
+                    self.store,
+                    verifier=self.source_verifier,
+                )
+                recovery_verification = recovery_verification_service.verify_job(
+                    job.job_id,
+                    job_root=job_root,
+                )
+                if (
+                    recovery_verification.result is None
+                    and str(
+                        recovery_verification.receipt.get(
+                            "verification_semantics_version"
+                        )
+                        or ""
+                    )
+                    != self.source_verifier.semantics_version
+                ):
+                    recovery_verification_service.request_reverification(
+                        job.job_id,
+                        reason=(
+                            "REPAIR_REPROCESS_VERIFIER_SEMANTICS_CHANGED:"
+                            f"{recovery_verification.receipt.get('verification_semantics_version')}"
+                            f"->{self.source_verifier.semantics_version}"
+                        ),
+                        maximum_attempts=4,
+                    )
+                    recovery_verification = (
+                        recovery_verification_service.verify_job(
+                            job.job_id,
+                            job_root=job_root,
+                        )
+                    )
+                (
+                    recovery_verification_rows,
+                    recovery_claim_links,
+                    recovery_compilation_rejections,
+                ) = _verification_artifact_rows(recovery_verification)
+                (
+                    dossier,
+                    recovery_outcomes,
+                    _recovery_verification_rows,
+                    _recovery_claim_links,
+                    _recovery_compilation_rejections,
+                ) = await self._run_repairs(
+                    prepared=prepared,
+                    orchestrator=orchestrator,
+                    dossier_store=dossier_store,
+                    dossier=dossier,
+                    job_root=job_root,
+                    verification_rows=recovery_verification_rows,
+                    claim_links=recovery_claim_links,
+                    compilation_rejections=(
+                        recovery_compilation_rejections
+                    ),
+                    recover_completed_pass_id=(
+                        completed_repair_reprocess_id
+                    ),
+                )
+                pass_outcomes.extend(recovery_outcomes)
+                self._emit(
+                    self.store.get_job(job.job_id),
+                    "COMPLETED_REPAIR_REPROCESSED_BEFORE_DESCENDANT_CAPTURE",
+                    {
+                        "pass_id": completed_repair_reprocess_id,
+                        "automatic_resubmit_allowed": False,
+                        "reprocessed_outcome_count": len(recovery_outcomes),
+                        "latest_dossier_hash": canonical_hash(dossier),
+                    },
+                )
+
             dossier, public_outcomes = await self._close_public_gaps(
                 prepared=prepared,
                 orchestrator=orchestrator,
@@ -1246,6 +1326,7 @@ class ProV2LiveCanaryRunner:
         verification_rows: Sequence[Mapping[str, Any]],
         claim_links: Sequence[Mapping[str, Any]],
         compilation_rejections: Sequence[Mapping[str, Any]],
+        recover_completed_pass_id: str | None = None,
     ) -> tuple[
         Mapping[str, Any],
         list[Mapping[str, Any]],
@@ -1262,6 +1343,13 @@ class ProV2LiveCanaryRunner:
             orchestrator,
             verifier=self.source_verifier,
         )
+        if recover_completed_pass_id is not None and (
+            str(current.get("research_pass_id") or "")
+            != recover_completed_pass_id
+        ):
+            raise RuntimeError(
+                "completed repair reprocessing requires the current dossier pass"
+            )
         for repair_ordinal in range(1, self.repair_pass_limit + 1):
             plan = repair_service.plan_repair(
                 job_id=prepared.job.job_id,
@@ -1283,6 +1371,7 @@ class ProV2LiveCanaryRunner:
                     "verification_row_hash": canonical_hash(current_verifications),
                     "claim_fact_link_hash": canonical_hash(current_links),
                 },
+                recover_research_pass_id=recover_completed_pass_id,
             )
             if not plan.rejection_packets:
                 return (
@@ -1377,6 +1466,14 @@ class ProV2LiveCanaryRunner:
                 }
             )
             outcomes.append(summary)
+            if recover_completed_pass_id is not None:
+                return (
+                    current,
+                    outcomes,
+                    current_verifications,
+                    current_links,
+                    current_rejections,
+                )
             if not repaired.receipt.unresolved_packet_ids:
                 continue
         final_plan = repair_service.plan_repair(
@@ -1924,6 +2021,69 @@ def _submitted_unsnapshotted_followup_plan(
             prompt_hash=research_pass.prompt_hash,
         )
     return None
+
+
+def _completed_current_repair_reprocess_pass_id(
+    ledger: ProMultiPassLedger,
+    *,
+    job_id: str,
+    dossier: Mapping[str, Any],
+    job_root: Path,
+) -> str | None:
+    """Find one captured repair whose proposals were applied as a no-op.
+
+    The repair must still be the latest snapshot.  Once a descendant snapshot
+    exists, revising the historical pass would violate append-only lineage.
+    """
+
+    pass_id = str(dossier.get("research_pass_id") or "")
+    if not pass_id:
+        return None
+    research_pass = ledger.get_pass(pass_id)
+    if (
+        research_pass.job_id != job_id
+        or research_pass.pass_name != "VERIFIER_REPAIR"
+        or research_pass.status != "COMPLETE"
+        or research_pass.submit_count != 1
+        or not research_pass.response_hash
+    ):
+        return None
+    pass_snapshot = ledger.latest_dossier_snapshot_for_pass(
+        job_id=job_id,
+        pass_id=pass_id,
+    )
+    latest_snapshot = ledger.latest_dossier_snapshot(job_id)
+    if (
+        pass_snapshot is None
+        or latest_snapshot is None
+        or pass_snapshot.snapshot_id != latest_snapshot.snapshot_id
+        or pass_snapshot.revision_ordinal != 1
+    ):
+        return None
+    repair_receipt_path = job_root / "repair/verifier_repair_receipt.json"
+    if not repair_receipt_path.is_file():
+        return None
+    repair_receipt = json.loads(repair_receipt_path.read_text(encoding="utf-8"))
+    if (
+        str(repair_receipt.get("research_pass_id") or "") != pass_id
+        or tuple(repair_receipt.get("resolutions") or ())
+    ):
+        return None
+    pass_root = (
+        job_root
+        / "research_passes"
+        / f"{research_pass.pass_ordinal:02d}_{pass_id}"
+    )
+    captured_path = pass_root / "capture/incoming/research_dossier.json"
+    if not captured_path.is_file():
+        return None
+    captured = ResearchDossierParser().parse(
+        downloaded_json_path=captured_path
+    ).payload
+    proposals = tuple(captured.get("verification_repair_register") or ())
+    if not proposals:
+        return None
+    return pass_id
 
 
 def _research_semantic_hash(dossier: Mapping[str, Any]) -> str:

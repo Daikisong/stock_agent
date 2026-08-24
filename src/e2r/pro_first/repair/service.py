@@ -72,6 +72,7 @@ class ProVerifierRepairService:
         primary_archetype_ids: Sequence[str],
         existing_verified_ledger_digest: Mapping[str, Any] | None = None,
         maximum_prompt_payload_chars: int = DEFAULT_REPAIR_PROMPT_PAYLOAD_CHAR_BUDGET,
+        recover_research_pass_id: str | None = None,
     ) -> VerifierRepairPlan:
         if maximum_prompt_payload_chars < 1:
             raise ValueError("repair prompt payload budget must be positive")
@@ -106,6 +107,20 @@ class ProVerifierRepairService:
                     ),
                 }
             )
+        pass_inputs = {
+            "route_reason": "MATERIAL_FACT_VERIFIER_REJECTION",
+            "rejection_packets": [row.to_prompt_dict() for row in packets],
+            "deterministic_reverification_required": True,
+            "accepted_fact_deletion_allowed": False,
+        }
+        if recover_research_pass_id is not None:
+            _require_exact_completed_repair_input(
+                self.orchestrator,
+                job_id=job_id,
+                research_pass_id=recover_research_pass_id,
+                unresolved_question_state=unresolved,
+                pass_inputs=pass_inputs,
+            )
         followup: FollowupPassPlan | TransportPendingDecision | None = None
         if packets:
             followup = self.orchestrator.plan_followup(
@@ -114,16 +129,18 @@ class ProVerifierRepairService:
                 primary_archetype_ids=primary_archetype_ids,
                 pass_name="VERIFIER_REPAIR",
                 unresolved_question_state=unresolved,
-                pass_inputs={
-                    "route_reason": "MATERIAL_FACT_VERIFIER_REJECTION",
-                    "rejection_packets": [row.to_prompt_dict() for row in packets],
-                    "deterministic_reverification_required": True,
-                    "accepted_fact_deletion_allowed": False,
-                },
+                pass_inputs=pass_inputs,
                 existing_verified_ledger_digest=(
                     existing_verified_ledger_digest or {}
                 ),
             )
+            if recover_research_pass_id is not None and (
+                not isinstance(followup, FollowupPassPlan)
+                or followup.research_pass.pass_id != recover_research_pass_id
+            ):
+                raise RuntimeError(
+                    "completed repair recovery selected a different research pass"
+                )
         repair_root = Path(job_root).resolve() / "repair"
         receipt = {
             "schema_version": "e2r_pro_verifier_repair_plan_receipt_v1",
@@ -172,6 +189,7 @@ class ProVerifierRepairService:
             followup=followup,
             receipt=receipt,
         )
+
     def apply_and_reverify(
         self,
         *,
@@ -439,6 +457,38 @@ class ProVerifierRepairService:
             prior_fact_compilation_rejection_rows=(
                 prior_fact_compilation_rejection_rows
             ),
+        )
+
+
+def _require_exact_completed_repair_input(
+    orchestrator: ProMultiPassResearchOrchestrator,
+    *,
+    job_id: str,
+    research_pass_id: str,
+    unresolved_question_state: Sequence[Mapping[str, Any]],
+    pass_inputs: Mapping[str, Any],
+) -> None:
+    """Refuse recovery unless current deterministic inputs identify that pass."""
+
+    research_pass = orchestrator.ledger.get_pass(research_pass_id)
+    if (
+        research_pass.job_id != job_id
+        or research_pass.pass_name != "VERIFIER_REPAIR"
+        or research_pass.status != ResearchPassStatus.COMPLETE.value
+        or research_pass.submit_count != 1
+        or not research_pass.response_hash
+    ):
+        raise ValueError("repair recovery requires one completed submitted pass")
+    expected_input_hash = canonical_hash(
+        {
+            "pass_name": "VERIFIER_REPAIR",
+            "unresolved_question_state": list(unresolved_question_state),
+            "pass_inputs": dict(pass_inputs),
+        }
+    )
+    if research_pass.pass_input_hash != expected_input_hash:
+        raise ValueError(
+            "repair recovery inputs differ from the immutable completed pass"
         )
 
 

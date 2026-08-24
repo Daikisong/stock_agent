@@ -410,6 +410,54 @@ class ProFirstV2VerifierRepairTest(unittest.TestCase):
                 prior_verification_rows=rows,
             )
 
+    def test_completed_repair_recovery_requires_exact_immutable_input(self) -> None:
+        fact = self._fact(excerpt="원문에 없는 과장된 HBM 계약 문장")
+        dossier = self._dossier([fact])
+        _verification, rows, service, plan = self._verify_and_plan(
+            dossier, self._verifier()
+        )
+        pass_id = plan.followup.research_pass.pass_id
+        self._complete_repair_pass(plan)
+        pass_count = len(
+            self.orchestrator.ledger.list_passes(self.job.job_id)
+        )
+
+        recovered = service.plan_repair(
+            job_id=self.job.job_id,
+            job_root=self.root,
+            packet=self.packet,
+            dossier=dossier,
+            verification_rows=rows,
+            primary_archetype_ids=(ARCHETYPE,),
+            recover_research_pass_id=pass_id,
+        )
+
+        self.assertEqual(recovered.followup.research_pass.pass_id, pass_id)
+        self.assertEqual(
+            len(self.orchestrator.ledger.list_passes(self.job.job_id)),
+            pass_count,
+        )
+        changed_rows = tuple(
+            {**row, "status": "ACCEPTED_CURRENT"} for row in rows
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "inputs differ from the immutable completed pass",
+        ):
+            service.plan_repair(
+                job_id=self.job.job_id,
+                job_root=self.root,
+                packet=self.packet,
+                dossier=dossier,
+                verification_rows=changed_rows,
+                primary_archetype_ids=(ARCHETYPE,),
+                recover_research_pass_id=pass_id,
+            )
+        self.assertEqual(
+            len(self.orchestrator.ledger.list_passes(self.job.job_id)),
+            pass_count,
+        )
+
     def test_wrong_subject_opens_repair(self) -> None:
         competitor = "비교기업"
         competitor_excerpt = self.excerpt.replace(self.company_name, competitor)

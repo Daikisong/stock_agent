@@ -1,10 +1,10 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-24 23:51 KST`
+기준 시각: `2026-08-25 00:04 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
-기록 직전 HEAD: `bb39967fc871bf4bd4e9178a39015815612a23bf`
+기록 직전 HEAD: `79e6b7e5511ed6d68abfe6c9bb16814d8d0969af`
 
 PR: Draft PR #7, 병합·draft 해제·auto-merge를 수행하지 않음
 
@@ -588,3 +588,70 @@ score/Stage authority      false / false
 이 문서 커밋 이후 workflow의 새 V2 audit 단계까지 clean runner에서 통과하는지 다시
 확인한다. 아직 pass 7 capture, 원본 pass 6 revision 2 반영, 남은 bounded repair,
 000660 saturation과 점수, C17/C28 canary가 남아 있으므로 완료 표시는 하지 않는다.
+
+## 15. 00:04 KST pass 6 correction 선행 gate
+
+대기 중 DB와 snapshot lineage를 다시 대조해, pass 7을 먼저 capture하면 pass 6의 교정
+응답을 원본에 append-only revision으로 추가할 수 없다는 순서 위험을 확인했다.
+
+```text
+pass 6  COMPLETE / submit_count=1 / response_hash 있음
+pass 6  original snapshot revision 1 / repair resolution 0
+pass 6  captured raw proposal 17개
+pass 7  RESEARCH_RUNNING / submit_count=1 / 아직 snapshot 없음
+```
+
+snapshot store는 의도적으로 descendant가 생긴 historical pass의 사후 revision을 거절한다.
+따라서 pass 7 snapshot이 먼저 생기면 pass 6 revision 2를 뒤늦게 끼워 넣을 수 없다.
+이는 append-only 안전장치가 맞게 작동하는 것이며, 해결은 안전장치를 끄는 게 아니라
+이미 capture된 pass 6 correction을 descendant보다 먼저 적용하는 것이다.
+
+쉬운 예: 장부 6쪽의 정정지를 붙이기 전에 7쪽을 제본하면, 나중에 6쪽 뒤에 정정지를
+끼우는 순간 장부 순서가 바뀐다. 그래서 7쪽 원고가 외부에서 작성 중이더라도 입고는 잠시
+멈추고 `6쪽 정정지 → 7쪽 입고` 순서로 처리한다.
+
+이를 generic recovery gate로 구현했다.
+
+- 현재 latest dossier pass가 `VERIFIER_REPAIR / COMPLETE / submit_count=1`인지 확인한다.
+- 그 pass가 전체 latest snapshot이며 아직 revision 1인지 확인한다.
+- exact pass의 capture에 repair proposal이 있으나 durable repair receipt의 resolution이
+  0개인 경우만 no-op correction 대상으로 인정한다.
+- 현재 재계산한 rejection packet과 unresolved question의 `pass_input_hash`가 immutable
+  completed pass와 정확히 같을 때만 recovery를 허용한다.
+- exact parent snapshot에서 response delta를 다시 만들고 기존 revision 1을 보존한 채
+  revision 2를 추가한다.
+- 이 recovery 호출은 기존 completed pass 한 개만 처리하고 즉시 반환한다. 다음 repair를
+  새로 제출하지 않으며, 그 다음 단계가 이미 제출된 pass 7을 회수한다.
+- revision 2가 이미 있거나 descendant snapshot이 있으면 recovery를 반복하지 않는다.
+
+브라우저의 Pro 연구는 ChatGPT 서버에서 계속되지만, 잘못된 snapshot 순서를 만들지 않도록
+상태만 읽던 local runner를 poll 168에서 종료했다. 이는 pass 7 취소가 아니며 browser
+composer 입력·클릭·재전송은 0회다. 원본 DB의 pass 7은 계속
+`RESEARCH_RUNNING / submit_count=1`로 보존된다.
+
+원본 8.0MB runtime 전체를 별도 임시 복제한 뒤, 브라우저를 전혀 열지 않고 새 선행 gate를
+실행한 결과는 다음과 같다.
+
+```text
+clone root                 /tmp/e2r-pass6-preflight-rehearsal-Wf7yRn
+automatic resubmit         false
+pass                       PROPASS-3ef919d661d3bfa39f201c4e
+revision 2 snapshot        PRODOSSIERSNAPSHOT-235d2b608cbda1622f500445
+parent revision 1          PRODOSSIERSNAPSHOT-374eb7b04d924c725676a390
+dossier hash               20919dfa73dce80c58c7be860bdb5aa03a0d95d87d5c097c7a91b37791cf1848
+facts / routes             97 / 115
+repair resolutions         17
+reverified accepted        5
+reverified pending         12
+score_valid                false
+```
+
+이 값은 이전 수동 clone rehearsal과 byte-identical dossier hash 및 동일 5/12 결과다.
+관련 `live runtime + verifier repair`는 `43/43 PASS`, 확장 logic suite는 browser 1건을
+제외한 84건이 PASS다. 제외된 1건은 WSL Chromium이 `libnspr4.so` 부재로 launch 전에
+종료된 기존 환경 오류이며 코드 assertion failure가 아니다. V2 static audit는 다시
+`20/20 zero / critical_count=0 / PASS`다.
+
+다음 재개는 이 커밋의 코드를 사용해 원본 pass 6 revision 2부터 추가한 뒤, 같은 canonical
+conversation의 pass 7 visible result만 capture한다. 그 전후 snapshot, DB foreign key,
+submit_count를 다시 기록한다.

@@ -55,6 +55,7 @@ from e2r.pro_first.operations import (
 from e2r.pro_first.canary.live_v2 import (
     _accepted_dossier_fact_ids,
     _compile_question_bounds,
+    _completed_current_repair_reprocess_pass_id,
     _durable_pass_rows,
     _followup_execution_mode,
     _has_snapshotted_completed_pass,
@@ -162,6 +163,81 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
                 orchestrator,
                 job_id="PROJOB-RECOVERY",
                 pass_name="PUBLIC_GAP_CLOSURE",
+            )
+        )
+
+    def test_completed_noop_repair_is_reprocessed_before_descendant_snapshot(
+        self,
+    ) -> None:
+        job_id = "PROJOB-REPAIR-REPROCESS"
+        pass_id = "PROPASS-REPAIR-REPROCESS"
+        job_root = self.root / "job"
+        pass_root = job_root / f"research_passes/06_{pass_id}"
+        incoming = pass_root / "capture/incoming"
+        incoming.mkdir(parents=True)
+        (incoming / "research_dossier.json").write_text(
+            json.dumps(
+                {
+                    "verification_repair_register": [
+                        {
+                            "candidate_id": "PROFACT-OLD",
+                            "status": "REPLACED",
+                            "dossier_fact_id": "PROFACT-NEW",
+                        }
+                    ]
+                }
+            ),
+            encoding="utf-8",
+        )
+        receipt_root = job_root / "repair"
+        receipt_root.mkdir(parents=True)
+        receipt_path = receipt_root / "verifier_repair_receipt.json"
+        receipt_path.write_text(
+            json.dumps(
+                {
+                    "research_pass_id": pass_id,
+                    "resolutions": [],
+                    "unresolved_packet_ids": ["PACKET-1"],
+                }
+            ),
+            encoding="utf-8",
+        )
+        research_pass = SimpleNamespace(
+            job_id=job_id,
+            pass_id=pass_id,
+            pass_name="VERIFIER_REPAIR",
+            pass_ordinal=6,
+            status="COMPLETE",
+            submit_count=1,
+            response_hash="a" * 64,
+        )
+        snapshot = SimpleNamespace(
+            snapshot_id="SNAPSHOT-REPAIR-1",
+            revision_ordinal=1,
+        )
+        ledger = SimpleNamespace(
+            get_pass=lambda _pass_id: research_pass,
+            latest_dossier_snapshot_for_pass=lambda **_kwargs: snapshot,
+            latest_dossier_snapshot=lambda _job_id: snapshot,
+        )
+
+        self.assertEqual(
+            _completed_current_repair_reprocess_pass_id(
+                ledger,
+                job_id=job_id,
+                dossier={"research_pass_id": pass_id},
+                job_root=job_root,
+            ),
+            pass_id,
+        )
+
+        snapshot.revision_ordinal = 2
+        self.assertIsNone(
+            _completed_current_repair_reprocess_pass_id(
+                ledger,
+                job_id=job_id,
+                dossier={"research_pass_id": pass_id},
+                job_root=job_root,
             )
         )
 

@@ -359,3 +359,33 @@ GitHub Actions의 `static-security`도 같은 명령을 실행하므로 로컬 �
 
 이 정적 PASS는 live 연구 완료를 뜻하지 않는다. 현재 pass 7은 기존 1회 전송을
 `RESEARCH_RUNNING` 상태로 회수 대기 중이며, 점수·Stage·publication은 계속 막혀 있다.
+
+## completed repair와 descendant capture의 순서
+
+pass 6처럼 Pro 응답 capture는 성공했지만 과거 adapter 결함으로 repair action이 0개 적용된
+경우, 동일 pass correction은 기존 snapshot을 덮어쓰지 않고 revision 2로 추가한다. 이때
+이미 다음 pass snapshot이 생기면 historical pass revision을 추가할 수 없도록 snapshot
+store가 차단한다.
+
+따라서 resume 순서는 다음으로 고정한다.
+
+```text
+latest pass가 completed repair revision 1
++ capture에는 proposal 존재
++ durable resolution 0
++ immutable pass_input_hash exact match
+→ exact parent에서 무전송 reprocess
+→ same-pass revision 2 append
+→ 이미 제출된 unsnapshotted descendant capture
+→ 신규 repair planning
+```
+
+이 gate는 단순히 이름이 `VERIFIER_REPAIR`라는 이유만으로 재실행하지 않는다. proposal이
+실제로 capture됐고 적용 결과가 0이며, 해당 pass가 아직 전체 latest이고 revision 1인 경우만
+대상이다. 완료된 정상 repair, revision 2가 있는 pass, descendant가 이미 있는 historical
+pass는 건드리지 않는다.
+
+쉬운 예로 교정 답안 17개를 받은 기록과 채점표 0개가 동시에 있을 때만 다시 채점한다.
+이미 17개 채점표가 있거나 다음 시험 답안까지 제본된 뒤라면 자동으로 과거 장을 바꾸지
+않는다. 복제 rehearsal에서는 새 전송 없이 기존과 동일한 `5 accepted / 12 pending`과
+revision 2 dossier hash를 재현했다.
