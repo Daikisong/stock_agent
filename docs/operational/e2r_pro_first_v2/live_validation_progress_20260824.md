@@ -1,6 +1,6 @@
 # E2R Pro-First V2 P9 라이브 검증 진행 장부
 
-기준 시각: `2026-08-24 22:55 KST`
+기준 시각: `2026-08-24 23:36 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
@@ -471,3 +471,51 @@ connection 21곳을 `contextlib.closing`으로 명시 종료하도록 고쳤고,
 - 이미 제출된 pass의 현재 prompt template가 바뀌어도 original durable prompt hash를
   유지하고 재전송하지 않는가
 - 복제 rehearsal의 5 accepted / 12 pending을 원본 runtime 반영 완료로 과장하지 않는가
+
+## 13. 23:05 KST 원본 재개와 public/repair queue 분리
+
+커밋 `9d3ee28d941b954fde0aeb24b01bb797cac414ad`에서 원본 runtime을 재개했다. initial
+capture, initial import, pass 4 counter audit와 pass 6 no-op snapshot은 모두 durable
+artifact를 재사용했고, 기존 pass의 submit은 0회였다.
+
+재개 직후 상태기계는 아래 새 pass를 같은 canonical conversation에 정확히 1회 제출했다.
+
+```text
+pass id       PROPASS-5c7b3b52569b6744cc2686d9
+ordinal       7
+pass name     PUBLIC_GAP_CLOSURE
+parent        PROPASS-3ef919d661d3bfa39f201c4e
+submit_count  1
+status        RESEARCH_RUNNING
+question ids  18
+```
+
+그런데 pass input을 읽어보니 18개 결정의 `deterministic_status`가
+`VERIFIER_REPAIR_REQUIRED`인데도 기존 `_close_public_gaps()`가 이를 public search queue에
+포함했다. 원인은 이 함수가 `public_material_gap_question_ids`를 사용하지 않고, 모든
+non-terminal mandatory question에서 provider/lifecycle만 뺀 집합을 사용한 것이다.
+
+쉬운 예: `새 공시를 더 찾아야 함`과 `이미 가져온 공시의 subject/quote를 고쳐야 함`은
+서로 다른 작업인데, 기존 코드는 둘 다 “추가 검색” 바구니에 넣었다. 이 상태를 두면 pass 7
+완료 뒤 같은 repair-required 질문으로 public-gap pass가 반복될 수 있다.
+
+교정 규칙:
+
+```text
+public gap queue = missing mandatory + deterministic public material gap
+                  - verifier repair pending
+                  - provider/parser pending
+                  - lifecycle hard-break pending
+```
+
+이미 제출된 pass 7은 취소하거나 다시 보내지 않았다. ChatGPT 연구는 그대로 계속되고,
+monitor process만 종료했다. `submit_count=1 / RESEARCH_RUNNING`이므로 다음 재개는 visible
+result recovery만 가능하다. 새 helper와 회귀시험은 repair-required `Q-REPAIR`가 public
+queue로 들어가지 않고 `Q-MISSING`, `Q-PUBLIC`만 남는 것을 검증한다.
+
+교정 후 관련 `live_runtime + saturation + verifier_repair`는 `63/63 PASS`다. 같은 HEAD의
+GitHub Actions run `32735981403`은 Playwright system library를 설치한 clean runner에서
+full regression `7,560 tests`와 browser mock `57 tests`를 모두 SUCCESS로 완료했다. WSL
+직접 full suite의 58개 error는 정확히 browser mock 57개와 multi-pass browser 1개이며,
+로컬 Chromium의 `libnspr4.so` 부재로 launch 전에 발생했다. 비브라우저 assertion failure는
+0이고, 별도 핵심 122개와 이번 관련 63개는 모두 통과했다.

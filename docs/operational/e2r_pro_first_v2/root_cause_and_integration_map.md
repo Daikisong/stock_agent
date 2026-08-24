@@ -280,6 +280,13 @@ roster에 보존돼 있다. 초대형 미전송 pass
 runtime에 같은 무전송 revision 경로를 적용한 뒤, deterministic verifier가 남긴 12건과
 deferred 29건을 bounded repair로 계속 처리하는 것이다.
 
+원본 재개에서 추가로 `PUBLIC_GAP_CLOSURE` selector가 모든 non-terminal mandatory
+question을 가져가 `VERIFIER_REPAIR_REQUIRED`까지 public search pass에 넣는 순서 결함을
+확인했다. public closure는 이제 `missing mandatory + public_material_gap_question_ids`만
+후보로 삼고 verifier/provider/lifecycle pending을 각각의 전용 queue에 남긴다. 이미 1회
+제출된 pass 7은 취소·재전송하지 않고 durable running pass로 보존하며, 응답 완료 뒤 exact
+conversation recovery로 capture한다.
+
 브라우저 안전 규칙도 함께 고정했다. 실제 ChatGPT 입력은 E2R 전용 Chrome의 exact
 conversation DOM/CDP만 사용하며 OS 전역 키보드, clipboard, window focus 자동화는
 사용하지 않는다. 중복으로 고착된 탭을 복구할 때도 exact canonical conversation URL과

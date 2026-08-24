@@ -843,21 +843,7 @@ class ProV2LiveCanaryRunner:
                 job_root=job_root,
                 verified_fact_ids=provisional_ids,
             )
-            unresolved_ids = tuple(
-                dict.fromkeys(
-                    (*saturation.missing_mandatory_question_ids,
-                     *saturation.nonterminal_mandatory_question_ids)
-                )
-            )
-            provider_pending = set(
-                saturation.provider_parser_core_pending_question_ids
-            )
-            counter_pending = set(saturation.lifecycle_hard_break_pending_ids)
-            public_ids = tuple(
-                value
-                for value in unresolved_ids
-                if value not in provider_pending and value not in counter_pending
-            )
+            public_ids = _public_gap_followup_question_ids(saturation)
             if not public_ids:
                 return current, outcomes
             unresolved = _question_states_for_ids(current, public_ids)
@@ -1868,6 +1854,25 @@ def _verifier_pending_question_ids(dossier: Mapping[str, Any]) -> tuple[str, ...
         for row in dossier.get("question_family_results") or ()
         if str(row.get("status") or "") == "VERIFIER_REPAIR_REQUIRED"
     )
+
+
+def _public_gap_followup_question_ids(
+    saturation: ResearchSaturationReceipt,
+) -> tuple[str, ...]:
+    """Route only missing/public questions, never verifier work, to gap search."""
+
+    blocked = {
+        *saturation.verifier_repair_pending_ids,
+        *saturation.provider_parser_core_pending_question_ids,
+        *saturation.lifecycle_hard_break_pending_ids,
+    }
+    candidates = dict.fromkeys(
+        (
+            *saturation.missing_mandatory_question_ids,
+            *saturation.public_material_gap_question_ids,
+        )
+    )
+    return tuple(value for value in candidates if value not in blocked)
 
 
 def _research_semantic_hash(dossier: Mapping[str, Any]) -> str:

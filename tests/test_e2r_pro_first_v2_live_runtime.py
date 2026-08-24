@@ -59,6 +59,7 @@ from e2r.pro_first.canary.live_v2 import (
     _followup_execution_mode,
     _has_snapshotted_completed_pass,
     _load_recovered_snapshot_state,
+    _public_gap_followup_question_ids,
     _verification_artifact_rows,
 )
 from e2r.cli.run_e2r_pro_first_v2_live_canaries import _parse_spec
@@ -103,6 +104,27 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
         self.assertEqual(
             _followup_execution_mode(research_pass, pass_root=pass_root),
             "RECOVER_SUBMITTED_RESULT",
+        )
+
+    def test_public_gap_followup_never_steals_verifier_repair_questions(self) -> None:
+        saturation = SimpleNamespace(
+            missing_mandatory_question_ids=("Q-MISSING",),
+            nonterminal_mandatory_question_ids=(
+                "Q-MISSING",
+                "Q-PUBLIC",
+                "Q-REPAIR",
+                "Q-PROVIDER",
+                "Q-LIFECYCLE",
+            ),
+            public_material_gap_question_ids=("Q-PUBLIC", "Q-REPAIR"),
+            verifier_repair_pending_ids=("Q-REPAIR",),
+            provider_parser_core_pending_question_ids=("Q-PROVIDER",),
+            lifecycle_hard_break_pending_ids=("Q-LIFECYCLE",),
+        )
+
+        self.assertEqual(
+            _public_gap_followup_question_ids(saturation),
+            ("Q-MISSING", "Q-PUBLIC"),
         )
 
     def test_followup_execution_modes_distinguish_submit_capture_and_partial_bundle(self) -> None:
