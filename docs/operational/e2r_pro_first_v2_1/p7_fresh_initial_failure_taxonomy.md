@@ -1,5 +1,12 @@
 # P7 첫 fresh initial 실패 분류와 수정 장부
 
+> 후속 상태(2026-08-26): 이 문서는 1차 conversation의 diagnostic taxonomy로 보존한다. 해당 job은
+> `old_job_frozen_at=2026-08-25T00:13:07.514455Z`와
+> `superseded_by_fresh_job_id=PROJOB-ab48ce7e94097cf9b6846602`로 봉인됐다. generic 수정 뒤 완전히 새
+> conversation에서 실행한 2차 C06은 initial material `16/18=88.8889%`로 Gate를 통과했다. 성공
+> 증거는 `p7_c06_fresh_initial_success_receipt.json`과 `implementation_progress.md`의 P7 최종 절을
+> 따른다. 이 후속 성공은 아래 1차 실패 artifact를 덮어쓰거나 재분류하지 않는다.
+
 기준 문서는 `e2r_pro_first_v2_1_fresh_session_verifier_ready_master_goal.md`의 13~14절이다.
 첫 fresh conversation의 initial acceptance가 80% 미만이므로 같은 conversation을 repair로 길게
 끌지 않고 diagnostic-only로 봉인했다.

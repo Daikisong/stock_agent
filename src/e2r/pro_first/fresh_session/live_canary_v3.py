@@ -27,6 +27,10 @@ from ..browser.completion_monitor import (
 from ..browser.protocol import BrowserResultSnapshot, BrowserUIState
 from ..browser.worker import ProBrowserWorker
 from ..capture.coordinator import CaptureFilesystemReconciler, ProCaptureCoordinator
+from ..capture.expanded_dossier import (
+    ExpandedDossierArtifactService,
+    expanded_dossier_recovery_required,
+)
 from ..capture.receipt import CaptureReceipt, load_capture_receipt
 from ..config import ProFirstLocalConfig
 from ..dossier import CodexProReportDossierStructurer, ProDossierImporter
@@ -285,6 +289,21 @@ class FreshV3InitialLiveCanaryRunner:
                 capture_source=capture.receipt.capture_source,
                 report_hash=capture.receipt.report_md_hash,
             )
+            expanded = await ExpandedDossierArtifactService().recover(
+                job_root=boundary.fresh_job_root,
+                capture_receipt=capture.receipt,
+                adapter=runtime.session.adapter,
+            )
+            if expanded is not None:
+                self._emit(
+                    "FRESH_EXPANDED_DOSSIER_CAPTURED_NO_SUBMIT",
+                    job_id=fresh_job.job_id,
+                    expanded_dossier_hash=expanded.receipt[
+                        "expanded_dossier_hash"
+                    ],
+                    expanded_counts=expanded.receipt["expanded_counts"],
+                    browser_submit_delta=0,
+                )
         finally:
             await runtime.close()
 
@@ -441,6 +460,46 @@ class FreshV3InitialLiveCanaryRunner:
                     f"submitted-run recovery cannot continue from {self.store.get_job(job.job_id).status}"
                 )
             capture_receipt = load_capture_receipt(capture_receipt_path)
+
+        if expanded_dossier_recovery_required(
+            boundary.fresh_job_root,
+            capture_receipt,
+        ):
+            runtime = await ProBrowserWorker(self.config.browser).open(job_id=job.job_id)
+            try:
+                current_conversation = runtime.adapter.conversation_id()
+                if current_conversation != capture_receipt.conversation_id:
+                    recovered = await runtime.adapter.recover_conversation_without_submit(
+                        job_id=job.job_id,
+                        run_id=str(built.packet_payload["run_id"]),
+                        search_terms=(
+                            str(capture_receipt.conversation_id or ""),
+                        ),
+                    )
+                    if recovered.conversation_id != capture_receipt.conversation_id:
+                        raise ValueError(
+                            "recovered JSON attachment conversation differs from capture"
+                        )
+                expanded = await ExpandedDossierArtifactService().recover(
+                    job_root=boundary.fresh_job_root,
+                    capture_receipt=capture_receipt,
+                    adapter=runtime.adapter,
+                )
+                if expanded is None:
+                    raise ValueError(
+                        "expanded dossier recovery was required but produced no bundle"
+                    )
+                self._emit(
+                    "FRESH_EXPANDED_DOSSIER_RECOVERED_NO_SUBMIT",
+                    job_id=fresh_job.job_id,
+                    expanded_dossier_hash=expanded.receipt[
+                        "expanded_dossier_hash"
+                    ],
+                    expanded_counts=expanded.receipt["expanded_counts"],
+                    browser_submit_delta=0,
+                )
+            finally:
+                await runtime.close()
 
         return self._finish_initial_verification(
             boundary=boundary,

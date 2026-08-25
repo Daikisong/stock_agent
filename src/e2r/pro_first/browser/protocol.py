@@ -159,6 +159,34 @@ class BrowserCaptureRequest:
 
 
 @dataclass(frozen=True)
+class BrowserJsonAttachmentRequest:
+    job_id: str
+    run_id: str
+    conversation_id: str
+    assistant_turn_id: str
+    expected_filename: str
+    staging_directory: Path
+
+
+@dataclass(frozen=True)
+class RawBrowserJsonAttachment:
+    conversation_id: str
+    assistant_turn_id: str
+    json_part_path: Path
+    downloaded_filename: str
+    attachment_key: AttachmentKey
+    submit_count: int = 0
+
+    def __post_init__(self) -> None:
+        if not self.conversation_id or not self.assistant_turn_id:
+            raise ValueError("JSON attachment capture identity must be nonempty")
+        if not self.downloaded_filename.strip():
+            raise ValueError("downloaded JSON filename must be nonempty")
+        if self.submit_count != 0:
+            raise ValueError("JSON attachment recovery must never submit")
+
+
+@dataclass(frozen=True)
 class RawBrowserCapture:
     conversation_id: str | None
     assistant_turn_id: str
@@ -220,6 +248,10 @@ class ChatGPTWebAdapter(Protocol):
 
     async def capture_result(self, request: BrowserCaptureRequest) -> RawBrowserCapture: ...
 
+    async def download_json_attachment_without_submit(
+        self, request: BrowserJsonAttachmentRequest
+    ) -> RawBrowserJsonAttachment: ...
+
 
 class ManualLoginRequired(RuntimeError):
     pass
@@ -237,6 +269,7 @@ __all__ = [
     "AttachmentKey",
     "BrowserInspection",
     "BrowserCaptureRequest",
+    "BrowserJsonAttachmentRequest",
     "BrowserResultSnapshot",
     "BrowserUIIncompatible",
     "BrowserUIState",
@@ -245,6 +278,7 @@ __all__ = [
     "PreparedBrowserJob",
     "PreparedFollowupPass",
     "RawBrowserCapture",
+    "RawBrowserJsonAttachment",
     "RecoveredBrowserConversation",
     "SubmitAuthorizationRequired",
 ]

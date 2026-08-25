@@ -58,6 +58,12 @@ _FACT_FIELD_ALIASES = {
 _LINEAGE_FIELD_ALIASES = {"source_lineage_id": "lineage_id"}
 _LIFECYCLE_ALIASES = {"HISTORICAL": "HISTORICAL_ONLY"}
 _DIRECTION_ALIASES = {"COUNTER": "NEGATIVE"}
+_INITIAL_PASS_NAME = "INITIAL_FULL_RESEARCH"
+_INITIAL_CONVERSATION_PLACEHOLDER = "PENDING_INITIAL_CONVERSATION"
+_INITIAL_CONVERSATION_PLACEHOLDER_ALIASES = frozenset(
+    {"PENDING_NEW_CONVERSATION"}
+)
+_NULL_PARENT_PASS_ALIASES = frozenset({"NONE"})
 
 
 class PreSchemaV3Normalizer:
@@ -92,6 +98,7 @@ class PreSchemaV3Normalizer:
                 operations=(),
             )
         operations: list[PreflightOperation] = []
+        _normalize_initial_transport_aliases(normalized, operations)
         source_aliases = _consume_identity_aliases(
             normalized,
             "source_document_aliases",
@@ -323,6 +330,68 @@ class PreSchemaV3Normalizer:
             before_hash=before_hash,
             after_hash=canonical_hash(normalized),
             operations=tuple(operations),
+        )
+
+
+def _normalize_initial_transport_aliases(
+    dossier: dict[str, Any],
+    operations: list[PreflightOperation],
+) -> None:
+    """Canonicalize only exact, self-consistent initial-pass transport aliases.
+
+    The visible prompt uses ``NONE`` in its marker because a marker cannot
+    carry JSON null, and Pro can copy that marker spelling into the dossier.
+    Likewise, the initial conversation does not exist before submit and Pro
+    can spell the required placeholder as ``PENDING_NEW_CONVERSATION``.  These
+    values describe transport identity, not evidence.  Normalize them only
+    when the top-level current pass has exactly one matching
+    ``INITIAL_FULL_RESEARCH`` row whose parent uses the same null alias.
+    Follow-up pass lineage remains fail-closed.
+    """
+
+    current_pass_id = str(dossier.get("research_pass_id") or "")
+    rows = dossier.get("research_passes") or ()
+    matching_rows = [
+        row
+        for row in rows
+        if isinstance(row, dict)
+        and str(row.get("pass_id") or "") == current_pass_id
+        and str(row.get("pass_name") or "") == _INITIAL_PASS_NAME
+        and str(row.get("parent_pass_id") or "").upper()
+        in _NULL_PARENT_PASS_ALIASES
+    ]
+    if (
+        not current_pass_id
+        or len(matching_rows) != 1
+        or str(dossier.get("parent_pass_id") or "").upper()
+        not in _NULL_PARENT_PASS_ALIASES
+    ):
+        return
+
+    dossier["parent_pass_id"] = None
+    matching_rows[0]["parent_pass_id"] = None
+    operations.append(
+        _operation(
+            "NORMALIZE_INITIAL_PARENT_PASS_NULL_ALIAS",
+            "RESEARCH_PASS",
+            current_pass_id,
+            field_name="parent_pass_id",
+            before="NONE",
+            after=None,
+        )
+    )
+    conversation_id = str(dossier.get("conversation_id") or "")
+    if conversation_id in _INITIAL_CONVERSATION_PLACEHOLDER_ALIASES:
+        dossier["conversation_id"] = _INITIAL_CONVERSATION_PLACEHOLDER
+        operations.append(
+            _operation(
+                "NORMALIZE_INITIAL_CONVERSATION_PLACEHOLDER_ALIAS",
+                "DOSSIER",
+                str(dossier.get("job_id") or ""),
+                field_name="conversation_id",
+                before=conversation_id,
+                after=_INITIAL_CONVERSATION_PLACEHOLDER,
+            )
         )
 
 

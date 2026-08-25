@@ -14,6 +14,7 @@ from .protocol import (
     AttachmentKey,
     BrowserCaptureRequest,
     BrowserInspection,
+    BrowserJsonAttachmentRequest,
     BrowserResultSnapshot,
     BrowserUIIncompatible,
     BrowserUIState,
@@ -21,6 +22,7 @@ from .protocol import (
     PreparedBrowserJob,
     PreparedFollowupPass,
     RawBrowserCapture,
+    RawBrowserJsonAttachment,
     RecoveredBrowserConversation,
     SubmitAuthorizationRequired,
 )
@@ -38,6 +40,7 @@ from .selector_registry import (
     FILE_INPUT_SELECTORS,
     LOGIN_INDICATOR_SELECTORS,
     DOWNLOAD_SELECTORS,
+    JSON_CANDIDATE_SELECTORS,
     MD_CANDIDATE_SELECTORS,
     PDF_CANDIDATE_SELECTORS,
     PREVIEW_ROOT_SELECTORS,
@@ -565,7 +568,19 @@ class PlaywrightChatGPTWebAdapter:
             if await turn.locator(selector).count() > 0:
                 citations = True
                 break
-        new_keys = tuple(key for key, _locator in await self._new_md_candidates())
+        new_attachment_rows: list[tuple[AttachmentKey, Any]] = []
+        for selectors in (
+            MD_CANDIDATE_SELECTORS,
+            PDF_CANDIDATE_SELECTORS,
+            JSON_CANDIDATE_SELECTORS,
+        ):
+            new_attachment_rows.extend(
+                await self._new_file_candidates(
+                    selectors,
+                    assistant_turn_id=turn_id,
+                )
+            )
+        new_keys = tuple(key for key, _locator in new_attachment_rows)
         report_hash = canonical_hash(
             {
                 "conversation_id": self.conversation_id(),
@@ -806,6 +821,76 @@ class PlaywrightChatGPTWebAdapter:
             transport_normalization_operations=transport_operations,
         )
 
+    async def download_json_attachment_without_submit(
+        self,
+        request: BrowserJsonAttachmentRequest,
+    ) -> RawBrowserJsonAttachment:
+        """Download one exact visible JSON artifact without touching composer/send.
+
+        The durable capture already binds the conversation and assistant turn.
+        A JSON link elsewhere in the report (for example a schema URL) or in an
+        older turn therefore cannot be mistaken for the requested dossier.
+        """
+
+        current_conversation = self.conversation_id()
+        if current_conversation != request.conversation_id:
+            raise BrowserUIIncompatible(
+                "visible conversation differs from JSON attachment recovery identity"
+            )
+        expected = Path(request.expected_filename).name
+        if expected != request.expected_filename or not expected.casefold().endswith(
+            ".json"
+        ):
+            raise BrowserUIIncompatible(
+                "expected JSON attachment filename must be one safe basename"
+            )
+        matching = [
+            (key, locator)
+            for key, locator in await self._new_json_candidates(
+                assistant_turn_id=request.assistant_turn_id,
+            )
+            if key.button_text == expected
+            and key.conversation_id == request.conversation_id
+            and key.turn_id == request.assistant_turn_id
+        ]
+        if len(matching) != 1:
+            raise BrowserUIIncompatible(
+                "exactly one same-turn JSON dossier attachment is required"
+            )
+        key, locator = matching[0]
+        request.staging_directory.mkdir(parents=True, exist_ok=True)
+        part_path = request.staging_directory / "expanded_research_dossier.json.part"
+        download = await self._download_from_candidate(locator)
+        suggested = str(download.suggested_filename or "").strip()
+        if suggested != expected:
+            raise BrowserUIIncompatible(
+                f"downloaded JSON filename mismatch: expected {expected}, got {suggested}"
+            )
+        await download.save_as(str(part_path))
+        if not part_path.is_file() or part_path.stat().st_size == 0:
+            raise BrowserUIIncompatible(
+                "Playwright download produced an empty JSON dossier"
+            )
+        try:
+            payload = json.loads(part_path.read_text(encoding="utf-8-sig"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as error:
+            part_path.unlink(missing_ok=True)
+            raise BrowserUIIncompatible(
+                "downloaded JSON dossier is not a UTF-8 JSON document"
+            ) from error
+        if not isinstance(payload, dict):
+            part_path.unlink(missing_ok=True)
+            raise BrowserUIIncompatible(
+                "downloaded JSON dossier must be a JSON object"
+            )
+        return RawBrowserJsonAttachment(
+            conversation_id=request.conversation_id,
+            assistant_turn_id=request.assistant_turn_id,
+            json_part_path=part_path,
+            downloaded_filename=suggested,
+            attachment_key=key,
+        )
+
     @staticmethod
     async def _visible_citation_registry(turn: Any) -> tuple[dict[str, str], ...]:
         rows = await turn.locator("a[href]").evaluate_all(
@@ -833,13 +918,17 @@ class PlaywrightChatGPTWebAdapter:
     async def snapshot_attachment_keys(self) -> tuple[AttachmentKey, ...]:
         keys: list[AttachmentKey] = []
         conversation_id = self.conversation_id()
-        for selector in (*MD_CANDIDATE_SELECTORS, *PDF_CANDIDATE_SELECTORS):
+        for selector in (
+            *MD_CANDIDATE_SELECTORS,
+            *PDF_CANDIDATE_SELECTORS,
+            *JSON_CANDIDATE_SELECTORS,
+        ):
             locator = self.page.locator(selector)
             for index in range(await locator.count()):
                 item = locator.nth(index)
                 if not await item.is_visible():
                     continue
-                text = (await item.inner_text()).strip()
+                text = await self._attachment_candidate_name(item)
                 turn_id = await item.evaluate(
                     """element => {
                         const turn = element.closest('[data-message-id], [data-turn-id]');
@@ -857,8 +946,21 @@ class PlaywrightChatGPTWebAdapter:
     async def _new_pdf_candidates(self) -> list[tuple[AttachmentKey, Any]]:
         return await self._new_file_candidates(PDF_CANDIDATE_SELECTORS)
 
+    async def _new_json_candidates(
+        self,
+        *,
+        assistant_turn_id: str | None = None,
+    ) -> list[tuple[AttachmentKey, Any]]:
+        return await self._new_file_candidates(
+            JSON_CANDIDATE_SELECTORS,
+            assistant_turn_id=assistant_turn_id,
+        )
+
     async def _new_file_candidates(
-        self, selectors: tuple[str, ...]
+        self,
+        selectors: tuple[str, ...],
+        *,
+        assistant_turn_id: str | None = None,
     ) -> list[tuple[AttachmentKey, Any]]:
         candidates: list[tuple[AttachmentKey, Any]] = []
         seen: set[str] = set()
@@ -868,16 +970,34 @@ class PlaywrightChatGPTWebAdapter:
                 item = locator.nth(index)
                 if not await item.is_visible():
                     continue
+                turn_id = await self._turn_id(item)
+                if assistant_turn_id is not None and turn_id != assistant_turn_id:
+                    continue
                 key = AttachmentKey(
                     self.conversation_id(),
-                    await self._turn_id(item),
-                    (await item.inner_text()).strip(),
+                    turn_id,
+                    await self._attachment_candidate_name(item),
                 )
                 if key.stable_key in self._preexisting_attachment_keys or key.stable_key in seen:
                     continue
                 seen.add(key.stable_key)
                 candidates.append((key, item))
         return candidates
+
+    @staticmethod
+    async def _attachment_candidate_name(candidate: Any) -> str:
+        values = [
+            await candidate.get_attribute("aria-label"),
+            await candidate.get_attribute("title"),
+            await candidate.get_attribute("download"),
+            (await candidate.inner_text()).strip(),
+        ]
+        for value in values:
+            for line in str(value or "").splitlines():
+                normalized = line.strip()
+                if re.search(r"\.(?:md|pdf|json)$", normalized, re.IGNORECASE):
+                    return normalized
+        return str(values[-1] or "").strip()
 
     async def _download_from_candidate(self, candidate: Any) -> Any:
         try:
@@ -888,7 +1008,7 @@ class PlaywrightChatGPTWebAdapter:
             preview = await first_visible(self.page, PREVIEW_ROOT_SELECTORS)
             if preview is None:
                 raise BrowserUIIncompatible(
-                    "MD candidate produced neither a Playwright download nor a preview"
+                    "file candidate produced neither a Playwright download nor a preview"
                 ) from direct_error
             download_control = None
             for selector in DOWNLOAD_SELECTORS:

@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-25 P7 1차 fresh 실패 봉인 후 successor 재실행 준비`
+기준 시각: `2026-08-26 P7 2차 fresh C06 Gate 통과 및 visible JSON 첨부 복구 완료`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_1_fresh_session_verifier_ready_master_goal.md`
@@ -16,7 +16,8 @@ P2 152db6a7  source 문서와 atomic fact를 분리한 검증 친화 dossier를 
 P3 d5d62bc2  최초 Pro 조사에서 verifier-ready 증거를 생성하도록 계약 강화
 P4 788e14d2  URL 날짜 인용 alias scope의 기계적 결함을 로컬에서 자동 정규화
 P5 cad578af  전체 dossier 재출력을 제거하고 의미 오류만 compact delta로 수리
-P6 이 문서와 함께 fresh-session orchestration phase commit으로 고정
+P6 8b0e27bd  기존 대화를 봉인하고 새 Pro 세션의 blind canary 실행 경계를 구현
+P7 이 문서와 함께 2차 fresh C06 Gate 통과 phase commit으로 고정
 ```
 
 PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지 않는다.
@@ -31,7 +32,7 @@ P3 Initial Prompt V3                      COMPLETE
 P4 local preflight                        COMPLETE
 P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
-P7 000660 fresh canary                    IN_PROGRESS
+P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh canary                   PENDING
 P9 final CI/audit                         PENDING
 ```
@@ -710,3 +711,121 @@ successor artifact root    = 완전히 새로운 2차 fresh runtime
 호환성을 유지하고, successor일 때만 중앙 장부를 명시한다. 쉬운 예로 이전 시험 답안지는 1차 서랍에서
 읽되, 수험번호 장부는 계속 중앙 금고에서 읽고, 새 답안은 2차 빈 서랍에 쓰는 구조다. 세 위치를
 섞거나 복사하지 않는다. 분리 경로 회귀를 포함한 orchestration test는 `18/18 PASS`다.
+
+## P7 최종 — 2차 fresh C06 initial efficiency PASS
+
+1차 diagnostic-only run을 predecessor로 봉인한 뒤 새 runtime/session/job/run/pass/conversation에서
+blind fresh initial을 다시 실행했다. 초기 prompt에는 1차 fact, URL, question 답, score, Stage를
+넣지 않았으며 submit/capture는 각각 정확히 한 번이다.
+
+```text
+runtime          C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260825T150833Z
+fresh session    FRESH-V2-1-C06-20260825T150833Z
+fresh job        PROJOB-ab48ce7e94097cf9b6846602
+fresh run        PRORUN-683f5a5423a6e367f443c6de
+initial pass     PROPASS-e49762cc3ad556d6b211d92b
+conversation     6a8db0ad-8ed0-83e8-888e-dce26c950343
+assistant turn   request-WEB:a63d3897-9bd3-4749-996d-52a56adc7a89-0
+submit/capture   1 / 1
+```
+
+### visible JSON 산출물 복구
+
+Pro는 응답 본문에 0-fact 실패 결과를 낸 것이 아니었다. 본문에는 응답 길이를 줄인 transport manifest를
+두고, 같은 assistant turn에 전체 `ResearchDossierV3` JSON 파일을 visible attachment로 제공했다.
+기존 adapter가 `.md/.pdf`만 찾았기 때문에 inline manifest를 전체 dossier로 오인했다.
+
+generic 수정은 종목명이나 파일명을 하드코딩하지 않는다.
+
+```text
+inline V3가 expanded_artifact_required_for_verification=true 선언
+→ sandbox:/mnt/data/<safe-json-basename> exact reference 검사
+→ 같은 conversation + 같은 assistant turn + 같은 filename 1개만 선택
+→ visible download control 사용
+→ 기존 capture/incoming과 READY는 변경하지 않음
+→ capture/supplemental에 별도 JSON + receipt + READY를 written-last로 봉인
+→ job/run/target/as_of/conversation/turn/capture receipt/report hash/count 결박
+→ browser submit delta=0일 때만 importer가 expanded JSON 선택
+```
+
+쉬운 예로 본문은 “전체 명세서는 동봉 파일에 있다”는 운송장이었고, JSON은 실제 명세서였다. 기존
+운송장 봉인을 뜯어 바꾸지 않고 동봉 파일에 별도 인수증을 붙였다. 첨부 READY가 없거나 다른 turn,
+파일명, hash, 선언 수량이면 0-fact 본문을 import하지 않고 fail-closed한다.
+
+실제 attachment/result:
+
+```text
+downloaded bytes                  169,993
+expanded source documents         16
+expanded facts                    25 (material 18 / counter 5 / resolution 2)
+derived metrics                   3
+mandatory question results        28
+search route receipts             37
+unresolved gaps                   12
+post-cutoff / duplicate credit    0 / 0
+browser submit delta              0
+expanded dossier SHA-256          e32c98c78934c2d62c39cbec67d11032948269e62d086a0cdf418dcc7153c1a0
+supplemental receipt hash          108ca7596c88bf05c61cbedcf908d73c3db136ca8531339fa07ecf1c8afa48e5
+```
+
+Pro가 marker 표기용 `PENDING_NEW_CONVERSATION`과 `NONE`을 JSON identity에 복사한 경우도 initial pass의
+top-level/current pass row가 정확히 일치할 때만 로컬에서 canonical placeholder/null로 바꾼다.
+follow-up의 `NONE`은 고치지 않고 lineage 오류로 막는다. evidence, quote, URL은 이 정규화가 바꾸지 않는다.
+
+### initial source verification과 efficiency Gate
+
+전체 25개 fact를 source verifier에 넣었고, Initial Gate의 분모인 material candidate는 18개다.
+그중 16개가 accepted여서 `16 / 18 = 88.8889%`로 80% 기준을 통과했다. 낮은 비율을 repair로 메운
+결과가 아니라 follow-up 전 initial artifact만으로 계산한 값이다.
+
+```text
+mandatory question coverage                 28/28
+material candidate / accepted               18 / 16
+post-preflight acceptance                    88.8889% PASS
+all fact terminal                            25/25
+accepted all-kind fact                       21
+genuine semantic repair candidate            3 <= limit 5
+initial prompt output defect                 0
+local-normalizable sent to Pro               0
+source-representation sent to Pro            0
+source-document unbound material             0
+question-unbound material                    0
+tracking URL                                 0
+multi-source atomic fact                     0
+derived metric mixed fact                    0
+query/search                                 0/0
+old conversation new submit                  0
+score/Stage authority                        false/false
+publication                                  withheld
+Gate                                         PASS
+```
+
+canonical hashes와 수치는 `p7_c06_fresh_initial_success_receipt.json`에 별도 기록했다. 원문 보고서,
+전체 source/fact JSON, fetched document는 Git에 복제하지 않고 보존 runtime의 hash로 결박한다.
+
+검증:
+
+```text
+expanded attachment fail-closed unit regression     5/5 PASS
+preflight/fresh/import 포함 focused regression      60/60 PASS
+Windows MD/PDF/capture browser regression           20/20 PASS
+actual visible JSON download                         PASS
+actual expanded import                               PASS
+actual source verification                           PASS
+actual C06 Initial Efficiency Gate                   PASS (88.8889%)
+actual Pro extra submit                              0
+Linux non-browser Pro-first regression              392/392 PASS
+Windows real-browser Pro-first regression            79/79 PASS
+split-platform Pro-first total                       471/471 PASS
+failure / error                                        0 / 0
+Pro-first V2 static audit                         PASS / critical 0
+Pro-first production static audit                 PASS / critical 0
+E2R v6 production static audit                    PASS / critical 0
+Pro-first V2 audit hash                            f0eec38d973de9ae5b5c7b52b505ccdec9b9fd78a1fc749bee7b7ad8998e8acc
+E2R v6 static audit hash                           5f4df78b1870afe90511928f88bc76eefc46095e5746b882e80c9f0a068c3b41
+compileall / git diff check                        PASS / PASS
+```
+
+따라서 P7 verdict는 `PRO_FIRST_V2_1_C06_FRESH_SESSION_PASS`다. 이는 아직 7 component/21 Judge/score/
+Stage나 multi-archetype 완료를 뜻하지 않는다. 다음 단계는 각각 새 conversation을 쓰는 P8 C17/C28
+fresh initial canary다.

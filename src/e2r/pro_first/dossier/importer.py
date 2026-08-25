@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Callable, Mapping
 
 from ..capture.coordinator import CaptureCompleteEvent
-from ..capture.receipt import load_capture_receipt, verify_capture_bundle
+from ..capture.receipt import file_sha256, load_capture_receipt, verify_capture_bundle
 from ..atomic_io import fsync_directory
 from ..ids import canonical_hash, canonical_json, stable_id
 from ..job_store import ProFirstJobStore
@@ -142,8 +142,15 @@ class ProDossierImporter:
         elif job.status != JobStatus.IMPORTING.value:
             raise ValueError(f"dossier import cannot start from {job.status}")
         try:
+            # Imported lazily to keep the capture and dossier packages free of
+            # an import cycle.  An explicit inline transport manifest must
+            # resolve to its hash-bound same-turn JSON artifact; it is never
+            # accepted as a zero-fact research result.
+            from ..capture.expanded_dossier import resolve_import_dossier_path
+
+            input_dossier_path = resolve_import_dossier_path(root, receipt)
             parsed = self.parser.parse(
-                downloaded_json_path=incoming / "research_dossier.json",
+                downloaded_json_path=input_dossier_path,
                 report_md_path=incoming / "pro_report.md",
                 final_response_text=final_response_text,
             )
@@ -205,6 +212,8 @@ class ProDossierImporter:
                 "target_id": job.symbol,
                 "as_of_date": job.as_of_date,
                 "dossier_id": dossier_id,
+                "input_dossier_path": input_dossier_path.relative_to(root).as_posix(),
+                "input_dossier_hash": file_sha256(input_dossier_path),
                 "parser_source": parsed.parser_source,
                 "parser_before_hash": parsed.before_hash,
                 "parser_after_hash": parsed.after_hash,

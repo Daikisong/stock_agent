@@ -8,7 +8,10 @@ import unittest
 
 from e2r.pro_first.job_store import ProFirstJobStore
 from e2r.pro_first.ids import canonical_hash, canonical_json
-from e2r.pro_first.dossier import CANONICAL_COMPONENT_IDS
+from e2r.pro_first.dossier import (
+    CANONICAL_COMPONENT_IDS,
+    bind_dossier_transport_identity,
+)
 from e2r.pro_first.dossier.validator import (
     DossierValidationContext,
     DossierValidationError,
@@ -140,6 +143,79 @@ class ProFirstV21LocalPreflightTest(unittest.TestCase):
             normalized.payload["source_documents"][0]["lineage_id"], "SL-ONE"
         )
         self.assertNotIn("source_lineage_aliases", normalized.payload)
+
+    def test_initial_transport_none_and_conversation_aliases_are_local(self) -> None:
+        dossier = self._dossier()
+        dossier["conversation_id"] = "PENDING_NEW_CONVERSATION"
+        dossier["parent_pass_id"] = "NONE"
+        dossier["research_passes"][0].update(
+            {
+                "parent_pass_id": "NONE",
+                "status": "TRANSPORT_PENDING",
+                "response_hash": None,
+            }
+        )
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+        operation_codes = {row.operation_code for row in normalized.operations}
+
+        self.assertIsNone(normalized.payload["parent_pass_id"])
+        self.assertIsNone(normalized.payload["research_passes"][0]["parent_pass_id"])
+        self.assertEqual(
+            normalized.payload["conversation_id"],
+            "PENDING_INITIAL_CONVERSATION",
+        )
+        self.assertIn(
+            "NORMALIZE_INITIAL_PARENT_PASS_NULL_ALIAS",
+            operation_codes,
+        )
+        self.assertIn(
+            "NORMALIZE_INITIAL_CONVERSATION_PLACEHOLDER_ALIAS",
+            operation_codes,
+        )
+        bound = bind_dossier_transport_identity(
+            normalized.payload,
+            conversation_id="CAPTURED-CONVERSATION",
+            research_pass_id="PROPASS-PREFLIGHT",
+            parent_pass_id=None,
+            allow_initial_conversation_placeholder=True,
+            pass_name="INITIAL_FULL_RESEARCH",
+            prompt_hash="c" * 64,
+            response_hash="d" * 64,
+        )
+        self.assertEqual(
+            bound.payload["conversation_id"],
+            "CAPTURED-CONVERSATION",
+        )
+        self.assertEqual(
+            bound.payload["research_passes"][0]["status"],
+            "COMPLETE",
+        )
+
+    def test_followup_none_parent_alias_is_not_normalized(self) -> None:
+        dossier = self._dossier()
+        dossier["conversation_id"] = "PENDING_NEW_CONVERSATION"
+        dossier["parent_pass_id"] = "NONE"
+        dossier["research_passes"][0].update(
+            {
+                "pass_name": "VERIFIER_REPAIR",
+                "parent_pass_id": "NONE",
+            }
+        )
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+
+        self.assertEqual(normalized.payload["parent_pass_id"], "NONE")
+        self.assertEqual(
+            normalized.payload["conversation_id"],
+            "PENDING_NEW_CONVERSATION",
+        )
 
     def test_known_publisher_alias_is_normalized_from_injected_registry(self) -> None:
         dossier = self._dossier()

@@ -132,10 +132,19 @@ PDF_CANDIDATE_SELECTORS = (
     '.entity-underline:has-text(".pdf")',
 )
 
+JSON_CANDIDATE_SELECTORS = (
+    'button:has-text(".json")',
+    'a:has-text(".json")',
+    '[data-testid*="behavior-btn"]:has-text(".json")',
+    '.entity-underline:has-text(".json")',
+)
+
 PREVIEW_ROOT_SELECTORS = (
     '[role="dialog"]',
     '[data-side-pane-shell-rail="true"]',
     '[data-side-pane-shell-surface="true"]',
+    '[data-testid="stage-thread-flyout"]',
+    '[data-testid="screen-threadFlyOut"]',
 )
 
 DOWNLOAD_SELECTORS = (
