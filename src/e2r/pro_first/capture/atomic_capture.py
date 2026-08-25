@@ -51,6 +51,7 @@ class AtomicCaptureWriter:
         *,
         identity: CaptureIdentity,
         raw_capture: RawBrowserCapture,
+        dossier_override: Mapping[str, object] | None = None,
     ) -> AtomicCaptureResult:
         root = Path(job_root).resolve()
         staging = root / "capture/.staging"
@@ -63,7 +64,11 @@ class AtomicCaptureWriter:
         if not report_part.is_file() or report_part.stat().st_size == 0:
             raise ValueError("mandatory staged MD report is missing or empty")
         report_text = report_part.read_text(encoding="utf-8-sig")
-        dossier_text = self._extract_dossier(report_text)
+        dossier_text = (
+            canonical_json(dossier_override)
+            if dossier_override is not None
+            else self._extract_dossier(report_text)
+        )
         dossier_part = staging / "research_dossier.json.part"
         self._write_bytes_durable(dossier_part, (dossier_text + "\n").encode("utf-8"))
 

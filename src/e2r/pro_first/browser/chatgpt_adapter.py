@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from ..ids import canonical_hash
+from ..ids import canonical_hash, canonical_json
 from .page_helpers import editor_text, first_existing, first_visible, locator_enabled
 from .result_transport import normalize_visible_dossier_transport
 from .protocol import (
@@ -163,29 +163,9 @@ class PlaywrightChatGPTWebAdapter:
         else:
             await editor.fill(prompt, timeout=60_000)
         current = await editor_text(editor)
-        retained_dom_text = current
-        if used_direct_dom_input:
-            # ``innerText`` is a rendered view and collapses JSON indentation,
-            # so it can appear thousands of characters shorter even though
-            # the exact text nodes are present.  Reconstruct only the located
-            # editor's visible DOM, treating ``br`` as a newline.  This keeps
-            # the integrity check browser-local and exact without clipboard or
-            # OS keyboard access.
-            retained_dom_text = await editor.evaluate(
-                r"""
-                element => {
-                    const visit = node => {
-                        if (node.nodeType === Node.TEXT_NODE) {
-                            return node.nodeValue || '';
-                        }
-                        if (node.nodeType !== Node.ELEMENT_NODE) return '';
-                        if (node.tagName === 'BR') return '\n';
-                        return Array.from(node.childNodes).map(visit).join('');
-                    };
-                    return Array.from(element.childNodes).map(visit).join('');
-                }
-                """
-            )
+        retained_dom_text = (
+            await self._editor_exact_text(editor) if used_direct_dom_input else current
+        )
         required_markers = tuple(
             marker for marker in ("[[E2R_PRO_RUN_ID:", "[[E2R_PRO_JOB_ID:") if marker in prompt
         )
@@ -254,6 +234,86 @@ class PlaywrightChatGPTWebAdapter:
         return PreparedBrowserJob(
             browser_session_id=browser_session_id,
             conversation_id=self.conversation_id(),
+            state=BrowserUIState.AWAITING_USER_APPROVAL,
+            packet_path=path,
+            packet_hash=packet_hash,
+            prompt_hash=prompt_hash,
+            uploaded_filename=uploaded_filename,
+            prompt_preview=prompt[:500],
+            deep_research_ready=True,
+            send_ready=True,
+            preexisting_attachment_keys=preexisting,
+            submit_count=0,
+        )
+
+    async def recover_initial_prepared_without_mutation(
+        self,
+        *,
+        browser_session_id: str,
+        packet_path: str | Path,
+        packet_hash: str,
+        prompt: str,
+        prompt_hash: str,
+    ) -> PreparedBrowserJob:
+        """Adopt an intact failed-preparation draft without upload or input.
+
+        ChatGPT can keep the selected packet and full composer text after a
+        transient attachment toast while the finite preparation wait expires.
+        Recovery is allowed only when both browser-local contents hash back to
+        the exact durable packet and prompt.  This method never calls file
+        upload, editor fill, or send.
+        """
+
+        path = Path(packet_path).resolve()
+        packet_payload = json.loads(path.read_text(encoding="utf-8"))
+        if canonical_hash(packet_payload) != packet_hash:
+            raise BrowserUIIncompatible("recovered packet file differs from durable hash")
+        if canonical_hash({"prompt": prompt}) != prompt_hash:
+            raise BrowserUIIncompatible("recovered prompt differs from durable hash")
+        await self.ensure_logged_in()
+        if self.conversation_id() is not None:
+            raise BrowserUIIncompatible(
+                "prepared initial recovery requires the unchanged new-chat route"
+            )
+        await self.ensure_deep_research_mode()
+        uploaded_filename = await self._selected_packet_filename_if_hash_matches(
+            path,
+            packet_hash,
+        )
+        if uploaded_filename is None:
+            raise BrowserUIIncompatible(
+                "prepared initial recovery found no exact selected packet; re-upload is forbidden"
+            )
+        self._uploaded_filename = uploaded_filename
+        editor = await first_visible(self.page, EDITOR_SELECTORS)
+        if editor is None:
+            raise BrowserUIIncompatible("prepared initial recovery found no editor")
+        retained = await self._editor_exact_text(editor)
+        if retained.rstrip() != prompt.rstrip():
+            raise BrowserUIIncompatible(
+                "prepared initial recovery editor differs from the exact durable prompt"
+            )
+        preexisting = await self.snapshot_attachment_keys()
+        send = await self._wait_for_send_ready()
+        if send is None:
+            raise BrowserUIIncompatible(
+                "prepared initial recovery send button remains unavailable"
+            )
+        self._prepared_binding = {
+            "authorization_kind": "INITIAL_USER_APPROVAL",
+            "browser_session_id": browser_session_id,
+            "packet_hash": packet_hash,
+            "prompt_hash": prompt_hash,
+        }
+        self._preexisting_attachment_keys = frozenset(
+            row.stable_key for row in preexisting
+        )
+        self._prepared_job_id = self._marker_value(prompt, "E2R_PRO_JOB_ID")
+        self._prepared_run_id = self._marker_value(prompt, "E2R_PRO_RUN_ID")
+        self._submit_attempted = False
+        return PreparedBrowserJob(
+            browser_session_id=browser_session_id,
+            conversation_id=None,
             state=BrowserUIState.AWAITING_USER_APPROVAL,
             packet_path=path,
             packet_hash=packet_hash,
@@ -420,13 +480,16 @@ class PlaywrightChatGPTWebAdapter:
             state = BrowserUIState.AWAITING_CLARIFICATION
         elif any(token in body_text for token in ("usage limit", "quota", "사용 한도", "한도에 도달")):
             state = BrowserUIState.QUOTA_PENDING
+        elif stop is not None:
+            # A stale upload/network toast can remain visible after the one
+            # authorized send has already started.  The visible stop control
+            # is stronger current-state evidence that research is running.
+            state = BrowserUIState.RESEARCH_RUNNING
         elif mock_state == "ERROR" or any(
             token in body_text
             for token in ("something went wrong", "network error", "오류가 발생", "다시 시도하세요")
         ):
             state = BrowserUIState.RETRYABLE_ERROR
-        elif stop is not None:
-            state = BrowserUIState.RESEARCH_RUNNING
         elif prompt_ready and packet_uploaded and deep_ready:
             state = BrowserUIState.PROMPT_READY
         elif packet_uploaded:
@@ -475,6 +538,19 @@ class PlaywrightChatGPTWebAdapter:
         raw_report_text = (await turn.inner_text()).strip()
         normalization = normalize_visible_dossier_transport(raw_report_text)
         report_text = normalization.normalized_text
+        citation_registry = await self._visible_citation_registry(turn)
+        transport_operations = list(normalization.operations)
+        if citation_registry:
+            report_text = "\n".join(
+                (
+                    report_text,
+                    "",
+                    "E2R_VISIBLE_CITATION_REGISTRY_BEGIN",
+                    *(canonical_json(row) for row in citation_registry),
+                    "E2R_VISIBLE_CITATION_REGISTRY_END",
+                )
+            )
+            transport_operations.append("APPEND_VISIBLE_CITATION_HREF_REGISTRY")
         turn_id = await self._turn_id(turn)
         has_dossier = (
             "E2R_RESEARCH_DOSSIER_JSON_BEGIN" in report_text
@@ -484,7 +560,7 @@ class PlaywrightChatGPTWebAdapter:
             "E2R_REPAIR_DELTA_JSON_BEGIN" in report_text
             and "E2R_REPAIR_DELTA_JSON_END" in report_text
         )
-        citations = False
+        citations = bool(citation_registry)
         for selector in CITATION_SELECTORS:
             if await turn.locator(selector).count() > 0:
                 citations = True
@@ -498,9 +574,7 @@ class PlaywrightChatGPTWebAdapter:
                 "raw_report_hash": (
                     normalization.raw_hash if normalization.applied else None
                 ),
-                "transport_normalization_operations": list(
-                    normalization.operations
-                ),
+                "transport_normalization_operations": transport_operations,
                 "attachment_keys": [row.stable_key for row in new_keys],
             }
         )
@@ -514,9 +588,9 @@ class PlaywrightChatGPTWebAdapter:
             job_marker_matches=f"[[E2R_PRO_JOB_ID:{job_id}]]" in report_text,
             run_marker_matches=f"[[E2R_PRO_RUN_ID:{run_id}]]" in report_text,
             new_attachment_keys=new_keys,
-            raw_report_text=(normalization.raw_text if normalization.applied else None),
-            raw_report_hash=(normalization.raw_hash if normalization.applied else None),
-            transport_normalization_operations=normalization.operations,
+            raw_report_text=(normalization.raw_text if transport_operations else None),
+            raw_report_hash=(normalization.raw_hash if transport_operations else None),
+            transport_normalization_operations=tuple(transport_operations),
             has_repair_delta_marker=has_repair_delta,
         )
 
@@ -621,7 +695,18 @@ class PlaywrightChatGPTWebAdapter:
 
     async def capture_result(self, request: BrowserCaptureRequest) -> RawBrowserCapture:
         snapshot = await self.inspect_result(job_id=request.job_id, run_id=request.run_id)
-        if not snapshot.structurally_complete or snapshot.report_hash != request.expected_report_hash:
+        readable_override = bool(
+            request.allow_readable_report_without_dossier
+            and snapshot.assistant_turn_id
+            and snapshot.report_text.strip()
+            and snapshot.has_citations
+            and snapshot.job_marker_matches
+            and snapshot.run_marker_matches
+        )
+        if (
+            not (snapshot.structurally_complete or readable_override)
+            or snapshot.report_hash != request.expected_report_hash
+        ):
             raise BrowserUIIncompatible("capture requires the same stable completed assistant result")
         request.staging_directory.mkdir(parents=True, exist_ok=True)
         part_path = request.staging_directory / "pro_report.md.part"
@@ -661,7 +746,9 @@ class PlaywrightChatGPTWebAdapter:
             attachment_key = key
         else:
             if not (
-                snapshot.has_dossier_marker or snapshot.has_repair_delta_marker
+                snapshot.has_dossier_marker
+                or snapshot.has_repair_delta_marker
+                or readable_override
             ):
                 raise BrowserUIIncompatible("no matching new MD and no complete direct report fallback")
             part_path.write_bytes((snapshot.report_text + "\n").encode("utf-8"))
@@ -718,6 +805,30 @@ class PlaywrightChatGPTWebAdapter:
             raw_report_md_part_path=raw_part_path,
             transport_normalization_operations=transport_operations,
         )
+
+    @staticmethod
+    async def _visible_citation_registry(turn: Any) -> tuple[dict[str, str], ...]:
+        rows = await turn.locator("a[href]").evaluate_all(
+            r"""elements => elements.map(element => ({
+                url: element.href || element.getAttribute('href') || '',
+                text: (element.innerText || '').trim(),
+                aria_label: element.getAttribute('aria-label') || '',
+                title: element.getAttribute('title') || ''
+            })).filter(row => /^https?:\/\//i.test(row.url))"""
+        )
+        registry: list[dict[str, str]] = []
+        seen: set[tuple[str, str, str, str]] = set()
+        for row in rows:
+            normalized = {
+                key: " ".join(str(row.get(key) or "").split())
+                for key in ("url", "text", "aria_label", "title")
+            }
+            key = tuple(normalized[name] for name in ("url", "text", "aria_label", "title"))
+            if key in seen:
+                continue
+            seen.add(key)
+            registry.append(normalized)
+        return tuple(registry)
 
     async def snapshot_attachment_keys(self) -> tuple[AttachmentKey, ...]:
         keys: list[AttachmentKey] = []
@@ -876,13 +987,33 @@ class PlaywrightChatGPTWebAdapter:
         # ChatGPT can show the uploaded filename before its attachment scan is
         # complete.  During that short interval the visible send button stays
         # disabled, so wait finitely without ever clicking it.
-        for attempt in range(300):
+        for attempt in range(1_200):
             send = await first_visible(self.page, SEND_SELECTORS)
             if await locator_enabled(send):
                 return send
-            if attempt < 299:
+            if attempt < 1_199:
                 await self.page.wait_for_timeout(100)
         return None
+
+    @staticmethod
+    async def _editor_exact_text(editor: Any) -> str:
+        """Reconstruct only the located editor DOM, preserving ``br`` lines."""
+
+        return await editor.evaluate(
+            r"""
+            element => {
+                const visit = node => {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        return node.nodeValue || '';
+                    }
+                    if (node.nodeType !== Node.ELEMENT_NODE) return '';
+                    if (node.tagName === 'BR') return '\n';
+                    return Array.from(node.childNodes).map(visit).join('');
+                };
+                return Array.from(element.childNodes).map(visit).join('');
+            }
+            """
+        )
 
     async def _wait_for_uploaded_filename(self, filename: str) -> str | None:
         # Current ChatGPT file tiles can expose the name only through their
@@ -912,6 +1043,25 @@ class PlaywrightChatGPTWebAdapter:
     ) -> str | None:
         """Reuse a visible selected file only after exact JSON hash validation."""
 
+        selected_name = await self._selected_packet_filename_if_hash_matches(
+            packet_path,
+            packet_hash,
+        )
+        if selected_name is None:
+            return None
+        displayed = await self._wait_for_uploaded_filename(packet_path.name)
+        if displayed is not None:
+            self._uploaded_filename = displayed
+            return displayed
+        return None
+
+    async def _selected_packet_filename_if_hash_matches(
+        self,
+        packet_path: Path,
+        packet_hash: str,
+    ) -> str | None:
+        """Read the browser-selected File and require the exact JSON hash."""
+
         inputs = self.page.locator('input[type="file"]')
         for index in range(await inputs.count()):
             item = inputs.nth(index)
@@ -932,10 +1082,7 @@ class PlaywrightChatGPTWebAdapter:
                 continue
             if canonical_hash(payload) != packet_hash:
                 continue
-            displayed = await self._wait_for_uploaded_filename(packet_path.name)
-            if displayed is not None:
-                self._uploaded_filename = displayed
-                return displayed
+            return str(selected.get("name") or "")
         return None
 
     async def _manual_login_required(self) -> bool:

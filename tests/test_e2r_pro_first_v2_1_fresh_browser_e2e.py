@@ -191,7 +191,11 @@ class ProFirstV21FreshBrowserE2ETest(unittest.IsolatedAsyncioTestCase):
                 staging_directory=self.root / "repair-capture",
             )
         )
-        self.assertEqual(capture.source, "DIRECT_REPORT_DOM")
+        self.assertEqual(capture.source, "DIRECT_REPORT_DOM_NORMALIZED")
+        self.assertIn(
+            "APPEND_VISIBLE_CITATION_HREF_REGISTRY",
+            capture.transport_normalization_operations,
+        )
         self.assertIn(
             "E2R_REPAIR_DELTA_JSON_BEGIN",
             capture.report_md_part_path.read_text(encoding="utf-8"),
@@ -247,6 +251,50 @@ class ProFirstV21FreshBrowserE2ETest(unittest.IsolatedAsyncioTestCase):
         self.assertIsNotNone(
             self.store.get_job(self.boundary.old_job_id).old_job_frozen_at
         )
+
+    async def test_intact_prepared_draft_is_recovered_without_second_upload(self) -> None:
+        query = urlencode(
+            {
+                "job_id": self.built.job.job_id,
+                "run_id": self.built.packet_payload["run_id"],
+                "target_id": self.built.job.symbol,
+                "as_of_date": self.built.job.as_of_date,
+                "filename": self.built.output_filename,
+            }
+        )
+        await self.page.goto(
+            f"{self.server.base_url}/?{query}",
+            wait_until="domcontentloaded",
+        )
+        original = PlaywrightChatGPTWebAdapter(self.page)
+        prepared = await original.prepare_without_submit(
+            browser_session_id="BROWSER-ORIGINAL-DRAFT",
+            packet_path=self.built.packet_bundle.research_packet_json,
+            packet_hash=self.built.packet_bundle.packet_hash,
+            prompt=self.built.prompt.prompt_text,
+            prompt_hash=self.built.prompt.prompt_hash,
+        )
+        selected_before = await self.page.locator('input[type="file"]').first.evaluate(
+            "input => Array.from(input.files || []).map(file => file.name)"
+        )
+        await self.page.evaluate(
+            "document.querySelector('#attachments').replaceChildren()"
+        )
+        recovered = await PlaywrightChatGPTWebAdapter(
+            self.page
+        ).recover_initial_prepared_without_mutation(
+            browser_session_id="BROWSER-RECOVERED-DRAFT",
+            packet_path=self.built.packet_bundle.research_packet_json,
+            packet_hash=self.built.packet_bundle.packet_hash,
+            prompt=self.built.prompt.prompt_text,
+            prompt_hash=self.built.prompt.prompt_hash,
+        )
+        selected_after = await self.page.locator('input[type="file"]').first.evaluate(
+            "input => Array.from(input.files || []).map(file => file.name)"
+        )
+        self.assertEqual(selected_before, selected_after)
+        self.assertEqual(recovered.uploaded_filename, prepared.uploaded_filename)
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
 
     async def _show_report(self, report: str) -> None:
         await self.page.evaluate(

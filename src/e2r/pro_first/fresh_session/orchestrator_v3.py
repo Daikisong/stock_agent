@@ -164,6 +164,20 @@ class FreshSessionOrchestratorV3:
             JobStatus.PACKET_READY.value,
             JobStatus.BROWSER_PREPARING.value,
             JobStatus.AWAITING_USER_APPROVAL.value,
+            # Recovery may only reuse the hash-bound durable packet below;
+            # it may not build a replacement while the job needs attention.
+            JobStatus.USER_ATTENTION_REQUIRED.value,
+            # A submitted-run recovery only recompiles and hash-checks the
+            # already durable packet/prompt.  It must never create a packet in
+            # any of these states.
+            JobStatus.RESEARCH_RUNNING.value,
+            JobStatus.RESULT_DETECTED.value,
+            JobStatus.CAPTURING_ARTIFACTS.value,
+            JobStatus.CAPTURE_COMPLETE.value,
+            JobStatus.IMPORTING.value,
+            JobStatus.DOSSIER_IMPORTED.value,
+            JobStatus.VERIFYING_SOURCES.value,
+            JobStatus.GAP_ADJUDICATION.value,
         }
         if job.status not in allowed:
             raise ValueError(f"fresh V3 packet cannot build/reuse from {job.status}")
@@ -191,6 +205,13 @@ class FreshSessionOrchestratorV3:
                 manifest_hash=canonical_hash(manifest),
             )
         else:
+            if job.status not in {
+                JobStatus.PACKET_BUILDING.value,
+                JobStatus.PACKET_READY.value,
+            }:
+                raise FreshSessionBoundaryError(
+                    "submitted fresh recovery requires the existing hash-bound packet"
+                )
             candidate = self.store.get_candidate(job.candidate_id)
             selection = dict(candidate.selection_receipt)
             trigger_ids = tuple(
@@ -449,6 +470,101 @@ class FreshSessionOrchestratorV3:
             )
         except Exception:
             await session.close()
+            raise
+
+    async def recover_prepared_initial_in_logged_in_browser(
+        self,
+        built: BuiltFreshV3JobPacket,
+        *,
+        config: ProFirstLocalConfig,
+    ) -> PreparedFreshV3BrowserRuntime:
+        """Adopt an exact intact new-chat draft after preparation timed out."""
+
+        job = self._ensure_browser_preparing(built.job.job_id)
+        if job.submit_count != 0 or job.conversation_id is not None:
+            raise FreshSessionBoundaryError(
+                "prepared-draft recovery is allowed only before the first submit"
+            )
+        try:
+            session = await ProBrowserWorker(config.browser).open(job_id=job.job_id)
+        except Exception as error:
+            self._record_browser_attention(job.job_id, error)
+            raise
+        try:
+            if session.adapter.conversation_id() is not None:
+                raise FreshSessionBoundaryError(
+                    "prepared-draft recovery left the original new-chat route"
+                )
+            prepared = await session.adapter.recover_initial_prepared_without_mutation(
+                browser_session_id=session.browser_session_id,
+                packet_path=built.packet_bundle.research_packet_json,
+                packet_hash=built.packet_bundle.packet_hash,
+                prompt=built.prompt.prompt_text,
+                prompt_hash=built.prompt.prompt_hash,
+            )
+            job = self.store.record_browser_prepared(
+                job.job_id,
+                expected_version=job.state_version,
+                browser_session_id=prepared.browser_session_id,
+                conversation_id=None,
+                adapter_name="PlaywrightChatGPTWebAdapterV3FreshRecoveredDraft",
+                packet_hash=prepared.packet_hash,
+                prompt_hash=prepared.prompt_hash,
+                state={
+                    "state": prepared.state.value,
+                    "uploaded_filename": prepared.uploaded_filename,
+                    "send_ready": prepared.send_ready,
+                    "pro_mode_ready": prepared.deep_research_ready,
+                    "legacy_deep_research_allowed": False,
+                    "new_chat_route_verified": True,
+                    "initial_pass_id": built.initial_pass_id,
+                    "packet_schema_version": PACKET_V3_SCHEMA_VERSION,
+                    "prepared_draft_recovered_without_upload_or_input": True,
+                    "submit_count": 0,
+                },
+                actor="v2.1-fresh-v3-browser-draft-recovery",
+                idempotency_key=(
+                    f"fresh-v3-browser-draft-recovered:{job.job_id}:"
+                    f"{prepared.prompt_hash}"
+                ),
+            )
+            unsigned = {
+                "schema_version": "e2r_pro_fresh_v3_prepare_receipt_v1",
+                "status": "FRESH_NEW_CHAT_DRAFT_RECOVERED_AWAITING_APPROVAL",
+                "fresh_session_id": self.boundary.fresh_session_id,
+                "job_id": job.job_id,
+                "run_id": built.packet_payload["run_id"],
+                "initial_pass_id": built.initial_pass_id,
+                "old_conversation_id": self.boundary.old_conversation_id,
+                "prepared_conversation_id": None,
+                "new_chat_route_verified": True,
+                "prepared_draft_recovered_without_upload_or_input": True,
+                "packet_hash_verified_in_browser": True,
+                "prompt_hash_verified_in_browser": True,
+                "packet_hash": prepared.packet_hash,
+                "prompt_hash": prepared.prompt_hash,
+                "submit_count": 0,
+                "score_authority": False,
+                "stage_authority": False,
+            }
+            receipt = {**unsigned, "receipt_hash": canonical_hash(unsigned)}
+            write_runtime_json_once(
+                self.boundary.fresh_job_root
+                / "fresh_session/fresh_v3_prepare_receipt.json",
+                receipt,
+            )
+            return PreparedFreshV3BrowserRuntime(
+                built=built,
+                prepared=PreparedFreshV3Initial(
+                    job=job,
+                    prepared=prepared,
+                    receipt=receipt,
+                ),
+                session=session,
+            )
+        except Exception as error:
+            await session.close()
+            self._record_browser_attention(job.job_id, error)
             raise
 
     async def submit_initial_once(

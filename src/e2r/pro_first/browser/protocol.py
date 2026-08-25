@@ -155,6 +155,7 @@ class BrowserCaptureRequest:
     expected_filename: str
     expected_report_hash: str
     staging_directory: Path
+    allow_readable_report_without_dossier: bool = False
 
 
 @dataclass(frozen=True)

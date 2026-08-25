@@ -103,6 +103,15 @@ LIKELY_NONPUBLIC은 단순히 찾지 못했다는 뜻이 아니며 공개의무,
 8. score_authority=false
 9. stage_authority=false
 
+[전달 실패 방지 — JSON 직렬화 우선]
+
+1. 조사 도중이 아니라 최종 답변을 쓰기 전에 유효한 ResearchDossierV3 JSON을 먼저 완성하고 검사한다.
+2. ResearchDossierV3 JSON 직렬화는 생략할 수 없다. self-audit에서 문제가 발견되면 JSON 전체를 포기하지 말고 해당 fact만 제거해 unresolved_gaps와 non-terminal QuestionFamilyResultV3로 옮긴다.
+3. 응답 길이가 부족할 것 같으면 Markdown 설명을 짧게 하고, 검증 가능한 atomic fact 수를 줄이되 mandatory question roster와 유효한 JSON 객체는 반드시 남긴다.
+4. exact supporting excerpt는 각 atomic fact를 직접 지지하는 짧은 구절만 쓴다. 서로 다른 fact의 인용량을 합친 임의의 내부 제한 때문에 dossier 전체를 보류하지 않는다.
+5. 도구 세션이 끝날 위험이 있으면 그 시점까지 검증 완료된 fact와 명시적 gap만 담은 유효한 dossier를 먼저 출력한다. 미완료 후보를 억지로 fact로 승격하지 않는다.
+6. 최종 답변에는 `E2R_RESEARCH_DOSSIER_JSON_BEGIN`과 `E2R_RESEARCH_DOSSIER_JSON_END` 경계가 정확히 한 쌍 있어야 한다.
+
 최종 출력 전에 다음 self-audit를 먼저 수행하라.
 
 - source_document_id 없는 fact 0
@@ -488,16 +497,18 @@ Mandatory question families:
   "candidate_archetypes": [
     "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE"
   ],
+  "forbidden_inferences": null,
+  "fresh_blind_boundary": null,
   "job_id": "PROMPT-V3-SNAPSHOT-C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-  "known_counterfacts": [],
-  "known_positive_facts": [],
   "research_mode": "FULL_RESEARCH",
+  "research_objectives": null,
   "revision_valuation_snapshot": {},
   "run_id": "PROMPT-V3-SNAPSHOT-RUN-C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
   "schema_version": "e2r_pro_research_packet_v3",
   "selected_archetypes": [
     "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE"
   ],
+  "source_preferences": null,
   "structured_financial_snapshot": {},
   "target": {
     "aliases": [],

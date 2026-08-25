@@ -292,6 +292,60 @@ class FreshSessionBoundaryService:
         )
         return boundary, fresh
 
+    def load_existing(
+        self,
+        *,
+        fresh_runtime_root: str | Path,
+        leakage_manifest: OldAnswerLeakageManifest,
+    ) -> tuple[FreshSessionBoundary, ProResearchJob]:
+        """Load one immutable boundary without creating another successor."""
+
+        fresh_root = Path(fresh_runtime_root).expanduser().resolve()
+        boundary_path = fresh_root / "fresh_session_boundary_receipt.json"
+        if not boundary_path.is_file():
+            raise FreshSessionBoundaryError("fresh boundary receipt is missing")
+        receipt = json.loads(boundary_path.read_text(encoding="utf-8"))
+        unsigned = {key: value for key, value in receipt.items() if key != "receipt_hash"}
+        if (
+            receipt.get("schema_version")
+            != "e2r_pro_fresh_session_boundary_receipt_v1"
+            or receipt.get("receipt_hash") != canonical_hash(unsigned)
+            or receipt.get("fresh_runtime_root") != str(fresh_root)
+        ):
+            raise FreshSessionBoundaryError("fresh boundary receipt failed hash/path validation")
+        for field in ("old_job_id", "old_run_id", "old_conversation_id"):
+            if receipt.get(field) != getattr(leakage_manifest, field):
+                raise FreshSessionBoundaryError(
+                    "fresh boundary differs from the old-answer leakage manifest"
+                )
+        fresh_job_id = str(receipt.get("fresh_job_id") or "")
+        fresh = self.store.get_job(fresh_job_id)
+        old = self.store.get_job(leakage_manifest.old_job_id)
+        if (
+            old.superseded_by_fresh_job_id != fresh_job_id
+            or fresh.job_id == old.job_id
+            or fresh.old_job_frozen_at is not None
+        ):
+            raise FreshSessionBoundaryError(
+                "durable old/fresh successor binding is not recoverable"
+            )
+        old_root = Path(str(receipt.get("old_runtime_root") or "")).resolve()
+        _assert_disjoint_runtime_roots(old_root, fresh_root)
+        return (
+            FreshSessionBoundary(
+                fresh_session_id=str(receipt["fresh_session_id"]),
+                old_job_id=leakage_manifest.old_job_id,
+                old_run_id=leakage_manifest.old_run_id,
+                old_conversation_id=leakage_manifest.old_conversation_id,
+                fresh_job_id=fresh_job_id,
+                old_runtime_root=old_root,
+                fresh_runtime_root=fresh_root,
+                leakage_manifest=leakage_manifest,
+                boundary_receipt_path=boundary_path,
+            ),
+            fresh,
+        )
+
 
 def audit_fresh_blind_payload(
     payload: Mapping[str, Any],

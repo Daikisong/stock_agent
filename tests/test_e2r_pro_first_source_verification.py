@@ -323,6 +323,32 @@ class ProFirstSourceVerificationTest(unittest.TestCase):
             "UNIT_SCOPE_MAPPER",
         )
 
+    def test_empty_fact_roster_finishes_without_scope_mapper_or_fetch(self) -> None:
+        class ForbiddenScopeMapper:
+            provider_name = "FORBIDDEN_FOR_EMPTY_ROSTER"
+
+            def map_facts(inner_self, *, facts, contracts):
+                raise AssertionError("empty fact roster must not call the scope mapper")
+
+        fetcher = _CountingFetcher({})
+        result = ProSourceVerifier(
+            page_fetcher=fetcher,
+            mechanism_scope_mapper=ForbiddenScopeMapper(),
+        ).verify(
+            dossier=self._dossier(),
+            job=self.job,
+            job_root=self.root,
+        )
+
+        self.assertEqual(result.verifications, ())
+        self.assertEqual(result.fact_compilation.facts, ())
+        self.assertEqual(result.receipt_payload["candidate_fact_count"], 0)
+        self.assertEqual(result.receipt_payload["compiled_evidence_fact_count"], 0)
+        self.assertEqual(result.receipt_payload["mechanism_scope_mapping_count"], 0)
+        self.assertEqual(result.receipt_payload["query_count"], 0)
+        self.assertEqual(result.receipt_payload["search_count"], 0)
+        self.assertEqual(fetcher.calls, [])
+
     def test_snippet_only_rejected(self) -> None:
         result = self._verify(
             self._fact(),

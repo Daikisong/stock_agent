@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-25 P6 완료 검증 시점`
+기준 시각: `2026-08-25 P7 fresh initial live 실행 중`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_1_fresh_session_verifier_ready_master_goal.md`
@@ -31,7 +31,7 @@ P3 Initial Prompt V3                      COMPLETE
 P4 local preflight                        COMPLETE
 P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
-P7 000660 fresh canary                    PENDING
+P7 000660 fresh canary                    IN_PROGRESS
 P8 C17/C28 fresh canary                   PENDING
 P9 final CI/audit                         PENDING
 ```
@@ -526,3 +526,161 @@ orchestration proof이므로 아직 000660 initial acceptance 80%나 score/Stage
 만들고 000660 / `as_of_date=2026-08-23` / C06+R13 fresh blind packet을 정확히 한 번 전송한다.
 initial result에 local preflight와 source verification을 적용해 acceptance ratio를 계산한다. 80%
 미만이면 repair로 메워 PASS하지 않고 해당 conversation을 diagnostic-only로 봉인한다.
+
+## P7 live 실행 장부 — fresh initial 1회
+
+마스터 Goal의 사용자 승인 범위에 따라 ordinary Chat + visible Pro mode에서 실제 fresh canary를
+시작했다. 기존 대화에 follow-up을 보내지 않았고, 새 conversation을 만든 뒤 initial prompt를
+정확히 한 번만 제출했다.
+
+```text
+runtime          C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260824T221229Z
+fresh session    FRESH-V2-1-C06-20260824T221229Z
+fresh job        PROJOB-ee3f7609d478547f60e3aff8
+fresh run        PRORUN-886983514379a2248fe03d3c
+initial pass     PROPASS-fe8dc97296863bea30fb5151
+durable transient conversation WEB:08326745-1438-42bb-a18b-9355869dab22
+visible canonical conversation 6a8cc4ce-095c-83e8-b375-8d40084b818e
+old conversation 6a8b09c3-bfcc-83ee-b15b-9f76eca52249
+submit count     1
+capture count    0 (연구 완료 대기 시점)
+current status   RESEARCH_RUNNING
+```
+
+blind packet과 prompt 경계:
+
+```text
+packet hash                     dcefe680d4f0d079e6af236e7e8744ef21f0afbeac8187935d191fb292bf3712
+prompt hash                     a0d4a9a98d255b82fe2db641cfbe1a3c6889226b68d0c6ce837e7e62db981ecc
+prompt chars                    58,648
+packet old-answer leakage       0
+old score/Stage leakage         0
+mandatory question families     28
+score/stage authority           false/false
+```
+
+첫 prepare 시 ChatGPT의 과거 오류 toast 때문에 send-ready 판정이 30초 안에 끝나지 않아
+`USER_ATTENTION_REQUIRED`로 안전 정지했다. 이때 `submit_count=0`이었다. 동일 브라우저 draft의
+prompt hash와 첨부 File SHA-256을 다시 검증해 새 upload나 composer 입력 없이 복구했고,
+그 뒤 제출 횟수는 정확히 1이 됐다. 쉬운 예로 서류가 접수 창구에 이미 놓여 있는지를 hash로
+확인한 뒤 접수 버튼만 한 번 누른 것이며, 같은 서류를 두 번 올리지 않았다.
+
+제출 직후 ChatGPT UI가 임시 `WEB:...` 대화 ID를 사용하다 정식 `/c/<id>` URL로 전환하는 것도
+live에서 확인했다. 감시 프로세스를 브라우저 연구와 분리해 종료하고, `submit_count=1`을 요구하는
+no-submit recovery 경로를 추가했다. 완료 결과 안의 exact job/run marker와 report hash가 모두
+맞을 때만 정식 conversation ID로 재결박한 뒤 capture한다. 이 복구 경로에는 upload, composer
+입력, DOM send가 없다.
+
+live 실행에 앞서/실행 중 확인한 회귀:
+
+```text
+fresh efficiency + orchestration unit tests       19/19 PASS
+Windows production adapter browser E2E             2/2 PASS
+prepared draft no-mutation recovery browser E2E     1/1 PASS
+submitted packet reuse regression                    PASS
+transient→canonical conversation rebind regression  PASS
+현재 live 새 conversation 확인                       PASS
+현재 live exactly-once submit                        PASS (1)
+```
+
+이 장부는 중간 상태다. Pro 응답 capture, DossierV3 import, local preflight, source verification과
+초기 material acceptance 80% gate가 끝나기 전에는 P7 PASS나 score/Stage를 선언하지 않는다.
+
+## P7 fresh initial 최종 판정 — 1차 conversation은 diagnostic-only
+
+2026-08-25에 첫 fresh initial의 완료 결과를 캡처하고 initial efficiency gate까지 실행했다. 이
+conversation은 P7 PASS가 아니다. 마스터 Goal 13~14절에 따라 낮은 acceptance를 repair로 메우지
+않고 diagnostic-only로 봉인했다.
+
+```text
+visible mode                    ordinary Chat + visible Pro
+canonical conversation         6a8cc4ce-095c-83e8-b375-8d40084b818e
+submit / capture               1 / 1
+additional browser send        0
+mandatory questions            28 / 28
+serialized source documents    0
+serialized material facts      0
+accepted material facts        0
+initial acceptance             0.0%
+source verifier fetch          0
+query / search                 0 / 0
+score / Stage authority        false / false
+score receipt / Stage receipt  없음 / 없음
+gate                           FAIL
+failure reasons                NO_INITIAL_MATERIAL_CANDIDATES,
+                               INITIAL_ACCEPTANCE_RATIO_BELOW_80_PERCENT
+publication                    withheld
+new conversation required      true
+```
+
+Pro가 조사 내용을 전혀 만들지 않은 것은 아니다. 화면 보고서에는 28개 question 판정, 공식 issuer·
+경쟁사·시장자료에 대한 서술, 11개 공개/비공개·parser/provider gap, self-audit가 들어 있다. 다만
+Pro가 마지막에 exact excerpt 총량을 자체 점검하다 한 단어 초과를 발견했다고 서술한 뒤, 유효한
+`E2R_RESEARCH_DOSSIER_JSON_BEGIN/END` 블록과 fact별 excerpt–URL 결박을 출력하지 않았다. 쉬운 예로
+조사 메모는 도착했지만 각 주장에 원문 문장과 출처를 붙인 증빙 명세서는 제출되지 않은 상태다.
+
+사람이 읽을 수 있는 모든 보고서 내용은 버리지 않았다.
+
+```text
+raw visible report chars                 8,817
+normalized report chars                  9,379 (파일 newline 포함 9,380)
+visible citation href registry           3
+reported material/source/route counts    28 / 18 / 122
+serialized usable material facts         0
+question results preserved               28
+explicit unresolved gaps preserved       11
+```
+
+Codex structurer는 새 검색이나 점수 판단 없이 완료 보고서만 읽어 V3 representation을 만들었다.
+보고서에 exact excerpt와 explicit URL이 fact 단위로 함께 있지 않은 주장은 material fact로 만들지
+않고 question result와 unresolved gap으로 보존했다. 따라서 0개는 “Pro의 모든 설명을 폐기했다”는
+뜻이 아니라 “검증 불가능한 설명을 점수 사실로 몰래 승격하지 않았다”는 뜻이다.
+
+live에서 확인된 generic 결함과 조치는
+`p7_fresh_initial_failure_taxonomy.md`에 기록했다. 핵심 수정은 다음과 같다.
+
+```text
+완료 보고서에 JSON block 없음       → readable report + citation registry를 원문 보존 capture
+보고서 representation 복구           → Codex-only structurer, browse/fetch/score/Stage 금지
+fact roster 0에서 mapper 예외         → provider 호출 없이 zero-count verification receipt
+post-capture verifier 재개             → 브라우저를 다시 열지 않고 immutable capture에서 재개
+post-import USER_ATTENTION 재개        → 기존 import ledger 재사용
+중단된 중복 import timestamp drift     → evidence 필드 동일할 때 durable ledger timestamp로 복구
+```
+
+첫 run의 canonical receipts:
+
+```text
+capture source                  DIRECT_REPORT_DOM_NORMALIZED
+capture report SHA-256          8ae172543c9a2beba7ec98937efca00c3989a7b73cac3608b1b16dae2c22848c
+browser result SHA-256          dd595f8e27c58e22a72e37677adee2b46d231ba81d6080987ba56312a07d2efa
+dossier snapshot SHA-256        0c0a4a2fae10db5cea7166ab9db6c20bdfc466fecbcda3f8b5c59b075af5ce9b
+efficiency receipt SHA-256      8e751564ceb0f03b0c92015a4ea268c5cffd6a6d0aa129fb40dc2a7927fb4160
+source verification semantics  e2r_pro_source_verification_v10
+current durable state           GAP_ADJUDICATION + old_job_frozen_at set
+```
+
+root-cause prompt patch는 모든 아키타입 공통 Initial Prompt V3에 적용했다. self-audit 오류나 응답
+길이 압력이 있어도 dossier 전체를 생략하지 않고, 문제가 있는 fact만 gap으로 내린 뒤 유효한 JSON을
+먼저 보장하도록 했다. C06·000660 전용 문구는 추가하지 않았다. 36개 prompt snapshot을 다시 만들었고
+compile/오염/누수/길이 critical은 0이다.
+
+다음 P7 시도는 같은 conversation의 repair가 아니다. 새 runtime, fresh_session_id, job, run, pass,
+ChatGPT conversation을 사용한 blind fresh rerun이어야 한다. 새 run이 initial acceptance 80%를
+통과하기 전에는 C17/C28, 점수, Stage, 운영 준비를 진행하지 않는다.
+
+커밋 전 검증:
+
+```text
+fresh/structurer/import/source/prompt 집중 회귀       83/83 PASS
+변경된 Windows Playwright browser 회귀                3/3 PASS
+Initial Prompt V3 canonical snapshot                 36/36 PASS
+Pro-first V2 requirement static audit                PASS / critical 0
+Pro-first production static audit                    PASS / critical 0
+Python compileall / git diff check                    PASS / PASS
+```
+
+WSL 전체 Pro-first discovery에서는 463개 중 browser-dependent 60개가 동일하게 `libnspr4.so` 부재로
+시작하지 못했고 나머지 403개는 통과했다. 이는 코드 assertion 실패가 아니라 WSL Chromium 실행환경
+문제다. 변경으로 영향을 받은 browser assertion 3개는 Playwright가 설치된 Windows Python에서 다시
+실행해 모두 통과했다.

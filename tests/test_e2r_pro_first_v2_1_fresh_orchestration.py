@@ -10,17 +10,23 @@ import unittest
 from e2r.pro_first.approval import ProApprovalService
 from e2r.pro_first.browser.protocol import (
     BrowserInspection,
+    BrowserResultSnapshot,
     BrowserUIState,
     PreparedBrowserJob,
     PreparedFollowupPass,
 )
+from e2r.pro_first.config import load_pro_first_local_config
 from e2r.pro_first.fresh_session import (
+    FreshV3InitialLiveCanaryRunner,
     FreshSessionBoundaryError,
     FreshSessionBoundaryService,
     FreshSessionOrchestratorV3,
     FreshSessionRerunRequired,
     OldAnswerLeakageManifest,
     audit_fresh_blind_payload,
+)
+from e2r.pro_first.fresh_session.live_canary_v3 import (
+    _requires_browser_result_recovery,
 )
 from e2r.pro_first.ids import canonical_hash
 from e2r.pro_first.job_store import ProFirstJobStore
@@ -257,6 +263,75 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             await self.orchestrator.submit_initial_once(adapter)
         self.assertEqual(adapter.submit_count, 1)
 
+    async def test_submitted_recovery_reuses_packet_without_second_submit(self) -> None:
+        adapter = await self._prepare_and_approve("fresh-conversation-recovery")
+        submitted = await self.orchestrator.submit_initial_once(adapter)
+
+        recovered = self.orchestrator.build_initial_packet(
+            commit_sha="a" * 40,
+            config_hash="b" * 64,
+        )
+
+        self.assertEqual(
+            recovered.packet_bundle.packet_hash,
+            self.built.packet_bundle.packet_hash,
+        )
+        self.assertEqual(recovered.initial_pass_id, self.built.initial_pass_id)
+        self.assertEqual(submitted.submit_result.job.submit_count, 1)
+        self.assertEqual(self.store.get_job(self.fresh_job.job_id).submit_count, 1)
+        self.assertEqual(adapter.submit_count, 1)
+
+    def test_post_capture_verifier_attention_does_not_reopen_browser(self) -> None:
+        pre_capture = replace(
+            self.fresh_job,
+            status=JobStatus.USER_ATTENTION_REQUIRED.value,
+            capture_count=0,
+        )
+        post_capture = replace(pre_capture, capture_count=1)
+
+        self.assertTrue(_requires_browser_result_recovery(pre_capture))
+        self.assertFalse(_requires_browser_result_recovery(post_capture))
+
+    async def test_completed_markers_rebind_transient_conversation_without_submit(self) -> None:
+        adapter = await self._prepare_and_approve("WEB:temporary-conversation")
+        await self.orchestrator.submit_initial_once(adapter)
+        runner = FreshV3InitialLiveCanaryRunner(
+            replace(
+                load_pro_first_local_config(
+                    Path(__file__).parents[1]
+                    / "configs/e2r_pro_first_local.example.yaml"
+                ),
+                runtime_root=self.boundary.fresh_runtime_root,
+            ),
+            old_runtime_root=self.boundary.old_runtime_root,
+            fresh_runtime_root=self.boundary.fresh_runtime_root,
+            repo_root=self.root,
+            store=self.store,
+            source_verifier=object(),
+        )
+        result = BrowserResultSnapshot(
+            conversation_id="canonical-conversation-0001",
+            assistant_turn_id="assistant-turn-1",
+            report_text="complete dossier",
+            report_hash="d" * 64,
+            has_citations=True,
+            has_dossier_marker=True,
+            job_marker_matches=True,
+            run_marker_matches=True,
+            new_attachment_keys=(),
+        )
+
+        runner._rebind_completed_conversation(
+            job_id=self.fresh_job.job_id,
+            run_id=str(self.built.packet_payload["run_id"]),
+            result=result,
+        )
+
+        rebound = self.store.get_job(self.fresh_job.job_id)
+        self.assertEqual(rebound.conversation_id, "canonical-conversation-0001")
+        self.assertEqual(rebound.submit_count, 1)
+        self.assertEqual(adapter.submit_count, 1)
+
     async def test_existing_chat_prepare_is_blocked_then_new_chat_retry_works(self) -> None:
         adapter = _FreshAdapter(submitted_conversation_id="fresh-after-retry")
         adapter.current_conversation_id = OLD_CONVERSATION
@@ -275,6 +350,12 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             JobStatus.USER_ATTENTION_REQUIRED.value,
         )
         self.assertEqual(attention.submit_count, 0)
+        rebuilt = self.orchestrator.build_initial_packet(
+            commit_sha="a" * 40,
+            config_hash="b" * 64,
+        )
+        self.assertEqual(rebuilt.packet_bundle.packet_hash, self.built.packet_bundle.packet_hash)
+        self.assertEqual(rebuilt.prompt.prompt_hash, self.built.prompt.prompt_hash)
         adapter.current_conversation_id = None
         prepared = await self.orchestrator.prepare_initial_with_adapter(
             self.built,
@@ -511,6 +592,22 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 leakage_manifest=mismatched,
             )
         self.assertFalse(destination.exists())
+
+    def test_existing_boundary_loads_without_creating_another_job(self) -> None:
+        jobs_before = tuple(
+            row.job_id for row in self.store.list_jobs(limit=100)
+        )
+        loaded, job = FreshSessionBoundaryService(self.store).load_existing(
+            fresh_runtime_root=self.boundary.fresh_runtime_root,
+            leakage_manifest=self.manifest,
+        )
+        jobs_after = tuple(
+            row.job_id for row in self.store.list_jobs(limit=100)
+        )
+
+        self.assertEqual(loaded.fresh_job_id, self.boundary.fresh_job_id)
+        self.assertEqual(job.job_id, self.fresh_job.job_id)
+        self.assertEqual(jobs_after, jobs_before)
 
     async def _prepare_and_approve(self, conversation_id: str) -> _FreshAdapter:
         adapter = _FreshAdapter(submitted_conversation_id=conversation_id)

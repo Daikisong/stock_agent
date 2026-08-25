@@ -18,6 +18,11 @@ from .dialect_adapter import (
     ResearchDossierDialectAdapter,
 )
 from .normalizer import NormalizedDossier, ResearchDossierNormalizer
+from .codex_report_structurer import (
+    CodexProReportDossierStructurer,
+    StructuredProReport,
+    StructuredReportTransport,
+)
 from .parser import DossierParseError, ParsedDossier, ResearchDossierParser
 from .validator import (
     CANONICAL_COMPONENT_IDS,
@@ -46,6 +51,7 @@ __all__ = [
     "BoundDossierIdentity",
     "DossierIdentityBindingError",
     "CANONICAL_COMPONENT_IDS",
+    "CodexProReportDossierStructurer",
     "AdaptedDossier",
     "AvailabilityClass",
     "DossierDialectError",
@@ -70,6 +76,8 @@ __all__ = [
     "ResearchDossierParser",
     "ResearchDossierValidator",
     "ResearchPassName",
+    "StructuredProReport",
+    "StructuredReportTransport",
     "compile_dossier_v2_closure_summary",
     "validate_research_status",
     "validate_route_bindings",

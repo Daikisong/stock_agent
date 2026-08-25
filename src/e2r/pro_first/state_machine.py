@@ -28,6 +28,7 @@ class TransitionContext:
     judge_coverage_complete: bool = False
     deterministic_score_present: bool = False
     deterministic_stagecourt_present: bool = False
+    completed_result_reverified: bool = False
 
 
 @dataclass(frozen=True)
@@ -62,7 +63,7 @@ _ALLOWED: Mapping[JobStatus, frozenset[JobStatus]] = {
     JobStatus.RESEARCH_RUNNING: frozenset({JobStatus.AWAITING_CLARIFICATION, JobStatus.USER_ATTENTION_REQUIRED, JobStatus.QUOTA_PENDING, JobStatus.RESULT_DETECTED, JobStatus.FAILED_RETRYABLE, JobStatus.CANCELLED}),
     JobStatus.AWAITING_CLARIFICATION: frozenset({JobStatus.RESEARCH_RUNNING, JobStatus.USER_ATTENTION_REQUIRED, JobStatus.CANCELLED}),
     JobStatus.QUOTA_PENDING: frozenset({JobStatus.RESEARCH_RUNNING, JobStatus.USER_ATTENTION_REQUIRED, JobStatus.CANCELLED}),
-    JobStatus.USER_ATTENTION_REQUIRED: frozenset({JobStatus.BROWSER_PREPARING, JobStatus.IMPORTING, JobStatus.VERIFYING_SOURCES, JobStatus.BLOCKED, JobStatus.CANCELLED}),
+    JobStatus.USER_ATTENTION_REQUIRED: frozenset({JobStatus.BROWSER_PREPARING, JobStatus.RESULT_DETECTED, JobStatus.IMPORTING, JobStatus.VERIFYING_SOURCES, JobStatus.BLOCKED, JobStatus.CANCELLED}),
     JobStatus.RESULT_DETECTED: frozenset({JobStatus.CAPTURING_ARTIFACTS, JobStatus.FAILED_RETRYABLE, JobStatus.CANCELLED}),
     JobStatus.CAPTURING_ARTIFACTS: frozenset({JobStatus.CAPTURE_COMPLETE, JobStatus.FAILED_RETRYABLE, JobStatus.USER_ATTENTION_REQUIRED, JobStatus.CANCELLED}),
     JobStatus.CAPTURE_COMPLETE: frozenset({JobStatus.IMPORTING, JobStatus.USER_ATTENTION_REQUIRED, JobStatus.BLOCKED}),
@@ -103,6 +104,14 @@ class ProJobStateMachine:
             raise InvalidJobTransition(f"invalid Pro-first transition: {source.value} -> {target.value}")
         if target is JobStatus.SUBMITTING and not context.approval_nonce_consumed:
             raise InvalidJobTransition("SUBMITTING requires an atomically consumed approval nonce")
+        if (
+            source is JobStatus.USER_ATTENTION_REQUIRED
+            and target is JobStatus.RESULT_DETECTED
+            and not context.completed_result_reverified
+        ):
+            raise InvalidJobTransition(
+                "USER_ATTENTION_REQUIRED result recovery requires exact completed-result revalidation"
+            )
         if source is JobStatus.CAPTURE_COMPLETE and target is JobStatus.IMPORTING and not context.capture_receipt_verified:
             raise InvalidJobTransition("IMPORTING requires a verified capture receipt")
         if source is JobStatus.IMPORTING and target is JobStatus.DOSSIER_IMPORTED and not context.dossier_validated:

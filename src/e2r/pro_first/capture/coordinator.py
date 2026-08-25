@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import inspect
 import json
 from pathlib import Path
-from typing import Awaitable, Callable
+from typing import Awaitable, Callable, Mapping
 
 from ..browser.protocol import BrowserCaptureRequest, ChatGPTWebAdapter
 from ..job_store import ProFirstJobStore
@@ -63,6 +63,7 @@ class ProCaptureCoordinator:
         job_root: str | Path,
         adapter: ChatGPTWebAdapter,
         capture_mode: str = "LIVE_BROWSER",
+        dossier_override: Mapping[str, object] | None = None,
     ) -> tuple[ProResearchJob, AtomicCaptureResult]:
         job = self.store.get_job(job_id)
         if job.status != JobStatus.RESULT_DETECTED.value:
@@ -86,6 +87,9 @@ class ProCaptureCoordinator:
                     expected_filename=expected_filename,
                     expected_report_hash=expected_report_hash,
                     staging_directory=root / "capture/.staging",
+                    allow_readable_report_without_dossier=(
+                        dossier_override is not None
+                    ),
                 )
             )
             result = self.writer.finalize(
@@ -101,6 +105,7 @@ class ProCaptureCoordinator:
                     capture_mode=capture_mode,
                 ),
                 raw_capture=raw,
+                dossier_override=dossier_override,
             )
             completed = self._record_complete(capturing, result)
         except Exception as error:

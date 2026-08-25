@@ -94,17 +94,31 @@ class ProDossierImporter:
         if job.dossier_id and job.status not in {
             JobStatus.CAPTURE_COMPLETE.value,
             JobStatus.IMPORTING.value,
-            JobStatus.USER_ATTENTION_REQUIRED.value,
         }:
             stored = self.store.get_dossier_import_receipt(job_id)
             if stored is None or not normalized_path.is_file() or not import_receipt_path.is_file():
                 raise ValueError("durable dossier import exists without canonical import artifacts")
             file_receipt = json.loads(import_receipt_path.read_text(encoding="utf-8"))
             normalized_payload = json.loads(normalized_path.read_text(encoding="utf-8"))
-            if file_receipt != stored or canonical_hash(normalized_payload) != stored.get(
+            if canonical_hash(normalized_payload) != stored.get(
                 "normalized_dossier_hash"
             ):
                 raise ValueError("canonical import artifacts differ from the durable import ledger")
+            if file_receipt != stored:
+                # A process can fail after replacing the receipt file but before
+                # the idempotent database transition commits.  Reconcile only
+                # the volatile import timestamp; every evidence-bearing field
+                # must still match the durable ledger exactly.
+                stable_file = dict(file_receipt)
+                stable_stored = dict(stored)
+                stable_file.pop("imported_at", None)
+                stable_stored.pop("imported_at", None)
+                if stable_file != stable_stored:
+                    raise ValueError(
+                        "canonical import artifacts differ from the durable import ledger"
+                    )
+                self._write_json_atomic(import_receipt_path, stored)
+                file_receipt = dict(stored)
             return DossierImportResult(
                 job=job,
                 normalized_dossier=normalized_payload,

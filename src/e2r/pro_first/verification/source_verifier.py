@@ -36,7 +36,7 @@ if TYPE_CHECKING:
     from ..preflight import EvidencePreflightResult
 
 
-SOURCE_VERIFICATION_SEMANTICS_VERSION = "e2r_pro_source_verification_v9"
+SOURCE_VERIFICATION_SEMANTICS_VERSION = "e2r_pro_source_verification_v10"
 
 
 TERMINAL_SOURCE_STATUSES = frozenset(
@@ -221,7 +221,11 @@ class ProSourceVerifier:
         )
         selected_scope_contracts = self._selected_scope_contracts(job)
         scope_mapping = None
-        if self.mechanism_scope_mapper is not None:
+        # A structurally valid dossier may intentionally contain no promotable
+        # facts.  That is an efficiency-gate failure, not a mapper input error.
+        # Preserve a zero-count verification receipt so the run can be sealed
+        # diagnostic-only without inventing evidence or calling a provider.
+        if self.mechanism_scope_mapper is not None and facts:
             scope_mapping = self._load_durable_mechanism_scope_mapping(
                 root=root,
                 facts=facts,

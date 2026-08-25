@@ -242,6 +242,70 @@ class ProFirstDossierImportTest(unittest.IsolatedAsyncioTestCase):
         ]
         self.assertEqual(len(matching), 1)
 
+    async def test_post_import_attention_reuses_durable_import_without_transition(self) -> None:
+        await self._capture(self._valid_dossier())
+        importer = ProDossierImporter(self.store, now=lambda: self.now)
+        first = importer.import_job(self.job.job_id, job_root=self.root)
+        verifying = self.store.transition(
+            self.job.job_id,
+            expected_version=first.job.state_version,
+            to_status=JobStatus.VERIFYING_SOURCES,
+            actor="test-source-verifier",
+            idempotency_key="test-post-import-verifying",
+        )
+        attention = self.store.transition(
+            self.job.job_id,
+            expected_version=verifying.state_version,
+            to_status=JobStatus.USER_ATTENTION_REQUIRED,
+            actor="test-source-verifier",
+            idempotency_key="test-post-import-attention",
+        )
+
+        resumed = importer.import_job(self.job.job_id, job_root=self.root)
+
+        self.assertEqual(resumed.job.state_version, attention.state_version)
+        self.assertEqual(resumed.job.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(resumed.job.dossier_id, first.job.dossier_id)
+        self.assertEqual(resumed.import_receipt, first.import_receipt)
+        imported_events = [
+            event
+            for event in self.store.list_events(self.job.job_id)
+            if event.to_status == JobStatus.DOSSIER_IMPORTED.value
+        ]
+        self.assertEqual(len(imported_events), 1)
+
+    async def test_post_import_attention_repairs_timestamp_only_receipt_drift(self) -> None:
+        await self._capture(self._valid_dossier())
+        importer = ProDossierImporter(self.store, now=lambda: self.now)
+        first = importer.import_job(self.job.job_id, job_root=self.root)
+        receipt_path = self.root / "import/dossier_import_receipt.json"
+        drifted = json.loads(receipt_path.read_text(encoding="utf-8"))
+        drifted["imported_at"] = "2026-08-22T04:05:06Z"
+        receipt_path.write_text(
+            json.dumps(drifted, ensure_ascii=False, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        verifying = self.store.transition(
+            self.job.job_id,
+            expected_version=first.job.state_version,
+            to_status=JobStatus.VERIFYING_SOURCES,
+            actor="test-source-verifier",
+            idempotency_key="test-timestamp-drift-verifying",
+        )
+        self.store.transition(
+            self.job.job_id,
+            expected_version=verifying.state_version,
+            to_status=JobStatus.USER_ATTENTION_REQUIRED,
+            actor="test-source-verifier",
+            idempotency_key="test-timestamp-drift-attention",
+        )
+
+        resumed = importer.import_job(self.job.job_id, job_root=self.root)
+
+        repaired = json.loads(receipt_path.read_text(encoding="utf-8"))
+        self.assertEqual(repaired, first.import_receipt)
+        self.assertEqual(resumed.import_receipt, first.import_receipt)
+
     async def test_target_mismatch_rejected(self) -> None:
         dossier = self._valid_dossier()
         dossier["target"]["target_id"] = "999999"

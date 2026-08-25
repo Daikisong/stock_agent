@@ -293,7 +293,11 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
                 staging_directory=root / "capture/.staging",
             )
         )
-        self.assertEqual(raw.source, "DIRECT_REPORT_DOM")
+        self.assertEqual(raw.source, "DIRECT_REPORT_DOM_NORMALIZED")
+        self.assertIn(
+            "APPEND_VISIBLE_CITATION_HREF_REGISTRY",
+            raw.transport_normalization_operations,
+        )
         self.assertIn(
             "E2R_RESEARCH_DOSSIER_JSON_BEGIN",
             raw.report_md_part_path.read_text(encoding="utf-8"),
@@ -315,6 +319,7 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
                 "RESTORE_SINGLE_DELETED_DOSSIER_END_SENTINEL:"
                 "E2R_RESEARCH_DOSSIER_SON_END->"
                 "E2R_RESEARCH_DOSSIER_JSON_END",
+                "APPEND_VISIBLE_CITATION_HREF_REGISTRY",
             ),
         )
         root = Path(self.temporary_directory.name) / "normalized-direct"

@@ -55,6 +55,9 @@ class ProFirstV21InitialPromptV3Test(unittest.TestCase):
             prompt = path.read_text(encoding="utf-8")
             for marker in ATOMIC_EVIDENCE_REQUIREMENT_MARKERS:
                 self.assertIn(marker, prompt, f"{path.name}: {marker}")
+            self.assertIn("ResearchDossierV3 JSON 직렬화는 생략할 수 없다", prompt)
+            self.assertIn("해당 fact만 제거해 unresolved_gaps", prompt)
+            self.assertIn("경계가 정확히 한 쌍", prompt)
 
     def test_all_preflight_fields_and_derived_separation_are_explicit(self) -> None:
         fields = (*VERIFIER_PREFLIGHT_TRUE_FIELDS, *VERIFIER_PREFLIGHT_FALSE_FIELDS)
