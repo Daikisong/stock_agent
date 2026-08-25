@@ -1212,3 +1212,24 @@ compileall / diff check                         PASS / PASS
 `p8_c17_fresh_initial_failure_receipt_r3.json`에 기록했다. 다음 C17은 이 수정 commit을 packet에 결박한
 새 runtime/session/job/run/pass/conversation에서 다시 시작한다. 세 번째 conversation에는 추가 질문을
 보내지 않는다.
+
+### C17 네 번째 fresh initial — 실행 중
+
+전 후보 일괄 withholding 방지 수정 commit과 독립 CI green을 확인한 뒤, 세 번째 C17 job을 predecessor로
+봉인하고 네 번째 actual Pro 조사를 새 conversation에 정확히 한 번 전송했다.
+
+```text
+runtime          C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260825T223036Z
+fresh session    FRESH-V2-1-C17-R4-20260825T223036Z
+fresh job        PROJOB-2ceb6e7eccad3ab6e4a8446b
+fresh run        PRORUN-609870c1cb8f7e5c4de98c97
+initial pass     PROPASS-db2ed0ab0d2b0d93bb84b5ee
+commit binding   14d0c7f24f082b19d99f2e5df508965fa3c4fdcf
+submit/capture   1 / 0 (실행 중)
+automatic resend 0
+```
+
+2026-08-26 07:54 KST durable DB와 browser page를 read-only로 다시 확인했다. job은
+`RESEARCH_RUNNING`, 제출은 1회, 캡처는 0회이고 ChatGPT의 새 conversation URL이 생성돼 있다. 아직
+다운로드할 최종 JSON/MD attachment가 생성되지 않았으므로 캡처를 억지로 시도하지 않고 같은 submitted
+job을 감시한다. 완료 뒤 이 임시 상태를 canonical conversation, report hash, Gate 결과로 갱신한다.
