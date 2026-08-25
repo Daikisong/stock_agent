@@ -22,6 +22,10 @@ class FreshSessionRerunRequired(FreshSessionBoundaryError):
     """The current fresh conversation is diagnostic-only; start another one."""
 
 
+FROZEN_PREDECESSOR_BOUNDARY = "FROZEN_PREDECESSOR"
+INDEPENDENT_CANARY_BOUNDARY = "INDEPENDENT_CROSS_ARCHETYPE_CANARY"
+
+
 @dataclass(frozen=True)
 class OldAnswerLeakageManifest:
     """Exact old-run values that may never become fresh research answers.
@@ -138,6 +142,7 @@ class FreshSessionBoundary:
     fresh_runtime_root: Path
     leakage_manifest: OldAnswerLeakageManifest
     boundary_receipt_path: Path
+    predecessor_required: bool = True
 
     @property
     def fresh_job_root(self) -> Path:
@@ -262,6 +267,8 @@ class FreshSessionBoundaryService:
         receipt = {
             "schema_version": "e2r_pro_fresh_session_boundary_receipt_v1",
             "status": "FRESH_SESSION_BOUNDARY_ESTABLISHED",
+            "boundary_mode": FROZEN_PREDECESSOR_BOUNDARY,
+            "predecessor_required": True,
             "fresh_session_id": fresh_session_id,
             "old_job_id": old_job_id,
             "old_run_id": old_run_id,
@@ -289,8 +296,161 @@ class FreshSessionBoundaryService:
             fresh_runtime_root=fresh_root,
             leakage_manifest=manifest,
             boundary_receipt_path=boundary_path,
+            predecessor_required=True,
         )
         return boundary, fresh
+
+    def start_independent(
+        self,
+        *,
+        symbol: str,
+        company_name: str,
+        as_of_date: str,
+        fresh_session_id: str,
+        reference_runtime_root: str | Path,
+        fresh_runtime_root: str | Path,
+        archetype_ids: Sequence[str],
+        leakage_manifest: OldAnswerLeakageManifest | None = None,
+    ) -> tuple[FreshSessionBoundary, ProResearchJob]:
+        """Start a cross-archetype canary with no fabricated predecessor run.
+
+        C06 has a real repair-heavy predecessor whose answers must be denied.
+        C17/C28 do not.  This path creates the fresh job directly and uses a
+        deterministic empty-answer manifest, rather than manufacturing a fake
+        frozen job or borrowing C06's target identity.
+        """
+
+        target = {
+            "fresh_session_id": fresh_session_id.strip(),
+            "symbol": symbol.strip(),
+            "company_name": company_name.strip(),
+            "as_of_date": as_of_date.strip(),
+        }
+        if any(not value for value in target.values()):
+            raise ValueError("independent fresh canary target fields are required")
+        primary_ids = tuple(
+            dict.fromkeys(str(value).strip() for value in archetype_ids)
+        )
+        if not 1 <= len(primary_ids) <= 3 or any(not value for value in primary_ids):
+            raise ValueError("fresh canary requires one to three primary contracts")
+
+        manifest = leakage_manifest or build_independent_leakage_manifest(
+            fresh_session_id=target["fresh_session_id"],
+            symbol=target["symbol"],
+            as_of_date=target["as_of_date"],
+        )
+        expected_manifest = build_independent_leakage_manifest(
+            fresh_session_id=target["fresh_session_id"],
+            symbol=target["symbol"],
+            as_of_date=target["as_of_date"],
+        )
+        if manifest != expected_manifest:
+            raise FreshSessionBoundaryError(
+                "independent canary leakage manifest differs from its target identity"
+            )
+
+        reference_root = Path(reference_runtime_root).expanduser().resolve()
+        fresh_root = Path(fresh_runtime_root).expanduser().resolve()
+        _assert_disjoint_runtime_roots(reference_root, fresh_root)
+        boundary_path = fresh_root / "fresh_session_boundary_receipt.json"
+        _prepare_new_runtime_root(
+            fresh_root,
+            boundary_path=boundary_path,
+            fresh_session_id=target["fresh_session_id"],
+            old_job_id=manifest.old_job_id,
+        )
+
+        trigger = canonical_hash(
+            {
+                "selection_mode": ResearchMode.FORCED_VALIDATION_CANARY.value,
+                "boundary_mode": INDEPENDENT_CANARY_BOUNDARY,
+                "symbol": target["symbol"],
+                "as_of_date": target["as_of_date"],
+                "fresh_session_id": target["fresh_session_id"],
+                "packet_contract": "e2r_pro_research_packet_v3",
+            }
+        )
+        candidate = self.store.create_candidate(
+            symbol=target["symbol"],
+            company_name=target["company_name"],
+            as_of_date=target["as_of_date"],
+            scan_window=ScanWindow.MORNING,
+            trigger_fingerprint=trigger,
+            research_mode=ResearchMode.FORCED_VALIDATION_CANARY,
+            selection_receipt={
+                "schema_version": "e2r_pro_independent_fresh_canary_selection_v1",
+                "selection_mode": "INDEPENDENT_FRESH_BLIND_FORCED_VALIDATION_CANARY",
+                "boundary_mode": INDEPENDENT_CANARY_BOUNDARY,
+                "fresh_session_id": target["fresh_session_id"],
+                "production_candidate": False,
+                "test_injected": False,
+                "predecessor_required": False,
+                "final_score_visible_at_selection": False,
+                "final_stage_visible_at_selection": False,
+                "trigger_ids": [
+                    stable_id(
+                        "FRESHTRIGGER",
+                        {
+                            "fresh_session_id": target["fresh_session_id"],
+                            "symbol": target["symbol"],
+                            "as_of_date": target["as_of_date"],
+                        },
+                    )
+                ],
+                "reason_codes": [
+                    "EXPLICIT_USER_AUTHORIZED_CROSS_ARCHETYPE_FRESH_BLIND_VALIDATION"
+                ],
+                "old_answer_inputs_allowed": False,
+            },
+        )
+        fresh = self.store.create_job(
+            candidate.candidate_id,
+            archetype_ids=primary_ids,
+            actor="v2.1-independent-fresh-session-boundary",
+        )
+        receipt = {
+            "schema_version": "e2r_pro_fresh_session_boundary_receipt_v1",
+            "status": "FRESH_SESSION_BOUNDARY_ESTABLISHED",
+            "boundary_mode": INDEPENDENT_CANARY_BOUNDARY,
+            "predecessor_required": False,
+            "fresh_session_id": target["fresh_session_id"],
+            "old_job_id": manifest.old_job_id,
+            "old_run_id": manifest.old_run_id,
+            "old_conversation_id": manifest.old_conversation_id,
+            "fresh_job_id": fresh.job_id,
+            "old_runtime_root": str(reference_root),
+            "fresh_runtime_root": str(fresh_root),
+            "target": {
+                "symbol": fresh.symbol,
+                "company_name": fresh.company_name,
+                "as_of_date": fresh.as_of_date,
+                "archetype_ids": list(fresh.archetype_ids),
+            },
+            "new_runtime_root": reference_root != fresh_root,
+            "new_job_id": True,
+            "old_job_frozen": None,
+            "old_conversation_followup_allowed": False,
+            "fresh_packet_old_answer_allowed": False,
+            "score_authority": False,
+            "stage_authority": False,
+        }
+        receipt = {**receipt, "receipt_hash": canonical_hash(receipt)}
+        _write_json_once(boundary_path, receipt)
+        return (
+            FreshSessionBoundary(
+                fresh_session_id=target["fresh_session_id"],
+                old_job_id=manifest.old_job_id,
+                old_run_id=manifest.old_run_id,
+                old_conversation_id=manifest.old_conversation_id,
+                fresh_job_id=fresh.job_id,
+                old_runtime_root=reference_root,
+                fresh_runtime_root=fresh_root,
+                leakage_manifest=manifest,
+                boundary_receipt_path=boundary_path,
+                predecessor_required=False,
+            ),
+            fresh,
+        )
 
     def load_existing(
         self,
@@ -318,17 +478,35 @@ class FreshSessionBoundaryService:
                 raise FreshSessionBoundaryError(
                     "fresh boundary differs from the old-answer leakage manifest"
                 )
+        boundary_mode = str(
+            receipt.get("boundary_mode") or FROZEN_PREDECESSOR_BOUNDARY
+        )
+        predecessor_required = boundary_mode != INDEPENDENT_CANARY_BOUNDARY
         fresh_job_id = str(receipt.get("fresh_job_id") or "")
         fresh = self.store.get_job(fresh_job_id)
-        old = self.store.get_job(leakage_manifest.old_job_id)
-        if (
-            old.superseded_by_fresh_job_id != fresh_job_id
-            or fresh.job_id == old.job_id
-            or fresh.old_job_frozen_at is not None
-        ):
-            raise FreshSessionBoundaryError(
-                "durable old/fresh successor binding is not recoverable"
-            )
+        if predecessor_required:
+            old = self.store.get_job(leakage_manifest.old_job_id)
+            if (
+                old.superseded_by_fresh_job_id != fresh_job_id
+                or fresh.job_id == old.job_id
+                or fresh.old_job_frozen_at is not None
+            ):
+                raise FreshSessionBoundaryError(
+                    "durable old/fresh successor binding is not recoverable"
+                )
+        else:
+            target = receipt.get("target") or {}
+            if (
+                receipt.get("predecessor_required") is not False
+                or fresh.old_job_frozen_at is not None
+                or target.get("symbol") != fresh.symbol
+                or target.get("company_name") != fresh.company_name
+                or target.get("as_of_date") != fresh.as_of_date
+                or tuple(target.get("archetype_ids") or ()) != fresh.archetype_ids
+            ):
+                raise FreshSessionBoundaryError(
+                    "independent fresh boundary target/state is not recoverable"
+                )
         old_root = Path(str(receipt.get("old_runtime_root") or "")).resolve()
         _assert_disjoint_runtime_roots(old_root, fresh_root)
         return (
@@ -342,9 +520,32 @@ class FreshSessionBoundaryService:
                 fresh_runtime_root=fresh_root,
                 leakage_manifest=leakage_manifest,
                 boundary_receipt_path=boundary_path,
+                predecessor_required=predecessor_required,
             ),
             fresh,
         )
+
+
+def build_independent_leakage_manifest(
+    *,
+    fresh_session_id: str,
+    symbol: str,
+    as_of_date: str,
+) -> OldAnswerLeakageManifest:
+    """Return deterministic deny sentinels for a canary with no predecessor."""
+
+    identity = {
+        "fresh_session_id": fresh_session_id.strip(),
+        "symbol": symbol.strip(),
+        "as_of_date": as_of_date.strip(),
+    }
+    if any(not value for value in identity.values()):
+        raise ValueError("independent leakage manifest identity is incomplete")
+    return OldAnswerLeakageManifest(
+        old_job_id=stable_id("NOPREDECESSORJOB", identity),
+        old_run_id=stable_id("NOPREDECESSORRUN", identity),
+        old_conversation_id=stable_id("NOPREDECESSORCONVERSATION", identity),
+    )
 
 
 def audit_fresh_blind_payload(
@@ -590,6 +791,8 @@ def _write_json_once(path: Path, payload: Mapping[str, Any]) -> None:
 
 
 __all__ = [
+    "FROZEN_PREDECESSOR_BOUNDARY",
+    "INDEPENDENT_CANARY_BOUNDARY",
     "FreshBlindLeakageAudit",
     "FreshSessionBoundary",
     "FreshSessionBoundaryError",
@@ -598,5 +801,6 @@ __all__ = [
     "OldAnswerLeakageManifest",
     "assert_fresh_prompt_has_no_old_answers",
     "audit_fresh_blind_payload",
+    "build_independent_leakage_manifest",
     "write_runtime_json_once",
 ]

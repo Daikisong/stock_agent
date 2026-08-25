@@ -16,6 +16,7 @@ from e2r.pro_first.fresh_session import (
     FRESH_LIVE_AUTHORIZATION_PHRASE,
     FreshInitialCanarySpec,
     FreshV3InitialLiveCanaryRunner,
+    IndependentFreshInitialCanarySpec,
 )
 from e2r.pro_first.ids import canonical_json
 
@@ -37,15 +38,24 @@ async def _run(args: argparse.Namespace) -> Mapping[str, Any]:
         max_completion_polls=args.max_completion_polls,
         state_database_path=args.state_database_path,
     )
-    spec = FreshInitialCanarySpec(
-        old_job_id=args.old_job_id,
-        old_run_id=args.old_run_id,
-        old_conversation_id=args.old_conversation_id,
-        fresh_session_id=args.fresh_session_id,
-        archetype_ids=tuple(args.archetype),
-        old_score_values=tuple(args.old_score),
-        old_stage_values=tuple(args.old_stage),
-    )
+    if args.symbol:
+        spec = IndependentFreshInitialCanarySpec(
+            fresh_session_id=args.fresh_session_id,
+            symbol=args.symbol,
+            company_name=args.company_name,
+            as_of_date=args.as_of_date,
+            archetype_ids=tuple(args.archetype),
+        )
+    else:
+        spec = FreshInitialCanarySpec(
+            old_job_id=args.old_job_id,
+            old_run_id=args.old_run_id,
+            old_conversation_id=args.old_conversation_id,
+            fresh_session_id=args.fresh_session_id,
+            archetype_ids=tuple(args.archetype),
+            old_score_values=tuple(args.old_score),
+            old_stage_values=tuple(args.old_stage),
+        )
     if args.resume_submitted_job_id:
         return await runner.resume_submitted(
             spec,
@@ -78,9 +88,12 @@ def main(argv: list[str] | None = None) -> int:
             "identities remain in the original durable ledger."
         ),
     )
-    parser.add_argument("--old-job-id", required=True)
-    parser.add_argument("--old-run-id", required=True)
-    parser.add_argument("--old-conversation-id", required=True)
+    parser.add_argument("--old-job-id")
+    parser.add_argument("--old-run-id")
+    parser.add_argument("--old-conversation-id")
+    parser.add_argument("--symbol")
+    parser.add_argument("--company-name")
+    parser.add_argument("--as-of-date")
     parser.add_argument(
         "--fresh-session-id",
         default=(
@@ -114,6 +127,19 @@ def main(argv: list[str] | None = None) -> int:
         help=f"must equal {FRESH_LIVE_AUTHORIZATION_PHRASE}",
     )
     args = parser.parse_args(argv)
+    old_identity = (args.old_job_id, args.old_run_id, args.old_conversation_id)
+    target_identity = (args.symbol, args.company_name, args.as_of_date)
+    old_complete = all(old_identity)
+    target_complete = all(target_identity)
+    if old_complete == target_complete or (
+        any(old_identity) and not old_complete
+    ) or (any(target_identity) and not target_complete):
+        parser.error(
+            "provide exactly one complete identity: old job/run/conversation "
+            "or symbol/company-name/as-of-date"
+        )
+    if target_complete and (args.old_score or args.old_stage):
+        parser.error("independent fresh canary cannot receive old score/stage values")
     if args.authorization != FRESH_LIVE_AUTHORIZATION_PHRASE:
         parser.error(
             "actual ChatGPT Chat+Pro submission requires the exact authorization phrase"

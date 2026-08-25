@@ -10,6 +10,7 @@ from .boundary import (
     OldAnswerLeakageManifest,
     assert_fresh_prompt_has_no_old_answers,
     audit_fresh_blind_payload,
+    build_independent_leakage_manifest,
 )
 from .orchestrator_v3 import (
     BuiltFreshV3JobPacket,
@@ -25,6 +26,7 @@ from .live_canary_v3 import (
     FreshInitialCanarySpec,
     FreshInitialEfficiencyGate,
     FreshV3InitialLiveCanaryRunner,
+    IndependentFreshInitialCanarySpec,
     build_old_answer_leakage_manifest,
     evaluate_initial_efficiency,
 )
@@ -48,12 +50,14 @@ __all__ = [
     "FreshSessionOrchestratorV3",
     "FreshSessionRerunRequired",
     "FreshV3InitialLiveCanaryRunner",
+    "IndependentFreshInitialCanarySpec",
     "OldRunFreezeService",
     "OldAnswerLeakageManifest",
     "PreparedFreshV3BrowserRuntime",
     "PreparedFreshV3Initial",
     "assert_fresh_prompt_has_no_old_answers",
     "audit_fresh_blind_payload",
+    "build_independent_leakage_manifest",
     "build_old_answer_leakage_manifest",
     "build_old_run_rejection_taxonomy",
     "evaluate_initial_efficiency",

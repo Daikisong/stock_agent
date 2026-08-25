@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-26 P7 2차 fresh C06 Gate 통과 및 visible JSON 첨부 복구 완료`
+기준 시각: `2026-08-26 P7 CI 봉인 완료 / P8 독립 C17·C28 실행 경계 검증 완료`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_1_fresh_session_verifier_ready_master_goal.md`
@@ -17,7 +17,8 @@ P3 d5d62bc2  최초 Pro 조사에서 verifier-ready 증거를 생성하도록 �
 P4 788e14d2  URL 날짜 인용 alias scope의 기계적 결함을 로컬에서 자동 정규화
 P5 cad578af  전체 dossier 재출력을 제거하고 의미 오류만 compact delta로 수리
 P6 8b0e27bd  기존 대화를 봉인하고 새 Pro 세션의 blind canary 실행 경계를 구현
-P7 이 문서와 함께 2차 fresh C06 Gate 통과 phase commit으로 고정
+P7 fdf4ac40  Pro JSON 첨부를 동일 응답 증거로 봉인하고 C06 Gate를 통과
+P8 실행 전 경계 commit에서 C17/C28 독립 fresh target 생성을 고정
 ```
 
 PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지 않는다.
@@ -33,12 +34,68 @@ P4 local preflight                        COMPLETE
 P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
-P8 C17/C28 fresh canary                   PENDING
+P8 C17/C28 fresh canary                   IN_PROGRESS (실행 경계 PASS, live 전송 대기)
 P9 final CI/audit                         PENDING
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
 `PRO_FIRST_V2_1_OPERATIONAL_RESEARCH_READY`를 선언하지 않는다.
+
+## P7 최종 CI 봉인
+
+`fdf4ac402861db2c12be2eeeafa7c24727e59f3c`를 checkout한 세 GitHub 실행이 모두
+완료됐다.
+
+```text
+push E2R Pro-first verification
+https://github.com/Daikisong/stock_agent/actions/runs/32881804962
+SUCCESS / full regression 7,683 tests / failure·error 0
+
+PR E2R Pro-first verification
+https://github.com/Daikisong/stock_agent/actions/runs/32881810946
+SUCCESS / full regression 7,683 tests / failure·error 0
+
+PR E2R v6 operational cutover verification
+https://github.com/Daikisong/stock_agent/actions/runs/32881811183
+SUCCESS / Gate 1 receipt·production static audit·7,683 tests PASS
+```
+
+따라서 P7은 로컬 영수증만 통과한 상태가 아니라 GitHub의 별도 checkout에서도 전체
+회귀를 통과한 상태로 봉인한다.
+
+## P8 독립 cross-archetype fresh 경계
+
+C17 `011170 롯데케미칼`과 C28 `053800 안랩`에는 C06처럼 실제 old repair-heavy job이
+없다. 기존 `FreshSessionBoundaryService.start()`를 그대로 쓰면 old job의 종목을 상속하므로,
+C06 job을 부모로 넣을 경우 011170을 요청해도 000660 패킷이 만들어지는 잘못된 실행이 된다.
+
+이를 피하려고 다음 경계를 추가했다.
+
+```text
+INDEPENDENT_CROSS_ARCHETYPE_CANARY
+→ symbol/company/as_of/archetype를 새 candidate와 job에 직접 결박
+→ 가짜 frozen old job 생성 0
+→ C06 old answer·score·Stage 입력 0
+→ 새 runtime/job/run/pass/conversation 요구 유지
+→ 기존 대화 화면에는 입력하지 않고 new-chat route로 이동 후 exactly-once submit
+```
+
+쉬운 예로 C17 실행은 “C06 문서를 지운 사본”이 아니다. 처음부터 `011170 / 롯데케미칼 /
+C17`인 빈 fresh job을 만들고, old-answer deny 목록은 비어 있는 상태로 시작한다.
+
+실행 전 검증:
+
+```text
+independent target/boundary regression          PASS
+Linux V2.1 non-browser focused                  72/72 PASS
+Windows Playwright fresh browser+orchestration  21/21 PASS
+Pro-first V2 static audit                       PASS / critical 0
+Pro-first production static audit               PASS / critical 0
+compileall / git diff --check                    PASS
+```
+
+다음 실제 전송 순서는 C17을 별도 새 대화에서 먼저 닫고, 그 결과가 efficiency gate를
+통과한 뒤 C28을 또 다른 새 대화에서 실행하는 것이다. 두 실행 모두 점수·Stage 권한은 없다.
 
 ## P0 — old repair-heavy run 봉인
 

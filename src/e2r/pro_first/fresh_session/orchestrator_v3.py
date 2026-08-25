@@ -443,10 +443,11 @@ class FreshSessionOrchestratorV3:
             raise
         try:
             current_conversation = session.adapter.conversation_id()
-            if current_conversation not in {
-                None,
-                self.boundary.old_conversation_id,
-            }:
+            if (
+                self.boundary.predecessor_required
+                and current_conversation
+                not in {None, self.boundary.old_conversation_id}
+            ):
                 raise FreshSessionBoundaryError(
                     "matched ChatGPT tab is unrelated to the frozen E2R conversation"
                 )

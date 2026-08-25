@@ -36,7 +36,7 @@ from ..config import ProFirstLocalConfig
 from ..dossier import CodexProReportDossierStructurer, ProDossierImporter
 from ..ids import canonical_hash, canonical_json
 from ..job_store import ProFirstJobStore
-from ..models import JobStatus
+from ..models import JobStatus, ProResearchJob
 from ..state_machine import TransitionContext
 from ..multi_pass import ProMultiPassDossierStore, ProMultiPassLedger
 from ..verification import (
@@ -46,8 +46,10 @@ from ..verification import (
     ProSourceVerifier,
 )
 from .boundary import (
+    FreshSessionBoundary,
     FreshSessionBoundaryService,
     OldAnswerLeakageManifest,
+    build_independent_leakage_manifest,
     write_runtime_json_once,
 )
 from .orchestrator_v3 import FreshSessionOrchestratorV3
@@ -82,10 +84,44 @@ class FreshInitialCanarySpec:
         for value, label in required:
             if not str(value).strip():
                 raise ValueError(f"{label} is required")
-        archetypes = tuple(dict.fromkeys(str(value).strip() for value in self.archetype_ids))
+        archetypes = tuple(
+            dict.fromkeys(str(value).strip() for value in self.archetype_ids)
+        )
         if not 1 <= len(archetypes) <= 3 or any(not value for value in archetypes):
             raise ValueError("fresh canary needs one to three archetype ids")
         object.__setattr__(self, "archetype_ids", archetypes)
+
+
+@dataclass(frozen=True)
+class IndependentFreshInitialCanarySpec:
+    """A fresh cross-archetype canary that has no old target run to inherit."""
+
+    fresh_session_id: str
+    symbol: str
+    company_name: str
+    as_of_date: str
+    archetype_ids: tuple[str, ...]
+
+    def __post_init__(self) -> None:
+        for value, label in (
+            (self.fresh_session_id, "fresh_session_id"),
+            (self.symbol, "symbol"),
+            (self.company_name, "company_name"),
+            (self.as_of_date, "as_of_date"),
+        ):
+            normalized = str(value).strip()
+            if not normalized:
+                raise ValueError(f"{label} is required")
+            object.__setattr__(self, label, normalized)
+        archetypes = tuple(
+            dict.fromkeys(str(value).strip() for value in self.archetype_ids)
+        )
+        if not 1 <= len(archetypes) <= 3 or any(not value for value in archetypes):
+            raise ValueError("fresh canary needs one to three archetype ids")
+        object.__setattr__(self, "archetype_ids", archetypes)
+
+
+FreshCanarySpec = FreshInitialCanarySpec | IndependentFreshInitialCanarySpec
 
 
 @dataclass(frozen=True)
@@ -160,32 +196,19 @@ class FreshV3InitialLiveCanaryRunner:
 
     async def run(
         self,
-        spec: FreshInitialCanarySpec,
+        spec: FreshCanarySpec,
         *,
         commit_sha: str,
         resume_prepared_job_id: str | None = None,
     ) -> Mapping[str, Any]:
         started = time.monotonic()
-        manifest = build_old_answer_leakage_manifest(
-            self.store,
-            old_job_id=spec.old_job_id,
-            old_run_id=spec.old_run_id,
-            old_conversation_id=spec.old_conversation_id,
-            old_job_root=self.old_runtime_root / "jobs" / spec.old_job_id,
-            old_score_values=spec.old_score_values,
-            old_stage_values=spec.old_stage_values,
-        )
+        manifest = self._build_leakage_manifest(spec)
         boundary_service = FreshSessionBoundaryService(self.store)
         if resume_prepared_job_id is None:
-            boundary, fresh_job = boundary_service.start(
-                old_job_id=spec.old_job_id,
-                old_run_id=spec.old_run_id,
-                old_conversation_id=spec.old_conversation_id,
-                fresh_session_id=spec.fresh_session_id,
-                old_runtime_root=self.old_runtime_root,
-                fresh_runtime_root=self.fresh_runtime_root,
-                archetype_ids=spec.archetype_ids,
-                leakage_manifest=manifest,
+            boundary, fresh_job = self._start_boundary(
+                boundary_service,
+                spec,
+                manifest=manifest,
             )
         else:
             boundary, fresh_job = boundary_service.load_existing(
@@ -319,7 +342,7 @@ class FreshV3InitialLiveCanaryRunner:
 
     async def resume_submitted(
         self,
-        spec: FreshInitialCanarySpec,
+        spec: FreshCanarySpec,
         *,
         commit_sha: str,
         submitted_job_id: str,
@@ -327,15 +350,7 @@ class FreshV3InitialLiveCanaryRunner:
         """Resume one exact submitted initial request without any DOM send."""
 
         started = time.monotonic()
-        manifest = build_old_answer_leakage_manifest(
-            self.store,
-            old_job_id=spec.old_job_id,
-            old_run_id=spec.old_run_id,
-            old_conversation_id=spec.old_conversation_id,
-            old_job_root=self.old_runtime_root / "jobs" / spec.old_job_id,
-            old_score_values=spec.old_score_values,
-            old_stage_values=spec.old_stage_values,
-        )
+        manifest = self._build_leakage_manifest(spec)
         boundary, fresh_job = FreshSessionBoundaryService(self.store).load_existing(
             fresh_runtime_root=self.fresh_runtime_root,
             leakage_manifest=manifest,
@@ -511,6 +526,55 @@ class FreshV3InitialLiveCanaryRunner:
             initial_research_seconds=_elapsed_since_submission(
                 self.store.get_job(fresh_job.job_id).submitted_at
             ),
+        )
+
+    def _build_leakage_manifest(
+        self,
+        spec: FreshCanarySpec,
+    ) -> OldAnswerLeakageManifest:
+        if isinstance(spec, IndependentFreshInitialCanarySpec):
+            return build_independent_leakage_manifest(
+                fresh_session_id=spec.fresh_session_id,
+                symbol=spec.symbol,
+                as_of_date=spec.as_of_date,
+            )
+        return build_old_answer_leakage_manifest(
+            self.store,
+            old_job_id=spec.old_job_id,
+            old_run_id=spec.old_run_id,
+            old_conversation_id=spec.old_conversation_id,
+            old_job_root=self.old_runtime_root / "jobs" / spec.old_job_id,
+            old_score_values=spec.old_score_values,
+            old_stage_values=spec.old_stage_values,
+        )
+
+    def _start_boundary(
+        self,
+        service: FreshSessionBoundaryService,
+        spec: FreshCanarySpec,
+        *,
+        manifest: OldAnswerLeakageManifest,
+    ) -> tuple[FreshSessionBoundary, ProResearchJob]:
+        if isinstance(spec, IndependentFreshInitialCanarySpec):
+            return service.start_independent(
+                symbol=spec.symbol,
+                company_name=spec.company_name,
+                as_of_date=spec.as_of_date,
+                fresh_session_id=spec.fresh_session_id,
+                reference_runtime_root=self.old_runtime_root,
+                fresh_runtime_root=self.fresh_runtime_root,
+                archetype_ids=spec.archetype_ids,
+                leakage_manifest=manifest,
+            )
+        return service.start(
+            old_job_id=spec.old_job_id,
+            old_run_id=spec.old_run_id,
+            old_conversation_id=spec.old_conversation_id,
+            fresh_session_id=spec.fresh_session_id,
+            old_runtime_root=self.old_runtime_root,
+            fresh_runtime_root=self.fresh_runtime_root,
+            archetype_ids=spec.archetype_ids,
+            leakage_manifest=manifest,
         )
 
     async def _reverify_user_attention_result(
@@ -745,7 +809,9 @@ class FreshV3InitialLiveCanaryRunner:
         return {
             "schema_version": "e2r_pro_fresh_initial_live_run_result_v1",
             "status": (
-                "PRO_FIRST_V2_1_C06_INITIAL_EFFICIENCY_PASS"
+                _initial_efficiency_pass_status(
+                    self.store.get_job(fresh_job_id).archetype_ids
+                )
                 if gate.passed
                 else "OPERATIONAL_EFFICIENCY_GATE_FAILED"
             ),
@@ -1181,9 +1247,18 @@ def _elapsed_since_submission(submitted_at: str | None) -> float:
     )
 
 
+def _initial_efficiency_pass_status(archetype_ids: Sequence[str]) -> str:
+    if len(archetype_ids) == 1:
+        prefix = str(archetype_ids[0]).split("_", 1)[0]
+        if prefix.startswith("C") and prefix[1:].isdigit():
+            return f"PRO_FIRST_V2_1_{prefix}_INITIAL_EFFICIENCY_PASS"
+    return "PRO_FIRST_V2_1_MULTI_ARCHETYPE_INITIAL_EFFICIENCY_PASS"
+
+
 __all__ = [
     "FRESH_LIVE_AUTHORIZATION_PHRASE",
     "FreshInitialCanarySpec",
+    "IndependentFreshInitialCanarySpec",
     "FreshDetectedInitialResult",
     "FreshInitialEfficiencyGate",
     "FreshV3InitialLiveCanaryRunner",

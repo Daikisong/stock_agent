@@ -179,6 +179,50 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             self.fresh_job.job_id,
         )
 
+    def test_independent_cross_archetype_boundary_uses_exact_target_without_fake_old_job(
+        self,
+    ) -> None:
+        service = FreshSessionBoundaryService(self.store)
+        boundary, job = service.start_independent(
+            symbol="011170",
+            company_name="롯데케미칼",
+            as_of_date="2026-08-23",
+            fresh_session_id="FRESH-SESSION-C17-INDEPENDENT",
+            reference_runtime_root=self.root / "ledger-runtime",
+            fresh_runtime_root=self.root / "fresh-runtime-c17",
+            archetype_ids=("C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",),
+        )
+        self.assertFalse(boundary.predecessor_required)
+        self.assertEqual(job.symbol, "011170")
+        self.assertEqual(job.company_name, "롯데케미칼")
+        self.assertEqual(job.as_of_date, "2026-08-23")
+        self.assertEqual(
+            job.archetype_ids,
+            ("C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",),
+        )
+        self.assertNotIn(
+            boundary.old_job_id,
+            {row.job_id for row in self.store.list_jobs(limit=100)},
+        )
+
+        built = FreshSessionOrchestratorV3(self.store, boundary).build_initial_packet(
+            commit_sha="c" * 40,
+            config_hash="d" * 64,
+        )
+        self.assertEqual(built.packet_payload["target"]["symbol"], "011170")
+        self.assertEqual(
+            built.packet_payload["candidate_archetypes"],
+            ["C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"],
+        )
+        self.assertTrue(built.packet_leakage_audit.passed)
+
+        loaded, loaded_job = service.load_existing(
+            fresh_runtime_root=boundary.fresh_runtime_root,
+            leakage_manifest=boundary.leakage_manifest,
+        )
+        self.assertFalse(loaded.predecessor_required)
+        self.assertEqual(loaded_job.job_id, job.job_id)
+
     def test_fresh_packet_has_no_old_fact_answer_score_or_stage(self) -> None:
         packet = self.built.packet_payload
         serialized = str(packet)
