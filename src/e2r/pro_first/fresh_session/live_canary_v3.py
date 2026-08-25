@@ -111,6 +111,7 @@ class FreshV3InitialLiveCanaryRunner:
         repo_root: str | Path,
         progress: ProgressHandler | None = None,
         max_completion_polls: int = 1_440,
+        state_database_path: str | Path | None = None,
         store: ProFirstJobStore | None = None,
         source_verifier: ProSourceVerifier | None = None,
         report_structurer: CodexProReportDossierStructurer | None = None,
@@ -123,9 +124,16 @@ class FreshV3InitialLiveCanaryRunner:
         self.repo_root = Path(repo_root).expanduser().resolve()
         self.progress = progress or (lambda _payload: None)
         self.max_completion_polls = max_completion_polls
-        self.store = store or ProFirstJobStore(
-            self.old_runtime_root / "pro_first.sqlite3"
+        if store is not None and state_database_path is not None:
+            raise ValueError("pass either store or state_database_path, not both")
+        self.state_database_path = (
+            Path(state_database_path).expanduser().resolve()
+            if state_database_path is not None
+            else self.old_runtime_root / "pro_first.sqlite3"
         )
+        self.store = store or ProFirstJobStore(self.state_database_path)
+        if store is not None:
+            self.state_database_path = store.database_path.expanduser().resolve()
         self.source_verifier = source_verifier or ProSourceVerifier(
             page_fetcher=PageFetcher(
                 live_enabled=True,

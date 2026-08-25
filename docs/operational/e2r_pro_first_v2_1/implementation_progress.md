@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-25 P7 fresh initial live 실행 중`
+기준 시각: `2026-08-25 P7 1차 fresh 실패 봉인 후 successor 재실행 준비`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_1_fresh_session_verifier_ready_master_goal.md`
@@ -684,3 +684,29 @@ WSL 전체 Pro-first discovery에서는 463개 중 browser-dependent 60개가 �
 시작하지 못했고 나머지 403개는 통과했다. 이는 코드 assertion 실패가 아니라 WSL Chromium 실행환경
 문제다. 변경으로 영향을 받은 browser assertion 3개는 Playwright가 설치된 Windows Python에서 다시
 실행해 모두 통과했다.
+
+GitHub의 최신 보존 head `05cb9726cfa3f451cf3df8c5be1d097b5c205552`에서도 독립 Linux CI를
+확인했다.
+
+```text
+E2R Pro-first verification (push)         SUCCESS  run 32793935843
+E2R Pro-first verification (PR)           SUCCESS  run 32793940414
+E2R v6 operational cutover verification   SUCCESS  run 32793940623
+core-unit / browser-mock / full-regression / static-security   모두 SUCCESS
+PR #7                                      Draft / OPEN / MERGEABLE
+local HEAD == origin branch                true
+```
+
+1차 fresh job은 원래 live runtime의 중앙 SQLite 장부에 기록되지만, 그 job의 report와 receipt는
+1차 fresh runtime에 있다. 따라서 2차 successor는 서로 다른 두 위치를 함께 써야 한다.
+
+```text
+predecessor artifact root  = 1차 fresh runtime
+durable state database     = 원래 live runtime/pro_first.sqlite3
+successor artifact root    = 완전히 새로운 2차 fresh runtime
+```
+
+이를 위해 live runner/CLI에 optional `state_database_path` 경계를 추가했다. 기본값은 기존과 같아
+호환성을 유지하고, successor일 때만 중앙 장부를 명시한다. 쉬운 예로 이전 시험 답안지는 1차 서랍에서
+읽되, 수험번호 장부는 계속 중앙 금고에서 읽고, 새 답안은 2차 빈 서랍에 쓰는 구조다. 세 위치를
+섞거나 복사하지 않는다. 분리 경로 회귀를 포함한 orchestration test는 `18/18 PASS`다.

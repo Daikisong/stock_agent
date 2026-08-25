@@ -35,6 +35,7 @@ async def _run(args: argparse.Namespace) -> Mapping[str, Any]:
         repo_root=args.repo_root,
         progress=_progress,
         max_completion_polls=args.max_completion_polls,
+        state_database_path=args.state_database_path,
     )
     spec = FreshInitialCanarySpec(
         old_job_id=args.old_job_id,
@@ -68,6 +69,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--old-runtime-root", required=True)
     parser.add_argument("--fresh-runtime-root", required=True)
+    parser.add_argument(
+        "--state-database-path",
+        help=(
+            "central durable pro_first.sqlite3 path; defaults to "
+            "OLD_RUNTIME_ROOT/pro_first.sqlite3. Use this when the immediate "
+            "predecessor artifacts live in a newer runtime root while all job "
+            "identities remain in the original durable ledger."
+        ),
+    )
     parser.add_argument("--old-job-id", required=True)
     parser.add_argument("--old-run-id", required=True)
     parser.add_argument("--old-conversation-id", required=True)

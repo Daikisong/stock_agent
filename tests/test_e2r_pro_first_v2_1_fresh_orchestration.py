@@ -292,6 +292,28 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(_requires_browser_result_recovery(pre_capture))
         self.assertFalse(_requires_browser_result_recovery(post_capture))
 
+    def test_successor_can_use_predecessor_artifacts_and_central_ledger_separately(self) -> None:
+        central_database = self.root / "central-ledger" / "pro_first.sqlite3"
+        runner = FreshV3InitialLiveCanaryRunner(
+            replace(
+                load_pro_first_local_config(
+                    Path(__file__).parents[1]
+                    / "configs/e2r_pro_first_local.example.yaml"
+                ),
+                runtime_root=self.root / "successor-runtime",
+            ),
+            old_runtime_root=self.boundary.fresh_runtime_root,
+            fresh_runtime_root=self.root / "successor-runtime",
+            repo_root=self.root,
+            state_database_path=central_database,
+            source_verifier=object(),
+            report_structurer=object(),
+        )
+
+        self.assertEqual(runner.old_runtime_root, self.boundary.fresh_runtime_root)
+        self.assertEqual(runner.state_database_path, central_database.resolve())
+        self.assertEqual(runner.store.database_path.resolve(), central_database.resolve())
+
     async def test_completed_markers_rebind_transient_conversation_without_submit(self) -> None:
         adapter = await self._prepare_and_approve("WEB:temporary-conversation")
         await self.orchestrator.submit_initial_once(adapter)
