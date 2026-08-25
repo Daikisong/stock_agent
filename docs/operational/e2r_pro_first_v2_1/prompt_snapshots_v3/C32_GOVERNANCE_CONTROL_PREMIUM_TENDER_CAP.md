@@ -49,6 +49,9 @@
 14. 동일 lineage의 재인용을 독립 source로 세지 않는다.
 15. final output 전 각 fact의 verifier_preflight 9개 true 항목과 derived 혼합 금지 항목을 스스로 검사한다.
 16. verifier_preflight에서 하나라도 요구값과 다르면 accepted material fact로 제출하지 않는다.
+17. fact의 issuer_scoped는 연결된 source document target_scope.issuer_scoped와 같아야 한다. issuer 자체 원문이 아닌 regulator/customer/partner/peer 자료라면 둘 다 false로 두며, 사실이 target을 언급한다는 이유만으로 true로 올리지 않는다.
+18. question_family_results의 support_fact_ids는 material_facts만, counter_fact_ids는 counterfacts만, resolution_fact_ids는 resolution_facts만 참조한다. 한 fact가 질문 맥락에서 다른 극성으로도 읽힐 수 있으면 잘못된 종류의 칸에 중복 참조하지 말고 closure_reason에 그 경계를 설명한다.
+19. question_family_results가 fact ID를 참조하면 그 fact의 question_family_ids에도 해당 question ID가 있어야 한다. 양쪽 연결을 확신할 수 없으면 question 쪽 참조를 생략하되 fact 자체와 closure_reason은 보존한다.
 
 [Question closure]
 

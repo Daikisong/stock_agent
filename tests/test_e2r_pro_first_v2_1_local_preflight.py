@@ -144,6 +144,114 @@ class ProFirstV21LocalPreflightTest(unittest.TestCase):
         )
         self.assertNotIn("source_lineage_aliases", normalized.payload)
 
+    def test_fact_scope_is_only_downgraded_to_bound_nonissuer_source(self) -> None:
+        dossier = self._dossier()
+        dossier["source_documents"][0]["target_scope"]["issuer_scoped"] = False
+        self.assertIs(dossier["material_facts"][0]["issuer_scoped"], True)
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+
+        self.assertIs(
+            normalized.payload["source_documents"][0]["target_scope"][
+                "issuer_scoped"
+            ],
+            False,
+        )
+        self.assertIs(
+            normalized.payload["material_facts"][0]["issuer_scoped"],
+            False,
+        )
+        self.assertIn(
+            "DOWNGRADE_FACT_TO_NONISSUER_SOURCE_SCOPE",
+            {row.operation_code for row in normalized.operations},
+        )
+
+        stronger_source = self._dossier()
+        stronger_source["material_facts"][0]["issuer_scoped"] = False
+        unchanged = PreSchemaV3Normalizer().normalize(
+            stronger_source,
+            archetype_ids=self.job.archetype_ids,
+        )
+        self.assertIs(
+            unchanged.payload["material_facts"][0]["issuer_scoped"],
+            False,
+        )
+        self.assertNotIn(
+            "DOWNGRADE_FACT_TO_NONISSUER_SOURCE_SCOPE",
+            {row.operation_code for row in unchanged.operations},
+        )
+
+    def test_wrong_kind_question_reference_is_dropped_without_promotion(self) -> None:
+        dossier = self._dossier()
+        counterfact = deepcopy(dossier["material_facts"][0])
+        counterfact.update(
+            {
+                "dossier_fact_id": "FACT-COUNTER",
+                "fact_kind": "COUNTER",
+                "direction": "NEGATIVE",
+            }
+        )
+        dossier["counterfacts"] = [counterfact]
+        dossier["question_family_results"] = [
+            {
+                "question_family_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q01",
+                "support_fact_ids": [],
+                "counter_fact_ids": [
+                    "FACT-ONE",
+                    "FACT-COUNTER",
+                    "FACT-UNKNOWN",
+                ],
+                "resolution_fact_ids": [],
+            }
+        ]
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+
+        question = normalized.payload["question_family_results"][0]
+        self.assertEqual(question["support_fact_ids"], [])
+        self.assertEqual(
+            question["counter_fact_ids"],
+            ["FACT-COUNTER", "FACT-UNKNOWN"],
+        )
+        self.assertIn(
+            "DROP_WRONG_KIND_QUESTION_FACT_REFERENCE",
+            {row.operation_code for row in normalized.operations},
+        )
+
+    def test_question_reference_without_fact_backlink_is_dropped_conservatively(self) -> None:
+        dossier = self._dossier()
+        dossier["material_facts"][0]["question_family_ids"] = []
+        dossier["question_family_results"] = [
+            {
+                "question_family_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q01",
+                "support_fact_ids": ["FACT-ONE", "FACT-UNKNOWN"],
+                "counter_fact_ids": [],
+                "resolution_fact_ids": [],
+            }
+        ]
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+
+        question = normalized.payload["question_family_results"][0]
+        self.assertEqual(question["support_fact_ids"], ["FACT-UNKNOWN"])
+        self.assertEqual(
+            normalized.payload["material_facts"][0]["question_family_ids"],
+            [],
+        )
+        self.assertIn(
+            "DROP_UNBOUND_QUESTION_FACT_REFERENCE",
+            {row.operation_code for row in normalized.operations},
+        )
+
     def test_initial_transport_none_and_conversation_aliases_are_local(self) -> None:
         dossier = self._dossier()
         dossier["conversation_id"] = "PENDING_NEW_CONVERSATION"

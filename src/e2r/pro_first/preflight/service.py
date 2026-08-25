@@ -257,6 +257,27 @@ class PreSchemaV3Normalizer:
                     str(fact.get("source_document_id") or "")
                 )
                 if source_document is not None:
+                    document_scope = source_document.get("target_scope") or {}
+                    if (
+                        fact.get("issuer_scoped") is True
+                        and isinstance(document_scope, Mapping)
+                        and document_scope.get("issuer_scoped") is False
+                    ):
+                        fact["issuer_scoped"] = False
+                        operations.append(
+                            _operation(
+                                "DOWNGRADE_FACT_TO_NONISSUER_SOURCE_SCOPE",
+                                "ATOMIC_FACT",
+                                fact_id,
+                                field_name="issuer_scoped",
+                                before=True,
+                                after=False,
+                                detail=(
+                                    "fact cannot claim stronger issuer scope than "
+                                    "its bound source document"
+                                ),
+                            )
+                        )
                     mapping = self.scope_mapper.map_fact(
                         fact=fact,
                         source_document=source_document,
@@ -289,6 +310,94 @@ class PreSchemaV3Normalizer:
                                     after=value,
                                 )
                             )
+
+        fact_ids_by_question_field = {
+            "support_fact_ids": {
+                str(row.get("dossier_fact_id") or "")
+                for row in normalized.get("material_facts") or ()
+                if isinstance(row, Mapping)
+            },
+            "counter_fact_ids": {
+                str(row.get("dossier_fact_id") or "")
+                for row in normalized.get("counterfacts") or ()
+                if isinstance(row, Mapping)
+            },
+            "resolution_fact_ids": {
+                str(row.get("dossier_fact_id") or "")
+                for row in normalized.get("resolution_facts") or ()
+                if isinstance(row, Mapping)
+            },
+        }
+        known_fact_ids = set().union(*fact_ids_by_question_field.values())
+        fact_by_id = {
+            str(row.get("dossier_fact_id") or ""): row
+            for collection in _FACT_COLLECTIONS
+            for row in normalized.get(collection) or ()
+            if isinstance(row, Mapping)
+        }
+        for question in normalized.get("question_family_results") or ():
+            if not isinstance(question, dict):
+                continue
+            question_id = str(question.get("question_family_id") or "")
+            for field_name, allowed_fact_ids in fact_ids_by_question_field.items():
+                before = list(question.get(field_name) or ())
+                after = [
+                    value
+                    for value in before
+                    if str(value) not in known_fact_ids
+                    or str(value) in allowed_fact_ids
+                ]
+                if after == before:
+                    continue
+                question[field_name] = after
+                dropped_ids = tuple(
+                    str(value) for value in before if value not in after
+                )
+                operations.append(
+                    _operation(
+                        "DROP_WRONG_KIND_QUESTION_FACT_REFERENCE",
+                        "QUESTION_FAMILY_RESULT",
+                        question_id,
+                        field_name=field_name,
+                        before=before,
+                        after=after,
+                        detail=(
+                            "removed known facts whose global fact kind does not "
+                            f"match the question reference field: {','.join(dropped_ids)}"
+                        ),
+                    )
+                )
+            for field_name in fact_ids_by_question_field:
+                before = list(question.get(field_name) or ())
+                after = [
+                    value
+                    for value in before
+                    if str(value) not in fact_by_id
+                    or question_id
+                    in set(
+                        fact_by_id[str(value)].get("question_family_ids") or ()
+                    )
+                ]
+                if after == before:
+                    continue
+                question[field_name] = after
+                dropped_ids = tuple(
+                    str(value) for value in before if value not in after
+                )
+                operations.append(
+                    _operation(
+                        "DROP_UNBOUND_QUESTION_FACT_REFERENCE",
+                        "QUESTION_FAMILY_RESULT",
+                        question_id,
+                        field_name=field_name,
+                        before=before,
+                        after=after,
+                        detail=(
+                            "removed known facts that do not bind back to the "
+                            f"question family: {','.join(dropped_ids)}"
+                        ),
+                    )
+                )
 
         for lineage in normalized.get("source_lineages") or ():
             if isinstance(lineage, dict):

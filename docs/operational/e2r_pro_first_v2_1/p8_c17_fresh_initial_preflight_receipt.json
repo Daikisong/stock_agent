@@ -1,0 +1,61 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p8_initial_preflight_receipt_v1",
+  "status": "CAPTURE_VALIDATED_PENDING_SOURCE_VERIFICATION",
+  "recorded_at": "2026-08-26T04:41:22+09:00",
+  "target": {
+    "target_id": "011170",
+    "company_name": "롯데케미칼",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+  },
+  "runtime_root": "C:\\Users\\eorb9\\AppData\\Local\\E2R\\ProFirstRuntime\\fresh_v2_1\\20260825T183156Z",
+  "fresh_session_id": "FRESH-V2-1-C17-20260825T183156Z",
+  "job_id": "PROJOB-bd77f3912ada3fdc878330c6",
+  "run_id": "PRORUN-6d2c7188521024cf65e94101",
+  "research_pass_id": "PROPASS-6de9211605df22e8d1e255ce",
+  "conversation_id": "6a8ddfc4-f27c-83e8-829d-919ecb97c815",
+  "assistant_turn_id": "request-WEB:38f40b92-5b48-45bf-9f26-a853b4009662-0",
+  "capture": {
+    "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+    "captured_at": "2026-08-25T19:32:05.144428Z",
+    "submit_count": 1,
+    "capture_count": 1,
+    "automatic_resubmit_count": 0,
+    "report_md_sha256": "db1b50f30ee4070e69895b14529dc85abd8cbd288dcb6a55612b996b8a9b2090",
+    "dossier_json_sha256": "517c4af5e78253afda0fcf9b63006bc6329ff50a10c534c4bfde33549613c4a8",
+    "dossier_transport": "INLINE_VISIBLE_RESPONSE_JSON",
+    "optional_pdf_present": false
+  },
+  "dossier": {
+    "parser_source": "DOWNLOADED_JSON",
+    "parser_after_sha256": "a402fd978b58de85033e4c00aae6e3d391e960759eb0c99019b1e6ac92752523",
+    "pre_schema_after_sha256": "3ae336285826f020f5ca452b30692e9b772bfec10267542bdd9c628fcc62c05d",
+    "source_document_count": 8,
+    "material_fact_count": 9,
+    "counter_fact_count": 8,
+    "resolution_fact_count": 3,
+    "fact_count": 20,
+    "question_family_count": 26,
+    "search_route_receipt_count": 26,
+    "unresolved_gap_count": 0,
+    "strict_graph_validation": "PASS"
+  },
+  "conservative_local_normalization": {
+    "operation_count": 9,
+    "initial_transport_alias_count": 2,
+    "issuer_scope_downgrade_count": 1,
+    "wrong_kind_question_reference_drop_count": 1,
+    "unbound_question_reference_drop_count": 5,
+    "fact_content_added_count": 0,
+    "fact_kind_promotion_count": 0,
+    "issuer_scope_upgrade_count": 0,
+    "pro_followup_count": 0
+  },
+  "authority": {
+    "score_authority": false,
+    "stage_authority": false,
+    "source_verification_status": "PENDING",
+    "initial_efficiency_gate_status": "PENDING",
+    "p8_verdict": "NOT_YET_DECLARED"
+  }
+}

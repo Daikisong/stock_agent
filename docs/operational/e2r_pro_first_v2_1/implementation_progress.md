@@ -886,3 +886,83 @@ compileall / git diff check                        PASS / PASS
 따라서 P7 verdict는 `PRO_FIRST_V2_1_C06_FRESH_SESSION_PASS`다. 이는 아직 7 component/21 Judge/score/
 Stage나 multi-archetype 완료를 뜻하지 않는다. 다음 단계는 각각 새 conversation을 쓰는 P8 C17/C28
 fresh initial canary다.
+
+## P8 진행 — 독립 target 경계와 C17 최초 capture
+
+P8은 C06의 종목·conversation·증거를 복사하지 않고 C17과 C28을 각각 완전히 독립된 target으로
+시작해야 한다. 이전 구현은 predecessor job이 있는 successor만 만들 수 있었으므로, 과거 진단 job이
+없는 target에는 가짜 old job을 만들지 않는 `start_independent` 경계를 추가했다.
+
+쉬운 예로 C06 수험표에 종목명만 롯데케미칼로 바꿔 재사용하지 않는다. 롯데케미칼의 target ID,
+아키타입, job, run, pass와 새 ChatGPT conversation을 처음부터 따로 만든다.
+
+```text
+boundary commit       f719b94b5bcf99aec6de7e785675ecd16be89b49
+target identity test  PASS (old diagnostic job 생성 0)
+Linux focused tests   72/72 PASS
+GitHub push CI        SUCCESS  run 32884242262
+GitHub PR CI          SUCCESS  run 32884248916
+GitHub v6 CI          SUCCESS  run 32884248976
+```
+
+C17 actual fresh initial은 visible ChatGPT Pro에서 정확히 한 번 전송됐고 새 conversation에서 약 55분간
+조사된 뒤 완료됐다. 결과는 inline JSON으로 보존됐으며 자동 재전송은 없었다.
+
+```text
+runtime          C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260825T183156Z
+fresh session    FRESH-V2-1-C17-20260825T183156Z
+fresh job        PROJOB-bd77f3912ada3fdc878330c6
+fresh run        PRORUN-6d2c7188521024cf65e94101
+initial pass     PROPASS-6de9211605df22e8d1e255ce
+conversation     6a8ddfc4-f27c-83e8-829d-919ecb97c815
+assistant turn   request-WEB:38f40b92-5b48-45bf-9f26-a853b4009662-0
+submit/capture   1 / 1
+automatic resend 0
+report SHA-256   db1b50f30ee4070e69895b14529dc85abd8cbd288dcb6a55612b996b8a9b2090
+dossier SHA-256  517c4af5e78253afda0fcf9b63006bc6329ff50a10c534c4bfde33549613c4a8
+```
+
+### C17 local representation 정규화
+
+최초 import는 조사 부족이 아니라 표현 계층의 양방향 연결 불일치에서 fail-closed했다. Pro에 같은 내용을
+다시 묻거나 종목별 예외를 넣지 않고, 증거를 절대 늘리지 않는 공통 정규화만 추가했다.
+
+```text
+nonissuer source보다 강한 fact issuer scope     true → false  1건
+material fact를 counter 칸에서 중복 참조         참조 삭제      1건
+fact 쪽 question backlink가 없는 question 참조  참조 삭제      5건
+새 fact 생성 / fact kind 승격 / scope 상향       0 / 0 / 0
+Pro follow-up / browser submit 증가               0 / 0
+```
+
+예를 들어 “공시 가격은 국제 기준가다”라는 중립 fact가 어떤 질문에서는 참고 근거이고 다른 질문에서는
+낙관론의 제약처럼 읽힐 수 있다. 그러나 전역 종류가 `MATERIAL`인 fact를 question의 `counter_fact_ids`에
+동시에 넣으면 저장 규격이 충돌한다. 로컬 정규화는 그 fact를 `COUNTER`로 바꾸거나 새 사실을 만들지 않고,
+잘못된 question 참조만 제거한다. 원문 fact와 closure 설명은 그대로 남는다.
+
+이 규칙은 모든 target에 동일하게 적용하며 알 수 없는 fact ID는 지우지 않는다. 알 수 없는 ID는 기존
+strict validator가 계속 오류로 막는다. Initial Prompt V3에도 issuer/source scope 일치, fact kind별
+question reference, fact→question backlink 규칙을 공통으로 넣어 36개 snapshot을 다시 만들었다.
+
+현재 C17 exact capture의 parser→dialect adapter→pre-schema→identity binding→strict validator 결과:
+
+```text
+source documents             8
+material/counter/resolution  9 / 8 / 3
+all facts                    20
+mandatory questions          26
+search route receipts        26
+strict graph validation      PASS
+focused regression           72/72 PASS
+Initial Prompt V3 snapshots  36/36 PASS / critical 0
+Pro-first static audit       PASS / critical 0
+Pro-first V2 static audit    PASS / critical 0
+E2R v6 production audit      PASS / critical 0
+compileall / diff check      PASS / PASS
+```
+
+이 시점은 C17의 **capture·import 전 검문 PASS**이지 Initial Efficiency Gate PASS가 아니다. 다음 재개는
+같은 submitted job과 immutable capture를 사용하며 browser upload·composer 입력·DOM send를 실행하지
+않는다. source verification과 initial acceptance를 마친 뒤에만 C17 Gate 판정을 기록한다. C17이 끝나기
+전에는 C28이나 P8 최종 verdict를 선언하지 않는다. 상세 수치와 hash는
+`p8_c17_fresh_initial_preflight_receipt.json`에 기록했다.
