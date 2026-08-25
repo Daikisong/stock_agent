@@ -37,6 +37,11 @@ class SubjectScopeVerifier:
         subject = str(fact.get("subject") or "").strip()
         issuer_scoped = fact.get("issuer_scoped") is True
         matched = next((alias for alias in aliases if _contains(document, alias)), None)
+        excerpt = _scope_text(fact.get("supporting_excerpt"))
+        excerpt_target_match = next(
+            (alias for alias in aliases if _contains(excerpt, alias)),
+            None,
+        )
         if issuer_scoped:
             # ``subject`` is a structured economic label (for example,
             # ``operating cash flow``), not a second company-name field.  The
@@ -45,18 +50,24 @@ class SubjectScopeVerifier:
             # alias rejects legitimate bilingual filings wholesale.
             if matched is None or not subject:
                 return SubjectScopeVerification(False, "WRONG_SUBJECT", matched)
-        elif not subject or not any(
-            _contains(document, candidate)
-            for candidate in (
-                subject,
-                *(
-                    str(value)
-                    for value in fact.get("preflight_subject_aliases") or ()
-                ),
+        elif not subject or (
+            excerpt_target_match is None
+            and not any(
+                _contains(document, candidate)
+                for candidate in (
+                    subject,
+                    *(
+                        str(value)
+                        for value in fact.get("preflight_subject_aliases") or ()
+                    ),
+                )
             )
         ):
             # A peer/customer/partner counterfact need not name the target in
-            # the peer document, but its stated subject must be literal.
+            # the peer document, but its stated subject must be literal. When
+            # the already quote-verified excerpt itself names the target, a
+            # spacing or facility-label variation in the structured subject
+            # must not turn target-specific regulator evidence into WRONG_SUBJECT.
             return SubjectScopeVerification(False, "WRONG_SUBJECT", matched)
         segment = str(fact.get("business_segment") or "").strip()
         if not segment:

@@ -52,6 +52,9 @@
 17. fact의 issuer_scoped는 연결된 source document target_scope.issuer_scoped와 같아야 한다. issuer 자체 원문이 아닌 regulator/customer/partner/peer 자료라면 둘 다 false로 두며, 사실이 target을 언급한다는 이유만으로 true로 올리지 않는다.
 18. question_family_results의 support_fact_ids는 material_facts만, counter_fact_ids는 counterfacts만, resolution_fact_ids는 resolution_facts만 참조한다. 한 fact가 질문 맥락에서 다른 극성으로도 읽힐 수 있으면 잘못된 종류의 칸에 중복 참조하지 말고 closure_reason에 그 경계를 설명한다.
 19. question_family_results가 fact ID를 참조하면 그 fact의 question_family_ids에도 해당 question ID가 있어야 한다. 양쪽 연결을 확신할 수 없으면 question 쪽 참조를 생략하되 fact 자체와 closure_reason은 보존한다.
+20. supporting_excerpt는 verifier가 내려받을 source representation에 실제로 연속 등장하는 원문이어야 한다. 표의 서로 떨어진 cell을 `A | B | C`처럼 새 문장으로 합성하지 말고, PDF/HTML text에서 연속으로 복사되는 행·문장만 사용한다.
+21. publication_date와 availability_date에는 문서의 게시·공시일만 기록한다. 본문의 회사채 만기일, 계약 종료일, 전망기간, 목표연도 같은 미래 날짜를 source publication date로 사용하지 않는다.
+22. 같은 predicate의 더 최신 관측치가 있으면 이전 관측치를 CURRENT material candidate로 중복 제출하지 않는다. 과거 맥락은 HISTORICAL_ONLY 경계를 명시하고, 최신 관측치와 섞어 현재 사실처럼 서술하지 않는다.
 
 [Question closure]
 

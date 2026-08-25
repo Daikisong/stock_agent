@@ -64,7 +64,10 @@ def _normalize_whitespace(value: str) -> str:
 def _normalize_punctuation(value: str) -> str:
     normalized = unicodedata.normalize("NFKC", value).casefold()
     replaced = "".join(
-        " " if unicodedata.category(character).startswith(("P", "Z")) else character
+        " "
+        if unicodedata.category(character).startswith(("P", "Z"))
+        or character in {"|", "│", "┃", "¦"}
+        else character
         for character in normalized
     )
     return re.sub(r"\s+", " ", replaced).strip()

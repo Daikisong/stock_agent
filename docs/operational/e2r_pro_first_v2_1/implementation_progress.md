@@ -985,3 +985,61 @@ recovery loader는 당시 packet의 commit/config/hash, durable job의 packet/pr
 blind packet audit, prompt leakage receipt, mandatory question roster와 score/Stage authority false를 모두
 검사한다. prompt 본문은 복원·전송하지 않고 영수증의 글자 수만 보존한다. compile이 호출되면 즉시
 실패하도록 만든 회귀를 포함해 fresh orchestration `20/20 PASS`를 확인했다.
+
+### C17 Initial Efficiency Gate — diagnostic-only FAIL
+
+receipt-only recovery로 동일 capture를 import한 뒤 8개 source를 각 1회 full fetch하고 전체 20개 fact를
+검증했다. query/search와 Pro follow-up은 모두 0이다. 결과는 9개 material candidate 중 3개 accepted로
+80% Gate를 통과하지 못했다. 같은 conversation에서 repair로 비율을 올리지 않고 즉시 봉인했다.
+
+```text
+material candidate / accepted        9 / 3
+post-preflight acceptance             33.3333% FAIL
+mandatory question coverage           26 / 26
+all fact terminal                      20 / 20
+genuine repair candidate / limit       9 / 5
+initial prompt output defect           1
+local/representation sent to Pro       0 / 0
+query/search                            0 / 0
+same-conversation repair               0
+score/Stage authority                  false / false
+publication                            withheld
+durable state                          GAP_ADJUDICATION + frozen_at
+new conversation required              true
+```
+
+불변 Gate failure 수치와 runtime 파일 hash는 `p8_c17_fresh_initial_failure_receipt.json`에 기록했다.
+이 33.3333%를 이후 verifier 개선으로 소급 변경하지 않는다.
+
+거절 10건을 원문과 대조한 결과, 실제 output defect와 generic verifier 오탐이 섞여 있었다.
+
+```text
+원문 표 cell이 newline, excerpt가 vertical `|` delimiter  오탐 3건
+본문 회사채 만기일 2028-01-31을 게시일로 오인          오탐 1건
+exact excerpt에 target이 있는데 subject 띄어쓰기로 거절  오탐 1건
+중간 문구를 생략한 비연속 quote                         실제 defect
+떨어진 표 header/value를 한 excerpt로 합성               실제 defect
+target도 subject도 exact excerpt에 없는 project label     실제 defect
+```
+
+표 delimiter 수정은 셀의 값과 순서가 실제 문서에 연속할 때만 punctuation-normalized exact match로
+인정한다. 중간에 다른 셀이 끼면 계속 거절한다. 날짜 수정은 `재무제표 작성기준`, `발행일 만기일`처럼
+본문/표 header에 포함된 단어를 게시일 label로 보지 않고, 줄 시작의 실제 `게시일 2026-...` 같은
+metadata만 읽는다. subject 수정도 exact excerpt 자체에 target alias가 있을 때만 nonissuer subject의
+띄어쓰기 차이를 허용한다.
+
+sealed source page를 사용한 read-only projection 결과는 다음과 같다. 이것은 과거 Gate 재채점이 아니라
+새 verifier 규칙의 단위 확인이다.
+
+```text
+vertical table quote exact match       3/3 PASS
+synthetic header/value quote reject    2/2 PASS
+SK filing publication date             2026-08-13 PASS
+MOTIR target-specific subject scope    PASS
+source/quote/publication regression    212/212 PASS
+```
+
+새 Initial Prompt V3에는 표 cell 합성 금지, publication date와 본문 미래일 분리, 최신 predicate와
+HISTORICAL_ONLY 분리를 모든 아키타입 공통 규칙으로 추가했다. C17 종목명·질문명·검색어를 코드에
+하드코딩하지 않았다. 다음 C17은 새 runtime/session/job/run/pass/conversation에서 blind fresh initial로
+다시 시작한다.

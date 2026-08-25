@@ -31,8 +31,11 @@ from e2r.pro_first.preflight import (
     split_compound_fact,
 )
 from e2r.pro_first.verification import (
+    AsOfDateVerifier,
+    ExactQuoteVerifier,
     ProSourceVerificationService,
     ProSourceVerifier,
+    SubjectScopeVerifier,
 )
 from e2r.research.page_fetcher import FetchResult
 
@@ -99,6 +102,76 @@ class ProFirstV21LocalPreflightTest(unittest.TestCase):
                 "문서 본문: 검증기업은 \"HBM\"을 공급한다. 후속 설명",
             ).matched
         )
+
+    def test_exact_quote_accepts_only_ordered_table_delimiter_representation(self) -> None:
+        verifier = ExactQuoteVerifier()
+        accepted = verifier.verify(
+            "PE | 258,904 | 223,175 | 86.2",
+            "생산실적\nPE\n258,904\n223,175\n86.2\n다음 행",
+        )
+        self.assertTrue(accepted.matched)
+        self.assertEqual(
+            accepted.match_mode,
+            "UNICODE_PUNCTUATION_WHITESPACE_NORMALIZED",
+        )
+        self.assertFalse(
+            verifier.verify(
+                "PE | 258,904 | 86.2",
+                "PE\n258,904\n다른 제품\n777,000\n86.2",
+            ).matched
+        )
+
+    def test_body_maturity_table_is_not_inferred_as_publication_date(self) -> None:
+        result = AsOfDateVerifier().verify(
+            claimed_published_at="2026-08-13",
+            event_date="2026-06-30",
+            as_of_date="2026-08-23",
+            source_url="https://issuer.example/report(2026.08.13).pdf",
+            source_title="2026년 반기보고서",
+            source_publisher="공시기업",
+            document_text=(
+                "반기보고서\n"
+                "재무제표 작성기준 및 회계정책의 변경\n"
+                "회차 발행액 발행일 만기일 평가일 평가기관\n"
+                "15-2 1,000 2025.01.31 2028.01.31 2026.04.29 평가사\n"
+            ),
+            fetch_result=FetchResult(
+                url="https://issuer.example/report(2026.08.13).pdf",
+                ok=True,
+                text="full document",
+            ),
+        )
+        self.assertTrue(result.accepted)
+        self.assertEqual(result.effective_published_at, "2026-08-13")
+
+    def test_nonissuer_exact_excerpt_target_anchor_survives_subject_spacing(self) -> None:
+        result = SubjectScopeVerifier().verify(
+            fact={
+                "subject": "롯데케미칼 여수공장",
+                "issuer_scoped": False,
+                "supporting_excerpt": (
+                    "롯데케미칼 여수 공장의 NCC와 PE·PP 사업을 통합"
+                ),
+                "business_segment": "여수 기초화학",
+                "product_family": "NCC·PE·PP",
+            },
+            document_text=(
+                "산업부 승인 내용. 롯데케미칼 여수 공장의 NCC와 PE·PP "
+                "사업을 통합한다."
+            ),
+            target_id="011170",
+            company_name="롯데케미칼",
+            semantic_scope={
+                "scope_business_segment": "여수 기초화학",
+                "scope_product_family": "NCC·PE·PP",
+                "scope_technology_family": "석유화학",
+                "scope_transaction_type": "사업재편",
+                "scope_economic_mechanism": "통합",
+                "scope_confidence": 0.9,
+            },
+        )
+        self.assertTrue(result.accepted)
+        self.assertEqual(result.status, "SUBJECT_SCOPE_ACCEPTED")
 
     def test_http_last_modified_never_overrides_confirmed_published_date(self) -> None:
         resolution = DatePrecedenceResolver().resolve(
