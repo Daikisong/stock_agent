@@ -966,3 +966,22 @@ compileall / diff check      PASS / PASS
 않는다. source verification과 initial acceptance를 마친 뒤에만 C17 Gate 판정을 기록한다. C17이 끝나기
 전에는 C28이나 P8 최종 verdict를 선언하지 않는다. 상세 수치와 hash는
 `p8_c17_fresh_initial_preflight_receipt.json`에 기록했다.
+
+첫 post-capture 재개는 브라우저를 열기 전에 fail-closed했다. 원인은 resume 경로가 이미 제출된 prompt를
+영수증에서 복원하지 않고 최신 공통 template로 다시 compile한 뒤 immutable prompt receipt와 비교했기
+때문이다. C17 제출 뒤 scope/reference 규칙 3개가 공통 template에 추가됐으므로 두 hash가 다른 것은
+정상이다. 이 실패에서 browser submit과 runtime artifact 변경은 모두 0이다.
+
+resume 경로를 다음처럼 분리했다.
+
+```text
+새 제출 전 경로       현재 template로 compile → prepare/upload/send 가능
+submit_count=1 재개   기존 packet + manifest + prompt receipts만 exact-load
+                     → current template compile 금지
+                     → browser prepare/upload/send 금지
+```
+
+recovery loader는 당시 packet의 commit/config/hash, durable job의 packet/prompt hash, run/pass identity,
+blind packet audit, prompt leakage receipt, mandatory question roster와 score/Stage authority false를 모두
+검사한다. prompt 본문은 복원·전송하지 않고 영수증의 글자 수만 보존한다. compile이 호출되면 즉시
+실패하도록 만든 회귀를 포함해 fresh orchestration `20/20 PASS`를 확인했다.

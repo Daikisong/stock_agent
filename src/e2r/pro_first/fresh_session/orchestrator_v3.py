@@ -346,6 +346,184 @@ class FreshSessionOrchestratorV3:
             prompt_leakage_receipt=prompt_audit,
         )
 
+    def load_initial_packet_for_submitted_recovery(
+        self,
+        *,
+        commit_sha: str,
+        config_hash: str,
+    ) -> BuiltFreshV3JobPacket:
+        """Load the exact submitted packet and prompt receipts without recompiling.
+
+        A post-submit recovery can run after the common prompt template has been
+        improved. Recompiling in that situation would compare a new prompt with
+        the immutable prompt that was actually submitted and fail before import.
+        This loader verifies the durable artifacts instead. The receipt-only
+        prompt text is a length-preserving placeholder and must never be sent to
+        a browser.
+        """
+
+        job = self.store.get_job(self.boundary.fresh_job_id)
+        if job.submit_count != 1 or not job.packet_hash:
+            raise FreshSessionBoundaryError(
+                "submitted recovery requires one exact submit and a durable packet"
+            )
+        packet_root = self.boundary.fresh_job_root / "packet"
+        packet_path = packet_root / "research_packet.json"
+        packet_markdown_path = packet_root / "research_packet.md"
+        manifest_path = packet_root / "packet_manifest.json"
+        required_paths = (packet_path, packet_markdown_path, manifest_path)
+        if any(not path.is_file() for path in required_paths):
+            raise FreshSessionBoundaryError(
+                "submitted recovery requires the complete immutable packet bundle"
+            )
+        packet_payload = json.loads(packet_path.read_text(encoding="utf-8"))
+        if (
+            packet_payload.get("schema_version") != PACKET_V3_SCHEMA_VERSION
+            or canonical_hash(packet_payload) != job.packet_hash
+        ):
+            raise FreshSessionBoundaryError(
+                "submitted recovery packet differs from the durable job"
+            )
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if (
+            str(manifest.get("packet_hash") or "") != job.packet_hash
+            or str(manifest.get("job_id") or "") != job.job_id
+            or str(manifest.get("run_id") or "")
+            != str(packet_payload.get("run_id") or "")
+            or str(manifest.get("commit_sha") or "") != str(commit_sha)
+            or str(manifest.get("config_hash") or "") != str(config_hash)
+        ):
+            raise FreshSessionBoundaryError(
+                "submitted recovery packet manifest identity differs"
+            )
+        bundle = PacketBundleReceipt(
+            packet_directory=packet_root,
+            research_packet_json=packet_path,
+            research_packet_markdown=packet_markdown_path,
+            packet_manifest=manifest_path,
+            packet_hash=job.packet_hash,
+            manifest_hash=canonical_hash(manifest),
+        )
+
+        packet_audit = audit_fresh_blind_payload(
+            packet_payload,
+            self.boundary.leakage_manifest,
+        )
+        packet_audit_path = (
+            self.boundary.fresh_job_root
+            / "fresh_session/fresh_blind_packet_audit.json"
+        )
+        prompt_audit_path = (
+            self.boundary.fresh_job_root
+            / "fresh_session/fresh_initial_prompt_leakage_audit.json"
+        )
+        prompt_receipt_path = (
+            self.boundary.fresh_job_root
+            / "fresh_session/initial_prompt_v3_receipt.json"
+        )
+        if any(
+            not path.is_file()
+            for path in (packet_audit_path, prompt_audit_path, prompt_receipt_path)
+        ):
+            raise FreshSessionBoundaryError(
+                "submitted recovery requires immutable initial prompt receipts"
+            )
+        stored_packet_audit = json.loads(
+            packet_audit_path.read_text(encoding="utf-8")
+        )
+        if not packet_audit.passed or stored_packet_audit != packet_audit.to_dict():
+            raise FreshSessionBoundaryError(
+                "submitted recovery packet leakage receipt differs"
+            )
+        prompt_audit = json.loads(prompt_audit_path.read_text(encoding="utf-8"))
+        prompt_receipt = json.loads(
+            prompt_receipt_path.read_text(encoding="utf-8")
+        )
+        prompt_hash = str(prompt_receipt.get("prompt_hash") or "")
+        prompt_char_count = int(prompt_receipt.get("prompt_char_count") or 0)
+        mandatory_question_ids = tuple(
+            str(value)
+            for value in prompt_receipt.get("mandatory_question_ids") or ()
+        )
+        if (
+            prompt_receipt.get("schema_version")
+            != "e2r_compiled_pro_research_prompt_v3"
+            or prompt_receipt.get("pass_name") != INITIAL_PASS_NAME
+            or tuple(prompt_receipt.get("primary_archetype_ids") or ())
+            != job.archetype_ids
+            or len(mandatory_question_ids)
+            != int(prompt_receipt.get("mandatory_question_count") or -1)
+            or len(mandatory_question_ids) != len(set(mandatory_question_ids))
+            or not mandatory_question_ids
+            or prompt_char_count <= 0
+            or not prompt_hash
+            or job.approval_prompt_hash != prompt_hash
+            or prompt_receipt.get("score_authority") is not False
+            or prompt_receipt.get("stage_authority") is not False
+        ):
+            raise FreshSessionBoundaryError(
+                "submitted recovery initial prompt receipt differs from the durable job"
+            )
+        unsigned_prompt_audit = dict(prompt_audit)
+        stored_prompt_audit_hash = str(
+            unsigned_prompt_audit.pop("receipt_hash", "")
+        )
+        if (
+            canonical_hash(unsigned_prompt_audit) != stored_prompt_audit_hash
+            or prompt_audit.get("status") != "PASS"
+            or prompt_audit.get("prompt_hash") != prompt_hash
+            or prompt_audit.get("score_authority") is not False
+            or prompt_audit.get("stage_authority") is not False
+        ):
+            raise FreshSessionBoundaryError(
+                "submitted recovery initial prompt leakage receipt differs"
+            )
+
+        initial_pass_id = stable_id(
+            "PROPASS",
+            {
+                "job_id": job.job_id,
+                "run_id": packet_payload["run_id"],
+                "pass_name": INITIAL_PASS_NAME,
+                "packet_hash": bundle.packet_hash,
+                "fresh_session_id": self.boundary.fresh_session_id,
+            },
+        )
+        browser_state = self.store.get_browser_session_state(job.job_id) or {}
+        durable_initial_pass_id = str(
+            (browser_state.get("state") or {}).get("initial_pass_id") or ""
+        )
+        if durable_initial_pass_id != initial_pass_id:
+            raise FreshSessionBoundaryError(
+                "submitted recovery initial pass identity differs"
+            )
+        prompt = CompiledProResearchPromptV3(
+            pass_name=INITIAL_PASS_NAME,
+            primary_archetype_ids=job.archetype_ids,
+            contract_ids=tuple(
+                str(value) for value in prompt_receipt.get("contract_ids") or ()
+            ),
+            mandatory_question_ids=mandatory_question_ids,
+            prompt_text=" " * prompt_char_count,
+            prompt_hash=prompt_hash,
+            dossier_schema_hash=str(
+                prompt_receipt.get("dossier_schema_hash") or ""
+            ),
+        )
+        return BuiltFreshV3JobPacket(
+            boundary=self.boundary,
+            job=job,
+            packet_bundle=bundle,
+            packet_payload=packet_payload,
+            prompt=prompt,
+            initial_pass_id=initial_pass_id,
+            output_filename=(
+                f"E2R_PRO_V3_{job.job_id}_{job.symbol}_{job.as_of_date}.md"
+            ),
+            packet_leakage_audit=packet_audit,
+            prompt_leakage_receipt=prompt_audit,
+        )
+
     async def prepare_initial_with_adapter(
         self,
         built: BuiltFreshV3JobPacket,

@@ -366,7 +366,7 @@ class FreshV3InitialLiveCanaryRunner:
             )
         _persist_runtime_manifest(boundary.fresh_runtime_root, manifest)
         orchestrator = FreshSessionOrchestratorV3(self.store, boundary)
-        built = orchestrator.build_initial_packet(
+        built = orchestrator.load_initial_packet_for_submitted_recovery(
             commit_sha=commit_sha,
             config_hash=self.config.config_hash,
         )

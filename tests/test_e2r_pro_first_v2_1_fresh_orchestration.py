@@ -325,6 +325,32 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.store.get_job(self.fresh_job.job_id).submit_count, 1)
         self.assertEqual(adapter.submit_count, 1)
 
+    async def test_submitted_recovery_loads_receipt_without_prompt_recompile(self) -> None:
+        adapter = await self._prepare_and_approve("fresh-conversation-receipt-load")
+        submitted = await self.orchestrator.submit_initial_once(adapter)
+
+        class _CompilerMustNotRun:
+            def compile(self, **_kwargs):
+                raise AssertionError("submitted recovery must not recompile prompt")
+
+        self.orchestrator.initial_compiler = _CompilerMustNotRun()
+        recovered = self.orchestrator.load_initial_packet_for_submitted_recovery(
+            commit_sha="a" * 40,
+            config_hash="b" * 64,
+        )
+
+        self.assertEqual(recovered.prompt.prompt_hash, self.built.prompt.prompt_hash)
+        self.assertEqual(
+            len(recovered.prompt.prompt_text),
+            len(self.built.prompt.prompt_text),
+        )
+        self.assertEqual(
+            recovered.prompt.mandatory_question_ids,
+            self.built.prompt.mandatory_question_ids,
+        )
+        self.assertEqual(submitted.submit_result.job.submit_count, 1)
+        self.assertEqual(adapter.submit_count, 1)
+
     def test_post_capture_verifier_attention_does_not_reopen_browser(self) -> None:
         pre_capture = replace(
             self.fresh_job,
