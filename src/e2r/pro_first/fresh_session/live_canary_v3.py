@@ -42,6 +42,7 @@ from ..multi_pass import ProMultiPassDossierStore, ProMultiPassLedger
 from ..verification import (
     ACCEPTED_SOURCE_STATUSES,
     CodexMechanismScopeMapper,
+    EvidenceLifecycleBridge,
     ProSourceVerificationService,
     ProSourceVerifier,
 )
@@ -1022,7 +1023,18 @@ def evaluate_initial_efficiency(
 ) -> FreshInitialEfficiencyGate:
     """Evaluate the initial response before any repair can affect its ratio."""
 
-    material = tuple(dossier.get("material_facts") or ())
+    serialized_material = tuple(dossier.get("material_facts") or ())
+    lifecycle_bridge = EvidenceLifecycleBridge()
+    material = tuple(
+        row
+        for row in serialized_material
+        if lifecycle_bridge.classify(row).compile_as_evidence
+    )
+    excluded_noncurrent_material = tuple(
+        row
+        for row in serialized_material
+        if not lifecycle_bridge.classify(row).compile_as_evidence
+    )
     material_ids = {
         str(row.get("dossier_fact_id") or "") for row in material
     }
@@ -1065,14 +1077,16 @@ def evaluate_initial_efficiency(
     genuine_repair_ids = {
         str(row.get("candidate_id") or "")
         for row in rejection_rows
-        if row.get("material") is True
+        if str(row.get("candidate_id") or "") in material_ids
+        and row.get("material") is True
         and row.get("send_to_pro_allowed") is True
         and row.get("cause_class") == "GENUINE_SEMANTIC_OR_SOURCE_DEFECT"
     }
     initial_output_defect_ids = {
         str(row.get("candidate_id") or "")
         for row in rejection_rows
-        if row.get("material") is True
+        if str(row.get("candidate_id") or "") in material_ids
+        and row.get("material") is True
         and row.get("cause_class") == "INITIAL_PROMPT_OUTPUT_DEFECT"
     }
     genuine_limit = max(5, int(candidate_count * 0.10))
@@ -1121,7 +1135,15 @@ def evaluate_initial_efficiency(
         "initial_research_elapsed_seconds": round(initial_research_seconds, 6),
         "total_elapsed_seconds": round(total_elapsed_seconds, 6),
         "source_document_count": len(tuple(dossier.get("source_documents") or ())),
+        "serialized_material_fact_count": len(serialized_material),
         "initial_material_candidate_count": candidate_count,
+        "excluded_noncurrent_material_fact_count": len(
+            excluded_noncurrent_material
+        ),
+        "excluded_noncurrent_material_fact_ids": [
+            str(row.get("dossier_fact_id") or "")
+            for row in excluded_noncurrent_material
+        ],
         "post_preflight_accepted_material_count": accepted_count,
         "post_preflight_acceptance_ratio": round(acceptance_ratio, 6),
         "mandatory_question_count": len(expected_questions),

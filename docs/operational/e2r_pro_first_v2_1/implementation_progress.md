@@ -1043,3 +1043,79 @@ source/quote/publication regression    212/212 PASS
 HISTORICAL_ONLY 분리를 모든 아키타입 공통 규칙으로 추가했다. C17 종목명·질문명·검색어를 코드에
 하드코딩하지 않았다. 다음 C17은 새 runtime/session/job/run/pass/conversation에서 blind fresh initial로
 다시 시작한다.
+
+### C17 두 번째 fresh initial — lifecycle 분모 결함 봉인
+
+첫 실패에서 확인한 공통 prompt/verifier 결함을 고친 뒤, 첫 C17 job을 predecessor로 동결하고 완전히
+새 runtime/job/run/pass/ChatGPT conversation에서 두 번째 actual Pro 조사를 정확히 한 번 실행했다.
+
+```text
+runtime          C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260825T200105Z
+fresh session    FRESH-V2-1-C17-R2-20260825T200105Z
+fresh job        PROJOB-2136f20fb124e6b76760230b
+fresh run        PRORUN-e53f79d5009fb8a7248a71ac
+initial pass     PROPASS-68c4c79b446b0c16bdb9ff40
+conversation     6a8df4a7-1690-83ee-bd01-036d058c979f
+submit/capture   1 / 1
+automatic resend 0
+prompt/response  58,327 / 138,146 chars
+research/total   3,076.970388 / 3,132.240946 seconds
+report SHA-256   e353b051332af43ab60af225b7b535a3d8fb93e5d87f2f99edcede76ec48c19e
+```
+
+26개 mandatory question/route가 모두 채워졌고 8개 dossier source를 full fetch했다. 전체 21개 fact는
+모두 terminal이었으며 query/search와 same-conversation repair는 0이었다. 그러나 당시 Gate 구현은
+`material_facts` 배열의 12개를 lifecycle과 무관하게 모두 현재 acceptance 분모로 세어 `6/12=50%`로
+FAIL을 봉인했다.
+
+```text
+당시 immutable Gate                         6 / 12 = 50.0000% FAIL
+mandatory question                          26 / 26
+all fact terminal                            21 / 21
+initial prompt output defect                  0
+genuine repair candidate / limit              4 / 5
+query/search                                  0 / 0
+same-conversation repair                      0
+score/Stage authority                        false / false
+publication                                  withheld
+```
+
+원인은 evidence 부족이 아니라 현재성 분모 오염이었다. 12개 중 Q1 과거 비교 fact 5개는 Pro가 명시적으로
+`HISTORICAL_ONLY`로 보존했고, Q2/current material은 7개였다. 과거 사실을 삭제하거나 CURRENT로 승격하지
+않고, `EvidenceLifecycleBridge.compile_as_evidence`가 true인 material만 현재 Gate 후보와 repair roster에
+포함하도록 공통 계산을 고쳤다.
+
+쉬운 예로 2026년 2분기 현재 성적을 평가하면서 2026년 1분기 비교표 5줄까지 새 답안의 분모에 넣으면 안
+된다. 비교표는 이력으로 그대로 남기되 현재 답안은 `6/7=85.7143%`로 계산해야 한다.
+
+```text
+serialized material facts                    12 (모두 보존)
+excluded HISTORICAL_ONLY                       5
+current material candidate / accepted          7 / 6
+read-only fixed-rule projection                85.7143% PASS
+current genuine repair candidate               1 <= limit 5
+```
+
+과거 immutable FAIL receipt를 새 규칙으로 덮어쓰지 않았다. 위 PASS는 계산 수리 검증용 read-only projection
+이라 operational Gate 권한이 없고, 실제 PASS는 새 conversation에서만 얻는다. 두 번째 실패의 전체 ID,
+hash, 수치와 projection hash는 `p8_c17_fresh_initial_failure_receipt_r2.json`에 별도 봉인했다.
+
+범용 회귀는 `현재 7개 중 6개 accepted + HISTORICAL_ONLY 5개 + 과거 rejection 5개`를 입력해 다음을
+동시에 확인한다.
+
+```text
+과거 fact/ID 보존                              PASS
+현재 분모                                      7
+accepted                                       6
+acceptance                                     85.7143% PASS
+현재 genuine repair roster                     1
+focused lifecycle/fresh/verifier regression   94/94 PASS
+Pro-first static audit                        PASS / critical 0
+Pro-first V2 static audit                     PASS / critical 0
+E2R v6 production static audit                PASS / critical 0
+compileall / diff check                       PASS / PASS
+```
+
+이 수정도 target, 종목명, C17 질문명으로 분기하지 않는다. 다음 단계는 이 commit을 push한 뒤 새
+runtime/session/job/run/pass/conversation에서 C17 initial을 한 번 더 실행하는 것이다. 두 번째 실패 job은
+감사용으로 동결하며 같은 conversation에는 어떤 추가 질문도 보내지 않는다.

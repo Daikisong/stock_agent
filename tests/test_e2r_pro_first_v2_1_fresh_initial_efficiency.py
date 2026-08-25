@@ -78,6 +78,94 @@ class FreshInitialEfficiencyGateTest(unittest.TestCase):
             gate.receipt["failure_reasons"],
         )
 
+    def test_historical_material_is_preserved_but_not_counted_as_current_candidate(
+        self,
+    ) -> None:
+        dossier = self._dossier()
+        dossier["material_facts"] = dossier["material_facts"][:7]
+        for index in range(5):
+            fact_id = f"HISTORICAL-{index:02d}"
+            dossier["material_facts"].append(
+                {
+                    "dossier_fact_id": fact_id,
+                    "source_document_id": f"SRC-{index:02d}",
+                    "question_family_ids": ["Q01"],
+                    "current_status": "HISTORICAL_ONLY",
+                    "verifier_preflight": {
+                        "derived_calculation_mixed_into_fact": False,
+                    },
+                }
+            )
+        verification_rows = [
+            {
+                "dossier_fact_id": f"FACT-{index:02d}",
+                "status": (
+                    "ACCEPTED_CURRENT"
+                    if index < 6
+                    else "REJECTED_WRONG_SUBJECT"
+                ),
+            }
+            for index in range(7)
+        ] + [
+            {
+                "dossier_fact_id": f"HISTORICAL-{index:02d}",
+                "status": "HISTORICAL_ONLY",
+            }
+            for index in range(5)
+        ]
+        rejection_rows = [
+            {
+                "candidate_id": "FACT-06",
+                "cause_class": "GENUINE_SEMANTIC_OR_SOURCE_DEFECT",
+                "material": True,
+                "send_to_pro_allowed": True,
+            }
+        ] + [
+            {
+                "candidate_id": f"HISTORICAL-{index:02d}",
+                "cause_class": "GENUINE_SEMANTIC_OR_SOURCE_DEFECT",
+                "material": True,
+                "send_to_pro_allowed": True,
+            }
+            for index in range(5)
+        ]
+
+        gate = evaluate_initial_efficiency(
+            dossier=dossier,
+            mandatory_question_ids=("Q01", "Q02"),
+            verification_rows=verification_rows,
+            rejection_rows=rejection_rows,
+            verification_receipt={
+                "local_normalizable_sent_to_pro_count": 0,
+                "source_representation_sent_to_pro_count": 0,
+                "unclassified_rejection_count": 0,
+            },
+            prompt_char_count=50_000,
+            response_char_count=25_000,
+            initial_research_seconds=30.0,
+            total_elapsed_seconds=40.0,
+            job_id="PROJOB-FRESH",
+            run_id="PRORUN-FRESH",
+            conversation_id="fresh-conversation",
+        )
+
+        self.assertTrue(gate.passed)
+        self.assertEqual(gate.receipt["serialized_material_fact_count"], 12)
+        self.assertEqual(gate.receipt["initial_material_candidate_count"], 7)
+        self.assertEqual(
+            gate.receipt["excluded_noncurrent_material_fact_count"], 5
+        )
+        self.assertEqual(
+            gate.receipt["excluded_noncurrent_material_fact_ids"],
+            [f"HISTORICAL-{index:02d}" for index in range(5)],
+        )
+        self.assertEqual(gate.receipt["post_preflight_accepted_material_count"], 6)
+        self.assertEqual(gate.receipt["post_preflight_acceptance_ratio"], 0.857143)
+        self.assertEqual(
+            gate.receipt["genuine_semantic_repair_candidate_count"], 1
+        )
+        self.assertEqual(gate.receipt["failure_reasons"], [])
+
     def _evaluate(
         self,
         *,
@@ -133,6 +221,7 @@ class FreshInitialEfficiencyGateTest(unittest.TestCase):
                     "dossier_fact_id": f"FACT-{index:02d}",
                     "source_document_id": f"SRC-{index:02d}",
                     "question_family_ids": ["Q01" if index % 2 == 0 else "Q02"],
+                    "current_status": "CURRENT",
                     "verifier_preflight": {
                         "derived_calculation_mixed_into_fact": False,
                     },

@@ -20,7 +20,7 @@ class EvidenceLifecycleBridge:
         direction = str(fact.get("direction") or "NEUTRAL").upper()
         if lifecycle == "SUPERSEDED":
             return LifecycleDisposition("SUPERSEDED", False, None, "SUPERSEDED")
-        if lifecycle == "HISTORICAL":
+        if lifecycle in {"HISTORICAL", "HISTORICAL_ONLY"}:
             return LifecycleDisposition("HISTORICAL_ONLY", False, None, None)
         if lifecycle == "UNKNOWN":
             return LifecycleDisposition("UNVERIFIED_PENDING", False, None, None)
