@@ -59,6 +59,20 @@ class ProFirstV21InitialPromptV3Test(unittest.TestCase):
             self.assertIn("해당 fact만 제거해 unresolved_gaps", prompt)
             self.assertIn("경계가 정확히 한 쌍", prompt)
 
+    def test_incremental_graph_and_json_first_contract_is_common(self) -> None:
+        required = (
+            "조사와 동시에 증거 그래프 유지",
+            "마지막에 한꺼번에 처리하지 않는다",
+            "이미 검증 완료된 다른 fact를 제거하지 않는다",
+            "배열을 전부 비우는 것은 금지한다",
+            "JSON이 첫 번째이자 주 산출물",
+            "JSON보다 먼저 쓰지 않는다",
+        )
+        for path in SNAPSHOTS.glob("*.md"):
+            prompt = path.read_text(encoding="utf-8")
+            for marker in required:
+                self.assertIn(marker, prompt, f"{path.name}: {marker}")
+
     def test_all_preflight_fields_and_derived_separation_are_explicit(self) -> None:
         fields = (*VERIFIER_PREFLIGHT_TRUE_FIELDS, *VERIFIER_PREFLIGHT_FALSE_FIELDS)
         for path in SNAPSHOTS.glob("*.md"):

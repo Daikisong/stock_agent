@@ -1089,6 +1089,16 @@ def evaluate_initial_efficiency(
         and row.get("material") is True
         and row.get("cause_class") == "INITIAL_PROMPT_OUTPUT_DEFECT"
     }
+    self_reported_withheld_candidate_count = int(
+        (dossier.get("research_saturation") or {}).get(
+            "candidate_fact_count_withheld"
+        )
+        or 0
+    )
+    if candidate_count == 0 and self_reported_withheld_candidate_count > 0:
+        initial_output_defect_ids.add(
+            "SELF_REPORTED_BULK_WITHHELD_CANDIDATE_ROSTER"
+        )
     genuine_limit = max(5, int(candidate_count * 0.10))
     local_sent = int(
         verification_receipt.get("local_normalizable_sent_to_pro_count") or 0
@@ -1158,6 +1168,9 @@ def evaluate_initial_efficiency(
         "source_representation_sent_to_pro_count": representation_sent,
         "unclassified_rejection_count": unclassified,
         "initial_prompt_output_defect_count": len(initial_output_defect_ids),
+        "self_reported_withheld_candidate_count": (
+            self_reported_withheld_candidate_count
+        ),
         "genuine_semantic_repair_candidate_count": len(genuine_repair_ids),
         "genuine_semantic_repair_candidate_limit": genuine_limit,
         "repair_pass_count": 0,

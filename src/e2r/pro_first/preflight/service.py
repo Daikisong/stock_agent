@@ -466,29 +466,28 @@ def _normalize_initial_transport_aliases(
         if isinstance(row, dict)
         and str(row.get("pass_id") or "") == current_pass_id
         and str(row.get("pass_name") or "") == _INITIAL_PASS_NAME
-        and str(row.get("parent_pass_id") or "").upper()
-        in _NULL_PARENT_PASS_ALIASES
+        and _is_explicit_initial_null_parent(row)
     ]
     if (
         not current_pass_id
         or len(matching_rows) != 1
-        or str(dossier.get("parent_pass_id") or "").upper()
-        not in _NULL_PARENT_PASS_ALIASES
+        or not _is_explicit_initial_null_parent(dossier)
     ):
         return
 
-    dossier["parent_pass_id"] = None
-    matching_rows[0]["parent_pass_id"] = None
-    operations.append(
-        _operation(
-            "NORMALIZE_INITIAL_PARENT_PASS_NULL_ALIAS",
-            "RESEARCH_PASS",
-            current_pass_id,
-            field_name="parent_pass_id",
-            before="NONE",
-            after=None,
+    if dossier["parent_pass_id"] is not None:
+        dossier["parent_pass_id"] = None
+        matching_rows[0]["parent_pass_id"] = None
+        operations.append(
+            _operation(
+                "NORMALIZE_INITIAL_PARENT_PASS_NULL_ALIAS",
+                "RESEARCH_PASS",
+                current_pass_id,
+                field_name="parent_pass_id",
+                before="NONE",
+                after=None,
+            )
         )
-    )
     conversation_id = str(dossier.get("conversation_id") or "")
     if conversation_id in _INITIAL_CONVERSATION_PLACEHOLDER_ALIASES:
         dossier["conversation_id"] = _INITIAL_CONVERSATION_PLACEHOLDER
@@ -502,6 +501,13 @@ def _normalize_initial_transport_aliases(
                 after=_INITIAL_CONVERSATION_PLACEHOLDER,
             )
         )
+
+
+def _is_explicit_initial_null_parent(value: Mapping[str, Any]) -> bool:
+    if "parent_pass_id" not in value:
+        return False
+    parent = value.get("parent_pass_id")
+    return parent is None or str(parent).upper() in _NULL_PARENT_PASS_ALIASES
 
 
 class LocalEvidencePreflightService:

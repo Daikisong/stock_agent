@@ -376,6 +376,54 @@ class ProFirstV21LocalPreflightTest(unittest.TestCase):
             "COMPLETE",
         )
 
+    def test_initial_conversation_alias_accepts_canonical_null_parent(self) -> None:
+        dossier = self._dossier()
+        dossier["conversation_id"] = "PENDING_NEW_CONVERSATION"
+        dossier["parent_pass_id"] = None
+        dossier["research_passes"][0].update(
+            {
+                "parent_pass_id": None,
+                "status": "PENDING",
+                "response_hash": None,
+            }
+        )
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+        operation_codes = {row.operation_code for row in normalized.operations}
+
+        self.assertIsNone(normalized.payload["parent_pass_id"])
+        self.assertIsNone(normalized.payload["research_passes"][0]["parent_pass_id"])
+        self.assertEqual(
+            normalized.payload["conversation_id"],
+            "PENDING_INITIAL_CONVERSATION",
+        )
+        self.assertNotIn(
+            "NORMALIZE_INITIAL_PARENT_PASS_NULL_ALIAS",
+            operation_codes,
+        )
+        self.assertIn(
+            "NORMALIZE_INITIAL_CONVERSATION_PLACEHOLDER_ALIAS",
+            operation_codes,
+        )
+
+    def test_missing_initial_parent_field_does_not_enable_identity_rewrite(self) -> None:
+        dossier = self._dossier()
+        dossier["conversation_id"] = "PENDING_NEW_CONVERSATION"
+        dossier.pop("parent_pass_id")
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+
+        self.assertEqual(
+            normalized.payload["conversation_id"],
+            "PENDING_NEW_CONVERSATION",
+        )
+
     def test_followup_none_parent_alias_is_not_normalized(self) -> None:
         dossier = self._dossier()
         dossier["conversation_id"] = "PENDING_NEW_CONVERSATION"

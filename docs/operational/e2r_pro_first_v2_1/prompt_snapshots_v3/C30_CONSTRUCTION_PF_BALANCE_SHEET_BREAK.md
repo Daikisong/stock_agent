@@ -29,6 +29,16 @@
 9. 공개적으로 더 조사 가능한 material gap을 UNKNOWN으로 남기고 COMPLETE라고 선언하지 않는다.
 10. 비공개 가능성이 높은 정보는 공개 경계와 attempted routes를 근거로 LIKELY_NONPUBLIC로 제안한다.
 
+[조사와 동시에 증거 그래프 유지 — 마지막 일괄 직렬화 금지]
+
+1. mandatory question roster와 빈 QuestionFamilyResultV3 골격을 조사 시작 시 먼저 만든다.
+2. source를 열면 SourceDocumentV3와 SearchRouteReceiptV3를 즉시 추가하고, exact excerpt를 확인한 fact는 그때 AtomicFactV3와 양방향 question binding까지 완성한다.
+3. source 조사와 fact/question/lineage 직렬화를 분리해 마지막에 한꺼번에 처리하지 않는다.
+4. issuer official 핵심 source를 읽은 뒤 검증 완료된 최소 core subset을 먼저 보존하고, 이후 source와 fact는 하나씩 append한다.
+5. 새 후보 하나의 preflight나 binding이 실패해도 이미 검증 완료된 다른 fact를 제거하지 않는다. 실패한 그 후보만 gap으로 내린다.
+6. source document와 source-backed 후보를 실제로 찾았는데 단지 최종 일괄 binding/schema 검사를 끝내지 못했다는 이유로 material/counter/resolution 배열을 전부 비우는 것은 금지한다.
+7. 도구 시간이 줄면 새 source 탐색을 즉시 멈추고, 그 시점까지 완성한 source/fact/question/route graph를 유효한 JSON으로 봉인한다.
+
 [Verifier-ready atomic evidence contract — 최우선]
 
 각 material/counter/resolution fact는 반드시 다음 규칙을 지킨다.
@@ -97,25 +107,21 @@ LIKELY_NONPUBLIC은 단순히 찾지 못했다는 뜻이 아니며 공개의무,
 
 특정 COMPLETE 상태를 형식적으로 강제하지 않는다.
 
-[출력]
+[출력 — JSON이 첫 번째이자 주 산출물]
 
-1. 사람이 읽는 Markdown research report
-2. SourceDocumentV3 registry
-3. Atomic material/counter/resolution facts
-4. DerivedMetricV3
-5. QuestionFamilyResultV3
-6. SearchRouteReceiptV3
-7. ResearchDossierV3 JSON 정확히 하나
-8. score_authority=false
-9. stage_authority=false
+1. `E2R_RESEARCH_DOSSIER_JSON_BEGIN` 직후 ResearchDossierV3 JSON 정확히 하나를 먼저 출력한다.
+2. JSON 안에 SourceDocumentV3, Atomic material/counter/resolution facts, DerivedMetricV3, QuestionFamilyResultV3, SearchRouteReceiptV3를 모두 넣는다.
+3. `E2R_RESEARCH_DOSSIER_JSON_END` 뒤 사람이 읽는 Markdown 설명은 짧게 덧붙일 수 있으나 JSON보다 먼저 쓰지 않는다.
+4. score_authority=false
+5. stage_authority=false
 
 [전달 실패 방지 — JSON 직렬화 우선]
 
-1. 조사 도중이 아니라 최종 답변을 쓰기 전에 유효한 ResearchDossierV3 JSON을 먼저 완성하고 검사한다.
+1. 조사 중 계속 유지한 evidence graph에서 유효한 ResearchDossierV3 JSON을 최종 답변의 첫 산출물로 봉인한다. 마지막에 처음부터 graph를 재작성하지 않는다.
 2. ResearchDossierV3 JSON 직렬화는 생략할 수 없다. self-audit에서 문제가 발견되면 JSON 전체를 포기하지 말고 해당 fact만 제거해 unresolved_gaps와 non-terminal QuestionFamilyResultV3로 옮긴다.
 3. 응답 길이가 부족할 것 같으면 Markdown 설명을 짧게 하고, 검증 가능한 atomic fact 수를 줄이되 mandatory question roster와 유효한 JSON 객체는 반드시 남긴다.
 4. exact supporting excerpt는 각 atomic fact를 직접 지지하는 짧은 구절만 쓴다. 서로 다른 fact의 인용량을 합친 임의의 내부 제한 때문에 dossier 전체를 보류하지 않는다.
-5. 도구 세션이 끝날 위험이 있으면 그 시점까지 검증 완료된 fact와 명시적 gap만 담은 유효한 dossier를 먼저 출력한다. 미완료 후보를 억지로 fact로 승격하지 않는다.
+5. 도구 세션이 끝날 위험이 있으면 새 탐색을 중단하고 그 시점까지 검증 완료된 fact와 명시적 gap만 담은 유효한 dossier를 먼저 출력한다. 미완료 후보를 억지로 fact로 승격하지 않으며, 검증 완료된 subset을 함께 버리지 않는다.
 6. 최종 답변에는 `E2R_RESEARCH_DOSSIER_JSON_BEGIN`과 `E2R_RESEARCH_DOSSIER_JSON_END` 경계가 정확히 한 쌍 있어야 한다.
 
 최종 출력 전에 다음 self-audit를 먼저 수행하라.

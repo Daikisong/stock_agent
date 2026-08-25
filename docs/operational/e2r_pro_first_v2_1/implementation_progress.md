@@ -1119,3 +1119,96 @@ compileall / diff check                       PASS / PASS
 이 수정도 target, 종목명, C17 질문명으로 분기하지 않는다. 다음 단계는 이 commit을 push한 뒤 새
 runtime/session/job/run/pass/conversation에서 C17 initial을 한 번 더 실행하는 것이다. 두 번째 실패 job은
 감사용으로 동결하며 같은 conversation에는 어떤 추가 질문도 보내지 않는다.
+
+### C17 세 번째 fresh initial — 전 후보 일괄 withholding 봉인
+
+current-material Gate 수리를 push하고 CI green을 확인한 뒤, 두 번째 C17 job을 predecessor로 봉인하고
+세 번째 actual Pro 조사를 새 conversation에 정확히 한 번 전송했다.
+
+```text
+runtime          C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260825T210303Z
+fresh session    FRESH-V2-1-C17-R3-20260825T210303Z
+fresh job        PROJOB-8d0471204d7de2826e879f2e
+fresh run        PRORUN-69358af2127fa7984988fb83
+initial pass     PROPASS-cc762a119f46a3f109bf08e6
+conversation     6a8e0320-0f28-83ee-9a1e-5c0bc2d148c7
+submit/capture   1 / 1
+automatic resend 0
+prompt/response  58,327 / 59,779 chars
+research elapsed 4,946.447733 seconds
+report SHA-256   8891d29aba3eb0c6c6f8e0a3aeca595c93932aad3d0cb550fba5c0aaea4368e5
+```
+
+Pro는 11개 source document와 26개 mandatory question result를 만들었지만, 조사 마지막에 fact-question
+양방향 binding과 전체 schema 검증을 끝내지 못했다는 이유로 후보 50개 전부를 accepted candidate
+배열에서 제거했다. 조사 부족과 구분하면 다음과 같다.
+
+```text
+opened source documents                 11
+mandatory question results              26 / 26
+self-reported candidate facts           50
+serialized material/counter/resolution   0 / 0 / 0
+search route receipts                     0
+terminal/nonterminal questions            0 / 26
+complete claimed                          false
+```
+
+최초 import는 `conversation_id=PENDING_NEW_CONVERSATION`, top-level/pass `parent_pass_id=null` 조합에서
+fail-closed했다. 기존 transport normalizer가 같은 placeholder를 parent 문자열 `NONE`과 함께 쓴 경우만
+처리하고 더 정확한 JSON null 조합을 놓쳤기 때문이다. exact initial pass와 명시적 parent field를 모두
+확인한 뒤 null 또는 `NONE`만 허용하도록 공통 수정했다. parent field 누락과 follow-up pass는 계속
+정규화하지 않는다.
+
+실제 immutable capture를 browser 재개 없이 parser→dialect→pre-schema→identity binding→strict V3
+validator에 다시 넣은 결과는 `0 facts / 11 sources / 26 questions` graph로 PASS했다. 동일 submitted job을
+receipt-only recovery한 뒤 Gate를 실행했고 추가 upload/composer/send는 0이었다.
+
+```text
+Initial Gate material / accepted          0 / 0
+acceptance                                0.0% FAIL
+failure reasons                           NO_INITIAL_MATERIAL_CANDIDATES,
+                                          INITIAL_ACCEPTANCE_RATIO_BELOW_80_PERCENT
+full source fetch                         11
+query/search                              0 / 0
+same-conversation repair                  0
+score/Stage authority                     false / false
+publication                               withheld
+durable state                             GAP_ADJUDICATION + frozen_at
+```
+
+과거 Gate receipt는 당시 코드대로 output defect 0을 보존한다. 새 공통 Gate는 dossier가 명시한
+`candidate_fact_count_withheld > 0`인데 current material이 0이면 synthetic fact를 만들지 않고
+`INITIAL_PROMPT_OUTPUT_DEFECT` 하나를 추가 기록한다. sealed dossier의 read-only projection은 withheld
+50, output defect 1이며 operational PASS 권한은 없다.
+
+근본 prompt 수정은 마지막 일괄 직렬화를 금지한다.
+
+```text
+조사 시작        mandatory question skeleton 생성
+source를 열 때   SourceDocument + route 즉시 append
+quote 확인 때    AtomicFact + 양방향 question binding 즉시 append
+후속 조사        이미 검증된 core subset 보존 후 한 건씩 추가
+후보 실패        해당 후보만 gap, 기존 valid fact는 유지
+도구 시간 감소   새 탐색 중지 → 현재 graph를 JSON-first로 봉인
+```
+
+source와 후보를 찾았는데 마지막 일괄 schema 검사를 못 끝냈다는 이유로 세 fact 배열을 모두 비우는 행동을
+모든 36개 아키타입에서 명시적으로 금지했다. JSON을 최종 응답의 첫 번째 주 산출물로 두고 Markdown은
+그 뒤 짧게만 허용한다. 특정 target·C17·롯데케미칼·후보 개수로 분기하지 않는다.
+
+검증:
+
+```text
+exact captured V3 transport recovery             PASS
+focused prompt/preflight/gate/orchestration     65/65 PASS
+Initial Prompt V3 snapshots                     36/36 PASS / critical 0
+Pro-first static audit                          PASS / critical 0
+Pro-first V2 static audit                       PASS / critical 0
+E2R v6 production static audit                  PASS / critical 0
+compileall / diff check                         PASS / PASS
+```
+
+세 번째 immutable failure의 전체 hash와 old/new Gate 의미는
+`p8_c17_fresh_initial_failure_receipt_r3.json`에 기록했다. 다음 C17은 이 수정 commit을 packet에 결박한
+새 runtime/session/job/run/pass/conversation에서 다시 시작한다. 세 번째 conversation에는 추가 질문을
+보내지 않는다.

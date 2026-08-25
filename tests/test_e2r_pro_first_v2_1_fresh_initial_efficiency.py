@@ -166,6 +166,27 @@ class FreshInitialEfficiencyGateTest(unittest.TestCase):
         )
         self.assertEqual(gate.receipt["failure_reasons"], [])
 
+    def test_self_reported_bulk_withholding_is_an_initial_output_defect(self) -> None:
+        dossier = self._dossier()
+        dossier["material_facts"] = []
+        dossier["research_saturation"] = {
+            "candidate_fact_count_withheld": 50,
+            "withholding_reason": "final graph serialization was not completed",
+        }
+
+        gate = self._evaluate(accepted_count=0, dossier=dossier)
+
+        self.assertFalse(gate.passed)
+        self.assertEqual(gate.receipt["serialized_material_fact_count"], 0)
+        self.assertEqual(gate.receipt["initial_material_candidate_count"], 0)
+        self.assertEqual(gate.receipt["self_reported_withheld_candidate_count"], 50)
+        self.assertEqual(gate.receipt["initial_prompt_output_defect_count"], 1)
+        self.assertIn("INITIAL_PROMPT_OUTPUT_DEFECT", gate.receipt["failure_reasons"])
+        self.assertIn(
+            "NO_INITIAL_MATERIAL_CANDIDATES",
+            gate.receipt["failure_reasons"],
+        )
+
     def _evaluate(
         self,
         *,
