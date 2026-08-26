@@ -1013,10 +1013,12 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
         root.mkdir(parents=True)
         rows = ({"dossier_fact_id": "PROFACT-1", "status": "ACCEPTED_CURRENT"},)
         links = ({"claim_id": "CLAIM-1", "fact_id": "FACT-1"},)
+        rejection_classifications: tuple[dict, ...] = ()
         rejections: tuple[dict, ...] = ()
         compilation = {"facts": [], "claim_fact_links": list(links)}
         for name, values in (
             ("source_verifications.jsonl", rows),
+            ("rejection_classifications.jsonl", rejection_classifications),
             ("claim_fact_links.jsonl", links),
             ("fact_compilation_rejections.jsonl", rejections),
         ):
@@ -1032,11 +1034,20 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
             "job_id": "JOB-1",
             "dossier_id": "DOSSIER-1",
             "verification_semantics_version": "v7",
+            "preflight_receipt_hash": "a" * 64,
         }
         receipt["verification_hash"] = canonical_hash(
             {
-                **receipt,
+                "job_id": receipt["job_id"],
+                "dossier_id": receipt["dossier_id"],
+                "verification_semantics_version": receipt[
+                    "verification_semantics_version"
+                ],
+                "preflight_receipt_hash": receipt[
+                    "preflight_receipt_hash"
+                ],
                 "verifications": rows,
+                "rejection_classifications": rejection_classifications,
                 "fact_compilation": compilation,
             }
         )

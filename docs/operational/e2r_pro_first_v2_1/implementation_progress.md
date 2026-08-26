@@ -1751,3 +1751,93 @@ compileall / git diff check                       PASS / PASS
 final full unittest elapsed       655.522 seconds
 final full unittest log sha256    9bccf1f209803306de93029cdab105aa762253c5915d594183dcc88c094eba91
 ```
+
+## 2026-08-26 — P10 V3 JSON full-thesis tail 구현 및 actual 3종 read-only 검문
+
+P9는 fresh initial 효율 검문까지였고 세 canary 모두 `GAP_ADJUDICATION`에서 멈춰 있었다. P10은 이미
+성공한 각 initial pass를 다시 보내지 않고, **동일한 일반 Chat + Pro conversation**에서 deterministic
+saturation이 지목한 공백만 후속 조사한 뒤 score/Judge/Stage로 넘기는 후반 실행 경로다.
+
+화면에 보이는 `ResearchDossierV3_...json`의 정확한 처리 순서는 다음과 같다.
+
+```text
+같은 assistant turn의 JSON 다운로드
+→ conversation/run/pass/hash 결박
+→ V3 strict schema와 source/fact lineage 검증
+→ append-only effective dossier
+→ deterministic saturation
+→ 남은 question만 같은 Pro conversation에 delta 요청
+```
+
+이전 진행 문구의 “새 MD 실다운로드”는 legacy capture 테스트 이름을 그대로 옮긴 부정확한 표현이었다.
+현재 fresh V3 actual의 정확한 표현은 “예전 MD/다른 turn JSON을 오인하지 않고, 같은 turn의 새 V3 JSON을
+실다운로드하며, 별도 PDF가 존재할 때만 선택 캡처한다”이다. 쉬운 예로 화면에 C06 JSON 카드가 이미 있으면
+그 버튼으로 파일을 받아 연결하면 되고, 새 MD가 다시 생기기를 기다리지 않는다.
+
+C06 actual은 이미 다음 경로로 다운로드·연결돼 있다.
+
+```text
+capture mode       CHATGPT_WEB_VISIBLE_CHAT_PRO_FRESH_V3
+capture source     DIRECT_REPORT_DOM
+dossier path       capture/incoming/research_dossier.json
+dossier hash       0e43559193138e74d69a22f1c081cca1baa02fd110fba4490b9b95e381e9d9cd
+conversation       6a8db0ad-8ed0-83e8-888e-dce26c950343
+submit/capture     1 / 1
+expanded JSON      capture/supplemental/expanded_research_dossier.json
+schema/import      e2r_pro_research_dossier_v3 / PASS
+PDF                없음(null, 오류 아님)
+```
+
+새 runner는 fresh boundary와 old-answer leakage manifest를 다시 검증하고, 기존 conversation을
+`recover_conversation_without_submit`으로 연 뒤 initial submit delta 0을 보장한다. 후속 응답은 전체 dossier
+재출력이 아니라 새 source/fact/route와 변경 question/gap만 담는 `ResearchDossierV3 delta JSON`이다.
+deterministic merger가 기존 accepted lineage를 append-only로 합친다.
+
+동일 semantic gap을 pass/dossier transport hash 변화만으로 재전송하지 않도록
+`research_gap_context_hash`를 pass ledger에 영구 저장한다. 공개 gap, counter/supersession, verifier repair,
+saturation audit은 순서와 권한이 분리되어 있다. Pro는 증거만 추가하며 score/Stage는 계속 deterministic
+pipeline만 계산한다. semantic progress가 없거나 source gap이 남으면 낮은 점수를 확정하지 않고 honest
+pending으로 종료한다.
+
+기존 durable verification receipt 재사용에서 실제 accepted fact를 0개로 오인하던 원인도 수정했다.
+검산 hash를 재계산할 때 `preflight_receipt_hash`와 `rejection_classifications`가 빠져 모든 actual receipt가
+불일치로 보였던 문제다. 두 artifact를 exact hash 재계산에 포함한 뒤 actual 3종이 모두 회복됐다.
+
+```text
+canary   accepted facts   next public questions   material repair candidates
+C06      21               25                      3
+C17      18               21                      1
+C28      17               24                      3
+```
+
+질문 수가 P9의 unresolved 41보다 큰 것은 같은 질문이 `공식 route 미시도`, `verified fact linkage 누락`,
+`source-route quorum 미달`처럼 여러 deterministic failure family에 겹칠 수 있기 때문이다. 종목별 query
+문자열을 코드가 만드는 방식은 사용하지 않는다. runner는 failure code와 source-role 공백만 같은 Pro에
+되돌리고, 실제 검색 판단과 query 생성은 Pro가 수행한다.
+
+코드 변경 후 검증은 다음과 같다.
+
+```text
+V3/fresh/runtime/JSON capture focused                 72/72 PASS
+Phase100                                               15/15 PASS
+Pro-first static audit                          PASS / critical 0
+Pro-first V2 static audit                       PASS / critical 0
+V2.1 fresh efficiency audit                     PASS / critical 0
+compileall / git diff check                           PASS / PASS
+WSL full discovery                           7,717 executed
+WSL code assertion failure                                0
+WSL Playwright startup environment error                  60
+Windows browser bundle                            78 PASS
+Windows-only POSIX subprocess check environment error      1
+```
+
+WSL의 60개 오류는 production adapter 코드가 아니라 headless Chromium이 `libnspr4.so`를 찾지 못해
+각 browser test의 setup에서 종료된 동일 환경 오류다. 해당 browser 동작은 Playwright가 설치된 Windows
+Python에서 전부 통과했다. 반대로 Windows에서 남은 1개는 POSIX provider의 지연 import를 새 subprocess로
+검사하는 Linux 전용 항목이며 WSL 전체 실행에서 통과했다. 독립 GitHub CI에서는 Playwright system
+library를 설치한 Ubuntu runner로 전체 suite를 다시 검증한다.
+
+이 시점에는 actual 후속 Pro 전송을 아직 하지 않았다. code/receipt/document를 먼저 한글 commit으로
+push하고 독립 CI green을 확인한 뒤 C06 → C17 → C28 순서로 같은 conversation tail을 실행한다. 따라서
+score/Stage publication은 계속 withheld이며 `p10_full_thesis_tail_preflight_receipt.json`은 구현·검문
+receipt이지 최종 full-thesis receipt가 아니다.

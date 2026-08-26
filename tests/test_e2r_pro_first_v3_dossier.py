@@ -5,11 +5,17 @@ import unittest
 
 from e2r.pro_first.dossier import (
     DOSSIER_V3_SCHEMA_VERSION,
+    DossierDeltaMergeError,
     DossierValidationContext,
     DossierValidationError,
     ResearchDossierNormalizer,
     ResearchDossierValidator,
+    apply_research_dossier_delta,
     bind_dossier_transport_identity,
+)
+from e2r.pro_first.saturation import ResearchSaturationAdjudicator
+from e2r.pro_first.saturation.question_closure import (
+    compile_question_closure_decision,
 )
 
 
@@ -397,6 +403,211 @@ class ProFirstV3DossierTest(unittest.TestCase):
                 "e2r_pro_research_dossier_v3",
             },
         )
+
+    def test_v3_document_lineage_and_roles_feed_saturation(self) -> None:
+        payload = self._dossier()
+        route = {
+            "route_receipt_id": "ROUTE-V3-001",
+            "pass_id": self.pass_id,
+            "archetype_id": self.archetype_id,
+            "question_family_id": self.question_id,
+            "gap_id": "GAP-V3-001",
+            "source_role_id": "OFFICIAL_FILING",
+            "query_or_navigation_objective": "Open the official filing",
+            "query_text": "issuer official filing",
+            "result_count_seen": 1,
+            "opened_source_urls": ["https://example.com/filing"],
+            "accepted_fact_ids": ["FACT-001"],
+            "rejected_candidate_ids": [],
+            "provider_status": "SUCCESS",
+            "no_new_route_reason": None,
+            "performed_at": "2026-08-22T00:00:00Z",
+        }
+        question = self._question_result()
+        question["search_route_receipt_ids"] = ["ROUTE-V3-001"]
+        payload["search_route_receipts"] = [route]
+        payload["question_family_results"] = [question]
+
+        decision = compile_question_closure_decision(
+            question_contract={
+                "question_family_id": self.question_id,
+                "mandatory_for_full_thesis": True,
+                "required_source_roles": ["OFFICIAL_FILING"],
+                "question_roles": ["ECONOMIC_BRIDGE"],
+                "could_change_score": True,
+                "could_change_stage": False,
+                "could_change_hard_break": False,
+                "affected_component_ids": ["eps_fcf_explosion"],
+                "adequate_search_requirements": {
+                    "minimum_distinct_source_routes": 1,
+                    "official_route_attempt_required": True,
+                    "independent_no_new_route_confirmations_for_absence": 2,
+                },
+            },
+            question_result=question,
+            dossier_facts=payload["material_facts"],
+            source_lineages=payload["source_lineages"],
+            source_documents=payload["source_documents"],
+            route_receipts=payload["search_route_receipts"],
+            verified_fact_ids=frozenset({"FACT-001"}),
+        )
+
+        self.assertTrue(decision.question_to_source_linkage_complete)
+        self.assertEqual(decision.linked_source_lineage_ids, ("SL-001",))
+        self.assertIn("OFFICIAL_FILING", decision.verified_source_roles)
+        self.assertNotIn(
+            "QUESTION_FACT_MISSING_SOURCE_LINEAGE",
+            decision.failure_codes,
+        )
+        saturation = ResearchSaturationAdjudicator().adjudicate(
+            dossier=payload,
+            verified_fact_ids=("FACT-001",),
+        )
+        q01 = next(
+            row
+            for row in saturation.question_decisions
+            if row.question_family_id == self.question_id
+        )
+        self.assertEqual(q01.linked_source_lineage_ids, ("SL-001",))
+        self.assertNotIn(
+            "QUESTION_FACT_MISSING_SOURCE_LINEAGE",
+            q01.failure_codes,
+        )
+
+    def test_v3_followup_delta_appends_document_fact_lineage_and_route(self) -> None:
+        original = self._dossier()
+        response = self._dossier()
+        response["research_pass_id"] = "PROPASS-v3-followup"
+        response["parent_pass_id"] = self.pass_id
+        response["candidate_archetypes"] = []
+        response["selected_archetypes"] = []
+        response["source_documents"] = [
+            {
+                **self._source(
+                    "SRC-002",
+                    "https://example.com/followup-filing",
+                ),
+                "lineage_id": "SL-002",
+            }
+        ]
+        followup_fact = self._fact(
+            "FACT-002",
+            source_id="SRC-002",
+            predicate="FREE_CASH_FLOW",
+            excerpt="Free cash flow was positive in the current period.",
+        )
+        followup_fact["research_pass_id"] = "PROPASS-v3-followup"
+        response["material_facts"] = [followup_fact]
+        response["counterfacts"] = []
+        response["resolution_facts"] = []
+        response["source_lineages"] = [
+            {
+                "lineage_id": "SL-002",
+                "source_document_ids": ["SRC-002"],
+                "fact_ids": ["FACT-002"],
+                "independence_group_id": "ISSUER-FILING-FOLLOWUP",
+                "status": "ACTIVE",
+            }
+        ]
+        response["search_route_receipts"] = [
+            {
+                "route_receipt_id": "ROUTE-V3-002",
+                "pass_id": "PROPASS-v3-followup",
+                "archetype_id": self.archetype_id,
+                "question_family_id": self.question_id,
+                "gap_id": "GAP-V3-002",
+                "source_role_id": "OFFICIAL_FILING",
+                "query_or_navigation_objective": "Open a newer official filing",
+                "query_text": "issuer followup official filing",
+                "result_count_seen": 1,
+                "opened_source_urls": [
+                    "https://example.com/followup-filing"
+                ],
+                "accepted_fact_ids": ["FACT-002"],
+                "rejected_candidate_ids": [],
+                "provider_status": "SUCCESS",
+                "no_new_route_reason": None,
+                "performed_at": "2026-08-22T01:00:00Z",
+            }
+        ]
+        response["research_passes"] = [
+            {
+                "pass_id": "PROPASS-v3-followup",
+                "parent_pass_id": self.pass_id,
+                "pass_name": "PUBLIC_GAP_CLOSURE",
+                "status": "COMPLETE",
+                "prompt_hash": "c" * 64,
+                "response_hash": "d" * 64,
+            }
+        ]
+        response["question_family_results"] = []
+        response["derived_metrics"] = []
+
+        merged = apply_research_dossier_delta(
+            original_dossier=original,
+            response_dossier=response,
+            validation_context=DossierValidationContext(
+                job_id="PROJOB-v3",
+                run_id="PRORUN-v3",
+                target_id=self.target_id,
+                as_of_date="2026-08-23",
+                conversation_id="conversation-v3",
+                candidate_archetype_ids=(self.archetype_id,),
+                research_pass_id="PROPASS-v3-followup",
+                parent_pass_id=self.pass_id,
+                enforce_parent_pass_id=True,
+            ),
+        )
+
+        self.assertEqual(merged.new_fact_ids, ("FACT-002",))
+        self.assertEqual(merged.new_source_lineage_ids, ("SL-002",))
+        self.assertEqual(merged.new_route_receipt_ids, ("ROUTE-V3-002",))
+        self.assertEqual(
+            {row["source_document_id"] for row in merged.effective_dossier["source_documents"]},
+            {"SRC-001", "SRC-002"},
+        )
+        self.assertNotIn("proposed_score_ranges", merged.effective_dossier)
+        ResearchDossierValidator().validate(
+            merged.effective_dossier,
+            DossierValidationContext(
+                job_id="PROJOB-v3",
+                run_id="PRORUN-v3",
+                target_id=self.target_id,
+                as_of_date="2026-08-23",
+                conversation_id="conversation-v3",
+                candidate_archetype_ids=(self.archetype_id,),
+                research_pass_id="PROPASS-v3-followup",
+                parent_pass_id=self.pass_id,
+                enforce_parent_pass_id=True,
+            ),
+        )
+
+        detached = deepcopy(response)
+        detached["source_documents"].append(
+            {
+                **self._source(
+                    "SRC-003",
+                    "https://example.com/unattached-filing",
+                ),
+                "lineage_id": "SL-003",
+            }
+        )
+        with self.assertRaisesRegex(DossierDeltaMergeError, "detached"):
+            apply_research_dossier_delta(
+                original_dossier=original,
+                response_dossier=detached,
+                validation_context=DossierValidationContext(
+                    job_id="PROJOB-v3",
+                    run_id="PRORUN-v3",
+                    target_id=self.target_id,
+                    as_of_date="2026-08-23",
+                    conversation_id="conversation-v3",
+                    candidate_archetype_ids=(self.archetype_id,),
+                    research_pass_id="PROPASS-v3-followup",
+                    parent_pass_id=self.pass_id,
+                    enforce_parent_pass_id=True,
+                ),
+            )
 
 
 if __name__ == "__main__":

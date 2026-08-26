@@ -1776,6 +1776,10 @@ def _compile_question_bounds(
         for collection in ("material_facts", "counterfacts", "resolution_facts")
         for row in dossier.get(collection) or ()
     }
+    source_documents = {
+        str(row.get("source_document_id") or ""): row
+        for row in dossier.get("source_documents") or ()
+    }
     verified = frozenset(str(value) for value in verified_fact_ids)
     result_by_id = {
         str(row.get("question_family_id") or ""): row
@@ -1816,6 +1820,32 @@ def _compile_question_bounds(
                     *(facts.get(fact_id, {}).get("source_role_ids") or ()),
                     facts.get(fact_id, {}).get("source_role_id"),
                     facts.get(fact_id, {}).get("source_family"),
+                    *(
+                        source_documents.get(
+                            str(
+                                facts.get(fact_id, {}).get(
+                                    "source_document_id"
+                                )
+                                or ""
+                            ),
+                            {},
+                        ).get("source_role_ids")
+                        or ()
+                    ),
+                    source_documents.get(
+                        str(
+                            facts.get(fact_id, {}).get("source_document_id")
+                            or ""
+                        ),
+                        {},
+                    ).get("source_role_id"),
+                    source_documents.get(
+                        str(
+                            facts.get(fact_id, {}).get("source_document_id")
+                            or ""
+                        ),
+                        {},
+                    ).get("source_family"),
                 )
                 if str(value or "")
             }
@@ -2002,6 +2032,7 @@ def _verification_artifact_rows(
         )
     root = Path(verification.verification_root)
     rows = _read_jsonl(root / "source_verifications.jsonl")
+    rejection_rows = _read_jsonl(root / "rejection_classifications.jsonl")
     links = _read_jsonl(root / "claim_fact_links.jsonl")
     rejections = _read_jsonl(root / "fact_compilation_rejections.jsonl")
     compilation_path = root / "fact_compilation_receipt.json"
@@ -2015,7 +2046,11 @@ def _verification_artifact_rows(
             "verification_semantics_version": verification.receipt.get(
                 "verification_semantics_version"
             ),
+            "preflight_receipt_hash": verification.receipt.get(
+                "preflight_receipt_hash"
+            ),
             "verifications": rows,
+            "rejection_classifications": rejection_rows,
             "fact_compilation": compilation,
         }
     )

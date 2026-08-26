@@ -967,12 +967,9 @@ class FreshSessionOrchestratorV3:
             raise ValueError(f"unsupported fresh V3 follow-up: {pass_name}")
         scope, parent = self._scope_and_completed_parent(built, pass_name)
         existing_passes = self.ledger.list_passes(built.job.job_id)
-        if pass_name in _GAP_PASS_NAMES:
-            prior = tuple(row for row in existing_passes if row.pass_name in _GAP_PASS_NAMES)
-            failure = "SECOND_PUBLIC_GAP_PASS_BLOCKS_OPERATIONAL_READY"
-        else:
-            prior = tuple(row for row in existing_passes if row.pass_name == pass_name)
-            failure = "SECOND_SATURATION_PASS_BLOCKS_OPERATIONAL_READY"
+        prior = tuple(
+            row for row in existing_passes if row.pass_name == pass_name
+        )
         context = {
             "latest_dossier_digest": dict(latest_dossier_digest),
             "unresolved_question_state": list(unresolved_question_state),
@@ -991,10 +988,6 @@ class FreshSessionOrchestratorV3:
                 "logical_input_hash": logical_input_hash,
             },
         )
-        if prior and all(row.pass_id != pass_id for row in prior):
-            raise FreshSessionRerunRequired(
-                f"{failure}: seal this diagnostic conversation and start a new one"
-            )
         active = tuple(
             row
             for row in existing_passes
@@ -1024,6 +1017,12 @@ class FreshSessionOrchestratorV3:
                 detail={
                     "fresh_v3_followup": True,
                     "context_hash": compiled.context_hash,
+                    "research_gap_context_hash": str(
+                        (context.get("pass_inputs") or {}).get(
+                            "research_gap_context_hash"
+                        )
+                        or ""
+                    ),
                     "prompt_char_count": len(compiled.prompt_text),
                     "score_authority": False,
                     "stage_authority": False,
@@ -1076,6 +1075,13 @@ class FreshSessionOrchestratorV3:
             pass_id,
             response_hash=response_hash,
             conversation_id=conversation_id,
+        )
+
+    def confirm_transport_pending_result_visible(self, pass_id: str):
+        """Expose the shared exactly-once recovery path to fresh V3 runners."""
+
+        return self.followup_transport.confirm_transport_pending_result_visible(
+            pass_id
         )
 
     def _scope_and_completed_parent(
@@ -1196,8 +1202,11 @@ def _compile_fresh_followup_v3(
             "초기 V3의 one fact/one predicate/one source/one exact excerpt 계약과 "
             "verifier_preflight를 그대로 지켜라. 기존 accepted fact는 append-only다.",
             "최종 응답 맨 앞에 위 job/run/pass/parent marker를 각각 정확히 한 번 "
-            "출력하고, `E2R_RESEARCH_DOSSIER_JSON_BEGIN/END` 사이에 최신 "
-            "ResearchDossierV3 JSON 하나를 출력하라.",
+            "출력하고, `E2R_RESEARCH_DOSSIER_JSON_BEGIN/END` 사이에 "
+            "ResearchDossierV3 **delta JSON** 하나를 출력하라. 이전 전체 dossier를 "
+            "반복하지 말고 이번 pass의 새 source/fact/route와 실제로 갱신한 question/gap만 "
+            "배열에 넣어라. schema의 나머지 필수 배열·객체는 빈 값으로 유지해도 되며, "
+            "deterministic merger가 이전 append-only ledger와 합친다.",
             "",
             "## Compact deterministic context",
             "",

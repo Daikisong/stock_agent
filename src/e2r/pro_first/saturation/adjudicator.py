@@ -34,8 +34,12 @@ class ResearchSaturationAdjudicator:
         verifier_repair_pending_ids: Sequence[str] = (),
         lifecycle_hard_break_pending_ids: Sequence[str] = (),
     ) -> ResearchSaturationReceipt:
-        if dossier.get("schema_version") != "e2r_pro_research_dossier_v2":
-            raise ValueError("research saturation requires ResearchDossierV2")
+        schema_version = str(dossier.get("schema_version") or "")
+        if schema_version not in {
+            "e2r_pro_research_dossier_v2",
+            "e2r_pro_research_dossier_v3",
+        }:
+            raise ValueError("research saturation requires ResearchDossierV2/V3")
         selected = tuple(str(value) for value in dossier.get("selected_archetypes") or ())
         bundle = select_contract_bundle(selected)
         contracts_by_question = {
@@ -74,6 +78,7 @@ class ResearchSaturationAdjudicator:
         snapshot = compile_verified_research_snapshot(dossier, verified_fact_ids)
         verified = frozenset(snapshot.verified_fact_ids)
         lineages = tuple(dossier.get("source_lineages") or ())
+        source_documents = tuple(dossier.get("source_documents") or ())
         routes = tuple(dossier.get("search_route_receipts") or ())
         fact_snapshot_hash = snapshot.fact_snapshot_hash
         lineage_roster_hash = snapshot.accepted_lineage_roster_hash
@@ -115,6 +120,7 @@ class ResearchSaturationAdjudicator:
                     question_result=result,
                     dossier_facts=fact_rows,
                     source_lineages=lineages,
+                    source_documents=source_documents,
                     route_receipts=routes,
                     verified_fact_ids=verified,
                     deterministic_bound=bounds.get(question_id),

@@ -35,6 +35,7 @@ def compile_question_closure_decision(
     source_lineages: Sequence[Mapping[str, Any]],
     route_receipts: Sequence[Mapping[str, Any]],
     verified_fact_ids: frozenset[str],
+    source_documents: Sequence[Mapping[str, Any]] = (),
     deterministic_bound: DeterministicQuestionBound | None = None,
     fixpoint_confirmations: Sequence[NoNewRouteConfirmation] = (),
 ) -> QuestionClosureDecision:
@@ -46,7 +47,12 @@ def compile_question_closure_decision(
         for row in dossier_facts
     }
     lineage_by_id = {
-        str(row.get("source_lineage_id") or ""): row for row in source_lineages
+        str(row.get("source_lineage_id") or row.get("lineage_id") or ""): row
+        for row in source_lineages
+    }
+    source_document_by_id = {
+        str(row.get("source_document_id") or ""): row
+        for row in source_documents
     }
     linked_fact_ids = tuple(
         dict.fromkeys(
@@ -60,7 +66,10 @@ def compile_question_closure_decision(
     )
     linked_lineages = tuple(
         dict.fromkeys(
-            str(facts_by_id[value].get("source_lineage_id") or "")
+            _fact_lineage_id(
+                facts_by_id[value],
+                source_document_by_id=source_document_by_id,
+            )
             for value in verified_linked
             if value in facts_by_id
         )
@@ -93,6 +102,7 @@ def compile_question_closure_decision(
     )
     route_bound_verified = _route_bound_verified_fact_ids(
         facts_by_id=facts_by_id,
+        source_document_by_id=source_document_by_id,
         route_receipts=route_receipts,
         verified_fact_ids=verified_fact_ids,
     )
@@ -110,6 +120,15 @@ def compile_question_closure_decision(
                 verified_roles.add(str(fact[key]))
         verified_roles.update(
             str(value) for value in fact.get("source_role_ids") or ()
+        )
+        source_document = source_document_by_id.get(
+            str(fact.get("source_document_id") or "")
+        ) or {}
+        for key in ("source_role_id", "source_family"):
+            if source_document.get(key):
+                verified_roles.add(str(source_document[key]))
+        verified_roles.update(
+            str(value) for value in source_document.get("source_role_ids") or ()
         )
     required_roles = tuple(
         str(value) for value in question_contract.get("required_source_roles") or ()
@@ -297,6 +316,7 @@ def compile_question_closure_decision(
 def _route_bound_verified_fact_ids(
     *,
     facts_by_id: Mapping[str, Mapping[str, Any]],
+    source_document_by_id: Mapping[str, Mapping[str, Any]],
     route_receipts: Sequence[Mapping[str, Any]],
     verified_fact_ids: frozenset[str],
 ) -> frozenset[str]:
@@ -328,22 +348,37 @@ def _route_bound_verified_fact_ids(
     )
     for fact_id in verified_fact_ids:
         fact = facts_by_id.get(fact_id) or {}
-        fact_url = str(fact.get("source_url") or fact.get("url") or "")
+        source_document = source_document_by_id.get(
+            str(fact.get("source_document_id") or "")
+        ) or {}
+        fact_urls = {
+            str(value)
+            for value in (
+                fact.get("source_url"),
+                fact.get("url"),
+                source_document.get("canonical_url"),
+                source_document.get("opened_url"),
+            )
+            if str(value or "")
+        }
         fact_pass_id = str(fact.get("research_pass_id") or "")
         if (
-            not fact_url
+            not fact_urls
             or not fact_pass_id
             or tuple(fact.get("source_anchor_fact_ids") or ())
         ):
             continue
         if any(
             str(route.get("pass_id") or "") == fact_pass_id
-            and fact_url
-            in {
+            and bool(
+                fact_urls.intersection(
+                    {
                 str(value)
                 for value in route.get("opened_source_urls") or ()
                 if str(value)
-            }
+                    }
+                )
+            )
             for route in normal_routes
         ):
             acquisition_bound.add(fact_id)
@@ -363,6 +398,26 @@ def _route_bound_verified_fact_ids(
             return frozenset(bound)
         bound.update(added)
         acquisition_bound.update(added)
+
+
+def _fact_lineage_id(
+    fact: Mapping[str, Any],
+    *,
+    source_document_by_id: Mapping[str, Mapping[str, Any]],
+) -> str:
+    """Resolve V2 direct lineage or V3 fact->document->lineage identity."""
+
+    direct = str(fact.get("source_lineage_id") or "")
+    if direct:
+        return direct
+    source_document = source_document_by_id.get(
+        str(fact.get("source_document_id") or "")
+    ) or {}
+    return str(
+        source_document.get("lineage_id")
+        or source_document.get("source_lineage_id")
+        or ""
+    )
 
 
 def _materiality(

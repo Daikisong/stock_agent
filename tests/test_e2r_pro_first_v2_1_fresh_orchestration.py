@@ -31,6 +31,10 @@ from e2r.pro_first.fresh_session.live_canary_v3 import (
     _requires_browser_result_recovery,
     build_old_answer_leakage_manifest,
 )
+from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
+    _context_already_attempted,
+    _repairable_classifications,
+)
 from e2r.pro_first.ids import canonical_hash
 from e2r.pro_first.job_store import ProFirstJobStore
 from e2r.pro_first.models import JobStatus, ResearchMode, ScanWindow
@@ -706,6 +710,137 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             all(row.conversation_id == "fresh-conversation-tail" for row in passes)
         )
         self.assertTrue(all(row.submit_count == 1 for row in passes))
+
+    async def test_distinct_gap_and_reaudit_passes_remain_in_same_conversation(self) -> None:
+        adapter = await self._prepare_and_approve("fresh-conversation-multipass")
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="7" * 64,
+        )
+        planned_names = (
+            "PUBLIC_GAP_CLOSURE",
+            "COUNTER_SUPERSESSION_CLOSURE",
+            "SATURATION_AUDIT",
+            "PUBLIC_GAP_CLOSURE",
+            "SATURATION_AUDIT",
+        )
+        pass_ids = []
+        for ordinal, pass_name in enumerate(planned_names, start=1):
+            plan, _compiled = self.orchestrator.plan_v3_followup(
+                self.built,
+                pass_name=pass_name,
+                latest_dossier_digest={
+                    "dossier_hash": f"{ordinal:064x}",
+                    "mandatory_question_nonterminal_count": max(0, 5 - ordinal),
+                },
+                unresolved_question_state=(
+                    {
+                        "question_family_id": (
+                            self.built.prompt.mandatory_question_ids[0]
+                        ),
+                        "deterministic_status": "PUBLIC_SEARCHABLE",
+                    },
+                ),
+                pass_inputs={"iteration": ordinal},
+            )
+            await self.orchestrator.prepare_followup(plan, adapter)
+            await self.orchestrator.submit_followup(plan, adapter)
+            self.orchestrator.complete_followup(
+                plan.research_pass.pass_id,
+                response_hash=f"{ordinal + 10:064x}",
+                conversation_id="fresh-conversation-multipass",
+            )
+            pass_ids.append(plan.research_pass.pass_id)
+
+        self.assertEqual(len(pass_ids), len(set(pass_ids)))
+        passes = self.orchestrator.ledger.list_passes(self.fresh_job.job_id)
+        self.assertEqual(
+            [row.pass_name for row in passes[1:]],
+            list(planned_names),
+        )
+        self.assertTrue(
+            all(
+                row.conversation_id == "fresh-conversation-multipass"
+                for row in passes
+            )
+        )
+
+    async def test_full_thesis_tail_uses_delta_prompt_and_gap_identity_dedup(self) -> None:
+        adapter = await self._prepare_and_approve("fresh-conversation-gap-dedup")
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="8" * 64,
+        )
+        gap_hash = "9" * 64
+        plan, compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest={
+                "dossier_hash": "a" * 64,
+                "fact_snapshot_hash": "b" * 64,
+            },
+            unresolved_question_state=(
+                {
+                    "question_family_id": self.built.prompt.mandatory_question_ids[0],
+                    "deterministic_status": "PUBLIC_SEARCHABLE",
+                },
+            ),
+            pass_inputs={"research_gap_context_hash": gap_hash},
+        )
+        self.assertIn("ResearchDossierV3 **delta JSON**", compiled.prompt_text)
+        self.assertIn("이전 전체 dossier를", compiled.prompt_text)
+        self.assertEqual(
+            plan.research_pass.detail["research_gap_context_hash"],
+            gap_hash,
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        await self.orchestrator.submit_followup(plan, adapter)
+        self.orchestrator.complete_followup(
+            plan.research_pass.pass_id,
+            response_hash="c" * 64,
+            conversation_id="fresh-conversation-gap-dedup",
+        )
+        self.assertTrue(
+            _context_already_attempted(
+                self.orchestrator.ledger,
+                job_id=self.fresh_job.job_id,
+                pass_name="PUBLIC_GAP_CLOSURE",
+                research_gap_context_hash=gap_hash,
+            )
+        )
+        self.assertFalse(
+            _context_already_attempted(
+                self.orchestrator.ledger,
+                job_id=self.fresh_job.job_id,
+                pass_name="PUBLIC_GAP_CLOSURE",
+                research_gap_context_hash="d" * 64,
+            )
+        )
+
+    def test_full_thesis_tail_routes_only_material_pro_repair_candidates(self) -> None:
+        rows = (
+            {
+                "candidate_id": "FACT-YES",
+                "material": True,
+                "send_to_pro_allowed": True,
+            },
+            {
+                "candidate_id": "FACT-NONMATERIAL",
+                "material": False,
+                "send_to_pro_allowed": True,
+            },
+            {
+                "candidate_id": "FACT-LOCAL",
+                "material": True,
+                "send_to_pro_allowed": False,
+            },
+        )
+        self.assertEqual(
+            tuple(row["candidate_id"] for row in _repairable_classifications(rows)),
+            ("FACT-YES",),
+        )
 
     async def test_second_semantic_repair_requires_new_conversation(self) -> None:
         adapter = await self._prepare_and_approve("fresh-conversation-repair-limit")

@@ -35,12 +35,38 @@ def compile_verified_research_snapshot(
         raise ValueError("verified fact roster contains an unknown dossier fact id")
     fact_snapshot_hash = canonical_hash([facts_by_id[value] for value in verified])
     verified_set = frozenset(verified)
+    source_documents = {
+        str(row.get("source_document_id") or ""): row
+        for row in dossier.get("source_documents") or ()
+    }
     active_lineages = tuple(
         sorted(
             (
                 {
-                    "source_lineage_id": row.get("source_lineage_id"),
-                    "source_urls": sorted(row.get("source_urls") or ()),
+                    "source_lineage_id": (
+                        row.get("source_lineage_id") or row.get("lineage_id")
+                    ),
+                    "source_urls": sorted(
+                        {
+                            str(url)
+                            for url in row.get("source_urls") or ()
+                            if str(url)
+                        }
+                        | {
+                            str(document.get("canonical_url") or "")
+                            for source_document_id in row.get(
+                                "source_document_ids"
+                            )
+                            or ()
+                            for document in (
+                                source_documents.get(
+                                    str(source_document_id)
+                                )
+                                or {},
+                            )
+                            if str(document.get("canonical_url") or "")
+                        }
+                    ),
                     "fact_ids": sorted(
                         set(str(value) for value in row.get("fact_ids") or ()).intersection(
                             verified_set

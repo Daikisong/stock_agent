@@ -30,6 +30,10 @@ from .live_canary_v3 import (
     build_old_answer_leakage_manifest,
     evaluate_initial_efficiency,
 )
+from .full_thesis_live_v3 import (
+    FRESH_FULL_THESIS_AUTHORIZATION_PHRASE,
+    FreshV3FullThesisLiveRunner,
+)
 from .rejection_taxonomy import (
     build_old_run_rejection_taxonomy,
     render_old_run_rejection_taxonomy_markdown,
@@ -48,6 +52,7 @@ __all__ = [
     "DEFAULT_COMPARISON_PATH",
     "EXPECTED_FRESH_RECEIPTS",
     "FreshBlindLeakageAudit",
+    "FRESH_FULL_THESIS_AUTHORIZATION_PHRASE",
     "FRESH_LIVE_AUTHORIZATION_PHRASE",
     "FreshDetectedInitialResult",
     "FreshInitialCanarySpec",
@@ -59,6 +64,7 @@ __all__ = [
     "FreshSessionOrchestratorV3",
     "FreshSessionRerunRequired",
     "FreshV3InitialLiveCanaryRunner",
+    "FreshV3FullThesisLiveRunner",
     "IndependentFreshInitialCanarySpec",
     "OldRunFreezeService",
     "OldAnswerLeakageManifest",

@@ -1,4 +1,4 @@
-"""Append-only merge of same-conversation ResearchDossierV2 follow-up deltas."""
+"""Append-only merge of same-conversation ResearchDossierV2/V3 deltas."""
 
 from __future__ import annotations
 
@@ -33,15 +33,16 @@ def apply_research_dossier_delta(
     response_dossier: Mapping[str, Any],
     validation_context: DossierValidationContext,
 ) -> DossierDeltaMergeResult:
-    """Accept cumulative or delta-shaped V2 responses under one strict rule.
+    """Accept cumulative or delta-shaped V2/V3 responses under one strict rule.
 
     Existing fact/lineage/route/pass rows are immutable.  A follow-up may add
     rows and may advance its question closure row, but it cannot delete prior
     fact/route links.  The resulting full ledger is then validated as ordinary
-    ResearchDossierV2 before it can reach verification or saturation.
+    ResearchDossierV2/V3 before it can reach verification or saturation.
     """
 
     _validate_scope_identity(original_dossier, response_dossier, validation_context)
+    schema_version = str(original_dossier.get("schema_version") or "")
     effective = deepcopy(dict(original_dossier))
     new_fact_ids: list[str] = []
     for collection in ("material_facts", "counterfacts", "resolution_facts"):
@@ -54,7 +55,19 @@ def apply_research_dossier_delta(
                 required_new_pass_id=validation_context.research_pass_id,
             )
         )
-    new_lineages = _merge_source_lineages(effective, response_dossier)
+    new_source_document_ids: tuple[str, ...] = ()
+    if schema_version == "e2r_pro_research_dossier_v3":
+        new_source_document_ids = _append_immutable_rows(
+            effective,
+            response_dossier,
+            collection="source_documents",
+            id_key="source_document_id",
+        )
+    new_lineages = _merge_source_lineages(
+        effective,
+        response_dossier,
+        schema_version=schema_version,
+    )
     new_routes = _append_immutable_rows(
         effective,
         response_dossier,
@@ -67,10 +80,19 @@ def apply_research_dossier_delta(
         response_dossier,
         collection="research_passes",
         id_key="pass_id",
+        required_new_pass_id=validation_context.research_pass_id,
     )
+    if schema_version == "e2r_pro_research_dossier_v3":
+        _append_immutable_rows(
+            effective,
+            response_dossier,
+            collection="derived_metrics",
+            id_key="derived_metric_id",
+        )
     updated_questions = _merge_question_results(effective, response_dossier)
     _merge_gap_state(effective, response_dossier)
-    _append_repair_register(effective, response_dossier)
+    if schema_version == "e2r_pro_research_dossier_v2":
+        _append_repair_register(effective, response_dossier)
 
     for key in (
         "research_pass_id",
@@ -99,14 +121,21 @@ def apply_research_dossier_delta(
         deterministic_research_status
     )
     effective["research_saturation"] = saturation
-    effective["proposed_score_ranges"] = []
+    if schema_version == "e2r_pro_research_dossier_v2":
+        effective["proposed_score_ranges"] = []
     effective["score_authority"] = False
     effective["stage_authority"] = False
+    if schema_version == "e2r_pro_research_dossier_v3":
+        _validate_new_v3_source_documents_are_route_bound(
+            effective,
+            new_source_document_ids=new_source_document_ids,
+            current_pass_id=validation_context.research_pass_id,
+        )
     try:
         ResearchDossierValidator().validate(effective, validation_context)
     except Exception as error:
         raise DossierDeltaMergeError(
-            f"merged ResearchDossierV2 failed strict validation: {error}"
+            f"merged ResearchDossierV2/V3 failed strict validation: {error}"
         ) from error
     return DossierDeltaMergeResult(
         effective_dossier=effective,
@@ -125,11 +154,19 @@ def _validate_scope_identity(
     response: Mapping[str, Any],
     context: DossierValidationContext,
 ) -> None:
+    original_version = str(original.get("schema_version") or "")
+    response_version = str(response.get("schema_version") or "")
     if (
-        original.get("schema_version") != "e2r_pro_research_dossier_v2"
-        or response.get("schema_version") != "e2r_pro_research_dossier_v2"
+        original_version
+        not in {
+            "e2r_pro_research_dossier_v2",
+            "e2r_pro_research_dossier_v3",
+        }
+        or response_version != original_version
     ):
-        raise DossierDeltaMergeError("follow-up merge requires two V2 dossiers")
+        raise DossierDeltaMergeError(
+            "follow-up merge requires two dossiers of the same V2/V3 schema"
+        )
     for key in ("job_id", "run_id", "conversation_id", "as_of_date"):
         if response.get(key) != original.get(key):
             raise DossierDeltaMergeError(f"follow-up changed immutable scope field: {key}")
@@ -220,6 +257,7 @@ SOURCE_LINEAGE_UNION_FIELDS = frozenset(
         "publisher_roster",
         "same_fact_reprints_collapsed",
         "existing_fact_ids_referenced",
+        "source_document_ids",
     }
 )
 SOURCE_LINEAGE_IDENTITY_FIELDS = frozenset(
@@ -236,7 +274,10 @@ SOURCE_LINEAGE_CURRENT_STATE_FIELDS = frozenset(
 
 
 def _merge_source_lineages(
-    effective: dict[str, Any], response: Mapping[str, Any]
+    effective: dict[str, Any],
+    response: Mapping[str, Any],
+    *,
+    schema_version: str,
 ) -> tuple[str, ...]:
     """Append evidence to an existing lineage without rewriting its identity.
 
@@ -246,9 +287,14 @@ def _merge_source_lineages(
     diagnostics retain an explicit value history before advancing.
     """
 
+    id_key = (
+        "lineage_id"
+        if schema_version == "e2r_pro_research_dossier_v3"
+        else "source_lineage_id"
+    )
     rows = list(effective.get("source_lineages") or ())
     index = {
-        str(row.get("source_lineage_id") or ""): position
+        str(row.get(id_key) or ""): position
         for position, row in enumerate(rows)
     }
     if len(index) != len(rows):
@@ -262,10 +308,10 @@ def _merge_source_lineages(
                 "follow-up source lineage row must be an object"
             )
         incoming = deepcopy(dict(incoming_raw))
-        lineage_id = str(incoming.get("source_lineage_id") or "")
+        lineage_id = str(incoming.get(id_key) or "")
         if not lineage_id:
             raise DossierDeltaMergeError(
-                "follow-up source lineage lacks source_lineage_id"
+                f"follow-up source lineage lacks {id_key}"
             )
         if lineage_id not in index:
             index[lineage_id] = len(rows)
@@ -332,6 +378,62 @@ def _merge_source_lineages(
         rows[index[lineage_id]] = merged
     effective["source_lineages"] = rows
     return tuple(added)
+
+
+def _validate_new_v3_source_documents_are_route_bound(
+    effective: Mapping[str, Any],
+    *,
+    new_source_document_ids: Sequence[str],
+    current_pass_id: str | None,
+) -> None:
+    """Reject unattached V3 documents without inventing pass metadata.
+
+    V3 source documents do not carry a pass id.  A new document is therefore
+    admitted only when the current pass added a fact that cites it or opened
+    its exact canonical/opened URL in a durable route receipt.
+    """
+
+    if not new_source_document_ids:
+        return
+    current_pass = str(current_pass_id or "")
+    referenced_document_ids = {
+        str(fact.get("source_document_id") or "")
+        for collection in ("material_facts", "counterfacts", "resolution_facts")
+        for fact in effective.get(collection) or ()
+        if str(fact.get("research_pass_id") or "") == current_pass
+    }
+    current_route_urls = {
+        str(url)
+        for route in effective.get("search_route_receipts") or ()
+        if str(route.get("pass_id") or "") == current_pass
+        for url in route.get("opened_source_urls") or ()
+        if str(url)
+    }
+    documents = {
+        str(row.get("source_document_id") or ""): row
+        for row in effective.get("source_documents") or ()
+    }
+    unattached = []
+    for document_id in new_source_document_ids:
+        document = documents.get(document_id) or {}
+        document_urls = {
+            str(value)
+            for value in (
+                document.get("canonical_url"),
+                document.get("opened_url"),
+            )
+            if str(value or "")
+        }
+        if (
+            document_id not in referenced_document_ids
+            and not document_urls.intersection(current_route_urls)
+        ):
+            unattached.append(document_id)
+    if unattached:
+        raise DossierDeltaMergeError(
+            "new V3 source document is detached from the current pass: "
+            + ",".join(sorted(unattached))
+        )
 
 
 def _merge_question_results(
