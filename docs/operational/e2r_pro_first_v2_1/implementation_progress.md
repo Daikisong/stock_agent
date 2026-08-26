@@ -1295,3 +1295,76 @@ compileall / git diff check                     PASS / PASS
 관리자 인증이 필요한 시스템 설치 대신 공개 Ubuntu 패키지를 `/tmp/e2r-playwright-deps`에만 풀고
 `LD_LIBRARY_PATH`로 테스트 Chromium에 연결했다. 그 후 browser 79개와 전체 7,698개가 모두
 통과했다. Windows ChatGPT 로그인 프로필과 봉인된 C17 대화는 변경하지 않았다.
+
+## 2026-08-26 — C17 다섯 번째 fresh initial은 짧은 인용의 dossier 일괄 반려를 드러냄
+
+네 번째 C17 실패 원인의 공통 verifier 수정과 독립 CI green을 확인한 뒤, 다섯 번째 actual Pro 조사를
+새 conversation에 정확히 한 번 전송했다.
+
+```text
+runtime          C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260826T010453Z
+fresh session    FRESH-V2-1-C17-R5-20260826T010453Z
+fresh job        PROJOB-6ed24292874ceae06e5e7f27
+fresh run        PRORUN-10f8b5284f7fe8bd52ca12d8
+initial pass     PROPASS-25f410895f717db11ff4fe5a
+commit binding   e8f0b25c8d6858bd6bf0b5d0b998f3b540c20c43
+conversation     6a8e3c60-3b58-83ee-ad02-e81700c63463
+submit/capture   1 / 1
+automatic resend 0
+prompt/response  59,254 / 148,393 chars
+research elapsed 3,812.572911 seconds
+report SHA-256   c9fe840b8923d5b8f210608abaed306943a78a02cb8db4ec9fffeb9e48700fd3
+```
+
+Pro 응답 캡처와 canonical conversation 복구는 성공했다. 그러나 import schema가 첫 counterfact의
+`supporting_excerpt="정기보수 영향"`을 8자 미만이라는 이유만으로 거절해 initial efficiency Gate까지
+도달하지 못했다. 이때 실제 응답에는 source 9개와 fact 33개가 있었다.
+
+```text
+source documents                       9
+material / counter / resolution    12 / 15 / 6
+all facts                              33
+derived metrics                         1
+questions / routes                 26 / 26
+short nonempty excerpt                  1
+actual import verdict                FAIL
+```
+
+이 실패는 Pro 자료 부족이나 파싱 누락이 아니라 pre-downstream schema의 일괄 반려다. 쉬운 예로 33개
+후보 중 `정기보수 영향` 한 줄이 7자라는 이유로 33개 전체를 버린 셈이다. initial dossier와 compact
+repair schema는 이제 `supporting_excerpt`가 비어 있지 않으면 후보 graph를 보존한다. 빈 문자열은 계속
+거절한다. 1~7자 후보는 자동 증거 승격되지 않으며 기존 literal source verifier가 fact 단위로 보류·거절한다.
+따라서 나머지 dossier를 살리면서 점수 안전성은 유지한다.
+
+R5 immutable capture를 새 schema로 읽기 전용 projection한 결과는 다음과 같다.
+
+```text
+schema projection                      PASS
+source / all facts                   9 / 33
+material / counter / resolution    12 / 15 / 6
+questions / routes                 26 / 26
+query / fetch                         0 / 0
+operational Gate authority              false
+projection hash       1809818ec02bdf546e2741e1275ae33e1305fd1218e6c55a03ea10eccf39fc5f
+```
+
+이 projection으로 R5를 소급 PASS 처리하지 않았다. R5 job은
+`FRESH_SESSION_DIAGNOSTIC_ONLY / NEW_CONVERSATION_REQUIRED`로 봉인했고 같은 conversation에는 어떤
+추가 입력도 보내지 않는다. 전체 ID, hash와 immutable 실패는
+`p8_c17_fresh_initial_failure_receipt_r5.json`에 기록했다.
+
+공통 schema와 36개 prompt snapshot을 갱신한 뒤 로컬 검증은 다음과 같이 닫혔다.
+
+```text
+focused dossier/preflight/repair tests          56/56 PASS
+Initial Prompt V3 snapshots                     36/36 PASS / critical 0
+전체 unittest                                   7,701 PASS
+failure / error                                   0 / 0
+Pro-first static audit                           PASS / critical 0
+Pro-first V2 static audit                        PASS / critical 0
+E2R v6 production static audit                  PASS / critical 0
+compileall / git diff check                      PASS / PASS
+```
+
+다음 실제 C17 검문은 이 schema hash가 반영된 commit과 CI green을 먼저 확인한 뒤, 여섯 번째 새
+conversation에서 수행한다. R5 raw capture와 중앙 ledger는 수정하지 않는다.

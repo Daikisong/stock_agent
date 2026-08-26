@@ -1,5 +1,5 @@
 {
-  "audit_hash": "f84cb5aa3ac01dcad2226ba46460f74d80210408881f73617e65372e2aaaaf89",
+  "audit_hash": "c2dbe8cbc64a6275adad668eca294e7c9face25cb6e0f0e70f7aa86f987958a6",
   "canonical_contract_count": 36,
   "counters": {
     "atomic_contract_missing_snapshot_count": 0,
@@ -38,7 +38,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -46,7 +46,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59529,
-      "prompt_hash": "f422dd464f507304b31fcfb24f030eaddd27a8a4275eda354f40cd27031dd8ab",
+      "prompt_hash": "cee34af03054e20943e84841a6f7f82788b521b0b32ee9ae3cafa9849c9100c3",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C01_ORDER_BACKLOG_MARGIN_BRIDGE.md"
     },
     {
@@ -59,7 +59,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -67,7 +67,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59514,
-      "prompt_hash": "8617d2a682ed98ebd0bc5ec524f090025d530e044703673d7e0928cd4cfebb57",
+      "prompt_hash": "3002bf1cf12367f2c85405a62b5d34ad09887c0e7f0018db630b616b45d8f6fa",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C02_POWER_GRID_DATACENTER_CAPEX.md"
     },
     {
@@ -80,7 +80,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -88,7 +88,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59262,
-      "prompt_hash": "d5e356d6d4dfc326076198c2d170683552207bbef28bdef55ed8fd8b76fc6742",
+      "prompt_hash": "83f8e44f9c0b6d73dec80298bef4b19b2189880bbabd084a2e49023eabb075e1",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG.md"
     },
     {
@@ -101,7 +101,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -109,7 +109,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59657,
-      "prompt_hash": "624b50a111acde9105e758b2fd5a1014a9040a381f7f3beb1b7665da7508afc2",
+      "prompt_hash": "f40273c085d9c2aa2d17b4fc8f3e6c0e4abf473540577c747b92c98cd44ee57c",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY.md"
     },
     {
@@ -122,7 +122,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -130,7 +130,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59098,
-      "prompt_hash": "e0f06d605375d510aeb00792316208cb0c9ae124a6fa8880ac05fa0587c3f895",
+      "prompt_hash": "6825821901a41b8a4d3d81d9d7aa6a17f4e9bd8b1fcfe4cffef6a1b01d15a35f",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C05_EPC_MEGA_CONTRACT_MARGIN_GAP.md"
     },
     {
@@ -143,7 +143,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 28,
       "missing_atomic_markers": [],
@@ -151,7 +151,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 60534,
-      "prompt_hash": "d0338a9c865e96d8dbb31da8f23f174214e50230797b27c09fb823ad0fb69520",
+      "prompt_hash": "baba1074d475b5cc3b72b3734b8f7c86137972eb75b3daa5d836ed364952e460",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C06_HBM_MEMORY_CUSTOMER_CAPACITY.md"
     },
     {
@@ -164,7 +164,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 28,
       "missing_atomic_markers": [],
@@ -172,7 +172,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 60492,
-      "prompt_hash": "fa3abd1d35417069ec893f2423f7b8bde905d8e297f93b194370d9628ebd8a80",
+      "prompt_hash": "f2d773a5a28ff354a9153a85e2fbc00f8223ea24e5f6d44444757b46cc88dd68",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH.md"
     },
     {
@@ -185,7 +185,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -193,7 +193,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59764,
-      "prompt_hash": "c5cce95cab9d914d78939b8a54bcd98e43cde2441c9d9360ab1902e3c2e36cb7",
+      "prompt_hash": "a469fa8edc27787032831218abf37c551c62d33e8418f96a021f5f54d7e5f55b",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY.md"
     },
     {
@@ -206,7 +206,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -214,7 +214,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59669,
-      "prompt_hash": "e7f0cb312be2de92c38e241cf033706e9a325d0195282a97b28b2b7044cee621",
+      "prompt_hash": "6a9b90684e34f6f785901bce388381b3aec41b3ea367982f3d2c143dddef500b",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF.md"
     },
     {
@@ -227,7 +227,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -235,7 +235,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59764,
-      "prompt_hash": "7f8e23d5397705cf66adaa82399ccb60bfeae53be0965ccd0b31c7f454073911",
+      "prompt_hash": "b24bde03d63fa35d36a7b9358a0b94c58c792c73ed1240911f20a32332e70455",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE.md"
     },
     {
@@ -248,7 +248,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -256,7 +256,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 58594,
-      "prompt_hash": "00446c7671fd6fac7adf4e6c02d5713a65e0b315c15b5ced7eae07a600c95f09",
+      "prompt_hash": "684c73a9669c9698fee0f6273413401fdbb38bbb9f34e087be899fd17fe2b014",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C11_BATTERY_ORDERBOOK_RERATING.md"
     },
     {
@@ -269,7 +269,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -277,7 +277,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 58547,
-      "prompt_hash": "e095958cf78383db4aa31d9e2d15ed2930bc71852d4b0e279c1c9722cad8d8bc",
+      "prompt_hash": "0c3c108058e1c7a99963a3db46f1a9d445124070726cd11fab2dae6b4d016f0f",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK.md"
     },
     {
@@ -290,7 +290,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -298,7 +298,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 58512,
-      "prompt_hash": "e080093023a751cb3c000cc8b77f6001d8c560e385d3540f93efbc511e912004",
+      "prompt_hash": "125cfa46333b3e890a309fce4beb79de311cde36975271c9fae4adc949fc2d01",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C13_BATTERY_JV_UTILIZATION_AMPC_IRA.md"
     },
     {
@@ -311,7 +311,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -319,7 +319,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 58281,
-      "prompt_hash": "17b886942d73e2dfdbada83734059269d3c82421143f094bc26bd0f428d94025",
+      "prompt_hash": "573ab8d4a7650bf472246d13cc4db1a84418cfce0273328038ee9229f830011f",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C14_EV_DEMAND_SLOWDOWN_4B_4C.md"
     },
     {
@@ -332,7 +332,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -340,7 +340,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59376,
-      "prompt_hash": "f689aa12531597f9341d933a2cd32b82c2e09cdf581a0b6cf4b8328d8f688e95",
+      "prompt_hash": "78cee0884d8e59268abe8a398a250dbcb8372eb16c7fb97d74039a83dd028e49",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C15_MATERIAL_SPREAD_SUPERCYCLE.md"
     },
     {
@@ -353,7 +353,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -361,7 +361,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 58492,
-      "prompt_hash": "e143124ef595bcd64d3e36a342b398182d43ef19aed5d72761e1e701ff748bd2",
+      "prompt_hash": "492b47887694cb74a2de1c88d33f35410e3e3715d2302e86f491acf8f064bd44",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C16_STRATEGIC_RESOURCE_POLICY_SUPPLY.md"
     },
     {
@@ -374,7 +374,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -382,7 +382,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 58529,
-      "prompt_hash": "db15f39130567f30195f9e98d1376268d4cc025f0eb9b362b3371df24e83d72b",
+      "prompt_hash": "ff9ea0d282ce646cc177d6af2d823eab737fc7152da5df09c9810e858239b193",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C17_CHEMICAL_COMMODITY_MARGIN_SPREAD.md"
     },
     {
@@ -395,7 +395,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -403,7 +403,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59506,
-      "prompt_hash": "f11a84e90423547fb44bb1b91071c914f5500fefad9ac1f54c3e1fd707f3cd43",
+      "prompt_hash": "898b5f12f3f97adf20297fa4ee1666e9861a9e5f510194cac097d7e20de5683f",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C18_CONSUMER_EXPORT_CHANNEL_REORDER.md"
     },
     {
@@ -416,7 +416,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -424,7 +424,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 58482,
-      "prompt_hash": "08150adb9f883e588faac753edf936ceca2a58289b882f99c97181c15a149c66",
+      "prompt_hash": "cdc1097119bcd6ec99c8d50eca32ad24ac817a2a90f0b699cb60be660c000058",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C19_BRAND_RETAIL_INVENTORY_MARGIN.md"
     },
     {
@@ -437,7 +437,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -445,7 +445,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 58742,
-      "prompt_hash": "b35f1943169bc05b6f778180c4a279620bb0a31f4556be164f6d5ce081b663b5",
+      "prompt_hash": "7331abb069510b49dcfb77a8890c971166947dcabaf233e4c05f9b18fb808c43",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION.md"
     },
     {
@@ -458,7 +458,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -466,7 +466,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59494,
-      "prompt_hash": "5783f187112087df375ac0f0d8f3fd947cd3ef162b954ce1af38926273fa5bef",
+      "prompt_hash": "0ed0c8949de776bfb18255af6df9217e93d6dc0d5f1724cffcc611727040ee82",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN.md"
     },
     {
@@ -479,7 +479,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -487,7 +487,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 58551,
-      "prompt_hash": "ccd2f81de07371233b34b0687f9dae69ae594904486e58f046e0b60a9941fa0d",
+      "prompt_hash": "6d4545e4238eec090a1367846b61162970757bc9ed1e6c3c1c0bd1436c8272c3",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C22_INSURANCE_RATE_CYCLE_RESERVE.md"
     },
     {
@@ -500,7 +500,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -508,7 +508,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 58785,
-      "prompt_hash": "2e19b6dce691e591535c31ab9f5636cd7f1e20cd226d8cb11099af0ae3173acf",
+      "prompt_hash": "97568462eb7f3e010fedb194eff438aa19b3289c4d0f69ad6596ad69af031b0e",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION.md"
     },
     {
@@ -521,7 +521,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 28,
       "missing_atomic_markers": [],
@@ -529,7 +529,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 60661,
-      "prompt_hash": "cce66a988e3a8e1cabbdb3264e1133531cc7e00218946947f14b30c0f5e48f79",
+      "prompt_hash": "6d6c843c1266299eb70c21756dea43f1e42efe03718182ef1b1fc91396af3d1b",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C24_BIO_TRIAL_DATA_EVENT_RISK.md"
     },
     {
@@ -542,7 +542,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -550,7 +550,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59134,
-      "prompt_hash": "c4156abfcc7a189f8d7b4b12bc0607eebe6bc2b2ffa2615db321bb9c4b3001b9",
+      "prompt_hash": "9af424eb1c254a19ae1a93dfa985a07e07ef9625f8556aea6cf1d38498ba975b",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT.md"
     },
     {
@@ -563,7 +563,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -571,7 +571,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 58761,
-      "prompt_hash": "8e0e2b20ae35cd3481e689f2b35866c0fa41d466fcd6899df1edb1b35a2e7be9",
+      "prompt_hash": "fc08b04a4a00257638e8b6979cdddd21aee47819b4550f77b501f5f2f1e3ff0a",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE.md"
     },
     {
@@ -584,7 +584,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -592,7 +592,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 58584,
-      "prompt_hash": "490b1542b348bb14da4cdf3e94d1fb52d3493e90290f20189c44f51cbc28509f",
+      "prompt_hash": "f7d0bee43bc08fcbbbdbba344c3ea2c3951a5dc6bc85600c63352c5c9613a1b9",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C27_CONTENT_IP_GLOBAL_MONETIZATION.md"
     },
     {
@@ -605,7 +605,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -613,7 +613,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59771,
-      "prompt_hash": "7b46272db9b33066e37520c85633fde43a783dce24d637ed5e5b2215171139ee",
+      "prompt_hash": "6b110121f6484cf3355780ad6319fcd0c88089d1d720cab46631461a12c30d7d",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C28_SOFTWARE_SECURITY_CONTRACT_RETENTION.md"
     },
     {
@@ -626,7 +626,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -634,7 +634,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59620,
-      "prompt_hash": "aa82f4a7b105287618259b3d849f7409cdb39bfab185f8e36791f96a722a4923",
+      "prompt_hash": "1bc70830643782c5c388160d07f3e159aa6ceabeffeef46c4c764b14aa93552f",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE.md"
     },
     {
@@ -647,7 +647,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -655,7 +655,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59452,
-      "prompt_hash": "3ba954afeadea3b354043381a32dc7056a4cacc17d7b4c140be15393ef3f0aae",
+      "prompt_hash": "388e835438a3c258c93f8d19f569ae601c5cf5ccd50afc9039b4e7666bbb5d01",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK.md"
     },
     {
@@ -668,7 +668,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 27,
       "missing_atomic_markers": [],
@@ -676,7 +676,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 59395,
-      "prompt_hash": "0b8b4262d86789ba11a6cc3902769f09142af18d9099440658aaa9e9852c4c22",
+      "prompt_hash": "5197d64150e32aca04483db93afa64d6aed9b627e19672722a960bec98f0d702",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C31_POLICY_SUBSIDY_LEGISLATION_EVENT.md"
     },
     {
@@ -689,7 +689,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "PRIMARY",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 26,
       "missing_atomic_markers": [],
@@ -697,7 +697,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 58602,
-      "prompt_hash": "28d6624b835df2ccb656da3305f0790506dcb22ab9a617e312712d2f985d219d",
+      "prompt_hash": "0a5eb8e28f53afd6d3cfce4959ed0401876e9f99957536521ffa8f3962c3bf88",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP.md"
     },
     {
@@ -706,7 +706,7 @@
         "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW"
       ],
       "contract_role": "CROSS_GUARD",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 5,
       "missing_atomic_markers": [],
@@ -714,7 +714,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 38021,
-      "prompt_hash": "71ffba62b86e8a32d29c938e92160157ce6ac4bc6c3076ce255a8e2dd3fa3add",
+      "prompt_hash": "6075268cf7966d8b68c254ba4dd5106b4d877799e22bb635ac239ba1b56c282e",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW.md"
     },
     {
@@ -723,7 +723,7 @@
         "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM"
       ],
       "contract_role": "CROSS_GUARD",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 5,
       "missing_atomic_markers": [],
@@ -731,7 +731,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 37614,
-      "prompt_hash": "385ab59be7e50ecdf0f325089a76f334933f062e66b0ab38da68a16ebf1be50f",
+      "prompt_hash": "66b40f394980713e3a99543942a1886183508e072cef14bf2fa7d4b861f3913f",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/R13_CROSS_ARCHETYPE_4B_4C_REDTEAM.md"
     },
     {
@@ -740,7 +740,7 @@
         "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION"
       ],
       "contract_role": "CROSS_GUARD",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 5,
       "missing_atomic_markers": [],
@@ -748,7 +748,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 37942,
-      "prompt_hash": "d4b4aa681b4c05e685993e04714a07ecf5fd0f61a94bd66675346bdb4165bed2",
+      "prompt_hash": "a2e13a322adc53d3208f826a925017f358119b292c92ec12f605bc87b4457e1f",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION.md"
     },
     {
@@ -757,7 +757,7 @@
         "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
       ],
       "contract_role": "CROSS_GUARD",
-      "dossier_schema_hash": "da9977b66ad14899a4533dfca3d5b9bfceca02229adacd723edb6356a0c66edc",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
       "failure_codes": [],
       "mandatory_question_count": 5,
       "missing_atomic_markers": [],
@@ -765,7 +765,7 @@
       "missing_preflight_fields": [],
       "polluted_question_ids": [],
       "prompt_char_count": 37828,
-      "prompt_hash": "82f054bc35a7f1ca7519016cb50a56650f56b2718373173ee8e5b11baf494cdd",
+      "prompt_hash": "9c9dac4d66c5508333ef114c928d76dacfd0145ccf5171d85b36e706193b158d",
       "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL.md"
     }
   ],

@@ -269,6 +269,18 @@ class ProFirstV3DossierTest(unittest.TestCase):
                 ):
                     ResearchDossierValidator().validate(payload, self._context())
 
+    def test_short_nonempty_excerpt_is_preserved_for_downstream_verification(self) -> None:
+        payload = self._dossier()
+        payload["material_facts"][0]["supporting_excerpt"] = "정기보수 영향"
+
+        receipt = ResearchDossierValidator().validate(payload, self._context())
+
+        self.assertEqual(receipt.fact_ids, ("FACT-001",))
+
+        payload["material_facts"][0]["supporting_excerpt"] = ""
+        with self.assertRaisesRegex(DossierValidationError, "schema validation failed"):
+            ResearchDossierValidator().validate(payload, self._context())
+
     def test_unknown_lifecycle_and_failed_preflight_are_rejected(self) -> None:
         payload = self._dossier()
         payload["material_facts"][0]["current_status"] = "UNKNOWN"

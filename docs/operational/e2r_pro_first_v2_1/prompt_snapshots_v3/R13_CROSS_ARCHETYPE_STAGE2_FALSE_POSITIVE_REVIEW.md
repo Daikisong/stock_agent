@@ -386,7 +386,7 @@ Mandatory question families:
           "type": "string"
         },
         "supporting_excerpt": {
-          "minLength": 8,
+          "minLength": 1,
           "type": "string"
         },
         "target_id": {

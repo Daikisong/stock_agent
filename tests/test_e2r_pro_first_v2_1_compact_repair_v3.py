@@ -297,6 +297,30 @@ class ProFirstV21CompactRepairV3Test(unittest.TestCase):
                 response_hash="f" * 64,
             )
 
+    def test_short_nonempty_repair_excerpt_is_preserved_for_reverification(self) -> None:
+        dossier = self._dossier()
+        compiled = self._compile(dossier=dossier)
+        delta = self._narrow_delta()
+        delta["repair_actions"][0]["replacement_fact"][
+            "supporting_excerpt"
+        ] = "정기보수 영향"
+
+        application = apply_repair_delta_v3(
+            dossier=dossier,
+            repair_delta=delta,
+            compiled_prompt=compiled,
+            prior_accepted_candidate_ids=("FACT-ACCEPTED",),
+            prompt_hash=compiled.prompt_hash,
+            response_hash="7" * 64,
+        )
+
+        replacement = next(
+            row
+            for row in application.effective_dossier["material_facts"]
+            if row["dossier_fact_id"] == "FACT-REPLACEMENT"
+        )
+        self.assertEqual(replacement["supporting_excerpt"], "정기보수 영향")
+
     def test_accepted_fact_cannot_be_targeted_or_deleted(self) -> None:
         dossier = self._dossier()
         compiled = self._compile(dossier=dossier)

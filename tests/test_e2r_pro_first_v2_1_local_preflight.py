@@ -103,6 +103,28 @@ class ProFirstV21LocalPreflightTest(unittest.TestCase):
             ).matched
         )
 
+    def test_short_excerpt_survives_schema_but_does_not_bypass_literal_verification(self) -> None:
+        dossier = self._dossier()
+        dossier["material_facts"][0]["supporting_excerpt"] = "정기보수 영향"
+        fetcher = _CountingFetcher(
+            {
+                self.canonical_url: FetchResult(
+                    url=self.canonical_url,
+                    ok=True,
+                    text=self._document(excerpt="정기보수 영향"),
+                )
+            }
+        )
+
+        preflight = self._run(dossier, fetcher)
+
+        self.assertTrue(
+            any(row.cause_code == "QUOTE_TOO_SHORT" for row in preflight.issues)
+        )
+        self.assertIsNone(
+            preflight.resolved_fact_documents["FACT-ONE"].quote_match_mode
+        )
+
     def test_exact_quote_accepts_only_ordered_table_delimiter_representation(self) -> None:
         verifier = ExactQuoteVerifier()
         accepted = verifier.verify(
