@@ -2134,3 +2134,18 @@ score / Stage authority            false / false
 raw capture와 기존 canonical fact는 수정하지 않았다. 다음 실행은 동일 pass 06 READY capture를
 `REUSE_CAPTURE`로 읽어 browser submit 0으로 영구 병합·재검증한 뒤 saturation을 계속한다. 상세 9개 mapping과
 신규 6개 fact ID는 `p10_c06_public_gap_fifth_capture_merge_receipt.json`에 고정했다.
+
+실제 runner 재개에서도 pass 06은 `FOLLOWUP_CAPTURE_REUSED`, `browser_submit_delta=0`으로 처리됐다.
+중복 9개를 제외한 신규 fact 6개와 route 28개만 반영됐고 effective dossier는 75 facts / 29 documents /
+27 lineages / 170 routes / 28 questions로 영구 저장됐다. persisted file hash는
+`0b6c41c9fa33239fdbe44a142d658f8b0a23d2a087843dc11c7ad9171a3d697a`다.
+
+재검증 accepted fact는 36 → 39로 늘었다. provider/parser core pending은 1로 유지됐고, 새 graph가 이전
+질문 edge를 정직하게 다시 열면서 nonterminal question은 3 → 4, source-linkage incomplete는 2 → 3이 됐다.
+따라서 아직 score/Stage로 넘기지 않았다.
+
+다음 pass 07 계획 직후 Playwright의 dialog 자동 처리 경합이 `No dialog is showing`으로 driver를 닫았다.
+ledger를 직접 확인했을 때 pass 07 `PROPASS-73881856ab23461cd67a18c1`은 `PLANNED`, submit count 0,
+submitted_at/response_hash null이었다. runner 재시작은 기존 planned row를 회복해 정확히 한 번 전송했고
+현재 `RESEARCH_RUNNING`이다. 즉 transient browser-driver 오류가 새 pass 생성이나 중복 전송으로 이어지지
+않았다.

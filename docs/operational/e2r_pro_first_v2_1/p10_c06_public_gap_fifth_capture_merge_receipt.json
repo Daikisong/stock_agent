@@ -86,8 +86,33 @@
     "failure_count": 0,
     "error_count": 0
   },
+  "actual_capture_reuse": {
+    "status": "PASS",
+    "browser_submit_delta": 0,
+    "capture_reused": true,
+    "actual_new_fact_count": 6,
+    "actual_new_route_count": 28,
+    "semantic_progress": true,
+    "persisted_effective_dossier_file_hash": "0b6c41c9fa33239fdbe44a142d658f8b0a23d2a087843dc11c7ad9171a3d697a",
+    "accepted_fact_count_after_reverification": 39,
+    "nonterminal_mandatory_question_count": 4,
+    "provider_parser_core_pending_count": 1,
+    "public_material_gap_count": 18,
+    "source_linkage_incomplete_count": 3
+  },
+  "next_pass_recovery": {
+    "pass_id": "PROPASS-73881856ab23461cd67a18c1",
+    "pass_name": "PUBLIC_GAP_CLOSURE",
+    "pass_ordinal": 7,
+    "state_before_browser_recovery": "PLANNED",
+    "submit_count_before_browser_recovery": 0,
+    "transient_error": "PLAYWRIGHT_DIALOG_RACE_NO_DIALOG_SHOWING",
+    "duplicate_submit_observed": false,
+    "submit_count_after_recovery": 1,
+    "current_status": "RESEARCH_RUNNING"
+  },
   "raw_capture_tracked_in_git": false,
   "score_authority": false,
   "stage_authority": false,
-  "next_action": "REUSE_CAPTURE_WITH_ZERO_SUBMIT_THEN_CONTINUE_DETERMINISTIC_SATURATION"
+  "next_action": "WAIT_FOR_PASS_07_CAPTURE_THEN_CONTINUE_DETERMINISTIC_SATURATION"
 }
