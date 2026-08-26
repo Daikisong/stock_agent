@@ -643,6 +643,34 @@ class ProFirstV3DossierTest(unittest.TestCase):
             ),
         )
 
+        omitted_lineage = deepcopy(response)
+        omitted_lineage["source_lineages"] = []
+        graph_projected = apply_research_dossier_delta(
+            original_dossier=original,
+            response_dossier=omitted_lineage,
+            validation_context=DossierValidationContext(
+                job_id="PROJOB-v3",
+                run_id="PRORUN-v3",
+                target_id=self.target_id,
+                as_of_date="2026-08-23",
+                conversation_id="conversation-v3",
+                candidate_archetype_ids=(self.archetype_id,),
+                research_pass_id="PROPASS-v3-followup",
+                parent_pass_id=self.pass_id,
+                enforce_parent_pass_id=True,
+            ),
+        )
+        self.assertEqual(
+            graph_projected.effective_dossier["source_lineages"][0]["fact_ids"],
+            ["FACT-001", "FACT-002"],
+        )
+        extension = graph_projected.effective_dossier["research_saturation"][
+            "v3_graph_lineage_roster_extensions"
+        ][0]
+        self.assertEqual(extension["lineage_id"], "SL-001")
+        self.assertEqual(extension["added_fact_ids"], ["FACT-002"])
+        self.assertEqual(extension["added_source_document_ids"], ["SRC-002"])
+
         detached = deepcopy(response)
         detached["source_documents"].append(
             {

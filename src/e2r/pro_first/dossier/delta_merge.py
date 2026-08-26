@@ -106,6 +106,8 @@ def apply_research_dossier_delta(
             current = dict(effective.get(key) or {})
             current.update(deepcopy(dict(incoming)))
             effective[key] = current
+    if schema_version == "e2r_pro_research_dossier_v3":
+        _extend_v3_lineage_rosters_from_graph(effective)
     _project_overclaimed_route_closures(effective)
     reported_research_status = response_dossier.get("research_status")
     if not isinstance(reported_research_status, str) or not reported_research_status:
@@ -489,6 +491,87 @@ def _project_overclaimed_route_closures(effective: dict[str, Any]) -> None:
     if projections:
         saturation = dict(effective.get("research_saturation") or {})
         saturation["route_truth_question_status_projections"] = projections
+        effective["research_saturation"] = saturation
+
+
+def _extend_v3_lineage_rosters_from_graph(effective: dict[str, Any]) -> None:
+    """Fill only omitted V3 lineage roster members from immutable graph edges.
+
+    ``source_lineages`` duplicates relationships already fixed by
+    ``source_documents[*].lineage_id`` and each atomic fact's
+    ``source_document_id``.  A delta may add a fact against a prior document
+    while omitting the unchanged lineage row.  In that case the exact missing
+    roster member is derivable without inventing source identity or content.
+    Existing extra/wrong members are never removed, so strict validation still
+    rejects contradictory graphs.
+    """
+
+    source_documents = tuple(effective.get("source_documents") or ())
+    source_by_id = {
+        str(row.get("source_document_id") or ""): row
+        for row in source_documents
+        if isinstance(row, Mapping)
+    }
+    facts = tuple(
+        row
+        for collection in ("material_facts", "counterfacts", "resolution_facts")
+        for row in effective.get(collection) or ()
+        if isinstance(row, Mapping)
+    )
+    expected_documents: dict[str, list[str]] = {}
+    for document in source_documents:
+        if not isinstance(document, Mapping):
+            continue
+        lineage_id = str(document.get("lineage_id") or "")
+        document_id = str(document.get("source_document_id") or "")
+        if lineage_id and document_id:
+            expected_documents.setdefault(lineage_id, []).append(document_id)
+    expected_facts: dict[str, list[str]] = {}
+    for fact in facts:
+        document = source_by_id.get(str(fact.get("source_document_id") or ""))
+        lineage_id = str((document or {}).get("lineage_id") or "")
+        fact_id = str(fact.get("dossier_fact_id") or "")
+        if lineage_id and fact_id:
+            expected_facts.setdefault(lineage_id, []).append(fact_id)
+
+    extensions: list[dict[str, Any]] = []
+    lineage_rows = list(effective.get("source_lineages") or ())
+    for index, raw_row in enumerate(lineage_rows):
+        if not isinstance(raw_row, Mapping):
+            continue
+        row = deepcopy(dict(raw_row))
+        lineage_id = str(row.get("lineage_id") or "")
+        actual_documents = list(row.get("source_document_ids") or ())
+        actual_facts = list(row.get("fact_ids") or ())
+        missing_documents = [
+            value
+            for value in expected_documents.get(lineage_id, ())
+            if value not in set(actual_documents)
+        ]
+        missing_facts = [
+            value
+            for value in expected_facts.get(lineage_id, ())
+            if value not in set(actual_facts)
+        ]
+        if not missing_documents and not missing_facts:
+            continue
+        row["source_document_ids"] = [*actual_documents, *missing_documents]
+        row["fact_ids"] = [*actual_facts, *missing_facts]
+        lineage_rows[index] = row
+        extensions.append(
+            {
+                "lineage_id": lineage_id,
+                "added_source_document_ids": missing_documents,
+                "added_fact_ids": missing_facts,
+                "derivation": (
+                    "SOURCE_DOCUMENT_LINEAGE_AND_FACT_SOURCE_DOCUMENT_EDGES"
+                ),
+            }
+        )
+    effective["source_lineages"] = lineage_rows
+    if extensions:
+        saturation = dict(effective.get("research_saturation") or {})
+        saturation["v3_graph_lineage_roster_extensions"] = extensions
         effective["research_saturation"] = saturation
 
 

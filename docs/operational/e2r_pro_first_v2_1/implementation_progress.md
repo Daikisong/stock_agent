@@ -1925,3 +1925,49 @@ submit_count=1 + COMPLETE
 즉 “한 번 보냈다”와 “그 답안을 병합·검증까지 완료했다”를 같은 상태로 취급하지 않는다. 회귀 테스트는
 submit 직후 `_context_already_attempted=false`, durable completion 뒤 `true`를 검증하며 기존 submitted-result
 recovery 두 사례와 함께 3/3 통과했다.
+
+재개 뒤 pass 02 capture는 submit delta 0으로 실제 재사용됐고 새 사실 14개와 route 33개가 effective
+dossier에 영구 저장됐다. 재검증 accepted fact는 21개에서 32개로 증가했고 deterministic 공백은 다음처럼
+줄었다.
+
+```text
+public material gap       21 → 13
+source linkage incomplete  9 →  6
+accepted facts            21 → 32
+```
+
+변경된 snapshot의 exact gap context에 대해 pass 03
+`PROPASS-5e45eef5db23629f4e757e04`를 같은 conversation에 한 번 전송했다. 약 105분 뒤 새 V3 JSON을
+같은 assistant turn에서 회수했으며 자동 재전송은 0이었다.
+
+```text
+prompt hash      402094b1bd5c0ce8f30d8855877f18b42a6a8c56dff0e4aa1078b8f7c7de0ecd
+raw report hash  cbc113bf637d5648e392145f57f9489c958206eb269cd9f6f9459877d02432f4
+report hash      e8b7ca893c6894f80f8f18421fbaa0673c2977ab1330e0bb47f3f4094230aa3f
+V3 JSON hash     c2d01adb0b9cc9eef89be822a96875e958fbfc3661ae6527384240a28ff222d0
+```
+
+pass 03 delta는 기존 검증 문서를 재사용해 새 사실 3개를 만들고 source document와 lineage row는 다시
+출력하지 않았다. V3 graph의 사실은 각각 기존 `source_document_id`를 정확히 가리켰지만, 중복 색인인
+`source_lineages[*].fact_ids`에는 그 3개가 없어서 strict roster 검문이 fail-safe 정지했다.
+
+merger는 이제 기존 source document의 immutable `lineage_id`와 새 fact의 `source_document_id` edge에서
+누락 roster member만 추가한다. 새 URL, 새 문서, 새 fact 내용, lineage identity는 만들지 않는다. 반대로
+lineage에 잘못 들어간 초과 member는 삭제하지 않고 strict validator가 계속 거부한다.
+
+실제 pass 03 capture 오프라인 재병합 결과는 다음과 같다.
+
+```text
+exact capture offline merge                  PASS
+new / effective facts                        3 / 42
+new / effective source documents             0 / 23
+new / effective source lineages               0 / 21
+new / effective route receipts               20 / 90
+effective mandatory questions                    28
+graph-derived roster additions                    3
+effective research status              PROVIDER_PENDING
+```
+
+관련 V2/V3 delta·saturation·fresh orchestration·repair 회귀는 128/128, compileall과 diff check는 PASS다.
+상세 capture identity와 정확한 roster addition은
+`p10_c06_public_gap_second_capture_merge_receipt.json`에 고정했다.
