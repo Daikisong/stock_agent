@@ -797,6 +797,14 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         )
         await self.orchestrator.prepare_followup(plan, adapter)
         await self.orchestrator.submit_followup(plan, adapter)
+        self.assertFalse(
+            _context_already_attempted(
+                self.orchestrator.ledger,
+                job_id=self.fresh_job.job_id,
+                pass_name="PUBLIC_GAP_CLOSURE",
+                research_gap_context_hash=gap_hash,
+            )
+        )
         self.orchestrator.complete_followup(
             plan.research_pass.pass_id,
             response_hash="c" * 64,

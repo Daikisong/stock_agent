@@ -1904,3 +1904,24 @@ score / Stage authority                  false / false
 동일 pass capture를 `REUSE_CAPTURE`로 사용해 submit 0으로 effective snapshot을 영구 저장한 뒤, 남은 exact
 parser/source 공백만 같은 conversation에서 이어간다. 상세 수치는
 `p10_c06_public_gap_capture_merge_receipt.json`에 고정했다.
+
+첫 actual 재개에서는 browser submit delta 0과 conversation recovery는 통과했지만, ledger가 capture를 가진
+`RESEARCH_RUNNING` pass를 “이미 시도한 context”로 간주해 건너뛴 뒤 다음 pass를 만들려 했다. 그 결과
+`another fresh follow-up is still incomplete`로 fail-safe 정지했다. 원인은 context dedup 조건이
+`submit_count=1`만 보고 `status=COMPLETE`를 요구하지 않은 것이었다.
+
+수정 뒤에는 다음처럼 분리한다.
+
+```text
+submit_count=1 + RESEARCH_RUNNING/TRANSPORT_PENDING
+→ 같은 durable pass 재계획
+→ READY capture가 있으면 REUSE_CAPTURE
+→ 새 submit 0
+
+submit_count=1 + COMPLETE
+→ 같은 semantic context 재시도 금지
+```
+
+즉 “한 번 보냈다”와 “그 답안을 병합·검증까지 완료했다”를 같은 상태로 취급하지 않는다. 회귀 테스트는
+submit 직후 `_context_already_attempted=false`, durable completion 뒤 `true`를 검증하며 기존 submitted-result
+recovery 두 사례와 함께 3/3 통과했다.

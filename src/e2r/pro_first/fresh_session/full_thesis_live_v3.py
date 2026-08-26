@@ -943,6 +943,7 @@ def _context_already_attempted(
         row.pass_name == pass_name
         and str(row.detail.get("research_gap_context_hash") or "")
         == research_gap_context_hash
+        and row.status == "COMPLETE"
         and row.submit_count == 1
         for row in ledger.list_passes(job_id)
     )
