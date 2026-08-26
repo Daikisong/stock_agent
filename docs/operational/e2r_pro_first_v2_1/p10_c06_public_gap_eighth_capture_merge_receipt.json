@@ -1,0 +1,103 @@
+{
+  "schema_version": "e2r_pro_p10_c06_public_gap_eighth_capture_merge_receipt_v1",
+  "verdict": "PASS_OFFLINE_EXACT_CAPTURE_MERGE_AFTER_LINEAGE_IDENTITY_PRESERVATION",
+  "final_full_thesis_allowed": false,
+  "job_id": "PROJOB-ab48ce7e94097cf9b6846602",
+  "run_id": "PRORUN-683f5a5423a6e367f443c6de",
+  "target_id": "000660",
+  "as_of_date": "2026-08-23",
+  "conversation_id": "6a8db0ad-8ed0-83e8-888e-dce26c950343",
+  "pass_id": "PROPASS-ed72e2b8b8c1328e8e98a5b4",
+  "parent_pass_id": "PROPASS-c2dd5ebc4e49628f26459c3e",
+  "pass_name": "PUBLIC_GAP_CLOSURE",
+  "pass_ordinal": 9,
+  "submit_count": 1,
+  "automatic_resubmit_count": 0,
+  "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+  "capture_mode": "CHATGPT_WEB_VISIBLE_PRO_FOLLOWUP",
+  "assistant_turn_id": "request-6a8db0ad-8ed0-83e8-888e-dce26c950343-7",
+  "captured_at": "2026-08-26T23:40:19.345614Z",
+  "prompt_hash": "4790fba98dba798a23731b72e98f94f848d9098231c79102e98aee50fbeec8f5",
+  "raw_report_md_hash": "e86a496c9116dc0d52bd72d9db65c0bb682f9417187be7c48e4e1e6d1214b549",
+  "report_md_hash": "d272dbce15bca6af8fcd632c2fff1bb378d10ad1e40004da9b8373b6e82e2ab9",
+  "dossier_json_hash": "14014ecad82958c4c7e112e80cbf71f50e77079a07d12e4b6a9209ad73c95d46",
+  "report_pdf_hash": null,
+  "optional_pdf_error": null,
+  "mandatory_operational_artifact": "SAME_TURN_RESEARCH_DOSSIER_V3_JSON",
+  "transport_normalization_operations": [
+    "APPEND_VISIBLE_CITATION_HREF_REGISTRY"
+  ],
+  "parser_operations": [
+    "REMOVE_STANDALONE_JSON_LANGUAGE_LABEL"
+  ],
+  "captured_delta": {
+    "new_source_document_row_count": 2,
+    "pro_reported_material_fact_row_count": 1,
+    "pro_reported_counterfact_row_count": 3,
+    "pro_reported_resolution_fact_row_count": 0,
+    "pro_reported_fact_row_count": 4,
+    "new_source_lineage_row_count": 3,
+    "new_route_receipt_count": 24,
+    "pro_reported_updated_question_count": 19
+  },
+  "pre_schema": {
+    "operation_count": 9,
+    "dropped_wrong_kind_question_fact_reference_count": 2,
+    "dropped_unbound_question_fact_reference_count": 1,
+    "canonicalized_route_source_url_count": 6,
+    "fact_statement_or_excerpt_mutation_count": 0
+  },
+  "initial_fail_safe": {
+    "status": "FAILED_SAFE_NO_AUTOMATIC_RESUBMIT",
+    "error_class": "DossierDeltaMergeError",
+    "error_message": "follow-up rewrote source lineage identity: SL-SKH-DRSA-20260508.independence_group_id",
+    "pass_status_after_failure": "RESEARCH_RUNNING",
+    "response_hash_after_failure": null,
+    "ready_capture_present": true
+  },
+  "lineage_identity_projection": {
+    "lineage_id": "SL-SKH-DRSA-20260508",
+    "preserved_field": "independence_group_id",
+    "prior_value_hash": "c169f69b31df0be948c093031b974651d6cacb30b7eeefcc67323c3aae21637c",
+    "incoming_value_hash": "fee7415c3b27a9be9c95bf4529e446244fbd3f006e239a00927f3ef69a73699b",
+    "incoming_identity_adopted": false,
+    "new_document_and_fact_edges_allowed": true
+  },
+  "projection_policy": {
+    "v3_existing_lineage_identity": "PRESERVE_PRIOR_INDEPENDENCE_GROUP_AND_STATUS",
+    "v3_new_graph_edges": "APPEND_THEN_STRICTLY_VALIDATE",
+    "v2_existing_lineage_identity_rewrite": "STRICT_FAILURE_UNCHANGED",
+    "raw_capture_mutation_allowed": false,
+    "fact_statement_or_excerpt_mutation_allowed": false,
+    "target_or_archetype_specific_rule_used": false
+  },
+  "exact_capture_offline_merge": {
+    "status": "PASS",
+    "actual_new_fact_count": 4,
+    "actual_new_fact_ids": [
+      "PROFACT-P9-C06-HBM-RIGOROUS-TESTING-APPROVAL",
+      "PROFACT-P9-C06-PURCHASE-TIME-QUANTITIES-PRICING",
+      "PROFACT-P9-C06-LARGEST-CUSTOMER-23.9",
+      "PROFACT-P9-C06-MEMORY-OVERSUPPLY-WEAK-PRICES"
+    ],
+    "actual_new_source_document_count": 2,
+    "actual_new_source_lineage_count": 2,
+    "actual_new_route_receipt_count": 24,
+    "effective_fact_count": 92,
+    "effective_source_document_count": 32,
+    "effective_source_lineage_count": 30,
+    "effective_route_receipt_count": 241,
+    "effective_question_count": 28,
+    "effective_research_status": "PROVIDER_PENDING",
+    "effective_dossier_hash": "4008775ddb850620df11938556371e76d75f86276b230fcb8185ef74b94de7b8"
+  },
+  "focused_regression": {
+    "test_count": 72,
+    "failure_count": 0,
+    "error_count": 0,
+    "v2_strict_lineage_rebind_test_preserved": true
+  },
+  "score_authority": false,
+  "stage_authority": false,
+  "next_action": "REUSE_PASS_09_READY_CAPTURE_WITH_ZERO_BROWSER_SUBMITS_THEN_CONTINUE_DETERMINISTIC_SATURATION"
+}

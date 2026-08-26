@@ -2276,3 +2276,52 @@ score / Stage authority            false / false
 conversation에 정확히 한 번 제출했고 현재 `RESEARCH_RUNNING`이다. 코드 commit `16570d85`의 E2R
 Pro-first와 E2R v6 GitHub Actions는 모두 SUCCESS다. 상세 pass 07 reuse와 pass 08 identity·hash·검증 수는
 각각 sixth/seventh capture merge receipt에 고정했다.
+
+pass 09는 약 48분 뒤 완료됐고 같은 assistant turn의 V3 JSON capture는 정상 저장됐다.
+
+```text
+assistant turn      request-6a8db0ad-8ed0-83e8-888e-dce26c950343-7
+prompt hash         4790fba98dba798a23731b72e98f94f848d9098231c79102e98aee50fbeec8f5
+raw report hash     e86a496c9116dc0d52bd72d9db65c0bb682f9417187be7c48e4e1e6d1214b549
+report hash         d272dbce15bca6af8fcd632c2fff1bb378d10ad1e40004da9b8373b6e82e2ab9
+V3 JSON hash        14014ecad82958c4c7e112e80cbf71f50e77079a07d12e4b6a9209ad73c95d46
+raw docs / facts    2 / 4
+raw lineages/routes 3 / 24
+updated questions   19
+PDF                 없음(null, 오류 아님)
+```
+
+첫 병합은 `SL-SKH-DRSA-20260508`의 기존 `independence_group_id`를 pass 09가 다른 값으로 적어
+`follow-up rewrote source lineage identity`에서 fail-safe 정지했다. 같은 lineage를 새 independence group으로
+바꾸면 동일 출처를 독립 출처 두 개처럼 셀 위험이 있으므로 새 값을 채택해서는 안 된다.
+
+V3 follow-up은 이제 기존 lineage ID가 있으면 그 lineage의 `independence_group_id`와 `status`를 prior valid
+graph 그대로 보존한다. 새 document/fact edge만 append하고, 나머지 graph는 strict validator가 그대로
+검사한다. 원본 capture와 fact statement/excerpt는 수정하지 않으며 투영 내역과 전후 값 hash를 saturation
+감사 필드에 남긴다. V2의 기존 identity 재결박 시도는 계속 strict failure다.
+
+쉬운 예: 기존 영수증 묶음 `L1`을 이미 “발행사 공시 한 묶음”으로 세었는데 다음 답변이 `L1`을 “새 독립
+출처 묶음”이라고 이름만 바꿔도 독립 증거 하나를 둘로 세면 안 된다. 묶음 identity는 그대로 두고, 실제 새
+영수증과 사실만 그 묶음에 추가한다.
+
+실제 pass 09 capture의 parser → pre-schema → identity binding → lineage identity preservation → append-only
+merge → strict validation 전체를 브라우저·전송 없이 재생한 결과는 다음과 같다.
+
+```text
+exact capture offline merge                  PASS
+actual new facts                                4
+effective facts                                92
+effective source documents                     32
+effective source lineages                      30
+effective route receipts                      241
+effective mandatory questions                  28
+effective research status        PROVIDER_PENDING
+focused regression                         72/72 PASS
+V2 strict identity-rebind failure        unchanged
+score / Stage authority              false / false
+```
+
+raw capture는 READY로 보존됐고 SQL pass는 submit count 1인 `RESEARCH_RUNNING`, response hash null이다.
+다음 실행은 같은 capture를 `REUSE_CAPTURE`로 읽어 browser submit delta 0을 확인한 뒤 source 재검증과
+deterministic saturation을 계속한다. 상세 identity hash와 신규 fact ID는
+`p10_c06_public_gap_eighth_capture_merge_receipt.json`에 고정했다.

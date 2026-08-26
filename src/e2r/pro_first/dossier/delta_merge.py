@@ -46,6 +46,10 @@ def apply_research_dossier_delta(
     schema_version = str(original_dossier.get("schema_version") or "")
     response = deepcopy(dict(response_dossier))
     if schema_version == "e2r_pro_research_dossier_v3":
+        response = _preserve_prior_v3_source_lineage_identity(
+            original_dossier,
+            response,
+        )
         response = _coalesce_prior_v3_source_document_duplicates(
             original_dossier,
             response,
@@ -180,6 +184,73 @@ _V3_FACT_REFERENCE_FIELDS = frozenset(
         "new_verified_fact_ids_expected",
     }
 )
+_V3_PRESERVED_SOURCE_LINEAGE_IDENTITY_FIELDS = (
+    "independence_group_id",
+    "status",
+)
+
+
+def _preserve_prior_v3_source_lineage_identity(
+    original: Mapping[str, Any],
+    response: dict[str, Any],
+) -> dict[str, Any]:
+    """Keep an existing V3 lineage identity while accepting new graph edges.
+
+    A follow-up can add documents and facts to an existing lineage, but it
+    cannot turn that already counted publisher/event group into another
+    independence group.  Preserve the prior identity, record the projection,
+    and let strict graph validation decide whether the appended edges are
+    otherwise valid.  V2 keeps its existing hard-fail behavior.
+    """
+
+    prior_by_id = {
+        str(row.get("lineage_id") or ""): row
+        for row in original.get("source_lineages") or ()
+        if isinstance(row, Mapping) and str(row.get("lineage_id") or "")
+    }
+    projections: list[dict[str, Any]] = []
+    retained: list[Any] = []
+    for raw_lineage in response.get("source_lineages") or ():
+        if not isinstance(raw_lineage, Mapping):
+            retained.append(deepcopy(raw_lineage))
+            continue
+        incoming = deepcopy(dict(raw_lineage))
+        lineage_id = str(incoming.get("lineage_id") or "")
+        prior = prior_by_id.get(lineage_id)
+        if prior is None:
+            retained.append(incoming)
+            continue
+        changes: list[dict[str, Any]] = []
+        for field_name in _V3_PRESERVED_SOURCE_LINEAGE_IDENTITY_FIELDS:
+            canonical_value = prior.get(field_name)
+            incoming_value = incoming.get(field_name)
+            if canonical_hash(canonical_value) == canonical_hash(incoming_value):
+                continue
+            incoming[field_name] = deepcopy(canonical_value)
+            changes.append(
+                {
+                    "field_name": field_name,
+                    "incoming_value_hash": canonical_hash(incoming_value),
+                    "canonical_value_hash": canonical_hash(canonical_value),
+                }
+            )
+        retained.append(incoming)
+        if changes:
+            projections.append(
+                {
+                    "lineage_id": lineage_id,
+                    "preserved_fields": changes,
+                    "incoming_identity_adopted": False,
+                    "new_document_and_fact_edges_allowed": True,
+                }
+            )
+    response["source_lineages"] = retained
+    if not projections:
+        return response
+    saturation = dict(response.get("research_saturation") or {})
+    saturation["v3_source_lineage_identity_projections"] = projections
+    response["research_saturation"] = saturation
+    return response
 
 
 def _coalesce_prior_v3_source_document_duplicates(

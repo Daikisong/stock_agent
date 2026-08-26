@@ -524,7 +524,7 @@ class ProFirstV3DossierTest(unittest.TestCase):
                 "lineage_id": "SL-001",
                 "source_document_ids": ["SRC-002"],
                 "fact_ids": ["FACT-002"],
-                "independence_group_id": "ISSUER-FILING",
+                "independence_group_id": "PRO-RELABELED-ISSUER-FILING",
                 "status": "ACTIVE",
             }
         ]
@@ -612,6 +612,21 @@ class ProFirstV3DossierTest(unittest.TestCase):
                     "status": "ACTIVE",
                 }
             ],
+        )
+        lineage_projection = merged.effective_dossier["research_saturation"][
+            "v3_source_lineage_identity_projections"
+        ][0]
+        self.assertEqual(lineage_projection["lineage_id"], "SL-001")
+        self.assertEqual(
+            [
+                row["field_name"]
+                for row in lineage_projection["preserved_fields"]
+            ],
+            ["independence_group_id"],
+        )
+        self.assertFalse(lineage_projection["incoming_identity_adopted"])
+        self.assertTrue(
+            lineage_projection["new_document_and_fact_edges_allowed"]
         )
         self.assertNotIn("proposed_score_ranges", merged.effective_dossier)
         projected_question = merged.effective_dossier["question_family_results"][0]
