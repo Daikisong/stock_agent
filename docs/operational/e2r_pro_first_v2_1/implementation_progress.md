@@ -1434,3 +1434,63 @@ compileall / git diff check                PASS / PASS
 전체 identity와 zero-submit 증거는
 `p8_c17_fresh_pre_submit_boundary_failure_receipt_r6.json`에 기록했다. 다음 actual R6은 이 수정 commit과
 독립 CI green을 확인한 뒤 새 runtime/session/job/run/pass/conversation에서 정확히 한 번만 보낸다.
+
+## 2026-08-26 — C17 여섯 번째 actual fresh initial 100% PASS
+
+전송 전 boundary 수정 commit `b4493b26e9f1aadbc3789ff0bda70b14122f6895`와 독립 CI 세 개가 모두
+SUCCESS인 것을 확인한 뒤, 폐기한 pre-submit identity와 다른 새 runtime/session에서 C17 actual Pro
+조사를 정확히 한 번 전송했다.
+
+```text
+runtime          C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260826T033612Z
+fresh session    FRESH-V2-1-C17-R6-20260826T033612Z
+fresh job        PROJOB-41ec024bdbc0c9c8d56c9d05
+fresh run        PRORUN-b9e5878d77b712aa7a378561
+initial pass     PROPASS-6a68e3062040f1f73f6d9487
+commit binding   b4493b26e9f1aadbc3789ff0bda70b14122f6895
+conversation     6a8e5f55-a7f8-83e8-bd89-82c1e4529916
+submit/capture   1 / 1
+automatic resend 0
+prompt/response  59,254 / 120,503 chars
+research elapsed 3,665.403214 seconds
+total elapsed    3,732.263675 seconds
+report SHA-256   e71dabb85fba62901fbe8ad6089cd5782f7de7b6d826b774e70d0c30f7bf0364
+```
+
+ChatGPT 결과 카드의 JSON을 실제 capture bundle에 저장했고 importer는
+`parser_source=DOWNLOADED_JSON`으로 읽었다. 보고서 MD는 visible report를 보존하는 별도 감사 산출물이고,
+선택 PDF는 요청하지 않아 `null`이며 오류도 없다. 쉬운 예로 JSON은 계산기에 넣는 구조화 입력이고 MD는
+사람이 당시 답변을 다시 읽는 영수증이다. 둘 중 하나를 예전 대화 파일과 혼동해 선택하지 않았다.
+
+Pro dossier는 source 8개와 fact 26개를 만들었다. material 15개 중 7개는 `as_of_date` 현재 판단이 아닌
+historical-only 자료라 efficiency 분모에서 제외했다. 남은 current material 8개는 preflight와 source
+verification 후 8개 모두 승인됐다.
+
+```text
+source documents                               8
+material / counter / resolution          15 / 8 / 3
+all facts                                     26
+historical-only material excluded              7
+current material / accepted                8 / 8
+post-preflight acceptance                    100% PASS
+mandatory question coverage               26 / 26
+search route receipts                          34
+genuine semantic repair                         0
+repair pass / deferred batch                 0 / 0
+output contract defect                          0
+query / search                               0 / 0
+source fetch                                    8
+score / Stage authority              false / false
+publication                          withheld
+```
+
+여기서 `100% PASS`는 C17 초기 조사 효율 검문 통과이며 점수나 Stage 확정이 아니다. 예를 들어 질문 26개가
+모두 dossier에 답을 갖고 current material 8개가 검증됐어도, 남은 public/parser gap을 닫고 7 component와
+21 Judge를 계산하기 전에는 운영 점수를 게시하지 않는다. 그래서 job은 `GAP_ADJUDICATION`, publication은
+withheld, score/Stage authority는 false를 유지한다.
+
+DB와 파일을 교차 확인한 결과 job은 `submit_count=1`, `capture_count=1`, `last_error=null`이고 initial pass는
+`COMPLETE`다. capture receipt, downloaded JSON, normalized dossier, source verification, efficiency receipt의
+identity와 hash는 `p8_c17_fresh_initial_success_receipt_r6.json`에 기록했다. raw 보고서, source page, 중앙
+ledger는 Git에 넣지 않는다. 다음 단계는 완전히 다른 새 conversation에서 C28 initial canary를 실행하는
+것이다.
