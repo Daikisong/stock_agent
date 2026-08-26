@@ -116,6 +116,28 @@
     "dossier_snapshot_count": 0,
     "ready_capture_present": true
   },
+  "actual_capture_reuse": {
+    "status": "PASS",
+    "browser_submit_delta": 0,
+    "capture_reused": true,
+    "pass_status_after_reuse": "COMPLETE",
+    "actual_new_fact_count": 7,
+    "actual_new_route_count": 19,
+    "persisted_effective_dossier_file_hash": "e2fdc72738c52e87a74082561c7769cdbac7847102f700b89f629bea0970468b",
+    "accepted_fact_count_after_reverification": 39,
+    "nonterminal_mandatory_question_count": 6,
+    "provider_parser_core_pending_count": 4,
+    "public_material_gap_count": 15,
+    "source_linkage_incomplete_count": 5
+  },
+  "next_pass": {
+    "pass_id": "PROPASS-c2dd5ebc4e49628f26459c3e",
+    "pass_name": "PUBLIC_GAP_CLOSURE",
+    "pass_ordinal": 8,
+    "parent_pass_id": "PROPASS-73881856ab23461cd67a18c1",
+    "submit_count": 1,
+    "duplicate_submit_observed": false
+  },
   "score_authority": false,
   "stage_authority": false,
   "next_action": "REUSE_PASS_07_READY_CAPTURE_WITH_ZERO_BROWSER_SUBMITS_THEN_CONTINUE_DETERMINISTIC_SATURATION"

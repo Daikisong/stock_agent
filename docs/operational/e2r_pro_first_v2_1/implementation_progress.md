@@ -2225,3 +2225,54 @@ Chromium에서 실행해 failure/error 0을 확인했다. 특히 이전 MD 버�
 현재 SQL ledger의 pass 07은 `RESEARCH_RUNNING`, submit count 1, response hash null, snapshot 0이고
 READY capture는 hash-bound 상태다. 다음 실행은 새로 전송하지 않고 이 capture를 `REUSE_CAPTURE`로 읽어
 browser submit delta 0을 확인한 뒤 영구 snapshot·source 재검증·deterministic saturation을 계속한다.
+
+실제 runner 재개에서도 pass 07은 `FOLLOWUP_CAPTURE_REUSED`, `browser_submit_delta=0`으로 처리됐다.
+신규 사실 7개와 경로 19개가 반영됐고 effective dossier는 82 facts / 29 documents / 27 lineages / 189
+routes / 28 questions로 영구 저장됐다. persisted file hash는
+`e2fdc72738c52e87a74082561c7769cdbac7847102f700b89f629bea0970468b`다. 재검증 accepted fact는
+39로 유지됐고, 변경된 exact graph에서 nonterminal 6, provider/parser core pending 4, public material gap
+15, source-linkage incomplete 5가 남았다.
+
+따라서 pass 08 `PROPASS-c2dd5ebc4e49628f26459c3e`를 같은 conversation에 한 번 전송했다. pass 08은
+약 49분 뒤 완료됐고 같은 assistant turn의 V3 JSON을 자동 캡처했다.
+
+```text
+assistant turn      request-6a8db0ad-8ed0-83e8-888e-dce26c950343-6
+prompt hash         ba29a00623a8abdb8b84a49906856bf1a02efb36f498caa693182bf40eb30833
+raw report hash     0ba772b5a288a28de02db059de06b281d57c245d664990bd461576ad793c77c5
+report hash         878ab8fce2e3596170bc0d40be281c52289e9183d3d4571a95d3edba957074d9
+V3 JSON hash        3e7205f69cfbb60e7b978b2314b6cafe327f6e21fd9610a4ed8c0be68a79a183
+raw docs / facts    1 / 9
+raw lineages/routes 4 / 28
+updated questions   19
+PDF                 없음(null, 오류 아님)
+```
+
+원본 사실 9개 중 3개는 pass 07과 source document, predicate, normalized subject, excerpt, fact kind까지
+같은 exact atomic identity였다. 기존 canonical fact를 수정하지 않고 새 ID의 참조만 기존 ID로 연결해 실제
+신규 사실은 6개가 됐다. 병합과 source-backed 재검증 결과는 다음과 같다.
+
+```text
+actual new facts                               6
+effective facts                               88
+effective source documents                    30
+effective source lineages                     28
+effective route receipts                     217
+accepted source-backed facts                  42
+verification query / search                  0 / 0
+nonterminal mandatory questions                4
+provider/parser core pending                    2
+public material gaps                           17
+source-linkage incomplete                       3
+research saturation valid                   false
+score / Stage authority            false / false
+```
+
+쉬운 예: pass 07의 “HBM4 샘플 출하” 문장을 pass 08이 새 번호로 다시 제출했어도 판매 실적으로 두 번 세지
+않는다. 대신 새로 확인된 감사인 지정·현재 감사 범위 같은 별도 원자는 보존하고, 실제 원문 검문을 통과한
+것만 accepted fact 42개에 넣는다.
+
+이 snapshot도 아직 saturation이 아니므로 pass 09 `PROPASS-ed72e2b8b8c1328e8e98a5b4`를 같은
+conversation에 정확히 한 번 제출했고 현재 `RESEARCH_RUNNING`이다. 코드 commit `16570d85`의 E2R
+Pro-first와 E2R v6 GitHub Actions는 모두 SUCCESS다. 상세 pass 07 reuse와 pass 08 identity·hash·검증 수는
+각각 sixth/seventh capture merge receipt에 고정했다.
