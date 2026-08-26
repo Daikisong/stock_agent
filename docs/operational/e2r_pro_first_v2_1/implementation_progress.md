@@ -2054,3 +2054,32 @@ source-linkage incomplete는 8 → 6으로 줄었다.
 pass 05 `PROPASS-26c03ab89ff306eec50c9e3c`를 같은 conversation에 한 번 전송했다. pass 05가 실행 중인
 동안 score/Stage는 계속 withheld다. 이 전송은 pass 04 재사용 실패로 인한 중복 제출이 아니라, pass 04
 병합으로 바뀐 exact snapshot을 입력으로 만든 다음 semantic gap pass다.
+
+pass 05는 약 59분 뒤 완료됐고 같은 assistant turn의 V3 JSON을 자동 다운로드했다. 사용자가 화면의
+다운로드 버튼을 다시 누르지 않았으며 submit은 1, automatic resubmit은 0이다.
+
+```text
+assistant turn      request-6a8db0ad-8ed0-83e8-888e-dce26c950343-3
+prompt hash         0d5f0b61adfa86544ccf4987e58a2cf4b0e51bbdba0704d42efe86a0ed1b6a6e
+raw report hash     4403d04d1a70f2beba18e23512dbc4ac5ffaaf24d7fd53c7bdc9c8678ab4e41e
+report hash         432b9d72dcbc13b88ead8cae113456b65d14fade6c646d7be4f165c439b4bc54
+V3 JSON hash        95e7b4cb6c85cf5029f4da69c3882ee487a2ecb19e400bfbfb710879ff2ae745
+new docs / facts    2 / 17
+new routes          27
+updated questions   19
+PDF                 없음(null, 오류 아님)
+```
+
+병합 뒤 effective dossier는 69 facts / 28 documents / 26 lineages / 142 routes / 28 questions다.
+누적 graph에서 `R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_Q05`가 backlink 없이 참조한
+`PROFACT-R13-TOTAL-ISSUED-SHARES` 한 edge만 제거됐고 fact 내용은 유지됐다. persisted file hash는
+`f6de52e011c4cb48a3804cf3649aa1e113b0b4756ede80aee6b66c1a81dd7eb8`다.
+
+source-backed 재검증 결과 accepted fact는 33 → 36, nonterminal question은 7 → 3,
+provider/parser core pending은 4 → 1, source-linkage incomplete는 6 → 2로 줄었다. 공개 material gap은
+15 → 18로 늘었지만 이는 실패 증가가 아니라 새 evidence graph가 이전의 넓은 질문을 더 구체적인 공개자료
+확인 항목으로 펼친 결과다. saturation은 아직 invalid이므로 score/Stage는 계속 withheld다.
+
+변경된 exact snapshot을 입력으로 pass 06 `PROPASS-330252bb6db7ee3267fab916`을 같은 conversation에
+한 번 전송했다. 상세 capture와 post-merge 수치는
+`p10_c06_public_gap_fourth_capture_merge_receipt.json`에 고정했다.
