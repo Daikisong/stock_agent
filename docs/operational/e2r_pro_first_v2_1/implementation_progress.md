@@ -2149,3 +2149,79 @@ ledger를 직접 확인했을 때 pass 07 `PROPASS-73881856ab23461cd67a18c1`은 
 submitted_at/response_hash null이었다. runner 재시작은 기존 planned row를 회복해 정확히 한 번 전송했고
 현재 `RESEARCH_RUNNING`이다. 즉 transient browser-driver 오류가 새 pass 생성이나 중복 전송으로 이어지지
 않았다.
+
+### 2026-08-27 — C06 pass 07 V3 JSON과 중복 문서 범위 충돌 처리
+
+pass 07은 약 69분 뒤 완료됐고 같은 assistant turn의 V3 JSON이 READY capture로 저장됐다. 이 단계의
+필수 산출물은 **같은 응답의 `ResearchDossierV3` JSON**이다. 이전 진행 문구의 “새 MD 실다운로드”는
+과거 전송 형식에 끌려간 부정확한 표현이었다. 현재 운영 경로는 JSON을 먼저 읽고, 화면 보고서 텍스트는
+transport 보존본, PDF는 같은 응답에 실제 export가 있을 때만 받는 선택 증빙으로 취급한다.
+
+```text
+assistant turn      request-6a8db0ad-8ed0-83e8-888e-dce26c950343-5
+prompt hash         070df189a5dffe764c7c31088d0241b6e43708abc08a9097331c05d1147fe540
+raw report hash     8f89ca980eeaa8c9d3f0b1f5e43efa53f8d3455b7baf7ebd0f76f9975744a468
+report hash         c46ac1188e9dd83a5b53fc567279125c2417e36f5dbb11a6923cb7a1485bb1c0
+V3 JSON hash        bef6a8697fb288bad1ea3c2c8cb8c722d085ba80950f583543b7657d3c5e1b05
+raw docs / facts    1 / 10
+raw lineages/routes 4 / 19
+updated questions   19
+PDF                 없음(null, 오류 아님)
+```
+
+첫 병합은 `duplicate or empty canonical source URL identity`에서 fail-safe 정지했다. 같은 KRX URL이
+pass 04의 `PROSRC-P4-SKH-AUDIT-KRX-20260304`와 pass 07의
+`PROSRC-P7-KRX-SKH-SUBSIDIARY-AUDIT-20260304`로 반복됐지만, 기존 document는 issuer 범위이고 새
+document는 non-issuer 자회사 범위였다. URL만 보고 새 ID를 기존 ID로 바꾸면 자회사 사실이 본사 사실처럼
+보일 수 있으므로 그렇게 합치지 않았다.
+
+일반 병합 규칙은 다음처럼 고정했다.
+
+```text
+같은 URL + 같은 target/issuer scope
+→ 기존 canonical document ID 재사용
+→ 새 fact의 source reference만 canonical ID로 연결
+
+같은 URL + 서로 다른 target/issuer scope
+→ 기존 document 불변 보존
+→ 충돌하는 새 duplicate document와 그 document에만 의존하는 새 fact 제외
+→ raw JSON과 검색 route receipt는 감사용으로 보존
+
+같은 pass 안에서 URL 중복
+→ 자동 합치지 않고 strict validation 실패 유지
+```
+
+쉬운 예: 한 공시 URL 안에 본사와 자회사 표가 함께 있어도 “같은 링크”라는 이유만으로 자회사 감사 결과를
+본사 감사 결과로 바꾸면 안 된다. 어느 범위인지 deterministic하게 결박할 수 없는 새 행만 점수 그래프에서
+빼고, 기존 장부와 원본 캡처는 그대로 두는 편이 안전하다.
+
+실제 pass 07에서는 자회사 범위 resolution fact 3개만 제외됐고, 나머지 7개 사실은 정상 반영됐다.
+parser → V3 dialect → pre-schema → durable pass identity → append-only merge → strict validator 전 경로를
+브라우저 전송 없이 정확히 재생한 결과는 다음과 같다.
+
+```text
+exact capture offline merge                    PASS
+Pro fact rows                                    10
+scope-conflicting dependent facts excluded        3
+actual new facts                                  7
+effective facts                                  82
+effective source documents                       29
+effective source lineages                        27
+effective route receipts                        189
+effective mandatory questions                    28
+effective research status          PROVIDER_PENDING
+V3 targeted regression                       20/20 PASS
+WSL non-browser focused                      128/128 PASS
+Windows Chromium capture                       20/20 PASS
+assertion failures                                  0
+score / Stage authority                 false / false
+```
+
+WSL의 browser 20개는 test body 전에 `libnspr4.so`가 없어 환경 오류가 났고, 동일 20개를 실제 Windows
+Chromium에서 실행해 failure/error 0을 확인했다. 특히 이전 MD 버튼 미선택, 현재 산출물 실다운로드,
+일치하는 PDF의 선택 캡처가 유지됐다. 상세 hash, 제외 fact ID, cross-platform test 수는
+`p10_c06_public_gap_sixth_capture_merge_receipt.json`에 고정했다.
+
+현재 SQL ledger의 pass 07은 `RESEARCH_RUNNING`, submit count 1, response hash null, snapshot 0이고
+READY capture는 hash-bound 상태다. 다음 실행은 새로 전송하지 않고 이 capture를 `REUSE_CAPTURE`로 읽어
+browser submit delta 0을 확인한 뒤 영구 snapshot·source 재검증·deterministic saturation을 계속한다.

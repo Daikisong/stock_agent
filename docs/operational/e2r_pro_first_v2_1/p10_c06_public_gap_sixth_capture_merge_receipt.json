@@ -1,0 +1,122 @@
+{
+  "schema_version": "e2r_pro_p10_c06_public_gap_sixth_capture_merge_receipt_v1",
+  "verdict": "PASS_OFFLINE_EXACT_CAPTURE_MERGE_AFTER_SOURCE_SCOPE_PROJECTION",
+  "final_full_thesis_allowed": false,
+  "job_id": "PROJOB-ab48ce7e94097cf9b6846602",
+  "run_id": "PRORUN-683f5a5423a6e367f443c6de",
+  "target_id": "000660",
+  "as_of_date": "2026-08-23",
+  "conversation_id": "6a8db0ad-8ed0-83e8-888e-dce26c950343",
+  "pass_id": "PROPASS-73881856ab23461cd67a18c1",
+  "parent_pass_id": "PROPASS-330252bb6db7ee3267fab916",
+  "pass_name": "PUBLIC_GAP_CLOSURE",
+  "pass_ordinal": 7,
+  "submit_count": 1,
+  "automatic_resubmit_count": 0,
+  "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+  "assistant_turn_id": "request-6a8db0ad-8ed0-83e8-888e-dce26c950343-5",
+  "captured_at": "2026-08-26T21:37:10.037778Z",
+  "prompt_hash": "070df189a5dffe764c7c31088d0241b6e43708abc08a9097331c05d1147fe540",
+  "raw_report_md_hash": "8f89ca980eeaa8c9d3f0b1f5e43efa53f8d3455b7baf7ebd0f76f9975744a468",
+  "report_md_hash": "c46ac1188e9dd83a5b53fc567279125c2417e36f5dbb11a6923cb7a1485bb1c0",
+  "dossier_json_hash": "bef6a8697fb288bad1ea3c2c8cb8c722d085ba80950f583543b7657d3c5e1b05",
+  "report_pdf_hash": null,
+  "optional_pdf_error": null,
+  "mandatory_operational_artifact": "SAME_TURN_RESEARCH_DOSSIER_V3_JSON",
+  "optional_operational_artifacts": [
+    "VISIBLE_REPORT_MARKDOWN_TRANSPORT_COPY",
+    "MATCHING_PDF_WHEN_PRESENT"
+  ],
+  "transport_normalization_operations": [
+    "APPEND_VISIBLE_CITATION_HREF_REGISTRY"
+  ],
+  "parser_operations": [
+    "REMOVE_STANDALONE_JSON_LANGUAGE_LABEL"
+  ],
+  "pre_schema_operation_count": 10,
+  "pre_schema_operation_summary": {
+    "dropped_unbound_question_fact_reference_count": 1,
+    "canonicalized_route_source_url_count": 9,
+    "fact_statement_or_excerpt_mutation_count": 0
+  },
+  "captured_delta": {
+    "new_source_document_row_count": 1,
+    "pro_reported_material_fact_row_count": 6,
+    "pro_reported_counterfact_row_count": 1,
+    "pro_reported_resolution_fact_row_count": 3,
+    "pro_reported_fact_row_count": 10,
+    "new_source_lineage_row_count": 4,
+    "new_route_receipt_count": 19,
+    "pro_reported_updated_question_count": 19,
+    "pro_reported_research_status": "NEEDS_PUBLIC_GAP_CLOSURE"
+  },
+  "duplicate_source_document_projection": {
+    "duplicate_source_document_id": "PROSRC-P7-KRX-SKH-SUBSIDIARY-AUDIT-20260304",
+    "canonical_source_document_id": "PROSRC-P4-SKH-AUDIT-KRX-20260304",
+    "canonical_url_hash": "01ffb31af50807275bdd9ba7bf7f9b3e8a8b92a8a5eba37dcfb23dd34f1fde20",
+    "target_scope_compatible": false,
+    "action": "DROP_SCOPE_CONFLICTING_DUPLICATE_DOCUMENT_AND_FACTS",
+    "incoming_document_content_adopted": false,
+    "dropped_fact_ids": [
+      "PROFACT-P7-R13-SUBSIDIARY-EMBEZZLEMENT-DISCLOSURE-NO",
+      "PROFACT-P7-R13-SUBSIDIARY-GOING-CONCERN-NOT-APPLICABLE",
+      "PROFACT-P7-R13-SUBSIDIARY-INTERNAL-CONTROL-NOT-APPLICABLE"
+    ],
+    "dropped_derived_metric_ids": []
+  },
+  "projection_policy": {
+    "same_url_and_same_target_issuer_scope": "REUSE_PRIOR_CANONICAL_DOCUMENT_ID",
+    "same_url_and_conflicting_target_issuer_scope": "DROP_INCOMING_DUPLICATE_DOCUMENT_AND_ONLY_ITS_DEPENDENT_FACTS",
+    "same_pass_duplicate_url": "STRICT_VALIDATION_FAILURE",
+    "prior_canonical_document_mutation_allowed": false,
+    "raw_capture_mutation_allowed": false,
+    "route_receipt_preserved": true,
+    "target_or_archetype_specific_rule_used": false
+  },
+  "exact_capture_offline_merge": {
+    "status": "PASS",
+    "actual_new_fact_count": 7,
+    "actual_new_fact_ids": [
+      "PROFACT-P7-C06-Q2-REVENUE-FILING-ROW",
+      "PROFACT-P7-C06-Q2-OPERATING-PROFIT-FILING-ROW",
+      "PROFACT-P7-C06-HBM4-SAMPLES-SHIPPED",
+      "PROFACT-P7-C06-HBM4-CERTIFICATION-TO-START",
+      "PROFACT-P7-C06-HBM-PRICING-CONSENSUS-BEAT",
+      "PROFACT-P7-C06-Q3-HBM-REVENUE-REVISION-UP",
+      "PROFACT-P7-C06-HBM-SHIPMENT-CONSENSUS-SHORTFALL"
+    ],
+    "actual_new_source_document_count": 0,
+    "actual_new_source_lineage_count": 0,
+    "actual_new_route_receipt_count": 19,
+    "effective_fact_count": 82,
+    "effective_source_document_count": 29,
+    "effective_source_lineage_count": 27,
+    "effective_route_receipt_count": 189,
+    "effective_question_count": 28,
+    "effective_research_status": "PROVIDER_PENDING",
+    "effective_dossier_hash": "34637a0e766592d45204ff909028bf14a0bd12f08423fe8e10497e945b23dd1e"
+  },
+  "regression": {
+    "v3_targeted_test_count": 20,
+    "v3_targeted_failure_count": 0,
+    "v3_targeted_error_count": 0,
+    "cross_platform_focused_test_count": 148,
+    "assertion_failure_count": 0,
+    "wsl_nonbrowser_pass_count": 128,
+    "wsl_browser_environment_error_count": 20,
+    "wsl_browser_environment_error": "MISSING_LIBNSPR4_SO_BEFORE_TEST_BODY",
+    "windows_chromium_capture_test_count": 20,
+    "windows_chromium_failure_count": 0,
+    "windows_chromium_error_count": 0
+  },
+  "durable_state_before_reuse": {
+    "pass_status": "RESEARCH_RUNNING",
+    "submit_count": 1,
+    "response_hash": null,
+    "dossier_snapshot_count": 0,
+    "ready_capture_present": true
+  },
+  "score_authority": false,
+  "stage_authority": false,
+  "next_action": "REUSE_PASS_07_READY_CAPTURE_WITH_ZERO_BROWSER_SUBMITS_THEN_CONTINUE_DETERMINISTIC_SATURATION"
+}

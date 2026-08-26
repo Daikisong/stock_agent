@@ -46,6 +46,10 @@ def apply_research_dossier_delta(
     schema_version = str(original_dossier.get("schema_version") or "")
     response = deepcopy(dict(response_dossier))
     if schema_version == "e2r_pro_research_dossier_v3":
+        response = _coalesce_prior_v3_source_document_duplicates(
+            original_dossier,
+            response,
+        )
         response = _coalesce_prior_v3_atomic_fact_duplicates(
             original_dossier,
             response,
@@ -178,6 +182,199 @@ _V3_FACT_REFERENCE_FIELDS = frozenset(
 )
 
 
+def _coalesce_prior_v3_source_document_duplicates(
+    original: Mapping[str, Any],
+    response: dict[str, Any],
+) -> dict[str, Any]:
+    """Reuse a prior canonical URL only when its target scope is compatible.
+
+    V3 gives one canonical URL one document identity.  A later pass may repeat
+    that URL under another id.  Matching target/issuer scope can safely reuse
+    the prior immutable document.  Conflicting scope cannot be upgraded or
+    downgraded deterministically, so the duplicate document and only its
+    dependent incoming facts are excluded from the effective graph while the
+    raw capture and route receipt remain intact.
+    """
+
+    prior_by_url: dict[str, Mapping[str, Any]] = {}
+    for raw_document in original.get("source_documents") or ():
+        if not isinstance(raw_document, Mapping):
+            continue
+        url = str(raw_document.get("canonical_url") or "")
+        if url and url not in prior_by_url:
+            prior_by_url[url] = raw_document
+
+    incoming_url_counts: dict[str, int] = {}
+    for raw_document in response.get("source_documents") or ():
+        if isinstance(raw_document, Mapping):
+            url = str(raw_document.get("canonical_url") or "")
+            incoming_url_counts[url] = incoming_url_counts.get(url, 0) + 1
+
+    replacements: dict[str, str] = {}
+    removed_document_ids: set[str] = set()
+    projections: list[dict[str, Any]] = []
+    retained_documents: list[Any] = []
+    for raw_document in response.get("source_documents") or ():
+        if not isinstance(raw_document, Mapping):
+            retained_documents.append(deepcopy(raw_document))
+            continue
+        incoming = deepcopy(dict(raw_document))
+        duplicate_id = str(incoming.get("source_document_id") or "")
+        url = str(incoming.get("canonical_url") or "")
+        prior = prior_by_url.get(url)
+        if prior is None or incoming_url_counts.get(url) != 1:
+            retained_documents.append(incoming)
+            continue
+        canonical_id = str(prior.get("source_document_id") or "")
+        if not duplicate_id or not canonical_id or duplicate_id == canonical_id:
+            retained_documents.append(incoming)
+            continue
+        incoming_scope = incoming.get("target_scope") or {}
+        prior_scope = prior.get("target_scope") or {}
+        scope_compatible = (
+            str(incoming_scope.get("target_id") or "")
+            == str(prior_scope.get("target_id") or "")
+            and incoming_scope.get("issuer_scoped")
+            is prior_scope.get("issuer_scoped")
+        )
+        action = "REUSE_PRIOR_CANONICAL_DOCUMENT"
+        if scope_compatible:
+            replacements[duplicate_id] = canonical_id
+        else:
+            action = "DROP_SCOPE_CONFLICTING_DUPLICATE_DOCUMENT_AND_FACTS"
+            removed_document_ids.add(duplicate_id)
+        projections.append(
+            {
+                "duplicate_source_document_id": duplicate_id,
+                "canonical_source_document_id": canonical_id,
+                "canonical_url_hash": canonical_hash(url),
+                "action": action,
+                "incoming_document_content_adopted": False,
+                "target_scope_compatible": scope_compatible,
+            }
+        )
+    response["source_documents"] = retained_documents
+
+    removed_fact_ids: set[str] = set()
+    removed_fact_ids_by_document: dict[str, set[str]] = {
+        document_id: set() for document_id in removed_document_ids
+    }
+    if removed_document_ids:
+        for collection in _V3_FACT_COLLECTIONS:
+            retained_facts: list[Any] = []
+            for raw_fact in response.get(collection) or ():
+                if (
+                    isinstance(raw_fact, Mapping)
+                    and str(raw_fact.get("source_document_id") or "")
+                    in removed_document_ids
+                ):
+                    fact_id = str(raw_fact.get("dossier_fact_id") or "")
+                    if fact_id:
+                        removed_fact_ids.add(fact_id)
+                        removed_fact_ids_by_document[
+                            str(raw_fact.get("source_document_id") or "")
+                        ].add(fact_id)
+                    continue
+                retained_facts.append(deepcopy(raw_fact))
+            response[collection] = retained_facts
+
+    if replacements or removed_document_ids:
+        _rewrite_v3_source_document_references(
+            response,
+            replacements,
+            removed_document_ids=removed_document_ids,
+        )
+    removed_metric_ids_by_document: dict[str, set[str]] = {
+        document_id: set() for document_id in removed_document_ids
+    }
+    if removed_fact_ids:
+        retained_metrics: list[Any] = []
+        for raw_metric in response.get("derived_metrics") or ():
+            inputs = {
+                str(value) for value in (raw_metric or {}).get("input_fact_ids") or ()
+            } if isinstance(raw_metric, Mapping) else set()
+            if inputs.intersection(removed_fact_ids):
+                metric_id = str(raw_metric.get("derived_metric_id") or "")
+                if metric_id:
+                    for document_id, document_fact_ids in (
+                        removed_fact_ids_by_document.items()
+                    ):
+                        if inputs.intersection(document_fact_ids):
+                            removed_metric_ids_by_document[document_id].add(
+                                metric_id
+                            )
+                continue
+            retained_metrics.append(deepcopy(raw_metric))
+        response["derived_metrics"] = retained_metrics
+        _rewrite_v3_fact_references(
+            response,
+            {},
+            removed_fact_ids=removed_fact_ids,
+        )
+    if removed_document_ids or removed_fact_ids:
+        _prune_empty_v3_response_lineages(response)
+    if not projections:
+        return response
+    for row in projections:
+        document_id = row["duplicate_source_document_id"]
+        if document_id in removed_document_ids:
+            row["dropped_fact_ids"] = sorted(
+                removed_fact_ids_by_document[document_id]
+            )
+            row["dropped_derived_metric_ids"] = sorted(
+                removed_metric_ids_by_document[document_id]
+            )
+    saturation = dict(response.get("research_saturation") or {})
+    saturation["v3_duplicate_source_document_projections"] = projections
+    response["research_saturation"] = saturation
+    return response
+
+
+def _rewrite_v3_source_document_references(
+    response: dict[str, Any],
+    replacements: Mapping[str, str],
+    *,
+    removed_document_ids: set[str] | frozenset[str] = frozenset(),
+) -> None:
+    for collection in _V3_FACT_COLLECTIONS:
+        for raw_fact in response.get(collection) or ():
+            if isinstance(raw_fact, dict):
+                source_id = str(raw_fact.get("source_document_id") or "")
+                if source_id in replacements:
+                    raw_fact["source_document_id"] = replacements[source_id]
+    for raw_lineage in response.get("source_lineages") or ():
+        if isinstance(raw_lineage, dict):
+            raw_lineage["source_document_ids"] = list(
+                dict.fromkeys(
+                    replacements.get(str(value), str(value))
+                    for value in raw_lineage.get("source_document_ids") or ()
+                    if str(value) not in removed_document_ids
+                )
+            )
+    saturation = response.get("research_saturation")
+    if isinstance(saturation, dict):
+        for field_name in ("new_source_document_ids_expected",):
+            values = saturation.get(field_name)
+            if isinstance(values, list):
+                saturation[field_name] = list(
+                    dict.fromkeys(
+                        replacements.get(str(value), str(value))
+                        for value in values
+                        if str(value) not in removed_document_ids
+                    )
+                )
+
+
+def _prune_empty_v3_response_lineages(response: dict[str, Any]) -> None:
+    response["source_lineages"] = [
+        deepcopy(raw_lineage)
+        for raw_lineage in response.get("source_lineages") or ()
+        if not isinstance(raw_lineage, Mapping)
+        or raw_lineage.get("source_document_ids")
+        or raw_lineage.get("fact_ids")
+    ]
+
+
 def _coalesce_prior_v3_atomic_fact_duplicates(
     original: Mapping[str, Any],
     response: dict[str, Any],
@@ -258,6 +455,8 @@ def _coalesce_prior_v3_atomic_fact_duplicates(
 def _rewrite_v3_fact_references(
     value: Any,
     replacements: Mapping[str, str],
+    *,
+    removed_fact_ids: set[str] | frozenset[str] = frozenset(),
 ) -> None:
     if isinstance(value, dict):
         for key, child in tuple(value.items()):
@@ -266,13 +465,22 @@ def _rewrite_v3_fact_references(
                     dict.fromkeys(
                         replacements.get(str(fact_id), str(fact_id))
                         for fact_id in child
+                        if str(fact_id) not in removed_fact_ids
                     )
                 )
             else:
-                _rewrite_v3_fact_references(child, replacements)
+                _rewrite_v3_fact_references(
+                    child,
+                    replacements,
+                    removed_fact_ids=removed_fact_ids,
+                )
     elif isinstance(value, list):
         for child in value:
-            _rewrite_v3_fact_references(child, replacements)
+            _rewrite_v3_fact_references(
+                child,
+                replacements,
+                removed_fact_ids=removed_fact_ids,
+            )
 
 
 def _validate_scope_identity(

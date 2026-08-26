@@ -828,6 +828,287 @@ class ProFirstV3DossierTest(unittest.TestCase):
         self.assertEqual(projection["canonical_fact_id"], "FACT-001")
         self.assertFalse(projection["incoming_fact_content_adopted"])
 
+    def test_followup_reuses_prior_source_document_for_same_url_and_scope(self):
+        original = self._dossier()
+        original["question_family_results"] = [self._question_result()]
+        pass_id = "PROPASS-v3-followup-source-reuse"
+        repeated_source = self._source(
+            "SRC-REPEATED-BY-FOLLOWUP",
+            "https://example.com/filing",
+        )
+        new_fact = self._fact(
+            "FACT-002",
+            source_id="SRC-REPEATED-BY-FOLLOWUP",
+            predicate="OPERATING_CASH_FLOW_GROWTH",
+            excerpt="Operating cash flow increased during the reported quarter.",
+        )
+        new_fact["research_pass_id"] = pass_id
+        question = self._question_result(support_fact_ids=["FACT-002"])
+        question["search_route_receipt_ids"] = ["ROUTE-SOURCE-REUSE"]
+        response = deepcopy(original)
+        response.update(
+            {
+                "research_pass_id": pass_id,
+                "parent_pass_id": self.pass_id,
+                "candidate_archetypes": [],
+                "selected_archetypes": [],
+                "source_documents": [repeated_source],
+                "material_facts": [new_fact],
+                "counterfacts": [],
+                "resolution_facts": [],
+                "derived_metrics": [],
+                "question_family_results": [question],
+                "unresolved_gaps": [],
+                "source_lineages": [
+                    {
+                        "lineage_id": "SL-001",
+                        "source_document_ids": ["SRC-REPEATED-BY-FOLLOWUP"],
+                        "fact_ids": ["FACT-002"],
+                        "independence_group_id": "ISSUER-FILING",
+                        "status": "ACTIVE",
+                    }
+                ],
+                "search_route_receipts": [
+                    {
+                        "route_receipt_id": "ROUTE-SOURCE-REUSE",
+                        "pass_id": pass_id,
+                        "archetype_id": self.archetype_id,
+                        "question_family_id": self.question_id,
+                        "gap_id": "GAP-SOURCE-REUSE",
+                        "source_role_id": "OFFICIAL_FILING",
+                        "query_or_navigation_objective": (
+                            "Re-open the same issuer filing for another atom."
+                        ),
+                        "query_text": None,
+                        "result_count_seen": 1,
+                        "opened_source_urls": ["https://example.com/filing"],
+                        "accepted_fact_ids": ["FACT-002"],
+                        "rejected_candidate_ids": [],
+                        "provider_status": "SUCCESS",
+                        "no_new_route_reason": None,
+                        "performed_at": "2026-08-23T02:00:00Z",
+                    }
+                ],
+                "research_passes": [
+                    {
+                        "pass_id": pass_id,
+                        "parent_pass_id": self.pass_id,
+                        "pass_name": "PUBLIC_GAP_CLOSURE",
+                        "status": "COMPLETE",
+                        "prompt_hash": "e" * 64,
+                        "response_hash": "f" * 64,
+                    }
+                ],
+                "research_saturation": {
+                    "new_source_document_ids_expected": [
+                        "SRC-REPEATED-BY-FOLLOWUP"
+                    ],
+                    "new_verified_fact_ids_expected": ["FACT-002"],
+                },
+            }
+        )
+
+        merged = apply_research_dossier_delta(
+            original_dossier=original,
+            response_dossier=response,
+            validation_context=DossierValidationContext(
+                job_id="PROJOB-v3",
+                run_id="PRORUN-v3",
+                target_id=self.target_id,
+                as_of_date="2026-08-23",
+                conversation_id="conversation-v3",
+                candidate_archetype_ids=(self.archetype_id,),
+                research_pass_id=pass_id,
+                parent_pass_id=self.pass_id,
+                enforce_parent_pass_id=True,
+            ),
+        )
+
+        self.assertEqual(merged.new_fact_ids, ("FACT-002",))
+        self.assertEqual(
+            [
+                row["source_document_id"]
+                for row in merged.effective_dossier["source_documents"]
+            ],
+            ["SRC-001"],
+        )
+        self.assertEqual(
+            merged.effective_dossier["material_facts"][1]["source_document_id"],
+            "SRC-001",
+        )
+        self.assertEqual(
+            merged.effective_dossier["source_lineages"][0]["source_document_ids"],
+            ["SRC-001"],
+        )
+        projection = merged.effective_dossier["research_saturation"][
+            "v3_duplicate_source_document_projections"
+        ][0]
+        self.assertEqual(projection["action"], "REUSE_PRIOR_CANONICAL_DOCUMENT")
+        self.assertTrue(projection["target_scope_compatible"])
+        self.assertFalse(projection["incoming_document_content_adopted"])
+
+        same_pass_duplicate = deepcopy(response)
+        same_pass_duplicate["source_documents"].append(
+            self._source(
+                "SRC-SECOND-SAME-PASS-DUPLICATE",
+                "https://example.com/filing",
+            )
+        )
+        with self.assertRaisesRegex(DossierDeltaMergeError, "canonical source URL"):
+            apply_research_dossier_delta(
+                original_dossier=original,
+                response_dossier=same_pass_duplicate,
+                validation_context=DossierValidationContext(
+                    job_id="PROJOB-v3",
+                    run_id="PRORUN-v3",
+                    target_id=self.target_id,
+                    as_of_date="2026-08-23",
+                    conversation_id="conversation-v3",
+                    candidate_archetype_ids=(self.archetype_id,),
+                    research_pass_id=pass_id,
+                    parent_pass_id=self.pass_id,
+                    enforce_parent_pass_id=True,
+                ),
+            )
+
+    def test_followup_drops_only_facts_from_same_url_with_conflicting_scope(self):
+        original = self._dossier()
+        original["question_family_results"] = [self._question_result()]
+        pass_id = "PROPASS-v3-followup-source-scope-conflict"
+        conflicting_source = self._source(
+            "SRC-SUBSIDIARY-SCOPE",
+            "https://example.com/filing",
+        )
+        conflicting_source["target_scope"].update(
+            {"issuer_scoped": False, "subject": "Issuer subsidiary"}
+        )
+        conflicting_fact = self._fact(
+            "FACT-SUBSIDIARY-SCOPE",
+            kind="RESOLUTION",
+            source_id="SRC-SUBSIDIARY-SCOPE",
+            predicate="SUBSIDIARY_AUDIT_STATUS",
+            excerpt="The cited filing concerns a subsidiary-specific audit status.",
+        )
+        conflicting_fact.update(
+            {
+                "research_pass_id": pass_id,
+                "issuer_scoped": False,
+                "subject": "Issuer subsidiary",
+                "direction": "NEUTRAL",
+            }
+        )
+        question = self._question_result()
+        question["support_fact_ids"] = []
+        question["resolution_fact_ids"] = ["FACT-SUBSIDIARY-SCOPE"]
+        question["search_route_receipt_ids"] = ["ROUTE-SCOPE-CONFLICT"]
+        response = deepcopy(original)
+        response.update(
+            {
+                "research_pass_id": pass_id,
+                "parent_pass_id": self.pass_id,
+                "candidate_archetypes": [],
+                "selected_archetypes": [],
+                "source_documents": [conflicting_source],
+                "material_facts": [],
+                "counterfacts": [],
+                "resolution_facts": [conflicting_fact],
+                "derived_metrics": [],
+                "question_family_results": [question],
+                "unresolved_gaps": [],
+                "source_lineages": [
+                    {
+                        "lineage_id": "SL-SUBSIDIARY-SCOPE",
+                        "source_document_ids": ["SRC-SUBSIDIARY-SCOPE"],
+                        "fact_ids": ["FACT-SUBSIDIARY-SCOPE"],
+                        "independence_group_id": "SUBSIDIARY-FILING",
+                        "status": "ACTIVE",
+                    }
+                ],
+                "search_route_receipts": [
+                    {
+                        "route_receipt_id": "ROUTE-SCOPE-CONFLICT",
+                        "pass_id": pass_id,
+                        "archetype_id": self.archetype_id,
+                        "question_family_id": self.question_id,
+                        "gap_id": "GAP-SCOPE-CONFLICT",
+                        "source_role_id": "OFFICIAL_FILING",
+                        "query_or_navigation_objective": (
+                            "Check whether the filing is issuer- or subsidiary-scoped."
+                        ),
+                        "query_text": None,
+                        "result_count_seen": 1,
+                        "opened_source_urls": ["https://example.com/filing"],
+                        "accepted_fact_ids": ["FACT-SUBSIDIARY-SCOPE"],
+                        "rejected_candidate_ids": [],
+                        "provider_status": "SUCCESS",
+                        "no_new_route_reason": None,
+                        "performed_at": "2026-08-23T03:00:00Z",
+                    }
+                ],
+                "research_passes": [
+                    {
+                        "pass_id": pass_id,
+                        "parent_pass_id": self.pass_id,
+                        "pass_name": "PUBLIC_GAP_CLOSURE",
+                        "status": "COMPLETE",
+                        "prompt_hash": "1" * 64,
+                        "response_hash": "2" * 64,
+                    }
+                ],
+                "research_saturation": {
+                    "new_source_document_ids_expected": ["SRC-SUBSIDIARY-SCOPE"],
+                    "new_verified_fact_ids_expected": ["FACT-SUBSIDIARY-SCOPE"],
+                },
+            }
+        )
+
+        merged = apply_research_dossier_delta(
+            original_dossier=original,
+            response_dossier=response,
+            validation_context=DossierValidationContext(
+                job_id="PROJOB-v3",
+                run_id="PRORUN-v3",
+                target_id=self.target_id,
+                as_of_date="2026-08-23",
+                conversation_id="conversation-v3",
+                candidate_archetype_ids=(self.archetype_id,),
+                research_pass_id=pass_id,
+                parent_pass_id=self.pass_id,
+                enforce_parent_pass_id=True,
+            ),
+        )
+
+        self.assertEqual(merged.new_fact_ids, ())
+        self.assertEqual(
+            merged.effective_dossier["source_documents"],
+            original["source_documents"],
+        )
+        self.assertEqual(
+            merged.effective_dossier["material_facts"],
+            original["material_facts"],
+        )
+        self.assertEqual(merged.effective_dossier["resolution_facts"], [])
+        self.assertEqual(
+            merged.effective_dossier["search_route_receipts"][0]["accepted_fact_ids"],
+            [],
+        )
+        self.assertEqual(
+            merged.effective_dossier["source_lineages"],
+            original["source_lineages"],
+        )
+        projection = merged.effective_dossier["research_saturation"][
+            "v3_duplicate_source_document_projections"
+        ][0]
+        self.assertEqual(
+            projection["action"],
+            "DROP_SCOPE_CONFLICTING_DUPLICATE_DOCUMENT_AND_FACTS",
+        )
+        self.assertFalse(projection["target_scope_compatible"])
+        self.assertEqual(
+            projection["dropped_fact_ids"],
+            ["FACT-SUBSIDIARY-SCOPE"],
+        )
+
     def test_followup_drops_prior_fact_reference_without_fact_backlink(self):
         original = self._dossier()
         original["question_family_results"] = [self._question_result()]
