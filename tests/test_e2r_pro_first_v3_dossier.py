@@ -474,8 +474,27 @@ class ProFirstV3DossierTest(unittest.TestCase):
             q01.failure_codes,
         )
 
-    def test_v3_followup_delta_appends_document_fact_lineage_and_route(self) -> None:
+    def test_v3_followup_delta_extends_existing_lineage_without_v2_fields(self) -> None:
         original = self._dossier()
+        original["search_route_receipts"] = [
+            {
+                "route_receipt_id": "ROUTE-V3-PARSER-PENDING",
+                "pass_id": self.pass_id,
+                "archetype_id": self.archetype_id,
+                "question_family_id": self.question_id,
+                "gap_id": "GAP-V3-PARSER",
+                "source_role_id": "OFFICIAL_FILING",
+                "query_or_navigation_objective": "Read an oversized filing",
+                "query_text": "issuer oversized filing",
+                "result_count_seen": 1,
+                "opened_source_urls": ["https://example.com/filing"],
+                "accepted_fact_ids": [],
+                "rejected_candidate_ids": [],
+                "provider_status": "PARSER_PENDING",
+                "no_new_route_reason": "The full text was not parser-readable.",
+                "performed_at": "2026-08-21T01:00:00Z",
+            }
+        ]
         response = self._dossier()
         response["research_pass_id"] = "PROPASS-v3-followup"
         response["parent_pass_id"] = self.pass_id
@@ -487,7 +506,7 @@ class ProFirstV3DossierTest(unittest.TestCase):
                     "SRC-002",
                     "https://example.com/followup-filing",
                 ),
-                "lineage_id": "SL-002",
+                "lineage_id": "SL-001",
             }
         ]
         followup_fact = self._fact(
@@ -502,10 +521,10 @@ class ProFirstV3DossierTest(unittest.TestCase):
         response["resolution_facts"] = []
         response["source_lineages"] = [
             {
-                "lineage_id": "SL-002",
+                "lineage_id": "SL-001",
                 "source_document_ids": ["SRC-002"],
                 "fact_ids": ["FACT-002"],
-                "independence_group_id": "ISSUER-FILING-FOLLOWUP",
+                "independence_group_id": "ISSUER-FILING",
                 "status": "ACTIVE",
             }
         ]
@@ -540,7 +559,23 @@ class ProFirstV3DossierTest(unittest.TestCase):
                 "response_hash": "d" * 64,
             }
         ]
-        response["question_family_results"] = []
+        question = self._question_result()
+        question.update(
+            {
+                "status": "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH",
+                "support_fact_ids": [],
+                "required_source_roles_satisfied": [],
+                "required_source_roles_missing": ["OFFICIAL_FILING"],
+                "search_route_receipt_ids": [
+                    "ROUTE-V3-PARSER-PENDING",
+                    "ROUTE-V3-002",
+                ],
+                "availability_class": "PUBLIC_SEARCHABLE",
+                "adequate_search_proven": True,
+                "closure_reason": "The follow-up reported an adequate absence.",
+            }
+        )
+        response["question_family_results"] = [question]
         response["derived_metrics"] = []
 
         merged = apply_research_dossier_delta(
@@ -560,13 +595,39 @@ class ProFirstV3DossierTest(unittest.TestCase):
         )
 
         self.assertEqual(merged.new_fact_ids, ("FACT-002",))
-        self.assertEqual(merged.new_source_lineage_ids, ("SL-002",))
+        self.assertEqual(merged.new_source_lineage_ids, ())
         self.assertEqual(merged.new_route_receipt_ids, ("ROUTE-V3-002",))
         self.assertEqual(
             {row["source_document_id"] for row in merged.effective_dossier["source_documents"]},
             {"SRC-001", "SRC-002"},
         )
+        self.assertEqual(
+            merged.effective_dossier["source_lineages"],
+            [
+                {
+                    "lineage_id": "SL-001",
+                    "source_document_ids": ["SRC-001", "SRC-002"],
+                    "fact_ids": ["FACT-001", "FACT-002"],
+                    "independence_group_id": "ISSUER-FILING",
+                    "status": "ACTIVE",
+                }
+            ],
+        )
         self.assertNotIn("proposed_score_ranges", merged.effective_dossier)
+        projected_question = merged.effective_dossier["question_family_results"][0]
+        self.assertEqual(projected_question["status"], "PARSER_PENDING")
+        self.assertEqual(
+            projected_question["availability_class"], "PARSER_BLOCKED"
+        )
+        self.assertFalse(projected_question["adequate_search_proven"])
+        self.assertEqual(
+            merged.effective_dossier["research_status"], "PROVIDER_PENDING"
+        )
+        projection = merged.effective_dossier["research_saturation"][
+            "route_truth_question_status_projections"
+        ][0]
+        self.assertEqual(projection["reported_status"], "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH")
+        self.assertEqual(projection["projected_status"], "PARSER_PENDING")
         ResearchDossierValidator().validate(
             merged.effective_dossier,
             DossierValidationContext(

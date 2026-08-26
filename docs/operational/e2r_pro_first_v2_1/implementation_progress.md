@@ -1841,3 +1841,66 @@ library를 설치한 Ubuntu runner로 전체 suite를 다시 검증한다.
 push하고 독립 CI green을 확인한 뒤 C06 → C17 → C28 순서로 같은 conversation tail을 실행한다. 따라서
 score/Stage publication은 계속 withheld이며 `p10_full_thesis_tail_preflight_receipt.json`은 구현·검문
 receipt이지 최종 full-thesis receipt가 아니다.
+
+## 2026-08-26 — P10 C06 actual `PUBLIC_GAP_CLOSURE` 1차 회수와 V3 병합 수리
+
+독립 CI green 뒤 C06의 기존 conversation `6a8db0ad-8ed0-83e8-888e-dce26c950343`을 URL로 직접
+회복했다. initial prompt는 다시 보내지 않았고 browser submit delta는 0이었다. deterministic saturation이
+지목한 공개자료·provider/parser·source-linkage 공백만 `PUBLIC_GAP_CLOSURE` pass로 정확히 한 번 전송했다.
+
+```text
+pass id             PROPASS-1db540b7e696ffc05d1c94a1
+parent pass         PROPASS-e49762cc3ad556d6b211d92b
+submit count        1
+automatic resubmit  0
+research elapsed    약 110분
+capture source      DIRECT_REPORT_DOM_NORMALIZED
+new source docs     7
+new facts           14
+new routes          33
+updated questions   25
+```
+
+Pro 완료 뒤 같은 assistant turn에서 후속 V3 JSON을 실다운로드했다. raw capture는 runtime에만 보존하고
+Git에는 hash와 검문 결과만 둔다.
+
+```text
+prompt hash      1b93bf9ec67200eedd51da4b6f8ad8676a010f2eb0948ba49c0949d610001442
+raw report hash  32c8873c366852a16aa13775f7321889e45cacd4cff73e64a2932639e8ea2828
+report hash      b561736ef2c6c90147ed6053dd5e4c60810675d4b18389ce130239592528f44f
+V3 JSON hash     5c708857249957f3dd2e2d26347750f6ef366ecb48df457bd5fe473158c899dd
+```
+
+첫 병합은 fail-safe로 멈췄다. 원인은 V2 lineage의 URL·publisher·상태이력 필드를 V3 lineage에도
+추가하던 schema 혼용이었다. V3는 `lineage_id`, `source_document_ids`, `fact_ids`,
+`independence_group_id`, `status`만 두고 URL은 `source_documents`가 소유한다. merger를 schema별로
+분리하고 기존 lineage에 새 문서/사실을 합치는 회귀 테스트를 추가했다.
+
+두 번째 실제-data 오프라인 병합에서는 Pro가 `R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q01`을
+`EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH`로 닫았지만 exact route roster에 기존
+`PARSER_PENDING` 영수증이 남아 있음을 검문이 잡았다. 전체 답안을 폐기하지 않고 새 증거는 보존하되,
+그 질문 하나만 deterministic하게 `PARSER_PENDING / PARSER_BLOCKED`로 낮춘다. raw Pro 주장은 capture에
+그대로 남고 effective dossier의 `research_saturation.route_truth_question_status_projections`에 투영 이유와
+blocking route를 기록한다.
+
+쉬운 예: 새 답안 14개 중 13개가 정상이고 감사 원문 1개가 파서에 막혔다면 14개를 전부 버리거나
+“감사 문제 없음”으로 확정하지 않는다. 14개를 모두 ledger에 넣고 감사 질문만 pending으로 둔다.
+
+실제 저장된 capture를 브라우저·전송 없이 다시 병합한 결과는 다음과 같다.
+
+```text
+exact capture offline merge                  PASS
+new / effective facts                       14 / 39
+new / effective source documents             7 / 23
+new / effective source lineages               6 / 21
+new / effective route receipts               33 / 70
+effective mandatory questions                    28
+route-truth status projection                     1
+effective research status              PROVIDER_PENDING
+score / Stage authority                  false / false
+```
+
+따라서 이 시점의 PASS는 **capture 보존과 exact-data 병합 PASS**이지 full-thesis 완료가 아니다. 다음 실행은
+동일 pass capture를 `REUSE_CAPTURE`로 사용해 submit 0으로 effective snapshot을 영구 저장한 뒤, 남은 exact
+parser/source 공백만 같은 conversation에서 이어간다. 상세 수치는
+`p10_c06_public_gap_capture_merge_receipt.json`에 고정했다.

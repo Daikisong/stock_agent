@@ -106,6 +106,7 @@ def apply_research_dossier_delta(
             current = dict(effective.get(key) or {})
             current.update(deepcopy(dict(incoming)))
             effective[key] = current
+    _project_overclaimed_route_closures(effective)
     reported_research_status = response_dossier.get("research_status")
     if not isinstance(reported_research_status, str) or not reported_research_status:
         raise DossierDeltaMergeError(
@@ -249,7 +250,7 @@ def _append_immutable_rows(
     return tuple(added)
 
 
-SOURCE_LINEAGE_UNION_FIELDS = frozenset(
+V2_SOURCE_LINEAGE_UNION_FIELDS = frozenset(
     {
         "source_urls",
         "canonical_source_urls",
@@ -260,7 +261,7 @@ SOURCE_LINEAGE_UNION_FIELDS = frozenset(
         "source_document_ids",
     }
 )
-SOURCE_LINEAGE_IDENTITY_FIELDS = frozenset(
+V2_SOURCE_LINEAGE_IDENTITY_FIELDS = frozenset(
     {
         "source_lineage_id",
         "independence_group_id",
@@ -268,8 +269,14 @@ SOURCE_LINEAGE_IDENTITY_FIELDS = frozenset(
         "status",
     }
 )
-SOURCE_LINEAGE_CURRENT_STATE_FIELDS = frozenset(
+V2_SOURCE_LINEAGE_CURRENT_STATE_FIELDS = frozenset(
     {"lineage_status", "lineage_operation"}
+)
+V3_SOURCE_LINEAGE_UNION_FIELDS = frozenset(
+    {"source_document_ids", "fact_ids"}
+)
+V3_SOURCE_LINEAGE_IDENTITY_FIELDS = frozenset(
+    {"lineage_id", "independence_group_id", "status"}
 )
 
 
@@ -292,6 +299,14 @@ def _merge_source_lineages(
         if schema_version == "e2r_pro_research_dossier_v3"
         else "source_lineage_id"
     )
+    if schema_version == "e2r_pro_research_dossier_v3":
+        union_fields = V3_SOURCE_LINEAGE_UNION_FIELDS
+        identity_fields = V3_SOURCE_LINEAGE_IDENTITY_FIELDS
+        current_state_fields: frozenset[str] = frozenset()
+    else:
+        union_fields = V2_SOURCE_LINEAGE_UNION_FIELDS
+        identity_fields = V2_SOURCE_LINEAGE_IDENTITY_FIELDS
+        current_state_fields = V2_SOURCE_LINEAGE_CURRENT_STATE_FIELDS
     rows = list(effective.get("source_lineages") or ())
     index = {
         str(row.get(id_key) or ""): position
@@ -320,7 +335,7 @@ def _merge_source_lineages(
             continue
 
         prior = deepcopy(dict(rows[index[lineage_id]]))
-        for key in SOURCE_LINEAGE_IDENTITY_FIELDS:
+        for key in identity_fields:
             before = prior.get(key)
             after = incoming.get(key)
             if before is not None and after is not None and before != after:
@@ -328,7 +343,7 @@ def _merge_source_lineages(
                     f"follow-up rewrote source lineage identity: {lineage_id}.{key}"
                 )
         merged = deepcopy(prior)
-        for key in SOURCE_LINEAGE_UNION_FIELDS:
+        for key in union_fields:
             merged[key] = list(
                 dict.fromkeys(
                     str(value)
@@ -339,7 +354,7 @@ def _merge_source_lineages(
                     if str(value)
                 )
             )
-        for key in SOURCE_LINEAGE_CURRENT_STATE_FIELDS:
+        for key in current_state_fields:
             before = prior.get(key)
             after = incoming.get(key)
             history_key = f"{key}_history"
@@ -357,12 +372,12 @@ def _merge_source_lineages(
             if after is not None:
                 merged[key] = deepcopy(after)
         handled = (
-            SOURCE_LINEAGE_UNION_FIELDS
-            | SOURCE_LINEAGE_IDENTITY_FIELDS
-            | SOURCE_LINEAGE_CURRENT_STATE_FIELDS
+            union_fields
+            | identity_fields
+            | current_state_fields
             | {
                 f"{key}_history"
-                for key in SOURCE_LINEAGE_CURRENT_STATE_FIELDS
+                for key in current_state_fields
             }
         )
         for key, value in incoming.items():
@@ -378,6 +393,103 @@ def _merge_source_lineages(
         rows[index[lineage_id]] = merged
     effective["source_lineages"] = rows
     return tuple(added)
+
+
+def _project_overclaimed_route_closures(effective: dict[str, Any]) -> None:
+    """Keep new evidence while refusing terminal closure over blocked routes.
+
+    Pro's raw response remains immutable in the capture bundle.  The effective
+    dossier may nevertheless have to demote a reported absence/non-public
+    closure when its exact route roster still contains a provider/parser
+    failure, lacks two routes, or lacks a no-new-route reason.  Rejecting the
+    whole delta would discard otherwise valid new documents and facts; marking
+    the exact question pending preserves both the evidence and fail-closed
+    score semantics.
+    """
+
+    receipt_by_id = {
+        str(row.get("route_receipt_id") or ""): row
+        for row in effective.get("search_route_receipts") or ()
+        if isinstance(row, Mapping)
+    }
+    projections: list[dict[str, Any]] = []
+    question_rows = list(effective.get("question_family_results") or ())
+    for index, raw_row in enumerate(question_rows):
+        if not isinstance(raw_row, Mapping):
+            continue
+        row = deepcopy(dict(raw_row))
+        reported_status = str(row.get("status") or "")
+        if reported_status not in {
+            "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH",
+            "LIKELY_NONPUBLIC",
+        }:
+            continue
+        route_ids = tuple(
+            str(value)
+            for value in row.get("search_route_receipt_ids") or ()
+            if str(value)
+        )
+        linked = tuple(receipt_by_id.get(value) for value in route_ids)
+        non_success = tuple(
+            (route_id, str((receipt or {}).get("provider_status") or "MISSING"))
+            for route_id, receipt in zip(route_ids, linked)
+            if receipt is None or receipt.get("provider_status") != "SUCCESS"
+        )
+        missing_no_new_reason = tuple(
+            route_id
+            for route_id, receipt in zip(route_ids, linked)
+            if reported_status == "LIKELY_NONPUBLIC"
+            and receipt is not None
+            and receipt.get("provider_status") == "SUCCESS"
+            and not str(receipt.get("no_new_route_reason") or "").strip()
+        )
+        failure_codes: list[str] = []
+        if row.get("adequate_search_proven") is not True:
+            failure_codes.append("ADEQUATE_SEARCH_NOT_PROVEN")
+        if len(route_ids) < 2:
+            failure_codes.append("INSUFFICIENT_ROUTE_RECEIPTS")
+        if non_success:
+            failure_codes.append("NON_NORMAL_PROVIDER_OR_PARSER_RECEIPT")
+        if missing_no_new_reason:
+            failure_codes.append("MISSING_NO_NEW_ROUTE_REASON")
+        if not failure_codes:
+            continue
+        blocking_statuses = {status for _route_id, status in non_success}
+        if "PARSER_PENDING" in blocking_statuses:
+            projected_status = "PARSER_PENDING"
+            availability_class = "PARSER_BLOCKED"
+        elif blocking_statuses:
+            projected_status = "PROVIDER_PENDING"
+            availability_class = "PROVIDER_BLOCKED"
+        else:
+            projected_status = "SOURCE_PENDING"
+            availability_class = "PUBLIC_SEARCHABLE"
+        row["status"] = projected_status
+        row["availability_class"] = availability_class
+        row["adequate_search_proven"] = False
+        prior_reason = str(row.get("closure_reason") or "").strip()
+        row["closure_reason"] = (
+            f"{prior_reason} " if prior_reason else ""
+        ) + "Deterministic route audit kept this question pending."
+        question_rows[index] = row
+        projections.append(
+            {
+                "question_family_id": str(row.get("question_family_id") or ""),
+                "reported_status": reported_status,
+                "projected_status": projected_status,
+                "failure_codes": failure_codes,
+                "blocking_route_receipts": [
+                    {"route_receipt_id": route_id, "provider_status": status}
+                    for route_id, status in non_success
+                ],
+                "missing_no_new_route_reason_ids": list(missing_no_new_reason),
+            }
+        )
+    effective["question_family_results"] = question_rows
+    if projections:
+        saturation = dict(effective.get("research_saturation") or {})
+        saturation["route_truth_question_status_projections"] = projections
+        effective["research_saturation"] = saturation
 
 
 def _validate_new_v3_source_documents_are_route_bound(

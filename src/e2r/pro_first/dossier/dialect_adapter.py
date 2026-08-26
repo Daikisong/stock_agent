@@ -15,7 +15,7 @@ from typing import Any, Mapping
 
 from ..ids import canonical_hash
 from .v2 import compile_dossier_v2_closure_summary
-from .delta_merge import SOURCE_LINEAGE_IDENTITY_FIELDS
+from .delta_merge import V2_SOURCE_LINEAGE_IDENTITY_FIELDS
 
 
 _CANONICAL_DIRECTIONS = frozenset(
@@ -515,7 +515,7 @@ def _project_existing_followup_lineage_identity(
         prior = prior_by_id.get(lineage_id)
         changed_fields: list[str] = []
         if prior is not None:
-            for key in sorted(SOURCE_LINEAGE_IDENTITY_FIELDS):
+            for key in sorted(V2_SOURCE_LINEAGE_IDENTITY_FIELDS):
                 if key not in prior:
                     continue
                 if key in row and canonical_hash(row[key]) != canonical_hash(prior[key]):
