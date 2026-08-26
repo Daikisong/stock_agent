@@ -2083,3 +2083,54 @@ provider/parser core pending은 4 → 1, source-linkage incomplete는 6 → 2로
 변경된 exact snapshot을 입력으로 pass 06 `PROPASS-330252bb6db7ee3267fab916`을 같은 conversation에
 한 번 전송했다. 상세 capture와 post-merge 수치는
 `p10_c06_public_gap_fourth_capture_merge_receipt.json`에 고정했다.
+
+pass 06은 약 44분 뒤 완료됐고 같은 assistant turn의 V3 JSON capture는 정상 저장됐다.
+
+```text
+assistant turn      request-6a8db0ad-8ed0-83e8-888e-dce26c950343-4
+prompt hash         71bd8763eda7bb2b93bbab2f777164570ca0ee6cb58663825ebe2c638046f04d
+raw report hash     6eb13d9c8a80096a48d40ad3218c45a37d711e6057398465217eb8bc07cad2c1
+report hash         8c8a483dd74d20f6424bcf6ccb02ecdacafeac45ad1020b6364e4b1cc2f748dc
+V3 JSON hash        4a033c7741892968c20c894b43bdb2cefd0ee8120fb8f223f1eedcd3b65bc479
+raw fact rows       15
+new docs / routes   1 / 28
+updated questions   19
+PDF                 없음(null, 오류 아님)
+```
+
+첫 병합은 `duplicate atomic predicate/source/excerpt identity` 검문에서 fail-safe 정지했다. 실제 JSON을
+이전 effective graph와 strict validator의 동일 identity로 대조하니 15개 중 9개가 이전 fact와 같은
+`source_document_id + predicate_id + normalized subject + normalized excerpt`를 새 ID로 반복한 것이었다.
+첫 오류 ID 하나만 예외 처리하면 뒤의 8개에서 다시 멈추므로, exact atomic identity 정책을 validator와
+merger가 공유하도록 일반화했다.
+
+follow-up merger는 이제 이전 valid graph와 fact kind까지 같은 exact duplicate만 기존 canonical fact로
+투영한다. 새 duplicate row의 statement, confidence, period 같은 변경값은 채택하지 않고 기존 fact를 그대로
+보존한다. question, lineage, route, derived input의 fact reference만 canonical ID로 바꾼다. 동일 pass 안의
+중복, MATERIAL/COUNTER/RESOLUTION kind 충돌, unknown fact는 계속 strict failure다.
+
+쉬운 예: 이전 장부의 영수증 `F1`과 출처·항목·주체·원문이 완전히 같은 영수증을 다음 pass가 `F9`로
+다시 냈다면 `F9`를 새 실적으로 두 번 세지 않는다. `F9`가 가리키던 경로만 `F1`로 연결한다. 반면 원문이나
+항목이 다르면 자동으로 합치지 않는다.
+
+실제 pass 06 capture의 parser → dialect adapter → pre-schema → identity binding → delta merge 전체를
+브라우저·전송 없이 재생한 결과는 다음과 같다.
+
+```text
+exact capture offline merge                  PASS
+Pro fact rows                                  15
+prior exact duplicates                         9
+actual new facts                                6
+effective facts                               75
+effective source documents                    29
+effective source lineages                     27
+effective route receipts                     170
+effective mandatory questions                 28
+effective research status       PROVIDER_PENDING
+focused regression                       145/145 PASS
+score / Stage authority            false / false
+```
+
+raw capture와 기존 canonical fact는 수정하지 않았다. 다음 실행은 동일 pass 06 READY capture를
+`REUSE_CAPTURE`로 읽어 browser submit 0으로 영구 병합·재검증한 뒤 saturation을 계속한다. 상세 9개 mapping과
+신규 6개 fact ID는 `p10_c06_public_gap_fifth_capture_merge_receipt.json`에 고정했다.

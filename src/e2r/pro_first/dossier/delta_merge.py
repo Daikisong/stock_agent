@@ -9,6 +9,7 @@ from typing import Any, Mapping, Sequence
 from ..ids import canonical_hash
 from .validator import DossierValidationContext, ResearchDossierValidator
 from .v2 import compile_dossier_v2_closure_summary
+from .v3 import v3_atomic_fact_identity
 
 
 class DossierDeltaMergeError(ValueError):
@@ -43,13 +44,19 @@ def apply_research_dossier_delta(
 
     _validate_scope_identity(original_dossier, response_dossier, validation_context)
     schema_version = str(original_dossier.get("schema_version") or "")
+    response = deepcopy(dict(response_dossier))
+    if schema_version == "e2r_pro_research_dossier_v3":
+        response = _coalesce_prior_v3_atomic_fact_duplicates(
+            original_dossier,
+            response,
+        )
     effective = deepcopy(dict(original_dossier))
     new_fact_ids: list[str] = []
     for collection in ("material_facts", "counterfacts", "resolution_facts"):
         new_fact_ids.extend(
             _append_immutable_rows(
                 effective,
-                response_dossier,
+                response,
                 collection=collection,
                 id_key="dossier_fact_id",
                 required_new_pass_id=validation_context.research_pass_id,
@@ -59,25 +66,25 @@ def apply_research_dossier_delta(
     if schema_version == "e2r_pro_research_dossier_v3":
         new_source_document_ids = _append_immutable_rows(
             effective,
-            response_dossier,
+            response,
             collection="source_documents",
             id_key="source_document_id",
         )
     new_lineages = _merge_source_lineages(
         effective,
-        response_dossier,
+        response,
         schema_version=schema_version,
     )
     new_routes = _append_immutable_rows(
         effective,
-        response_dossier,
+        response,
         collection="search_route_receipts",
         id_key="route_receipt_id",
         required_new_pass_id=validation_context.research_pass_id,
     )
     _append_immutable_rows(
         effective,
-        response_dossier,
+        response,
         collection="research_passes",
         id_key="pass_id",
         required_new_pass_id=validation_context.research_pass_id,
@@ -85,23 +92,23 @@ def apply_research_dossier_delta(
     if schema_version == "e2r_pro_research_dossier_v3":
         _append_immutable_rows(
             effective,
-            response_dossier,
+            response,
             collection="derived_metrics",
             id_key="derived_metric_id",
         )
-    updated_questions = _merge_question_results(effective, response_dossier)
-    _merge_gap_state(effective, response_dossier)
+    updated_questions = _merge_question_results(effective, response)
+    _merge_gap_state(effective, response)
     if schema_version == "e2r_pro_research_dossier_v2":
-        _append_repair_register(effective, response_dossier)
+        _append_repair_register(effective, response)
 
     for key in (
         "research_pass_id",
         "parent_pass_id",
         "research_saturation",
     ):
-        effective[key] = deepcopy(response_dossier.get(key))
+        effective[key] = deepcopy(response.get(key))
     for key in ("component_research", "structured_metrics"):
-        incoming = response_dossier.get(key)
+        incoming = response.get(key)
         if isinstance(incoming, Mapping):
             current = dict(effective.get(key) or {})
             current.update(deepcopy(dict(incoming)))
@@ -110,7 +117,7 @@ def apply_research_dossier_delta(
         _extend_v3_lineage_rosters_from_graph(effective)
         _drop_unbound_v3_question_fact_references(effective)
     _project_overclaimed_route_closures(effective)
-    reported_research_status = response_dossier.get("research_status")
+    reported_research_status = response.get("research_status")
     if not isinstance(reported_research_status, str) or not reported_research_status:
         raise DossierDeltaMergeError(
             "follow-up response lacks its reported research status"
@@ -151,6 +158,121 @@ def apply_research_dossier_delta(
         new_route_receipt_ids=tuple(new_routes),
         updated_question_family_ids=tuple(updated_questions),
     )
+
+
+_V3_FACT_COLLECTIONS = (
+    "material_facts",
+    "counterfacts",
+    "resolution_facts",
+)
+_V3_FACT_REFERENCE_FIELDS = frozenset(
+    {
+        "support_fact_ids",
+        "counter_fact_ids",
+        "resolution_fact_ids",
+        "accepted_fact_ids",
+        "input_fact_ids",
+        "fact_ids",
+        "new_verified_fact_ids_expected",
+    }
+)
+
+
+def _coalesce_prior_v3_atomic_fact_duplicates(
+    original: Mapping[str, Any],
+    response: dict[str, Any],
+) -> dict[str, Any]:
+    """Project a later-pass duplicate onto the immutable canonical fact.
+
+    The V3 validator intentionally forbids two fact ids for one exact atomic
+    source/predicate/subject/excerpt identity.  A follow-up can nevertheless
+    repeat an already accepted atom under a new id.  Only duplicates against
+    the prior valid graph are coalesced.  Same-pass duplicates and cross-kind
+    conflicts remain in place so strict validation still rejects them.
+    """
+
+    prior_by_identity: dict[tuple[str, str, str, str], tuple[str, str]] = {}
+    for collection in _V3_FACT_COLLECTIONS:
+        for raw_fact in original.get(collection) or ():
+            if not isinstance(raw_fact, Mapping):
+                continue
+            fact_id = str(raw_fact.get("dossier_fact_id") or "")
+            identity = v3_atomic_fact_identity(raw_fact)
+            if fact_id and identity not in prior_by_identity:
+                prior_by_identity[identity] = (collection, fact_id)
+
+    incoming_identity_counts: dict[tuple[str, str, str, str], int] = {}
+    for collection in _V3_FACT_COLLECTIONS:
+        for raw_fact in response.get(collection) or ():
+            if isinstance(raw_fact, Mapping):
+                identity = v3_atomic_fact_identity(raw_fact)
+                incoming_identity_counts[identity] = (
+                    incoming_identity_counts.get(identity, 0) + 1
+                )
+
+    replacements: dict[str, str] = {}
+    projections: list[dict[str, Any]] = []
+    for collection in _V3_FACT_COLLECTIONS:
+        retained: list[Any] = []
+        for raw_fact in response.get(collection) or ():
+            if not isinstance(raw_fact, Mapping):
+                retained.append(deepcopy(raw_fact))
+                continue
+            incoming = deepcopy(dict(raw_fact))
+            duplicate_id = str(incoming.get("dossier_fact_id") or "")
+            identity = v3_atomic_fact_identity(incoming)
+            prior = prior_by_identity.get(identity)
+            if (
+                prior is None
+                or prior[0] != collection
+                or incoming_identity_counts.get(identity) != 1
+            ):
+                retained.append(incoming)
+                continue
+            canonical_id = prior[1]
+            if not duplicate_id or duplicate_id == canonical_id:
+                retained.append(incoming)
+                continue
+            replacements[duplicate_id] = canonical_id
+            projections.append(
+                {
+                    "duplicate_fact_id": duplicate_id,
+                    "canonical_fact_id": canonical_id,
+                    "fact_collection": collection,
+                    "atomic_identity_hash": canonical_hash(identity),
+                    "incoming_fact_content_adopted": False,
+                    "reason": "EXACT_PRIOR_ATOMIC_IDENTITY",
+                }
+            )
+        response[collection] = retained
+
+    if not replacements:
+        return response
+    _rewrite_v3_fact_references(response, replacements)
+    saturation = dict(response.get("research_saturation") or {})
+    saturation["v3_duplicate_atomic_fact_projections"] = projections
+    response["research_saturation"] = saturation
+    return response
+
+
+def _rewrite_v3_fact_references(
+    value: Any,
+    replacements: Mapping[str, str],
+) -> None:
+    if isinstance(value, dict):
+        for key, child in tuple(value.items()):
+            if key in _V3_FACT_REFERENCE_FIELDS and isinstance(child, list):
+                value[key] = list(
+                    dict.fromkeys(
+                        replacements.get(str(fact_id), str(fact_id))
+                        for fact_id in child
+                    )
+                )
+            else:
+                _rewrite_v3_fact_references(child, replacements)
+    elif isinstance(value, list):
+        for child in value:
+            _rewrite_v3_fact_references(child, replacements)
 
 
 def _validate_scope_identity(

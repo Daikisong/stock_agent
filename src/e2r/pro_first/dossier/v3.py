@@ -38,6 +38,17 @@ class DossierV3EvidenceSummary:
     lineage_ids: tuple[str, ...]
 
 
+def v3_atomic_fact_identity(fact: Mapping[str, Any]) -> tuple[str, str, str, str]:
+    """Return the validator's canonical identity for one atomic fact."""
+
+    return (
+        str(fact.get("source_document_id") or ""),
+        str(fact.get("predicate_id") or ""),
+        _normalized_text(fact.get("subject")),
+        _normalized_text(fact.get("supporting_excerpt")),
+    )
+
+
 def validate_dossier_v3_evidence_graph(
     payload: Mapping[str, Any],
     *,
@@ -152,12 +163,7 @@ def validate_dossier_v3_evidence_graph(
                 raise ValueError(f"counterfact has incompatible direction: {fact_id}")
             preflight = fact.get("verifier_preflight") or {}
             _validate_preflight(preflight, fact_id=fact_id)
-            identity = (
-                source_id,
-                str(fact.get("predicate_id") or ""),
-                _normalized_text(fact.get("subject")),
-                _normalized_text(fact.get("supporting_excerpt")),
-            )
+            identity = v3_atomic_fact_identity(fact)
             if identity in atomic_identities:
                 raise ValueError(
                     f"duplicate atomic predicate/source/excerpt identity: {fact_id}"
@@ -310,5 +316,6 @@ __all__ = [
     "DossierV3EvidenceSummary",
     "FactKindV3",
     "FactLifecycleV3",
+    "v3_atomic_fact_identity",
     "validate_dossier_v3_evidence_graph",
 ]

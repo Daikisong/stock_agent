@@ -44,6 +44,7 @@ from .v3 import (
     DossierV3EvidenceSummary,
     FactKindV3,
     FactLifecycleV3,
+    v3_atomic_fact_identity,
     validate_dossier_v3_evidence_graph,
 )
 
@@ -82,6 +83,7 @@ __all__ = [
     "validate_research_status",
     "validate_route_bindings",
     "validate_dossier_v3_evidence_graph",
+    "v3_atomic_fact_identity",
     "bind_dossier_transport_identity",
     "apply_research_dossier_delta",
 ]

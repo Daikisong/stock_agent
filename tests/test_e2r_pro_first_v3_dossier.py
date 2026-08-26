@@ -698,6 +698,136 @@ class ProFirstV3DossierTest(unittest.TestCase):
                 ),
             )
 
+    def test_followup_coalesces_exact_prior_atomic_fact_without_rewriting_it(self):
+        original = self._dossier()
+        original["question_family_results"] = [self._question_result()]
+        duplicate = deepcopy(original["material_facts"][0])
+        duplicate.update(
+            {
+                "dossier_fact_id": "FACT-REPEATED-BY-FOLLOWUP",
+                "research_pass_id": "PROPASS-v3-followup-duplicate",
+                "statement": "The same filing atom was restated by the follow-up.",
+                "confidence": 0.99,
+            }
+        )
+        question = self._question_result(
+            support_fact_ids=["FACT-REPEATED-BY-FOLLOWUP"]
+        )
+        question["search_route_receipt_ids"] = ["ROUTE-FOLLOWUP-DUPLICATE"]
+        response = deepcopy(original)
+        response.update(
+            {
+                "research_pass_id": "PROPASS-v3-followup-duplicate",
+                "parent_pass_id": self.pass_id,
+                "candidate_archetypes": [],
+                "selected_archetypes": [],
+                "source_documents": [],
+                "material_facts": [duplicate],
+                "counterfacts": [],
+                "resolution_facts": [],
+                "derived_metrics": [],
+                "question_family_results": [question],
+                "unresolved_gaps": [],
+                "source_lineages": [
+                    {
+                        "lineage_id": "SL-001",
+                        "source_document_ids": ["SRC-001"],
+                        "fact_ids": ["FACT-REPEATED-BY-FOLLOWUP"],
+                        "independence_group_id": "ISSUER-FILING",
+                        "status": "ACTIVE",
+                    }
+                ],
+                "search_route_receipts": [
+                    {
+                        "route_receipt_id": "ROUTE-FOLLOWUP-DUPLICATE",
+                        "pass_id": "PROPASS-v3-followup-duplicate",
+                        "archetype_id": self.archetype_id,
+                        "question_family_id": self.question_id,
+                        "gap_id": "GAP-FOLLOWUP-DUPLICATE",
+                        "source_role_id": "OFFICIAL_FILING",
+                        "query_or_navigation_objective": "Re-open the official filing.",
+                        "query_text": None,
+                        "result_count_seen": 1,
+                        "opened_source_urls": ["https://example.com/filing"],
+                        "accepted_fact_ids": ["FACT-REPEATED-BY-FOLLOWUP"],
+                        "rejected_candidate_ids": [],
+                        "provider_status": "SUCCESS",
+                        "no_new_route_reason": None,
+                        "performed_at": "2026-08-23T01:00:00Z",
+                    }
+                ],
+                "research_passes": [
+                    {
+                        "pass_id": "PROPASS-v3-followup-duplicate",
+                        "parent_pass_id": self.pass_id,
+                        "pass_name": "PUBLIC_GAP_CLOSURE",
+                        "status": "COMPLETE",
+                        "prompt_hash": "c" * 64,
+                        "response_hash": "d" * 64,
+                    }
+                ],
+                "research_saturation": {
+                    "new_verified_fact_ids_expected": [
+                        "FACT-REPEATED-BY-FOLLOWUP"
+                    ]
+                },
+            }
+        )
+
+        merged = apply_research_dossier_delta(
+            original_dossier=original,
+            response_dossier=response,
+            validation_context=DossierValidationContext(
+                job_id="PROJOB-v3",
+                run_id="PRORUN-v3",
+                target_id=self.target_id,
+                as_of_date="2026-08-23",
+                conversation_id="conversation-v3",
+                candidate_archetype_ids=(self.archetype_id,),
+                research_pass_id="PROPASS-v3-followup-duplicate",
+                parent_pass_id=self.pass_id,
+                enforce_parent_pass_id=True,
+            ),
+        )
+
+        self.assertEqual(merged.new_fact_ids, ())
+        self.assertEqual(len(merged.effective_dossier["material_facts"]), 1)
+        self.assertEqual(
+            merged.effective_dossier["material_facts"][0],
+            original["material_facts"][0],
+        )
+        self.assertEqual(
+            merged.effective_dossier["question_family_results"][0][
+                "support_fact_ids"
+            ],
+            ["FACT-001"],
+        )
+        self.assertEqual(
+            merged.effective_dossier["search_route_receipts"][0][
+                "accepted_fact_ids"
+            ],
+            ["FACT-001"],
+        )
+        self.assertEqual(
+            merged.effective_dossier["source_lineages"][0]["fact_ids"],
+            ["FACT-001"],
+        )
+        self.assertEqual(
+            merged.effective_dossier["research_saturation"][
+                "new_verified_fact_ids_expected"
+            ],
+            ["FACT-001"],
+        )
+        projection = merged.effective_dossier["research_saturation"][
+            "v3_duplicate_atomic_fact_projections"
+        ][0]
+        self.assertEqual(
+            projection["duplicate_fact_id"],
+            "FACT-REPEATED-BY-FOLLOWUP",
+        )
+        self.assertEqual(projection["canonical_fact_id"], "FACT-001")
+        self.assertFalse(projection["incoming_fact_content_adopted"])
+
     def test_followup_drops_prior_fact_reference_without_fact_backlink(self):
         original = self._dossier()
         original["question_family_results"] = [self._question_result()]
