@@ -604,6 +604,43 @@ class ProFirstSourceVerificationTest(unittest.TestCase):
         )
         self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
 
+    def test_nonissuer_analyst_fact_accepts_target_bound_compound_subject(self) -> None:
+        excerpt = "2026년 EPS 추정치를 +15% 상향했다."
+        result = self._verify(
+            self._fact(
+                subject=f"분석기관의 {self.company_name} 추정",
+                issuer_scoped=False,
+                supporting_excerpt=excerpt,
+            ),
+            document=(
+                f"{self.company_name} ({self.target_id}) 주가전망. "
+                "분석기관은 MEMORY 사업과 HBM 제품의 실적 및 "
+                "밸류에이션을 검토했다. "
+                f"{excerpt} "
+                "이 문서는 대상 기업의 추정치 변경과 근거를 설명하는 "
+                "전체 분석 보고서 본문이다. "
+                + ("검증 가능한 실적 표와 추정 근거를 함께 설명한다. " * 12)
+            ),
+        )
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
+
+    def test_nonissuer_compound_subject_rejects_distant_target_mention(self) -> None:
+        excerpt = "비교기업의 2026년 EPS 추정치를 +15% 상향했다."
+        result = self._verify(
+            self._fact(
+                subject=f"분석기관의 {self.company_name} 추정",
+                issuer_scoped=False,
+                supporting_excerpt=excerpt,
+            ),
+            document=(
+                f"{self.company_name} ({self.target_id}) 주가전망. "
+                + ("대상과 무관한 장문 시장 설명 " * 250)
+                + excerpt
+                + " 전체 분석 보고서 본문이다."
+            ),
+        )
+        self.assertEqual(result.verifications[0].status, "REJECTED_WRONG_SUBJECT")
+
     def test_source_unavailable_rejected_without_search(self) -> None:
         result = self._verify(
             self._fact(),

@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-26 P7 CI 봉인 완료 / P8 독립 C17·C28 실행 경계 검증 완료`
+기준 시각: `2026-08-26 C17 4차 FAIL 봉인 / subject verifier v11 전체 회귀 PASS`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_1_fresh_session_verifier_ready_master_goal.md`
@@ -18,7 +18,8 @@ P4 788e14d2  URL 날짜 인용 alias scope의 기계적 결함을 로컬에서 �
 P5 cad578af  전체 dossier 재출력을 제거하고 의미 오류만 compact delta로 수리
 P6 8b0e27bd  기존 대화를 봉인하고 새 Pro 세션의 blind canary 실행 경계를 구현
 P7 fdf4ac40  Pro JSON 첨부를 동일 응답 증거로 봉인하고 C06 Gate를 통과
-P8 실행 전 경계 commit에서 C17/C28 독립 fresh target 생성을 고정
+P8 f719b94b  C17/C28 독립 fresh target 생성을 고정
+P8 e6ac55b4  C17 1~4차 fresh initial 실행 상태를 순차 봉인
 ```
 
 PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지 않는다.
@@ -34,7 +35,7 @@ P4 local preflight                        COMPLETE
 P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
-P8 C17/C28 fresh canary                   IN_PROGRESS (실행 경계 PASS, live 전송 대기)
+P8 C17/C28 fresh canary                   IN_PROGRESS (C17 4차 FAIL 봉인, v11 5차 대기)
 P9 final CI/audit                         PENDING
 ```
 
@@ -1213,7 +1214,7 @@ compileall / diff check                         PASS / PASS
 새 runtime/session/job/run/pass/conversation에서 다시 시작한다. 세 번째 conversation에는 추가 질문을
 보내지 않는다.
 
-### C17 네 번째 fresh initial — 실행 중
+### C17 네 번째 fresh initial — analyst subject verifier 과잉반려 봉인
 
 전 후보 일괄 withholding 방지 수정 commit과 독립 CI green을 확인한 뒤, 세 번째 C17 job을 predecessor로
 봉인하고 네 번째 actual Pro 조사를 새 conversation에 정확히 한 번 전송했다.
@@ -1225,11 +1226,72 @@ fresh job        PROJOB-2ceb6e7eccad3ab6e4a8446b
 fresh run        PRORUN-609870c1cb8f7e5c4de98c97
 initial pass     PROPASS-db2ed0ab0d2b0d93bb84b5ee
 commit binding   14d0c7f24f082b19d99f2e5df508965fa3c4fdcf
-submit/capture   1 / 0 (실행 중)
+conversation     6a8e17a3-44a8-83ee-92a9-e941133c33a3
+submit/capture   1 / 1
 automatic resend 0
+prompt/response  59,254 / 122,693 chars
+research elapsed 5,997.813202 seconds
+report SHA-256   c36b18248c1a7db2229aca6f97d2e5ecb8f1d5649a9d453f6db3f836f253f9ea
 ```
 
-2026-08-26 07:54 KST durable DB와 browser page를 read-only로 다시 확인했다. job은
-`RESEARCH_RUNNING`, 제출은 1회, 캡처는 0회이고 ChatGPT의 새 conversation URL이 생성돼 있다. 아직
-다운로드할 최종 JSON/MD attachment가 생성되지 않았으므로 캡처를 억지로 시도하지 않고 같은 submitted
-job을 감시한다. 완료 뒤 이 임시 상태를 canonical conversation, report hash, Gate 결과로 갱신한다.
+Pro는 이전 실행처럼 후보 전부를 버리지 않고 `10 material / 9 counter / 7 resolution`, source 7개,
+question 26개, route receipt 26개를 실제 JSON graph에 보존했다. 26개 질문 중 23개가 terminal이고 3개
+`PUBLIC_SEARCHABLE`이 남아 `NEEDS_PUBLIC_GAP_CLOSURE`로 정직하게 끝났다.
+
+```text
+serialized material                         10
+excluded HISTORICAL_ONLY                     4
+current material / accepted                6 / 4
+acceptance                              66.6667% FAIL
+output contract defect                        0
+query/search                               0 / 0
+score/Stage authority              false / false
+publication                          withheld
+```
+
+두 current material과 counter 하나는 source fetch, date, exact quote까지 통과했지만 subject가
+`KB증권의 롯데케미칼 추정`, `iM증권의 롯데케미칼 가치평가`처럼 구조화된 관계 라벨이라는 이유로
+`REJECTED_WRONG_SUBJECT`가 됐다. 원문에는 대상명·종목코드와 quote가 실제로 존재하지만 그 합성 라벨
+전체가 글자 그대로 나오지 않아 생긴 verifier 과잉반려다.
+
+공통 verifier는 non-issuer structured subject가 target alias를 포함하고, 이미 literal 검증된 quote의 앞뒤
+2,000자 bounded context에도 같은 target alias가 있을 때만 target analyst fact를 인정하도록 고쳤다.
+target 언급이 멀리 떨어진 다중 회사 문서는 계속 `WRONG_SUBJECT`로 막는다. 쉬운 예로 문서 첫머리에
+`롯데케미칼(011170) 주가전망`이 있고 바로 뒤에 `2026년 EPS 추정치 +15%`가 있으면 같은 대상 분석이다.
+반대로 5,000자 앞에 롯데케미칼이 한 번 나오고 quote는 비교기업 얘기면 통과하지 않는다.
+
+네 번째 immutable capture와 내려받은 7개 원문을 `/tmp` projection에서 재검증한 결과는 다음과 같다.
+
+```text
+all fact candidates / accepted                26 / 20
+current material / accepted                     6 / 6
+acceptance                                     100% PASS
+genuine semantic repair                           0
+query/search                                   0 / 0
+read-only Gate projection                       PASS
+projection receipt b1524db518f1d5d50d71acdd2a3339c84c22684ab73b922cff9c92d761aaba7b
+```
+
+과거 FAIL receipt는 덮어쓰지 않았고 projection에는 operational 권한이 없다. 전체 ID, hash, old/new Gate와
+과잉반려 근거는 `p8_c17_fresh_initial_failure_receipt_r4.json`에 봉인했다. source verification semantics는
+`e2r_pro_source_verification_v11`로 올린다. 회귀·정적 감사·CI green 뒤 새 conversation에서 실제 C17
+initial PASS를 다시 증명하며 네 번째 conversation에는 어떤 추가 입력도 보내지 않는다.
+
+코드 변경 후 로컬 검증은 다음과 같이 닫혔다.
+
+```text
+source/local-preflight/Gate/known-bad focused   72/72 PASS
+Playwright 직접 실행 6 modules              79/79 PASS
+전체 unittest                                 7,698 PASS
+failure / error / skipped                        0 / 0 / 38
+Pro-first static audit                         PASS / critical 0
+Pro-first V2 static audit                      PASS / critical 0
+E2R v6 production static audit                 PASS / critical 0
+compileall / git diff check                     PASS / PASS
+```
+
+첫 전체 실행의 browser 60 ERROR는 assertion 실패가 아니라 WSL에
+`libnspr4.so`, `libnss3.so`, `libasound.so.2`가 없어 Chromium이 시작 전 종료된 환경 실패였다.
+관리자 인증이 필요한 시스템 설치 대신 공개 Ubuntu 패키지를 `/tmp/e2r-playwright-deps`에만 풀고
+`LD_LIBRARY_PATH`로 테스트 Chromium에 연결했다. 그 후 browser 79개와 전체 7,698개가 모두
+통과했다. Windows ChatGPT 로그인 프로필과 봉인된 C17 대화는 변경하지 않았다.

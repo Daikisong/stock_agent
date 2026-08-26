@@ -36,7 +36,7 @@ if TYPE_CHECKING:
     from ..preflight import EvidencePreflightResult
 
 
-SOURCE_VERIFICATION_SEMANTICS_VERSION = "e2r_pro_source_verification_v10"
+SOURCE_VERIFICATION_SEMANTICS_VERSION = "e2r_pro_source_verification_v11"
 
 
 TERMINAL_SOURCE_STATUSES = frozenset(

@@ -62,6 +62,11 @@ class SubjectScopeVerifier:
                     ),
                 )
             )
+            and not _third_party_target_analysis_supported(
+                fact=fact,
+                normalized_document=document,
+                target_aliases=aliases,
+            )
         ):
             # A peer/customer/partner counterfact need not name the target in
             # the peer document, but its stated subject must be literal. When
@@ -123,6 +128,53 @@ def _scope_text(value: object) -> str:
 def _contains(normalized_document: str, value: str) -> bool:
     needle = _scope_text(value)
     return bool(needle and needle in normalized_document)
+
+
+_THIRD_PARTY_TARGET_CONTEXT_CHARS = 2_000
+
+
+def _third_party_target_analysis_supported(
+    *,
+    fact: Mapping[str, object],
+    normalized_document: str,
+    target_aliases: Sequence[str],
+) -> bool:
+    """Accept target-bound analyst facts without trusting a compound label.
+
+    A non-issuer subject such as ``Broker's TargetCo estimate`` is a
+    structured relationship label and often does not occur verbatim in the
+    source.  It is nevertheless target-bound when the subject itself names a
+    target alias and that same alias occurs close to the already
+    quote-verified excerpt.  The bounded context is important: a target name
+    anywhere in a long multi-company document must not license an excerpt
+    about a different company.
+    """
+
+    subject = _scope_text(fact.get("subject"))
+    subject_target_aliases = tuple(
+        alias for alias in target_aliases if _contains(subject, alias)
+    )
+    if not subject_target_aliases:
+        return False
+    excerpt = _scope_text(fact.get("supporting_excerpt"))
+    if not excerpt:
+        return False
+    start = 0
+    while True:
+        excerpt_index = normalized_document.find(excerpt, start)
+        if excerpt_index < 0:
+            return False
+        context_start = max(
+            0, excerpt_index - _THIRD_PARTY_TARGET_CONTEXT_CHARS
+        )
+        context_end = min(
+            len(normalized_document),
+            excerpt_index + len(excerpt) + _THIRD_PARTY_TARGET_CONTEXT_CHARS,
+        )
+        context = normalized_document[context_start:context_end]
+        if any(_contains(context, alias) for alias in subject_target_aliases):
+            return True
+        start = excerpt_index + max(1, len(excerpt))
 
 
 _DESCRIPTOR_GRAMMAR_WORDS = frozenset(
