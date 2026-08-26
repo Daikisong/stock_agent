@@ -435,12 +435,91 @@ class PreSchemaV3Normalizer:
                         after=route["opened_source_urls"],
                     )
                 )
+        _drop_invalid_question_route_references(normalized, operations)
         _downgrade_unproven_terminal_absence_claims(normalized, operations)
         return StaticPreflightNormalization(
             payload=normalized,
             before_hash=before_hash,
             after_hash=canonical_hash(normalized),
             operations=tuple(operations),
+        )
+
+
+def _drop_invalid_question_route_references(
+    dossier: dict[str, Any],
+    operations: list[PreflightOperation],
+) -> None:
+    """Remove route links that cannot prove the exact owning question.
+
+    A route receipt is an audit record for one exact archetype/question pair.
+    Reusing it as a convenient citation on another question overstates that
+    second question's search coverage.  The safe mechanical projection keeps
+    the global receipt and every fact untouched, but removes the foreign or
+    unknown link and revokes adequate-search proof on the referencing row.
+    """
+
+    receipt_by_id = {
+        str(row.get("route_receipt_id") or ""): row
+        for row in dossier.get("search_route_receipts") or ()
+        if isinstance(row, Mapping)
+    }
+    for question in dossier.get("question_family_results") or ():
+        if not isinstance(question, dict):
+            continue
+        question_id = str(question.get("question_family_id") or "")
+        archetype_id = str(question.get("archetype_id") or "")
+        before = [
+            str(value)
+            for value in question.get("search_route_receipt_ids") or ()
+        ]
+        after: list[str] = []
+        failure_codes: list[str] = []
+        dropped_ids: list[str] = []
+        for receipt_id in before:
+            receipt = receipt_by_id.get(receipt_id)
+            if receipt is None:
+                failure_codes.append("UNKNOWN_ROUTE_RECEIPT")
+                dropped_ids.append(receipt_id)
+                continue
+            if (
+                str(receipt.get("question_family_id") or "") != question_id
+                or str(receipt.get("archetype_id") or "") != archetype_id
+            ):
+                failure_codes.append("FOREIGN_QUESTION_ROUTE_RECEIPT")
+                dropped_ids.append(receipt_id)
+                continue
+            if receipt_id in after:
+                failure_codes.append("DUPLICATE_QUESTION_ROUTE_RECEIPT")
+                dropped_ids.append(receipt_id)
+                continue
+            after.append(receipt_id)
+        if after == before:
+            continue
+
+        adequate_before = question.get("adequate_search_proven")
+        question["search_route_receipt_ids"] = after
+        question["adequate_search_proven"] = False
+        operations.append(
+            _operation(
+                "DROP_INVALID_QUESTION_ROUTE_REFERENCE",
+                "QUESTION_FAMILY_RESULT",
+                question_id,
+                field_name="search_route_receipt_ids",
+                before={
+                    "route_receipt_ids": before,
+                    "adequate_search_proven": adequate_before,
+                },
+                after={
+                    "route_receipt_ids": after,
+                    "adequate_search_proven": False,
+                },
+                detail=(
+                    "failure_codes="
+                    + ",".join(dict.fromkeys(failure_codes))
+                    + ";dropped_ids="
+                    + ",".join(dropped_ids)
+                ),
+            )
         )
 
 

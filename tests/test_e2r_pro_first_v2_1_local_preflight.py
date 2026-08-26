@@ -416,6 +416,113 @@ class ProFirstV21LocalPreflightTest(unittest.TestCase):
         )
         self.assertEqual(receipt.schema_version, "e2r_pro_research_dossier_v3")
 
+    def test_foreign_question_route_is_dropped_without_deleting_receipt(self) -> None:
+        dossier = self._terminal_absence_dossier()
+        dossier["source_documents"][0]["canonical_url"] = self.canonical_url
+        dossier["source_documents"][0]["opened_url"] = self.canonical_url
+        foreign_route = dossier["search_route_receipts"][1]
+        foreign_route["question_family_id"] = (
+            "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q02"
+        )
+        before_route_ids = [
+            row["route_receipt_id"]
+            for row in dossier["search_route_receipts"]
+        ]
+
+        with self.assertRaisesRegex(
+            DossierValidationError,
+            "search route receipt belongs to another question",
+        ):
+            ResearchDossierValidator().validate(
+                dossier,
+                DossierValidationContext(
+                    job_id=self.job.job_id,
+                    run_id="PRORUN-PREFLIGHT",
+                    target_id=self.target_id,
+                    as_of_date=self.as_of_date,
+                    conversation_id="CONVERSATION-PREFLIGHT",
+                    candidate_archetype_ids=self.job.archetype_ids,
+                    research_pass_id="PROPASS-PREFLIGHT",
+                    parent_pass_id=None,
+                    enforce_parent_pass_id=True,
+                ),
+            )
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+        question = normalized.payload["question_family_results"][0]
+        operation_codes = {row.operation_code for row in normalized.operations}
+
+        self.assertEqual(
+            question["search_route_receipt_ids"],
+            ["ROUTE-ABSENCE-1"],
+        )
+        self.assertIs(question["adequate_search_proven"], False)
+        self.assertEqual(question["status"], "PUBLIC_SEARCHABLE")
+        self.assertEqual(
+            [
+                row["route_receipt_id"]
+                for row in normalized.payload["search_route_receipts"]
+            ],
+            before_route_ids,
+        )
+        self.assertIn(
+            "DROP_INVALID_QUESTION_ROUTE_REFERENCE",
+            operation_codes,
+        )
+        self.assertIn(
+            "DOWNGRADE_UNPROVEN_TERMINAL_ABSENCE_CLAIM",
+            operation_codes,
+        )
+        receipt = ResearchDossierValidator().validate(
+            normalized.payload,
+            DossierValidationContext(
+                job_id=self.job.job_id,
+                run_id="PRORUN-PREFLIGHT",
+                target_id=self.target_id,
+                as_of_date=self.as_of_date,
+                conversation_id="CONVERSATION-PREFLIGHT",
+                candidate_archetype_ids=self.job.archetype_ids,
+                research_pass_id="PROPASS-PREFLIGHT",
+                parent_pass_id=None,
+                enforce_parent_pass_id=True,
+            ),
+        )
+        self.assertEqual(receipt.schema_version, "e2r_pro_research_dossier_v3")
+
+    def test_unknown_and_duplicate_question_routes_revoke_adequacy(self) -> None:
+        dossier = self._terminal_absence_dossier()
+        question = dossier["question_family_results"][0]
+        question["status"] = "PUBLIC_SEARCHABLE"
+        question["availability_class"] = "PUBLIC_SEARCHABLE"
+        question["search_route_receipt_ids"] = [
+            "ROUTE-ABSENCE-1",
+            "ROUTE-UNKNOWN",
+            "ROUTE-ABSENCE-1",
+        ]
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+        result = normalized.payload["question_family_results"][0]
+
+        self.assertEqual(
+            result["search_route_receipt_ids"],
+            ["ROUTE-ABSENCE-1"],
+        )
+        self.assertIs(result["adequate_search_proven"], False)
+        self.assertEqual(result["status"], "PUBLIC_SEARCHABLE")
+        operation = next(
+            row
+            for row in normalized.operations
+            if row.operation_code == "DROP_INVALID_QUESTION_ROUTE_REFERENCE"
+        )
+        self.assertIn("UNKNOWN_ROUTE_RECEIPT", operation.detail or "")
+        self.assertIn("DUPLICATE_QUESTION_ROUTE_RECEIPT", operation.detail or "")
+
     def test_proven_likely_nonpublic_is_preserved_exactly(self) -> None:
         dossier = self._terminal_absence_dossier()
         before_reasons = [

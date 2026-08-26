@@ -1576,3 +1576,83 @@ compileall / git diff check                          PASS / PASS
 `/tmp/e2r-playwright-deps/root/usr/lib/x86_64-linux-gnu`로 브라우저 어댑터 25개를 먼저 통과시킨 뒤,
 전체 7,705개를 처음부터 새로 실행해 failure/error 0을 확인했다. 중단한 환경 오류 실행은 위 최종 수치에
 합산하지 않았다.
+
+## 2026-08-26 — C28 두 번째 fresh initial은 다른 질문 route 오결박으로 봉인
+
+C28 R1 수정 commit `b136f02bdae86587bef4eb65159ff8011bee8423`의 독립 CI 세 개가 모두
+SUCCESS인 것을 확인한 뒤, R1과 다른 runtime/session/conversation에서 C28 actual Pro 조사를 정확히 한
+번 전송했다. 일반 Chat의 Pro 모드이며 legacy Deep Research 전송은 사용하지 않았다.
+
+```text
+runtime          C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260826T073534Z
+fresh session    FRESH-V2-1-C28-R2-20260826T073534Z
+fresh job        PROJOB-92a788cb99d245f007457792
+fresh run        PRORUN-7c3e60dacd5b3ea2e022d1df
+initial pass     PROPASS-fbc13f5eb3f4c9e20d8af44c
+commit binding   b136f02bdae86587bef4eb65159ff8011bee8423
+conversation     6a8e975e-fd30-83ee-9f62-cfaf58836274
+submit/capture   1 / 1
+automatic resend 0
+```
+
+ChatGPT 결과 카드의 JSON을 실제로 내려받아 `parser_source=DOWNLOADED_JSON`으로 읽었다. visible DOM의
+원본에는 JSON 문자열 안 raw control character 35개가 있었고, 기존 bounded parser가 의미를 바꾸지 않고
+JSON escape만 적용했다. MD 실다운로드·새 JSON·선택 PDF 경계도 유지됐고 PDF는 요청하지 않아 `null`이다.
+즉 이번에도 예전 MD를 잘못 집어온 문제가 아니다.
+
+다운로드 JSON에는 source 6개, fact 11개, mandatory question 27개와 route receipt 17개가 있었다. strict
+schema는 question row 15개가 자기 질문이 아닌 route receipt ID를 참조해 Gate 전에 멈췄다. 주로 공통 R13
+cross-guard 질문에서 C28 본 질문 또는 이웃 질문의 route를 재사용한 경우였다.
+
+```text
+source documents                               6
+material / counter / resolution          7 / 4 / 0
+all facts                                     11
+mandatory questions / route receipts      27 / 17
+derived metrics / unresolved gaps          3 / 11
+research status          NEEDS_PUBLIC_GAP_CLOSURE
+actual import                              FAIL
+initial efficiency Gate reached            false
+score / Stage authority            false / false
+publication                          withheld
+```
+
+쉬운 예로 Q02가 “Q03 검색에서 이 URL을 봤다”는 영수증을 자기 영수증처럼 연결한 상태다. URL과 자료를
+삭제할 이유는 없지만, 그 영수증으로 Q02 검색이 충분했다고 증명할 수는 없다. 공통 pre-schema normalizer는
+각 question이 정확히 같은 `archetype_id × question_family_id` 소유 route만 보존하도록 수정했다. unknown,
+foreign, duplicate link는 해당 question에서만 제거하고 `adequate_search_proven=false`로 되돌린다. 전역
+route receipt와 모든 fact는 그대로 보존한다. 종목·C28·질문 ID 하드코딩은 없다.
+
+R2 immutable JSON을 parser → 공개 dialect adapter → pre-schema normalizer → transport identity binding →
+strict V3 validator 순서로 읽기 전용 투영한 결과는 PASS다.
+
+```text
+initial placeholder alias normalization          1
+source / route URL canonicalization           2 / 3
+foreign question route links removed             15
+source / facts / questions / global routes  6 / 11 / 27 / 17
+research status          NEEDS_PUBLIC_GAP_CLOSURE
+Gate / score / Stage authority      false / false / false
+```
+
+이 projection으로 R2를 소급 PASS 처리하지 않았다. R2 job은 state version 15에서
+`FRESH_SESSION_DIAGNOSTIC_ONLY / OPERATIONAL_EFFICIENCY_GATE_FAILED / NEW_CONVERSATION_REQUIRED`로 봉인했고,
+같은 conversation에는 후속 입력이나 자동 재전송을 하지 않는다. 전체 실행 identity, artifact hash, 오류와
+봉인 증거는 `p8_c28_fresh_initial_failure_receipt_r2.json`에 기록했다.
+
+수정 후 검증은 다음과 같이 닫혔다.
+
+```text
+focused dossier/preflight/fresh tests              182/182 PASS
+전체 unittest                                      7,707 PASS
+failure / error / skipped                        0 / 0 / 38
+Phase100                                            15/15 PASS
+Pro-first static audit                       PASS / critical 0
+Pro-first V2 static audit                    PASS / critical 0
+E2R v6 production static audit                PASS / critical 0
+compileall / git diff check                         PASS / PASS
+```
+
+다음 단계는 이 범용 수정을 한글 commit으로 push하고 독립 CI green을 확인한 뒤, 세 번째 완전 새 C28
+conversation에서 actual initial canary를 한 번만 전송하는 것이다. R2 raw capture와 중앙 ledger는 수정하지
+않는다.
