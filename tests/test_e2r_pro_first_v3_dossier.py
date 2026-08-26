@@ -698,6 +698,90 @@ class ProFirstV3DossierTest(unittest.TestCase):
                 ),
             )
 
+    def test_followup_drops_prior_fact_reference_without_fact_backlink(self):
+        original = self._dossier()
+        original["question_family_results"] = [self._question_result()]
+        response = deepcopy(original)
+        response["research_pass_id"] = "PROPASS-v3-followup-unbound"
+        response["parent_pass_id"] = self.pass_id
+        response["candidate_archetypes"] = []
+        response["selected_archetypes"] = []
+        response["source_documents"] = []
+        response["material_facts"] = []
+        response["counterfacts"] = []
+        response["resolution_facts"] = []
+        response["derived_metrics"] = []
+        response["source_lineages"] = []
+        response["search_route_receipts"] = []
+        response["unresolved_gaps"] = []
+        response["research_passes"] = [
+            {
+                "pass_id": "PROPASS-v3-followup-unbound",
+                "parent_pass_id": self.pass_id,
+                "pass_name": "PUBLIC_GAP_CLOSURE",
+                "status": "COMPLETE",
+                "prompt_hash": "c" * 64,
+                "response_hash": "d" * 64,
+            }
+        ]
+        second_question_id = "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q02"
+        second_question = self._question_result(
+            question_id=second_question_id,
+            support_fact_ids=["FACT-001"],
+        )
+        second_question.update(
+            {
+                "status": "UNKNOWN_ROUTE_NOT_YET_TESTED",
+                "required_source_roles_satisfied": [],
+                "required_source_roles_missing": ["OFFICIAL_FILING"],
+                "closure_reason": "No route has been tested for this question.",
+                "adequate_search_proven": False,
+            }
+        )
+        response["question_family_results"] = [second_question]
+
+        merged = apply_research_dossier_delta(
+            original_dossier=original,
+            response_dossier=response,
+            validation_context=DossierValidationContext(
+                job_id="PROJOB-v3",
+                run_id="PRORUN-v3",
+                target_id=self.target_id,
+                as_of_date="2026-08-23",
+                conversation_id="conversation-v3",
+                candidate_archetype_ids=(self.archetype_id,),
+                research_pass_id="PROPASS-v3-followup-unbound",
+                parent_pass_id=self.pass_id,
+                enforce_parent_pass_id=True,
+            ),
+        )
+
+        projected = next(
+            row
+            for row in merged.effective_dossier["question_family_results"]
+            if row["question_family_id"] == second_question_id
+        )
+        self.assertEqual(projected["support_fact_ids"], [])
+        self.assertEqual(
+            merged.effective_dossier["material_facts"][0][
+                "question_family_ids"
+            ],
+            [self.question_id],
+        )
+        projection = merged.effective_dossier["research_saturation"][
+            "v3_question_fact_reference_projections"
+        ][0]
+        self.assertEqual(projection["question_family_id"], second_question_id)
+        self.assertEqual(
+            projection["dropped_references"],
+            [
+                {
+                    "fact_id": "FACT-001",
+                    "reason": "MISSING_FACT_BACKLINK",
+                }
+            ],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

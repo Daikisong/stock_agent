@@ -1971,3 +1971,74 @@ effective research status              PROVIDER_PENDING
 관련 V2/V3 delta·saturation·fresh orchestration·repair 회귀는 128/128, compileall과 diff check는 PASS다.
 상세 capture identity와 정확한 roster addition은
 `p10_c06_public_gap_second_capture_merge_receipt.json`에 고정했다.
+
+## 2026-08-27 — P10 C06 actual 3차 V3 JSON 회수와 질문–사실 계보 검문 수리
+
+pass 03을 submit 0으로 재사용·병합한 뒤 같은 conversation에서 pass 04
+`PROPASS-b2a41069565bc54d9c941209`를 정확히 한 번 전송했다. 약 80분 뒤 화면에 표시된
+`ResearchDossierV3_SKHynix_000660_asof_2026-08-23.json`을 같은 assistant turn에서 실제 다운로드했다.
+이 단계의 필수 산출물은 MD가 아니라 **V3 JSON**이다. 정규화 전후 MD는 전송 감사용이고, PDF는 같은
+응답에 존재할 때만 받는 선택 항목이다.
+
+```text
+capture source      DIRECT_REPORT_DOM_NORMALIZED
+assistant turn      request-6a8db0ad-8ed0-83e8-888e-dce26c950343-2
+submit / resubmit   1 / 0
+prompt hash         57db2da444a4a826b15128f12620711264146fa6c7134c7dbb00b0a3e296af98
+raw report hash     926a1b81e05bdea335a1920922c7d24a0b3965c9f7277d15652e66601114fa4c
+report hash         25666253b3fc0a52a248dfef50642b8a2e684d9d9c659052d607cc321c8fd796
+V3 JSON hash        980fc98d71817c5afaa3d2027cf5b8c0aa63bd00e1248f6d8d4f041cd5224161
+PDF                 없음(null, 오류 아님)
+```
+
+첫 실제 병합은 `question references a fact bound to another question` 검문에서 fail-safe 정지했다.
+initial V3는 strict schema 앞에서 `PreSchemaV3Normalizer`를 거치지만 follow-up V3만 이 경계를 건너뛰던
+것이 원인이었다. 또한 follow-up이 이전 pass의 immutable fact를 참조하면 delta 단독으로는 그 fact의
+backlink를 볼 수 있으므로, 누적 graph를 만든 뒤 한 번 더 같은 보수적 투영이 필요했다.
+
+수리는 두 경계를 일반화했다.
+
+```text
+현재 follow-up delta
+→ initial과 동일한 V3 pre-schema normalization
+→ job/run/pass identity 결박
+→ append-only 누적 graph 병합
+→ 누적 graph에서 fact backlink가 없는 질문 참조만 제거
+→ strict V3 validation
+```
+
+쉬운 예: 사실 F가 질문 A의 증거라고 사실 원장에 적혀 있는데 질문 B가 F 번호를 실수로 함께 적었다면,
+사실 F를 삭제하거나 “B도 지원한다”고 바꾸지 않는다. 질문 B의 중복 번호만 제거한다. 알 수 없는 fact id는
+자동 삭제하지 않아 strict validator가 계속 조작·오타를 거부한다.
+
+actual pass 04에서는 정확히 두 참조가 이 원칙에 따라 제거됐다.
+
+```text
+현재 delta:
+R13_CROSS_ARCHETYPE_STAGE2_3_GATE_Q03
+→ PROFACT-P4-R13-CONSOLIDATED-GOING-CONCERN-NOT-APPLICABLE 제거
+
+누적 graph:
+R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q01
+→ PROFACT-C06-HBM4-MASS-SHIPMENT 제거
+```
+
+사실 statement, excerpt, source document, fact의 question roster는 하나도 수정하지 않았다. 종목명·아키타입·
+질문명별 예외도 추가하지 않았다. actual capture를 브라우저·전송 없이 정확히 재생한 결과는 다음과 같다.
+
+```text
+exact capture offline merge                  PASS
+new / effective facts                       10 / 52
+new / effective source documents             3 / 26
+new effective / total source lineages        3 / 24
+new / effective route receipts              25 / 115
+effective mandatory questions                    28
+effective research status              PROVIDER_PENDING
+focused regression                         144/144 PASS
+score / Stage authority                  false / false
+```
+
+따라서 이 기록도 full-thesis 최종 점수 receipt가 아니라 **실제 V3 JSON 다운로드와 안전한 병합 경계의
+검증 receipt**다. 다음 실행은 이 READY capture를 `REUSE_CAPTURE`로 읽어 browser submit 0을 확인한 뒤
+재검증·saturation을 계속한다. 상세 identity, hash, 두 투영은
+`p10_c06_public_gap_third_capture_merge_receipt.json`에 고정했다.

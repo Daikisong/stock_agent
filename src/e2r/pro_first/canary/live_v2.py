@@ -61,6 +61,7 @@ from ..operations import (
     recover_submitted_v2_job_in_logged_in_browser,
 )
 from ..post_import import OperationalProScoringInputProvider
+from ..preflight import PreSchemaV3Normalizer, StaticPreflightNormalization
 from ..repair import ProVerifierRepairService
 from ..research_contracts import select_contract_bundle
 from ..saturation import (
@@ -1288,8 +1289,27 @@ class ProV2LiveCanaryRunner:
             parsed.payload,
             prior_dossier=original_dossier,
         )
-        bound = bind_dossier_transport_identity(
+        pre_schema = _normalize_followup_dossier_pre_schema(
             adapted.payload,
+            archetype_ids=prepared.job.archetype_ids,
+        )
+        if pre_schema.operations:
+            self._emit(
+                self.store.get_job(plan.scope.job_id),
+                "FOLLOWUP_LOCAL_PREFLIGHT_NORMALIZED",
+                {
+                    "pass_id": plan.research_pass.pass_id,
+                    "pass_name": plan.research_pass.pass_name,
+                    "before_hash": pre_schema.before_hash,
+                    "after_hash": pre_schema.after_hash,
+                    "operations": [
+                        row.to_dict() for row in pre_schema.operations
+                    ],
+                    "fact_content_mutation_allowed": False,
+                },
+            )
+        bound = bind_dossier_transport_identity(
+            pre_schema.payload,
             conversation_id=plan.scope.conversation_id,
             research_pass_id=plan.research_pass.pass_id,
             parent_pass_id=plan.research_pass.parent_pass_id,
@@ -2404,6 +2424,24 @@ def _pass_summary(
         "score_authority": False,
         "stage_authority": False,
     }
+
+
+def _normalize_followup_dossier_pre_schema(
+    payload: Mapping[str, Any],
+    *,
+    archetype_ids: Sequence[str],
+) -> StaticPreflightNormalization:
+    """Apply the same deterministic V3 pre-schema boundary as initial import.
+
+    Follow-up answers are captured raw first.  This projection can remove only
+    mechanically invalid duplicated graph links and normalize documented
+    aliases; it never edits the source-backed fact statement or excerpt.
+    """
+
+    return PreSchemaV3Normalizer().normalize(
+        payload,
+        archetype_ids=archetype_ids,
+    )
 
 
 def _outcome_summary(

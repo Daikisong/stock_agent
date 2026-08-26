@@ -61,6 +61,7 @@ from e2r.pro_first.canary.live_v2 import (
     _followup_execution_mode,
     _has_snapshotted_completed_pass,
     _load_recovered_snapshot_state,
+    _normalize_followup_dossier_pre_schema,
     _public_gap_followup_question_ids,
     _submitted_unsnapshotted_followup_plan,
     _verification_artifact_rows,
@@ -372,6 +373,54 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
                 pass_root=pass_root,
             ),
             "REUSE_CAPTURE",
+        )
+
+    def test_followup_v3_runs_initial_pre_schema_before_delta_merge(self) -> None:
+        question_a = "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q01"
+        question_b = "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q02"
+        payload = {
+            "schema_version": "e2r_pro_research_dossier_v3",
+            "job_id": "PROJOB-FOLLOWUP-PREFLIGHT",
+            "source_documents": [],
+            "material_facts": [
+                {
+                    "dossier_fact_id": "PROFACT-FOLLOWUP-ONE",
+                    "fact_kind": "MATERIAL",
+                    "question_family_ids": [question_a],
+                }
+            ],
+            "counterfacts": [],
+            "resolution_facts": [],
+            "question_family_results": [
+                {
+                    "question_family_id": question_b,
+                    "support_fact_ids": ["PROFACT-FOLLOWUP-ONE"],
+                    "counter_fact_ids": [],
+                    "resolution_fact_ids": [],
+                }
+            ],
+            "source_lineages": [],
+            "search_route_receipts": [],
+        }
+
+        normalized = _normalize_followup_dossier_pre_schema(
+            payload,
+            archetype_ids=("C06_HBM_MEMORY_CUSTOMER_CAPACITY",),
+        )
+
+        self.assertEqual(
+            normalized.payload["question_family_results"][0][
+                "support_fact_ids"
+            ],
+            [],
+        )
+        self.assertEqual(
+            normalized.payload["material_facts"][0]["question_family_ids"],
+            [question_a],
+        )
+        self.assertIn(
+            "DROP_UNBOUND_QUESTION_FACT_REFERENCE",
+            {row.operation_code for row in normalized.operations},
         )
 
     def test_durable_dossier_pass_rows_skip_only_unsubmitted_transport_plan(self) -> None:

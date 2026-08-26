@@ -108,6 +108,7 @@ def apply_research_dossier_delta(
             effective[key] = current
     if schema_version == "e2r_pro_research_dossier_v3":
         _extend_v3_lineage_rosters_from_graph(effective)
+        _drop_unbound_v3_question_fact_references(effective)
     _project_overclaimed_route_closures(effective)
     reported_research_status = response_dossier.get("research_status")
     if not isinstance(reported_research_status, str) or not reported_research_status:
@@ -572,6 +573,91 @@ def _extend_v3_lineage_rosters_from_graph(effective: dict[str, Any]) -> None:
     if extensions:
         saturation = dict(effective.get("research_saturation") or {})
         saturation["v3_graph_lineage_roster_extensions"] = extensions
+        effective["research_saturation"] = saturation
+
+
+def _drop_unbound_v3_question_fact_references(
+    effective: dict[str, Any],
+) -> None:
+    """Drop only redundant question edges not authorized by the fact roster.
+
+    A follow-up can cite an earlier-pass fact without repeating that immutable
+    fact row.  The delta-only pre-schema boundary therefore cannot know whether
+    the cited fact binds back to the current question.  Once the cumulative
+    graph has been assembled, this projection applies the same conservative
+    rule as initial V3 preflight: keep the fact unchanged and remove only the
+    unsupported question-to-fact edge.  Unknown fact ids remain untouched so
+    strict validation still rejects fabricated references.
+    """
+
+    fact_by_id: dict[str, Mapping[str, Any]] = {}
+    expected_collection_by_id: dict[str, str] = {}
+    for collection, reference_field in (
+        ("material_facts", "support_fact_ids"),
+        ("counterfacts", "counter_fact_ids"),
+        ("resolution_facts", "resolution_fact_ids"),
+    ):
+        for raw_fact in effective.get(collection) or ():
+            if not isinstance(raw_fact, Mapping):
+                continue
+            fact_id = str(raw_fact.get("dossier_fact_id") or "")
+            if not fact_id:
+                continue
+            fact_by_id[fact_id] = raw_fact
+            expected_collection_by_id[fact_id] = reference_field
+
+    projections: list[dict[str, Any]] = []
+    question_rows = list(effective.get("question_family_results") or ())
+    for index, raw_question in enumerate(question_rows):
+        if not isinstance(raw_question, Mapping):
+            continue
+        question = deepcopy(dict(raw_question))
+        question_id = str(question.get("question_family_id") or "")
+        changed = False
+        for field_name in (
+            "support_fact_ids",
+            "counter_fact_ids",
+            "resolution_fact_ids",
+        ):
+            before = [str(value) for value in question.get(field_name) or ()]
+            after: list[str] = []
+            dropped: list[dict[str, str]] = []
+            for fact_id in before:
+                fact = fact_by_id.get(fact_id)
+                if fact is None:
+                    after.append(fact_id)
+                    continue
+                if expected_collection_by_id[fact_id] != field_name:
+                    dropped.append(
+                        {"fact_id": fact_id, "reason": "WRONG_FACT_KIND"}
+                    )
+                    continue
+                if question_id not in {
+                    str(value)
+                    for value in fact.get("question_family_ids") or ()
+                }:
+                    dropped.append(
+                        {"fact_id": fact_id, "reason": "MISSING_FACT_BACKLINK"}
+                    )
+                    continue
+                after.append(fact_id)
+            if not dropped:
+                continue
+            question[field_name] = after
+            changed = True
+            projections.append(
+                {
+                    "question_family_id": question_id,
+                    "reference_field": field_name,
+                    "dropped_references": dropped,
+                }
+            )
+        if changed:
+            question_rows[index] = question
+    effective["question_family_results"] = question_rows
+    if projections:
+        saturation = dict(effective.get("research_saturation") or {})
+        saturation["v3_question_fact_reference_projections"] = projections
         effective["research_saturation"] = saturation
 
 
