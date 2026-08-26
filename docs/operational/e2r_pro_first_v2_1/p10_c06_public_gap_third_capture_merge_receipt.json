@@ -52,15 +52,15 @@
   "question_fact_reference_projections": [
     {
       "graph_scope": "CURRENT_PASS_PRE_SCHEMA",
-      "question_family_id": "R13_CROSS_ARCHETYPE_STAGE2_3_GATE_Q03",
-      "reference_field": "support_fact_ids",
+      "question_family_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW_Q03",
+      "reference_field": "resolution_fact_ids",
       "dropped_fact_id": "PROFACT-P4-R13-CONSOLIDATED-GOING-CONCERN-NOT-APPLICABLE",
       "reason": "MISSING_FACT_BACKLINK"
     },
     {
       "graph_scope": "CUMULATIVE_EFFECTIVE_DOSSIER",
       "question_family_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q01",
-      "reference_field": "support_fact_ids",
+      "reference_field": "resolution_fact_ids",
       "dropped_fact_id": "PROFACT-C06-HBM4-MASS-SHIPMENT",
       "reason": "MISSING_FACT_BACKLINK"
     }
@@ -76,8 +76,22 @@
     "failure_count": 0,
     "error_count": 0
   },
+  "actual_capture_reuse": {
+    "status": "PASS",
+    "browser_submit_delta": 0,
+    "capture_reused": true,
+    "persisted_effective_dossier_file_hash": "e60b7a109e4ea00e7003590b578891a764914c93d1dd603ad992c64ca939f125",
+    "accepted_fact_count_after_reverification": 33,
+    "nonterminal_mandatory_question_count": 7,
+    "provider_parser_core_pending_count": 4,
+    "public_material_gap_count": 15,
+    "source_linkage_incomplete_count": 6,
+    "next_pass_id": "PROPASS-26c03ab89ff306eec50c9e3c",
+    "next_pass_name": "PUBLIC_GAP_CLOSURE",
+    "next_pass_submit_count": 1
+  },
   "raw_capture_tracked_in_git": false,
   "score_authority": false,
   "stage_authority": false,
-  "next_action": "REUSE_CAPTURE_WITH_ZERO_SUBMIT_THEN_CONTINUE_DETERMINISTIC_SATURATION"
+  "next_action": "WAIT_FOR_PASS_05_CAPTURE_THEN_CONTINUE_DETERMINISTIC_SATURATION"
 }

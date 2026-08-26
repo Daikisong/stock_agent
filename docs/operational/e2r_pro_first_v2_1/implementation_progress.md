@@ -2015,11 +2015,11 @@ actual pass 04에서는 정확히 두 참조가 이 원칙에 따라 제거됐�
 
 ```text
 현재 delta:
-R13_CROSS_ARCHETYPE_STAGE2_3_GATE_Q03
+R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW_Q03 (`resolution_fact_ids`)
 → PROFACT-P4-R13-CONSOLIDATED-GOING-CONCERN-NOT-APPLICABLE 제거
 
 누적 graph:
-R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q01
+R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q01 (`resolution_fact_ids`)
 → PROFACT-C06-HBM4-MASS-SHIPMENT 제거
 ```
 
@@ -2042,3 +2042,15 @@ score / Stage authority                  false / false
 검증 receipt**다. 다음 실행은 이 READY capture를 `REUSE_CAPTURE`로 읽어 browser submit 0을 확인한 뒤
 재검증·saturation을 계속한다. 상세 identity, hash, 두 투영은
 `p10_c06_public_gap_third_capture_merge_receipt.json`에 고정했다.
+
+이후 실제 runner 재개에서도 pass 04 READY capture를 `FOLLOWUP_CAPTURE_REUSED`로 읽었고
+`browser_submit_delta=0`을 확인했다. effective dossier 52 facts / 26 documents / 24 lineages / 115 routes /
+28 questions가 영구 저장됐으며 파일 hash는
+`e60b7a109e4ea00e7003590b578891a764914c93d1dd603ad992c64ca939f125`다. source-backed 재검증 뒤
+accepted fact는 32 → 33, nonterminal question은 9 → 7, provider/parser core pending은 5 → 4,
+source-linkage incomplete는 8 → 6으로 줄었다.
+
+다만 이 snapshot에서 아직 공개자료로 조사 가능한 material gap 15개가 남아 deterministic saturation이
+pass 05 `PROPASS-26c03ab89ff306eec50c9e3c`를 같은 conversation에 한 번 전송했다. pass 05가 실행 중인
+동안 score/Stage는 계속 withheld다. 이 전송은 pass 04 재사용 실패로 인한 중복 제출이 아니라, pass 04
+병합으로 바뀐 exact snapshot을 입력으로 만든 다음 semantic gap pass다.
