@@ -16,8 +16,21 @@
     "route_receipt_count": 211,
     "snapshot_id": "PRODOSSIERSNAPSHOT-05656ec8f80ad8d8e58fb94d"
   },
+  "final_source_verification": {
+    "candidate_fact_count": 71,
+    "accepted_fact_candidate_count": 53,
+    "compiled_evidence_fact_count": 53,
+    "verification_hash": "026f0dc9282f4ee467ae54e3aa1a438aee596f08fe02d918d36f1c4816b823d6"
+  },
   "followup_submit_count_at_freeze": 10,
   "initial_submit_count_at_freeze": 1,
+  "submitted_pass_count_at_freeze": 11,
+  "initial_prompt_char_count": 141982,
+  "initial_response_char_count": 136604,
+  "total_prompt_char_count": null,
+  "total_response_char_count": null,
+  "total_character_telemetry_status": "NOT_DURABLY_PERSISTED_FOR_ALL_11_PASSES",
+  "durable_run_elapsed_seconds": 102273.792271,
   "job_id": "PROJOB-cdd91020f15891533e61431f",
   "last_in_flight_pass_id": "PROPASS-5cafcd69a1577739808ba25b",
   "new_submit_count_after_freeze": 0,
@@ -32,5 +45,10 @@
   "stage_authority": false,
   "superseded_by_fresh_job_id": null,
   "target_id": "000660",
+  "initial_acceptance_boundary_status": "NOT_PERSISTED_IN_OLD_PIPELINE",
+  "initial_material_candidate_count": null,
+  "initial_accepted_material_count": null,
+  "initial_acceptance_ratio": null,
+  "terminal_question_closure_proven": false,
   "unresolved_repair_packet_count": 4
 }

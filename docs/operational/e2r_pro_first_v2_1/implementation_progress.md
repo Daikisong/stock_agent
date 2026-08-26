@@ -1656,3 +1656,98 @@ compileall / git diff check                         PASS / PASS
 다음 단계는 이 범용 수정을 한글 commit으로 push하고 독립 CI green을 확인한 뒤, 세 번째 완전 새 C28
 conversation에서 actual initial canary를 한 번만 전송하는 것이다. R2 raw capture와 중앙 ledger는 수정하지
 않는다.
+
+## 2026-08-26 — C28 R3와 P9 다중 아키타입 fresh-session 검문 통과
+
+C28 R2 범용 수정 commit `fdac32990ba8d29fb6b596c6f5bbb8d5a372538e`의 독립 CI 세 개가 모두
+SUCCESS인 것을 확인한 뒤, R1/R2와 다른 runtime/session/conversation에서 안랩 C28 actual Pro 조사를
+정확히 한 번 전송했다. 일반 Chat의 Pro 모드이며 legacy Deep Research를 사용하지 않았다.
+
+```text
+runtime          C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260826T091553Z
+fresh session    FRESH-V2-1-C28-R3-20260826T091553Z
+fresh job        PROJOB-e3d57e985cd3a1617b717ccd
+fresh run        PRORUN-d0f7e7834ed81f0c9bb324a1
+initial pass     PROPASS-13e168efd50ba39ed8e94102
+conversation     6a8eaee3-d670-83ee-9c01-6f7d438db2f0
+submit/capture   1 / 1
+automatic resend 0
+prompt/response  60,479 / 116,288 chars
+research elapsed 3,678.863673 seconds
+total elapsed    3,738.385957 seconds
+```
+
+ChatGPT 결과 카드에서 새 JSON을 실제로 다운로드해 `parser_source=DOWNLOADED_JSON`으로 import했다.
+JSON 문자열 안 raw control character 84개는 bounded parser가 escape만 적용했고, source/fact 의미는
+바꾸지 않았다. 예전 MD를 잘못 고른 것이 아니며 선택 PDF는 요청하지 않아 `null`이다.
+
+```text
+source documents                              9
+all facts                                    22
+initial current material candidate/accepted 10 / 10
+post-preflight acceptance ratio             100%
+mandatory question coverage                 27 / 27
+verified/compiled facts                         17
+genuine repair candidate / actual pass       0 / 0
+query / search / fetch                       0 / 0 / 9
+score / Stage authority                      false / false
+publication                                  withheld
+initial efficiency Gate                      PASS
+```
+
+R3 job은 `GAP_ADJUDICATION`, dossier는 `NEEDS_PUBLIC_GAP_CLOSURE`다. 이 PASS는 C28 초기 조사 효율
+통과이지 최종 점수나 Stage가 아니다. 전체 identity, artifact hash, parser operation, source verification과
+Gate 수치는 `p8_c28_fresh_initial_success_receipt_r3.json`에 고정했다. raw report, downloaded JSON,
+source page와 중앙 ledger는 Git에 넣지 않는다.
+
+P9에서는 동결 구 실행과 세 fresh 실행을 `fresh_session_comparison.json/.md`로 비교했다. 새 독립 감사기는
+비교표의 자기주장을 믿지 않고 다섯 source receipt를 다시 읽어 합계와 hard-zero counter를 계산한다.
+
+```text
+fresh archetypes / conversations            3 / 3
+initial material candidate/accepted        36 / 34
+aggregate acceptance ratio                94.4444%
+mandatory question coverage                81 / 81
+verified facts                                    56
+actual Pro repair pass                              0
+required hard-zero counters                    13/13
+fresh efficiency audit               PASS / critical 0
+audit hash       47d96d1f3b602ef0b963ce3772ffc70cbacdb655fb399aefdcf0a61fb9b87b6a
+```
+
+동결 구 실행은 11 pass, prompt defect 50개, local/verifier defect 24개였고 마지막 source verification은
+53 fact를 accepted/compiled했다. 다만 구 pipeline은 initial acceptance 경계와 11 pass 전체 문자 telemetry를
+보존하지 않았으므로 comparison에는 `null`과 이유를 남겼다. 서로 source corpus가 달라 score parity도
+금지했다.
+
+현재 verdict는 verifier-ready pipeline, C06, C17, C28, multi-archetype fresh session까지 PASS다. 세 live
+canary에는 공개자료/parser gap 합계 41개가 남아 있고 score/Stage publication 권한도 없으므로
+`operational_research_readiness=WITHHELD_FULL_THESIS_PENDING`을 유지한다. 즉 초기 효율 검문을 최종 thesis
+완료로 과장하지 않는다.
+
+P9 코드·영수증·문서 작성 후 로컬 검증은 다음과 같이 닫혔다.
+
+```text
+P9 fresh efficiency focused tests                   5/5 PASS
+Linux headless browser tests                       79/79 PASS
+전체 unittest                                     7,712 PASS
+failure / error / skipped                       0 / 0 / 38
+Phase100                                           15/15 PASS
+Gate 1 tracked receipt                               4/4 PASS
+Pro-first static audit                     PASS / critical 0
+Pro-first V2 static audit                  PASS / critical 0
+Pro-first V2 static audit hash 0928a78b0411df4e885760d24be84d6a53edad45613963c0b53146aafad07b9a
+E2R v6 production static audit             PASS / critical 0
+E2R v6 static audit hash       ff981d5bed53ebaec938dbcc3049c4e31a854766cd6517ac306376609c94a27a
+compileall / git diff check                       PASS / PASS
+```
+
+첫 전체 실행에서 난 브라우저 ERROR 60개는 Playwright가 `libnspr4.so`를 찾지 못한 실행환경 오류였다.
+`/tmp/e2r-playwright-deps/root/usr/lib/x86_64-linux-gnu`를 `LD_LIBRARY_PATH`에 연결해 브라우저 79개를
+독립 통과시킨 뒤 전체 7,712개를 처음부터 다시 실행했다. 최종 실행은 failure/error 0이며 앞선 환경 오류
+실행은 PASS 수치에 포함하지 않았다.
+
+```text
+final full unittest elapsed       655.522 seconds
+final full unittest log sha256    9bccf1f209803306de93029cdab105aa762253c5915d594183dcc88c094eba91
+```

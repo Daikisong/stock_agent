@@ -139,6 +139,8 @@ jobs:
         run: python -m e2r.cli.audit_e2r_pro_first --repo-root . --output "${RUNNER_TEMP}/static_audit.json"
       - name: Recompute all requirement-level V2 static counters
         run: python -m e2r.cli.audit_e2r_pro_first_v2 --repo-root . --output "${RUNNER_TEMP}/v2_static_audit.json"
+      - name: Recompute V2.1 fresh-session efficiency receipts
+        run: python -m e2r.cli.audit_e2r_pro_first_v2_1_fresh_efficiency --repo-root . --output "${RUNNER_TEMP}/v2_1_fresh_efficiency_audit.json"
       - name: Prove CI has no live ChatGPT credential or login path
         run: |
           test "${E2R_RUN_LIVE_TESTS}" = "0"

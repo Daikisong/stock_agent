@@ -34,10 +34,19 @@ from .rejection_taxonomy import (
     build_old_run_rejection_taxonomy,
     render_old_run_rejection_taxonomy_markdown,
 )
+from .efficiency_audit import (
+    DEFAULT_COMPARISON_PATH,
+    EXPECTED_FRESH_RECEIPTS,
+    REQUIRED_ZERO_COUNTER_KEYS,
+    audit_fresh_session_comparison,
+    compile_fresh_session_efficiency_audit,
+)
 
 __all__ = [
     "BuiltFreshV3JobPacket",
     "CompiledFreshFollowupV3",
+    "DEFAULT_COMPARISON_PATH",
+    "EXPECTED_FRESH_RECEIPTS",
     "FreshBlindLeakageAudit",
     "FRESH_LIVE_AUTHORIZATION_PHRASE",
     "FreshDetectedInitialResult",
@@ -55,11 +64,14 @@ __all__ = [
     "OldAnswerLeakageManifest",
     "PreparedFreshV3BrowserRuntime",
     "PreparedFreshV3Initial",
+    "REQUIRED_ZERO_COUNTER_KEYS",
     "assert_fresh_prompt_has_no_old_answers",
+    "audit_fresh_session_comparison",
     "audit_fresh_blind_payload",
     "build_independent_leakage_manifest",
     "build_old_answer_leakage_manifest",
     "build_old_run_rejection_taxonomy",
+    "compile_fresh_session_efficiency_audit",
     "evaluate_initial_efficiency",
     "render_old_run_rejection_taxonomy_markdown",
 ]
