@@ -1368,3 +1368,69 @@ compileall / git diff check                      PASS / PASS
 
 다음 실제 C17 검문은 이 schema hash가 반영된 commit과 CI green을 먼저 확인한 뒤, 여섯 번째 새
 conversation에서 수행한다. R5 raw capture와 중앙 ledger는 수정하지 않는다.
+
+## 2026-08-26 — C17 R6 전송 전 predecessor denylist 경계를 보완
+
+짧은 인용 일괄 반려 수정 commit `953eede0ae6b81dddce19277aa4661f4b4c6ef2f`를 push한 뒤 같은
+head의 독립 CI 세 개가 모두 성공했다.
+
+```text
+push Pro-first CI       32923567286 SUCCESS
+PR Pro-first CI         32923570626 SUCCESS
+E2R v6 offline CI       32923570621 SUCCESS
+PR #7 state             Draft / Open / Mergeable
+```
+
+그 뒤 C17 R6을 위한 새 runtime/session을 준비했지만 ChatGPT 전송보다 앞선 old-answer leakage
+manifest 단계에서 멈췄다. R5는 schema import 전에 캡처는 완료했지만
+`research_passes/effective_dossier.latest.json`은 만들지 못한 diagnostic predecessor다. 기존 manifest
+builder가 verifier-complete predecessor만 가정해 이 파일을 무조건 열었다.
+
+```text
+intended runtime     C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260826T025720Z
+intended session     FRESH-V2-1-C17-R6-20260826T025720Z
+fresh runtime/job/run/pass/conversation created   0 / 0 / 0 / 0 / 0
+upload/composer fill/submit/capture                0 / 0 / 0 / 0
+automatic resend                                      0
+R5 ledger mutation                                     0
+actual Pro initial attempt                              0
+```
+
+따라서 이 사건은 C17 initial efficiency Gate 실패가 아니라 전송 전 boundary 진단이다. 위 intended
+identity는 감사용으로 폐기하고 실제 R6에는 새 timestamp를 사용한다.
+
+공통 manifest builder는 verifier-complete predecessor에서는 기존 effective dossier를 계속 우선한다.
+그 파일이 없는 schema-failed predecessor에서만 `READY.json`, capture receipt identity와 전체 capture
+bundle SHA-256을 모두 확인한 뒤 기존 bounded `ResearchDossierParser`로 캡처 JSON을 읽는다. 여기서
+읽은 값은 오직 이전 answer token denylist에만 들어가며 source verification, score, Stage 권한은 없다.
+쉬운 예로 R5의 `PROFACT-C01`이라는 이름이 새 packet에 우연히 복사되는지는 막지만, 그 fact를 새
+증거 또는 점수로 인정하지는 않는다. 캡처 JSON을 한 글자라도 바꾸면 hash mismatch로 실패한다.
+
+실제 R5 캡처에 대한 읽기 전용 manifest projection은 다음과 같다.
+
+```text
+old fact ids              33
+old route receipt ids     26
+old research pass ids      1
+old question answers      26
+expected source URLs      14
+expected fact ids         33
+score / Stage authority  false / false
+```
+
+수정 후 검증:
+
+```text
+focused fresh orchestration                    21/21 PASS
+tampered capture rejection                         PASS
+전체 unittest                                  7,702 PASS
+failure / error / skipped                    0 / 0 / 38
+Pro-first static audit                    PASS / critical 0
+Pro-first V2 static audit                 PASS / critical 0
+E2R v6 production static audit            PASS / critical 0
+compileall / git diff check                PASS / PASS
+```
+
+전체 identity와 zero-submit 증거는
+`p8_c17_fresh_pre_submit_boundary_failure_receipt_r6.json`에 기록했다. 다음 actual R6은 이 수정 commit과
+독립 CI green을 확인한 뒤 새 runtime/session/job/run/pass/conversation에서 정확히 한 번만 보낸다.

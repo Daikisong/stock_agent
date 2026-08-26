@@ -31,9 +31,17 @@ from ..capture.expanded_dossier import (
     ExpandedDossierArtifactService,
     expanded_dossier_recovery_required,
 )
-from ..capture.receipt import CaptureReceipt, load_capture_receipt
+from ..capture.receipt import (
+    CaptureReceipt,
+    load_capture_receipt,
+    verify_capture_bundle,
+)
 from ..config import ProFirstLocalConfig
-from ..dossier import CodexProReportDossierStructurer, ProDossierImporter
+from ..dossier import (
+    CodexProReportDossierStructurer,
+    ProDossierImporter,
+    ResearchDossierParser,
+)
 from ..ids import canonical_hash, canonical_json
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
@@ -939,16 +947,12 @@ def build_old_answer_leakage_manifest(
     if old.old_job_frozen_at is None:
         raise ValueError("old answer manifest requires a frozen diagnostic job")
     root = Path(old_job_root).expanduser().resolve()
-    pointer = json.loads(
-        (root / "research_passes/effective_dossier.latest.json").read_text(
-            encoding="utf-8"
-        )
+    dossier = _load_old_dossier_for_deny_manifest(
+        root,
+        old_job_id=old_job_id,
+        old_run_id=old_run_id,
+        old_conversation_id=old_conversation_id,
     )
-    dossier_path = (root / str(pointer.get("relative_path") or "")).resolve()
-    dossier_path.relative_to(root)
-    dossier = json.loads(dossier_path.read_text(encoding="utf-8"))
-    if canonical_hash(dossier) != pointer.get("dossier_hash"):
-        raise ValueError("old effective dossier differs from its immutable pointer")
     facts = tuple(
         row
         for collection in _FACT_COLLECTIONS
@@ -990,7 +994,17 @@ def build_old_answer_leakage_manifest(
             if str(row.get("route_receipt_id") or "").strip()
         )
     )
-    pass_ids = tuple(row.pass_id for row in ProMultiPassLedger(store).list_passes(old_job_id))
+    pass_ids = tuple(
+        dict.fromkeys(
+            (
+                *(
+                    row.pass_id
+                    for row in ProMultiPassLedger(store).list_passes(old_job_id)
+                ),
+                *_collect_pro_pass_ids(dossier),
+            )
+        )
+    )
     return OldAnswerLeakageManifest(
         old_job_id=old_job_id,
         old_run_id=old_run_id,
@@ -1004,6 +1018,87 @@ def build_old_answer_leakage_manifest(
         expected_source_urls=tuple(dict.fromkeys(value for value in urls if value)),
         expected_fact_ids=fact_ids,
     )
+
+
+def _collect_pro_pass_ids(value: Any) -> tuple[str, ...]:
+    collected: list[str] = []
+
+    def visit(current: Any) -> None:
+        if isinstance(current, Mapping):
+            for key, nested in current.items():
+                if key in {"research_pass_id", "pass_id", "parent_pass_id"}:
+                    token = str(nested or "").strip()
+                    if token.startswith("PROPASS-"):
+                        collected.append(token)
+                visit(nested)
+        elif isinstance(current, (list, tuple)):
+            for nested in current:
+                visit(nested)
+
+    visit(value)
+    return tuple(dict.fromkeys(collected))
+
+
+def _load_old_dossier_for_deny_manifest(
+    root: Path,
+    *,
+    old_job_id: str,
+    old_run_id: str,
+    old_conversation_id: str,
+) -> Mapping[str, Any]:
+    """Load old answer tokens without granting the old dossier any authority.
+
+    A verifier-complete predecessor has the canonical effective-dossier pointer.
+    A diagnostic predecessor can fail at schema import after an exactly-once
+    browser capture, so it has no effective dossier.  In that case only the
+    READY-certified, hash-verified capture is read to build the deny-only
+    leakage manifest.  The captured dossier never becomes a scoring or source-
+    verification input through this path.
+    """
+
+    pointer_path = root / "research_passes/effective_dossier.latest.json"
+    if pointer_path.is_file():
+        pointer = json.loads(pointer_path.read_text(encoding="utf-8"))
+        dossier_path = (root / str(pointer.get("relative_path") or "")).resolve()
+        dossier_path.relative_to(root)
+        dossier = json.loads(dossier_path.read_text(encoding="utf-8"))
+        if canonical_hash(dossier) != pointer.get("dossier_hash"):
+            raise ValueError("old effective dossier differs from its immutable pointer")
+        if not isinstance(dossier, dict):
+            raise ValueError("old effective dossier must be a JSON object")
+        return dossier
+
+    ready_path = root / "capture/incoming/READY.json"
+    receipt_path = root / "capture/incoming/browser_capture_receipt.json"
+    if not ready_path.is_file() or not receipt_path.is_file():
+        raise FileNotFoundError(
+            "old answer manifest requires an effective dossier or a READY-certified capture"
+        )
+    ready = json.loads(ready_path.read_text(encoding="utf-8"))
+    receipt = load_capture_receipt(receipt_path)
+    if (
+        not isinstance(ready, dict)
+        or ready.get("schema_version") != "e2r_pro_capture_ready_v1"
+        or ready.get("written_last") is not True
+        or ready.get("capture_receipt_path")
+        != "capture/incoming/browser_capture_receipt.json"
+        or ready.get("capture_receipt_hash") != receipt.receipt_hash
+        or ready.get("job_id") != old_job_id
+        or ready.get("run_id") != old_run_id
+    ):
+        raise ValueError("old capture READY identity or receipt hash mismatch")
+    if (
+        receipt.job_id != old_job_id
+        or receipt.run_id != old_run_id
+        or receipt.conversation_id != old_conversation_id
+    ):
+        raise ValueError("old capture receipt differs from frozen predecessor identity")
+    verify_capture_bundle(root, receipt)
+    dossier_path = (root / receipt.dossier_json_path).resolve()
+    dossier_path.relative_to(root)
+    return ResearchDossierParser().parse(
+        downloaded_json_path=dossier_path
+    ).payload
 
 
 def evaluate_initial_efficiency(

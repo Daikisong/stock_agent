@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import replace
 from datetime import datetime, timezone
 import hashlib
+import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -16,6 +17,7 @@ from e2r.pro_first.browser.protocol import (
     PreparedFollowupPass,
 )
 from e2r.pro_first.config import load_pro_first_local_config
+from e2r.pro_first.capture.receipt import CaptureReceipt, file_sha256
 from e2r.pro_first.fresh_session import (
     FreshV3InitialLiveCanaryRunner,
     FreshSessionBoundaryError,
@@ -27,6 +29,7 @@ from e2r.pro_first.fresh_session import (
 )
 from e2r.pro_first.fresh_session.live_canary_v3 import (
     _requires_browser_result_recovery,
+    build_old_answer_leakage_manifest,
 )
 from e2r.pro_first.ids import canonical_hash
 from e2r.pro_first.job_store import ProFirstJobStore
@@ -383,6 +386,112 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(runner.old_runtime_root, self.boundary.fresh_runtime_root)
         self.assertEqual(runner.state_database_path, central_database.resolve())
         self.assertEqual(runner.store.database_path.resolve(), central_database.resolve())
+
+    def test_schema_failed_predecessor_uses_only_hash_verified_capture_for_denylist(
+        self,
+    ) -> None:
+        job_root = self.root / "schema-failed-predecessor"
+        incoming = job_root / "capture/incoming"
+        incoming.mkdir(parents=True)
+        dossier = {
+            "research_pass_id": OLD_PASS,
+            "material_facts": [
+                {
+                    "dossier_fact_id": OLD_FACT,
+                    "source_url": EXPECTED_URL,
+                    "supporting_excerpt": "OLD EXCERPT\nLINE",
+                }
+            ],
+            "counterfacts": [],
+            "resolution_facts": [],
+            "source_documents": [
+                {"canonical_url": EXPECTED_URL, "opened_url": EXPECTED_URL}
+            ],
+            "search_route_receipts": [
+                {
+                    "route_receipt_id": OLD_ROUTE,
+                    "opened_source_urls": [EXPECTED_URL],
+                }
+            ],
+            "source_lineages": [],
+            "question_family_results": [
+                {"closure_reason": "OLD TERMINAL ANSWER"}
+            ],
+        }
+        report_path = incoming / "pro_report.md"
+        dossier_path = incoming / "research_dossier.json"
+        report_path.write_text("schema-failed captured report", encoding="utf-8")
+        captured_dossier_text = json.dumps(
+            dossier, ensure_ascii=False, sort_keys=True
+        ).replace(r"OLD EXCERPT\nLINE", "OLD EXCERPT\nLINE")
+        dossier_path.write_text(captured_dossier_text, encoding="utf-8")
+        receipt = CaptureReceipt(
+            schema_version="e2r_pro_capture_receipt_v1",
+            event_type="PRO_RESEARCH_CAPTURE_COMPLETE",
+            job_id=self.old_job.job_id,
+            run_id=OLD_RUN,
+            target_id=self.old_job.symbol,
+            as_of_date=self.old_job.as_of_date,
+            packet_hash="a" * 64,
+            prompt_hash="b" * 64,
+            conversation_id=OLD_CONVERSATION,
+            assistant_turn_id="assistant-turn-schema-failed",
+            report_md_hash=file_sha256(report_path),
+            report_pdf_hash=None,
+            dossier_json_hash=file_sha256(dossier_path),
+            submit_count=1,
+            capture_count=1,
+            captured_at="2026-08-25T01:02:03Z",
+            capture_mode="CHATGPT_WEB_VISIBLE_CHAT_PRO_FRESH_V3",
+            capture_source="DIRECT_REPORT_DOM_NORMALIZED",
+            optional_pdf_error=None,
+        )
+        receipt_path = incoming / "browser_capture_receipt.json"
+        receipt_path.write_text(
+            json.dumps(receipt.to_dict(), ensure_ascii=False, sort_keys=True),
+            encoding="utf-8",
+        )
+        (incoming / "READY.json").write_text(
+            json.dumps(
+                {
+                    "schema_version": "e2r_pro_capture_ready_v1",
+                    "capture_receipt_hash": receipt.receipt_hash,
+                    "capture_receipt_path": (
+                        "capture/incoming/browser_capture_receipt.json"
+                    ),
+                    "job_id": self.old_job.job_id,
+                    "run_id": OLD_RUN,
+                    "written_last": True,
+                },
+                ensure_ascii=False,
+                sort_keys=True,
+            ),
+            encoding="utf-8",
+        )
+
+        manifest = build_old_answer_leakage_manifest(
+            self.store,
+            old_job_id=self.old_job.job_id,
+            old_run_id=OLD_RUN,
+            old_conversation_id=OLD_CONVERSATION,
+            old_job_root=job_root,
+        )
+
+        self.assertEqual(manifest.old_fact_ids, (OLD_FACT,))
+        self.assertEqual(manifest.old_route_receipt_ids, (OLD_ROUTE,))
+        self.assertEqual(manifest.old_research_pass_ids, (OLD_PASS,))
+        self.assertEqual(manifest.old_question_answers, ("OLD TERMINAL ANSWER",))
+        self.assertEqual(manifest.expected_source_urls, (EXPECTED_URL,))
+
+        dossier_path.write_text("{}", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "capture artifact hash mismatch"):
+            build_old_answer_leakage_manifest(
+                self.store,
+                old_job_id=self.old_job.job_id,
+                old_run_id=OLD_RUN,
+                old_conversation_id=OLD_CONVERSATION,
+                old_job_root=job_root,
+            )
 
     async def test_completed_markers_rebind_transient_conversation_without_submit(self) -> None:
         adapter = await self._prepare_and_approve("WEB:temporary-conversation")
