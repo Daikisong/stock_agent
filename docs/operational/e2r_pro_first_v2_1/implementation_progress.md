@@ -1494,3 +1494,85 @@ DB와 파일을 교차 확인한 결과 job은 `submit_count=1`, `capture_count=
 identity와 hash는 `p8_c17_fresh_initial_success_receipt_r6.json`에 기록했다. raw 보고서, source page, 중앙
 ledger는 Git에 넣지 않는다. 다음 단계는 완전히 다른 새 conversation에서 C28 initial canary를 실행하는
 것이다.
+
+## 2026-08-26 — C28 첫 fresh initial은 비공개 종결 근거 1개 누락으로 봉인
+
+C17 R6의 100% PASS와 commit `dca86ae95f1356bcbd95c7e6202ca1b0e622b162`의 독립 CI green을 확인한
+뒤, C17과 다른 종목·아키타입인 안랩 C28 actual Pro 조사를 새 conversation에 정확히 한 번 전송했다.
+
+```text
+runtime          C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260826T050004Z
+fresh session    FRESH-V2-1-C28-R1-20260826T050004Z
+fresh job        PROJOB-8df8121eb03759d7f8a883ac
+fresh run        PRORUN-584b325f46a1fc5d02249a1a
+initial pass     PROPASS-df09bfe4987bc857a1a42780
+commit binding   dca86ae95f1356bcbd95c7e6202ca1b0e622b162
+conversation     6a8e72fe-b6fc-83e8-9c03-b760986e7d78
+submit/capture   1 / 1
+automatic resend 0
+prompt/response  60,479 / 129,708 chars
+```
+
+ChatGPT 결과 카드에서 JSON을 실제로 내려받아 `parser_source=DOWNLOADED_JSON` 경로로 연결했다. MD는
+사람이 읽는 감사용 보고서이고 선택 PDF는 요청하지 않았다. 즉 이번 실패는 다운로드 버튼이나 MD/JSON
+선택 문제가 아니다. JSON에는 source 6개, fact 37개, mandatory question 27개, route receipt 32개가
+보존됐다.
+
+strict schema가 멈춘 곳은 C28 Q02 하나다. Pro는 이 질문을 `LIKELY_NONPUBLIC`으로 표시하고 성공한
+검색 경로 2개를 연결했지만, 그중 한 경로의 `no_new_route_reason`이 비어 있었다.
+
+```text
+failing question                         C28...Q02
+claimed status                    LIKELY_NONPUBLIC
+linked routes / SUCCESS                    2 / 2
+route missing no-new-route reason              1
+actual import                                 FAIL
+initial efficiency Gate reached             false
+score / Stage authority             false / false
+publication                           withheld
+```
+
+쉬운 예로 “공개자료에서 못 찾았다”는 기록만 있고 “공식 공시 범위상 왜 더 볼 경로가 없는가”가 한 경로에
+없으므로 `비공개로 종결`할 수 없다. 그렇다고 없는 이유를 코드가 만들어 넣어서도 안 된다. 공통
+pre-schema normalizer는 이런 terminal absence/nonpublic 주장을 `PUBLIC_SEARCHABLE`,
+`adequate_search_proven=false`로 한 방향 하향하고, mandatory question이면 dossier 상태도 우선순위에 맞춰
+`NEEDS_PUBLIC_GAP_CLOSURE`로 되돌리도록 수정했다. 이미 모든 경로에 이유가 있는 정상
+`LIKELY_NONPUBLIC`은 그대로 보존한다. 종목명·C28·질문 ID 조건은 사용하지 않았다.
+
+R1 immutable JSON을 수정 코드에 읽기 전용으로 투영한 결과는 source 6개와 fact 37개를 그대로 보존한 채
+strict V3 schema를 통과했다. 이 projection에는 initial efficiency Gate, score, Stage, publication 권한이
+없으며 R1을 소급 PASS 처리하지 않는다. R1 job은 state version 15에서 다음 disposition으로 봉인했다.
+
+```text
+FRESH_SESSION_DIAGNOSTIC_ONLY
+OPERATIONAL_EFFICIENCY_GATE_FAILED
+NEW_CONVERSATION_REQUIRED
+same-conversation follow-up / automatic resend   0 / 0
+```
+
+회귀검사는 근거 없는 `LIKELY_NONPUBLIC` 하향, 정상 종결 보존, 근거 없는 evaluated absence 하향,
+이유 미생성을 함께 확인했다. local preflight 31개와 dossier/status/saturation/prompt focused 72개가 모두
+통과했다. 전체 ID, hash, raw/projection 경계와 봉인 증거는
+`p8_c28_fresh_initial_failure_receipt_r1.json`에 기록했다. 전체 테스트·정적 감사·독립 CI green을 먼저
+확인한 뒤에만 두 번째 완전 새 C28 conversation을 시작한다.
+
+수정 후 로컬 검증은 다음과 같이 닫혔다.
+
+```text
+local preflight focused                              31/31 PASS
+dossier/status/saturation/prompt focused             72/72 PASS
+실제 C28 R1 JSON read-only strict projection             PASS
+전체 unittest                                       7,705 PASS
+failure / error / skipped                         0 / 0 / 38
+Phase100                                             15/15 PASS
+Pro-first static audit                        PASS / critical 0
+Pro-first V2 static audit                     PASS / critical 0
+E2R v6 production static audit                 PASS / critical 0
+compileall / git diff check                          PASS / PASS
+```
+
+첫 전체 실행에서 브라우저 테스트가 낸 ERROR는 코드 실패가 아니라 `/tmp`에 풀어 둔 Chromium 공유
+라이브러리의 상위 경로를 잘못 지정한 실행 환경 오류였다. 실제 경로
+`/tmp/e2r-playwright-deps/root/usr/lib/x86_64-linux-gnu`로 브라우저 어댑터 25개를 먼저 통과시킨 뒤,
+전체 7,705개를 처음부터 새로 실행해 failure/error 0을 확인했다. 중단한 환경 오류 실행은 위 최종 수치에
+합산하지 않았다.

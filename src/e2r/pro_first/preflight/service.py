@@ -11,6 +11,7 @@ from e2r.research.page_fetcher import FetchResult, PageFetcher
 
 from ..atomic_io import fsync_directory
 from ..ids import canonical_hash, canonical_json, stable_id
+from ..research_contracts import select_contract_bundle
 from .atomic_fact import AtomicFactPreflight
 from .canonical_url import CanonicalURLResolver
 from .date_resolver import DatePrecedenceResolver
@@ -434,12 +435,153 @@ class PreSchemaV3Normalizer:
                         after=route["opened_source_urls"],
                     )
                 )
+        _downgrade_unproven_terminal_absence_claims(normalized, operations)
         return StaticPreflightNormalization(
             payload=normalized,
             before_hash=before_hash,
             after_hash=canonical_hash(normalized),
             operations=tuple(operations),
         )
+
+
+def _downgrade_unproven_terminal_absence_claims(
+    dossier: dict[str, Any],
+    operations: list[PreflightOperation],
+) -> None:
+    """Turn unsupported absence/nonpublic assertions back into open research gaps.
+
+    This is deliberately one-way and conservative.  It never invents an
+    adequate-search proof or a ``no_new_route_reason``.  If the dossier claims
+    terminal absence without the receipts required by the strict schema, the
+    question remains usable only as ``PUBLIC_SEARCHABLE``.
+    """
+
+    receipts = tuple(
+        row
+        for row in dossier.get("search_route_receipts") or ()
+        if isinstance(row, Mapping)
+    )
+    receipt_by_id = {
+        str(row.get("route_receipt_id") or ""): row for row in receipts
+    }
+    downgraded_question_ids: list[str] = []
+    for question in dossier.get("question_family_results") or ():
+        if not isinstance(question, dict):
+            continue
+        status = str(question.get("status") or "")
+        if status not in {
+            "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH",
+            "LIKELY_NONPUBLIC",
+        }:
+            continue
+        route_ids = tuple(
+            str(value) for value in question.get("search_route_receipt_ids") or ()
+        )
+        linked = tuple(
+            receipt_by_id[value] for value in route_ids if value in receipt_by_id
+        )
+        failure_codes: list[str] = []
+        if question.get("adequate_search_proven") is not True:
+            failure_codes.append("ADEQUATE_SEARCH_NOT_PROVEN")
+        if len(route_ids) < 2:
+            failure_codes.append("INSUFFICIENT_ROUTE_RECEIPTS")
+        if len(linked) != len(route_ids):
+            failure_codes.append("UNKNOWN_ROUTE_RECEIPT")
+        if any(row.get("provider_status") != "SUCCESS" for row in linked):
+            failure_codes.append("PROVIDER_OR_PARSER_NOT_SUCCESS")
+        if status == "LIKELY_NONPUBLIC" and any(
+            not str(row.get("no_new_route_reason") or "").strip()
+            for row in linked
+        ):
+            failure_codes.append("MISSING_NO_NEW_ROUTE_REASON")
+        if not failure_codes:
+            continue
+
+        question_id = str(question.get("question_family_id") or "")
+        before = {
+            "status": question.get("status"),
+            "availability_class": question.get("availability_class"),
+            "adequate_search_proven": question.get("adequate_search_proven"),
+        }
+        question["status"] = "PUBLIC_SEARCHABLE"
+        question["availability_class"] = "PUBLIC_SEARCHABLE"
+        question["adequate_search_proven"] = False
+        after = {
+            "status": question["status"],
+            "availability_class": question["availability_class"],
+            "adequate_search_proven": question["adequate_search_proven"],
+        }
+        operations.append(
+            _operation(
+                "DOWNGRADE_UNPROVEN_TERMINAL_ABSENCE_CLAIM",
+                "QUESTION_FAMILY_RESULT",
+                question_id,
+                field_name="status",
+                before=before,
+                after=after,
+                detail="failure_codes=" + ",".join(failure_codes),
+            )
+        )
+        downgraded_question_ids.append(question_id)
+
+    if not downgraded_question_ids:
+        return
+    reconciled_status = _research_status_after_terminal_downgrade(
+        dossier,
+        downgraded_question_ids=tuple(downgraded_question_ids),
+    )
+    before_status = dossier.get("research_status")
+    if reconciled_status is None or before_status == reconciled_status:
+        return
+    dossier["research_status"] = reconciled_status
+    operations.append(
+        _operation(
+            "RECONCILE_RESEARCH_STATUS_AFTER_TERMINAL_DOWNGRADE",
+            "DOSSIER",
+            str(dossier.get("job_id") or ""),
+            field_name="research_status",
+            before=before_status,
+            after=reconciled_status,
+            detail="downgraded_question_ids=" + ",".join(downgraded_question_ids),
+        )
+    )
+
+
+def _research_status_after_terminal_downgrade(
+    dossier: Mapping[str, Any],
+    *,
+    downgraded_question_ids: Sequence[str],
+) -> str | None:
+    try:
+        bundle = select_contract_bundle(
+            tuple(str(value) for value in dossier.get("selected_archetypes") or ())
+        )
+    except (KeyError, ValueError):
+        # Unknown contract identity remains the strict schema validator's job.
+        return None
+    mandatory_ids = {
+        str(question.get("question_family_id") or "")
+        for contract in bundle.contracts
+        for question in contract.get("question_families") or ()
+        if question.get("mandatory_for_full_thesis") is True
+    }
+    if not mandatory_ids.intersection(downgraded_question_ids):
+        return str(dossier.get("research_status") or "") or None
+    mandatory_rows = tuple(
+        row
+        for row in dossier.get("question_family_results") or ()
+        if isinstance(row, Mapping)
+        and str(row.get("question_family_id") or "") in mandatory_ids
+    )
+    if any(
+        row.get("status") in {"PROVIDER_PENDING", "PARSER_PENDING"}
+        or row.get("availability_class") in {"PROVIDER_BLOCKED", "PARSER_BLOCKED"}
+        for row in mandatory_rows
+    ):
+        return "PROVIDER_PENDING"
+    if any(row.get("status") == "VERIFIER_REPAIR_REQUIRED" for row in mandatory_rows):
+        return "NEEDS_VERIFIER_REPAIR"
+    return "NEEDS_PUBLIC_GAP_CLOSURE"
 
 
 def _normalize_initial_transport_aliases(

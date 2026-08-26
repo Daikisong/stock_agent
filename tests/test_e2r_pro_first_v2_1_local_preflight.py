@@ -347,6 +347,130 @@ class ProFirstV21LocalPreflightTest(unittest.TestCase):
             {row.operation_code for row in normalized.operations},
         )
 
+    def test_unproven_likely_nonpublic_is_reopened_without_fabricated_reason(self) -> None:
+        dossier = self._terminal_absence_dossier()
+        dossier["research_status"] = "COMPLETE_WITH_LIKELY_NONPUBLIC_REMAINDER"
+        dossier["search_route_receipts"][1]["no_new_route_reason"] = None
+        dossier["source_documents"][0]["canonical_url"] = self.canonical_url
+        dossier["source_documents"][0]["opened_url"] = self.canonical_url
+
+        with self.assertRaisesRegex(
+            DossierValidationError,
+            "LIKELY_NONPUBLIC requires no-new-route reasons",
+        ):
+            ResearchDossierValidator().validate(
+                dossier,
+                DossierValidationContext(
+                    job_id=self.job.job_id,
+                    run_id="PRORUN-PREFLIGHT",
+                    target_id=self.target_id,
+                    as_of_date=self.as_of_date,
+                    conversation_id="CONVERSATION-PREFLIGHT",
+                    candidate_archetype_ids=self.job.archetype_ids,
+                    research_pass_id="PROPASS-PREFLIGHT",
+                    parent_pass_id=None,
+                    enforce_parent_pass_id=True,
+                ),
+            )
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+        question = normalized.payload["question_family_results"][0]
+        operation_codes = {row.operation_code for row in normalized.operations}
+
+        self.assertEqual(question["status"], "PUBLIC_SEARCHABLE")
+        self.assertEqual(question["availability_class"], "PUBLIC_SEARCHABLE")
+        self.assertIs(question["adequate_search_proven"], False)
+        self.assertIsNone(
+            normalized.payload["search_route_receipts"][1][
+                "no_new_route_reason"
+            ],
+        )
+        self.assertEqual(
+            normalized.payload["research_status"],
+            "NEEDS_PUBLIC_GAP_CLOSURE",
+        )
+        self.assertIn(
+            "DOWNGRADE_UNPROVEN_TERMINAL_ABSENCE_CLAIM",
+            operation_codes,
+        )
+        self.assertIn(
+            "RECONCILE_RESEARCH_STATUS_AFTER_TERMINAL_DOWNGRADE",
+            operation_codes,
+        )
+        receipt = ResearchDossierValidator().validate(
+            normalized.payload,
+            DossierValidationContext(
+                job_id=self.job.job_id,
+                run_id="PRORUN-PREFLIGHT",
+                target_id=self.target_id,
+                as_of_date=self.as_of_date,
+                conversation_id="CONVERSATION-PREFLIGHT",
+                candidate_archetype_ids=self.job.archetype_ids,
+                research_pass_id="PROPASS-PREFLIGHT",
+                parent_pass_id=None,
+                enforce_parent_pass_id=True,
+            ),
+        )
+        self.assertEqual(receipt.schema_version, "e2r_pro_research_dossier_v3")
+
+    def test_proven_likely_nonpublic_is_preserved_exactly(self) -> None:
+        dossier = self._terminal_absence_dossier()
+        before_reasons = [
+            row["no_new_route_reason"]
+            for row in dossier["search_route_receipts"]
+        ]
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+        question = normalized.payload["question_family_results"][0]
+
+        self.assertEqual(question["status"], "LIKELY_NONPUBLIC")
+        self.assertEqual(question["availability_class"], "LIKELY_NONPUBLIC")
+        self.assertIs(question["adequate_search_proven"], True)
+        self.assertEqual(
+            [
+                row["no_new_route_reason"]
+                for row in normalized.payload["search_route_receipts"]
+            ],
+            before_reasons,
+        )
+        self.assertNotIn(
+            "DOWNGRADE_UNPROVEN_TERMINAL_ABSENCE_CLAIM",
+            {row.operation_code for row in normalized.operations},
+        )
+
+    def test_unproven_evaluated_absence_is_reopened_generically(self) -> None:
+        dossier = self._terminal_absence_dossier()
+        question = dossier["question_family_results"][0]
+        question["status"] = "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH"
+        question["availability_class"] = "PUBLIC_SEARCHABLE"
+        question["adequate_search_proven"] = False
+        question["search_route_receipt_ids"] = question[
+            "search_route_receipt_ids"
+        ][:1]
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+
+        self.assertEqual(
+            normalized.payload["question_family_results"][0]["status"],
+            "PUBLIC_SEARCHABLE",
+        )
+        self.assertEqual(
+            [row["no_new_route_reason"] for row in dossier["search_route_receipts"]],
+            [
+                row["no_new_route_reason"]
+                for row in normalized.payload["search_route_receipts"]
+            ],
+        )
+
     def test_initial_transport_none_and_conversation_aliases_are_local(self) -> None:
         dossier = self._dossier()
         dossier["conversation_id"] = "PENDING_NEW_CONVERSATION"
@@ -890,6 +1014,76 @@ class ProFirstV21LocalPreflightTest(unittest.TestCase):
                 "검색 결과의 짧은 snippet이 아니라 검증용 원문 전체를 모사하기 위해 충분한 길이를 유지한다.",
             )
         )
+
+    def _terminal_absence_dossier(self) -> dict:
+        dossier = self._dossier()
+        route_ids = ["ROUTE-ABSENCE-1", "ROUTE-ABSENCE-2"]
+        dossier["question_family_results"] = [
+            {
+                "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                "question_family_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q01",
+                "status": "LIKELY_NONPUBLIC",
+                "support_fact_ids": [],
+                "counter_fact_ids": [],
+                "resolution_fact_ids": [],
+                "attempted_source_role_ids": [
+                    "ISSUER_OFFICIAL",
+                    "CUSTOMER_PARTNER_OFFICIAL",
+                ],
+                "search_route_receipt_ids": route_ids,
+                "required_source_roles_satisfied": [],
+                "required_source_roles_missing": [
+                    "ISSUER_OFFICIAL",
+                    "CUSTOMER_PARTNER_OFFICIAL",
+                ],
+                "availability_class": "LIKELY_NONPUBLIC",
+                "affected_component_ids": [
+                    "bottleneck_pricing",
+                    "earnings_visibility",
+                    "information_confidence",
+                    "market_mispricing",
+                    "valuation_rerating",
+                ],
+                "could_change_score": True,
+                "could_change_stage": False,
+                "could_change_hard_break": False,
+                "closure_reason": (
+                    "두 개의 독립 공개 경로를 확인했으나 필요한 공개 사실을 "
+                    "확인하지 못했다."
+                ),
+                "adequate_search_proven": True,
+            }
+        ]
+        dossier["search_route_receipts"] = [
+            {
+                "route_receipt_id": route_id,
+                "pass_id": "PROPASS-PREFLIGHT",
+                "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                "question_family_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q01",
+                "gap_id": "GAP-ABSENCE-Q01",
+                "source_role_id": source_role,
+                "query_or_navigation_objective": "독립 공개 경로 확인",
+                "query_text": f"검증기업 공개 경로 확인 {index}",
+                "result_count_seen": 0,
+                "opened_source_urls": [
+                    f"https://search.example/absence/{index}"
+                ],
+                "accepted_fact_ids": [],
+                "rejected_candidate_ids": [],
+                "provider_status": "SUCCESS",
+                "no_new_route_reason": "공식 공개 범위에 새 경로가 없다.",
+                "performed_at": "2026-08-22T00:00:00Z",
+            }
+            for index, (route_id, source_role) in enumerate(
+                zip(
+                    route_ids,
+                    ("ISSUER_OFFICIAL", "CUSTOMER_PARTNER_OFFICIAL"),
+                    strict=True,
+                ),
+                1,
+            )
+        ]
+        return dossier
 
     def _dossier(self) -> dict:
         return {
