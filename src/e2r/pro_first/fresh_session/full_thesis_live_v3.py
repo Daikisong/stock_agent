@@ -20,7 +20,7 @@ from typing import Any, Callable, Mapping, Sequence
 from e2r.research.page_fetcher import PageFetcher
 
 from ..atomic_io import fsync_directory
-from ..browser.protocol import BrowserCaptureRequest
+from ..browser.protocol import BrowserCaptureRequest, RawBrowserCapture
 from ..browser.worker import BrowserWorkerSession, ProBrowserWorker
 from ..canary.live_v2 import (
     FollowupCaptureOutcome,
@@ -36,8 +36,9 @@ from ..canary.live_v2 import (
     _verification_needs_effective_dossier_reverification,
 )
 from ..capture.atomic_capture import AtomicCaptureWriter, CaptureIdentity
-from ..capture.receipt import load_capture_receipt, verify_capture_bundle
+from ..capture.receipt import CaptureReceipt, load_capture_receipt, verify_capture_bundle
 from ..config import ProFirstLocalConfig
+from ..dossier import DossierValidationContext, ResearchDossierValidator
 from ..ids import canonical_hash, canonical_json
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
@@ -47,7 +48,12 @@ from ..multi_pass import (
     ProMultiPassLedger,
 )
 from ..post_import import OperationalProScoringInputProvider
-from ..repair import CompactRepairServiceV3, RepairDeltaV3Parser
+from ..repair import (
+    CompactRepairServiceV3,
+    RepairDeltaV3Parser,
+    normalize_repair_delta_v3_transport,
+    reconcile_completed_repair_fail_closed,
+)
 from ..saturation import ResearchSaturationReceipt, compile_saturation_audit
 from ..scoring import ProScoringPipelineService
 from ..state_machine import TransitionContext
@@ -163,12 +169,25 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
         dossier = dict(snapshot.dossier)
         if dossier.get("schema_version") != "e2r_pro_research_dossier_v3":
             raise ValueError("fresh full-thesis tail requires ResearchDossierV3")
+        dossier, completed_repair_reconciliation = (
+            self._reconcile_completed_compact_repair_snapshot(
+                job_id=job_id,
+                job_root=job_root,
+                dossier=dossier,
+                dossier_store=dossier_store,
+                orchestrator=orchestrator,
+            )
+        )
         if self.store.get_job(job_id).status != JobStatus.GAP_ADJUDICATION.value:
             raise ValueError("fresh full-thesis tail must start at GAP_ADJUDICATION")
 
         session = await ProBrowserWorker(self.config.browser).open(job_id=job_id)
         prepared: PreparedFreshV3TailRuntime | None = None
-        pass_outcomes: list[Mapping[str, Any]] = []
+        pass_outcomes: list[Mapping[str, Any]] = (
+            [completed_repair_reconciliation]
+            if completed_repair_reconciliation is not None
+            else []
+        )
         latest_saturation: ResearchSaturationReceipt | None = None
         verification_state: FreshVerificationState | None = None
         score_receipt: Mapping[str, Any] | None = None
@@ -701,6 +720,8 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
             / f"{plan.research_pass.pass_ordinal:02d}_{plan.research_pass.pass_id}"
         )
         receipt_path = pass_root / "capture/incoming/browser_capture_receipt.json"
+        pass_id = plan.research_pass.pass_id
+        parent_id = str(plan.research_pass.parent_pass_id or "")
         mode = _followup_execution_mode(
             plan.research_pass,
             pass_root=pass_root,
@@ -727,8 +748,9 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                     staging_directory=pass_root / "capture/.staging",
                 )
             )
-            capture_receipt = AtomicCaptureWriter().finalize(
-                pass_root,
+            capture_receipt = _finalize_compact_repair_capture(
+                pass_root=pass_root,
+                raw_capture=raw,
                 identity=CaptureIdentity(
                     job_id=plan.scope.job_id,
                     run_id=str(prepared.packet_payload["run_id"]),
@@ -739,13 +761,14 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                     conversation_id=plan.scope.conversation_id,
                     capture_mode="CHATGPT_WEB_VISIBLE_PRO_FRESH_V3_REPAIR",
                 ),
-                raw_capture=raw,
-            ).receipt
+                job_id=plan.scope.job_id,
+                run_id=str(prepared.packet_payload["run_id"]),
+                pass_id=pass_id,
+                parent_pass_id=parent_id,
+            )
         report_text = (
             pass_root / capture_receipt.report_md_path
         ).read_text(encoding="utf-8")
-        pass_id = plan.research_pass.pass_id
-        parent_id = str(plan.research_pass.parent_pass_id or "")
         parsed = _parse_and_validate_compact_repair_transport(
             report_text=report_text,
             capture_source=capture_receipt.capture_source,
@@ -757,13 +780,23 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
         durable = orchestrator.ledger.get_pass(pass_id)
         if durable.status == "TRANSPORT_PENDING" and durable.submit_count == 1:
             orchestrator.confirm_transport_pending_result_visible(pass_id)
+        normalized_delta, normalization_receipt = normalize_repair_delta_v3_transport(
+            repair_delta=parsed.payload,
+            dossier=dossier,
+            compiled_prompt=compiled,
+            performed_at=capture_receipt.captured_at,
+        )
+        _write_json_atomic(
+            job_root / "repair_v3/repair_delta_transport_normalization.json",
+            normalization_receipt,
+        )
         repaired = CompactRepairServiceV3(
             verifier=self.source_verifier
         ).apply_and_reverify(
             job=self.store.get_job(prepared.job.job_id),
             job_root=job_root,
             dossier=dossier,
-            repair_delta=parsed.payload,
+            repair_delta=normalized_delta,
             compiled_prompt=compiled,
             prior_verification_rows=verification_state.verification_rows,
             response_hash=capture_receipt.report_md_hash,
@@ -808,6 +841,89 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
             job_root / "saturation/research_saturation_audit.json",
             compile_saturation_audit(saturation),
         )
+
+    def _reconcile_completed_compact_repair_snapshot(
+        self,
+        *,
+        job_id: str,
+        job_root: Path,
+        dossier: Mapping[str, Any],
+        dossier_store: ProMultiPassDossierStore,
+        orchestrator: FreshSessionOrchestratorV3,
+    ) -> tuple[Mapping[str, Any], Mapping[str, Any] | None]:
+        pass_id = str(dossier.get("research_pass_id") or "")
+        research_pass = orchestrator.ledger.get_pass(pass_id)
+        if research_pass.pass_name != "VERIFIER_REPAIR":
+            return dossier, None
+        reconciliation_path = (
+            job_root / "repair_v3/completed_repair_fail_closed_reconciliation.json"
+        )
+        if reconciliation_path.is_file():
+            receipt = _read_json(reconciliation_path)
+            if receipt.get("after_effective_dossier_hash") != canonical_hash(dossier):
+                raise ValueError(
+                    "completed repair reconciliation receipt differs from latest dossier"
+                )
+            return dossier, None
+        repair_receipt_path = job_root / "repair_v3/compact_repair_receipt.json"
+        repair_delta_path = job_root / "repair_v3/repair_delta_v3.json"
+        if not repair_receipt_path.is_file() or not repair_delta_path.is_file():
+            return dossier, None
+        repair_receipt = _read_json(repair_receipt_path)
+        failed_ids = tuple(
+            str(value)
+            for value in repair_receipt.get(
+                "unresolved_replacement_candidate_ids"
+            )
+            or ()
+        )
+        if repair_receipt.get("status") != "COMPACT_REPAIR_UNRESOLVED" or not failed_ids:
+            return dossier, None
+        parent_pass_id = str(research_pass.parent_pass_id or "")
+        parent_snapshot = dossier_store.load_latest_for_pass(
+            job_id=job_id,
+            pass_id=parent_pass_id,
+            job_root=job_root,
+        )
+        if parent_snapshot is None:
+            raise ValueError("completed repair reconciliation parent dossier is missing")
+        effective, receipt = reconcile_completed_repair_fail_closed(
+            repaired_dossier=dossier,
+            parent_dossier=parent_snapshot.dossier,
+            repair_delta=_read_json(repair_delta_path),
+            failed_replacement_ids=failed_ids,
+        )
+        job = self.store.get_job(job_id)
+        ResearchDossierValidator().validate(
+            effective,
+            DossierValidationContext(
+                job_id=job_id,
+                run_id=str(effective.get("run_id") or ""),
+                target_id=job.symbol,
+                as_of_date=job.as_of_date,
+                conversation_id=job.conversation_id,
+                candidate_archetype_ids=job.archetype_ids,
+                research_pass_id=pass_id,
+                parent_pass_id=parent_pass_id,
+                enforce_parent_pass_id=True,
+            ),
+        )
+        snapshot = dossier_store.persist(
+            job_id=job_id,
+            pass_id=pass_id,
+            dossier=effective,
+            job_root=job_root,
+        )
+        if snapshot.record.dossier_hash != receipt.get(
+            "after_effective_dossier_hash"
+        ):
+            raise ValueError("completed repair reconciliation snapshot hash mismatch")
+        _write_json_atomic(reconciliation_path, receipt)
+        _write_json_atomic(
+            job_root / "repair_v3/research_dossier.reconciled.json",
+            effective,
+        )
+        return effective, receipt
 
     def _emit_fresh(self, phase: str, **payload: Any) -> None:
         self.progress(
@@ -858,6 +974,36 @@ def _parse_and_validate_compact_repair_transport(
                 status="TRANSPORT_PENDING",
             )
     return parsed
+
+
+def _finalize_compact_repair_capture(
+    *,
+    pass_root: Path,
+    raw_capture: RawBrowserCapture,
+    identity: CaptureIdentity,
+    job_id: str,
+    run_id: str,
+    pass_id: str,
+    parent_pass_id: str,
+    writer: AtomicCaptureWriter | None = None,
+) -> CaptureReceipt:
+    """Persist a repair response without treating it as a full dossier MD."""
+
+    report_text = raw_capture.report_md_part_path.read_text(encoding="utf-8-sig")
+    parsed = _parse_and_validate_compact_repair_transport(
+        report_text=report_text,
+        capture_source=raw_capture.source,
+        job_id=job_id,
+        run_id=run_id,
+        pass_id=pass_id,
+        parent_pass_id=parent_pass_id,
+    )
+    return (writer or AtomicCaptureWriter()).finalize(
+        pass_root,
+        identity=identity,
+        raw_capture=raw_capture,
+        dossier_override=dict(parsed.payload),
+    ).receipt
 
 
 def _load_leakage_manifest(root: Path) -> OldAnswerLeakageManifest:
@@ -1043,7 +1189,20 @@ def _followup_context(
             "question_progress_hashes": question_progress_hashes,
         }
     )
+    prompt_question_state = (
+        [
+            _compact_saturation_audit_question_state(row)
+            for row in unresolved
+        ]
+        if pass_name == "SATURATION_AUDIT"
+        else unresolved
+    )
     return {
+        "question_state_schema_version": (
+            "e2r_saturation_audit_question_digest_v1"
+            if pass_name == "SATURATION_AUDIT"
+            else "e2r_followup_question_state_v1"
+        ),
         "latest_dossier_digest": {
             "schema_version": dossier.get("schema_version"),
             "dossier_hash": canonical_hash(dossier),
@@ -1065,7 +1224,7 @@ def _followup_context(
                 saturation.accepted_lineage_roster_hash
             ),
         },
-        "unresolved_question_state": unresolved,
+        "unresolved_question_state": prompt_question_state,
         "pass_inputs": {
             "route_reason": (
                 "DETERMINISTIC_FULL_THESIS_SATURATION_AUDIT"
@@ -1085,6 +1244,85 @@ def _followup_context(
             "score_authority": False,
             "stage_authority": False,
         },
+    }
+
+
+def _compact_saturation_audit_question_state(
+    row: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Remove append-only route repetition from a no-new-facts audit prompt."""
+
+    route_progress = dict(row.get("route_progress_state") or {})
+    latest_outcomes = tuple(route_progress.get("latest_route_outcomes") or ())
+    outcome_counts: dict[tuple[str, str, bool], int] = {}
+    for outcome in latest_outcomes:
+        key = (
+            str(outcome.get("provider_status") or ""),
+            str(outcome.get("parser_status") or ""),
+            outcome.get("no_new_route_confirmed") is True,
+        )
+        outcome_counts[key] = outcome_counts.get(key, 0) + 1
+    route_summary = {
+        "route_progress_hash": canonical_hash(route_progress),
+        "route_signature_count": len(
+            tuple(route_progress.get("route_signatures") or ())
+        ),
+        "latest_outcome_count": len(latest_outcomes),
+        "latest_outcome_status_counts": [
+            {
+                "provider_status": key[0],
+                "parser_status": key[1],
+                "no_new_route_confirmed": key[2],
+                "count": count,
+            }
+            for key, count in sorted(outcome_counts.items())
+        ],
+        "unknown_linked_route_reference": route_progress.get(
+            "unknown_linked_route_reference"
+        ),
+        "attempted_source_roles": list(
+            route_progress.get("attempted_source_roles") or ()
+        ),
+        "adequate": route_progress.get("adequate"),
+        "official_route_attempted": route_progress.get(
+            "official_route_attempted"
+        ),
+        "distinct_route_count": route_progress.get("distinct_route_count"),
+        "independent_no_new_route_confirmation_count": route_progress.get(
+            "independent_no_new_route_confirmation_count"
+        ),
+        "provider_parser_normal": route_progress.get(
+            "provider_parser_normal"
+        ),
+        "semantic_fixpoint": route_progress.get("semantic_fixpoint"),
+        "failure_codes": list(route_progress.get("failure_codes") or ()),
+    }
+    return {
+        "question_family_id": row.get("question_family_id"),
+        "reported_status": row.get("reported_status"),
+        "availability_class": row.get("availability_class"),
+        "closure_reason": row.get("closure_reason"),
+        "deterministic_status": row.get("deterministic_status"),
+        "gap_class": row.get("gap_class"),
+        "failure_codes": list(row.get("failure_codes") or ()),
+        "verified_linked_fact_ids": list(
+            row.get("verified_linked_fact_ids") or ()
+        ),
+        "linked_source_lineage_ids": list(
+            row.get("linked_source_lineage_ids") or ()
+        ),
+        "missing_core_source_roles": list(
+            row.get("missing_core_source_roles") or ()
+        ),
+        "missing_corroboration_source_roles": list(
+            row.get("missing_corroboration_source_roles") or ()
+        ),
+        "verified_source_roles": list(
+            row.get("verified_source_roles") or ()
+        ),
+        "deterministic_terminal": row.get("deterministic_terminal"),
+        "deterministic_ready": row.get("deterministic_ready"),
+        "route_progress_summary": route_summary,
     }
 
 

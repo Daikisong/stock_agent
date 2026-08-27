@@ -12,10 +12,14 @@ from e2r.pro_first.approval import ProApprovalService
 from e2r.pro_first.browser.chatgpt_adapter import PlaywrightChatGPTWebAdapter
 from e2r.pro_first.browser.mock_chatgpt_app import MockChatGPTServer
 from e2r.pro_first.browser.protocol import BrowserCaptureRequest
+from e2r.pro_first.capture.atomic_capture import AtomicCaptureWriter, CaptureIdentity
 from e2r.pro_first.fresh_session import (
     FreshSessionBoundaryService,
     FreshSessionOrchestratorV3,
     OldAnswerLeakageManifest,
+)
+from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
+    _finalize_compact_repair_capture,
 )
 from e2r.pro_first.job_store import ProFirstJobStore
 from e2r.pro_first.models import JobStatus, ResearchMode, ScanWindow
@@ -182,13 +186,14 @@ class ProFirstV21FreshBrowserE2ETest(unittest.IsolatedAsyncioTestCase):
         )
         self.assertTrue(repair_result.structurally_complete)
         self.assertTrue(repair_result.has_repair_delta_marker)
+        repair_pass_root = self.root / "repair-pass"
         capture = await adapter.capture_result(
             BrowserCaptureRequest(
                 job_id=self.built.job.job_id,
                 run_id=self.built.packet_payload["run_id"],
                 expected_filename="compact_repair_delta.md",
                 expected_report_hash=repair_result.report_hash,
-                staging_directory=self.root / "repair-capture",
+                staging_directory=repair_pass_root / "capture/.staging",
             )
         )
         self.assertEqual(capture.source, "DIRECT_REPORT_DOM_NORMALIZED")
@@ -199,6 +204,38 @@ class ProFirstV21FreshBrowserE2ETest(unittest.IsolatedAsyncioTestCase):
         self.assertIn(
             "E2R_REPAIR_DELTA_JSON_BEGIN",
             capture.report_md_part_path.read_text(encoding="utf-8"),
+        )
+        capture_receipt = _finalize_compact_repair_capture(
+            pass_root=repair_pass_root,
+            raw_capture=capture,
+            identity=CaptureIdentity(
+                job_id=self.built.job.job_id,
+                run_id=self.built.packet_payload["run_id"],
+                target_id=self.built.job.symbol,
+                as_of_date=self.built.job.as_of_date,
+                packet_hash=str(self.built.job.packet_hash or ""),
+                prompt_hash=repair_plan.prompt_hash,
+                conversation_id=conversation_id,
+                capture_mode="FRESH_V3_REPAIR_E2E",
+            ),
+            job_id=self.built.job.job_id,
+            run_id=self.built.packet_payload["run_id"],
+            pass_id=repair_plan.research_pass.pass_id,
+            parent_pass_id=repair_plan.research_pass.parent_pass_id or "",
+            writer=AtomicCaptureWriter(now=lambda: self.now),
+        )
+        persisted_repair = json.loads(
+            (repair_pass_root / capture_receipt.dossier_json_path).read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(
+            persisted_repair["schema_version"],
+            "e2r_pro_repair_delta_v3",
+        )
+        self.assertEqual(
+            persisted_repair["research_pass_id"],
+            repair_plan.research_pass.pass_id,
         )
         self.orchestrator.complete_followup(
             repair_plan.research_pass.pass_id,

@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-27 C06 pass 12 병합·재검문 accepted 50 / pass 13 같은 Pro 대화에서 실행 중`
+기준 시각: `2026-08-27 C06 pass 22 병합·재검문 accepted 66 / pass 23 같은 Pro 대화에서 실행 중`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -43,12 +43,142 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             IN_PROGRESS (C06 pass 13, C17/C28 tail 대기)
-P10 final CI/audit                        IN_PROGRESS (local 7,738 PASS, 1eaa4260 GitHub CI 2/2 SUCCESS)
+P9 live multi-pass saturation             IN_PROGRESS (C06 pass 23, C17/C28 tail 대기)
+P10 final CI/audit                        IN_PROGRESS (최근 pushed 59fed6fa, 현재 수정은 아직 미커밋)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
 `PRO_FIRST_V2_1_OPERATIONAL_RESEARCH_READY`를 선언하지 않는다.
+
+## P12 — Pass 17 fail-closed 수리와 실제 포화도 재개
+
+### 화면 JSON의 의미
+
+ChatGPT 화면의 `ResearchDossierV3_SKHynix_000660_asof_2026-08-23.json`은 정상적으로
+다운로드·capture된 응답이다. 따라서 이 시점의 문제는 “파일을 못 받음”이 아니었다.
+
+```text
+ChatGPT Pro 응답 JSON 다운로드
+→ 같은 assistant turn·conversation에 결박
+→ dossier 구조 검증
+→ source-backed fact를 로컬 verifier로 재검문
+→ 통과한 현재 근거만 saturation 질문에 연결
+```
+
+쉬운 예로 택배 상자는 이미 도착했다. 후속 작업은 택배를 다시 주문하는 것이 아니라 상자
+안의 증거가 `as_of_date`, 발행 주체, 인용문, URL 계보를 통과하는지 확인하는 단계다.
+
+### Pass 17 compact repair 수리
+
+Pass 17은 파일 다운로드가 아니라 같은 대화의 화면에 직접 표시된 compact repair JSON이었다.
+화면에서 확인한 86,263바이트 응답을 별도 재전송 없이 capture했다.
+
+```text
+pass                 PROPASS-e28bda224af4e7ceb393f04a
+submit_count         1
+automatic resubmit   0
+raw repair actions   48
+withdraw             40
+replacement verify   8
+accepted             6
+failed               2
+verification query   0
+verification search  0
+Pro resubmit         0
+```
+
+전송 형식 정규화는 진단용 `fetched_excerpt`가 candidate quote와 다르다는 이유만으로 반려하지
+않고, source URL 중복을 제거하고, 실제 source가 바뀐 correction을 replacement로 승격한다.
+단, issuer scope가 다르거나 로컬 재검문에 실패한 replacement는 원래 fact를 살려 두지 않고
+fail-closed 철회한다.
+
+완료된 Pass 17에도 이 규칙을 append-only로 적용했다.
+
+```text
+revision                         2
+facts before / after             71 / 69
+successful replacement retained 6
+failed replacement withdrawn    2
+terminal question restored       17
+effective dossier hash           42a560ae54ea1e61926c3e5149944b11f1e530d4273578ba0c536867b1ab2a82
+```
+
+### 포화도 판정의 로컬 오류 2건
+
+첫째, 과거에 정상 검문됐지만 지금은 `HISTORICAL_ONLY` 또는 `SUPERSEDED`인 fact를 현재
+질문의 verifier 수리 대상으로 다시 열던 오류를 고쳤다. 이런 fact는 현재 점수 근거로 쓰지
+않지만, 단지 과거 근거라는 이유만으로 새 Pro 수리를 만들지도 않는다. 현재 근거가 하나도
+없다면 기존처럼 질문 자체는 닫히지 않는다.
+
+둘째, 이유가 명시된 `NOT_APPLICABLE_WITH_REASON` 질문에 남아 있던 stale source-role 표기가
+질문을 다시 여는 오류를 고쳤다. 일반 fact-backed 질문의 거짓 source-role 주장은 계속
+차단한다.
+
+### SATURATION_AUDIT 100k 입력 경계
+
+28개 질문에 append-only route 전체를 그대로 반복해 넣어 감사 prompt가 248,906자로 커지던
+문제를 해결했다. SATURATION_AUDIT에만 의미 보존 digest를 쓰며, 일반 gap closure 입력은
+원래 상세 상태를 유지한다.
+
+```text
+before context chars       248,906
+before question state      180,118
+after context chars         85,293
+after question state        57,637
+question count                  28
+raw route progress hash     보존
+score/stage authority       없음
+```
+
+예를 들어 “같은 길을 40번 확인한 route ID 40개”를 모두 다시 쓰는 대신 “40회 확인, 성공/실패
+요약, 전체 목록 hash”를 보낸다. 의미가 바뀌면 hash도 바뀌므로 중복 방지 경계는 유지된다.
+
+### 같은 Pro 대화의 실제 후속 실행
+
+아래 pass는 새 대화나 새 세션이 아니라 기존 conversation
+`6a8db0ad-8ed0-83e8-888e-dce26c950343`의 exactly-once 후속 실행이다.
+
+```text
+Pass 18 PUBLIC_GAP_CLOSURE  facts +0 / routes +6 / accepted 57
+Pass 19 SATURATION_AUDIT    facts +0 / routes +0 / 질문 5개 재개방
+Pass 20 PUBLIC_GAP_CLOSURE  facts +4 / routes +8 / accepted 61
+Pass 21 PUBLIC_GAP_CLOSURE  facts +4 / routes +8 / accepted 63 (검문 통과 +2)
+Pass 22 PUBLIC_GAP_CLOSURE  facts +3 / routes +7 / accepted 66 (검문 통과 +3)
+Pass 23 PUBLIC_GAP_CLOSURE  현재 RESEARCH_RUNNING / submit_count 1
+```
+
+Pass 23 직전 deterministic 상태:
+
+```text
+mandatory questions                28
+nonterminal                         3
+public material gap                 2
+source linkage incomplete           1
+verifier repair pending              1
+provider/parser core pending         0
+lifecycle hard break pending         0
+accepted facts                      66
+```
+
+Pass 20~22는 accepted fact와 남은 gap이 실제로 변했으므로 동일 prompt 무한 재전송이 아니다.
+progress hash가 같고 의미 진전이 없으면 기존 dedup 경계가 새 전송을 막는다.
+
+현재 코드 검증:
+
+```text
+수정 직접 회귀       90/90 PASS
+전체 unittest        7,754 PASS / failure·error 0 / skipped 38
+compileall           PASS
+git diff --check     PASS
+Pro-first static     PASS / critical 0
+Pro-first V2 static  PASS / critical 0
+fresh efficiency     PASS / critical 0
+production static    PASS / critical 0
+```
+
+기계 판독 영수증은
+`p12_pass17_fail_closed_and_saturation_resume_receipt.json`에 기록했다. Pass 23과 최종
+full-thesis가 아직 끝나지 않았으므로 이 영수증은 `completion_claimed=false`다.
 
 ## P7 최종 CI 봉인
 

@@ -17,7 +17,10 @@ from e2r.pro_first.repair import (
     RepairDeltaV3ParseError,
     RepairDeltaV3Parser,
     RepairDeltaV3ValidationError,
+    RepairDeltaV3Validator,
     apply_repair_delta_v3,
+    normalize_repair_delta_v3_transport,
+    reconcile_completed_repair_fail_closed,
 )
 from e2r.pro_first.verification import ProSourceVerifier
 from e2r.research.page_fetcher import FetchResult
@@ -101,6 +104,25 @@ class ProFirstV21CompactRepairV3Test(unittest.TestCase):
         )
         with self.assertRaises(RepairDeltaV3ParseError):
             RepairDeltaV3Parser().parse_text(text + "\n" + text)
+
+    def test_parser_removes_only_visible_dom_json_language_label(self) -> None:
+        delta = self._withdraw_delta()
+        text = (
+            "E2R_REPAIR_DELTA_JSON_BEGIN\nJSON\n"
+            + json.dumps(delta, ensure_ascii=False)
+            + "\nE2R_REPAIR_DELTA_JSON_END"
+        )
+        parsed = RepairDeltaV3Parser().parse_text(text)
+        self.assertEqual(parsed.payload, delta)
+        self.assertEqual(
+            parsed.parser_operations,
+            (
+                "EXTRACT_REPAIR_DELTA_SENTINEL_BLOCK",
+                "REMOVE_STANDALONE_JSON_LANGUAGE_LABEL",
+            ),
+        )
+        with self.assertRaises(RepairDeltaV3ParseError):
+            RepairDeltaV3Parser().parse_text("JSON\n[]")
 
     def test_prompt_groups_same_source_root_cause_and_question_once(self) -> None:
         dossier = self._dossier()
@@ -323,6 +345,76 @@ class ProFirstV21CompactRepairV3Test(unittest.TestCase):
         self.assertEqual(lineage["fact_ids"], ["FACT-REPLACEMENT"])
         self.assertTrue(lineage["independence_group_id"].startswith("SLGROUP-"))
 
+    def test_transport_normalizer_binds_source_relabels_and_adds_pending_route(
+        self,
+    ) -> None:
+        dossier = self._dossier()
+        compiled = self._compile(dossier=dossier)
+        delta = self._replace_delta()
+        action = delta["repair_actions"][0]
+        action["action"] = "NARROW"
+        action["replacement_source_document"] = None
+        action["fetched_excerpt"] = "Pro가 다시 고른 비권위 진단 excerpt"
+        delta["new_route_receipts"] = []
+
+        normalized, receipt = normalize_repair_delta_v3_transport(
+            repair_delta=delta,
+            dossier=dossier,
+            compiled_prompt=compiled,
+            performed_at="2026-08-22T03:04:05Z",
+        )
+
+        normalized_action = normalized["repair_actions"][0]
+        self.assertEqual(normalized_action["action"], "REPLACE")
+        self.assertEqual(
+            normalized_action["replacement_source_document"][
+                "source_document_id"
+            ],
+            "SRC-TWO",
+        )
+        self.assertEqual(
+            normalized_action["replacement_fact"],
+            action["replacement_fact"],
+        )
+        route = normalized["new_route_receipts"][0]
+        self.assertEqual(route["provider_status"], "PROVIDER_PENDING")
+        self.assertEqual(route["accepted_fact_ids"], ["FACT-REPLACEMENT"])
+        self.assertEqual(receipt["replacement_semantic_field_changed_count"], 0)
+        RepairDeltaV3Validator().validate(
+            normalized,
+            dossier=dossier,
+            compiled_prompt=compiled,
+        )
+
+    def test_transport_normalizer_withdraws_source_scope_mismatch(self) -> None:
+        dossier = self._dossier()
+        compiled = self._compile(dossier=dossier)
+        delta = self._replace_delta()
+        delta["repair_actions"][0]["replacement_fact"]["issuer_scoped"] = False
+        delta["new_route_receipts"] = []
+
+        normalized, receipt = normalize_repair_delta_v3_transport(
+            repair_delta=delta,
+            dossier=dossier,
+            compiled_prompt=compiled,
+            performed_at="2026-08-22T03:04:05Z",
+        )
+
+        action = normalized["repair_actions"][0]
+        self.assertEqual(action["action"], "WITHDRAW")
+        self.assertIsNone(action["replacement_fact"])
+        self.assertEqual(normalized["new_source_documents"], [])
+        self.assertEqual(normalized["new_route_receipts"], [])
+        self.assertEqual(
+            receipt["scope_mismatched_replacement_withdrawn_count"],
+            1,
+        )
+        RepairDeltaV3Validator().validate(
+            normalized,
+            dossier=dossier,
+            compiled_prompt=compiled,
+        )
+
     def test_delta_cannot_escape_candidate_or_question_scope(self) -> None:
         dossier = self._dossier()
         compiled = self._compile(dossier=dossier)
@@ -449,6 +541,115 @@ class ProFirstV21CompactRepairV3Test(unittest.TestCase):
             (run.repair_root / "compact_repair_receipt.json").is_file()
         )
         self.assertEqual(len(fetcher.calls), 1)
+
+    def test_failed_replacement_is_withdrawn_without_second_repair(self) -> None:
+        dossier = self._dossier()
+        compiled = self._compile(dossier=dossier)
+        delta = self._narrow_delta()
+        delta["repair_actions"][0]["replacement_fact"][
+            "supporting_excerpt"
+        ] = "공개 원문에 없는 교체 문구"
+        service = CompactRepairServiceV3(
+            verifier=ProSourceVerifier(
+                page_fetcher=_CountingFetcher({self.url: self.document})
+            )
+        )
+
+        run = service.apply_and_reverify(
+            job=self.job,
+            job_root=self.job_root,
+            dossier=dossier,
+            repair_delta=delta,
+            compiled_prompt=compiled,
+            prior_verification_rows=[
+                {"dossier_fact_id": "FACT-ACCEPTED", "status": "ACCEPTED_CURRENT"},
+                {
+                    "dossier_fact_id": "FACT-REJECTED",
+                    "status": "REJECTED_QUOTE_MISMATCH",
+                },
+            ],
+            response_hash="9" * 64,
+        )
+
+        self.assertTrue(run.receipt["operational_ready_allowed"])
+        self.assertEqual(
+            run.receipt["failed_replacement_withdrawn_candidate_ids"],
+            ["FACT-REPLACEMENT"],
+        )
+        self.assertEqual(
+            run.receipt["unresolved_replacement_candidate_ids"],
+            [],
+        )
+        fact_ids = {
+            row["dossier_fact_id"]
+            for row in run.effective_dossier["material_facts"]
+        }
+        self.assertEqual(fact_ids, {"FACT-ACCEPTED"})
+        self.assertEqual(
+            run.effective_dossier["question_family_results"][0]["status"],
+            "SUPPORTED_SCORING",
+        )
+
+    def test_completed_old_repair_is_reconciled_append_only(self) -> None:
+        parent = self._dossier()
+        compiled = self._compile(dossier=parent)
+        delta = self._narrow_delta()
+        delta["new_route_receipts"][0]["route_receipt_id"] = (
+            "PROREPAIRROUTE-TEST-COMPLETED"
+        )
+        application = apply_repair_delta_v3(
+            dossier=parent,
+            repair_delta=delta,
+            compiled_prompt=compiled,
+            prior_accepted_candidate_ids=("FACT-ACCEPTED",),
+            prompt_hash=compiled.prompt_hash,
+            response_hash="8" * 64,
+        )
+        repaired = deepcopy(dict(application.effective_dossier))
+        repair_route = next(
+            row
+            for row in repaired["search_route_receipts"]
+            if row["route_receipt_id"].startswith("PROREPAIRROUTE-")
+        )
+        repair_route["provider_status"] = "FAILED"
+        repair_route["no_new_route_reason"] = (
+            "Deterministic local source re-verification did not accept the fact"
+        )
+
+        effective, receipt = reconcile_completed_repair_fail_closed(
+            repaired_dossier=repaired,
+            parent_dossier=parent,
+            repair_delta=delta,
+            failed_replacement_ids=("FACT-REPLACEMENT",),
+        )
+
+        self.assertNotEqual(
+            receipt["before_effective_dossier_hash"],
+            receipt["after_effective_dossier_hash"],
+        )
+        self.assertEqual(receipt["new_query_count"], 0)
+        self.assertEqual(receipt["new_pro_submit_count"], 0)
+        self.assertEqual(
+            receipt["failed_replacement_ids"],
+            ["FACT-REPLACEMENT"],
+        )
+        self.assertEqual(
+            {
+                row["dossier_fact_id"]
+                for row in effective["material_facts"]
+            },
+            {"FACT-ACCEPTED"},
+        )
+        self.assertEqual(
+            effective["question_family_results"][0]["status"],
+            "SUPPORTED_SCORING",
+        )
+        self.assertFalse(
+            any(
+                row["route_receipt_id"].startswith("PROREPAIRROUTE-")
+                for row in effective["search_route_receipts"]
+            )
+        )
 
     def _compile(
         self,

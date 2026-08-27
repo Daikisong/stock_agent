@@ -54,6 +54,17 @@ class RepairDeltaV3Parser:
                 raise RepairDeltaV3ParseError("repair delta fence must be JSON")
             normalized = "\n".join(lines[1:-1]).strip()
             operations.append("REMOVE_JSON_CODE_FENCE")
+        # ChatGPT's visible code-block DOM can omit the backticks while
+        # retaining the standalone language badge as the first text line.
+        # Remove only that exact renderer label when a JSON object follows.
+        lines = normalized.strip().splitlines()
+        if (
+            len(lines) >= 2
+            and lines[0].strip().casefold() == "json"
+            and lines[1].lstrip().startswith("{")
+        ):
+            normalized = "\n".join(lines[1:]).strip()
+            operations.append("REMOVE_STANDALONE_JSON_LANGUAGE_LABEL")
         try:
             payload = json.loads(normalized)
         except json.JSONDecodeError as error:

@@ -497,6 +497,56 @@ class ProFirstV2SaturationTest(unittest.TestCase):
             "NEEDS_VERIFIER_REPAIR",
         )
 
+    def test_noncurrent_audit_fact_does_not_reopen_terminal_question(self) -> None:
+        for lifecycle in ("HISTORICAL_ONLY", "SUPERSEDED"):
+            with self.subTest(lifecycle=lifecycle):
+                dossier = deepcopy(self.dossier)
+                result = dossier["question_family_results"][0]
+                accepted_id = result["support_fact_ids"][0]
+                inactive_id = f"PROFACT-NONCURRENT-{lifecycle}"
+                inactive = deepcopy(
+                    next(
+                        row
+                        for row in dossier["material_facts"]
+                        if row["dossier_fact_id"] == accepted_id
+                    )
+                )
+                inactive["dossier_fact_id"] = inactive_id
+                inactive["current_status"] = lifecycle
+                dossier["material_facts"].append(inactive)
+                result["support_fact_ids"].append(inactive_id)
+
+                receipt = self._adjudicate(dossier)
+                decision = _decision(receipt, result["question_family_id"])
+
+                self.assertNotIn(
+                    inactive_id,
+                    decision.verified_linked_fact_ids,
+                )
+                self.assertNotIn(
+                    "QUESTION_REFERENCES_UNVERIFIED_FACT",
+                    decision.failure_codes,
+                )
+                self.assertNotIn(
+                    decision.question_family_id,
+                    receipt.verifier_repair_pending_ids,
+                )
+                self.assertTrue(receipt.research_saturation_valid)
+
+                result["support_fact_ids"] = [inactive_id]
+                historical_only_receipt = self._adjudicate(dossier)
+                historical_only_decision = _decision(
+                    historical_only_receipt,
+                    result["question_family_id"],
+                )
+                self.assertIn(
+                    "TERMINAL_EVIDENCE_STATUS_HAS_NO_VERIFIED_FACT",
+                    historical_only_decision.failure_codes,
+                )
+                self.assertFalse(
+                    historical_only_receipt.research_saturation_valid
+                )
+
     def test_tracked_saturation_audit_matches_current_engine(self) -> None:
         receipt = self._adjudicate()
         expected = dict(compile_saturation_audit(receipt))
@@ -801,6 +851,49 @@ class ProFirstV2SaturationTest(unittest.TestCase):
         self.assertTrue(decision.terminal)
         self.assertEqual(decision.gap_class, "NO_GAP")
         self.assertFalse(decision.verified_linked_fact_ids)
+        self.assertTrue(receipt.research_saturation_valid)
+
+    def test_not_applicable_ignores_stale_satisfied_role_claims(self) -> None:
+        dossier = deepcopy(self.dossier)
+        verified = set(self.verified)
+        result = dossier["question_family_results"][0]
+        question_id = result["question_family_id"]
+        question = self._contract_question(question_id)
+        removed_fact_ids = set(result["support_fact_ids"])
+        dossier["material_facts"] = [
+            row
+            for row in dossier["material_facts"]
+            if row["dossier_fact_id"] not in removed_fact_ids
+        ]
+        verified.difference_update(removed_fact_ids)
+        result.update(
+            {
+                "status": "NOT_APPLICABLE_WITH_REASON",
+                "support_fact_ids": [],
+                "counter_fact_ids": [],
+                "resolution_fact_ids": [],
+                "required_source_roles_satisfied": list(
+                    question["required_source_roles"]
+                ),
+                "availability_class": "NOT_APPLICABLE",
+                "closure_reason": (
+                    "검토 대상인 선행 문제 자체가 없어 해당 질문을 적용하지 않는다."
+                ),
+            }
+        )
+
+        receipt = self._adjudicate(
+            dossier,
+            verified_fact_ids=verified,
+        )
+        decision = _decision(receipt, question_id)
+
+        self.assertNotIn(
+            "PRO_CLAIMED_SOURCE_ROLE_UNVERIFIED",
+            decision.failure_codes,
+        )
+        self.assertTrue(decision.terminal)
+        self.assertEqual(decision.gap_class, "NO_GAP")
         self.assertTrue(receipt.research_saturation_valid)
 
     def test_question_missing_blocks_saturation(self) -> None:

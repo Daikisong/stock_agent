@@ -26,6 +26,7 @@ from .delta_v3 import (
     RepairDeltaV3ValidationError,
     RepairDeltaV3Validator,
     apply_repair_delta_v3,
+    normalize_repair_delta_v3_transport,
 )
 from .models_v3 import (
     CompactRepairGroupV3,
@@ -43,7 +44,11 @@ from .parser_v3 import (
     RepairDeltaV3Parser,
 )
 from .prompt_v3 import CompactRepairPromptCompilerV3
-from .service_v3 import CompactRepairRunV3, CompactRepairServiceV3
+from .service_v3 import (
+    CompactRepairRunV3,
+    CompactRepairServiceV3,
+    reconcile_completed_repair_fail_closed,
+)
 
 __all__ = [
     "REJECTION_CATEGORIES",
@@ -74,6 +79,8 @@ __all__ = [
     "RepairDeltaV3Validator",
     "apply_repair_delta",
     "apply_repair_delta_v3",
+    "normalize_repair_delta_v3_transport",
+    "reconcile_completed_repair_fail_closed",
     "compile_rejection_packets",
     "compile_verifier_repair_contract_audit",
     "derive_repair_delta_from_dossier_response",

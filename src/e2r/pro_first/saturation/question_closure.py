@@ -26,6 +26,10 @@ _FACT_BACKED_STATUSES = frozenset(
     }
 )
 
+_NONCURRENT_LIFECYCLE_STATUSES = frozenset(
+    {"HISTORICAL_ONLY", "SUPERSEDED"}
+)
+
 
 def compile_question_closure_decision(
     *,
@@ -152,7 +156,22 @@ def compile_question_closure_decision(
     referenced_unknown = set(linked_fact_ids) - set(facts_by_id)
     if referenced_unknown:
         failures.append("QUESTION_REFERENCES_UNKNOWN_FACT")
-    unverified = set(linked_fact_ids) - verified_fact_ids
+    noncurrent_lifecycle_fact_ids = {
+        fact_id
+        for fact_id in linked_fact_ids
+        if str((facts_by_id.get(fact_id) or {}).get("current_status") or "")
+        in _NONCURRENT_LIFECYCLE_STATUSES
+    }
+    # Historical/superseded rows remain linked for append-only audit history,
+    # but the verifier intentionally excludes them from current scoring
+    # evidence.  They must not be mistaken for repairable current facts.  A
+    # fact-backed terminal answer still needs at least one verified current
+    # fact below, so this cannot promote historical evidence into scoring.
+    unverified = (
+        set(linked_fact_ids)
+        - verified_fact_ids
+        - noncurrent_lifecycle_fact_ids
+    )
     if unverified:
         failures.append("QUESTION_REFERENCES_UNVERIFIED_FACT")
     if any(value not in active_lineage_ids for value in linked_lineages):
@@ -163,7 +182,10 @@ def compile_question_closure_decision(
         str(value)
         for value in question_result.get("required_source_roles_satisfied") or ()
     }
-    if not pro_claimed_satisfied.issubset(verified_roles):
+    if (
+        status != "NOT_APPLICABLE_WITH_REASON"
+        and not pro_claimed_satisfied.issubset(verified_roles)
+    ):
         failures.append("PRO_CLAIMED_SOURCE_ROLE_UNVERIFIED")
     fact_backed = status in _FACT_BACKED_STATUSES
     if fact_backed and not verified_linked:

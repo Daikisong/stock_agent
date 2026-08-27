@@ -1142,6 +1142,85 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             (question_id,),
         )
 
+    def test_saturation_audit_compacts_append_only_route_history(self) -> None:
+        question_ids = self.built.prompt.mandatory_question_ids
+        dossier = self._tail_dossier(*question_ids)
+        decisions = []
+        for question_index, question_id in enumerate(question_ids):
+            route_ids = []
+            for route_index in range(40):
+                route_id = f"ROUTE-AUDIT-{question_index}-{route_index}"
+                route_ids.append(route_id)
+                dossier["search_route_receipts"].append(
+                    {
+                        "route_receipt_id": route_id,
+                        "pass_id": f"PROPASS-AUDIT-{route_index}",
+                        "source_role_id": "ISSUER_OFFICIAL",
+                        "query_text": f"audit query {question_index} {route_index}",
+                        "opened_source_urls": [
+                            f"https://issuer.example/audit/{question_index}/{route_index}"
+                        ],
+                        "provider_status": "SUCCESS",
+                        "parser_status": "SUCCESS",
+                        "accepted_fact_ids": [f"FACT-{question_index + 1}"],
+                        "no_new_route_reason": "no newer public route",
+                    }
+                )
+            dossier["question_family_results"][question_index][
+                "search_route_receipt_ids"
+            ] = route_ids
+            base = self._question_decision(
+                question_id,
+                linked_fact_id=f"FACT-{question_index + 1}",
+            )
+            payload = base.to_dict()
+            payload["route_adequacy"]["linked_route_receipt_ids"] = route_ids
+            decisions.append(
+                SimpleNamespace(
+                    question_family_id=question_id,
+                    materiality="CORE_SCORE",
+                    status="SUPPORTED_SCORING",
+                    to_dict=lambda payload=payload: dict(payload),
+                )
+            )
+
+        context = _followup_context(
+            dossier=dossier,
+            saturation=self._tail_saturation(
+                tuple(decisions),
+                fact_hash="5" * 64,
+            ),
+            accepted_fact_ids=tuple(
+                f"FACT-{index + 1}" for index in range(len(question_ids))
+            ),
+            question_ids=question_ids,
+            pass_name="SATURATION_AUDIT",
+        )
+        serialized = json.dumps(
+            context,
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        )
+        first = context["unresolved_question_state"][0]
+
+        self.assertLess(len(serialized), 100_000)
+        self.assertEqual(
+            context["question_state_schema_version"],
+            "e2r_saturation_audit_question_digest_v1",
+        )
+        self.assertNotIn("search_route_receipt_ids", first)
+        self.assertNotIn("linked_route_receipt_ids", first)
+        self.assertNotIn("route_progress_state", first)
+        self.assertEqual(
+            first["route_progress_summary"]["route_signature_count"],
+            40,
+        )
+        self.assertEqual(
+            len(first["route_progress_summary"]["route_progress_hash"]),
+            64,
+        )
+
     async def test_running_legacy_pass_can_bind_progress_hashes_once(self) -> None:
         adapter = await self._prepare_and_approve(
             "fresh-conversation-progress-hash-migration"

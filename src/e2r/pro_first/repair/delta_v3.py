@@ -142,7 +142,6 @@ class RepairDeltaV3Validator:
                 "original_statement": prompt_candidate.get("original_statement"),
                 "source_document_id": prompt_candidate.get("source_document_id"),
                 "canonical_url": prompt_candidate.get("canonical_url"),
-                "fetched_excerpt": prompt_candidate.get("fetched_excerpt"),
                 "allowed_action": REPAIR_ACTION_CONTRACT,
             }
             for key, expected in immutable_echo.items():
@@ -271,6 +270,335 @@ class RepairDeltaV3Validator:
             raise RepairDeltaV3ValidationError(
                 "every replacement fact requires a current-pass route receipt"
             )
+
+
+def normalize_repair_delta_v3_transport(
+    *,
+    repair_delta: Mapping[str, Any],
+    dossier: Mapping[str, Any],
+    compiled_prompt: CompiledCompactRepairPromptV3,
+    performed_at: str,
+) -> tuple[Mapping[str, Any], Mapping[str, Any]]:
+    """Canonicalize bounded response-envelope omissions before validation.
+
+    The raw Pro response remains immutable in the browser capture.  This
+    normalizer never changes a replacement statement, excerpt, value, question
+    scope, source URL/content, or authority field.  It may canonicalize a new
+    source ID back to an existing document with the exact same canonical URL,
+    bind a declared new source to the action that already references it,
+    relabel a source-changing action as REPLACE, fail closed to WITHDRAW when a
+    proposed fact conflicts with the canonical source scope, and create a
+    pending local-reverification route when the response omitted that
+    redundant envelope row.
+    """
+
+    normalized = deepcopy(dict(repair_delta))
+    actions = tuple(normalized.get("repair_actions") or ())
+    action_ids = tuple(str(row.get("candidate_id") or "") for row in actions)
+    if len(action_ids) != len(set(action_ids)) or set(action_ids) != set(
+        compiled_prompt.candidate_ids
+    ):
+        raise RepairDeltaV3ValidationError(
+            "repair transport normalization requires the exact candidate roster"
+        )
+    prompt_candidates = {
+        str(row.get("candidate_id") or ""): row
+        for group in compiled_prompt.groups
+        for row in group.candidates
+    }
+    facts = _fact_map(dossier)
+    sources = {
+        str(row.get("source_document_id") or ""): row
+        for row in dossier.get("source_documents") or ()
+    }
+    existing_source_by_url = {
+        str(row.get("canonical_url") or ""): row
+        for row in sources.values()
+        if str(row.get("canonical_url") or "")
+    }
+    operations: list[Mapping[str, Any]] = []
+    source_id_remap: dict[str, str] = {}
+    canonical_new_source_rows: list[Mapping[str, Any]] = []
+    for source in normalized.get("new_source_documents") or ():
+        source_id = str(source.get("source_document_id") or "")
+        canonical_url = str(source.get("canonical_url") or "")
+        existing = existing_source_by_url.get(canonical_url)
+        if existing is None:
+            canonical_new_source_rows.append(source)
+            continue
+        existing_id = str(existing.get("source_document_id") or "")
+        source_id_remap[source_id] = existing_id
+        operations.append(
+            {
+                "operation": "DEDUPLICATE_DECLARED_SOURCE_BY_CANONICAL_URL",
+                "declared_source_document_id": source_id,
+                "canonical_source_document_id": existing_id,
+                "canonical_url_hash": canonical_hash(canonical_url),
+            }
+        )
+    normalized["new_source_documents"] = canonical_new_source_rows
+    new_sources = {
+        str(row.get("source_document_id") or ""): row
+        for row in canonical_new_source_rows
+    }
+    all_sources = {**sources, **new_sources}
+    questions = {
+        str(row.get("question_family_id") or ""): row
+        for row in dossier.get("question_family_results") or ()
+    }
+    existing_route_ids = {
+        str(row.get("route_receipt_id") or "")
+        for row in dossier.get("search_route_receipts") or ()
+    }
+    routes = list(normalized.get("new_route_receipts") or ())
+    for action in actions:
+        candidate_id = str(action.get("candidate_id") or "")
+        candidate = prompt_candidates.get(candidate_id)
+        original = facts.get(candidate_id)
+        if candidate is None or original is None:
+            raise RepairDeltaV3ValidationError(
+                "repair transport normalization encountered an unknown candidate"
+            )
+        for key, expected in (
+            ("question_family_ids", list(candidate.get("question_family_ids") or ())),
+            ("rejection_category", candidate.get("rejection_category")),
+            ("original_statement", candidate.get("original_statement")),
+            ("source_document_id", candidate.get("source_document_id")),
+            ("canonical_url", candidate.get("canonical_url")),
+            ("allowed_action", REPAIR_ACTION_CONTRACT),
+        ):
+            if action.get(key) != expected:
+                raise RepairDeltaV3ValidationError(
+                    "repair transport normalization refuses changed immutable "
+                    f"scope: {candidate_id}/{key}"
+                )
+        replacement = action.get("replacement_fact")
+        if not isinstance(replacement, Mapping):
+            continue
+        replacement_id = str(replacement.get("dossier_fact_id") or "")
+        source_id = str(replacement.get("source_document_id") or "")
+        canonical_source_id = source_id_remap.get(source_id)
+        if canonical_source_id is not None:
+            replacement["source_document_id"] = canonical_source_id
+            nested = action.get("replacement_source_document")
+            if isinstance(nested, Mapping) and str(
+                nested.get("source_document_id") or ""
+            ) == source_id:
+                action["replacement_source_document"] = None
+            operations.append(
+                {
+                    "operation": "REMAP_REPLACEMENT_TO_CANONICAL_SOURCE_ID",
+                    "candidate_id": candidate_id,
+                    "declared_source_document_id": source_id,
+                    "canonical_source_document_id": canonical_source_id,
+                }
+            )
+            source_id = canonical_source_id
+        source = all_sources.get(source_id)
+        if source is None:
+            raise RepairDeltaV3ValidationError(
+                "repair transport normalization cannot invent a missing source"
+            )
+        source_issuer_scoped = (source.get("target_scope") or {}).get(
+            "issuer_scoped"
+        )
+        if replacement.get("issuer_scoped") is not source_issuer_scoped:
+            action["action"] = "WITHDRAW"
+            action["replacement_fact"] = None
+            action["replacement_source_document"] = None
+            action["reason"] = (
+                "Deterministic source-scope validation rejected the proposed "
+                "replacement; the original candidate is withdrawn."
+            )
+            operations.append(
+                {
+                    "operation": "WITHDRAW_SCOPE_MISMATCHED_REPLACEMENT",
+                    "candidate_id": candidate_id,
+                    "replacement_id": replacement_id,
+                    "source_document_id": source_id,
+                }
+            )
+            continue
+        if source_id in new_sources and action.get("replacement_source_document") is None:
+            action["replacement_source_document"] = deepcopy(new_sources[source_id])
+            operations.append(
+                {
+                    "operation": "BIND_DECLARED_NEW_SOURCE_TO_ACTION",
+                    "candidate_id": candidate_id,
+                    "source_document_id": source_id,
+                }
+            )
+        if (
+            str(action.get("action") or "") in {"CORRECT", "NARROW"}
+            and source_id != str(original.get("source_document_id") or "")
+        ):
+            action["action"] = "REPLACE"
+            operations.append(
+                {
+                    "operation": "RELABEL_SOURCE_CHANGING_ACTION_AS_REPLACE",
+                    "candidate_id": candidate_id,
+                    "source_document_id": source_id,
+                }
+            )
+        already_covered = any(
+            replacement_id
+            in {str(value) for value in row.get("accepted_fact_ids") or ()}
+            for row in routes
+        )
+        if already_covered:
+            continue
+        replacement_questions = tuple(
+            sorted(str(value) for value in replacement.get("question_family_ids") or ())
+        )
+        question_id = next(
+            (value for value in replacement_questions if value in questions),
+            None,
+        )
+        source_roles = tuple(
+            sorted(str(value) for value in source.get("source_role_ids") or ())
+        )
+        canonical_url = str(source.get("canonical_url") or "")
+        if question_id is None or not source_roles or not canonical_url:
+            raise RepairDeltaV3ValidationError(
+                "repair transport normalization lacks route derivation inputs"
+            )
+        question = questions[question_id]
+        route_id = stable_id(
+            "PROREPAIRROUTE",
+            {
+                "pass_id": compiled_prompt.research_pass_id,
+                "candidate_id": candidate_id,
+                "replacement_id": replacement_id,
+                "source_document_id": source_id,
+                "question_family_id": question_id,
+            },
+        )
+        if route_id in existing_route_ids or any(
+            str(row.get("route_receipt_id") or "") == route_id for row in routes
+        ):
+            raise RepairDeltaV3ValidationError(
+                "derived compact repair route collides with an existing route"
+            )
+        unresolved_gaps = tuple(question.get("unresolved_gap_ids") or ())
+        routes.append(
+            {
+                "route_receipt_id": route_id,
+                "pass_id": compiled_prompt.research_pass_id,
+                "archetype_id": str(question.get("archetype_id") or ""),
+                "question_family_id": question_id,
+                "gap_id": str(unresolved_gaps[0]) if unresolved_gaps else None,
+                "source_role_id": source_roles[0],
+                "query_or_navigation_objective": (
+                    "Deterministic post-capture re-verification of Pro-declared "
+                    f"repair source for {candidate_id}"
+                ),
+                "query_text": None,
+                "result_count_seen": 1,
+                "opened_source_urls": [canonical_url],
+                "accepted_fact_ids": [replacement_id],
+                "rejected_candidate_ids": [],
+                "provider_status": "PROVIDER_PENDING",
+                "no_new_route_reason": (
+                    "Awaiting deterministic local source re-verification"
+                ),
+                "performed_at": performed_at,
+            }
+        )
+        operations.append(
+            {
+                "operation": "ADD_LOCAL_REVERIFICATION_PENDING_ROUTE",
+                "candidate_id": candidate_id,
+                "replacement_id": replacement_id,
+                "route_receipt_id": route_id,
+                "source_document_id": source_id,
+            }
+        )
+    active_replacement_ids = {
+        str((row.get("replacement_fact") or {}).get("dossier_fact_id") or "")
+        for row in actions
+        if isinstance(row.get("replacement_fact"), Mapping)
+    }
+    retained_routes: list[Mapping[str, Any]] = []
+    for route in routes:
+        accepted_before = tuple(
+            str(value) for value in route.get("accepted_fact_ids") or ()
+        )
+        accepted_after = tuple(
+            value for value in accepted_before if value in active_replacement_ids
+        )
+        if not accepted_after:
+            operations.append(
+                {
+                    "operation": "DROP_ROUTE_WITHOUT_ACTIVE_REPLACEMENT",
+                    "route_receipt_id": str(route.get("route_receipt_id") or ""),
+                }
+            )
+            continue
+        if accepted_after != accepted_before:
+            route["accepted_fact_ids"] = list(accepted_after)
+            operations.append(
+                {
+                    "operation": "REMOVE_WITHDRAWN_REPLACEMENT_FROM_ROUTE",
+                    "route_receipt_id": str(route.get("route_receipt_id") or ""),
+                }
+            )
+        retained_routes.append(route)
+    normalized["new_route_receipts"] = retained_routes
+    referenced_new_source_ids = {
+        str((row.get("replacement_fact") or {}).get("source_document_id") or "")
+        for row in actions
+        if isinstance(row.get("replacement_fact"), Mapping)
+    }
+    retained_new_sources: list[Mapping[str, Any]] = []
+    for source in normalized.get("new_source_documents") or ():
+        source_id = str(source.get("source_document_id") or "")
+        if source_id not in referenced_new_source_ids:
+            operations.append(
+                {
+                    "operation": "DROP_UNREFERENCED_DECLARED_SOURCE",
+                    "source_document_id": source_id,
+                }
+            )
+            continue
+        retained_new_sources.append(source)
+    normalized["new_source_documents"] = retained_new_sources
+    raw_hash = canonical_hash(repair_delta)
+    normalized_hash = canonical_hash(normalized)
+    receipt_payload = {
+        "schema_version": "e2r_repair_delta_v3_transport_normalization_v1",
+        "status": "BOUNDED_STRUCTURAL_NORMALIZATION",
+        "job_id": compiled_prompt.job_id,
+        "run_id": compiled_prompt.run_id,
+        "research_pass_id": compiled_prompt.research_pass_id,
+        "parent_pass_id": compiled_prompt.parent_pass_id,
+        "raw_delta_hash": raw_hash,
+        "normalized_delta_hash": normalized_hash,
+        "operation_count": len(operations),
+        "operations": operations,
+        "ignored_non_authority_response_fields": ["fetched_excerpt"],
+        "replacement_semantic_field_changed_count": 0,
+        "replacement_source_identity_canonicalized_count": sum(
+            1
+            for row in operations
+            if row.get("operation")
+            == "REMAP_REPLACEMENT_TO_CANONICAL_SOURCE_ID"
+        ),
+        "scope_mismatched_replacement_withdrawn_count": sum(
+            1
+            for row in operations
+            if row.get("operation")
+            == "WITHDRAW_SCOPE_MISMATCHED_REPLACEMENT"
+        ),
+        "question_scope_changed_count": 0,
+        "source_url_or_content_changed_count": 0,
+        "score_authority": False,
+        "stage_authority": False,
+    }
+    receipt = {
+        **receipt_payload,
+        "receipt_hash": canonical_hash(receipt_payload),
+    }
+    return normalized, receipt
 
 
 def apply_repair_delta_v3(
