@@ -831,36 +831,95 @@ class PlaywrightChatGPTWebAdapter:
         part_path = request.staging_directory / "pro_report.md.part"
         raw_part_path: Path | None = None
         transport_operations: tuple[str, ...] = ()
+        expected_basename = Path(request.expected_filename).name
+        if expected_basename != request.expected_filename:
+            raise BrowserUIIncompatible(
+                "primary report attachment filename must be one safe basename"
+            )
+        expected_suffix = Path(request.expected_filename).suffix.casefold()
+        if expected_suffix == ".json":
+            primary_candidates = await self._new_json_candidates(
+                assistant_turn_id=snapshot.assistant_turn_id,
+            )
+        elif expected_suffix == ".md":
+            primary_candidates = await self._new_md_candidates(
+                assistant_turn_id=snapshot.assistant_turn_id,
+            )
+        else:
+            raise BrowserUIIncompatible(
+                "primary report attachment must use a .md or .json filename"
+            )
         matching = [
             (key, locator)
-            for key, locator in await self._new_md_candidates()
+            for key, locator in primary_candidates
             if key.button_text.strip() == request.expected_filename
         ]
+        selected_filename = request.expected_filename
+        selected_suffix = expected_suffix
+        if not matching and expected_suffix == ".md":
+            current_json_candidates = await self._new_json_candidates(
+                assistant_turn_id=snapshot.assistant_turn_id,
+            )
+            if len(current_json_candidates) == 1:
+                matching = current_json_candidates
+                selected_filename = matching[0][0].button_text.strip()
+                selected_suffix = ".json"
         if matching:
             key, locator = matching[-1]
             download = await self._download_from_candidate(locator)
             suggested = download.suggested_filename
-            if suggested.strip() != request.expected_filename:
+            if suggested.strip() != selected_filename:
                 raise BrowserUIIncompatible(
-                    f"downloaded filename mismatch: expected {request.expected_filename}, got {suggested}"
+                    f"downloaded filename mismatch: expected {selected_filename}, got {suggested}"
                 )
             await download.save_as(str(part_path))
             if not part_path.is_file() or part_path.stat().st_size == 0:
-                raise BrowserUIIncompatible("Playwright download produced an empty MD file")
-            downloaded_text = part_path.read_text(encoding="utf-8-sig")
-            downloaded_normalization = normalize_visible_dossier_transport(
-                downloaded_text
-            )
-            if downloaded_normalization.applied:
-                raw_part_path = request.staging_directory / "pro_report.raw.md.part"
-                part_path.replace(raw_part_path)
-                part_path.write_bytes(
-                    downloaded_normalization.normalized_text.encode("utf-8")
+                raise BrowserUIIncompatible(
+                    "Playwright download produced an empty report attachment"
                 )
-                transport_operations = downloaded_normalization.operations
-                source = "DOWNLOAD_MD_NORMALIZED"
+            try:
+                downloaded_text = part_path.read_text(encoding="utf-8-sig")
+            except UnicodeDecodeError as error:
+                part_path.unlink(missing_ok=True)
+                raise BrowserUIIncompatible(
+                    "downloaded report attachment is not UTF-8 text"
+                ) from error
+            if selected_suffix == ".json":
+                try:
+                    downloaded_json = json.loads(downloaded_text)
+                except json.JSONDecodeError as error:
+                    part_path.unlink(missing_ok=True)
+                    raise BrowserUIIncompatible(
+                        "downloaded JSON report is not valid JSON"
+                    ) from error
+                if not isinstance(downloaded_json, dict):
+                    part_path.unlink(missing_ok=True)
+                    raise BrowserUIIncompatible(
+                        "downloaded JSON report must be a JSON object"
+                    )
+                if (
+                    str(downloaded_json.get("job_id") or "") != request.job_id
+                    or str(downloaded_json.get("run_id") or "") != request.run_id
+                ):
+                    part_path.unlink(missing_ok=True)
+                    raise BrowserUIIncompatible(
+                        "downloaded JSON report job/run identity differs from the capture request"
+                    )
+                source = "DOWNLOAD_JSON"
             else:
-                source = "DOWNLOAD_MD"
+                downloaded_normalization = normalize_visible_dossier_transport(
+                    downloaded_text
+                )
+                if downloaded_normalization.applied:
+                    raw_part_path = request.staging_directory / "pro_report.raw.md.part"
+                    part_path.replace(raw_part_path)
+                    part_path.write_bytes(
+                        downloaded_normalization.normalized_text.encode("utf-8")
+                    )
+                    transport_operations = downloaded_normalization.operations
+                    source = "DOWNLOAD_MD_NORMALIZED"
+                else:
+                    source = "DOWNLOAD_MD"
             downloaded_filename = suggested
             attachment_key = key
         else:
@@ -869,7 +928,9 @@ class PlaywrightChatGPTWebAdapter:
                 or snapshot.has_repair_delta_marker
                 or readable_override
             ):
-                raise BrowserUIIncompatible("no matching new MD and no complete direct report fallback")
+                raise BrowserUIIncompatible(
+                    "no matching new report attachment and no complete direct report fallback"
+                )
             part_path.write_bytes((snapshot.report_text + "\n").encode("utf-8"))
             if snapshot.transport_normalization_operations:
                 if snapshot.raw_report_text is None:
@@ -886,10 +947,12 @@ class PlaywrightChatGPTWebAdapter:
                 source = "DIRECT_REPORT_DOM"
             downloaded_filename = None
             attachment_key = None
-        expected_pdf = Path(request.expected_filename).with_suffix(".pdf").name
+        expected_pdf = Path(selected_filename).with_suffix(".pdf").name
         matching_pdf = [
             (key, locator)
-            for key, locator in await self._new_pdf_candidates()
+            for key, locator in await self._new_pdf_candidates(
+                assistant_turn_id=snapshot.assistant_turn_id,
+            )
             if key.button_text.strip() == expected_pdf
         ]
         pdf_part_path = None
@@ -1044,11 +1107,25 @@ class PlaywrightChatGPTWebAdapter:
                     keys.append(key)
         return tuple(keys)
 
-    async def _new_md_candidates(self) -> list[tuple[AttachmentKey, Any]]:
-        return await self._new_file_candidates(MD_CANDIDATE_SELECTORS)
+    async def _new_md_candidates(
+        self,
+        *,
+        assistant_turn_id: str | None = None,
+    ) -> list[tuple[AttachmentKey, Any]]:
+        return await self._new_file_candidates(
+            MD_CANDIDATE_SELECTORS,
+            assistant_turn_id=assistant_turn_id,
+        )
 
-    async def _new_pdf_candidates(self) -> list[tuple[AttachmentKey, Any]]:
-        return await self._new_file_candidates(PDF_CANDIDATE_SELECTORS)
+    async def _new_pdf_candidates(
+        self,
+        *,
+        assistant_turn_id: str | None = None,
+    ) -> list[tuple[AttachmentKey, Any]]:
+        return await self._new_file_candidates(
+            PDF_CANDIDATE_SELECTORS,
+            assistant_turn_id=assistant_turn_id,
+        )
 
     async def _new_json_candidates(
         self,

@@ -173,7 +173,7 @@ def render_mock_chatgpt(
           turn.appendChild(file);
         }}
         if (nextState === 'COMPLETE_WITH_MD_AND_PDF') {{
-          const pdfContext = {{...context, filename: context.filename.replace(/\\.md$/i, '.pdf')}};
+          const pdfContext = {{...context, filename: context.filename.replace(/\\.[^.]+$/i, '.pdf')}};
           const pdf = document.createElement('button');
           pdf.className = 'entity-underline'; pdf.textContent = pdfContext.filename;
           pdf.addEventListener('click', () => openPreview(pdfContext));
@@ -217,7 +217,11 @@ class _MockHandler(BaseHTTPRequestHandler):
                 report = b"%PDF-1.4\n% E2R mock PDF\n1 0 obj<<>>endobj\n%%EOF\n"
                 content_type = "application/pdf"
             else:
-                supplied = getattr(self.server, "report_text", None)
+                supplied = (
+                    getattr(self.server, "download_text", None)
+                    if filename.lower().endswith(".json")
+                    else None
+                ) or getattr(self.server, "report_text", None)
                 report = (
                     supplied
                     if supplied is not None
@@ -228,7 +232,11 @@ class _MockHandler(BaseHTTPRequestHandler):
                         as_of_date=query.get("as_of_date", ["2026-08-22"])[0],
                     )
                 ).encode("utf-8")
-                content_type = "text/markdown; charset=utf-8"
+                content_type = (
+                    "application/json; charset=utf-8"
+                    if filename.lower().endswith(".json")
+                    else "text/markdown; charset=utf-8"
+                )
             self.send_response(200)
             self.send_header("Content-Type", content_type)
             self.send_header("Content-Disposition", f'attachment; filename="{filename}"')
@@ -262,6 +270,7 @@ class MockChatGPTServer(AbstractContextManager["MockChatGPTServer"]):
     def __init__(self, *, report_text: str | None = None) -> None:
         self.server = ThreadingHTTPServer(("127.0.0.1", 0), _MockHandler)
         self.server.report_text = report_text  # type: ignore[attr-defined]
+        self.server.download_text = None  # type: ignore[attr-defined]
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
 
     @property
@@ -276,6 +285,11 @@ class MockChatGPTServer(AbstractContextManager["MockChatGPTServer"]):
         if not report_text.strip():
             raise ValueError("mock report text must be nonempty")
         self.server.report_text = report_text  # type: ignore[attr-defined]
+
+    def set_download_text(self, download_text: str) -> None:
+        if not download_text.strip():
+            raise ValueError("mock download text must be nonempty")
+        self.server.download_text = download_text  # type: ignore[attr-defined]
 
     def __exit__(self, *_args: object) -> None:
         self.server.shutdown()

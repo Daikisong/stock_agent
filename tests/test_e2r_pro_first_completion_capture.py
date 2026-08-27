@@ -15,7 +15,11 @@ from e2r.pro_first.browser.completion_monitor import (
     ProCompletionStateService,
 )
 from e2r.pro_first.browser.mock_chatgpt_app import MockChatGPTServer
-from e2r.pro_first.browser.protocol import BrowserCaptureRequest, BrowserUIState
+from e2r.pro_first.browser.protocol import (
+    BrowserCaptureRequest,
+    BrowserUIIncompatible,
+    BrowserUIState,
+)
 from e2r.pro_first.capture.atomic_capture import AtomicCaptureWriter, CaptureIdentity
 from e2r.pro_first.capture.coordinator import (
     CaptureEventDispatcher,
@@ -134,6 +138,9 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
 
     def _filename(self, job_id: str) -> str:
         return f"E2R_PRO_{job_id}_{self.symbol}_{self.as_of_date}.md"
+
+    def _json_filename(self, job_id: str) -> str:
+        return f"ResearchDossierV3_{job_id}_{self.symbol}_{self.as_of_date}.json"
 
     async def _complete_page(
         self, job_id: str, *, direct: bool = False, with_pdf: bool = False
@@ -278,6 +285,86 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(raw.source, "DOWNLOAD_MD")
         self.assertGreater(raw.report_md_part_path.stat().st_size, 0)
         self.assertEqual(clicks, [self._filename(job.job_id)])
+
+    async def _capture_new_json_preview(
+        self,
+        *,
+        with_pdf: bool = False,
+        download_job_id: str | None = None,
+    ):
+        job, _prompt_hash = await self._running_job()
+        filename = self._json_filename(job.job_id)
+        dossier = {
+            "schema_version": "e2r_pro_research_dossier_v3",
+            "job_id": download_job_id or job.job_id,
+            "run_id": self.run_id,
+            "target": {"target_id": self.symbol},
+            "as_of_date": self.as_of_date,
+            "score_authority": False,
+            "stage_authority": False,
+        }
+        self.server.set_download_text(json.dumps(dossier, ensure_ascii=False))
+        await self.page.evaluate(
+            "([state, context]) => window.__setMockState(state, context)",
+            [
+                "COMPLETE_WITH_MD_AND_PDF" if with_pdf else "COMPLETE_WITH_MD",
+                {
+                    "job_id": job.job_id,
+                    "run_id": self.run_id,
+                    "target_id": self.symbol,
+                    "as_of_date": self.as_of_date,
+                    "filename": filename,
+                },
+            ],
+        )
+        observed = await self._stable_completion(job.job_id)
+        root = Path(self.temporary_directory.name) / "new-json"
+        raw = await self.adapter.capture_result(
+            BrowserCaptureRequest(
+                job_id=job.job_id,
+                run_id=self.run_id,
+                # The current follow-up orchestration still carries its legacy
+                # MD fallback name.  The adapter must discover the single JSON
+                # attachment on the exact current assistant turn.
+                expected_filename=self._filename(job.job_id),
+                expected_report_hash=observed.result.report_hash,  # type: ignore[union-attr]
+                staging_directory=root / "capture/.staging",
+            )
+        )
+        clicks = await self.page.evaluate("window.__downloadClicks")
+        return job, raw, clicks, dossier
+
+    async def test_old_md_is_not_used_for_new_json_capture(self) -> None:
+        job, _raw, clicks, _dossier = await self._capture_new_json_preview()
+        self.assertEqual(clicks, [self._json_filename(job.job_id)])
+        self.assertNotIn("old_result.md", clicks)
+
+    async def test_new_json_preview_is_really_downloaded(self) -> None:
+        job, raw, clicks, dossier = await self._capture_new_json_preview()
+        self.assertEqual(raw.source, "DOWNLOAD_JSON")
+        self.assertEqual(
+            json.loads(raw.report_md_part_path.read_text(encoding="utf-8")),
+            dossier,
+        )
+        self.assertEqual(clicks, [self._json_filename(job.job_id)])
+
+    async def test_new_json_download_with_wrong_job_identity_is_rejected(self) -> None:
+        with self.assertRaisesRegex(
+            BrowserUIIncompatible,
+            "job/run identity differs",
+        ):
+            await self._capture_new_json_preview(download_job_id="PROJOB-wrong")
+
+    async def test_optional_pdf_remains_selected_for_json_capture(self) -> None:
+        job, raw, clicks, _dossier = await self._capture_new_json_preview(
+            with_pdf=True
+        )
+        filename = self._json_filename(job.job_id)
+        self.assertEqual(raw.source, "DOWNLOAD_JSON")
+        self.assertIsNotNone(raw.report_pdf_part_path)
+        self.assertTrue(raw.report_pdf_part_path.read_bytes().startswith(b"%PDF-"))
+        self.assertIsNone(raw.optional_pdf_error)
+        self.assertEqual(clicks, [filename, Path(filename).with_suffix(".pdf").name])
 
     async def test_direct_report_fallback(self) -> None:
         job, _prompt_hash = await self._running_job()

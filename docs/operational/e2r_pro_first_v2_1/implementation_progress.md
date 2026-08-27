@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-27 C06 pass 10 병합·재검문 완료 / pass 11 같은 Pro 대화에서 실행 중`
+기준 시각: `2026-08-27 C06 pass 12 병합·재검문 accepted 50 / pass 13 같은 Pro 대화에서 실행 중`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -23,6 +23,10 @@ P8 dca86ae9  C17 fresh Pro 초기 검문 통과를 기록
 P8 a62e4895  C28 fresh Pro 초기 검문과 3-target 효율 영수증을 확정
 P10 7abc9ecb C06 V3 JSON 후반 포화도 실행 경로 연결
 P10 377e0c36 과거 경로 실패와 검문 수리의 무한 재검색을 차단
+P10 df2925bf 현재 Pro 응답 오인과 질문별 무한 재전송을 차단
+P10 e3c2f2e8 C06 11차 캡처와 실제 질문 중복 제거를 기록
+P10 e0fabc43 같은 경로 영수증 반복을 의미 지문으로 차단
+P10 1eaa4260 C06 12차 검문 통과와 13차 근거를 기록
 ```
 
 PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지 않는다.
@@ -39,8 +43,8 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             IN_PROGRESS (C06 pass 11, C17/C28 tail 대기)
-P10 final CI/audit                        PENDING
+P9 live multi-pass saturation             IN_PROGRESS (C06 pass 13, C17/C28 tail 대기)
+P10 final CI/audit                        IN_PROGRESS (local 7,738 PASS, 1eaa4260 GitHub CI 2/2 SUCCESS)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -2650,3 +2654,37 @@ score/Stage authority false/false
 pass 13이 같은 KRX/SEC route와 같은 parser failure만 새 receipt ID로 반복하면 새 semantic guard가 다음
 submit을 막는다. 반대로 새 accepted evidence나 provider/parser 정상화가 있으면 그 변화만 다음 단계에
 쓴다.
+
+#### 현재-turn JSON 다운로드 버튼과 follow-up pass 직접 결박
+
+최초 전체 dossier의 expanded JSON은 이미 같은 assistant turn의 다운로드 버튼으로 회수했지만,
+pass 10~12의 delta JSON은 follow-up orchestration이 과거 .md 이름을 기대해 화면 DOM 텍스트
+fallback으로 캡처됐다. JSON 내용과 hash는 보존됐으나, 화면에 보이는 JSON 다운로드 버튼을 직접
+누르는 경로가 follow-up까지 일반화되지 않은 상태였다.
+
+이제 기대 이름이 .json이면 그 파일을 직접 고르고, 기존 follow-up처럼 기대 이름이 .md여도
+현재 assistant turn에 새 JSON 첨부가 정확히 하나면 그 JSON을 우선 다운로드한다. 단순히 .json
+문자열만 보고 받지 않고 다음 검문을 모두 통과해야 한다.
+
+~~~text
+현재 conversation 일치
++ 현재 assistant turn 일치
++ 새 JSON 첨부 정확히 1개
++ 브라우저 suggested filename 일치
++ UTF-8 JSON object
++ dossier job_id / run_id 일치
+= DOWNLOAD_JSON으로 현재 pass에 연결
+~~~
+
+쉬운 예로 이전 turn의 old_result.md나 다른 job의 JSON이 화면에 남아 있어도 받지 않는다. 현재
+pass의 JSON만 받고, 같은 basename의 선택 PDF가 있으면 기존처럼 PDF magic header를 확인해 함께
+보존한다. JSON 다운로드는 composer나 send를 건드리지 않으므로 submit count도 증가하지 않는다.
+
+회귀 결과는 JSON 집중 5/5 PASS, browser/expanded JSON/E2E 관련 60/60 PASS다. pass 13이 연구 중일
+때 폴링 프로그램만 최신 코드로 복구했고, conversation과 pass id는 유지됐으며
+browser_submit_delta=0, submit count 1, automatic resubmit false를 확인했다. 따라서 pass 13
+완료 결과부터 이 직접 JSON 다운로드 경로가 적용된다.
+
+최신 코드 전체 unittest는 7,738개 PASS, failure/error 0/0, 기존 skip 38로 끝났다. 네 static
+audit도 모두 PASS/critical 0이며, 직전 pushed head 1eaa4260의 GitHub Actions 두 필수 workflow도
+SUCCESS다. 새 commit의 GitHub Actions는 push 뒤 다시 별도로 확인한다.
