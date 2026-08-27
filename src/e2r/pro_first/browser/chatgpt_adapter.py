@@ -443,9 +443,8 @@ class PlaywrightChatGPTWebAdapter:
         send = await first_visible(self.page, SEND_SELECTORS)
         if not await locator_enabled(send):
             raise BrowserUIIncompatible("ChatGPT send button is not ready")
-        self._submit_attempted = True
         try:
-            await send.click()
+            await self._guarded_send_click_once(send)
         except Exception:
             # ChatGPT can start a same-page navigation after the DOM click and
             # keep Playwright waiting until its click timeout even though the
@@ -561,8 +560,7 @@ class PlaywrightChatGPTWebAdapter:
             raise BrowserUIIncompatible(
                 "recovered exact prompt has no enabled send button"
             )
-        self._submit_attempted = True
-        await send.click()
+        await self._guarded_send_click_once(send)
         for _attempt in range(50):
             inspection = await self.inspect_state()
             if (
@@ -574,6 +572,16 @@ class PlaywrightChatGPTWebAdapter:
         raise BrowserUIIncompatible(
             "recovered intercepted click did not enter RESEARCH_RUNNING"
         )
+
+    async def _guarded_send_click_once(self, send: Any) -> None:
+        """Own the adapter's only physical ChatGPT send-click surface."""
+
+        if self._submit_attempted:
+            raise SubmitAuthorizationRequired(
+                "this prepared browser adapter already attempted submit"
+            )
+        self._submit_attempted = True
+        await send.click()
 
     async def inspect_state(self) -> BrowserInspection:
         editor = await first_visible(self.page, EDITOR_SELECTORS)

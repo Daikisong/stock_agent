@@ -44,7 +44,7 @@ P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
 P9 live multi-pass saturation             IN_PROGRESS (C06 pass 24, C17/C28 tail 대기)
-P10 final CI/audit                        IN_PROGRESS (최근 pushed 51e91741, 현재 수정은 아직 미커밋)
+P10 final CI/audit                        IN_PROGRESS (single-click static 수리 뒤 CI 재실행 대기)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -137,6 +137,22 @@ Linux runtime + fresh orchestration     66/66 PASS
 Chromium의 `libnspr4.so`가 없어 실패했다. 전자는 Linux 66개 green으로, 후자는 Windows Chromium
 23개 green으로 각각 실제 책임 환경에서 재검증했다. 따라서 이 환경 오류를 제품 회귀로 숨기거나
 PASS 수에 중복 계산하지 않았다.
+
+첫 P13 push의 GitHub `static-security`는 normal submit과 modal recovery에 물리적
+`send.click()`이 각각 하나씩 있어 `guarded_dom_submit_path_count=2`로 차단했다. 두 흐름이 공통
+`_guarded_send_click_once()`만 호출하도록 합쳐 실제 DOM send surface를 다시 하나로 만들었다.
+
+```text
+production static audit critical         0
+guarded DOM send-click path               1
+Windows browser adapter                   30/30 PASS
+Windows multi-pass                        23/23 PASS
+census run-mode honesty                    24/24 PASS
+```
+
+쉬운 예로 정상 전송문과 복구 전송문을 따로 두지 않고, durable approval와
+`_submit_attempted` 잠금이 붙은 문 하나만 함께 사용한다. 첫 실패 CI를 삭제하거나 green으로
+간주하지 않으며, 수리 commit의 새 GitHub Actions가 끝나야 이 항목을 완료로 올린다.
 
 ## P12 — Pass 17 fail-closed 수리와 실제 포화도 재개
 

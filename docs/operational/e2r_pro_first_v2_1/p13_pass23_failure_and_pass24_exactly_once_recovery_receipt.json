@@ -68,7 +68,8 @@
     "exact_open_conversation_bypasses_changed_history_search_ui": true,
     "modal_interception_recovery_requires_pre_dispatch_proof": true,
     "modal_interception_recovery_reuses_existing_claim": true,
-    "running_pass_does_not_reenter_modal_interception_recovery": true
+    "running_pass_does_not_reenter_modal_interception_recovery": true,
+    "normal_and_recovery_submit_share_one_guarded_dom_click": true
   },
   "monitoring": {
     "first_monitor_poll_count": 1440,
@@ -106,6 +107,12 @@
     "linux_combined_environment_only_error": "Playwright Chromium libnspr4.so missing; both browser cases passed on Windows Chromium",
     "windows_browser_regression_count": 30,
     "windows_browser_failure_error_count": 0,
+    "census_run_mode_honesty_regression_count": 24,
+    "census_run_mode_honesty_failure_error_count": 0,
+    "first_p13_push_static_security_conclusion": "FAILURE",
+    "first_p13_push_duplicate_submit_path_count": 2,
+    "repaired_static_audit_critical_count": 0,
+    "repaired_guarded_dom_submit_path_count": 1,
     "compile": "PASS",
     "git_diff_check": "PASS",
     "full_unittest_rerun_pending": true
@@ -115,5 +122,5 @@
   "score_authority": false,
   "stage_authority": false,
   "next_action": "WAIT_FOR_EXISTING_PASS24_THEN_CAPTURE_ONLY_ITS_LATEST_JSON_WITHOUT_RESUBMIT",
-  "receipt_payload_hash": "64b45ab95f352d74e22a1d5488786267a0dfb0ff78a3f13a63cf4e37156b6b8c"
+  "receipt_payload_hash": "3ba49dd8acff736f38cfdd597071aeb2335058c6232798ac6f5bb9515009c1cb"
 }
