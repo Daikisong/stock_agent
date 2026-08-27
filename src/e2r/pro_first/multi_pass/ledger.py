@@ -7,6 +7,7 @@ import json
 import sqlite3
 from typing import Any, Iterator, Mapping, Sequence
 
+from ..browser.protocol import BrowserSubmittedTurnPersistence
 from ..ids import canonical_hash, canonical_json, stable_id
 from ..job_store import ProFirstJobStore
 from ..research_contracts import select_contract_bundle
@@ -346,6 +347,215 @@ class ProMultiPassLedger:
             target=ResearchPassStatus.RESEARCH_RUNNING,
         )
 
+    def record_server_persistence_observation(
+        self,
+        pass_id: str,
+        *,
+        observation: BrowserSubmittedTurnPersistence,
+    ) -> ResearchPassRecord:
+        """Bind a fresh public-UI dispatch observation to one claimed pass."""
+
+        now = self.store._now_text()
+        with self._transaction() as connection:
+            row = self._require_pass(connection, pass_id)
+            if (
+                row["status"]
+                not in {
+                    ResearchPassStatus.SUBMITTING.value,
+                    ResearchPassStatus.RESEARCH_RUNNING.value,
+                    ResearchPassStatus.TRANSPORT_PENDING.value,
+                }
+                or int(row["submit_count"]) != 1
+            ):
+                raise FollowupSubmitBlocked(
+                    "server-persistence evidence requires one claimed unfinished pass"
+                )
+            if (
+                observation.job_id != row["job_id"]
+                or observation.conversation_id != row["conversation_id"]
+                or observation.pass_id != row["pass_id"]
+                or observation.parent_pass_id != row["parent_pass_id"]
+                or observation.submit_count != 0
+            ):
+                raise FollowupSubmitBlocked(
+                    "server-persistence evidence differs from durable pass lineage"
+                )
+            detail = json.loads(row["detail_json"])
+            observations = list(detail.get("server_persistence_observations") or ())
+            if not any(
+                str(item.get("observation_id") or "")
+                == observation.observation_id
+                for item in observations
+                if isinstance(item, Mapping)
+            ):
+                observations.append(
+                    {
+                        "observation_id": observation.observation_id,
+                        "observed_at": observation.observed_at,
+                        "persistence_confirmed": (
+                            observation.persistence_confirmed
+                        ),
+                        "user_turn_id": observation.user_turn_id,
+                        "required_markers": list(observation.required_markers),
+                        "missing_markers": list(observation.missing_markers),
+                        "observed_user_turn_count": (
+                            observation.observed_user_turn_count
+                        ),
+                        "fresh_page_url": observation.fresh_page_url,
+                        "fresh_page_loaded": observation.fresh_page_loaded,
+                        "detail": observation.detail,
+                        "submit_count": 0,
+                    }
+                )
+            detail["server_persistence_observations"] = observations
+            detail["server_persistence_observation_count"] = len(observations)
+            detail["score_valid"] = False
+            detail["publication_withheld"] = True
+            if observation.persistence_confirmed:
+                prior_reason = str(detail.get("transport_pending_reason") or "")
+                if prior_reason:
+                    history = list(
+                        detail.get("transport_pending_reason_history") or ()
+                    )
+                    if prior_reason not in history:
+                        history.append(prior_reason)
+                    detail["transport_pending_reason_history"] = history
+                    detail["server_persistence_recovered_from_reason"] = prior_reason
+                detail.pop("transport_pending_reason", None)
+                detail.update(
+                    {
+                        "server_persistence_confirmed": True,
+                        "server_persistence_user_turn_id": observation.user_turn_id,
+                        "server_persistence_confirmed_observation_id": (
+                            observation.observation_id
+                        ),
+                        "research_status": "RESEARCH_RUNNING",
+                        "automatic_resubmit_allowed": False,
+                    }
+                )
+                target = ResearchPassStatus.RESEARCH_RUNNING.value
+                completed_at = None
+            else:
+                absence_rows = tuple(
+                    item
+                    for item in observations
+                    if isinstance(item, Mapping)
+                    and item.get("persistence_confirmed") is False
+                )
+                reason = (
+                    "SERVER_PERSISTENCE_UNCONFIRMED: fresh public conversation "
+                    "does not contain one user turn with the exact job/pass/parent markers"
+                )
+                prior_reason = str(detail.get("transport_pending_reason") or "")
+                history = list(detail.get("transport_pending_reason_history") or ())
+                if prior_reason and prior_reason != reason and prior_reason not in history:
+                    history.append(prior_reason)
+                detail.update(
+                    {
+                        "server_persistence_confirmed": False,
+                        "server_persistence_absence_confirmation_count": len(
+                            absence_rows
+                        ),
+                        "server_persistence_last_observation_id": (
+                            observation.observation_id
+                        ),
+                        "transport_pending_reason": reason,
+                        "transport_pending_reason_history": history,
+                        "research_status": "TRANSPORT_PENDING",
+                        "automatic_resubmit_allowed": False,
+                    }
+                )
+                target = ResearchPassStatus.TRANSPORT_PENDING.value
+                completed_at = now
+            connection.execute(
+                """
+                UPDATE pro_research_passes
+                SET status=?, detail_json=?, completed_at=?
+                WHERE pass_id=?
+                """,
+                (target, canonical_json(detail), completed_at, pass_id),
+            )
+            result = self._require_pass(connection, pass_id)
+        return self._pass_from_row(result)
+
+    def seal_unpersisted_dispatch(self, pass_id: str) -> ResearchPassRecord:
+        """Seal one clicked pass after two independent fresh-view absences.
+
+        The same pass can never be clicked again.  A later planner may create
+        one distinct replacement pass under the existing user-approved scope.
+        """
+
+        now = self.store._now_text()
+        with self._transaction() as connection:
+            row = self._require_pass(connection, pass_id)
+            if (
+                row["status"] != ResearchPassStatus.TRANSPORT_PENDING.value
+                or int(row["submit_count"]) != 1
+            ):
+                raise FollowupSubmitBlocked(
+                    "only one claimed transport-pending pass can be sealed unpersisted"
+                )
+            detail = json.loads(row["detail_json"])
+            observations = tuple(
+                item
+                for item in detail.get("server_persistence_observations") or ()
+                if isinstance(item, Mapping)
+            )
+            absence_ids = {
+                str(item.get("observation_id") or "")
+                for item in observations
+                if item.get("persistence_confirmed") is False
+                and str(item.get("observation_id") or "")
+            }
+            if any(
+                item.get("persistence_confirmed") is True
+                for item in observations
+            ) or len(absence_ids) < 2:
+                raise FollowupSubmitBlocked(
+                    "unpersisted dispatch requires two fresh-view absences and no confirmation"
+                )
+            evidence_hash = canonical_hash(
+                {
+                    "pass_id": pass_id,
+                    "server_persistence_observations": observations,
+                }
+            )
+            detail.update(
+                {
+                    "failure_class": "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED",
+                    "failure_domain": "TRANSPORT",
+                    "failure_reason": (
+                        "two independent fresh public conversation views lacked "
+                        "the exact submitted user-turn lineage"
+                    ),
+                    "server_persistence_failure_evidence_hash": evidence_hash,
+                    "transport_failure_root_input_hash": str(
+                        detail.get("transport_replacement_root_input_hash")
+                        or row["pass_input_hash"]
+                    ),
+                    "research_status": "TRANSPORT_FAILURE_PENDING",
+                    "automatic_resubmit_allowed": False,
+                    "replacement_pass_allowed": True,
+                    "score_valid": False,
+                    "publication_withheld": True,
+                }
+            )
+            connection.execute(
+                """
+                UPDATE pro_research_passes
+                SET status=?, detail_json=?, completed_at=?
+                WHERE pass_id=?
+                """,
+                (
+                    ResearchPassStatus.FAILED_HARD.value,
+                    canonical_json(detail),
+                    now,
+                    pass_id,
+                ),
+            )
+            result = self._require_pass(connection, pass_id)
+        return self._pass_from_row(result)
+
     def complete_pass(self, pass_id: str, *, response_hash: str) -> ResearchPassRecord:
         if len(response_hash) != 64:
             raise ValueError("pass response hash must be sha256")
@@ -377,6 +587,12 @@ class ProMultiPassLedger:
             if row["status"] == ResearchPassStatus.COMPLETE.value:
                 raise FollowupSubmitBlocked("a completed research pass cannot become transport-pending")
             detail = json.loads(row["detail_json"])
+            prior_reason = str(detail.get("transport_pending_reason") or "")
+            if prior_reason and prior_reason != reason:
+                history = list(detail.get("transport_pending_reason_history") or ())
+                if prior_reason not in history:
+                    history.append(prior_reason)
+                detail["transport_pending_reason_history"] = history
             detail["transport_pending_reason"] = reason
             detail["research_status"] = "TRANSPORT_PENDING"
             detail["score_valid"] = False
@@ -435,6 +651,7 @@ class ProMultiPassLedger:
             detail.update(
                 {
                     "failure_class": failure_class.strip(),
+                    "failure_domain": "PROVIDER",
                     "failure_reason": reason.strip(),
                     "failed_visible_response_hash": response_hash,
                     "research_status": "PROVIDER_FAILURE_PENDING",

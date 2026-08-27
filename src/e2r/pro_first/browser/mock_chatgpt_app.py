@@ -77,6 +77,7 @@ def render_mock_chatgpt(
           <button id="reasoning-mode" type="button">Pro</button>
           <button data-testid="stop-button" type="button" hidden>Stop</button>
         </form>
+        <section id="conversation-turns"></section>
         <section id="conversation-results"></section>
       </main>
     """
@@ -92,11 +93,42 @@ def render_mock_chatgpt(
     window.__downloadClicks = [];
     window.__useSiblingStagePreview = false;
     window.__previewStageDelayMs = 0;
+    window.__persistSubmittedTurn = true;
     const defaultContext = {json.dumps({"job_id": job_id, "run_id": run_id, "target_id": target_id, "as_of_date": as_of_date, "filename": filename})};
     let suppliedReport = {json.dumps(report_text, ensure_ascii=False)};
     window.__setSuppliedReport = (nextReport) => {{
       suppliedReport = nextReport;
     }};
+    function submittedTurnStorageKey() {{
+      return '__e2r_mock_submitted_turns__' + window.location.pathname;
+    }}
+    function persistedSubmittedTurns() {{
+      try {{
+        return JSON.parse(localStorage.getItem(submittedTurnStorageKey()) || '[]');
+      }} catch (_error) {{
+        return [];
+      }}
+    }}
+    function renderPersistedSubmittedTurns() {{
+      const root = document.querySelector('#conversation-turns');
+      if (!root) return;
+      root.replaceChildren();
+      persistedSubmittedTurns().forEach((text, index) => {{
+        const turn = document.createElement('section');
+        turn.dataset.turn = 'user';
+        turn.dataset.messageId = `persisted-user-${{index + 1}}`;
+        turn.textContent = text;
+        root.appendChild(turn);
+      }});
+    }}
+    function persistCurrentSubmittedTurn() {{
+      if (!window.__persistSubmittedTurn) return;
+      const editor = document.querySelector('#prompt-textarea');
+      const turns = persistedSubmittedTurns();
+      turns.push((editor && editor.innerText) || '');
+      localStorage.setItem(submittedTurnStorageKey(), JSON.stringify(turns));
+      renderPersistedSubmittedTurns();
+    }}
     function reportText(context) {{
       if (suppliedReport !== null) return suppliedReport;
       const dossier = {{
@@ -219,10 +251,16 @@ def render_mock_chatgpt(
         const freshId = 'mock-' + defaultContext.job_id.toLowerCase();
         window.history.pushState({{}}, '', '/c/' + freshId);
       }}
+      // A later click listener may replace the optimistic route with the
+      // canonical server conversation id.  Persist after the complete click
+      // dispatch so the mock models that final public URL, not an intermediate
+      // history entry.
+      window.setTimeout(persistCurrentSubmittedTurn, 0);
       window.__setMockState('RUNNING');
     }});
     const oldMd = document.querySelector('#old-md');
     if (oldMd) oldMd.addEventListener('click', () => openPreview(defaultContext, true));
+    renderPersistedSubmittedTurns();
     window.__setMockState({json.dumps(state)}, defaultContext);
   </script>
 </body>

@@ -22,6 +22,7 @@ from e2r.research.page_fetcher import PageFetcher
 from ..atomic_io import fsync_directory
 from ..browser.protocol import (
     BrowserCaptureRequest,
+    BrowserUIIncompatible,
     ChatGPTWebAdapter,
     RawBrowserCapture,
 )
@@ -736,6 +737,22 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
             if mode == "PREPARE_AND_SUBMIT":
                 await orchestrator.prepare_followup(plan, prepared.session.adapter)
                 await orchestrator.submit_followup(plan, prepared.session.adapter)
+            elif mode == "RECOVER_SUBMITTED_RESULT":
+                persistence = await orchestrator.audit_submitted_followup_persistence(
+                    plan,
+                    prepared.session.adapter,
+                )
+                if not persistence.observation.persistence_confirmed:
+                    disposition = (
+                        "sealed after two independent fresh-view absences"
+                        if persistence.sealed_unpersisted
+                        else "awaiting a second independent fresh-view audit"
+                    )
+                    raise LiveCanaryPending(
+                        "compact-repair follow-up is absent from the fresh public "
+                        f"conversation; {disposition}",
+                        status="TRANSPORT_PENDING",
+                    )
             result = await self._wait_for_followup_result(
                 prepared=prepared,
                 plan=plan,
@@ -1515,19 +1532,30 @@ async def _ensure_durable_conversation_visible(
 
     if not durable_conversation_id:
         raise ValueError("durable fresh conversation id is missing")
-    inspection = await adapter.ensure_logged_in()
+    try:
+        inspection = await adapter.ensure_logged_in()
+    except BrowserUIIncompatible:
+        inspection = await adapter.open_exact_conversation_without_submit(
+            conversation_id=durable_conversation_id,
+        )
+        if inspection.conversation_id != durable_conversation_id:
+            raise ValueError(
+                "exact public navigation differs from the approved conversation"
+        )
+        return "PUBLIC_EXACT_CONVERSATION_URL"
     if inspection.conversation_id == durable_conversation_id:
         return "CURRENT_EXACT_CONVERSATION"
-    recovered = await adapter.recover_conversation_without_submit(
-        job_id=job_id,
-        run_id=run_id,
-        search_terms=search_terms,
+    # The ledger already owns the exact durable conversation id.  If another
+    # valid ChatGPT page or conversation is active, opening that public URL is
+    # deterministic and avoids depending on mutable history-search snippets.
+    inspection = await adapter.open_exact_conversation_without_submit(
+        conversation_id=durable_conversation_id,
     )
-    if recovered.conversation_id != durable_conversation_id:
+    if inspection.conversation_id != durable_conversation_id:
         raise ValueError(
             "visible ChatGPT page differs from the approved fresh conversation"
         )
-    return "VISIBLE_HISTORY_SEARCH"
+    return "PUBLIC_EXACT_CONVERSATION_URL"
 
 
 def _context_already_attempted(

@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-28 C06 accepted 66 / pass 23 실패 봉인 / pass 24 같은 Pro 대화에서 실행 중 / local full 7,764 PASS`
+기준 시각: `2026-08-28 C06 accepted 66 / pass 24·25 서버 미저장 봉인 / 새 Pro 채팅 successor 준비 / local full 7,769 PASS`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -43,12 +43,92 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             IN_PROGRESS (C06 pass 24, C17/C28 tail 대기)
+P9 live multi-pass saturation             IN_PROGRESS (C06 old chat 봉인·새 chat 전환, C17/C28 tail 대기)
 P10 final CI/audit                        IN_PROGRESS (single-click static 수리 뒤 CI 재실행 대기)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
 `PRO_FIRST_V2_1_OPERATIONAL_RESEARCH_READY`를 선언하지 않는다.
+
+## P14 — 화면상 전송과 서버 저장 분리, C06 대화 폐기
+
+### 원인
+
+Pass 24는 원래 탭에서 user turn과 stop 버튼이 보여 7,900초 넘게 `RESEARCH_RUNNING`으로
+감시됐지만, 같은 로그인 context의 새 공개 대화 화면에는 Pass 24 user turn이 없었다. 같은 화면의
+낙관적 DOM을 서버 저장 증거로 사용한 것이 장시간 무한 대기의 원인이었다.
+
+쉬운 예로 전송함 화면에 편지가 보인 것만 확인했고, 실제 우편 서버의 발송 기록은 확인하지 않은
+상태였다. 이제는 별도 새 탭의 같은 `/c/{conversation_id}`에서 정확한 job/run/pass/parent marker가
+한 user turn 안에 모두 있어야 연구 실행으로 인정한다.
+
+### generic 수리
+
+```text
+동일 화면 stop/user turn                 서버 저장 권한 없음
+새 공개 conversation의 exact user turn   서버 저장 확인
+두 독립 새 화면에서 부재                  해당 pass FAILED_HARD/TRANSPORT 봉인
+동일 pass 추가 click                      금지
+별도 replacement pass                     정확히 1회만 허용
+replacement도 두 번 부재                  conversation 폐기, 새 fresh run 필요
+```
+
+Library나 다른 대화가 현재 탭이어도 mutable history search에 의존하지 않는다. ledger가 가진 exact
+conversation ID의 공개 `/c/...` URL을 읽기 전용으로 연다. 새 탭 관측과 exact URL 이동은 composer를
+편집하거나 send를 누르지 않는다. 물리적 DOM send surface는 계속 `submit_once()` 한 곳뿐이다.
+
+### 실제 C06 결과
+
+Pass 24는 두 번의 독립 새 화면 관측에서 모두 부재했다.
+
+```text
+pass                         PROPASS-0b188e6ae08632f0773af6d8
+status                       FAILED_HARD / TRANSPORT
+ledger submit count          1
+actual DOM send click        1 (기존 modal 복구 때의 1회)
+새 수리 뒤 추가 click         0
+absence observations         2
+automatic resubmit           false
+```
+
+그 뒤 실패 evidence hash를 prompt context에 넣은 별도 Pass 25를 한 번 만들었다. Pass 24를 다시 누른
+것이 아니며 `supersedes_unpersisted_pass_id`로 두 pass를 명시적으로 연결했다. 그러나 Pass 25도 같은
+대화에서 서버에 저장되지 않았다.
+
+```text
+replacement pass             PROPASS-098c6fa0009b452f1f4d6662
+supersedes                    PROPASS-0b188e6ae08632f0773af6d8
+status                        FAILED_HARD / TRANSPORT
+ledger submit count           1
+absence observations          2
+same-pass retry               0
+automatic resubmit            false
+```
+
+따라서 conversation `6a8db0ad-8ed0-83e8-888e-dce26c950343`은 더 사용하지 않는다. accepted fact 66과
+기존 score/Stage 미확정 상태는 감사 자료로 보존하지만 새 prompt의 답안으로 주입하지 않는다. 다음
+C06은 기존 job/run/conversation을 diagnostic-only로 봉인하고 새 runtime/session/job/run/pass/chat을
+가진 blind successor로 시작한다.
+
+### 검증
+
+```text
+낙관적 initial/follow-up 서버 미저장 회귀      PASS
+stale prior-pass marker 오인 방지               PASS
+두 부재 봉인·동일 pass 재전송 차단              PASS
+별도 replacement 1회·두 번째 실패 차단         PASS
+Library/다른 chat -> exact URL 무전송 이동       PASS
+집중 회귀                                      78/78 PASS
+CI 동일 Pro-first core                         238/238 PASS
+browser mock E2E                               69/69 PASS
+전체 unittest                                  7,769 PASS
+failure/error                                  0/0
+production static audit critical               0
+guarded DOM send-click path                    1
+```
+
+기계 판독 영수증은 `p14_server_persistence_and_new_chat_successor_receipt.json`이다. 현재는 새 successor
+chat을 시작하기 전 checkpoint이므로 `completion_claimed=false`다.
 
 ## P13 — Pass 23 실패 봉인과 Pass 24 exactly-once 복구
 

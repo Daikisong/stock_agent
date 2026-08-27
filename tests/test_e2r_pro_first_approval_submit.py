@@ -56,7 +56,11 @@ class ProFirstApprovalSubmitTest(unittest.IsolatedAsyncioTestCase):
             f"{self.server.base_url}/c/approval-conversation",
             wait_until="domcontentloaded",
         )
-        self.adapter = PlaywrightChatGPTWebAdapter(self.page)
+        self.adapter = PlaywrightChatGPTWebAdapter(
+            self.page,
+            server_persistence_max_polls=3,
+            server_persistence_poll_interval_ms=10,
+        )
 
     async def asyncTearDown(self) -> None:
         await self.browser.close()
@@ -146,7 +150,11 @@ class ProFirstApprovalSubmitTest(unittest.IsolatedAsyncioTestCase):
             f"{self.server.base_url}/",
             wait_until="domcontentloaded",
         )
-        self.adapter = PlaywrightChatGPTWebAdapter(self.page)
+        self.adapter = PlaywrightChatGPTWebAdapter(
+            self.page,
+            server_persistence_max_polls=3,
+            server_persistence_poll_interval_ms=10,
+        )
         job, prompt_hash = await self._prepare_durable_job()
         self.assertIsNone(job.conversation_id)
         await self.page.locator("#composer-submit-button").evaluate(
@@ -165,6 +173,43 @@ class ProFirstApprovalSubmitTest(unittest.IsolatedAsyncioTestCase):
         )
         self.assertEqual(result.job.conversation_id, "new-conversation-id")
         self.assertEqual(result.inspection.conversation_id, "new-conversation-id")
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 1)
+
+    async def test_optimistic_running_without_server_turn_fails_closed(self) -> None:
+        job, prompt_hash = await self._prepare_durable_job()
+        await self.page.evaluate("window.__persistSubmittedTurn = false")
+        service = ProApprovalService(self.store, now=lambda: self.now)
+        grant = service.issue(job.job_id, prompt_hash=prompt_hash)
+        service.approve(grant)
+        page_count_before = len(self.page.context.pages)
+
+        with self.assertRaisesRegex(RuntimeError, "fresh public conversation"):
+            await ExactlyOnceSubmitCoordinator(self.store).submit(
+                job.job_id,
+                self.adapter,
+            )
+
+        attention = self.store.get_job(job.job_id)
+        self.assertEqual(attention.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(attention.submit_count, 1)
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 1)
+        self.assertEqual(len(self.page.context.pages), page_count_before)
+        persistence_event = next(
+            event
+            for event in self.store.list_events(job.job_id)
+            if event.idempotency_key == f"submit-attention:{job.job_id}"
+        )
+        self.assertFalse(
+            persistence_event.payload["server_persistence_confirmed"]
+        )
+        self.assertTrue(
+            persistence_event.payload["server_persistence_observation_id"]
+        )
+        with self.assertRaises(DuplicateSubmitBlocked):
+            await ExactlyOnceSubmitCoordinator(self.store).submit(
+                job.job_id,
+                self.adapter,
+            )
         self.assertEqual(await self.page.evaluate("window.__submitCount"), 1)
 
     async def test_forged_or_missing_approval_proof_cannot_click_send(self) -> None:
@@ -229,7 +274,11 @@ class ProFirstApprovalSubmitTest(unittest.IsolatedAsyncioTestCase):
             f"{self.server.base_url}/c/WEB:transient-conversation",
             wait_until="domcontentloaded",
         )
-        self.adapter = PlaywrightChatGPTWebAdapter(self.page)
+        self.adapter = PlaywrightChatGPTWebAdapter(
+            self.page,
+            server_persistence_max_polls=3,
+            server_persistence_poll_interval_ms=10,
+        )
         job, prompt_hash = await self._prepare_durable_job()
         service = ProApprovalService(self.store, now=lambda: self.now)
         grant = service.issue(job.job_id, prompt_hash=prompt_hash)
@@ -291,7 +340,11 @@ class ProFirstApprovalSubmitTest(unittest.IsolatedAsyncioTestCase):
             f"{self.server.base_url}/c/WEB:transient-conversation",
             wait_until="domcontentloaded",
         )
-        self.adapter = PlaywrightChatGPTWebAdapter(self.page)
+        self.adapter = PlaywrightChatGPTWebAdapter(
+            self.page,
+            server_persistence_max_polls=3,
+            server_persistence_poll_interval_ms=10,
+        )
         job, prompt_hash = await self._prepare_durable_job()
         service = ProApprovalService(self.store, now=lambda: self.now)
         grant = service.issue(job.job_id, prompt_hash=prompt_hash)

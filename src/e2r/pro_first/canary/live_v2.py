@@ -1213,6 +1213,11 @@ class ProV2LiveCanaryRunner:
                     and _is_proven_pre_dispatch_modal_interception(
                         pending_reason
                     )
+                    and not bool(
+                        durable_pending.detail.get(
+                            "intercepted_submit_recovered"
+                        )
+                    )
                 ):
                     resumed = await orchestrator.resume_intercepted_followup_submit(
                         plan,
@@ -1228,9 +1233,56 @@ class ProV2LiveCanaryRunner:
                             "actual_dom_send_click_count": 1,
                             "new_pass_created": False,
                             "automatic_resubmit_allowed": False,
+                            "server_persistence_confirmed": True,
                         },
                     )
                 else:
+                    persistence_audit = (
+                        await orchestrator.audit_submitted_followup_persistence(
+                            plan,
+                            prepared.session.adapter,
+                        )
+                    )
+                    self._emit(
+                        self.store.get_job(plan.scope.job_id),
+                        "FOLLOWUP_SERVER_PERSISTENCE_AUDITED",
+                        {
+                            "pass_id": plan.research_pass.pass_id,
+                            "pass_name": plan.research_pass.pass_name,
+                            "submit_count": plan.research_pass.submit_count,
+                            "observation_id": (
+                                persistence_audit.observation.observation_id
+                            ),
+                            "server_persistence_confirmed": (
+                                persistence_audit.observation.persistence_confirmed
+                            ),
+                            "user_turn_id": (
+                                persistence_audit.observation.user_turn_id
+                            ),
+                            "absence_confirmation_count": int(
+                                persistence_audit.research_pass.detail.get(
+                                    "server_persistence_absence_confirmation_count"
+                                )
+                                or 0
+                            ),
+                            "sealed_unpersisted": (
+                                persistence_audit.sealed_unpersisted
+                            ),
+                            "browser_submit_delta": 0,
+                            "automatic_resubmit_allowed": False,
+                        },
+                    )
+                    if not persistence_audit.observation.persistence_confirmed:
+                        disposition = (
+                            "sealed after two independent fresh-view absences"
+                            if persistence_audit.sealed_unpersisted
+                            else "awaiting a second independent fresh-view audit"
+                        )
+                        raise LiveCanaryPending(
+                            "submitted follow-up is absent from the fresh public "
+                            f"conversation; {disposition}",
+                            status="TRANSPORT_PENDING",
+                        )
                     self._emit(
                         self.store.get_job(plan.scope.job_id),
                         "FOLLOWUP_SUBMITTED_RESULT_RECOVERY",

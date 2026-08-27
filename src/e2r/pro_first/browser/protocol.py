@@ -50,6 +50,57 @@ class BrowserInspection:
 
 
 @dataclass(frozen=True)
+class BrowserSubmittedTurnPersistence:
+    """Fresh public-UI evidence that one submitted user turn is durable.
+
+    The observation is intentionally read-only.  It comes from a temporary
+    page opened in the same authenticated browser context, never from a
+    private ChatGPT endpoint and never from the optimistic DOM that performed
+    the send click.
+    """
+
+    observation_id: str
+    observed_at: str
+    conversation_id: str
+    job_id: str
+    run_id: str | None
+    pass_id: str | None
+    parent_pass_id: str | None
+    persistence_confirmed: bool
+    user_turn_id: str | None
+    required_markers: tuple[str, ...]
+    missing_markers: tuple[str, ...]
+    observed_user_turn_count: int
+    fresh_page_url: str
+    fresh_page_loaded: bool
+    detail: str | None = None
+    submit_count: int = 0
+
+    def __post_init__(self) -> None:
+        if not self.observation_id.strip() or not self.observed_at.strip():
+            raise ValueError("server-persistence observation identity is required")
+        if not self.conversation_id.strip() or not self.job_id.strip():
+            raise ValueError("server-persistence conversation/job identity is required")
+        if self.pass_id is None and self.parent_pass_id is not None:
+            raise ValueError("parent pass marker requires a follow-up pass marker")
+        if self.pass_id is not None and not self.parent_pass_id:
+            raise ValueError("follow-up persistence requires the exact parent pass")
+        if not self.required_markers:
+            raise ValueError("server-persistence observation requires exact markers")
+        if self.observed_user_turn_count < 0:
+            raise ValueError("observed user-turn count cannot be negative")
+        if self.persistence_confirmed:
+            if not self.user_turn_id or self.missing_markers:
+                raise ValueError(
+                    "confirmed persistence requires one exact user turn and no missing marker"
+                )
+        elif not self.missing_markers:
+            raise ValueError("unconfirmed persistence must name missing markers")
+        if self.submit_count != 0:
+            raise ValueError("server-persistence inspection must never submit")
+
+
+@dataclass(frozen=True)
 class PreparedBrowserJob:
     browser_session_id: str
     conversation_id: str | None
@@ -222,6 +273,21 @@ class ChatGPTWebAdapter(Protocol):
 
     async def submit_once(self, approval_proof: Any) -> BrowserInspection: ...
 
+    async def inspect_submitted_turn_persistence(
+        self,
+        *,
+        conversation_id: str,
+        job_id: str,
+        pass_id: str | None = None,
+        parent_pass_id: str | None = None,
+    ) -> BrowserSubmittedTurnPersistence: ...
+
+    async def open_exact_conversation_without_submit(
+        self,
+        *,
+        conversation_id: str,
+    ) -> BrowserInspection: ...
+
     async def prepare_intercepted_followup_submit_recovery(
         self,
         approval_proof: Any,
@@ -278,6 +344,7 @@ __all__ = [
     "BrowserCaptureRequest",
     "BrowserJsonAttachmentRequest",
     "BrowserResultSnapshot",
+    "BrowserSubmittedTurnPersistence",
     "BrowserUIIncompatible",
     "BrowserUIState",
     "ChatGPTWebAdapter",

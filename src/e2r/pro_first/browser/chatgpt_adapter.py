@@ -4,8 +4,11 @@ from __future__ import annotations
 
 import json
 import re
+import secrets
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote, urlsplit, urlunsplit
 
 from ..ids import canonical_hash, canonical_json
 from .page_helpers import editor_text, first_existing, first_visible, locator_enabled
@@ -16,6 +19,7 @@ from .protocol import (
     BrowserInspection,
     BrowserJsonAttachmentRequest,
     BrowserResultSnapshot,
+    BrowserSubmittedTurnPersistence,
     BrowserUIIncompatible,
     BrowserUIState,
     ManualLoginRequired,
@@ -56,8 +60,22 @@ from .selector_registry import (
 class PlaywrightChatGPTWebAdapter:
     """One adapter for real ChatGPT and the local DOM-contract mock."""
 
-    def __init__(self, page: Any) -> None:
+    def __init__(
+        self,
+        page: Any,
+        *,
+        server_persistence_max_polls: int = 300,
+        server_persistence_poll_interval_ms: int = 100,
+    ) -> None:
+        if server_persistence_max_polls < 1:
+            raise ValueError("server-persistence poll bound must be positive")
+        if server_persistence_poll_interval_ms < 1:
+            raise ValueError("server-persistence poll interval must be positive")
         self.page = page
+        self._server_persistence_max_polls = server_persistence_max_polls
+        self._server_persistence_poll_interval_ms = (
+            server_persistence_poll_interval_ms
+        )
         self._uploaded_filename: str | None = None
         self._prepared_binding: dict[str, str] | None = None
         self._preexisting_attachment_keys: frozenset[str] = frozenset()
@@ -466,6 +484,216 @@ class PlaywrightChatGPTWebAdapter:
                 return inspection
             await self.page.wait_for_timeout(100)
         return await self.inspect_state()
+
+    async def inspect_submitted_turn_persistence(
+        self,
+        *,
+        conversation_id: str,
+        job_id: str,
+        pass_id: str | None = None,
+        parent_pass_id: str | None = None,
+    ) -> BrowserSubmittedTurnPersistence:
+        """Verify one send through a fresh public conversation page.
+
+        ChatGPT may optimistically add the user turn and stop control to the
+        page that performed ``send.click()`` even when the turn never reaches
+        the durable conversation.  A second page in the same authenticated
+        browser context is therefore the authority for dispatch persistence.
+        This method only navigates and reads the visible public UI; it never
+        calls a private endpoint, edits the composer, or submits anything.
+        """
+
+        if not conversation_id.strip() or not job_id.strip():
+            raise ValueError("server-persistence inspection requires conversation/job")
+        if pass_id is None and parent_pass_id is not None:
+            raise ValueError("parent pass requires a follow-up pass")
+        if pass_id is not None and not str(parent_pass_id or "").strip():
+            raise ValueError("follow-up persistence requires the exact parent pass")
+        source_url = urlsplit(str(self.page.url or ""))
+        if source_url.scheme not in {"http", "https"} or not source_url.netloc:
+            raise BrowserUIIncompatible(
+                "fresh persistence inspection requires a public browser origin"
+            )
+        fresh_url = urlunsplit(
+            (
+                source_url.scheme,
+                source_url.netloc,
+                # Recovery IDs may carry the audited ``WEB:`` namespace.
+                # Keep the colon path-safe while still escaping slashes and
+                # query/fragment delimiters.
+                f"/c/{quote(conversation_id, safe=':')}",
+                "",
+                "",
+            )
+        )
+        run_id = (
+            self._prepared_run_id
+            if self._prepared_job_id == job_id and self._prepared_run_id
+            else None
+        )
+        required = [f"[[E2R_PRO_JOB_ID:{job_id}]]"]
+        if run_id:
+            required.append(f"[[E2R_PRO_RUN_ID:{run_id}]]")
+        if pass_id is not None:
+            required.extend(
+                (
+                    f"[[E2R_PRO_PASS_ID:{pass_id}]]",
+                    f"[[E2R_PRO_PARENT_PASS_ID:{parent_pass_id}]]",
+                )
+            )
+        required_markers = tuple(required)
+        missing_markers = required_markers
+        user_turn_id: str | None = None
+        observed_user_turn_count = 0
+        fresh_page_loaded = False
+        detail: str | None = None
+        fresh_page = None
+        observed_url = fresh_url
+        try:
+            try:
+                fresh_page = await self.page.context.new_page()
+            except Exception:
+                # ``browser.new_page()`` is a Playwright convenience API that
+                # owns a one-page implicit context; that context rejects a
+                # later ``context.new_page()`` even though a normal public
+                # popup in the same authenticated context is valid.  CI's DOM
+                # mock uses that convenience API.  Opening a read-only popup
+                # keeps the same cookies/localStorage and still exercises the
+                # exact fresh-public-view contract used by a normal CDP
+                # context.  This is navigation only and cannot dispatch a
+                # prompt.
+                async with self.page.expect_popup(timeout=10_000) as popup_info:
+                    await self.page.evaluate(
+                        "url => window.open(url, '_blank')",
+                        fresh_url,
+                    )
+                fresh_page = await popup_info.value
+            await fresh_page.goto(
+                fresh_url,
+                wait_until="domcontentloaded",
+                timeout=60_000,
+            )
+            observed_url = str(fresh_page.url or fresh_url)
+            fresh_page_loaded = bool(
+                urlsplit(observed_url).path.rstrip("/")
+                == f"/c/{conversation_id}".rstrip("/")
+            )
+            for attempt in range(self._server_persistence_max_polls):
+                turns = fresh_page.locator(", ".join(USER_TURN_SELECTORS))
+                observed_user_turn_count = max(
+                    observed_user_turn_count,
+                    await turns.count(),
+                )
+                best_missing = required_markers
+                for index in range(await turns.count()):
+                    turn = turns.nth(index)
+                    try:
+                        turn_text = str(await turn.text_content() or "")
+                    except Exception:
+                        continue
+                    current_missing = tuple(
+                        marker for marker in required_markers if marker not in turn_text
+                    )
+                    if len(current_missing) < len(best_missing):
+                        best_missing = current_missing
+                    if current_missing:
+                        continue
+                    user_turn_id = await turn.evaluate(
+                        r"""element => {
+                            const identified = element.closest(
+                                '[data-message-id], [data-turn-id]'
+                            ) || element.querySelector(
+                                '[data-message-id], [data-turn-id]'
+                            );
+                            if (identified) {
+                                return identified.getAttribute('data-message-id')
+                                    || identified.getAttribute('data-turn-id');
+                            }
+                            return null;
+                        }"""
+                    )
+                    if user_turn_id:
+                        missing_markers = ()
+                        break
+                if user_turn_id:
+                    break
+                missing_markers = best_missing
+                if attempt + 1 < self._server_persistence_max_polls:
+                    await fresh_page.wait_for_timeout(
+                        self._server_persistence_poll_interval_ms
+                    )
+            if user_turn_id is None:
+                detail = (
+                    "fresh public conversation did not contain one user turn "
+                    "with all exact submission markers"
+                )
+        except Exception as error:
+            detail = f"{type(error).__name__}: {error}"
+            missing_markers = required_markers
+        finally:
+            if fresh_page is not None:
+                await fresh_page.close()
+        return BrowserSubmittedTurnPersistence(
+            observation_id=f"PROSERVERVIEW-{secrets.token_hex(12)}",
+            observed_at=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            conversation_id=conversation_id,
+            job_id=job_id,
+            run_id=run_id,
+            pass_id=pass_id,
+            parent_pass_id=parent_pass_id,
+            persistence_confirmed=user_turn_id is not None,
+            user_turn_id=user_turn_id,
+            required_markers=required_markers,
+            missing_markers=missing_markers,
+            observed_user_turn_count=observed_user_turn_count,
+            fresh_page_url=observed_url,
+            fresh_page_loaded=fresh_page_loaded,
+            detail=detail,
+            submit_count=0,
+        )
+
+    async def open_exact_conversation_without_submit(
+        self,
+        *,
+        conversation_id: str,
+    ) -> BrowserInspection:
+        """Navigate the current public tab to one durable conversation.
+
+        A user may leave the attached logged-in tab on Library or another
+        public ChatGPT surface.  Requiring the composer before navigating
+        makes that harmless state look like a login failure.  The durable
+        conversation id is already ledger-bound, so opening its normal
+        ``/c/...`` URL is narrower and safer than history-search heuristics.
+        This method only navigates; it never edits or submits the composer.
+        """
+
+        if not conversation_id.strip():
+            raise ValueError("exact conversation navigation requires an id")
+        source_url = urlsplit(str(self.page.url or ""))
+        if source_url.scheme not in {"http", "https"} or not source_url.netloc:
+            raise BrowserUIIncompatible(
+                "exact conversation navigation requires a public browser origin"
+            )
+        exact_url = urlunsplit(
+            (
+                source_url.scheme,
+                source_url.netloc,
+                f"/c/{quote(conversation_id, safe=':')}",
+                "",
+                "",
+            )
+        )
+        await self.page.goto(
+            exact_url,
+            wait_until="domcontentloaded",
+            timeout=60_000,
+        )
+        inspection = await self.ensure_logged_in()
+        if inspection.conversation_id != conversation_id:
+            raise BrowserUIIncompatible(
+                "public exact conversation URL did not retain the durable id"
+            )
+        return inspection
 
     async def prepare_intercepted_followup_submit_recovery(
         self,

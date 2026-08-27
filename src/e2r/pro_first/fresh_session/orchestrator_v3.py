@@ -984,6 +984,8 @@ class FreshSessionOrchestratorV3:
             row
             for row in prior
             if row.status == ResearchPassStatus.FAILED_HARD.value
+            and str(row.detail.get("failure_domain") or "PROVIDER")
+            == "PROVIDER"
             and (
                 row.pass_input_hash == provider_failure_root_input_hash
                 or str(
@@ -1019,6 +1021,52 @@ class FreshSessionOrchestratorV3:
                         "Do not repeat already completed routes. Use the "
                         "failure feedback, finish the requested structured "
                         "dossier, and preserve unresolved evidence as pending."
+                    ),
+                },
+            }
+            logical_input_hash = canonical_hash(
+                {"pass_name": pass_name, "context": context}
+            )
+        transport_replacement_root_input_hash = logical_input_hash
+        unpersisted_same_context = tuple(
+            row
+            for row in prior
+            if row.status == ResearchPassStatus.FAILED_HARD.value
+            and str(row.detail.get("failure_domain") or "") == "TRANSPORT"
+            and (
+                row.pass_input_hash == transport_replacement_root_input_hash
+                or str(
+                    row.detail.get("transport_failure_root_input_hash") or ""
+                )
+                == transport_replacement_root_input_hash
+            )
+        )
+        if len(unpersisted_same_context) >= 2:
+            raise FreshSessionBoundaryError(
+                "same fresh V3 context failed server persistence twice; "
+                "automatic repetition is blocked"
+            )
+        if unpersisted_same_context:
+            failed_transport = unpersisted_same_context[-1]
+            context["pass_inputs"] = {
+                **dict(context.get("pass_inputs") or {}),
+                "transport_persistence_feedback": {
+                    "supersedes_unpersisted_pass_id": failed_transport.pass_id,
+                    "failure_class": str(
+                        failed_transport.detail.get("failure_class")
+                        or "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED"
+                    ),
+                    "server_persistence_failure_evidence_hash": str(
+                        failed_transport.detail.get(
+                            "server_persistence_failure_evidence_hash"
+                        )
+                        or ""
+                    ),
+                    "replacement_ordinal": 1,
+                    "instruction": (
+                        "This is a new exactly-once pass replacing a prior "
+                        "turn that never persisted in the public conversation. "
+                        "Preserve the same research scope and structured output."
                     ),
                 },
             }
@@ -1102,6 +1150,16 @@ class FreshSessionOrchestratorV3:
                         if failed_same_context
                         else None
                     ),
+                    "transport_replacement_root_input_hash": (
+                        transport_replacement_root_input_hash
+                        if unpersisted_same_context
+                        else None
+                    ),
+                    "supersedes_unpersisted_pass_id": (
+                        unpersisted_same_context[-1].pass_id
+                        if unpersisted_same_context
+                        else None
+                    ),
                     "score_authority": False,
                     "stage_authority": False,
                 },
@@ -1150,6 +1208,18 @@ class FreshSessionOrchestratorV3:
         """Expose the shared proven-pre-dispatch recovery to fresh V3."""
 
         return await self.followup_transport.resume_intercepted_followup_submit(
+            plan,
+            adapter,
+        )
+
+    async def audit_submitted_followup_persistence(
+        self,
+        plan: FollowupPassPlan,
+        adapter: ChatGPTWebAdapter,
+    ):
+        """Expose the shared fresh public-UI persistence audit."""
+
+        return await self.followup_transport.audit_submitted_followup_persistence(
             plan,
             adapter,
         )

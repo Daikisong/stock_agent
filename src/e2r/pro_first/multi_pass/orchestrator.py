@@ -7,6 +7,7 @@ from typing import Any, Mapping, Sequence
 
 from ..browser.protocol import (
     BrowserInspection,
+    BrowserSubmittedTurnPersistence,
     BrowserUIState,
     ChatGPTWebAdapter,
     PreparedFollowupPass,
@@ -54,6 +55,13 @@ class ScopedFollowupProof:
 class FollowupSubmitResult:
     research_pass: ResearchPassRecord
     inspection: BrowserInspection
+
+
+@dataclass(frozen=True)
+class FollowupPersistenceAuditResult:
+    research_pass: ResearchPassRecord
+    observation: BrowserSubmittedTurnPersistence
+    sealed_unpersisted: bool
 
 
 class ProMultiPassResearchOrchestrator:
@@ -512,14 +520,33 @@ class ProMultiPassResearchOrchestrator:
                 )
             if inspection.conversation_id != claimed.conversation_id:
                 raise RuntimeError("follow-up response moved to another conversation")
-        except Exception as error:
-            self.ledger.mark_transport_pending(
-                claimed.pass_id,
-                reason=f"{type(error).__name__}: {error}",
+            persistence = await adapter.inspect_submitted_turn_persistence(
+                conversation_id=claimed.conversation_id,
+                job_id=claimed.job_id,
+                pass_id=claimed.pass_id,
+                parent_pass_id=claimed.parent_pass_id,
             )
+            durable = self.ledger.record_server_persistence_observation(
+                claimed.pass_id,
+                observation=persistence,
+            )
+            if not persistence.persistence_confirmed:
+                raise FollowupSubmitBlocked(
+                    "fresh public conversation did not persist the exact "
+                    f"follow-up turn: observation_id={persistence.observation_id}"
+                )
+        except Exception as error:
+            current = self.ledger.get_pass(claimed.pass_id)
+            if current.status in {
+                ResearchPassStatus.SUBMITTING.value,
+                ResearchPassStatus.RESEARCH_RUNNING.value,
+            }:
+                self.ledger.mark_transport_pending(
+                    claimed.pass_id,
+                    reason=f"{type(error).__name__}: {error}",
+                )
             raise
-        running = self.ledger.mark_running(claimed.pass_id)
-        return FollowupSubmitResult(research_pass=running, inspection=inspection)
+        return FollowupSubmitResult(research_pass=durable, inspection=inspection)
 
     def complete_followup(
         self,
@@ -581,11 +608,79 @@ class ProMultiPassResearchOrchestrator:
             raise FollowupSubmitBlocked(
                 "intercepted recovery did not prove the exact conversation running"
             )
-        running = self.ledger.confirm_intercepted_submit_dispatched(
+        persistence = await adapter.inspect_submitted_turn_persistence(
+            conversation_id=current.conversation_id,
+            job_id=current.job_id,
+            pass_id=current.pass_id,
+            parent_pass_id=current.parent_pass_id,
+        )
+        if not persistence.persistence_confirmed:
+            self.ledger.record_server_persistence_observation(
+                current.pass_id,
+                observation=persistence,
+            )
+            raise FollowupSubmitBlocked(
+                "intercepted click produced only optimistic local UI; "
+                f"fresh conversation lacks the pass: {persistence.observation_id}"
+            )
+        self.ledger.confirm_intercepted_submit_dispatched(
             current.pass_id,
             prior_failure_hash=failure_hash,
         )
+        running = self.ledger.record_server_persistence_observation(
+            current.pass_id,
+            observation=persistence,
+        )
         return FollowupSubmitResult(research_pass=running, inspection=inspection)
+
+    async def audit_submitted_followup_persistence(
+        self,
+        plan: FollowupPassPlan,
+        adapter: ChatGPTWebAdapter,
+    ) -> FollowupPersistenceAuditResult:
+        """Re-audit one already-clicked pass without preparing or submitting."""
+
+        current = self.ledger.get_pass(plan.research_pass.pass_id)
+        if (
+            current.submit_count != 1
+            or current.status
+            not in {
+                ResearchPassStatus.RESEARCH_RUNNING.value,
+                ResearchPassStatus.TRANSPORT_PENDING.value,
+            }
+            or not current.parent_pass_id
+        ):
+            raise FollowupSubmitBlocked(
+                "server-persistence audit requires one claimed unsnapshotted follow-up"
+            )
+        observation = await adapter.inspect_submitted_turn_persistence(
+            conversation_id=current.conversation_id,
+            job_id=current.job_id,
+            pass_id=current.pass_id,
+            parent_pass_id=current.parent_pass_id,
+        )
+        updated = self.ledger.record_server_persistence_observation(
+            current.pass_id,
+            observation=observation,
+        )
+        sealed = False
+        if (
+            not observation.persistence_confirmed
+            and int(
+                updated.detail.get(
+                    "server_persistence_absence_confirmation_count"
+                )
+                or 0
+            )
+            >= 2
+        ):
+            updated = self.ledger.seal_unpersisted_dispatch(current.pass_id)
+            sealed = True
+        return FollowupPersistenceAuditResult(
+            research_pass=updated,
+            observation=observation,
+            sealed_unpersisted=sealed,
+        )
 
     def _job_conversation(self, job_id: str) -> str:
         conversation_id = self.store.get_job(job_id).conversation_id
@@ -636,6 +731,7 @@ def _reject_scope_expansion_inputs(value: Any, path: tuple[str, ...] = ()) -> No
 
 __all__ = [
     "FollowupSubmitResult",
+    "FollowupPersistenceAuditResult",
     "ProMultiPassResearchOrchestrator",
     "ScopedFollowupProof",
 ]

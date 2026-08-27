@@ -133,6 +133,7 @@ class ExactlyOnceSubmitCoordinator:
             idempotency_key=f"submit-claimed:{job_id}",
         )
         proof = self._proof_from_claimed_job(claimed)
+        persistence = None
         try:
             inspection = await adapter.submit_once(proof)
             if inspection.state is not BrowserUIState.RESEARCH_RUNNING:
@@ -145,7 +146,38 @@ class ExactlyOnceSubmitCoordinator:
                 and claimed.conversation_id != inspection.conversation_id
             ):
                 raise RuntimeError("conversation changed to an unrelated id after submit")
+            durable_conversation_id = (
+                inspection.conversation_id or claimed.conversation_id
+            )
+            if not durable_conversation_id:
+                raise RuntimeError(
+                    "send click did not produce a conversation for server persistence proof"
+                )
+            persistence = await adapter.inspect_submitted_turn_persistence(
+                conversation_id=durable_conversation_id,
+                job_id=claimed.job_id,
+            )
+            if not persistence.persistence_confirmed:
+                raise RuntimeError(
+                    "fresh public conversation did not persist the exact initial "
+                    f"user turn: observation_id={persistence.observation_id}, "
+                    f"missing_markers={list(persistence.missing_markers)}"
+                )
         except Exception as error:
+            persistence_payload = (
+                {
+                    "server_persistence_observation_id": persistence.observation_id,
+                    "server_persistence_confirmed": (
+                        persistence.persistence_confirmed
+                    ),
+                    "server_persistence_user_turn_id": persistence.user_turn_id,
+                    "server_persistence_missing_markers": list(
+                        persistence.missing_markers
+                    ),
+                }
+                if persistence is not None
+                else {}
+            )
             self.store.transition(
                 job_id,
                 expected_version=claimed.state_version,
@@ -156,6 +188,7 @@ class ExactlyOnceSubmitCoordinator:
                     "submit_count": 1,
                     "error_class": type(error).__name__,
                     "automatic_resubmit_allowed": False,
+                    **persistence_payload,
                 },
                 updates={
                     "last_error_class": type(error).__name__,
@@ -172,6 +205,9 @@ class ExactlyOnceSubmitCoordinator:
             payload={
                 "submit_count": 1,
                 "conversation_id": inspection.conversation_id or claimed.conversation_id,
+                "server_persistence_observation_id": persistence.observation_id,
+                "server_persistence_confirmed": True,
+                "server_persistence_user_turn_id": persistence.user_turn_id,
             },
             updates={
                 "conversation_id": inspection.conversation_id or claimed.conversation_id,

@@ -19,6 +19,7 @@ from .models import (
     TransportPendingDecision,
 )
 from .orchestrator import (
+    FollowupPersistenceAuditResult,
     FollowupSubmitResult,
     ProMultiPassResearchOrchestrator,
     ScopedFollowupProof,
@@ -27,6 +28,7 @@ from .orchestrator import (
 __all__ = [
     "BOUNDED_FOLLOWUP_PASS_NAMES",
     "FollowupPassPlan",
+    "FollowupPersistenceAuditResult",
     "FollowupSubmitBlocked",
     "FollowupSubmitResult",
     "EffectiveDossierSnapshot",

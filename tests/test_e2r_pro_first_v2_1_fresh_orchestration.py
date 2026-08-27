@@ -13,6 +13,8 @@ from e2r.pro_first.approval import ProApprovalService
 from e2r.pro_first.browser.protocol import (
     BrowserInspection,
     BrowserResultSnapshot,
+    BrowserSubmittedTurnPersistence,
+    BrowserUIIncompatible,
     BrowserUIState,
     PreparedBrowserJob,
     PreparedFollowupPass,
@@ -73,6 +75,7 @@ class _FreshAdapter:
         self.prepared_initial: PreparedBrowserJob | None = None
         self.prepared_followup: PreparedFollowupPass | None = None
         self.submit_count = 0
+        self.persistence_count = 0
 
     async def ensure_logged_in(self) -> BrowserInspection:
         return self._inspection(BrowserUIState.READY_FOR_INPUT)
@@ -117,6 +120,48 @@ class _FreshAdapter:
         if self.prepared_followup is None:
             self.current_conversation_id = self.submitted_conversation_id
         return self._inspection(BrowserUIState.RESEARCH_RUNNING)
+
+    async def inspect_submitted_turn_persistence(
+        self,
+        *,
+        conversation_id: str,
+        job_id: str,
+        pass_id: str | None = None,
+        parent_pass_id: str | None = None,
+    ) -> BrowserSubmittedTurnPersistence:
+        self.persistence_count += 1
+        required = [f"[[E2R_PRO_JOB_ID:{job_id}]]"]
+        if pass_id is not None:
+            required.extend(
+                (
+                    f"[[E2R_PRO_PASS_ID:{pass_id}]]",
+                    f"[[E2R_PRO_PARENT_PASS_ID:{parent_pass_id}]]",
+                )
+            )
+        return BrowserSubmittedTurnPersistence(
+            observation_id=f"PROSERVERVIEW-FRESH-{self.persistence_count}",
+            observed_at="2026-08-25T01:02:03Z",
+            conversation_id=conversation_id,
+            job_id=job_id,
+            run_id=None,
+            pass_id=pass_id,
+            parent_pass_id=parent_pass_id,
+            persistence_confirmed=True,
+            user_turn_id=f"fresh-user-{self.persistence_count}",
+            required_markers=tuple(required),
+            missing_markers=(),
+            observed_user_turn_count=1,
+            fresh_page_url=f"https://chatgpt.com/c/{conversation_id}",
+            fresh_page_loaded=True,
+        )
+
+    async def open_exact_conversation_without_submit(
+        self,
+        *,
+        conversation_id: str,
+    ) -> BrowserInspection:
+        self.current_conversation_id = conversation_id
+        return self._inspection(BrowserUIState.READY_FOR_INPUT)
 
     async def prepare_intercepted_followup_submit_recovery(
         self,
@@ -226,6 +271,46 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         )
 
         self.assertEqual(source, "CURRENT_EXACT_CONVERSATION")
+        self.assertEqual(adapter.submit_count, 0)
+
+    async def test_library_page_opens_exact_durable_url_without_submit(self) -> None:
+        conversation_id = "fresh-conversation-from-library"
+
+        class LibraryAdapter(_FreshAdapter):
+            async def ensure_logged_in(self) -> BrowserInspection:
+                if self.current_conversation_id is None:
+                    raise BrowserUIIncompatible("composer absent on Library")
+                return self._inspection(BrowserUIState.READY_FOR_INPUT)
+
+        adapter = LibraryAdapter(submitted_conversation_id=conversation_id)
+
+        source = await _ensure_durable_conversation_visible(
+            adapter,
+            job_id=self.fresh_job.job_id,
+            run_id=str(self.built.packet_payload["run_id"]),
+            durable_conversation_id=conversation_id,
+            search_terms=(conversation_id, self.fresh_job.company_name),
+        )
+
+        self.assertEqual(source, "PUBLIC_EXACT_CONVERSATION_URL")
+        self.assertEqual(adapter.current_conversation_id, conversation_id)
+        self.assertEqual(adapter.submit_count, 0)
+
+    async def test_other_open_chat_uses_exact_durable_url_without_history(self) -> None:
+        conversation_id = "fresh-conversation-durable-target"
+        adapter = _FreshAdapter(submitted_conversation_id=conversation_id)
+        adapter.current_conversation_id = "unrelated-open-conversation"
+
+        source = await _ensure_durable_conversation_visible(
+            adapter,
+            job_id=self.fresh_job.job_id,
+            run_id=str(self.built.packet_payload["run_id"]),
+            durable_conversation_id=conversation_id,
+            search_terms=("ignored mutable history hint",),
+        )
+
+        self.assertEqual(source, "PUBLIC_EXACT_CONVERSATION_URL")
+        self.assertEqual(adapter.current_conversation_id, conversation_id)
         self.assertEqual(adapter.submit_count, 0)
 
     async def test_fresh_wrapper_resumes_proven_intercepted_claim(self) -> None:
@@ -909,6 +994,116 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         with self.assertRaisesRegex(
             FreshSessionBoundaryError,
             "same fresh V3 context failed twice",
+        ):
+            self.orchestrator.plan_v3_followup(
+                self.built,
+                pass_name="PUBLIC_GAP_CLOSURE",
+                latest_dossier_digest=digest,
+                unresolved_question_state=unresolved,
+                pass_inputs=inputs,
+            )
+
+    async def test_unpersisted_turn_gets_one_distinct_replacement_then_blocks(self) -> None:
+        adapter = await self._prepare_and_approve("fresh-conversation-transport")
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="a" * 64,
+        )
+        digest = {
+            "dossier_hash": "b" * 64,
+            "mandatory_question_nonterminal_count": 1,
+        }
+        unresolved = (
+            {
+                "question_family_id": self.built.prompt.mandatory_question_ids[0],
+                "deterministic_status": "PUBLIC_SEARCHABLE",
+            },
+        )
+        inputs = {"research_gap_context_hash": "c" * 64}
+
+        def absence(pass_id: str, parent_pass_id: str, ordinal: int):
+            return BrowserSubmittedTurnPersistence(
+                observation_id=f"PROSERVERVIEW-ABSENT-{pass_id}-{ordinal}",
+                observed_at=f"2026-08-25T01:02:0{ordinal}Z",
+                conversation_id="fresh-conversation-transport",
+                job_id=self.fresh_job.job_id,
+                run_id=str(self.built.packet_payload["run_id"]),
+                pass_id=pass_id,
+                parent_pass_id=parent_pass_id,
+                persistence_confirmed=False,
+                user_turn_id=None,
+                required_markers=(
+                    f"[[E2R_PRO_JOB_ID:{self.fresh_job.job_id}]]",
+                    f"[[E2R_PRO_PASS_ID:{pass_id}]]",
+                    f"[[E2R_PRO_PARENT_PASS_ID:{parent_pass_id}]]",
+                ),
+                missing_markers=(f"[[E2R_PRO_PASS_ID:{pass_id}]]",),
+                observed_user_turn_count=4,
+                fresh_page_url=(
+                    "https://chatgpt.com/c/fresh-conversation-transport"
+                ),
+                fresh_page_loaded=True,
+            )
+
+        first, _ = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest=digest,
+            unresolved_question_state=unresolved,
+            pass_inputs=inputs,
+        )
+        self.orchestrator.ledger.mark_prepared(first.research_pass.pass_id)
+        first_claimed = self.orchestrator.ledger.claim_submit(
+            first.research_pass.pass_id
+        )
+        for ordinal in (1, 2):
+            self.orchestrator.ledger.record_server_persistence_observation(
+                first_claimed.pass_id,
+                observation=absence(
+                    first_claimed.pass_id,
+                    str(first_claimed.parent_pass_id),
+                    ordinal,
+                ),
+            )
+        first_failed = self.orchestrator.ledger.seal_unpersisted_dispatch(
+            first_claimed.pass_id
+        )
+
+        replacement, compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest=digest,
+            unresolved_question_state=unresolved,
+            pass_inputs=inputs,
+        )
+
+        self.assertNotEqual(replacement.research_pass.pass_id, first_failed.pass_id)
+        self.assertEqual(
+            replacement.research_pass.detail["supersedes_unpersisted_pass_id"],
+            first_failed.pass_id,
+        )
+        self.assertIn("transport_persistence_feedback", compiled.prompt_text)
+        self.assertEqual(first_failed.submit_count, 1)
+
+        self.orchestrator.ledger.mark_prepared(replacement.research_pass.pass_id)
+        second_claimed = self.orchestrator.ledger.claim_submit(
+            replacement.research_pass.pass_id
+        )
+        for ordinal in (1, 2):
+            self.orchestrator.ledger.record_server_persistence_observation(
+                second_claimed.pass_id,
+                observation=absence(
+                    second_claimed.pass_id,
+                    str(second_claimed.parent_pass_id),
+                    ordinal,
+                ),
+            )
+        self.orchestrator.ledger.seal_unpersisted_dispatch(second_claimed.pass_id)
+
+        with self.assertRaisesRegex(
+            FreshSessionBoundaryError,
+            "failed server persistence twice",
         ):
             self.orchestrator.plan_v3_followup(
                 self.built,

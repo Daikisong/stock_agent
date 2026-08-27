@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 from e2r.pro_first.browser.protocol import (
     BrowserInspection,
+    BrowserSubmittedTurnPersistence,
     BrowserUIState,
     PreparedFollowupPass,
 )
@@ -37,10 +38,17 @@ INTERCEPTED_CLICK_REASON = (
 
 
 class _FakeSameConversationAdapter:
-    def __init__(self, conversation_id: str) -> None:
+    def __init__(
+        self,
+        conversation_id: str,
+        *,
+        persistence_results: tuple[bool, ...] = (True,),
+    ) -> None:
         self.conversation_id = conversation_id
+        self.persistence_results = persistence_results
         self.prepared: PreparedFollowupPass | None = None
         self.submit_count = 0
+        self.persistence_count = 0
         self.proofs: list[object] = []
 
     async def prepare_followup_without_submit(self, **kwargs) -> PreparedFollowupPass:
@@ -76,6 +84,43 @@ class _FakeSameConversationAdapter:
             prompt_ready=False,
             send_ready=False,
             stop_visible=True,
+        )
+
+    async def inspect_submitted_turn_persistence(
+        self,
+        *,
+        conversation_id: str,
+        job_id: str,
+        pass_id: str | None = None,
+        parent_pass_id: str | None = None,
+    ) -> BrowserSubmittedTurnPersistence:
+        self.persistence_count += 1
+        required = [f"[[E2R_PRO_JOB_ID:{job_id}]]"]
+        if pass_id is not None:
+            required.extend(
+                (
+                    f"[[E2R_PRO_PASS_ID:{pass_id}]]",
+                    f"[[E2R_PRO_PARENT_PASS_ID:{parent_pass_id}]]",
+                )
+            )
+        confirmed = self.persistence_results[
+            min(self.persistence_count - 1, len(self.persistence_results) - 1)
+        ]
+        return BrowserSubmittedTurnPersistence(
+            observation_id=f"PROSERVERVIEW-FAKE-{self.persistence_count}",
+            observed_at="2026-08-22T01:02:03Z",
+            conversation_id=conversation_id,
+            job_id=job_id,
+            run_id=None,
+            pass_id=pass_id,
+            parent_pass_id=parent_pass_id,
+            persistence_confirmed=confirmed,
+            user_turn_id=(f"user-turn-{self.submit_count}" if confirmed else None),
+            required_markers=tuple(required),
+            missing_markers=(() if confirmed else tuple(required)),
+            observed_user_turn_count=(1 if confirmed else 0),
+            fresh_page_url=f"https://chatgpt.com/c/{conversation_id}",
+            fresh_page_loaded=True,
         )
 
     async def prepare_intercepted_followup_submit_recovery(
@@ -263,6 +308,62 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
                 await browser.close()
                 await playwright.stop()
 
+    async def test_stale_prior_pass_marker_cannot_confirm_current_pass(self) -> None:
+        from playwright.async_api import async_playwright
+
+        plan = self._public_plan()
+        old_pass_id = "PROPASS-stale-prior-turn"
+        parent_pass_id = str(plan.research_pass.parent_pass_id)
+        with MockChatGPTServer() as server:
+            playwright = await async_playwright().start()
+            browser = await playwright.chromium.launch(headless=True)
+            try:
+                page = await browser.new_page()
+                await page.goto(
+                    f"{server.base_url}/c/{self.scope.conversation_id}",
+                    wait_until="domcontentloaded",
+                )
+                stale_prompt = "\n".join(
+                    (
+                        f"[[E2R_PRO_JOB_ID:{self.job.job_id}]]",
+                        f"[[E2R_PRO_PASS_ID:{old_pass_id}]]",
+                        f"[[E2R_PRO_PARENT_PASS_ID:{parent_pass_id}]]",
+                    )
+                )
+                await page.locator("#prompt-textarea").fill(stale_prompt)
+                await page.locator("#composer-submit-button").click()
+                adapter = PlaywrightChatGPTWebAdapter(
+                    page,
+                    server_persistence_max_polls=2,
+                    server_persistence_poll_interval_ms=10,
+                )
+                original_page_count = len(page.context.pages)
+
+                stale = await adapter.inspect_submitted_turn_persistence(
+                    conversation_id=self.scope.conversation_id,
+                    job_id=self.job.job_id,
+                    pass_id=old_pass_id,
+                    parent_pass_id=parent_pass_id,
+                )
+                current = await adapter.inspect_submitted_turn_persistence(
+                    conversation_id=self.scope.conversation_id,
+                    job_id=self.job.job_id,
+                    pass_id=plan.research_pass.pass_id,
+                    parent_pass_id=parent_pass_id,
+                )
+
+                self.assertTrue(stale.persistence_confirmed)
+                self.assertFalse(current.persistence_confirmed)
+                self.assertIn(
+                    f"[[E2R_PRO_PASS_ID:{plan.research_pass.pass_id}]]",
+                    current.missing_markers,
+                )
+                self.assertEqual(len(page.context.pages), original_page_count)
+                self.assertEqual(await page.evaluate("window.__submitCount"), 1)
+            finally:
+                await browser.close()
+                await playwright.stop()
+
     async def test_browser_recovers_modal_intercepted_click_under_same_claim(
         self,
     ) -> None:
@@ -439,6 +540,63 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
         await self.orchestrator.submit_followup(plan, adapter)
         with self.assertRaises(FollowupSubmitBlocked):
             await self.orchestrator.submit_followup(plan, adapter)
+        self.assertEqual(adapter.submit_count, 1)
+
+    async def test_optimistic_followup_without_server_turn_stays_pending(self) -> None:
+        plan = self._public_plan()
+        adapter = _FakeSameConversationAdapter(
+            self.scope.conversation_id,
+            persistence_results=(False, False),
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+
+        with self.assertRaisesRegex(FollowupSubmitBlocked, "fresh public"):
+            await self.orchestrator.submit_followup(plan, adapter)
+
+        pending = self.orchestrator.ledger.get_pass(plan.research_pass.pass_id)
+        self.assertEqual(pending.status, ResearchPassStatus.TRANSPORT_PENDING.value)
+        self.assertEqual(pending.submit_count, 1)
+        self.assertEqual(
+            pending.detail["server_persistence_absence_confirmation_count"],
+            1,
+        )
+        self.assertEqual(adapter.submit_count, 1)
+        with self.assertRaises(FollowupSubmitBlocked):
+            await self.orchestrator.submit_followup(plan, adapter)
+        self.assertEqual(adapter.submit_count, 1)
+
+    async def test_two_fresh_absences_seal_without_resubmitting_same_pass(self) -> None:
+        plan = self._public_plan()
+        adapter = _FakeSameConversationAdapter(
+            self.scope.conversation_id,
+            persistence_results=(False, False),
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        with self.assertRaises(FollowupSubmitBlocked):
+            await self.orchestrator.submit_followup(plan, adapter)
+
+        audited = await self.orchestrator.audit_submitted_followup_persistence(
+            plan,
+            adapter,
+        )
+
+        self.assertTrue(audited.sealed_unpersisted)
+        self.assertEqual(audited.research_pass.status, ResearchPassStatus.FAILED_HARD.value)
+        self.assertEqual(
+            audited.research_pass.detail["failure_domain"],
+            "TRANSPORT",
+        )
+        self.assertEqual(
+            audited.research_pass.detail["failure_class"],
+            "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED",
+        )
+        self.assertEqual(adapter.submit_count, 1)
+        self.assertEqual(adapter.persistence_count, 2)
+        with self.assertRaises(FollowupSubmitBlocked):
+            await self.orchestrator.audit_submitted_followup_persistence(
+                plan,
+                adapter,
+            )
         self.assertEqual(adapter.submit_count, 1)
 
     def test_claimed_transport_timeout_is_recovery_only_and_can_complete(self) -> None:

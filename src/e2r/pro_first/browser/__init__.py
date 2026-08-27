@@ -5,6 +5,7 @@ from .completion_monitor import BrowserCompletionMonitor, ProCompletionStateServ
 from .protocol import (
     BrowserCaptureRequest,
     BrowserResultSnapshot,
+    BrowserSubmittedTurnPersistence,
     BrowserUIState,
     ChatGPTWebAdapter,
     PreparedBrowserJob,
@@ -17,6 +18,7 @@ __all__ = [
     "BrowserCaptureRequest",
     "BrowserCompletionMonitor",
     "BrowserResultSnapshot",
+    "BrowserSubmittedTurnPersistence",
     "BrowserUIState",
     "ChatGPTWebAdapter",
     "PlaywrightChatGPTWebAdapter",
