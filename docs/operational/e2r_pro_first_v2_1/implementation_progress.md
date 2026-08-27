@@ -2778,3 +2778,127 @@ production static audit                      PASS / critical 0
 직전 pushed head `6eb9467c`의 필수 GitHub Actions 두 workflow도 SUCCESS이고 PR #7은 계속
 Draft/open/mergeable이다. 이 시점은 전체 목표 완료가 아니라 pass 15의 정확한 current-turn JSON을
 기다리는 중간 checkpoint다.
+
+#### pass 15 실캡처와 append-only 과거 경로의 현재 상태 오염 수리
+
+pass 15는 현재 assistant turn의 JSON을 `DOWNLOAD_JSON`으로 직접 받았다. submit은 처음 전송한
+1회뿐이고 자동 재전송은 없었다.
+
+```text
+pass id / ordinal                 PROPASS-b0ed66f61e76c999cf8555f1 / 15
+capture source                    DOWNLOAD_JSON
+question                          R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q01 한 개
+raw question status               EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH
+current route receipts            4개 / 모두 SUCCESS
+new economic-id fact              1개
+accepted fact                     50 -> 51
+verification query/search         0 / 0
+```
+
+새 fact `PROFACT-P15-R13-MAJOR-CLIENT-DISCUSSIONS-CONTINUE`는 2026년 2분기 issuer 원문의
+“major industry clients와 추가 논의를 계속한다”는 문장에 exact match하여 deterministic verifier가
+ACCEPTED했다. pass 15의 raw question은 support에 현재 검증 roster만 사용하고, 현재 4개 route도 모두
+정상이었다. 즉 Pro 응답 자체는 마지막 hard-break 질문을 정상적으로 평가했다.
+
+그런데 effective question의 `search_route_receipt_ids`는 삭제 불가능한 감사 장부라 pass 3의 과거
+`PARSER_PENDING` receipt도 함께 보존한다. 기존 delta projection과 strict dossier validator가 이
+누적 전체를 다시 현재 route처럼 검사하면서 정상 pass 15를 `PARSER_PENDING`으로 되돌렸다. 쉬운
+예로 3회차에 문서를 못 연 사실은 장부에 남아야 하지만, 15회차에 다시 연 네 경로가 모두 성공했으면
+현재 상태는 15회차 네 경로로 판단해야 한다.
+
+이를 다음처럼 분리했다.
+
+```text
+감사 ledger              과거와 현재 route id를 append-only로 모두 보존
+현재 provider/parser 판정 최신 research pass의 route cohort 전체만 사용
+같은 최신 pass 안의 실패   성공 한 건으로 숨기지 않고 계속 차단
+과거 rejected fact 참조    새 공개검색이 아니라 verifier repair로 이동
+```
+
+공통 `latest_question_route_cohort` 선택기를 delta projection, strict dossier validator, saturation
+route adequacy가 함께 사용하도록 했다. 현재 응답이 true delta이든 누적 dossier이든 마지막 pass의
+경로 묶음으로 같은 판정을 내린다. latest pass에 성공과 실패가 같이 있으면 전체가 정상일 때까지
+차단하므로 fail-closed 성질도 유지한다.
+
+실제 pass 14 effective dossier와 pass 15 incoming JSON을 수정 엔진에 그대로 재생한 결과는 다음과
+같다.
+
+```text
+effective route receipt count     29 (과거 감사 기록 삭제 없음)
+question status                   EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH
+adequate_search_proven            true
+route-truth demotion              없음
+dossier research status           COMPLETE_WITH_LIKELY_NONPUBLIC_REMAINDER
+strict validation                 PASS
+```
+
+회귀 테스트는 과거 parser 실패+현재 성공, 최신 parser 실패, 같은 최신 cohort의 일부 실패, adequately
+searched absence의 과거 rejected fact 참조를 각각 분리해 검증한다. V3 delta merge·V2 saturation·fresh
+orchestration 84/84와 V2 dossier status 19/19가 통과했다.
+
+pass 16 `PROPASS-851f67ee70d8dd5cd0a394cf`는 수정 전에 이미 같은 conversation에 정확히 한 번
+제출돼 현재 Pro 연구 중이다. 로컬 감시기만 최신 코드로 재시작했고 두 번 모두
+`browser_submit_delta=0`, `submit_count=1`, `automatic_resubmit_allowed=false`를 확인했다. 서버의
+연구 생성은 중단하거나 다시 제출하지 않았다. 완료 뒤 최신 cohort 판정과 verifier repair routing을
+실제 결과로 다시 확인한다.
+
+직전 pushed head `dd36c073`의 GitHub Actions는 E2R Pro-first verification 두 run과 E2R v6
+operational cutover verification이 모두 SUCCESS다. 이 섹션의 cohort 수정은 아직 로컬 검증 중이며,
+pass 16 회수와 receipt 작성 뒤 별도 한글 commit으로 push한다.
+
+#### pass 16 terminal closure와 48-candidate compact verifier repair
+
+pass 16도 현재 turn JSON을 직접 다운로드했고, 새 fact 없이 현재 route 5개를 모두 SUCCESS로
+정리했다. latest cohort 규칙을 적용한 실제 saturation 결과는 다음과 같다.
+
+```text
+mandatory question                 28
+nonterminal mandatory               0
+provider/parser core pending         0
+source-linkage incomplete            0
+lifecycle hard-break pending         0
+accepted fact                       51
+deterministic research status        NEEDS_VERIFIER_REPAIR
+```
+
+따라서 공개조사를 계속하는 pass 17은 만들지 않았다. 다만 counter router가 question의 현재 상태가
+아니라 `materiality=HARD_BREAK`만 보고 terminal hard-break 22개까지 counter 검색 대상으로 다시
+모으는 별도 결함이 있었다. hard-break는 중요도이지 미종료 상태가 아니다. 이제 실제
+`CONTRADICTED_UNRESOLVED && terminal=false` 또는 lifecycle pending인 질문만 counter follow-up에
+들어간다.
+
+verifier에는 question 기준 18개 수리가 남지만, rejected candidate 기준으로는 48개다. 기존 compact
+compiler는 후보마다 긴 atomic fact 필드명과 preflight object를 반복하고 source group마다 최대
+12,000자를 고정해 100,000자 상한을 넘었다. 상한을 올리지 않고 다음처럼 무손실 compact했다.
+
+```text
+atomic fact field name       context에 field_order 한 번만 기록
+candidate fact semantics     같은 순서의 values 배열로 보존
+고정 verifier_preflight      prompt 계약에 한 번만 기록
+source text                  candidate와 literal overlap이 큰 원문 window
+출력 schema/context          공백 indent 없는 canonical compact JSON
+크기 조절                    60,000 target을 향해 source window를 반감,
+                             단 100,000 hard limit 안에서 1회 pass는 유지
+```
+
+실제 48개 candidate와 17개 source group을 재컴파일한 결과는 88,559자였고, 실제 pass id를 넣어
+ledger에 기록된 전송 prompt는 88,571자다. full dossier 재출력, local-normalizable 전송,
+source-representation 전송은 모두 0이다. literal candidate excerpt는 28개가 보존됐다. 나머지는
+verifier가 원문을 확보하지 못한 후보이므로 Pro가 quote를 만들지 않고 WITHDRAW할 수 있게 빈 값으로
+남는다.
+
+```text
+repair pass id          PROPASS-e28bda224af4e7ceb393f04a
+pass ordinal/name       17 / VERIFIER_REPAIR
+candidate/group         48 / 17
+prompt chars            88,571 (< 100,000)
+submit count            1
+score/Stage authority   false / false
+current browser state   RESEARCH_RUNNING
+```
+
+관련 V3 repair·fresh orchestration·dossier·saturation 모듈은 119/119 PASS다. Pro-first, Pro-first V2,
+fresh efficiency, production static audit도 모두 PASS/critical 0이다. checkpoint receipt는
+`p11_pass15_pass16_route_cohort_and_compact_repair_receipt.json`이며 payload hash는
+`0e79d1ed8fc85995373df2c1e544d982c78ff3f210c7a47d741b0f781e9f2fdd`다. 전체 목표 완료가 아니라
+pass 17 결과의 deterministic 재검문을 기다리는 중간 checkpoint다.

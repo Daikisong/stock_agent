@@ -35,6 +35,7 @@ from e2r.pro_first.fresh_session.live_canary_v3 import (
 from e2r.pro_first.canary.live_v2 import _research_semantic_hash
 from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
     _context_already_attempted,
+    _counter_followup_question_ids,
     _followup_context,
     _question_ids_without_completed_context,
     _question_route_progress_state,
@@ -190,6 +191,31 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(
             self.store.get_job(self.old_job.job_id).superseded_by_fresh_job_id,
             self.fresh_job.job_id,
+        )
+
+    def test_terminal_hard_break_materiality_does_not_reopen_counter_search(
+        self,
+    ) -> None:
+        terminal_hard_break = SimpleNamespace(
+            question_family_id="Q-TERMINAL-HARD-BREAK",
+            materiality="HARD_BREAK",
+            status="SUPPORTED_NON_SCORING",
+            terminal=True,
+        )
+        unresolved_counter = SimpleNamespace(
+            question_family_id="Q-UNRESOLVED-COUNTER",
+            materiality="HARD_BREAK",
+            status="CONTRADICTED_UNRESOLVED",
+            terminal=False,
+        )
+        saturation = SimpleNamespace(
+            lifecycle_hard_break_pending_ids=("Q-LIFECYCLE-PENDING",),
+            question_decisions=(terminal_hard_break, unresolved_counter),
+        )
+
+        self.assertEqual(
+            _counter_followup_question_ids(saturation),
+            ("Q-LIFECYCLE-PENDING", "Q-UNRESOLVED-COUNTER"),
         )
 
     def test_independent_cross_archetype_boundary_uses_exact_target_without_fake_old_job(

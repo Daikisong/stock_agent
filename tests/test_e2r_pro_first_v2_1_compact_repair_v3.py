@@ -161,17 +161,81 @@ class ProFirstV21CompactRepairV3Test(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "nonmaterial"):
             self._compile(classifications=[classification])
 
-    def test_prompt_hard_limit_fails_without_transport_batching(self) -> None:
+    def test_large_source_is_compacted_without_transport_batching(self) -> None:
         huge = "공식 원문 " * 20_000
         path = self.job_root / self.document_relative_path
         path.write_text(huge, encoding="utf-8")
         verification = self._verification("FACT-REJECTED")
         verification["content_hash"] = hashlib.sha256(path.read_bytes()).hexdigest()
-        with self.assertRaisesRegex(ValueError, "HARD_LIMIT_EXCEEDED"):
-            self._compile(
-                verifications=[verification],
-                maximum_group_source_text_chars=150_000,
+        compiled = self._compile(
+            verifications=[verification],
+            maximum_group_source_text_chars=150_000,
+        )
+        self.assertLess(compiled.prompt_char_count, 100_000)
+        self.assertEqual(compiled.candidate_ids, ("FACT-REJECTED",))
+        self.assertEqual(len(compiled.groups), 1)
+        self.assertIn('"original_fact_field_order"', compiled.prompt_text)
+        self.assertIn('"original_fact_values"', compiled.prompt_text)
+
+    def test_forty_eight_candidates_across_seventeen_groups_fit_one_repair(
+        self,
+    ) -> None:
+        dossier = self._dossier()
+        accepted = deepcopy(dossier["material_facts"][0])
+        rejected_template = deepcopy(dossier["material_facts"][1])
+        dossier["material_facts"] = [accepted]
+        dossier["source_documents"] = []
+        dossier["source_lineages"][0]["fact_ids"] = ["FACT-ACCEPTED"]
+        dossier["question_family_results"][0]["support_fact_ids"] = [
+            "FACT-ACCEPTED"
+        ]
+        dossier["search_route_receipts"][0]["accepted_fact_ids"] = [
+            "FACT-ACCEPTED"
+        ]
+        for source_index in range(17):
+            source = deepcopy(self._dossier()["source_documents"][0])
+            source["source_document_id"] = f"SRC-GROUP-{source_index:02d}"
+            source["canonical_url"] = f"{self.url}/group/{source_index:02d}"
+            source["opened_url"] = source["canonical_url"]
+            dossier["source_documents"].append(source)
+        candidate_ids = []
+        for index in range(48):
+            candidate_id = f"FACT-REJECTED-{index:02d}"
+            candidate_ids.append(candidate_id)
+            fact = deepcopy(rejected_template)
+            fact.update(
+                {
+                    "dossier_fact_id": candidate_id,
+                    "predicate_id": f"HBM_REPAIR_PREDICATE_{index:02d}",
+                    "statement": f"HBM repair candidate {index:02d}는 검증이 필요하다.",
+                    "source_document_id": f"SRC-GROUP-{index % 17:02d}",
+                }
             )
+            dossier["material_facts"].append(fact)
+            dossier["source_lineages"][0]["fact_ids"].append(candidate_id)
+            dossier["question_family_results"][0]["support_fact_ids"].append(
+                candidate_id
+            )
+            dossier["search_route_receipts"][0]["accepted_fact_ids"].append(
+                candidate_id
+            )
+        compiled = self._compile(
+            dossier=dossier,
+            classifications=[
+                self._classification(candidate_id)
+                for candidate_id in candidate_ids
+            ],
+            verifications=[
+                self._verification(candidate_id)
+                for candidate_id in candidate_ids
+            ],
+            maximum_group_source_text_chars=150_000,
+        )
+
+        self.assertEqual(len(compiled.groups), 17)
+        self.assertEqual(len(compiled.candidate_ids), 48)
+        self.assertLess(compiled.prompt_char_count, 100_000)
+        self.assertNotIn('"material_facts"', compiled.prompt_text)
 
     def test_withdraw_preserves_accepted_fact_and_reopens_question(self) -> None:
         dossier = self._dossier()

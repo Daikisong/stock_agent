@@ -418,6 +418,85 @@ class ProFirstV2SaturationTest(unittest.TestCase):
             "NEEDS_VERIFIER_REPAIR",
         )
 
+        # Live-shaped absence closure: the current pass contributes two normal
+        # no-new routes while the append-only question row still contains one
+        # rejected fact reference from an older pass.  Search is complete; the
+        # stale fact reference belongs to verifier repair.
+        question = self._contract_question(result["question_family_id"])
+        current_no_new_routes = []
+        for index, role in enumerate(question["required_source_roles"], 1):
+            route = {
+                "route_receipt_id": f"ROUTE-CUMULATIVE-ABSENT-{index}",
+                "pass_id": f"PASS-CUMULATIVE-ABSENT-{index}",
+                "archetype_id": ARCHETYPE,
+                "question_family_id": result["question_family_id"],
+                "gap_id": "GAP-CUMULATIVE-ABSENT",
+                "source_role_id": role,
+                "query_or_navigation_objective": f"{role} 최신 공개 자료 재확인",
+                "query_text": f"검증대상 {role} 최신 공개 자료",
+                "result_count_seen": 0,
+                "opened_source_urls": [
+                    f"https://search.example/cumulative-absent/{index}"
+                ],
+                "accepted_fact_ids": [],
+                "rejected_candidate_ids": [],
+                "provider_status": "SUCCESS",
+                "parser_status": "SUCCESS",
+                "no_new_route_reason": "현재 공개 경로에서 더 새로운 사실이 확인되지 않았다.",
+                "performed_at": f"2026-08-23T0{index}:00:00Z",
+            }
+            dossier["search_route_receipts"].append(route)
+            current_no_new_routes.append(route)
+        result.update(
+            {
+                "status": "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH",
+                "availability_class": "PUBLIC_SEARCHABLE",
+                "adequate_search_proven": True,
+                "attempted_source_role_ids": list(
+                    question["required_source_roles"]
+                ),
+                "search_route_receipt_ids": [
+                    row["route_receipt_id"] for row in current_no_new_routes
+                ],
+            }
+        )
+        provisional = self._adjudicate(dossier)
+        attempted_hash = canonical_hash(sorted(question["required_source_roles"]))
+        confirmations = tuple(
+            NoNewRouteConfirmation.from_route_receipt(
+                receipt=route,
+                stable_gap_key="CUMULATIVE-ABSENCE-INTEGRITY-REPAIR",
+                fact_snapshot_hash=provisional.fact_snapshot_hash,
+                accepted_lineage_roster_hash=(
+                    provisional.accepted_lineage_roster_hash
+                ),
+                attempted_source_roles_hash=attempted_hash,
+            )
+            for route in current_no_new_routes
+        )
+        absence_receipt = self._adjudicate(
+            dossier,
+            fixpoint_confirmations=confirmations,
+        )
+        absence_decision = _decision(
+            absence_receipt,
+            result["question_family_id"],
+        )
+        self.assertTrue(absence_decision.terminal)
+        self.assertTrue(absence_decision.route_adequacy.adequate)
+        self.assertIn(
+            "QUESTION_REFERENCES_UNVERIFIED_FACT",
+            absence_decision.failure_codes,
+        )
+        self.assertIn(
+            absence_decision.question_family_id,
+            absence_receipt.verifier_repair_pending_ids,
+        )
+        self.assertEqual(
+            absence_receipt.deterministic_research_status,
+            "NEEDS_VERIFIER_REPAIR",
+        )
+
     def test_tracked_saturation_audit_matches_current_engine(self) -> None:
         receipt = self._adjudicate()
         expected = dict(compile_saturation_audit(receipt))

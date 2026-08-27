@@ -12,16 +12,6 @@ from .question_closure import compile_question_closure_decision
 from .snapshots import compile_verified_research_snapshot
 
 
-_FACT_BACKED_TERMINAL_STATUSES = frozenset(
-    {
-        "SUPPORTED_SCORING",
-        "PARTIALLY_SUPPORTED_SCORING",
-        "SUPPORTED_NON_SCORING",
-        "COUNTER_SUPPORTED",
-        "FUTURE_EVENT_ONLY",
-    }
-)
-
 _VERIFIER_INTEGRITY_FAILURE_CODES = frozenset(
     {
         "QUESTION_REFERENCES_UNKNOWN_FACT",
@@ -155,18 +145,17 @@ class ResearchSaturationAdjudicator:
             in {"PUBLIC_SEARCHABLE", "UNKNOWN_ROUTE_NOT_YET_TESTED", "SOURCE_PENDING"}
             and row.materiality not in {"NON_MATERIAL", "MONITORING"}
         )
-        # A terminal fact-backed answer with adequate source search but broken
-        # fact/lineage provenance is verifier work, not another public web
-        # search.  This includes a cumulative question row that still points
-        # at a rejected historical candidate even when current verified facts
-        # already cover the source role.  Missing core source roles remain
-        # public acquisition gaps.  This ordering prevents an integrity defect
-        # from opening an endless sequence of Pro searches that cannot repair
-        # the immutable ledger.
+        # A terminal answer with adequate source search but broken fact/lineage
+        # provenance is verifier work, not another public web search.  This
+        # includes both fact-backed answers and an adequately searched absence
+        # whose append-only audit row still points at a rejected historical
+        # candidate.  Missing core source roles remain public acquisition gaps.
+        # This ordering prevents an integrity defect from opening an endless
+        # sequence of Pro searches that cannot repair the immutable ledger.
         integrity_repair_pending = tuple(
             row.question_family_id
             for row in decisions
-            if row.status in _FACT_BACKED_TERMINAL_STATUSES
+            if row.terminal
             and row.route_adequacy.adequate
             and not row.missing_core_source_roles
             and (

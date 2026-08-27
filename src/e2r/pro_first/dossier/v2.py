@@ -8,6 +8,7 @@ from typing import Any, Mapping, Sequence
 
 from ..research_contracts import select_contract_bundle
 from ..research_contracts.validator import TERMINAL_STATUSES
+from ..route_cohort import latest_question_route_cohort
 
 
 DOSSIER_V2_SCHEMA_VERSION = "e2r_pro_research_dossier_v2"
@@ -199,10 +200,19 @@ def validate_route_bindings(payload: Mapping[str, Any]) -> None:
         }:
             if result.get("adequate_search_proven") is not True:
                 raise ValueError(f"{status} requires adequate-search proof")
-            if len(result.get("search_route_receipt_ids") or ()) < 2:
+            linked = latest_question_route_cohort(
+                tuple(
+                    receipt_by_id[value]
+                    for value in result["search_route_receipt_ids"]
+                )
+            )
+            if len(linked) < 2:
                 raise ValueError(f"{status} requires at least two route receipts")
-            linked = [receipt_by_id[value] for value in result["search_route_receipt_ids"]]
-            if any(row.get("provider_status") != "SUCCESS" for row in linked):
+            if any(
+                row.get("provider_status") != "SUCCESS"
+                or row.get("parser_status", "SUCCESS") != "SUCCESS"
+                for row in linked
+            ):
                 raise ValueError(f"{status} requires normal provider/parser receipts")
             if status == "LIKELY_NONPUBLIC" and any(
                 not str(row.get("no_new_route_reason") or "").strip() for row in linked

@@ -13,6 +13,9 @@ from e2r.pro_first.dossier import (
     apply_research_dossier_delta,
     bind_dossier_transport_identity,
 )
+from e2r.pro_first.dossier.delta_merge import (
+    _project_overclaimed_route_closures,
+)
 from e2r.pro_first.saturation import ResearchSaturationAdjudicator
 from e2r.pro_first.saturation.question_closure import (
     compile_question_closure_decision,
@@ -630,19 +633,21 @@ class ProFirstV3DossierTest(unittest.TestCase):
         )
         self.assertNotIn("proposed_score_ranges", merged.effective_dossier)
         projected_question = merged.effective_dossier["question_family_results"][0]
-        self.assertEqual(projected_question["status"], "PARSER_PENDING")
+        self.assertEqual(projected_question["status"], "SOURCE_PENDING")
         self.assertEqual(
-            projected_question["availability_class"], "PARSER_BLOCKED"
+            projected_question["availability_class"], "PUBLIC_SEARCHABLE"
         )
         self.assertFalse(projected_question["adequate_search_proven"])
         self.assertEqual(
-            merged.effective_dossier["research_status"], "PROVIDER_PENDING"
+            merged.effective_dossier["research_status"],
+            "NEEDS_PUBLIC_GAP_CLOSURE",
         )
         projection = merged.effective_dossier["research_saturation"][
             "route_truth_question_status_projections"
         ][0]
         self.assertEqual(projection["reported_status"], "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH")
-        self.assertEqual(projection["projected_status"], "PARSER_PENDING")
+        self.assertEqual(projection["projected_status"], "SOURCE_PENDING")
+        self.assertIn("INSUFFICIENT_ROUTE_RECEIPTS", projection["failure_codes"])
         ResearchDossierValidator().validate(
             merged.effective_dossier,
             DossierValidationContext(
@@ -656,6 +661,70 @@ class ProFirstV3DossierTest(unittest.TestCase):
                 parent_pass_id=self.pass_id,
                 enforce_parent_pass_id=True,
             ),
+        )
+
+        closed_response = deepcopy(response)
+        second_current_route = deepcopy(response["search_route_receipts"][0])
+        second_current_route.update(
+            {
+                "route_receipt_id": "ROUTE-V3-003",
+                "query_or_navigation_objective": (
+                    "Confirm the current absence through another official route"
+                ),
+                "query_text": "issuer second official absence check",
+                "opened_source_urls": [
+                    "https://example.com/second-official-route"
+                ],
+                "accepted_fact_ids": [],
+                "no_new_route_reason": (
+                    "The second current official route found no additional fact."
+                ),
+                "performed_at": "2026-08-22T01:05:00Z",
+            }
+        )
+        closed_response["search_route_receipts"].append(second_current_route)
+        closed_response["question_family_results"][0][
+            "search_route_receipt_ids"
+        ] = [
+            "ROUTE-V3-PARSER-PENDING",
+            "ROUTE-V3-002",
+            "ROUTE-V3-003",
+        ]
+        closed = apply_research_dossier_delta(
+            original_dossier=original,
+            response_dossier=closed_response,
+            validation_context=DossierValidationContext(
+                job_id="PROJOB-v3",
+                run_id="PRORUN-v3",
+                target_id=self.target_id,
+                as_of_date="2026-08-23",
+                conversation_id="conversation-v3",
+                candidate_archetype_ids=(self.archetype_id,),
+                research_pass_id="PROPASS-v3-followup",
+                parent_pass_id=self.pass_id,
+                enforce_parent_pass_id=True,
+            ),
+        )
+        closed_question = closed.effective_dossier["question_family_results"][0]
+        self.assertEqual(
+            closed_question["status"],
+            "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH",
+        )
+        self.assertEqual(
+            closed_question["search_route_receipt_ids"],
+            [
+                "ROUTE-V3-PARSER-PENDING",
+                "ROUTE-V3-002",
+                "ROUTE-V3-003",
+            ],
+        )
+        self.assertEqual(
+            closed.new_route_receipt_ids,
+            ("ROUTE-V3-002", "ROUTE-V3-003"),
+        )
+        self.assertNotIn(
+            "route_truth_question_status_projections",
+            closed.effective_dossier.get("research_saturation") or {},
         )
 
         omitted_lineage = deepcopy(response)
@@ -712,6 +781,74 @@ class ProFirstV3DossierTest(unittest.TestCase):
                     enforce_parent_pass_id=True,
                 ),
             )
+
+    def test_historical_failed_route_is_audited_but_not_relabelled_as_current(self) -> None:
+        question_id = self.question_id
+        effective = {
+            "search_route_receipts": [
+                {
+                    "route_receipt_id": "ROUTE-HISTORICAL-PARSER-PENDING",
+                    "pass_id": "PASS-HISTORICAL",
+                    "provider_status": "PARSER_PENDING",
+                },
+                {
+                    "route_receipt_id": "ROUTE-CURRENT-SUCCESS-1",
+                    "pass_id": "PASS-CURRENT",
+                    "provider_status": "SUCCESS",
+                },
+                {
+                    "route_receipt_id": "ROUTE-CURRENT-SUCCESS-2",
+                    "pass_id": "PASS-CURRENT",
+                    "provider_status": "SUCCESS",
+                },
+            ],
+            "question_family_results": [
+                {
+                    "question_family_id": question_id,
+                    "status": "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH",
+                    "adequate_search_proven": True,
+                    "availability_class": "PUBLIC_SEARCHABLE",
+                    "closure_reason": "Current routes found no newer public fact.",
+                    "search_route_receipt_ids": [
+                        "ROUTE-HISTORICAL-PARSER-PENDING",
+                        "ROUTE-CURRENT-SUCCESS-1",
+                        "ROUTE-CURRENT-SUCCESS-2",
+                    ],
+                }
+            ],
+        }
+        current_question = {
+            "question_family_id": question_id,
+            "status": "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH",
+            "adequate_search_proven": True,
+            "search_route_receipt_ids": [
+                "ROUTE-CURRENT-SUCCESS-1",
+                "ROUTE-CURRENT-SUCCESS-2",
+            ],
+        }
+
+        _project_overclaimed_route_closures(
+            effective,
+            current_question_results=(current_question,),
+        )
+
+        projected = effective["question_family_results"][0]
+        self.assertEqual(
+            projected["status"],
+            "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH",
+        )
+        self.assertEqual(
+            projected["search_route_receipt_ids"],
+            [
+                "ROUTE-HISTORICAL-PARSER-PENDING",
+                "ROUTE-CURRENT-SUCCESS-1",
+                "ROUTE-CURRENT-SUCCESS-2",
+            ],
+        )
+        self.assertNotIn(
+            "route_truth_question_status_projections",
+            effective.get("research_saturation") or {},
+        )
 
     def test_followup_coalesces_exact_prior_atomic_fact_without_rewriting_it(self):
         original = self._dossier()

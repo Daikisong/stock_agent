@@ -6,6 +6,7 @@ from typing import Any, Mapping, Sequence
 
 from ..gaps.source_family_policy import source_family_evidence_role
 from ..ids import canonical_hash
+from ..route_cohort import latest_question_route_cohort
 from .fixpoint import (
     NoNewRouteConfirmation,
     evaluate_semantic_no_new_route_fixpoint,
@@ -77,7 +78,7 @@ def evaluate_route_adequacy(
         failures.append("OFFICIAL_ROUTE_NOT_ATTEMPTED")
     if len(route_signatures) < minimum_routes:
         failures.append("DISTINCT_SOURCE_ROUTE_QUORUM_NOT_MET")
-    active_routes = _latest_question_route_cohort(linked)
+    active_routes = latest_question_route_cohort(linked)
     provider_parser_normal = all(
         row.get("provider_status") == "SUCCESS"
         and row.get("parser_status", "SUCCESS") == "SUCCESS"
@@ -138,32 +139,6 @@ def evaluate_route_adequacy(
             str(row.get("route_receipt_id") or "") for row in linked
         ),
         failure_codes=tuple(dict.fromkeys(failures)),
-    )
-
-
-def _latest_question_route_cohort(
-    linked_routes: Sequence[Mapping[str, Any]],
-) -> tuple[Mapping[str, Any], ...]:
-    """Return the newest append-only pass cohort for one question.
-
-    Question route ids are an append-only ledger: delta merge retains prior
-    ids first and appends the current pass ids.  Historical provider/parser
-    failures remain auditable, but they are not the current provider state
-    after a later pass has retried the question.  Every route in the newest
-    cohort must still be normal, so one successful route cannot hide another
-    unresolved route from the same current pass.
-
-    A question that was not updated simply keeps its previous last cohort.
-    The empty case deliberately remains vacuously normal; route-count and
-    official-route requirements report the missing acquisition separately.
-    """
-
-    rows = tuple(linked_routes)
-    if not rows:
-        return ()
-    latest_pass_id = str(rows[-1].get("pass_id") or "")
-    return tuple(
-        row for row in rows if str(row.get("pass_id") or "") == latest_pass_id
     )
 
 

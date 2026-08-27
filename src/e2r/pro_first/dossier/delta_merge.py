@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from typing import Any, Mapping, Sequence
 
 from ..ids import canonical_hash
+from ..route_cohort import latest_question_route_cohort
 from .validator import DossierValidationContext, ResearchDossierValidator
 from .v2 import compile_dossier_v2_closure_summary
 from .v3 import v3_atomic_fact_identity
@@ -124,7 +125,10 @@ def apply_research_dossier_delta(
     if schema_version == "e2r_pro_research_dossier_v3":
         _extend_v3_lineage_rosters_from_graph(effective)
         _drop_unbound_v3_question_fact_references(effective)
-    _project_overclaimed_route_closures(effective)
+    _project_overclaimed_route_closures(
+        effective,
+        current_question_results=response.get("question_family_results") or (),
+    )
     reported_research_status = response.get("research_status")
     if not isinstance(reported_research_status, str) or not reported_research_status:
         raise DossierDeltaMergeError(
@@ -799,7 +803,11 @@ def _merge_source_lineages(
     return tuple(added)
 
 
-def _project_overclaimed_route_closures(effective: dict[str, Any]) -> None:
+def _project_overclaimed_route_closures(
+    effective: dict[str, Any],
+    *,
+    current_question_results: Sequence[Mapping[str, Any]] = (),
+) -> None:
     """Keep new evidence while refusing terminal closure over blocked routes.
 
     Pro's raw response remains immutable in the capture bundle.  The effective
@@ -809,6 +817,13 @@ def _project_overclaimed_route_closures(effective: dict[str, Any]) -> None:
     whole delta would discard otherwise valid new documents and facts; marking
     the exact question pending preserves both the evidence and fail-closed
     score semantics.
+
+    ``search_route_receipt_ids`` is append-only in the effective dossier for
+    auditability.  A historical provider/parser failure must not therefore be
+    relabelled as a failure of the current follow-up.  For questions updated by
+    the current response, closure is audited against the exact route roster
+    reported by that response; the effective row still retains the cumulative
+    roster.  Unchanged questions continue to use their effective roster.
     """
 
     receipt_by_id = {
@@ -817,6 +832,12 @@ def _project_overclaimed_route_closures(effective: dict[str, Any]) -> None:
         if isinstance(row, Mapping)
     }
     projections: list[dict[str, Any]] = []
+    current_by_question_id = {
+        str(row.get("question_family_id") or ""): row
+        for row in current_question_results
+        if isinstance(row, Mapping)
+        and str(row.get("question_family_id") or "")
+    }
     question_rows = list(effective.get("question_family_results") or ())
     for index, raw_row in enumerate(question_rows):
         if not isinstance(raw_row, Mapping):
@@ -828,12 +849,30 @@ def _project_overclaimed_route_closures(effective: dict[str, Any]) -> None:
             "LIKELY_NONPUBLIC",
         }:
             continue
+        route_roster = current_by_question_id.get(
+            str(row.get("question_family_id") or ""),
+            row,
+        )
         route_ids = tuple(
             str(value)
-            for value in row.get("search_route_receipt_ids") or ()
+            for value in route_roster.get("search_route_receipt_ids") or ()
             if str(value)
         )
-        linked = tuple(receipt_by_id.get(value) for value in route_ids)
+        requested = tuple((value, receipt_by_id.get(value)) for value in route_ids)
+        active_receipts = latest_question_route_cohort(
+            tuple(receipt for _value, receipt in requested if receipt is not None)
+        )
+        active_ids = {
+            str(receipt.get("route_receipt_id") or "")
+            for receipt in active_receipts
+        }
+        active_requested = tuple(
+            (value, receipt)
+            for value, receipt in requested
+            if receipt is None or value in active_ids
+        )
+        route_ids = tuple(value for value, _receipt in active_requested)
+        linked = tuple(receipt for _value, receipt in active_requested)
         non_success = tuple(
             (route_id, str((receipt or {}).get("provider_status") or "MISSING"))
             for route_id, receipt in zip(route_ids, linked)

@@ -1193,15 +1193,17 @@ def _public_followup_question_ids(
 def _counter_followup_question_ids(
     saturation: ResearchSaturationReceipt,
 ) -> tuple[str, ...]:
-    hard_break = tuple(
+    unresolved_counter = tuple(
         row.question_family_id
         for row in saturation.question_decisions
-        if row.materiality == "HARD_BREAK"
-        or row.status == "CONTRADICTED_UNRESOLVED"
+        if row.status == "CONTRADICTED_UNRESOLVED" and not row.terminal
     )
     return tuple(
         dict.fromkeys(
-            (*saturation.lifecycle_hard_break_pending_ids, *hard_break)
+            (
+                *saturation.lifecycle_hard_break_pending_ids,
+                *unresolved_counter,
+            )
         )
     )
 
