@@ -222,12 +222,12 @@ class ChatGPTWebAdapter(Protocol):
 
     async def submit_once(self, approval_proof: Any) -> BrowserInspection: ...
 
-    async def resume_intercepted_followup_submit_once(
+    async def prepare_intercepted_followup_submit_recovery(
         self,
         approval_proof: Any,
         *,
         transport_pending_reason: str,
-    ) -> BrowserInspection: ...
+    ) -> None: ...
 
     async def prepare_followup_without_submit(
         self,

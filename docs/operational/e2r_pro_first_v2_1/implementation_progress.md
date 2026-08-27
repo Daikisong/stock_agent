@@ -139,8 +139,9 @@ Chromium의 `libnspr4.so`가 없어 실패했다. 전자는 Linux 66개 green으
 PASS 수에 중복 계산하지 않았다.
 
 첫 P13 push의 GitHub `static-security`는 normal submit과 modal recovery에 물리적
-`send.click()`이 각각 하나씩 있어 `guarded_dom_submit_path_count=2`로 차단했다. 두 흐름이 공통
-`_guarded_send_click_once()`만 호출하도록 합쳐 실제 DOM send surface를 다시 하나로 만들었다.
+`send.click()`이 각각 하나씩 있어 `guarded_dom_submit_path_count=2`로 차단했다. 복구 흐름도 기존
+`submit_once()` 경계로 다시 들어가게 합쳐 실제 DOM send surface를 하나로 만들었다. modal을 닫는
+Escape도 전역 keyboard가 아니라 확인된 modal 요소에만 보낸다.
 
 ```text
 production static audit critical         0
@@ -153,6 +154,25 @@ census run-mode honesty                    24/24 PASS
 쉬운 예로 정상 전송문과 복구 전송문을 따로 두지 않고, durable approval와
 `_submit_attempted` 잠금이 붙은 문 하나만 함께 사용한다. 첫 실패 CI를 삭제하거나 green으로
 간주하지 않으며, 수리 commit의 새 GitHub Actions가 끝나야 이 항목을 완료로 올린다.
+
+두 번째 P13 push에서는 static/security와 browser E2E는 통과했지만 core-unit 236개 중 정적 보안
+계약 2개가 실패했다. 공통 helper나 adapter 내부 재호출도 허용하지 않고 다음처럼 권한을 더 좁혔다.
+
+```text
+adapter recovery preflight    modal·lineage·unsent user turn만 검증
+physical DOM send click       submit_once 내부 정확히 1개
+submit_once caller            durable multi-pass recovery coordinator
+global keyboard path          0
+production static critical    0
+focused security/recovery     63/63 PASS
+```
+
+static audit에는 정확한 `resume_intercepted_followup_submit`만 허용되고 이름이 비슷한 unchecked 함수는
+계속 `submit_without_approval_count`로 잡히는 회귀를 추가했다.
+
+CI와 동일한 local readiness runner를 다시 실행한 결과 core unit은 237/237 PASS,
+failure/error/skip 0/0/0, `PRO_FIRST_PLATFORM_IMPLEMENTATION_READY`로 닫혔다. 이 구현 readiness는
+Pass 24 연구 완료나 전체 master goal 완료를 뜻하지 않는다.
 
 ## P12 — Pass 17 fail-closed 수리와 실제 포화도 재개
 

@@ -118,18 +118,16 @@ class _FreshAdapter:
             self.current_conversation_id = self.submitted_conversation_id
         return self._inspection(BrowserUIState.RESEARCH_RUNNING)
 
-    async def resume_intercepted_followup_submit_once(
+    async def prepare_intercepted_followup_submit_recovery(
         self,
         proof,
         *,
         transport_pending_reason: str,
-    ) -> BrowserInspection:
+    ) -> None:
         if not proof.ledger_verified or proof.submit_count != 1:
             raise PermissionError("durable claimed proof required")
         if transport_pending_reason != INTERCEPTED_CLICK_REASON:
             raise PermissionError("transport interception evidence changed")
-        self.submit_count += 1
-        return self._inspection(BrowserUIState.RESEARCH_RUNNING)
 
     def _inspection(self, state: BrowserUIState) -> BrowserInspection:
         return BrowserInspection(

@@ -569,10 +569,11 @@ class ProMultiPassResearchOrchestrator:
             submit_count=current.submit_count,
             _capability=_FOLLOWUP_CAPABILITY,
         )
-        inspection = await adapter.resume_intercepted_followup_submit_once(
+        await adapter.prepare_intercepted_followup_submit_recovery(
             proof,
             transport_pending_reason=reason,
         )
+        inspection = await adapter.submit_once(proof)
         if (
             inspection.state is not BrowserUIState.RESEARCH_RUNNING
             or inspection.conversation_id != current.conversation_id

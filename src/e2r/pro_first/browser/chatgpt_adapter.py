@@ -443,8 +443,9 @@ class PlaywrightChatGPTWebAdapter:
         send = await first_visible(self.page, SEND_SELECTORS)
         if not await locator_enabled(send):
             raise BrowserUIIncompatible("ChatGPT send button is not ready")
+        self._submit_attempted = True
         try:
-            await self._guarded_send_click_once(send)
+            await send.click()
         except Exception:
             # ChatGPT can start a same-page navigation after the DOM click and
             # keep Playwright waiting until its click timeout even though the
@@ -466,18 +467,20 @@ class PlaywrightChatGPTWebAdapter:
             await self.page.wait_for_timeout(100)
         return await self.inspect_state()
 
-    async def resume_intercepted_followup_submit_once(
+    async def prepare_intercepted_followup_submit_recovery(
         self,
         approval_proof: Any,
         *,
         transport_pending_reason: str,
-    ) -> BrowserInspection:
-        """Finish one claimed send whose first click never reached the button.
+    ) -> None:
+        """Prepare one claimed send whose first click never reached the button.
 
         This is narrower than a retry.  The durable claim already exists, the
         exact prompt must still be in the composer, no user turn may contain
         the pass marker, and Playwright's prior error must prove that the
-        global-search modal intercepted every click before dispatch.
+        global-search modal intercepted every click before dispatch.  This
+        method never clicks send; the durable multi-pass coordinator must call
+        the adapter's sole ``submit_once`` boundary after this preflight.
         """
 
         from ..multi_pass.orchestrator import ScopedFollowupProof
@@ -546,7 +549,7 @@ class PlaywrightChatGPTWebAdapter:
             ('[role="dialog"][data-testid="modal-global-search"]',),
         )
         if modal is not None:
-            await self.page.keyboard.press("Escape")
+            await modal.press("Escape")
             await self.page.wait_for_timeout(200)
             if await first_visible(
                 self.page,
@@ -555,33 +558,19 @@ class PlaywrightChatGPTWebAdapter:
                 raise BrowserUIIncompatible(
                     "global search modal remained visible after Escape"
                 )
-        send = await first_visible(self.page, SEND_SELECTORS)
-        if not await locator_enabled(send):
-            raise BrowserUIIncompatible(
-                "recovered exact prompt has no enabled send button"
-            )
-        await self._guarded_send_click_once(send)
-        for _attempt in range(50):
-            inspection = await self.inspect_state()
-            if (
-                inspection.state is BrowserUIState.RESEARCH_RUNNING
-                and inspection.conversation_id == approval_proof.conversation_id
-            ):
-                return inspection
-            await self.page.wait_for_timeout(100)
-        raise BrowserUIIncompatible(
-            "recovered intercepted click did not enter RESEARCH_RUNNING"
-        )
-
-    async def _guarded_send_click_once(self, send: Any) -> None:
-        """Own the adapter's only physical ChatGPT send-click surface."""
-
-        if self._submit_attempted:
-            raise SubmitAuthorizationRequired(
-                "this prepared browser adapter already attempted submit"
-            )
-        self._submit_attempted = True
-        await send.click()
+        # Recovery proves that the first Playwright click never reached the
+        # button, but it does not gain a second DOM submit surface.  Rebind the
+        # already-verified visible composer to the durable scoped proof, then
+        # enter the same guarded ``submit_once`` boundary used by normal sends.
+        self._prepared_binding = {
+            "authorization_kind": "SCOPED_FOLLOWUP",
+            "browser_session_id": approval_proof.browser_session_id,
+            "conversation_id": approval_proof.conversation_id,
+            "job_id": approval_proof.job_id,
+            "pass_id": approval_proof.pass_id,
+            "parent_pass_id": approval_proof.parent_pass_id,
+            "prompt_hash": approval_proof.prompt_hash,
+        }
 
     async def inspect_state(self) -> BrowserInspection:
         editor = await first_visible(self.page, EDITOR_SELECTORS)

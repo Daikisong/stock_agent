@@ -78,28 +78,16 @@ class _FakeSameConversationAdapter:
             stop_visible=True,
         )
 
-    async def resume_intercepted_followup_submit_once(
+    async def prepare_intercepted_followup_submit_recovery(
         self,
         proof,
         *,
         transport_pending_reason: str,
-    ) -> BrowserInspection:
+    ) -> None:
         if not proof.ledger_verified or proof.submit_count != 1:
             raise PermissionError("durable claimed proof required")
         if transport_pending_reason != INTERCEPTED_CLICK_REASON:
             raise PermissionError("transport proof changed")
-        self.submit_count += 1
-        self.proofs.append(proof)
-        return BrowserInspection(
-            state=BrowserUIState.RESEARCH_RUNNING,
-            conversation_id=self.conversation_id,
-            editor_ready=True,
-            deep_research_ready=True,
-            packet_uploaded=True,
-            prompt_ready=False,
-            send_ready=False,
-            stop_visible=True,
-        )
 
 
 class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):

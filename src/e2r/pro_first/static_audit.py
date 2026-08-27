@@ -115,7 +115,17 @@ class _PythonSurfaceVisitor(ast.NodeVisitor):
                 and "ProMultiPassResearchOrchestrator" in self.scope
                 and "submit_followup" in self.scope
             )
-            allowed = allowed_initial or allowed_scoped_followup
+            allowed_intercepted_recovery = (
+                self.relative_path
+                == "src/e2r/pro_first/multi_pass/orchestrator.py"
+                and "ProMultiPassResearchOrchestrator" in self.scope
+                and "resume_intercepted_followup_submit" in self.scope
+            )
+            allowed = (
+                allowed_initial
+                or allowed_scoped_followup
+                or allowed_intercepted_recovery
+            )
             if not allowed:
                 self._add(
                     "submit_without_approval_count",

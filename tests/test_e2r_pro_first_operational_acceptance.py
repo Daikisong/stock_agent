@@ -274,6 +274,25 @@ class ProFirstStaticAuditTest(unittest.TestCase):
         )
         self.assertEqual([row.key for row in findings], ["submit_without_approval_count"])
 
+    def test_only_exact_intercepted_recovery_coordinator_may_call_submit_once(self) -> None:
+        allowed, _ = audit_python_source(
+            "class ProMultiPassResearchOrchestrator:\n"
+            "    async def resume_intercepted_followup_submit(self, adapter, proof):\n"
+            "        await adapter.submit_once(proof)\n",
+            relative_path="src/e2r/pro_first/multi_pass/orchestrator.py",
+        )
+        rejected, _ = audit_python_source(
+            "class ProMultiPassResearchOrchestrator:\n"
+            "    async def resume_intercepted_followup_submit_unchecked(self, adapter, proof):\n"
+            "        await adapter.submit_once(proof)\n",
+            relative_path="src/e2r/pro_first/multi_pass/orchestrator.py",
+        )
+        self.assertEqual(allowed, ())
+        self.assertEqual(
+            [row.key for row in rejected],
+            ["submit_without_approval_count"],
+        )
+
     def test_private_chatgpt_endpoint_is_detected(self) -> None:
         findings, _ = audit_python_source(
             'URL = "https://chatgpt.com/backend-api/conversation"\n',
