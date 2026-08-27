@@ -2595,3 +2595,58 @@ production static audit                     PASS / critical 0
 current-turn JSON을 회수·병합·재검문한 뒤, 현재 의미 지문과 pass 12 입력 지문을 비교해 같은 경로
 반복이면 추가 submit 없이 pending/fixpoint/repair 경로로 보낸다. 실제 새 경로나 parser 정상화가 있을
 때만 다음 same-conversation pass를 허용한다. score/Stage authority는 계속 false다.
+
+#### pass 12 current-turn JSON과 검문 통과 2개
+
+pass 12는 약 57분 뒤 완료됐다. runner 코드를 새 semantic identity 버전으로 바꾸는 동안에도 ChatGPT
+연구는 중단하지 않았고, 기존 submitted pass를 `browser_submit_delta=0`, submit count 1로 복구했다.
+현재 assistant turn의 다음 delta만 캡처했다.
+
+```text
+ResearchDossierV3_SKHynix_000660_PUBLIC_GAP_CLOSURE_
+PROPASS-787438355e0c6f2da764cd1e_delta.json
+```
+
+```text
+capture source                   DIRECT_REPORT_DOM_NORMALIZED
+raw/normalized report hash       5de16341... / 216fbb8a...
+effective facts                  102 -> 108
+source documents                 35 -> 35
+source lineages                  33 -> 33
+route receipts                   266 -> 276
+verification query/search        0 / 0
+```
+
+새 6개 중 deterministic source verifier를 통과한 것은 2개다.
+
+```text
+PROFACT-P12-R13-CLOSE-20260821
+  2026-08-21 SK하이닉스 종가 1,730,000원
+  서울신문 원문 exact normalized match
+
+PROFACT-P12-R13-AUDIT-REPORTS-DISCLOSED-THREE-WEEKS-EARLY
+  외부감사인 의견이 있는 국·영문 감사보고서를 주총 3주 전 공시
+  KIND issuer-scoped 원문 punctuation/whitespace normalized match
+```
+
+나머지 revision/counter 4개는 S&P Global 원문이 verifier fetch에서 HTTP 403을 반환해
+`REJECTED_SOURCE_UNAVAILABLE`로 남겼다. Pro가 fact라고 적었다는 이유로 점수 그래프에 넣지 않았다.
+accepted fact는 48→50, fact snapshot과 accepted-lineage roster가 모두 바뀌었다.
+
+pass 12 뒤에도 nonterminal 2, provider/parser core pending 2, public material gap 16, verifier repair pending
+14, source-linkage incomplete 2라 saturation은 false다. 다만 pass 13은 receipt ID만 바뀌어서 열린 것이
+아니다. 두 accepted fact, 새 route signature, 네 질문의 deterministic progress identity가 모두 실제로
+바뀌었으므로 같은 conversation에 정확히 한 번 전송됐다.
+
+```text
+pass id             PROPASS-fad7cbf692ef68afca4ac459
+pass ordinal        13
+prompt chars        32,096
+question count      4
+submit count        1
+score/Stage authority false/false
+```
+
+pass 13이 같은 KRX/SEC route와 같은 parser failure만 새 receipt ID로 반복하면 새 semantic guard가 다음
+submit을 막는다. 반대로 새 accepted evidence나 provider/parser 정상화가 있으면 그 변화만 다음 단계에
+쓴다.
