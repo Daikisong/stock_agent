@@ -59,13 +59,21 @@ from e2r.pro_first.canary.live_v2 import (
     _completed_current_repair_reprocess_pass_id,
     _durable_pass_rows,
     _followup_execution_mode,
+    _has_exact_followup_markers,
     _has_snapshotted_completed_pass,
     _load_recovered_snapshot_state,
     _normalize_followup_dossier_pre_schema,
     _public_gap_followup_question_ids,
+    _quarantine_misbound_followup_capture,
     _submitted_unsnapshotted_followup_plan,
     _verification_artifact_rows,
     _verification_needs_effective_dossier_reverification,
+)
+from e2r.pro_first.capture.receipt import (
+    CAPTURE_EVENT_TYPE,
+    CAPTURE_RECEIPT_SCHEMA,
+    CaptureReceipt,
+    file_sha256,
 )
 from e2r.cli.run_e2r_pro_first_v2_live_canaries import _parse_spec
 from tests.test_e2r_pro_first_v2_saturation import _complete_dossier
@@ -374,6 +382,67 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
             ),
             "REUSE_CAPTURE",
         )
+
+    def test_wrong_previous_turn_capture_is_preserved_and_never_imported(self) -> None:
+        pass_root = self.root / "misbound-followup"
+        incoming = pass_root / "capture/incoming"
+        incoming.mkdir(parents=True)
+        expected_pass = "PROPASS-CURRENT"
+        expected_parent = "PROPASS-PARENT"
+        report_text = (
+            "[[E2R_PRO_PASS_ID:PROPASS-PREVIOUS]]\n"
+            "[[E2R_PRO_PARENT_PASS_ID:PROPASS-OLDER]]\n"
+        )
+        report = incoming / "pro_report.md"
+        dossier = incoming / "research_dossier.json"
+        report.write_text(report_text, encoding="utf-8")
+        dossier.write_text("{}\n", encoding="utf-8")
+        receipt = CaptureReceipt(
+            schema_version=CAPTURE_RECEIPT_SCHEMA,
+            event_type=CAPTURE_EVENT_TYPE,
+            job_id="PROJOB-MISBOUND",
+            run_id="PRORUN-MISBOUND",
+            target_id="000660",
+            as_of_date="2026-08-23",
+            packet_hash="a" * 64,
+            prompt_hash="b" * 64,
+            conversation_id="conversation-misbound",
+            assistant_turn_id="assistant-previous",
+            report_md_hash=file_sha256(report),
+            report_pdf_hash=None,
+            dossier_json_hash=file_sha256(dossier),
+            submit_count=1,
+            capture_count=1,
+            captured_at="2026-08-27T00:00:00Z",
+            capture_mode="DIRECT_VISIBLE_RESPONSE",
+            capture_source="VISIBLE_REPORT",
+            optional_pdf_error=None,
+        )
+
+        self.assertFalse(
+            _has_exact_followup_markers(
+                report_text,
+                pass_id=expected_pass,
+                parent_pass_id=expected_parent,
+            )
+        )
+        quarantine = _quarantine_misbound_followup_capture(
+            pass_root=pass_root,
+            capture_receipt=receipt,
+            report_text=report_text,
+            expected_pass_id=expected_pass,
+            expected_parent_pass_id=expected_parent,
+        )
+
+        preserved = pass_root / quarantine["quarantine_relative_path"]
+        self.assertFalse(incoming.exists())
+        self.assertEqual(
+            (preserved / "pro_report.md").read_text(encoding="utf-8"),
+            report_text,
+        )
+        self.assertEqual(quarantine["status"], "PRESERVED_NOT_IMPORTED")
+        self.assertFalse(quarantine["fact_import_allowed"])
+        self.assertFalse(quarantine["automatic_resubmit_allowed"])
 
     def test_followup_v3_runs_initial_pre_schema_before_delta_merge(self) -> None:
         question_a = "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q01"

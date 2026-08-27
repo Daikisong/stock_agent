@@ -170,10 +170,18 @@ DOWNLOAD_SELECTORS = (
 )
 
 ASSISTANT_TURN_SELECTORS = (
+    'section[data-turn="assistant"]',
     '[data-message-author-role="assistant"]',
     'article[data-turn="assistant"]',
     '[data-testid^="conversation-turn-"]:has([data-message-author-role="assistant"])',
     '[data-e2r-role="assistant"]',
+)
+
+USER_TURN_SELECTORS = (
+    'section[data-turn="user"]',
+    '[data-message-author-role="user"]',
+    'article[data-turn="user"]',
+    '[data-e2r-role="user"]',
 )
 
 CITATION_SELECTORS = (

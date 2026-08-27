@@ -41,6 +41,7 @@ from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
     _question_ids_without_completed_context,
     _question_route_progress_state,
     _repairable_classifications,
+    _ensure_durable_conversation_visible,
     _submitted_unsnapshotted_fresh_nonrepair_plan,
 )
 from e2r.pro_first.ids import canonical_hash
@@ -59,6 +60,10 @@ OLD_PASS = "PROPASS-old-diagnostic-pass"
 OLD_FACT = "PROFACT-OLD-ANSWER-001"
 OLD_ROUTE = "PROROUTE-OLD-ANSWER-001"
 EXPECTED_URL = "https://old.example.com/expected-answer"
+INTERCEPTED_CLICK_REASON = (
+    "TimeoutError: Locator.click: Timeout 30000ms exceeded; "
+    "modal-global-search intercepts pointer events"
+)
 
 
 class _FreshAdapter:
@@ -111,6 +116,19 @@ class _FreshAdapter:
         self.submit_count += 1
         if self.prepared_followup is None:
             self.current_conversation_id = self.submitted_conversation_id
+        return self._inspection(BrowserUIState.RESEARCH_RUNNING)
+
+    async def resume_intercepted_followup_submit_once(
+        self,
+        proof,
+        *,
+        transport_pending_reason: str,
+    ) -> BrowserInspection:
+        if not proof.ledger_verified or proof.submit_count != 1:
+            raise PermissionError("durable claimed proof required")
+        if transport_pending_reason != INTERCEPTED_CLICK_REASON:
+            raise PermissionError("transport interception evidence changed")
+        self.submit_count += 1
         return self._inspection(BrowserUIState.RESEARCH_RUNNING)
 
     def _inspection(self, state: BrowserUIState) -> BrowserInspection:
@@ -192,6 +210,65 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(
             self.store.get_job(self.old_job.job_id).superseded_by_fresh_job_id,
             self.fresh_job.job_id,
+        )
+
+    async def test_exact_open_conversation_bypasses_changed_history_search_ui(
+        self,
+    ) -> None:
+        conversation_id = "fresh-conversation-already-open"
+        adapter = _FreshAdapter(submitted_conversation_id=conversation_id)
+        adapter.current_conversation_id = conversation_id
+
+        source = await _ensure_durable_conversation_visible(
+            adapter,
+            job_id=self.fresh_job.job_id,
+            run_id=str(self.built.packet_payload["run_id"]),
+            durable_conversation_id=conversation_id,
+            search_terms=(conversation_id, self.fresh_job.company_name),
+        )
+
+        self.assertEqual(source, "CURRENT_EXACT_CONVERSATION")
+        self.assertEqual(adapter.submit_count, 0)
+
+    async def test_fresh_wrapper_resumes_proven_intercepted_claim(self) -> None:
+        adapter = await self._prepare_and_approve("fresh-conversation-intercepted")
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="d" * 64,
+        )
+        plan, _compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest={"dossier_hash": "e" * 64},
+            unresolved_question_state=(
+                {
+                    "question_family_id": (
+                        self.built.prompt.mandatory_question_ids[0]
+                    ),
+                    "deterministic_status": "PUBLIC_SEARCHABLE",
+                },
+            ),
+            pass_inputs={"research_gap_context_hash": "f" * 64},
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        claimed = self.orchestrator.ledger.claim_submit(
+            plan.research_pass.pass_id
+        )
+        self.orchestrator.ledger.mark_transport_pending(
+            claimed.pass_id,
+            reason=INTERCEPTED_CLICK_REASON,
+        )
+
+        resumed = await self.orchestrator.resume_intercepted_followup_submit(
+            plan,
+            adapter,
+        )
+
+        self.assertEqual(resumed.research_pass.status, "RESEARCH_RUNNING")
+        self.assertEqual(resumed.research_pass.submit_count, 1)
+        self.assertTrue(
+            resumed.research_pass.detail["intercepted_submit_recovered"]
         )
 
     def test_terminal_hard_break_materiality_does_not_reopen_counter_search(
@@ -774,6 +851,74 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             all(row.conversation_id == "fresh-conversation-tail" for row in passes)
         )
         self.assertTrue(all(row.submit_count == 1 for row in passes))
+
+    async def test_visible_provider_failure_gets_one_feedback_retry_then_blocks(self) -> None:
+        adapter = await self._prepare_and_approve("fresh-conversation-failure")
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="d" * 64,
+        )
+        digest = {
+            "dossier_hash": "e" * 64,
+            "mandatory_question_nonterminal_count": 2,
+        }
+        unresolved = (
+            {
+                "question_family_id": self.built.prompt.mandatory_question_ids[0],
+                "deterministic_status": "PUBLIC_SEARCHABLE",
+            },
+        )
+        inputs = {"research_gap_context_hash": "f" * 64}
+        first, _ = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest=digest,
+            unresolved_question_state=unresolved,
+            pass_inputs=inputs,
+        )
+        await self.orchestrator.prepare_followup(first, adapter)
+        await self.orchestrator.submit_followup(first, adapter)
+        self.orchestrator.ledger.mark_failed_hard(
+            first.research_pass.pass_id,
+            response_hash="1" * 64,
+            failure_class="CHATGPT_VISIBLE_THINKING_FAILED",
+            reason="thinking failed before JSON output",
+        )
+
+        retry, compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest=digest,
+            unresolved_question_state=unresolved,
+            pass_inputs=inputs,
+        )
+        self.assertNotEqual(retry.research_pass.pass_id, first.research_pass.pass_id)
+        self.assertEqual(
+            retry.research_pass.detail["supersedes_failed_pass_id"],
+            first.research_pass.pass_id,
+        )
+        self.assertIn("provider_failure_feedback", compiled.prompt_text)
+        await self.orchestrator.prepare_followup(retry, adapter)
+        await self.orchestrator.submit_followup(retry, adapter)
+        self.orchestrator.ledger.mark_failed_hard(
+            retry.research_pass.pass_id,
+            response_hash="2" * 64,
+            failure_class="CHATGPT_VISIBLE_THINKING_FAILED",
+            reason="same context failed a second time",
+        )
+
+        with self.assertRaisesRegex(
+            FreshSessionBoundaryError,
+            "same fresh V3 context failed twice",
+        ):
+            self.orchestrator.plan_v3_followup(
+                self.built,
+                pass_name="PUBLIC_GAP_CLOSURE",
+                latest_dossier_digest=digest,
+                unresolved_question_state=unresolved,
+                pass_inputs=inputs,
+            )
 
     async def test_distinct_gap_and_reaudit_passes_remain_in_same_conversation(self) -> None:
         adapter = await self._prepare_and_approve("fresh-conversation-multipass")

@@ -20,7 +20,11 @@ from typing import Any, Callable, Mapping, Sequence
 from e2r.research.page_fetcher import PageFetcher
 
 from ..atomic_io import fsync_directory
-from ..browser.protocol import BrowserCaptureRequest, RawBrowserCapture
+from ..browser.protocol import (
+    BrowserCaptureRequest,
+    ChatGPTWebAdapter,
+    RawBrowserCapture,
+)
 from ..browser.worker import BrowserWorkerSession, ProBrowserWorker
 from ..canary.live_v2 import (
     FollowupCaptureOutcome,
@@ -195,22 +199,20 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
         status = "FRESH_FULL_THESIS_PENDING"
         pending_reason: str | None = None
         try:
-            recovered = await session.adapter.recover_conversation_without_submit(
+            durable_conversation = str(
+                self.store.get_job(job_id).conversation_id or ""
+            )
+            recovery_source = await _ensure_durable_conversation_visible(
+                session.adapter,
                 job_id=job_id,
                 run_id=str(built.packet_payload["run_id"]),
+                durable_conversation_id=durable_conversation,
                 search_terms=(
-                    str(self.store.get_job(job_id).conversation_id or ""),
+                    durable_conversation,
                     self.store.get_job(job_id).company_name,
                     self.store.get_job(job_id).symbol,
                 ),
             )
-            durable_conversation = str(
-                self.store.get_job(job_id).conversation_id or ""
-            )
-            if recovered.conversation_id != durable_conversation:
-                raise ValueError(
-                    "visible ChatGPT page differs from the approved fresh conversation"
-                )
             prepared = PreparedFreshV3TailRuntime(
                 job=self.store.get_job(job_id),
                 packet_payload=built.packet_payload,
@@ -220,6 +222,7 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                 "FRESH_FULL_THESIS_CONVERSATION_RECOVERED",
                 job_id=job_id,
                 conversation_id=durable_conversation,
+                recovery_source=recovery_source,
                 browser_submit_delta=0,
             )
 
@@ -1492,6 +1495,39 @@ def _repairable_classifications(
         if row.get("send_to_pro_allowed") is True
         and row.get("material") is True
     )
+
+
+async def _ensure_durable_conversation_visible(
+    adapter: ChatGPTWebAdapter,
+    *,
+    job_id: str,
+    run_id: str,
+    durable_conversation_id: str,
+    search_terms: tuple[str, ...],
+) -> str:
+    """Keep an already-open exact conversation without requiring history UI.
+
+    ChatGPT's sidebar/search controls can change independently of the
+    conversation URL.  An exact durable conversation ID already visible in a
+    logged-in browser is therefore the strongest zero-navigation recovery
+    path.  History search is used only when another page is open.
+    """
+
+    if not durable_conversation_id:
+        raise ValueError("durable fresh conversation id is missing")
+    inspection = await adapter.ensure_logged_in()
+    if inspection.conversation_id == durable_conversation_id:
+        return "CURRENT_EXACT_CONVERSATION"
+    recovered = await adapter.recover_conversation_without_submit(
+        job_id=job_id,
+        run_id=run_id,
+        search_terms=search_terms,
+    )
+    if recovered.conversation_id != durable_conversation_id:
+        raise ValueError(
+            "visible ChatGPT page differs from the approved fresh conversation"
+        )
+    return "VISIBLE_HISTORY_SEARCH"
 
 
 def _context_already_attempted(

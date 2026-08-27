@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
+import re
 import time
 from typing import Any, Callable, Mapping, Sequence
 
@@ -30,10 +31,19 @@ from ..browser.completion_monitor import (
     BrowserCompletionMonitor,
     ProCompletionStateService,
 )
-from ..browser.protocol import BrowserCaptureRequest, BrowserUIState
+from ..browser.protocol import (
+    BrowserCaptureRequest,
+    BrowserResultSnapshot,
+    BrowserUIState,
+)
 from ..capture.atomic_capture import AtomicCaptureWriter, CaptureIdentity
 from ..capture.coordinator import ProCaptureCoordinator
-from ..capture.receipt import load_capture_receipt, verify_capture_bundle
+from ..capture.receipt import (
+    CaptureReceipt,
+    file_sha256,
+    load_capture_receipt,
+    verify_capture_bundle,
+)
 from ..config import ProFirstLocalConfig
 from ..dossier import (
     DossierValidationContext,
@@ -1159,6 +1169,25 @@ class ProV2LiveCanaryRunner:
             report_text = (
                 pass_root / capture_receipt.report_md_path
             ).read_text(encoding="utf-8")
+            if not _has_exact_followup_markers(
+                report_text,
+                pass_id=plan.research_pass.pass_id,
+                parent_pass_id=parent_id,
+            ):
+                quarantine = _quarantine_misbound_followup_capture(
+                    pass_root=pass_root,
+                    capture_receipt=capture_receipt,
+                    report_text=report_text,
+                    expected_pass_id=plan.research_pass.pass_id,
+                    expected_parent_pass_id=parent_id,
+                )
+                execution_mode = "RECOVER_SUBMITTED_RESULT"
+                self._emit(
+                    self.store.get_job(plan.scope.job_id),
+                    "FOLLOWUP_MISBOUND_CAPTURE_QUARANTINED",
+                    quarantine,
+                )
+        if execution_mode == "REUSE_CAPTURE":
             self._emit(
                 self.store.get_job(plan.scope.job_id),
                 "FOLLOWUP_CAPTURE_REUSED",
@@ -1172,16 +1201,46 @@ class ProV2LiveCanaryRunner:
             )
         else:
             if execution_mode == "RECOVER_SUBMITTED_RESULT":
-                self._emit(
-                    self.store.get_job(plan.scope.job_id),
-                    "FOLLOWUP_SUBMITTED_RESULT_RECOVERY",
-                    {
-                        "pass_id": plan.research_pass.pass_id,
-                        "pass_name": plan.research_pass.pass_name,
-                        "submit_count": plan.research_pass.submit_count,
-                        "automatic_resubmit_allowed": False,
-                    },
+                durable_pending = orchestrator.ledger.get_pass(
+                    plan.research_pass.pass_id
                 )
+                pending_reason = str(
+                    durable_pending.detail.get("transport_pending_reason")
+                    or ""
+                )
+                if (
+                    durable_pending.status == "TRANSPORT_PENDING"
+                    and _is_proven_pre_dispatch_modal_interception(
+                        pending_reason
+                    )
+                ):
+                    resumed = await orchestrator.resume_intercepted_followup_submit(
+                        plan,
+                        prepared.session.adapter,
+                    )
+                    self._emit(
+                        self.store.get_job(plan.scope.job_id),
+                        "FOLLOWUP_INTERCEPTED_SEND_RECOVERED",
+                        {
+                            "pass_id": resumed.research_pass.pass_id,
+                            "pass_name": resumed.research_pass.pass_name,
+                            "submit_count": resumed.research_pass.submit_count,
+                            "actual_dom_send_click_count": 1,
+                            "new_pass_created": False,
+                            "automatic_resubmit_allowed": False,
+                        },
+                    )
+                else:
+                    self._emit(
+                        self.store.get_job(plan.scope.job_id),
+                        "FOLLOWUP_SUBMITTED_RESULT_RECOVERY",
+                        {
+                            "pass_id": plan.research_pass.pass_id,
+                            "pass_name": plan.research_pass.pass_name,
+                            "submit_count": plan.research_pass.submit_count,
+                            "automatic_resubmit_allowed": False,
+                        },
+                    )
             else:
                 await orchestrator.prepare_followup(plan, prepared.session.adapter)
                 submitted = await orchestrator.submit_followup(
@@ -1197,10 +1256,49 @@ class ProV2LiveCanaryRunner:
                         "pass_ordinal": submitted.research_pass.pass_ordinal,
                     },
                 )
-            result = await self._wait_for_followup_result(
-                prepared=prepared,
-                plan=plan,
-            )
+            try:
+                result = await self._wait_for_followup_result(
+                    prepared=prepared,
+                    plan=plan,
+                )
+            except LiveCanaryPending as error:
+                if error.status == BrowserUIState.RETRYABLE_ERROR.value:
+                    durable_failure_pass = orchestrator.ledger.get_pass(
+                        plan.research_pass.pass_id
+                    )
+                    failure_result = await prepared.session.adapter.inspect_result(
+                        job_id=plan.scope.job_id,
+                        run_id=str(prepared.packet_payload["run_id"]),
+                    )
+                    failure_receipt = _persist_failed_visible_followup(
+                        pass_root=pass_root,
+                        plan=plan,
+                        result=failure_result,
+                        reason=error.reason,
+                        submit_count=durable_failure_pass.submit_count,
+                    )
+                    failed = orchestrator.ledger.mark_failed_hard(
+                        plan.research_pass.pass_id,
+                        response_hash=failure_result.report_hash,
+                        failure_class="CHATGPT_VISIBLE_THINKING_FAILED",
+                        reason=error.reason,
+                    )
+                    self._emit(
+                        self.store.get_job(plan.scope.job_id),
+                        "FOLLOWUP_VISIBLE_PROVIDER_FAILURE_RECORDED",
+                        {
+                            "pass_id": failed.pass_id,
+                            "pass_name": failed.pass_name,
+                            "submit_count": failed.submit_count,
+                            "failure_receipt_hash": failure_receipt[
+                                "receipt_hash"
+                            ],
+                            "automatic_resubmit_allowed": False,
+                            "score_authority": False,
+                            "stage_authority": False,
+                        },
+                    )
+                raise
             report_text = result.report_text
             raw = await prepared.session.adapter.capture_result(
                 BrowserCaptureRequest(
@@ -2494,6 +2592,145 @@ def _followup_execution_mode(research_pass: Any, *, pass_root: Path) -> str:
     )
 
 
+def _has_exact_followup_markers(
+    report_text: str,
+    *,
+    pass_id: str,
+    parent_pass_id: str,
+) -> bool:
+    return bool(
+        report_text.count(f"[[E2R_PRO_PASS_ID:{pass_id}]]") == 1
+        and report_text.count(
+            f"[[E2R_PRO_PARENT_PASS_ID:{parent_pass_id}]]"
+        )
+        == 1
+    )
+
+
+def _is_proven_pre_dispatch_modal_interception(reason: str) -> bool:
+    return all(
+        token in reason
+        for token in (
+            "Locator.click: Timeout",
+            "modal-global-search",
+            "intercepts pointer events",
+        )
+    )
+
+
+def _quarantine_misbound_followup_capture(
+    *,
+    pass_root: Path,
+    capture_receipt: CaptureReceipt,
+    report_text: str,
+    expected_pass_id: str,
+    expected_parent_pass_id: str,
+) -> Mapping[str, Any]:
+    """Preserve a completed bundle captured from the wrong visible turn.
+
+    No bytes are deleted.  The invalid ``incoming`` directory is moved under
+    a hash-addressed quarantine path so exactly-once recovery can inspect the
+    current assistant turn and build a new valid incoming bundle later.
+    """
+
+    capture_root = pass_root / "capture"
+    incoming = capture_root / "incoming"
+    quarantine = (
+        capture_root
+        / "quarantine"
+        / f"misbound-{capture_receipt.report_md_hash[:24]}"
+    )
+    if not incoming.is_dir():
+        raise RuntimeError("misbound follow-up capture incoming directory is missing")
+    if quarantine.exists():
+        raise RuntimeError("misbound follow-up quarantine path already exists")
+    observed_pass_ids = sorted(
+        set(re.findall(r"\[\[E2R_PRO_PASS_ID:([^\]]+)\]\]", report_text))
+    )
+    observed_parent_pass_ids = sorted(
+        set(
+            re.findall(
+                r"\[\[E2R_PRO_PARENT_PASS_ID:([^\]]+)\]\]",
+                report_text,
+            )
+        )
+    )
+    quarantine.parent.mkdir(parents=True, exist_ok=True)
+    os.replace(incoming, quarantine)
+    fsync_directory(quarantine.parent)
+    fsync_directory(capture_root)
+    payload = {
+        "schema_version": "e2r_pro_misbound_followup_capture_quarantine_v1",
+        "status": "PRESERVED_NOT_IMPORTED",
+        "expected_pass_id": expected_pass_id,
+        "expected_parent_pass_id": expected_parent_pass_id,
+        "observed_pass_ids": observed_pass_ids,
+        "observed_parent_pass_ids": observed_parent_pass_ids,
+        "capture_receipt_hash": capture_receipt.receipt_hash,
+        "report_md_hash": capture_receipt.report_md_hash,
+        "assistant_turn_id": capture_receipt.assistant_turn_id,
+        "quarantine_relative_path": quarantine.relative_to(pass_root).as_posix(),
+        "automatic_resubmit_allowed": False,
+        "fact_import_allowed": False,
+        "score_authority": False,
+        "stage_authority": False,
+    }
+    receipt = {**payload, "receipt_hash": canonical_hash(payload)}
+    _write_json_atomic(
+        capture_root
+        / f"misbound_capture_quarantine_{capture_receipt.report_md_hash[:24]}.json",
+        receipt,
+    )
+    return receipt
+
+
+def _persist_failed_visible_followup(
+    *,
+    pass_root: Path,
+    plan: FollowupPassPlan,
+    result: BrowserResultSnapshot,
+    reason: str,
+    submit_count: int,
+) -> Mapping[str, Any]:
+    """Persist a visible provider failure without promoting its prose."""
+
+    if (
+        result.conversation_id != plan.scope.conversation_id
+        or not result.assistant_turn_id
+        or not result.report_text.strip()
+        or submit_count != 1
+    ):
+        raise RuntimeError(
+            "visible follow-up failure lacks exact turn or submit identity"
+        )
+    failure_root = pass_root / "failure"
+    report_path = failure_root / "visible_assistant_failure.md"
+    _write_text_atomic(report_path, result.report_text + "\n")
+    payload = {
+        "schema_version": "e2r_pro_visible_followup_failure_v1",
+        "status": "PROVIDER_FAILURE_NOT_IMPORTED",
+        "job_id": plan.scope.job_id,
+        "conversation_id": plan.scope.conversation_id,
+        "pass_id": plan.research_pass.pass_id,
+        "parent_pass_id": plan.research_pass.parent_pass_id,
+        "pass_name": plan.research_pass.pass_name,
+        "submit_count": submit_count,
+        "assistant_turn_id": result.assistant_turn_id,
+        "browser_report_hash": result.report_hash,
+        "failure_report_file_hash": file_sha256(report_path),
+        "failure_report_relative_path": report_path.relative_to(pass_root).as_posix(),
+        "failure_class": "CHATGPT_VISIBLE_THINKING_FAILED",
+        "failure_reason": reason,
+        "automatic_resubmit_allowed": False,
+        "fact_import_allowed": False,
+        "score_authority": False,
+        "stage_authority": False,
+    }
+    receipt = {**payload, "receipt_hash": canonical_hash(payload)}
+    _write_json_atomic(failure_root / "visible_failure_receipt.json", receipt)
+    return receipt
+
+
 def _require_plan(
     value: FollowupPassPlan | TransportPendingDecision | None,
     pass_name: str,
@@ -2685,6 +2922,17 @@ def _write_json_atomic(path: Path, payload: Mapping[str, Any]) -> None:
     part = path.with_suffix(path.suffix + ".part")
     with part.open("w", encoding="utf-8") as stream:
         stream.write(canonical_json(payload) + "\n")
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.replace(part, path)
+    fsync_directory(path.parent)
+
+
+def _write_text_atomic(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    part = path.with_suffix(path.suffix + ".part")
+    with part.open("w", encoding="utf-8", newline="\n") as stream:
+        stream.write(content)
         stream.flush()
         os.fsync(stream.fileno())
     os.replace(part, path)

@@ -286,6 +286,63 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
 
         self.assertEqual(inspection.state, BrowserUIState.RETRYABLE_ERROR)
 
+    async def test_latest_section_thinking_failure_beats_older_completed_turn(
+        self,
+    ) -> None:
+        job_id = "PROJOB-aaaaaaaaaaaaaaaaaaaaaaaa"
+        run_id = "PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb"
+        await self.page.set_content(
+            "<html><body><form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button type="button">Pro</button></form>'
+            '<section data-turn="assistant" data-turn-id="old-turn">'
+            '<div data-message-author-role="assistant" data-message-id="old-message">'
+            f"[[E2R_PRO_JOB_ID:{job_id}]] "
+            f"[[E2R_PRO_RUN_ID:{run_id}]] "
+            "E2R_RESEARCH_DOSSIER_JSON_BEGIN {} "
+            "E2R_RESEARCH_DOSSIER_JSON_END"
+            "</div></section>"
+            '<section data-turn="assistant" data-turn-id="new-failed-turn">'
+            "<button>생각 실패</button>"
+            "<p>검색은 수행했지만 최종 dossier를 만들기 전에 실패했습니다.</p>"
+            "</section></body></html>"
+        )
+
+        inspection = await self.adapter.inspect_state()
+        result = await self.adapter.inspect_result(job_id=job_id, run_id=run_id)
+
+        self.assertEqual(inspection.state, BrowserUIState.RETRYABLE_ERROR)
+        self.assertIn("생각 실패", inspection.detail or "")
+        self.assertEqual(result.assistant_turn_id, "new-failed-turn")
+        self.assertIn("최종 dossier", result.report_text)
+        self.assertFalse(result.structurally_complete)
+
+    async def test_latest_completed_assistant_section_wins_in_document_order(
+        self,
+    ) -> None:
+        job_id = "PROJOB-aaaaaaaaaaaaaaaaaaaaaaaa"
+        run_id = "PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb"
+        await self.page.set_content(
+            "<html><body>"
+            '<article data-message-author-role="assistant" '
+            'data-message-id="old-message">old completed response</article>'
+            '<section data-turn="assistant" data-turn-id="new-turn">'
+            '<div data-message-author-role="assistant" data-message-id="new-message">'
+            f"[[E2R_PRO_JOB_ID:{job_id}]] "
+            f"[[E2R_PRO_RUN_ID:{run_id}]] "
+            "E2R_RESEARCH_DOSSIER_JSON_BEGIN {} "
+            "E2R_RESEARCH_DOSSIER_JSON_END"
+            "</div></section></body></html>"
+        )
+
+        result = await self.adapter.inspect_result(job_id=job_id, run_id=run_id)
+
+        self.assertEqual(result.assistant_turn_id, "new-turn")
+        self.assertTrue(result.structurally_complete)
+        self.assertTrue(result.job_marker_matches)
+        self.assertTrue(result.run_marker_matches)
+
     async def test_work_plus_pro_switches_to_chat_before_becoming_ready(self) -> None:
         await self.page.set_content(
             "<html><body>"

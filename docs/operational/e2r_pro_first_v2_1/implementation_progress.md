@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-27 C06 pass 22 병합·재검문 accepted 66 / pass 23 같은 Pro 대화에서 실행 중`
+기준 시각: `2026-08-27 C06 accepted 66 / pass 23 실패 봉인 / pass 24 같은 Pro 대화에서 실행 중`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -43,12 +43,100 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             IN_PROGRESS (C06 pass 23, C17/C28 tail 대기)
-P10 final CI/audit                        IN_PROGRESS (최근 pushed 59fed6fa, 현재 수정은 아직 미커밋)
+P9 live multi-pass saturation             IN_PROGRESS (C06 pass 24, C17/C28 tail 대기)
+P10 final CI/audit                        IN_PROGRESS (최근 pushed 51e91741, 현재 수정은 아직 미커밋)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
 `PRO_FIRST_V2_1_OPERATIONAL_RESEARCH_READY`를 선언하지 않는다.
+
+## P13 — Pass 23 실패 봉인과 Pass 24 exactly-once 복구
+
+### 왜 화면의 과거 결과를 잘못 잡았는가
+
+ChatGPT는 완료된 응답 안쪽에 `[data-message-author-role=assistant]`를 두지만, 현재 생각/실패 카드는
+바깥 `section[data-turn=assistant]`만 두는 UI가 있다. 기존 adapter는 selector별 결과를 이어 붙여
+과거 완료 응답이 최신 실패 카드보다 뒤에 온 것처럼 읽었다.
+
+이제 assistant turn selector를 CSS union으로 한 번에 읽어 실제 DOM 순서를 보존하고, 안쪽 요소는
+같은 최상위 assistant section으로 정규화한다. 최신 카드의 `생각 실패`가 과거의 완성 dossier보다
+우선한다.
+
+쉬운 예로 22번 답안과 23번 실패지가 책상에 같이 있을 때, 종이 종류별로 모아서 순서를 추측하지
+않고 책상 위 실제 시간 순서로 읽는다.
+
+### Pass 23 fail-closed 결과
+
+Pass 23 디렉터리에 잘못 붙어 있던 capture는 실제로 Pass 22 marker를 가진 결과였다. 삭제하거나
+덮어쓰지 않고 hash-addressed quarantine으로 통째로 이동했다.
+
+```text
+expected pass                PROPASS-e403f96cfbc9d058ab96521b
+observed pass                PROPASS-01b7ec312cf2422e4efbf228
+observed report hash         2afebf6805aa723863878b1f8a9e7c389b3694dc46857ef7394a256cc593690b
+quarantine receipt hash      50715d7ab4e56413f468332cb10da2f0aa28c1464b25544d80a04a245b1ef2a5
+status                       PRESERVED_NOT_IMPORTED
+fact/score/Stage authority   false / false / false
+```
+
+그 뒤 실제 최신 assistant turn `request-...-12`의 `생각 실패` 원문을 별도 failure artifact로
+봉인하고 Pass 23을 `FAILED_HARD`로 닫았다. 중간 사고문에 있던 거래대금이나 패키징 설명은 최종
+구조화 dossier가 아니므로 fact로 가져오지 않았다.
+
+```text
+Pass 23 status               FAILED_HARD
+submit_count                 1
+automatic resubmit           0
+failure response hash        bd9b9c5864646967b516f49f7c554877243f65b13bde74b7df6ced845e39bf9a
+failure receipt hash         3b8ea91449c83ed4e846f0965d0af1e11246c767d3a647af22105620cc86dc05
+```
+
+### 같은 논리 입력의 실패 피드백 재시도는 한 번만
+
+Pass 23 자체를 다시 보내지 않았다. 실패 class/hash/reason을 새 prompt의
+`provider_failure_feedback`에 넣은 Pass 24를 만들었다. 같은 root context에서 이 새 pass까지
+실패하면 자동 반복을 막는다.
+
+처음 Pass 24를 준비할 때 과거 대화 검색 modal이 화면 위에 남아 전송 버튼 클릭을 모두
+가로막았다. Playwright call log가 `modal-global-search intercepts pointer events`를 반복 기록했고
+실제 user turn에는 Pass 24 marker가 없었다. 다음 조건을 모두 확인한 뒤 기존 ledger claim 아래에서
+실제 DOM click 한 번만 수행했다.
+
+```text
+Pass 24                    PROPASS-0b188e6ae08632f0773af6d8
+supersedes                 PROPASS-e403f96cfbc9d058ab96521b
+ledger submit_count        1 유지
+actual DOM send click      1
+new pass on modal recovery 0
+automatic resubmit         false
+current state              RESEARCH_RUNNING
+```
+
+이미 정확한 conversation URL이 열려 있으면 바뀐 history-search UI를 찾지 않고 현재 대화를 그대로
+쓴다. 단, URL의 conversation ID가 durable ID와 다를 때만 visible history search로 이동한다.
+
+첫 completion monitor는 1,440회/7,923초 동안 마지막까지 `RESEARCH_RUNNING`을 확인하고 bounded
+종료했다. 이 종료는 연구 실패나 완료가 아니다. 같은 Pass 24에 monitor만 다시 붙였고
+`browser_submit_delta=0`, poll 1 `RESEARCH_RUNNING`을 다시 확인했다.
+
+현재 accepted fact 66과 saturation 상태는 변하지 않았다. Pass 24 최종 JSON을 아직 받지 않았으므로
+새 fact, score, Stage를 만들지 않는다. 기계 판독 영수증은
+`p13_pass23_failure_and_pass24_exactly_once_recovery_receipt.json`이며 `completion_claimed=false`다.
+
+이번 수리의 직접 관련 회귀 119개는 실행 환경의 책임을 분리해 전부 통과했다.
+
+```text
+Windows Chromium browser adapter       30/30 PASS
+Windows Chromium multi-pass            23/23 PASS
+Linux runtime + fresh orchestration     66/66 PASS
+합계                                     119/119 PASS
+```
+
+한 번에 Windows에서 네 모듈을 돌렸을 때 8개는 WSL worktree의 `.git` 파일이 가리키는 Linux
+절대경로를 Windows Git이 읽지 못해 실패했고, Linux에서 세 모듈을 돌렸을 때 2개는 test body 전에
+Chromium의 `libnspr4.so`가 없어 실패했다. 전자는 Linux 66개 green으로, 후자는 Windows Chromium
+23개 green으로 각각 실제 책임 환경에서 재검증했다. 따라서 이 환경 오류를 제품 회귀로 숨기거나
+PASS 수에 중복 계산하지 않았다.
 
 ## P12 — Pass 17 fail-closed 수리와 실제 포화도 재개
 

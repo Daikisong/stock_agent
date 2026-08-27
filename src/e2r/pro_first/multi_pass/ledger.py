@@ -393,6 +393,73 @@ class ProMultiPassLedger:
             result = self._require_pass(connection, pass_id)
         return self._pass_from_row(result)
 
+    def mark_failed_hard(
+        self,
+        pass_id: str,
+        *,
+        response_hash: str,
+        failure_class: str,
+        reason: str,
+    ) -> ResearchPassRecord:
+        """Close one exactly-once pass whose visible assistant turn failed.
+
+        The failed visible turn is immutable response evidence, but it is not
+        a dossier and can never authorize fact import, score, or publication.
+        A later pass may reference this failure receipt as planner feedback;
+        the failed pass itself is never submitted again.
+        """
+
+        if len(response_hash) != 64:
+            raise ValueError("failed pass response hash must be sha256")
+        if not failure_class.strip() or not reason.strip():
+            raise ValueError("failed pass requires a class and reason")
+        now = self.store._now_text()
+        with self._transaction() as connection:
+            row = self._require_pass(connection, pass_id)
+            if row["status"] == ResearchPassStatus.FAILED_HARD.value:
+                if row["response_hash"] != response_hash:
+                    raise FollowupSubmitBlocked("failed pass response hash changed")
+                return self._pass_from_row(row)
+            if (
+                row["status"]
+                not in {
+                    ResearchPassStatus.RESEARCH_RUNNING.value,
+                    ResearchPassStatus.TRANSPORT_PENDING.value,
+                }
+                or int(row["submit_count"]) != 1
+            ):
+                raise FollowupSubmitBlocked(
+                    "only one claimed running/pending pass can fail hard"
+                )
+            detail = json.loads(row["detail_json"])
+            detail.update(
+                {
+                    "failure_class": failure_class.strip(),
+                    "failure_reason": reason.strip(),
+                    "failed_visible_response_hash": response_hash,
+                    "research_status": "PROVIDER_FAILURE_PENDING",
+                    "automatic_resubmit_allowed": False,
+                    "score_valid": False,
+                    "publication_withheld": True,
+                }
+            )
+            connection.execute(
+                """
+                UPDATE pro_research_passes
+                SET status=?, response_hash=?, detail_json=?, completed_at=?
+                WHERE pass_id=?
+                """,
+                (
+                    ResearchPassStatus.FAILED_HARD.value,
+                    response_hash,
+                    canonical_json(detail),
+                    now,
+                    pass_id,
+                ),
+            )
+            result = self._require_pass(connection, pass_id)
+        return self._pass_from_row(result)
+
     def confirm_transport_pending_submit(
         self,
         pass_id: str,
@@ -426,6 +493,68 @@ class ProMultiPassLedger:
                     canonical_json(detail),
                     pass_id,
                     ResearchPassStatus.TRANSPORT_PENDING.value,
+                ),
+            )
+            result = self._require_pass(connection, pass_id)
+        return self._pass_from_row(result)
+
+    def confirm_intercepted_submit_dispatched(
+        self,
+        pass_id: str,
+        *,
+        prior_failure_hash: str,
+    ) -> ResearchPassRecord:
+        """Resume one claim only after proving its DOM click never dispatched."""
+
+        if len(prior_failure_hash) != 64:
+            raise ValueError("prior transport failure hash must be sha256")
+        now = self.store._now_text()
+        with self._transaction() as connection:
+            row = self._require_pass(connection, pass_id)
+            if (
+                row["status"] != ResearchPassStatus.TRANSPORT_PENDING.value
+                or int(row["submit_count"]) != 1
+            ):
+                raise FollowupSubmitBlocked(
+                    "only one claimed transport-pending pass can resume its undispatched click"
+                )
+            detail = json.loads(row["detail_json"])
+            reason = str(detail.get("transport_pending_reason") or "")
+            required = (
+                "Locator.click: Timeout",
+                "modal-global-search",
+                "intercepts pointer events",
+            )
+            if any(token not in reason for token in required):
+                raise FollowupSubmitBlocked(
+                    "transport receipt does not prove a pre-dispatch interception"
+                )
+            if canonical_hash({"transport_pending_reason": reason}) != prior_failure_hash:
+                raise FollowupSubmitBlocked(
+                    "transport failure evidence changed before recovery"
+                )
+            detail.update(
+                {
+                    "research_status": "RESEARCH_RUNNING",
+                    "intercepted_submit_recovered": True,
+                    "intercepted_submit_recovered_at": now,
+                    "prior_transport_failure_hash": prior_failure_hash,
+                    "actual_dom_send_click_count": 1,
+                    "automatic_resubmit_allowed": False,
+                    "score_valid": False,
+                    "publication_withheld": True,
+                }
+            )
+            connection.execute(
+                """
+                UPDATE pro_research_passes
+                SET status=?, detail_json=?, completed_at=NULL
+                WHERE pass_id=?
+                """,
+                (
+                    ResearchPassStatus.RESEARCH_RUNNING.value,
+                    canonical_json(detail),
+                    pass_id,
                 ),
             )
             result = self._require_pass(connection, pass_id)

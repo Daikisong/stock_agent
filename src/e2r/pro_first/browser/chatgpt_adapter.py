@@ -48,6 +48,7 @@ from .selector_registry import (
     PRO_REASONING_ACTIVE_SELECTORS,
     SEND_SELECTORS,
     STOP_SELECTORS,
+    USER_TURN_SELECTORS,
     WORK_MODE_ACTIVE_SELECTORS,
 )
 
@@ -466,6 +467,114 @@ class PlaywrightChatGPTWebAdapter:
             await self.page.wait_for_timeout(100)
         return await self.inspect_state()
 
+    async def resume_intercepted_followup_submit_once(
+        self,
+        approval_proof: Any,
+        *,
+        transport_pending_reason: str,
+    ) -> BrowserInspection:
+        """Finish one claimed send whose first click never reached the button.
+
+        This is narrower than a retry.  The durable claim already exists, the
+        exact prompt must still be in the composer, no user turn may contain
+        the pass marker, and Playwright's prior error must prove that the
+        global-search modal intercepted every click before dispatch.
+        """
+
+        from ..multi_pass.orchestrator import ScopedFollowupProof
+
+        if (
+            not isinstance(approval_proof, ScopedFollowupProof)
+            or not approval_proof.ledger_verified
+        ):
+            raise SubmitAuthorizationRequired(
+                "intercepted follow-up recovery requires the durable scoped proof"
+            )
+        required_failure_tokens = (
+            "Locator.click: Timeout",
+            "modal-global-search",
+            "intercepts pointer events",
+        )
+        if any(
+            token not in transport_pending_reason
+            for token in required_failure_tokens
+        ):
+            raise SubmitAuthorizationRequired(
+                "transport evidence does not prove a pre-dispatch modal interception"
+            )
+        if self._submit_attempted:
+            raise SubmitAuthorizationRequired(
+                "this browser adapter already attempted the recovered click"
+            )
+        await self.ensure_logged_in()
+        if self.conversation_id() != approval_proof.conversation_id:
+            raise SubmitAuthorizationRequired(
+                "conversation changed before intercepted send recovery"
+            )
+        editor = await first_visible(self.page, EDITOR_SELECTORS)
+        if editor is None:
+            raise BrowserUIIncompatible(
+                "intercepted send recovery requires the preserved prompt editor"
+            )
+        current_prompt = await editor_text(editor)
+        required_markers = (
+            f"[[E2R_PRO_JOB_ID:{approval_proof.job_id}]]",
+            f"[[E2R_PRO_PASS_ID:{approval_proof.pass_id}]]",
+            f"[[E2R_PRO_PARENT_PASS_ID:{approval_proof.parent_pass_id}]]",
+        )
+        if any(marker not in current_prompt for marker in required_markers):
+            raise SubmitAuthorizationRequired(
+                "preserved composer does not contain the exact claimed pass"
+            )
+        # ChatGPT's contenteditable DOM normalizes newlines and list spacing,
+        # so text read back from the composer is not byte-identical to the
+        # compiled prompt even immediately after ``set_prompt``.  The normal
+        # submit boundary therefore binds the compiled hash before insertion
+        # and verifies the three exact lineage markers after insertion.  This
+        # recovery uses that same boundary plus the stronger absence of an
+        # already-sent user turn below.
+        pass_marker = required_markers[1]
+        user_turns = self.page.locator(", ".join(USER_TURN_SELECTORS))
+        for index in range(await user_turns.count()):
+            turn = user_turns.nth(index)
+            if pass_marker in str(await turn.inner_text() or ""):
+                raise SubmitAuthorizationRequired(
+                    "claimed pass already exists as a visible user turn"
+                )
+
+        modal = await first_visible(
+            self.page,
+            ('[role="dialog"][data-testid="modal-global-search"]',),
+        )
+        if modal is not None:
+            await self.page.keyboard.press("Escape")
+            await self.page.wait_for_timeout(200)
+            if await first_visible(
+                self.page,
+                ('[role="dialog"][data-testid="modal-global-search"]',),
+            ) is not None:
+                raise BrowserUIIncompatible(
+                    "global search modal remained visible after Escape"
+                )
+        send = await first_visible(self.page, SEND_SELECTORS)
+        if not await locator_enabled(send):
+            raise BrowserUIIncompatible(
+                "recovered exact prompt has no enabled send button"
+            )
+        self._submit_attempted = True
+        await send.click()
+        for _attempt in range(50):
+            inspection = await self.inspect_state()
+            if (
+                inspection.state is BrowserUIState.RESEARCH_RUNNING
+                and inspection.conversation_id == approval_proof.conversation_id
+            ):
+                return inspection
+            await self.page.wait_for_timeout(100)
+        raise BrowserUIIncompatible(
+            "recovered intercepted click did not enter RESEARCH_RUNNING"
+        )
+
     async def inspect_state(self) -> BrowserInspection:
         editor = await first_visible(self.page, EDITOR_SELECTORS)
         login_required = editor is None and await self._manual_login_required()
@@ -479,6 +588,7 @@ class PlaywrightChatGPTWebAdapter:
         (
             latest_dossier_complete,
             latest_clarification_visible,
+            latest_failure_visible,
             latest_clarification_detail,
         ) = await self._latest_assistant_state_flags()
         packet_uploaded = bool(
@@ -503,6 +613,8 @@ class PlaywrightChatGPTWebAdapter:
             # authorized send has already started.  The visible stop control
             # is stronger current-state evidence that research is running.
             state = BrowserUIState.RESEARCH_RUNNING
+        elif latest_failure_visible:
+            state = BrowserUIState.RETRYABLE_ERROR
         elif mock_state == "ERROR" or any(
             token in operational_notice_text
             for token in ("something went wrong", "network error", "오류가 발생", "다시 시도하세요")
@@ -527,6 +639,7 @@ class PlaywrightChatGPTWebAdapter:
         }:
             detail = (
                 operational_notice_text.strip()
+                or latest_clarification_detail
                 or await self._body_tail_text()
                 or state.value
             )
@@ -595,37 +708,47 @@ class PlaywrightChatGPTWebAdapter:
 
     async def _latest_assistant_state_flags(
         self,
-    ) -> tuple[bool, bool, str]:
+    ) -> tuple[bool, bool, bool, str]:
         """Inspect the newest assistant turn without transferring full prose."""
 
-        for selector in ASSISTANT_TURN_SELECTORS:
-            matches = self.page.locator(selector)
-            for index in range(await matches.count() - 1, -1, -1):
-                item = matches.nth(index)
-                if await item.is_visible():
-                    flags = await item.evaluate(
-                        r"""element => {
-                            const text = (element.innerText || '').toLowerCase();
-                            const clarification = [
-                                'before i start, please clarify',
-                                '시작하기 전에 확인',
-                                'need clarification'
-                            ].some(token => text.includes(token));
-                            return {
-                                dossierComplete: text.includes(
-                                    'e2r_research_dossier_json_end'
-                                ),
-                                clarification,
-                                detail: clarification ? text.slice(-2000) : ''
-                            };
-                        }"""
-                    )
-                    return (
-                        bool(flags.get("dossierComplete")),
-                        bool(flags.get("clarification")),
-                        str(flags.get("detail") or ""),
-                    )
-        return False, False, ""
+        turns = await self._assistant_turns()
+        if not turns:
+            return False, False, False, ""
+        flags = await turns[-1].evaluate(
+            r"""element => {
+                const raw = (element.innerText || '').trim();
+                const text = raw.toLowerCase();
+                const clarification = [
+                    'before i start, please clarify',
+                    '시작하기 전에 확인',
+                    'need clarification'
+                ].some(token => text.includes(token));
+                const controls = Array.from(element.querySelectorAll('button'))
+                    .map(node => (node.innerText || '').trim().toLowerCase());
+                const visibleFailure = [
+                    '생각 실패',
+                    'thinking failed',
+                    '조사 실패',
+                    'research failed'
+                ].some(token => controls.includes(token) || text.startsWith(token));
+                return {
+                    dossierComplete: text.includes(
+                        'e2r_research_dossier_json_end'
+                    ),
+                    clarification,
+                    visibleFailure,
+                    detail: (clarification || visibleFailure)
+                        ? raw.slice(-2000)
+                        : ''
+                };
+            }"""
+        )
+        return (
+            bool(flags.get("dossierComplete")),
+            bool(flags.get("clarification")),
+            bool(flags.get("visibleFailure")),
+            str(flags.get("detail") or ""),
+        )
 
     async def inspect_result(self, *, job_id: str, run_id: str) -> BrowserResultSnapshot:
         turns = await self._assistant_turns()
@@ -1246,21 +1369,47 @@ class PlaywrightChatGPTWebAdapter:
                 raise BrowserUIIncompatible("preview download was not observed by Playwright") from error
 
     async def _assistant_turns(self) -> list[Any]:
+        """Return unique assistant turns in document order.
+
+        ChatGPT can render both a top-level assistant section and a nested
+        message-role element for one completed response.  Concatenating one
+        selector at a time can place an older nested response after the newest
+        top-level thinking card.  The CSS union keeps DOM order, and nested
+        matches are normalized to their top-level assistant section.
+        """
+
         turns: list[Any] = []
         seen: set[str] = set()
-        for selector in ASSISTANT_TURN_SELECTORS:
-            locator = self.page.locator(selector)
-            for index in range(await locator.count()):
-                item = locator.nth(index)
-                if not await item.is_visible():
-                    continue
-                identity = await item.evaluate(
-                    "element => element.getAttribute('data-message-id') || element.getAttribute('data-turn-id') || element.outerHTML.slice(0, 200)"
-                )
-                if identity in seen:
-                    continue
-                seen.add(identity)
-                turns.append(item)
+        locator = self.page.locator(", ".join(ASSISTANT_TURN_SELECTORS))
+        for index in range(await locator.count()):
+            item = locator.nth(index)
+            if not await item.is_visible():
+                continue
+            section = item.locator(
+                "xpath=ancestor-or-self::section[@data-turn='assistant'][1]"
+            )
+            if await section.count():
+                item = section
+            identity = await item.evaluate(
+                r"""element => {
+                    const direct = element.getAttribute('data-message-id')
+                        || element.getAttribute('data-turn-id');
+                    if (direct) return direct;
+                    if (element.matches('section[data-turn="assistant"]')) {
+                        return `assistant-section-${Array.from(
+                            document.querySelectorAll(
+                                'section[data-turn="assistant"]'
+                            )
+                        ).indexOf(element)}`;
+                    }
+                    return element.getAttribute('data-testid')
+                        || element.outerHTML.slice(0, 200);
+                }"""
+            )
+            if identity in seen:
+                continue
+            seen.add(identity)
+            turns.append(item)
         return turns
 
     @staticmethod

@@ -979,6 +979,52 @@ class FreshSessionOrchestratorV3:
         logical_input_hash = canonical_hash(
             {"pass_name": pass_name, "context": context}
         )
+        provider_failure_root_input_hash = logical_input_hash
+        failed_same_context = tuple(
+            row
+            for row in prior
+            if row.status == ResearchPassStatus.FAILED_HARD.value
+            and (
+                row.pass_input_hash == provider_failure_root_input_hash
+                or str(
+                    row.detail.get("provider_failure_root_input_hash") or ""
+                )
+                == provider_failure_root_input_hash
+            )
+        )
+        if len(failed_same_context) >= 2:
+            raise FreshSessionBoundaryError(
+                "same fresh V3 context failed twice at the provider; "
+                "automatic repetition is blocked"
+            )
+        if failed_same_context:
+            failed = failed_same_context[-1]
+            context["pass_inputs"] = {
+                **dict(context.get("pass_inputs") or {}),
+                "provider_failure_feedback": {
+                    "supersedes_failed_pass_id": failed.pass_id,
+                    "failure_class": str(
+                        failed.detail.get("failure_class")
+                        or "CHATGPT_VISIBLE_RESPONSE_FAILURE"
+                    ),
+                    "failure_reason": str(
+                        failed.detail.get("failure_reason")
+                        or "visible assistant turn failed before dossier output"
+                    ),
+                    "failed_visible_response_hash": str(
+                        failed.response_hash or ""
+                    ),
+                    "retry_ordinal": 1,
+                    "instruction": (
+                        "Do not repeat already completed routes. Use the "
+                        "failure feedback, finish the requested structured "
+                        "dossier, and preserve unresolved evidence as pending."
+                    ),
+                },
+            }
+            logical_input_hash = canonical_hash(
+                {"pass_name": pass_name, "context": context}
+            )
         pass_id = stable_id(
             "PROPASS",
             {
@@ -991,7 +1037,11 @@ class FreshSessionOrchestratorV3:
         active = tuple(
             row
             for row in existing_passes
-            if row.status != ResearchPassStatus.COMPLETE.value
+            if row.status
+            not in {
+                ResearchPassStatus.COMPLETE.value,
+                ResearchPassStatus.FAILED_HARD.value,
+            }
         )
         if active and all(row.pass_id != pass_id for row in active):
             raise FreshSessionBoundaryError(
@@ -1042,6 +1092,16 @@ class FreshSessionOrchestratorV3:
                         or {}
                     ),
                     "prompt_char_count": len(compiled.prompt_text),
+                    "provider_failure_root_input_hash": (
+                        provider_failure_root_input_hash
+                        if failed_same_context
+                        else None
+                    ),
+                    "supersedes_failed_pass_id": (
+                        failed_same_context[-1].pass_id
+                        if failed_same_context
+                        else None
+                    ),
                     "score_authority": False,
                     "stage_authority": False,
                 },
@@ -1081,6 +1141,18 @@ class FreshSessionOrchestratorV3:
         adapter: ChatGPTWebAdapter,
     ):
         return await self.followup_transport.submit_followup(plan, adapter)
+
+    async def resume_intercepted_followup_submit(
+        self,
+        plan: FollowupPassPlan,
+        adapter: ChatGPTWebAdapter,
+    ):
+        """Expose the shared proven-pre-dispatch recovery to fresh V3."""
+
+        return await self.followup_transport.resume_intercepted_followup_submit(
+            plan,
+            adapter,
+        )
 
     def complete_followup(
         self,

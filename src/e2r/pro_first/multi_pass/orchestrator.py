@@ -18,6 +18,7 @@ from .ledger import ProMultiPassLedger
 from .models import (
     COUNTER_SUPERSESSION_PASS_NAME,
     FollowupPassPlan,
+    FollowupSubmitBlocked,
     ResearchApprovalScope,
     ResearchPassRecord,
     ResearchPassStatus,
@@ -539,6 +540,51 @@ class ProMultiPassResearchOrchestrator:
         """Promote a claimed timeout only after its exact result is visible."""
 
         return self.ledger.confirm_transport_pending_submit(pass_id)
+
+    async def resume_intercepted_followup_submit(
+        self,
+        plan: FollowupPassPlan,
+        adapter: ChatGPTWebAdapter,
+    ) -> FollowupSubmitResult:
+        """Continue the existing claim after a proven pre-dispatch UI block."""
+
+        current = self.ledger.get_pass(plan.research_pass.pass_id)
+        if (
+            current.status != ResearchPassStatus.TRANSPORT_PENDING.value
+            or current.submit_count != 1
+        ):
+            raise FollowupSubmitBlocked(
+                "intercepted recovery requires one claimed transport-pending pass"
+            )
+        reason = str(current.detail.get("transport_pending_reason") or "")
+        failure_hash = canonical_hash({"transport_pending_reason": reason})
+        proof = ScopedFollowupProof(
+            job_id=current.job_id,
+            pass_id=current.pass_id,
+            parent_pass_id=current.parent_pass_id or "",
+            approval_scope_id=current.approval_scope_id,
+            browser_session_id=plan.scope.browser_session_id,
+            conversation_id=current.conversation_id,
+            prompt_hash=current.prompt_hash,
+            submit_count=current.submit_count,
+            _capability=_FOLLOWUP_CAPABILITY,
+        )
+        inspection = await adapter.resume_intercepted_followup_submit_once(
+            proof,
+            transport_pending_reason=reason,
+        )
+        if (
+            inspection.state is not BrowserUIState.RESEARCH_RUNNING
+            or inspection.conversation_id != current.conversation_id
+        ):
+            raise FollowupSubmitBlocked(
+                "intercepted recovery did not prove the exact conversation running"
+            )
+        running = self.ledger.confirm_intercepted_submit_dispatched(
+            current.pass_id,
+            prior_failure_hash=failure_hash,
+        )
+        return FollowupSubmitResult(research_pass=running, inspection=inspection)
 
     def _job_conversation(self, job_id: str) -> str:
         conversation_id = self.store.get_job(job_id).conversation_id

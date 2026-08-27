@@ -29,6 +29,11 @@ from e2r.pro_first.multi_pass import (
 
 
 ARCHETYPE = "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
+INTERCEPTED_CLICK_REASON = (
+    "TimeoutError: Locator.click: Timeout 30000ms exceeded; "
+    '<div role="dialog" data-testid="modal-global-search"> '
+    "intercepts pointer events"
+)
 
 
 class _FakeSameConversationAdapter:
@@ -60,6 +65,29 @@ class _FakeSameConversationAdapter:
             raise PermissionError("durable pass claim required")
         if self.prepared is None or proof.pass_id != self.prepared.pass_id:
             raise PermissionError("proof differs from prepared pass")
+        self.submit_count += 1
+        self.proofs.append(proof)
+        return BrowserInspection(
+            state=BrowserUIState.RESEARCH_RUNNING,
+            conversation_id=self.conversation_id,
+            editor_ready=True,
+            deep_research_ready=True,
+            packet_uploaded=True,
+            prompt_ready=False,
+            send_ready=False,
+            stop_visible=True,
+        )
+
+    async def resume_intercepted_followup_submit_once(
+        self,
+        proof,
+        *,
+        transport_pending_reason: str,
+    ) -> BrowserInspection:
+        if not proof.ledger_verified or proof.submit_count != 1:
+            raise PermissionError("durable claimed proof required")
+        if transport_pending_reason != INTERCEPTED_CLICK_REASON:
+            raise PermissionError("transport proof changed")
         self.submit_count += 1
         self.proofs.append(proof)
         return BrowserInspection(
@@ -247,6 +275,64 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
                 await browser.close()
                 await playwright.stop()
 
+    async def test_browser_recovers_modal_intercepted_click_under_same_claim(
+        self,
+    ) -> None:
+        from playwright.async_api import async_playwright
+
+        plan = self._public_plan()
+        with MockChatGPTServer() as server:
+            playwright = await async_playwright().start()
+            browser = await playwright.chromium.launch(headless=True)
+            try:
+                page = await browser.new_page()
+                await page.goto(
+                    f"{server.base_url}/c/{self.scope.conversation_id}",
+                    wait_until="domcontentloaded",
+                )
+                adapter = PlaywrightChatGPTWebAdapter(page)
+                await self.orchestrator.prepare_followup(plan, adapter)
+                claimed = self.orchestrator.ledger.claim_submit(
+                    plan.research_pass.pass_id
+                )
+                self.orchestrator.ledger.mark_transport_pending(
+                    claimed.pass_id,
+                    reason=INTERCEPTED_CLICK_REASON,
+                )
+                await page.evaluate(
+                    """() => {
+                        const modal = document.createElement('div');
+                        modal.setAttribute('role', 'dialog');
+                        modal.dataset.testid = 'modal-global-search';
+                        modal.style.cssText = 'position:fixed;inset:0;z-index:9999';
+                        document.body.appendChild(modal);
+                        document.addEventListener('keydown', event => {
+                            if (event.key === 'Escape') modal.remove();
+                        }, {once: true});
+                    }"""
+                )
+
+                resumed = await self.orchestrator.resume_intercepted_followup_submit(
+                    plan,
+                    adapter,
+                )
+
+                self.assertEqual(resumed.research_pass.status, "RESEARCH_RUNNING")
+                self.assertEqual(resumed.research_pass.submit_count, 1)
+                self.assertTrue(
+                    resumed.research_pass.detail["intercepted_submit_recovered"]
+                )
+                self.assertEqual(await page.evaluate("window.__submitCount"), 1)
+                self.assertEqual(
+                    await page.locator(
+                        '[data-testid="modal-global-search"]'
+                    ).count(),
+                    0,
+                )
+            finally:
+                await browser.close()
+                await playwright.stop()
+
     async def test_followup_is_authorized_by_initial_job_approval(self) -> None:
         plan = self._public_plan()
         adapter = _FakeSameConversationAdapter(self.scope.conversation_id)
@@ -402,6 +488,61 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
         )
         self.assertEqual(completed.status, "COMPLETE")
         self.assertEqual(completed.submit_count, 1)
+
+    async def test_modal_interception_resumes_existing_claim_exactly_once(self) -> None:
+        plan = self._public_plan()
+        adapter = _FakeSameConversationAdapter(self.scope.conversation_id)
+        await self.orchestrator.prepare_followup(plan, adapter)
+        claimed = self.orchestrator.ledger.claim_submit(
+            plan.research_pass.pass_id
+        )
+        pending = self.orchestrator.ledger.mark_transport_pending(
+            claimed.pass_id,
+            reason=INTERCEPTED_CLICK_REASON,
+        )
+
+        resumed = await self.orchestrator.resume_intercepted_followup_submit(
+            plan,
+            adapter,
+        )
+
+        self.assertEqual(pending.submit_count, 1)
+        self.assertEqual(resumed.research_pass.submit_count, 1)
+        self.assertEqual(resumed.research_pass.status, "RESEARCH_RUNNING")
+        self.assertEqual(adapter.submit_count, 1)
+        with self.assertRaises(FollowupSubmitBlocked):
+            await self.orchestrator.resume_intercepted_followup_submit(
+                plan,
+                adapter,
+            )
+
+    def test_visible_provider_failure_closes_claimed_pass_without_resubmit(self) -> None:
+        plan = self._public_plan()
+        pass_id = plan.research_pass.pass_id
+        self.orchestrator.ledger.mark_prepared(pass_id)
+        self.orchestrator.ledger.claim_submit(pass_id)
+        self.orchestrator.ledger.mark_running(pass_id)
+
+        failed = self.orchestrator.ledger.mark_failed_hard(
+            pass_id,
+            response_hash="9" * 64,
+            failure_class="CHATGPT_VISIBLE_THINKING_FAILED",
+            reason="latest assistant turn showed 생각 실패",
+        )
+        repeated = self.orchestrator.ledger.mark_failed_hard(
+            pass_id,
+            response_hash="9" * 64,
+            failure_class="CHATGPT_VISIBLE_THINKING_FAILED",
+            reason="same immutable failure",
+        )
+
+        self.assertEqual(failed.status, ResearchPassStatus.FAILED_HARD.value)
+        self.assertEqual(repeated.response_hash, "9" * 64)
+        self.assertEqual(failed.submit_count, 1)
+        self.assertFalse(failed.detail["automatic_resubmit_allowed"])
+        self.assertFalse(failed.detail["score_valid"])
+        with self.assertRaises(FollowupSubmitBlocked):
+            self.orchestrator.ledger.claim_submit(pass_id)
 
     def test_same_gap_third_reopen_hard_fails(self) -> None:
         values = {
