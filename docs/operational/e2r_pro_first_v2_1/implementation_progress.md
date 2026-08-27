@@ -3346,3 +3346,34 @@ publication                      withheld
 기계 판독 영수증은 `p15_c06_new_chat_initial_success_receipt.json`이다. 이 시점은 C06 Initial Gate를
 통과한 것이지 전체 목표 완료가 아니다. 다음은 같은 새 C06 conversation에서 bounded full-thesis tail을
 실행하고, 이후 C17·C28 tail과 전체 suite·GitHub Actions를 닫는 것이다.
+
+## P16 — C06 full-thesis tail 100,000자 사전 차단과 무손실 compact
+
+새 C06 job을 읽기 전용 점검한 결과는 `GAP_ADJUDICATION`, accepted fact 30, 공개 gap 23,
+비종료 mandatory 4, provider/parser core pending 2, source-linkage incomplete 9였다. 같은 conversation의
+bounded tail을 시작했지만 실제 send 전에 follow-up prompt 100,000자 상한이 작동했다.
+
+```text
+initial resubmit                 0
+follow-up submit                 0
+browser submit delta             0
+failure                          FreshSessionBoundaryError
+publication / score / Stage      withheld / false / false
+```
+
+원인은 25개 질문 context의 내용 자체가 아니라 JSON 들여쓰기였다. context를 보기 좋게 출력하면
+96,167자였고, 동일 객체를 canonical JSON으로 직렬화하면 73,242자였다. 질문, fact ID, route outcome을
+삭제하거나 batch 상한을 올리지 않고 공백만 제거했다.
+
+쉬운 예로 보고서 25장을 버린 것이 아니라 각 줄 앞의 스페이스만 없앤 것이다. 회귀 테스트는 100,000자를
+넘는 pretty context를 새 compiler에 넣고, prompt 안의 compact JSON을 다시 파싱해 원래 객체와 완전히
+같은지 비교한다.
+
+```text
+lossless JSON roundtrip regression     PASS
+focused fresh/preflight/submit tests   112/112 PASS
+failure / error                        0 / 0
+```
+
+기계 판독 영수증은 `p16_c06_full_tail_prompt_compaction_receipt.json`이다. 이 checkpoint도 전체 완료가
+아니며, 같은 C06 conversation에 compact된 bounded tail을 아직 전송하지 않은 상태다.

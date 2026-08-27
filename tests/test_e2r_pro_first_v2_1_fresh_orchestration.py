@@ -1375,6 +1375,106 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             )
         )
 
+    async def test_large_public_followup_context_is_losslessly_compacted(self) -> None:
+        adapter = await self._prepare_and_approve(
+            "fresh-conversation-large-public-context"
+        )
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="7" * 64,
+        )
+        unresolved = []
+        question_ids = []
+        for question_index in range(25):
+            question_id = f"QUESTION-LARGE-{question_index:02}"
+            question_ids.append(question_id)
+            route_ids = [
+                f"ROUTE-{question_index:02}-{route_index:02}-" + "x" * 24
+                for route_index in range(6)
+            ]
+            unresolved.append(
+                {
+                    "question_family_id": question_id,
+                    "reported_status": "PUBLIC_SEARCHABLE",
+                    "availability_class": "PUBLIC_SEARCHABLE",
+                    "closure_reason": "",
+                    "required_source_roles_missing": [
+                        "ISSUER_OFFICIAL",
+                        "OFFICIAL_FILING",
+                    ],
+                    "search_route_receipt_ids": route_ids,
+                    "deterministic_status": "PUBLIC_SEARCHABLE",
+                    "gap_class": "CORE_SCORE_BLOCKER",
+                    "failure_codes": [
+                        "PUBLIC_MATERIAL_GAP",
+                        "SOURCE_LINKAGE_INCOMPLETE",
+                    ],
+                    "verified_linked_fact_ids": route_ids,
+                    "linked_source_lineage_ids": route_ids,
+                    "linked_route_receipt_ids": route_ids,
+                    "missing_core_source_roles": ["OFFICIAL_FILING"],
+                    "missing_corroboration_source_roles": [],
+                    "verified_source_roles": ["ISSUER_OFFICIAL"],
+                    "deterministic_terminal": False,
+                    "deterministic_ready": False,
+                    "route_progress_state": {
+                        "route_signatures": route_ids,
+                        "latest_route_outcomes": [
+                            {
+                                "route_signature": route_id,
+                                "provider_status": "SUCCESS",
+                                "parser_status": "SUCCESS",
+                                "verified_accepted_fact_ids": [],
+                                "no_new_route_confirmed": False,
+                            }
+                            for route_id in route_ids
+                        ],
+                        "failure_codes": [],
+                    },
+                }
+            )
+        latest_digest = {
+            "dossier_hash": "a" * 64,
+            "verified_fact_ids": [f"FACT-{index:02}" for index in range(30)],
+        }
+        pass_inputs = {
+            "question_family_ids": question_ids,
+            "question_context_hashes": {
+                question_id: "b" * 64 for question_id in question_ids
+            },
+            "question_progress_hashes": {
+                question_id: "c" * 64 for question_id in question_ids
+            },
+            "research_gap_context_hash": "d" * 64,
+        }
+        expected_context = {
+            "latest_dossier_digest": latest_digest,
+            "unresolved_question_state": unresolved,
+            "pass_inputs": pass_inputs,
+        }
+        pretty_context = json.dumps(
+            expected_context,
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        )
+
+        _plan, compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest=latest_digest,
+            unresolved_question_state=unresolved,
+            pass_inputs=pass_inputs,
+        )
+        embedded_context = compiled.prompt_text.split("```json\n", 1)[1].split(
+            "\n```", 1
+        )[0]
+
+        self.assertGreater(len(pretty_context), 100_000)
+        self.assertLess(len(compiled.prompt_text), 100_000)
+        self.assertEqual(json.loads(embedded_context), expected_context)
+
     async def test_unchanged_question_is_not_resent_after_sibling_closes(self) -> None:
         adapter = await self._prepare_and_approve(
             "fresh-conversation-question-dedup"

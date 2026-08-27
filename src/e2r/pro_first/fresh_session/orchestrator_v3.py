@@ -11,7 +11,7 @@ from ..approval import ExactlyOnceSubmitCoordinator, SubmitResult
 from ..browser.protocol import ChatGPTWebAdapter, PreparedBrowserJob
 from ..browser.worker import BrowserWorkerSession, ProBrowserWorker
 from ..config import ProFirstLocalConfig
-from ..ids import canonical_hash, stable_id
+from ..ids import canonical_hash, canonical_json, stable_id
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
 from ..multi_pass import (
@@ -1371,7 +1371,7 @@ def _compile_fresh_followup_v3(
             "## Compact deterministic context",
             "",
             "```json",
-            json.dumps(context, ensure_ascii=False, indent=2, sort_keys=True),
+            canonical_json(context),
             "```",
             "",
         )
