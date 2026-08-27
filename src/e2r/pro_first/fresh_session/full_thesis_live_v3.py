@@ -746,20 +746,17 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
         ).read_text(encoding="utf-8")
         pass_id = plan.research_pass.pass_id
         parent_id = str(plan.research_pass.parent_pass_id or "")
-        if report_text.count(f"[[E2R_PRO_PASS_ID:{pass_id}]]") != 1:
-            raise LiveCanaryPending(
-                "compact repair lacks the exact pass marker",
-                status="TRANSPORT_PENDING",
-            )
-        if report_text.count(f"[[E2R_PRO_PARENT_PASS_ID:{parent_id}]]") != 1:
-            raise LiveCanaryPending(
-                "compact repair lacks the exact parent marker",
-                status="TRANSPORT_PENDING",
-            )
+        parsed = _parse_and_validate_compact_repair_transport(
+            report_text=report_text,
+            capture_source=capture_receipt.capture_source,
+            job_id=plan.scope.job_id,
+            run_id=str(prepared.packet_payload["run_id"]),
+            pass_id=pass_id,
+            parent_pass_id=parent_id,
+        )
         durable = orchestrator.ledger.get_pass(pass_id)
         if durable.status == "TRANSPORT_PENDING" and durable.submit_count == 1:
             orchestrator.confirm_transport_pending_result_visible(pass_id)
-        parsed = RepairDeltaV3Parser().parse_text(report_text)
         repaired = CompactRepairServiceV3(
             verifier=self.source_verifier
         ).apply_and_reverify(
@@ -821,6 +818,46 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                 **payload,
             }
         )
+
+
+def _parse_and_validate_compact_repair_transport(
+    *,
+    report_text: str,
+    capture_source: str,
+    job_id: str,
+    run_id: str,
+    pass_id: str,
+    parent_pass_id: str,
+):
+    """Accept MD markers or an identity-bound raw RepairDeltaV3 JSON file."""
+
+    parsed = RepairDeltaV3Parser().parse_text(report_text)
+    if capture_source == "DOWNLOAD_JSON":
+        for key, expected in (
+            ("job_id", job_id),
+            ("run_id", run_id),
+            ("research_pass_id", pass_id),
+            ("parent_pass_id", parent_pass_id),
+        ):
+            if str(parsed.payload.get(key) or "") != expected:
+                raise LiveCanaryPending(
+                    f"downloaded compact repair JSON has mismatched {key}",
+                    status="TRANSPORT_PENDING",
+                )
+        return parsed
+    markers = (
+        ("run", f"[[E2R_PRO_RUN_ID:{run_id}]]"),
+        ("job", f"[[E2R_PRO_JOB_ID:{job_id}]]"),
+        ("pass", f"[[E2R_PRO_PASS_ID:{pass_id}]]"),
+        ("parent", f"[[E2R_PRO_PARENT_PASS_ID:{parent_pass_id}]]"),
+    )
+    for label, marker in markers:
+        if report_text.count(marker) != 1:
+            raise LiveCanaryPending(
+                f"compact repair lacks the exact {label} marker",
+                status="TRANSPORT_PENDING",
+            )
+    return parsed
 
 
 def _load_leakage_manifest(root: Path) -> OldAnswerLeakageManifest:

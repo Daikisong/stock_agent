@@ -37,6 +37,7 @@ from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
     _context_already_attempted,
     _counter_followup_question_ids,
     _followup_context,
+    _parse_and_validate_compact_repair_transport,
     _question_ids_without_completed_context,
     _question_route_progress_state,
     _repairable_classifications,
@@ -217,6 +218,37 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             _counter_followup_question_ids(saturation),
             ("Q-LIFECYCLE-PENDING", "Q-UNRESOLVED-COUNTER"),
         )
+
+    def test_downloaded_repair_json_uses_exact_payload_lineage_without_md_markers(
+        self,
+    ) -> None:
+        payload = {
+            "schema_version": "e2r_pro_repair_delta_v3",
+            "job_id": self.fresh_job.job_id,
+            "run_id": self.built.packet_payload["run_id"],
+            "research_pass_id": "PROPASS-REPAIR-DOWNLOAD",
+            "parent_pass_id": self.built.initial_pass_id,
+        }
+        parsed = _parse_and_validate_compact_repair_transport(
+            report_text=json.dumps(payload),
+            capture_source="DOWNLOAD_JSON",
+            job_id=self.fresh_job.job_id,
+            run_id=self.built.packet_payload["run_id"],
+            pass_id="PROPASS-REPAIR-DOWNLOAD",
+            parent_pass_id=self.built.initial_pass_id,
+        )
+        self.assertEqual(parsed.payload, payload)
+
+        payload["parent_pass_id"] = "PROPASS-WRONG-PARENT"
+        with self.assertRaisesRegex(Exception, "mismatched parent_pass_id"):
+            _parse_and_validate_compact_repair_transport(
+                report_text=json.dumps(payload),
+                capture_source="DOWNLOAD_JSON",
+                job_id=self.fresh_job.job_id,
+                run_id=self.built.packet_payload["run_id"],
+                pass_id="PROPASS-REPAIR-DOWNLOAD",
+                parent_pass_id=self.built.initial_pass_id,
+            )
 
     def test_independent_cross_archetype_boundary_uses_exact_target_without_fake_old_job(
         self,

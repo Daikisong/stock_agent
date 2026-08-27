@@ -2902,3 +2902,28 @@ fresh efficiency, production static audit도 모두 PASS/critical 0이다. check
 `p11_pass15_pass16_route_cohort_and_compact_repair_receipt.json`이며 payload hash는
 `0e79d1ed8fc85995373df2c1e544d982c78ff3f210c7a47d741b0f781e9f2fdd`다. 전체 목표 완료가 아니라
 pass 17 결과의 deterministic 재검문을 기다리는 중간 checkpoint다.
+
+#### compact repair의 현재-turn JSON 실다운로드 연결
+
+ChatGPT Pro가 긴 repair 결과를 Markdown 첨부 대신 JSON 첨부로 반환할 수 있다. 브라우저 adapter는
+현재 assistant turn에 새로 생긴 JSON 하나만 선택해 `DOWNLOAD_JSON`으로 캡처하도록 이미 수리돼
+있었지만, fresh full-thesis 실행기는 캡처 뒤에도 Markdown marker를 먼저 요구했다. 이 상태에서는
+정상 JSON을 다운로드하고도 `TRANSPORT_PENDING`으로 되돌릴 수 있었다.
+
+repair transport 검증을 다음 두 경로로 분리했다.
+
+```text
+현재-turn JSON 다운로드  payload의 job/run/research_pass/parent_pass를 exact match
+Markdown/direct capture  본문의 job/run/pass/parent marker를 각각 정확히 1개 요구
+```
+
+쉬운 예로 pass 16 JSON이 파일 목록에 남아 있더라도 pass 17 결과로 재사용할 수 없다. JSON 안의
+`research_pass_id`와 `parent_pass_id`가 현재 repair plan과 다르면 즉시 차단한다. 반대로 현재 pass 17의
+네 identity가 모두 맞는 raw JSON은 Markdown marker가 없어도 `RepairDeltaV3Parser`와 전체 repair
+schema/verifier 검문으로 넘긴다.
+
+관련 raw JSON identity 회귀, 실제 browser E2E, compact repair V3 테스트는 18/18 PASS다. 실행 중인
+pass 17은 서버 연구를 중단하거나 재제출하지 않고 로컬 감시기만 새 코드로 재접속했다.
+재접속 직후 `browser_submit_delta=0`, 기존 `submit_count=1`, 같은 conversation/pass를 확인했다.
+화면에 열려 있던 `ResearchDossierV3_SKHynix_000660_asof_2026-08-23.json`은 최초 dossier이므로
+현재 repair 결과로 연결하지 않았다. 현재 pass 17 전용 첨부가 생성될 때만 자동 캡처한다.
