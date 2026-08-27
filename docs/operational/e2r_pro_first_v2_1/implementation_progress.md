@@ -2325,3 +2325,78 @@ raw capture는 READY로 보존됐고 SQL pass는 submit count 1인 `RESEARCH_RUN
 다음 실행은 같은 capture를 `REUSE_CAPTURE`로 읽어 browser submit delta 0을 확인한 뒤 source 재검증과
 deterministic saturation을 계속한다. 상세 identity hash와 신규 fact ID는
 `p10_c06_public_gap_eighth_capture_merge_receipt.json`에 고정했다.
+
+실제 runner 재개에서도 pass 09는 `FOLLOWUP_CAPTURE_REUSED`, `browser_submit_delta=0`으로 처리됐다.
+신규 사실 4개와 route 24개가 반영됐고 effective dossier는 92 facts / 32 documents / 30 lineages /
+241 routes / 28 questions가 됐다. source-backed 재검증 accepted fact는 42 → 45로 늘었다. 같은 변경
+snapshot에서 pass 10 `PROPASS-222c4db866a10be35f8aa25b`를 같은 conversation에 정확히 한 번 전송했다.
+
+### 2026-08-27 — 과거 parser 실패 영구 오염과 검문 실패의 검색 오배송 수리
+
+pass 10 응답을 기다리는 동안 pass 09 기준 saturation receipt를 질문별로 역추적했다. 기존
+`evaluate_route_adequacy()`는 질문에 누적된 **모든 과거 route**의 provider/parser가 SUCCESS여야 현재
+질문도 정상이라고 판단했다. 이 때문에 이전 pass에서 oversized filing parser가 실패한 뒤 후속 pass가
+같은 질문의 공식 filing을 정상으로 읽고 새 fact까지 검증해도 과거 실패 한 줄이 질문을 계속 막았다.
+
+쉬운 예: 2차에 문이 잠겨 영수증을 못 읽었지만 9차에 같은 질문의 영수증을 정상으로 읽었다면, 2차 실패는
+감사 이력으로 남겨야 하지만 9차 현재 상태까지 실패로 만들면 안 된다. 반대로 9차 한 묶음 안에서 영수증
+두 장 중 한 장이 여전히 안 읽히면 다른 한 장의 성공으로 덮어서는 안 된다.
+
+따라서 질문 route ID의 append-only 순서를 이용해 마지막으로 추가된 pass cohort를 현재 provider/parser
+상태로 판정한다. 과거 route와 hash는 삭제하지 않는다. 최신 cohort의 route는 전부 정상이어야 하며,
+absence fixpoint의 exact question/gap/fact snapshot/lineage snapshot 결박은 그대로 유지한다.
+
+동시에 누적 question row가 rejected fact ID를 계속 참조하는 경우도 `PUBLIC_GAP_CLOSURE`로 보내고 있었다.
+이는 새 웹 검색으로 고칠 문제가 아니라 기존 후보를 정확한 quote로 수정하거나 철회하는 verifier repair
+문제다. terminal fact-backed 질문이고 현재 source route와 core source role은 충분하지만 fact/lineage
+무결성 failure가 남은 경우를 `verifier_repair_pending_ids`로 분리했다. core source role 자체가 없으면 계속
+public acquisition blocker라서 repair 하나로 다른 core gap을 가리지 않는다.
+
+pass 09의 실제 45 accepted fact snapshot을 새 코드로 읽기 전용 재계산한 결과는 다음과 같다.
+
+```text
+                                    before   after projection
+nonterminal questions                    4                  4
+public material gaps                    17                 16
+verifier repair pending                  0                 13
+provider/parser core pending             2                  2
+source linkage incomplete                3                  3
+historical failure가 현재를 오염          yes                 no
+rejected reference를 다시 검색            yes                 no
+research saturation valid            false              false
+```
+
+즉 blocker를 지운 것이 아니라 잘못된 작업 대기열을 바로잡았다. 현재 실제 provider/parser pending 2개와
+공개 hard-break gap은 그대로 남고, rejected fact 참조 13개는 compact verifier repair로 간다.
+
+이 수정 중 pass 10은 ChatGPT에서 이미 작성 중이었다. runner를 새 코드로 교체한 첫 시도에서 새 routing을
+먼저 계산해 기존 `submit_count=1` pass와 충돌하는 복구 순서 결함도 확인했다. fresh V3 tail은 이제 코드나
+검증 결과가 바뀌어 다음 pass 종류가 달라져도, 이미 전송됐고 snapshot이 없는 pass를 항상 먼저 회수한다.
+pass 10 recovery의 실제 결과는 다음과 같다.
+
+```text
+pass id                 PROPASS-222c4db866a10be35f8aa25b
+durable submit count    1
+conversation            6a8db0ad-8ed0-83e8-888e-dce26c950343
+recovery event           FRESH_FULL_THESIS_SUBMITTED_PASS_RECOVERY
+browser submit delta     0
+current browser state    RESEARCH_RUNNING
+```
+
+회귀는 과거 실패→최신 성공, 과거 성공→최신 실패, 같은 최신 cohort의 성공+실패 혼합, rejected 누적 fact의
+repair routing, routing 변경 중 submitted-pass 우선 recovery를 각각 검사한다.
+
+```text
+saturation unit tests                  32/32 PASS
+saturation + fresh recovery            57/57 PASS
+cross-module focused                  109/109 PASS
+Pro-first static audit              PASS / critical 0
+Pro-first V2 static audit           PASS / critical 0
+fresh efficiency static audit       PASS / critical 0
+production static audit             PASS / critical 0
+compileall / git diff check          PASS / PASS
+```
+
+상세 전후 수치와 pass 10 exactly-once recovery 식별자는
+`p10_c06_route_state_and_repair_routing_receipt.json`에 고정했다. 이 시점은 아직 saturation이 아니므로
+score/Stage authority는 계속 false다.

@@ -385,6 +385,39 @@ class ProFirstV2SaturationTest(unittest.TestCase):
             receipt.verifier_repair_pending_ids,
         )
 
+    def test_rejected_cumulative_fact_reference_routes_to_verifier_not_search(
+        self,
+    ) -> None:
+        dossier = deepcopy(self.dossier)
+        result = dossier["question_family_results"][0]
+        accepted_id = result["support_fact_ids"][0]
+        rejected_id = "PROFACT-CUMULATIVE-REJECTED"
+        rejected = deepcopy(
+            next(
+                row
+                for row in dossier["material_facts"]
+                if row["dossier_fact_id"] == accepted_id
+            )
+        )
+        rejected["dossier_fact_id"] = rejected_id
+        dossier["material_facts"].append(rejected)
+        result["support_fact_ids"].append(rejected_id)
+
+        receipt = self._adjudicate(dossier)
+        decision = _decision(receipt, result["question_family_id"])
+
+        self.assertTrue(decision.route_adequacy.adequate)
+        self.assertTrue(decision.question_to_source_linkage_complete)
+        self.assertIn("QUESTION_REFERENCES_UNVERIFIED_FACT", decision.failure_codes)
+        self.assertIn(
+            decision.question_family_id,
+            receipt.verifier_repair_pending_ids,
+        )
+        self.assertEqual(
+            receipt.deterministic_research_status,
+            "NEEDS_VERIFIER_REPAIR",
+        )
+
     def test_tracked_saturation_audit_matches_current_engine(self) -> None:
         receipt = self._adjudicate()
         expected = dict(compile_saturation_audit(receipt))
@@ -847,6 +880,121 @@ class ProFirstV2SaturationTest(unittest.TestCase):
             fixpoint_confirmations=failed,
         )
         self.assertFalse(_decision(receipt, question_id).route_adequacy.semantic_fixpoint)
+        self.assertFalse(receipt.research_saturation_valid)
+
+    def test_historical_parser_failure_does_not_poison_latest_normal_route_cohort(
+        self,
+    ) -> None:
+        dossier = deepcopy(self.dossier)
+        result = dossier["question_family_results"][0]
+        first_route = next(
+            row
+            for row in dossier["search_route_receipts"]
+            if row["route_receipt_id"] == result["search_route_receipt_ids"][0]
+        )
+        first_route["provider_status"] = "PARSER_PENDING"
+        first_route["parser_status"] = "PENDING"
+        latest = deepcopy(
+            next(
+                row
+                for row in dossier["search_route_receipts"]
+                if row["route_receipt_id"] == result["search_route_receipt_ids"][-1]
+            )
+        )
+        latest.update(
+            {
+                "route_receipt_id": "ROUTE-LATEST-NORMAL",
+                "pass_id": "PASS-FOLLOWUP-NORMAL",
+                "provider_status": "SUCCESS",
+                "parser_status": "SUCCESS",
+            }
+        )
+        dossier["search_route_receipts"].append(latest)
+        result["search_route_receipt_ids"].append(latest["route_receipt_id"])
+
+        receipt = self._adjudicate(dossier)
+        decision = _decision(receipt, result["question_family_id"])
+        self.assertTrue(decision.route_adequacy.provider_parser_normal)
+        self.assertFalse(decision.route_adequacy.accepted_fact_delta_zero)
+        self.assertNotIn(
+            "PROVIDER_OR_PARSER_NOT_NORMAL",
+            decision.route_adequacy.failure_codes,
+        )
+        self.assertTrue(receipt.research_saturation_valid)
+
+    def test_latest_parser_failure_is_not_hidden_by_historical_success(self) -> None:
+        dossier = deepcopy(self.dossier)
+        result = dossier["question_family_results"][0]
+        latest = deepcopy(
+            next(
+                row
+                for row in dossier["search_route_receipts"]
+                if row["route_receipt_id"] == result["search_route_receipt_ids"][-1]
+            )
+        )
+        latest.update(
+            {
+                "route_receipt_id": "ROUTE-LATEST-PARSER-PENDING",
+                "pass_id": "PASS-FOLLOWUP-PENDING",
+                "accepted_fact_ids": [],
+                "provider_status": "PARSER_PENDING",
+                "parser_status": "PENDING",
+                "no_new_route_reason": "최신 공식 문서 본문을 아직 읽지 못했다.",
+            }
+        )
+        dossier["search_route_receipts"].append(latest)
+        result["search_route_receipt_ids"].append(latest["route_receipt_id"])
+
+        receipt = self._adjudicate(dossier)
+        decision = _decision(receipt, result["question_family_id"])
+        self.assertFalse(decision.route_adequacy.provider_parser_normal)
+        self.assertTrue(decision.route_adequacy.accepted_fact_delta_zero)
+        self.assertIn(
+            "PROVIDER_OR_PARSER_NOT_NORMAL",
+            decision.route_adequacy.failure_codes,
+        )
+        self.assertFalse(receipt.research_saturation_valid)
+
+    def test_one_success_does_not_hide_failure_in_same_latest_route_cohort(
+        self,
+    ) -> None:
+        dossier = deepcopy(self.dossier)
+        result = dossier["question_family_results"][0]
+        template = deepcopy(
+            next(
+                row
+                for row in dossier["search_route_receipts"]
+                if row["route_receipt_id"] == result["search_route_receipt_ids"][-1]
+            )
+        )
+        normal = {
+            **deepcopy(template),
+            "route_receipt_id": "ROUTE-LATEST-COHORT-NORMAL",
+            "pass_id": "PASS-FOLLOWUP-MIXED",
+            "provider_status": "SUCCESS",
+            "parser_status": "SUCCESS",
+        }
+        pending = {
+            **deepcopy(template),
+            "route_receipt_id": "ROUTE-LATEST-COHORT-PENDING",
+            "pass_id": "PASS-FOLLOWUP-MIXED",
+            "accepted_fact_ids": [],
+            "provider_status": "PARSER_PENDING",
+            "parser_status": "PENDING",
+            "no_new_route_reason": "같은 최신 pass의 다른 핵심 경로가 미해결이다.",
+        }
+        dossier["search_route_receipts"].extend((normal, pending))
+        result["search_route_receipt_ids"].extend(
+            (normal["route_receipt_id"], pending["route_receipt_id"])
+        )
+
+        receipt = self._adjudicate(dossier)
+        decision = _decision(receipt, result["question_family_id"])
+        self.assertFalse(decision.route_adequacy.provider_parser_normal)
+        self.assertIn(
+            "PROVIDER_OR_PARSER_NOT_NORMAL",
+            decision.route_adequacy.failure_codes,
+        )
         self.assertFalse(receipt.research_saturation_valid)
 
     def test_unrelated_or_stale_confirmations_do_not_close_current_gap(self) -> None:

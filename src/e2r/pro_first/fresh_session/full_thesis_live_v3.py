@@ -31,6 +31,7 @@ from ..canary.live_v2 import (
     _outcome_summary,
     _question_states_for_ids,
     _redact_saturation,
+    _submitted_unsnapshotted_followup_plan,
     _verification_artifact_rows,
     _verification_needs_effective_dossier_reverification,
 )
@@ -40,7 +41,11 @@ from ..config import ProFirstLocalConfig
 from ..ids import canonical_hash, canonical_json
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
-from ..multi_pass import ProMultiPassDossierStore, ProMultiPassLedger
+from ..multi_pass import (
+    FollowupPassPlan,
+    ProMultiPassDossierStore,
+    ProMultiPassLedger,
+)
 from ..post_import import OperationalProScoringInputProvider
 from ..repair import CompactRepairServiceV3, RepairDeltaV3Parser
 from ..saturation import ResearchSaturationReceipt, compile_saturation_audit
@@ -200,6 +205,45 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
             )
 
             for iteration in range(1, self.max_tail_iterations + 1):
+                recovery_plan = _submitted_unsnapshotted_fresh_nonrepair_plan(
+                    orchestrator,
+                    job_id=job_id,
+                )
+                if recovery_plan is not None:
+                    self._emit_fresh(
+                        "FRESH_FULL_THESIS_SUBMITTED_PASS_RECOVERY",
+                        job_id=job_id,
+                        pass_id=recovery_plan.research_pass.pass_id,
+                        pass_name=recovery_plan.research_pass.pass_name,
+                        submit_count=recovery_plan.research_pass.submit_count,
+                        browser_submit_delta=0,
+                    )
+                    outcome = await self._execute_followup(
+                        prepared=prepared,
+                        orchestrator=orchestrator,
+                        dossier_store=dossier_store,
+                        plan=recovery_plan,
+                        original_dossier=dossier,
+                        job_root=job_root,
+                        persist_effective=True,
+                    )
+                    next_dossier = dict(outcome.effective_dossier or dossier)
+                    pass_outcomes.append(_outcome_summary(outcome, next_dossier))
+                    if (
+                        recovery_plan.research_pass.pass_name
+                        in {
+                            "PUBLIC_GAP_CLOSURE",
+                            "COUNTER_SUPERSESSION_CLOSURE",
+                        }
+                        and not outcome.semantic_progress
+                    ):
+                        raise LiveCanaryPending(
+                            "recovered follow-up produced no deterministic semantic progress",
+                            status="RESEARCH_NO_PROGRESS_PENDING",
+                        )
+                    dossier = next_dossier
+                    continue
+
                 verification_state = self._load_current_verification(
                     job_id=job_id,
                     job_root=job_root,
@@ -947,6 +991,43 @@ def _context_already_attempted(
         and row.submit_count == 1
         for row in ledger.list_passes(job_id)
     )
+
+
+_FRESH_NONREPAIR_FOLLOWUP_NAMES = (
+    "PUBLIC_GAP_CLOSURE",
+    "COUNTER_SUPERSESSION_CLOSURE",
+    "SATURATION_AUDIT",
+)
+
+
+def _submitted_unsnapshotted_fresh_nonrepair_plan(
+    orchestrator: FreshSessionOrchestratorV3,
+    *,
+    job_id: str,
+) -> FollowupPassPlan | None:
+    """Recover already-sent work before applying a newly computed route.
+
+    A code or verification change can alter the next pass type while ChatGPT
+    is still answering the already submitted pass.  The durable submitted
+    pass always wins: capture and snapshot it with submit delta zero, then
+    recompute the next action from the merged dossier.
+    """
+
+    matches = tuple(
+        row
+        for row in (
+            _submitted_unsnapshotted_followup_plan(
+                orchestrator,
+                job_id=job_id,
+                pass_name=pass_name,
+            )
+            for pass_name in _FRESH_NONREPAIR_FOLLOWUP_NAMES
+        )
+        if row is not None
+    )
+    if len(matches) > 1:
+        raise ValueError("multiple submitted fresh follow-ups lack snapshots")
+    return matches[0] if matches else None
 
 
 def _read_json(path: Path) -> Mapping[str, Any]:

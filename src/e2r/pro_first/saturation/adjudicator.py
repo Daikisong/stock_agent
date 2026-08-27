@@ -22,6 +22,21 @@ _FACT_BACKED_TERMINAL_STATUSES = frozenset(
     }
 )
 
+_VERIFIER_INTEGRITY_FAILURE_CODES = frozenset(
+    {
+        "QUESTION_REFERENCES_UNKNOWN_FACT",
+        "QUESTION_REFERENCES_UNVERIFIED_FACT",
+        "QUESTION_REFERENCES_NONACTIVE_LINEAGE",
+        "QUESTION_FACT_MISSING_SOURCE_LINEAGE",
+        "PRO_CLAIMED_SOURCE_ROLE_UNVERIFIED",
+        "TERMINAL_EVIDENCE_STATUS_HAS_NO_VERIFIED_FACT",
+        "ECONOMIC_BRIDGE_UNVERIFIED",
+        "COUNTER_STATUS_HAS_NO_VERIFIED_COUNTERFACT",
+        "QUESTION_FACT_NOT_BOUND_TO_ROUTE_RECEIPT",
+        "QUESTION_TO_SOURCE_LINKAGE_INCOMPLETE",
+    }
+)
+
 
 class ResearchSaturationAdjudicator:
     def adjudicate(
@@ -142,16 +157,26 @@ class ResearchSaturationAdjudicator:
         )
         # A terminal fact-backed answer with adequate source search but broken
         # fact/lineage provenance is verifier work, not another public web
-        # search.  Missing core source roles remain public acquisition gaps.
-        # This ordering prevents an integrity defect from opening an endless
-        # sequence of Pro searches that cannot repair the immutable ledger.
+        # search.  This includes a cumulative question row that still points
+        # at a rejected historical candidate even when current verified facts
+        # already cover the source role.  Missing core source roles remain
+        # public acquisition gaps.  This ordering prevents an integrity defect
+        # from opening an endless sequence of Pro searches that cannot repair
+        # the immutable ledger.
         integrity_repair_pending = tuple(
             row.question_family_id
             for row in decisions
             if row.status in _FACT_BACKED_TERMINAL_STATUSES
             and row.route_adequacy.adequate
             and not row.missing_core_source_roles
-            and not row.question_to_source_linkage_complete
+            and (
+                not row.question_to_source_linkage_complete
+                or bool(
+                    set(row.failure_codes).intersection(
+                        _VERIFIER_INTEGRITY_FAILURE_CODES
+                    )
+                )
+            )
         )
         repair_pending = tuple(
             dict.fromkeys(

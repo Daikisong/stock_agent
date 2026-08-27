@@ -2243,7 +2243,8 @@ def _submitted_unsnapshotted_followup_plan(
         if (
             research_pass.pass_name != pass_name
             or research_pass.submit_count != 1
-            or research_pass.status not in {"RESEARCH_RUNNING", "COMPLETE"}
+            or research_pass.status
+            not in {"RESEARCH_RUNNING", "TRANSPORT_PENDING", "COMPLETE"}
             or orchestrator.ledger.latest_dossier_snapshot_for_pass(
                 job_id=job_id,
                 pass_id=research_pass.pass_id,

@@ -34,6 +34,7 @@ from e2r.pro_first.fresh_session.live_canary_v3 import (
 from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
     _context_already_attempted,
     _repairable_classifications,
+    _submitted_unsnapshotted_fresh_nonrepair_plan,
 )
 from e2r.pro_first.ids import canonical_hash
 from e2r.pro_first.job_store import ProFirstJobStore
@@ -826,6 +827,42 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 research_gap_context_hash="d" * 64,
             )
         )
+
+    async def test_submitted_followup_is_recovered_before_changed_routing_context(
+        self,
+    ) -> None:
+        adapter = await self._prepare_and_approve("fresh-conversation-recovery")
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="4" * 64,
+        )
+        plan, _compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest={"dossier_hash": "5" * 64},
+            unresolved_question_state=(),
+            pass_inputs={"research_gap_context_hash": "6" * 64},
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        await self.orchestrator.submit_followup(plan, adapter)
+        self.orchestrator.ledger.mark_transport_pending(
+            plan.research_pass.pass_id,
+            reason="visible result recovery must precede changed routing",
+        )
+
+        recovered = _submitted_unsnapshotted_fresh_nonrepair_plan(
+            self.orchestrator,
+            job_id=self.fresh_job.job_id,
+        )
+
+        self.assertIsNotNone(recovered)
+        assert recovered is not None
+        self.assertEqual(recovered.research_pass.pass_id, plan.research_pass.pass_id)
+        self.assertEqual(recovered.research_pass.status, "TRANSPORT_PENDING")
+        self.assertEqual(recovered.research_pass.submit_count, 1)
+        self.assertEqual(recovered.prompt_text, "")
+        self.assertEqual(adapter.submit_count, 2)  # initial one + follow-up one
 
     def test_full_thesis_tail_routes_only_material_pro_repair_candidates(self) -> None:
         rows = (
