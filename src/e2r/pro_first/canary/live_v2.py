@@ -2357,7 +2357,6 @@ def _research_semantic_hash(dossier: Mapping[str, Any]) -> str:
                 "structured_metrics",
                 "unresolved_gaps",
                 "source_lineages",
-                "search_route_receipts",
                 "verification_repair_register",
             )
         }

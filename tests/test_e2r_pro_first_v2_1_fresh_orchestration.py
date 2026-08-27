@@ -6,6 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from types import SimpleNamespace
 import unittest
 
 from e2r.pro_first.approval import ProApprovalService
@@ -31,8 +32,11 @@ from e2r.pro_first.fresh_session.live_canary_v3 import (
     _requires_browser_result_recovery,
     build_old_answer_leakage_manifest,
 )
+from e2r.pro_first.canary.live_v2 import _research_semantic_hash
 from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
     _context_already_attempted,
+    _followup_context,
+    _question_ids_without_completed_context,
     _repairable_classifications,
     _submitted_unsnapshotted_fresh_nonrepair_plan,
 )
@@ -828,6 +832,107 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             )
         )
 
+    async def test_unchanged_question_is_not_resent_after_sibling_closes(self) -> None:
+        adapter = await self._prepare_and_approve(
+            "fresh-conversation-question-dedup"
+        )
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="e" * 64,
+        )
+        question_a, question_b = self.built.prompt.mandatory_question_ids[:2]
+        decisions = (
+            self._question_decision(question_a, linked_fact_id="FACT-A"),
+            self._question_decision(question_b, linked_fact_id="FACT-B"),
+        )
+        saturation = self._tail_saturation(decisions, fact_hash="1" * 64)
+        dossier = self._tail_dossier(question_a, question_b)
+        first_context = _followup_context(
+            dossier=dossier,
+            saturation=saturation,
+            accepted_fact_ids=("FACT-A", "FACT-B"),
+            question_ids=(question_a, question_b),
+            pass_name="PUBLIC_GAP_CLOSURE",
+        )
+        plan, _compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest=first_context["latest_dossier_digest"],
+            unresolved_question_state=first_context[
+                "unresolved_question_state"
+            ],
+            pass_inputs=first_context["pass_inputs"],
+        )
+        self.assertEqual(
+            plan.research_pass.detail["question_context_hashes"],
+            first_context["pass_inputs"]["question_context_hashes"],
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        await self.orchestrator.submit_followup(plan, adapter)
+        self.orchestrator.complete_followup(
+            plan.research_pass.pass_id,
+            response_hash="f" * 64,
+            conversation_id=(
+                self.orchestrator.ledger.get_pass(
+                    plan.research_pass.pass_id
+                ).conversation_id
+                or ""
+            ),
+        )
+
+        # A closed elsewhere and the global fact snapshot changed.  B itself
+        # is identical, so B must not be submitted again.
+        unchanged_b = _followup_context(
+            dossier={
+                **dossier,
+                "material_facts": [
+                    *dossier["material_facts"],
+                    {"dossier_fact_id": "FACT-UNRELATED"},
+                ],
+            },
+            saturation=self._tail_saturation(
+                (decisions[1],),
+                fact_hash="2" * 64,
+            ),
+            accepted_fact_ids=("FACT-A", "FACT-B", "FACT-UNRELATED"),
+            question_ids=(question_b,),
+            pass_name="PUBLIC_GAP_CLOSURE",
+        )
+        self.assertEqual(
+            _question_ids_without_completed_context(
+                self.orchestrator.ledger,
+                job_id=self.fresh_job.job_id,
+                pass_name="PUBLIC_GAP_CLOSURE",
+                context=unchanged_b,
+            ),
+            (),
+        )
+
+        changed_b_decision = self._question_decision(
+            question_b,
+            linked_fact_id="FACT-B-NEW",
+        )
+        changed_b = _followup_context(
+            dossier=dossier,
+            saturation=self._tail_saturation(
+                (changed_b_decision,),
+                fact_hash="3" * 64,
+            ),
+            accepted_fact_ids=("FACT-A", "FACT-B-NEW"),
+            question_ids=(question_b,),
+            pass_name="PUBLIC_GAP_CLOSURE",
+        )
+        self.assertEqual(
+            _question_ids_without_completed_context(
+                self.orchestrator.ledger,
+                job_id=self.fresh_job.job_id,
+                pass_name="PUBLIC_GAP_CLOSURE",
+                context=changed_b,
+            ),
+            (question_b,),
+        )
+
     async def test_submitted_followup_is_recovered_before_changed_routing_context(
         self,
     ) -> None:
@@ -885,6 +990,40 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(
             tuple(row["candidate_id"] for row in _repairable_classifications(rows)),
             ("FACT-YES",),
+        )
+
+    def test_route_receipt_only_is_not_semantic_progress(self) -> None:
+        before = {
+            "material_facts": [],
+            "counterfacts": [],
+            "resolution_facts": [],
+            "question_family_results": [],
+            "source_lineages": [],
+            "search_route_receipts": [],
+        }
+        route_only = {
+            **before,
+            "search_route_receipts": [
+                {
+                    "route_receipt_id": "ROUTE-NO-FACT-NO-CLOSURE",
+                    "provider_status": "SUCCESS",
+                }
+            ],
+        }
+        new_lineage = {
+            **route_only,
+            "source_lineages": [
+                {"source_lineage_id": "LINEAGE-MEANINGFUL"}
+            ],
+        }
+
+        self.assertEqual(
+            _research_semantic_hash(before),
+            _research_semantic_hash(route_only),
+        )
+        self.assertNotEqual(
+            _research_semantic_hash(before),
+            _research_semantic_hash(new_lineage),
         )
 
     async def test_second_semantic_repair_requires_new_conversation(self) -> None:
@@ -989,6 +1128,72 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(loaded.fresh_job_id, self.boundary.fresh_job_id)
         self.assertEqual(job.job_id, self.fresh_job.job_id)
         self.assertEqual(jobs_after, jobs_before)
+
+    @staticmethod
+    def _question_decision(
+        question_id: str,
+        *,
+        linked_fact_id: str,
+    ) -> SimpleNamespace:
+        payload = {
+            "question_family_id": question_id,
+            "deterministic_status": "PUBLIC_SEARCHABLE",
+            "gap_class": "CORE_SCORE_BLOCKER",
+            "failure_codes": ["QUESTION_NONTERMINAL"],
+            "verified_linked_fact_ids": [linked_fact_id],
+            "linked_source_lineage_ids": [f"LINEAGE-{linked_fact_id}"],
+            "missing_core_source_roles": ["ISSUER_OFFICIAL"],
+            "route_adequacy": {
+                "linked_route_receipt_ids": [f"ROUTE-{question_id}"],
+            },
+        }
+        return SimpleNamespace(
+            question_family_id=question_id,
+            materiality="HARD_BREAK",
+            status="PUBLIC_SEARCHABLE",
+            to_dict=lambda: dict(payload),
+        )
+
+    @staticmethod
+    def _tail_saturation(
+        decisions: tuple[SimpleNamespace, ...],
+        *,
+        fact_hash: str,
+    ) -> SimpleNamespace:
+        return SimpleNamespace(
+            question_decisions=decisions,
+            fact_snapshot_hash=fact_hash,
+            accepted_lineage_roster_hash="a" * 64,
+            deterministic_research_status="SOURCE_PENDING",
+        )
+
+    @staticmethod
+    def _tail_dossier(*question_ids: str) -> dict[str, object]:
+        return {
+            "schema_version": "e2r_pro_research_dossier_v3",
+            "selected_archetypes": [ARCHETYPE],
+            "research_pass_id": "PROPASS-CONTEXT-BASE",
+            "research_status": "SOURCE_PENDING",
+            "source_documents": [],
+            "material_facts": [
+                {"dossier_fact_id": f"FACT-{index}"}
+                for index, _question_id in enumerate(question_ids, start=1)
+            ],
+            "counterfacts": [],
+            "resolution_facts": [],
+            "search_route_receipts": [],
+            "question_family_results": [
+                {
+                    "question_family_id": question_id,
+                    "status": "PUBLIC_SEARCHABLE",
+                    "availability_class": "PUBLIC_SEARCHABLE",
+                    "closure_reason": None,
+                    "required_source_roles_missing": ["ISSUER_OFFICIAL"],
+                    "search_route_receipt_ids": [f"ROUTE-{question_id}"],
+                }
+                for question_id in question_ids
+            ],
+        }
 
     async def _prepare_and_approve(self, conversation_id: str) -> _FreshAdapter:
         adapter = _FreshAdapter(submitted_conversation_id=conversation_id)

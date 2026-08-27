@@ -176,6 +176,17 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual((await editor.inner_text()).strip(), large.strip())
         self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
 
+    async def test_followup_sized_prompt_uses_exact_editor_input(self) -> None:
+        followup = self.prompt + "\n" + ("질문별 증분 검증 문장\n" * 700)
+        self.assertGreater(len(followup), 8_000)
+        self.assertLess(len(followup), 20_000)
+
+        await self.adapter.set_prompt(followup)
+
+        editor = self.page.locator("#prompt-textarea")
+        self.assertEqual((await editor.inner_text()).strip(), followup.strip())
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
+
     async def test_pro_mode_uses_visible_ordinary_chat_composer(self) -> None:
         inspection = await self.adapter.ensure_deep_research_mode()
         self.assertTrue(inspection.deep_research_ready)
@@ -239,6 +250,41 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         with self.assertRaisesRegex(BrowserUIIncompatible, "Pro mode is not active"):
             await self.adapter.ensure_deep_research_mode()
         self.assertFalse((await self.adapter.inspect_state()).deep_research_ready)
+
+    async def test_report_error_words_do_not_become_retryable_ui_error(self) -> None:
+        await self.page.set_content(
+            "<html><body><form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button type="button">Pro</button></form>'
+            '<article data-message-author-role="assistant">'
+            "[[E2R_PRO_JOB_ID:PROJOB-example]] "
+            "[[E2R_PRO_RUN_ID:PRORUN-example]] "
+            "DART gateway에서 오류가 발생했지만 해당 후보를 제외했다. "
+            "E2R_RESEARCH_DOSSIER_JSON_END"
+            "</article></body></html>"
+        )
+
+        inspection = await self.adapter.inspect_state()
+
+        self.assertEqual(
+            inspection.state,
+            BrowserUIState.DEEP_RESEARCH_MODE_READY,
+        )
+
+    async def test_visible_alert_is_retryable_ui_error(self) -> None:
+        await self.page.set_content(
+            "<html><body><form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button type="button">Pro</button></form>'
+            '<div role="alert">오류가 발생했습니다. 다시 시도하세요.</div>'
+            "</body></html>"
+        )
+
+        inspection = await self.adapter.inspect_state()
+
+        self.assertEqual(inspection.state, BrowserUIState.RETRYABLE_ERROR)
 
     async def test_work_plus_pro_switches_to_chat_before_becoming_ready(self) -> None:
         await self.page.set_content(

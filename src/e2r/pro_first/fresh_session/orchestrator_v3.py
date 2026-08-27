@@ -1023,6 +1023,18 @@ class FreshSessionOrchestratorV3:
                         )
                         or ""
                     ),
+                    "question_family_ids": list(
+                        (context.get("pass_inputs") or {}).get(
+                            "question_family_ids"
+                        )
+                        or ()
+                    ),
+                    "question_context_hashes": dict(
+                        (context.get("pass_inputs") or {}).get(
+                            "question_context_hashes"
+                        )
+                        or {}
+                    ),
                     "prompt_char_count": len(compiled.prompt_text),
                     "score_authority": False,
                     "stage_authority": False,

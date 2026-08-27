@@ -42,6 +42,7 @@ from .selector_registry import (
     DOWNLOAD_SELECTORS,
     JSON_CANDIDATE_SELECTORS,
     MD_CANDIDATE_SELECTORS,
+    OPERATIONAL_NOTICE_SELECTORS,
     PDF_CANDIDATE_SELECTORS,
     PREVIEW_ROOT_SELECTORS,
     PRO_REASONING_ACTIVE_SELECTORS,
@@ -132,7 +133,12 @@ class PlaywrightChatGPTWebAdapter:
         editor = await first_visible(self.page, EDITOR_SELECTORS)
         if editor is None:
             raise BrowserUIIncompatible("ChatGPT prompt editor was not found")
-        used_direct_dom_input = len(prompt) >= 20_000
+        # Real long-lived ChatGPT conversations can keep ProseMirror visibly
+        # mounted while Playwright's actionability check for ``fill`` never
+        # settles.  Browser-local DOM input has already proven reliable for
+        # full-thesis prompts, so use it well below the former 20k cutoff where
+        # this has occurred in live operation.
+        used_direct_dom_input = len(prompt) >= 8_000
         if used_direct_dom_input:
             # Playwright ``fill`` and ``document.execCommand('insertText')`` can
             # spend their entire action timeout making ProseMirror process a
@@ -468,20 +474,29 @@ class PlaywrightChatGPTWebAdapter:
         stop = await first_visible(self.page, STOP_SELECTORS)
         editor_value = await editor_text(editor) if editor is not None else ""
         body = self.page.locator("body")
-        body_text = (await body.inner_text()).lower()
         mock_state = (await body.get_attribute("data-mock-state") or "").upper()
+        operational_notice_text = await self._operational_notice_text()
+        (
+            latest_dossier_complete,
+            latest_clarification_visible,
+            latest_clarification_detail,
+        ) = await self._latest_assistant_state_flags()
         packet_uploaded = bool(
-            self._uploaded_filename and self._uploaded_filename.lower() in body_text
+            self._uploaded_filename
+            and await self._body_contains_text(self._uploaded_filename)
         )
         prompt_ready = bool(editor_value)
         if login_required:
             state = BrowserUIState.LOGIN_REQUIRED
-        elif mock_state == "CLARIFICATION" or any(
-            token in body_text
-            for token in ("before i start, please clarify", "시작하기 전에 확인", "need clarification")
+        elif mock_state == "CLARIFICATION" or (
+            not latest_dossier_complete
+            and latest_clarification_visible
         ):
             state = BrowserUIState.AWAITING_CLARIFICATION
-        elif any(token in body_text for token in ("usage limit", "quota", "사용 한도", "한도에 도달")):
+        elif mock_state == "QUOTA" or any(
+            token in operational_notice_text
+            for token in ("usage limit", "quota", "사용 한도", "한도에 도달")
+        ):
             state = BrowserUIState.QUOTA_PENDING
         elif stop is not None:
             # A stale upload/network toast can remain visible after the one
@@ -489,7 +504,7 @@ class PlaywrightChatGPTWebAdapter:
             # is stronger current-state evidence that research is running.
             state = BrowserUIState.RESEARCH_RUNNING
         elif mock_state == "ERROR" or any(
-            token in body_text
+            token in operational_notice_text
             for token in ("something went wrong", "network error", "오류가 발생", "다시 시도하세요")
         ):
             state = BrowserUIState.RETRYABLE_ERROR
@@ -504,13 +519,19 @@ class PlaywrightChatGPTWebAdapter:
         else:
             state = BrowserUIState.UI_INCOMPATIBLE
         detail = None
-        if state in {
-            BrowserUIState.AWAITING_CLARIFICATION,
+        if state is BrowserUIState.AWAITING_CLARIFICATION:
+            detail = latest_clarification_detail or state.value
+        elif state in {
             BrowserUIState.QUOTA_PENDING,
             BrowserUIState.RETRYABLE_ERROR,
-            BrowserUIState.UI_INCOMPATIBLE,
         }:
-            detail = (await body.inner_text()).strip()[-2_000:] or state.value
+            detail = (
+                operational_notice_text.strip()
+                or await self._body_tail_text()
+                or state.value
+            )
+        elif state is BrowserUIState.UI_INCOMPATIBLE:
+            detail = await self._body_tail_text() or state.value
         return BrowserInspection(
             state=state,
             conversation_id=self.conversation_id(),
@@ -522,6 +543,89 @@ class PlaywrightChatGPTWebAdapter:
             stop_visible=stop is not None,
             detail=detail,
         )
+
+    async def _body_contains_text(self, value: str) -> bool:
+        """Match a small token locally without transferring the whole chat."""
+
+        body = self.page.locator("body")
+        return bool(
+            await body.evaluate(
+                """(element, needle) =>
+                    (element.innerText || '').toLowerCase().includes(needle)
+                """,
+                value.lower(),
+            )
+        )
+
+    async def _body_tail_text(self) -> str:
+        """Return only bounded diagnostic text from an incompatible page."""
+
+        body = self.page.locator("body")
+        return str(
+            await body.evaluate(
+                """element => (element.innerText || '').trim().slice(-2000)"""
+            )
+            or ""
+        )
+
+    async def _operational_notice_text(self) -> str:
+        """Return visible error/quota UI text, excluding conversation prose."""
+
+        values: list[str] = []
+        seen: set[str] = set()
+        for selector in OPERATIONAL_NOTICE_SELECTORS:
+            matches = self.page.locator(selector)
+            for index in range(await matches.count()):
+                item = matches.nth(index)
+                if not await item.is_visible():
+                    continue
+                text = " ".join(
+                    value.strip()
+                    for value in (
+                        await item.inner_text(),
+                        str(await item.get_attribute("aria-label") or ""),
+                        str(await item.get_attribute("title") or ""),
+                    )
+                    if value and value.strip()
+                ).lower()
+                if text and text not in seen:
+                    seen.add(text)
+                    values.append(text)
+        return "\n".join(values)
+
+    async def _latest_assistant_state_flags(
+        self,
+    ) -> tuple[bool, bool, str]:
+        """Inspect the newest assistant turn without transferring full prose."""
+
+        for selector in ASSISTANT_TURN_SELECTORS:
+            matches = self.page.locator(selector)
+            for index in range(await matches.count() - 1, -1, -1):
+                item = matches.nth(index)
+                if await item.is_visible():
+                    flags = await item.evaluate(
+                        r"""element => {
+                            const text = (element.innerText || '').toLowerCase();
+                            const clarification = [
+                                'before i start, please clarify',
+                                '시작하기 전에 확인',
+                                'need clarification'
+                            ].some(token => text.includes(token));
+                            return {
+                                dossierComplete: text.includes(
+                                    'e2r_research_dossier_json_end'
+                                ),
+                                clarification,
+                                detail: clarification ? text.slice(-2000) : ''
+                            };
+                        }"""
+                    )
+                    return (
+                        bool(flags.get("dossierComplete")),
+                        bool(flags.get("clarification")),
+                        str(flags.get("detail") or ""),
+                    )
+        return False, False, ""
 
     async def inspect_result(self, *, job_id: str, run_id: str) -> BrowserResultSnapshot:
         turns = await self._assistant_turns()

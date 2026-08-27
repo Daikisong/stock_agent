@@ -22,6 +22,18 @@ STOP_SELECTORS = (
     'button[aria-label*="Stop"]',
 )
 
+# Operational notices must be separate UI surfaces.  Searching the complete
+# conversation body for words such as "error" is unsafe because a valid
+# research report can quote or describe a provider/parser error.
+OPERATIONAL_NOTICE_SELECTORS = (
+    '[role="alert"]',
+    '[aria-live="assertive"]',
+    '[data-testid*="error" i]',
+    '[data-testid*="toast" i]',
+    '[data-testid*="quota" i]',
+    '[data-sonner-toast]',
+)
+
 CHAT_HISTORY_SEARCH_CONTROL_SELECTORS = (
     'button[aria-label="검색"]',
     'button[aria-label*="채팅 검색"]',

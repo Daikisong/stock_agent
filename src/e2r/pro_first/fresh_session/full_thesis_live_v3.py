@@ -272,6 +272,25 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                     question_ids=public_ids,
                     pass_name="PUBLIC_GAP_CLOSURE",
                 )
+                public_ids = _question_ids_without_completed_context(
+                    orchestrator.ledger,
+                    job_id=job_id,
+                    pass_name="PUBLIC_GAP_CLOSURE",
+                    context=public_context,
+                )
+                if (
+                    tuple(
+                        public_context["pass_inputs"]["question_family_ids"]
+                    )
+                    != public_ids
+                ):
+                    public_context = _followup_context(
+                        dossier=dossier,
+                        saturation=latest_saturation,
+                        accepted_fact_ids=verification_state.accepted_fact_ids,
+                        question_ids=public_ids,
+                        pass_name="PUBLIC_GAP_CLOSURE",
+                    )
                 if public_ids and not _context_already_attempted(
                     orchestrator.ledger,
                     job_id=job_id,
@@ -320,7 +339,26 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                     question_ids=counter_ids,
                     pass_name="COUNTER_SUPERSESSION_CLOSURE",
                 )
-                if not _context_already_attempted(
+                counter_ids = _question_ids_without_completed_context(
+                    orchestrator.ledger,
+                    job_id=job_id,
+                    pass_name="COUNTER_SUPERSESSION_CLOSURE",
+                    context=counter_context,
+                )
+                if (
+                    tuple(
+                        counter_context["pass_inputs"]["question_family_ids"]
+                    )
+                    != counter_ids
+                ):
+                    counter_context = _followup_context(
+                        dossier=dossier,
+                        saturation=latest_saturation,
+                        accepted_fact_ids=verification_state.accepted_fact_ids,
+                        question_ids=counter_ids,
+                        pass_name="COUNTER_SUPERSESSION_CLOSURE",
+                    )
+                if counter_ids and not _context_already_attempted(
                     orchestrator.ledger,
                     job_id=job_id,
                     pass_name="COUNTER_SUPERSESSION_CLOSURE",
@@ -855,6 +893,15 @@ def _followup_context(
                 "verified_linked_fact_ids": list(
                     decision.get("verified_linked_fact_ids") or ()
                 ),
+                "linked_source_lineage_ids": list(
+                    decision.get("linked_source_lineage_ids") or ()
+                ),
+                "linked_route_receipt_ids": list(
+                    (
+                        decision.get("route_adequacy") or {}
+                    ).get("linked_route_receipt_ids")
+                    or ()
+                ),
                 "missing_core_source_roles": list(
                     decision.get("missing_core_source_roles") or ()
                 ),
@@ -864,25 +911,42 @@ def _followup_context(
         len(tuple(dossier.get(key) or ()))
         for key in ("material_facts", "counterfacts", "resolution_facts")
     )
+    question_context_hashes = {
+        row["question_family_id"]: canonical_hash(
+            {
+                "pass_name": pass_name,
+                "question_family_id": row["question_family_id"],
+                "reported_status": row["reported_status"],
+                "availability_class": row["availability_class"],
+                "required_source_roles_missing": row[
+                    "required_source_roles_missing"
+                ],
+                "search_route_receipt_ids": row[
+                    "search_route_receipt_ids"
+                ],
+                "deterministic_status": row["deterministic_status"],
+                "gap_class": row["gap_class"],
+                "failure_codes": row["failure_codes"],
+                "verified_linked_fact_ids": row[
+                    "verified_linked_fact_ids"
+                ],
+                "missing_core_source_roles": row[
+                    "missing_core_source_roles"
+                ],
+                "linked_source_lineage_ids": row[
+                    "linked_source_lineage_ids"
+                ],
+                "linked_route_receipt_ids": row[
+                    "linked_route_receipt_ids"
+                ],
+            }
+        )
+        for row in unresolved
+    }
     gap_context_hash = canonical_hash(
         {
             "pass_name": pass_name,
-            "fact_snapshot_hash": saturation.fact_snapshot_hash,
-            "accepted_lineage_roster_hash": (
-                saturation.accepted_lineage_roster_hash
-            ),
-            "questions": [
-                {
-                    "question_family_id": row["question_family_id"],
-                    "deterministic_status": row["deterministic_status"],
-                    "gap_class": row["gap_class"],
-                    "failure_codes": row["failure_codes"],
-                    "missing_core_source_roles": row[
-                        "missing_core_source_roles"
-                    ],
-                }
-                for row in unresolved
-            ],
+            "question_context_hashes": question_context_hashes,
         }
     )
     return {
@@ -917,6 +981,7 @@ def _followup_context(
                 else "DETERMINISTIC_PUBLIC_PROVIDER_PARSER_OR_LINKAGE_GAP"
             ),
             "question_family_ids": list(requested),
+            "question_context_hashes": question_context_hashes,
             "deterministic_research_status": (
                 saturation.deterministic_research_status
             ),
@@ -990,6 +1055,52 @@ def _context_already_attempted(
         and row.status == "COMPLETE"
         and row.submit_count == 1
         for row in ledger.list_passes(job_id)
+    )
+
+
+def _question_ids_without_completed_context(
+    ledger: ProMultiPassLedger,
+    *,
+    job_id: str,
+    pass_name: str,
+    context: Mapping[str, Any],
+) -> tuple[str, ...]:
+    """Return only question states not already sent and completed unchanged.
+
+    A pass can contain several questions.  If one question closes while
+    another remains byte-for-byte identical, the latter must not be sent
+    again merely because the global dossier snapshot changed.  Completed
+    per-question hashes preserve that append-only attempt identity.
+    """
+
+    pass_inputs = context.get("pass_inputs") or {}
+    current = pass_inputs.get("question_context_hashes") or {}
+    requested = tuple(
+        str(value)
+        for value in pass_inputs.get("question_family_ids") or ()
+    )
+    if not isinstance(current, Mapping):
+        raise ValueError("question_context_hashes must be a mapping")
+    attempted: dict[str, set[str]] = {}
+    for row in ledger.list_passes(job_id):
+        if (
+            row.pass_name != pass_name
+            or row.status != "COMPLETE"
+            or row.submit_count != 1
+        ):
+            continue
+        stored = row.detail.get("question_context_hashes")
+        if not isinstance(stored, Mapping):
+            continue
+        for question_id, context_hash in stored.items():
+            attempted.setdefault(str(question_id), set()).add(
+                str(context_hash)
+            )
+    return tuple(
+        question_id
+        for question_id in requested
+        if str(current.get(question_id) or "")
+        not in attempted.get(question_id, set())
     )
 
 

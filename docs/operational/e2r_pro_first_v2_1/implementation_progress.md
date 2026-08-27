@@ -1,9 +1,9 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-26 C17 4차 FAIL 봉인 / subject verifier v11 전체 회귀 PASS`
+기준 시각: `2026-08-27 C06 pass 10 병합·재검문 완료 / pass 11 같은 Pro 대화에서 실행 중`
 
 기준 Goal:
-`C:\Users\eorb9\Downloads\e2r_pro_first_v2_1_fresh_session_verifier_ready_master_goal.md`
+`C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`
 
@@ -19,7 +19,10 @@ P5 cad578af  전체 dossier 재출력을 제거하고 의미 오류만 compact d
 P6 8b0e27bd  기존 대화를 봉인하고 새 Pro 세션의 blind canary 실행 경계를 구현
 P7 fdf4ac40  Pro JSON 첨부를 동일 응답 증거로 봉인하고 C06 Gate를 통과
 P8 f719b94b  C17/C28 독립 fresh target 생성을 고정
-P8 e6ac55b4  C17 1~4차 fresh initial 실행 상태를 순차 봉인
+P8 dca86ae9  C17 fresh Pro 초기 검문 통과를 기록
+P8 a62e4895  C28 fresh Pro 초기 검문과 3-target 효율 영수증을 확정
+P10 7abc9ecb C06 V3 JSON 후반 포화도 실행 경로 연결
+P10 377e0c36 과거 경로 실패와 검문 수리의 무한 재검색을 차단
 ```
 
 PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지 않는다.
@@ -35,8 +38,9 @@ P4 local preflight                        COMPLETE
 P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
-P8 C17/C28 fresh canary                   IN_PROGRESS (C17 4차 FAIL 봉인, v11 5차 대기)
-P9 final CI/audit                         PENDING
+P8 C17/C28 fresh initial canary           COMPLETE
+P9 live multi-pass saturation             IN_PROGRESS (C06 pass 11, C17/C28 tail 대기)
+P10 final CI/audit                        PENDING
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -2400,3 +2404,94 @@ compileall / git diff check          PASS / PASS
 상세 전후 수치와 pass 10 exactly-once recovery 식별자는
 `p10_c06_route_state_and_repair_routing_receipt.json`에 고정했다. 이 시점은 아직 saturation이 아니므로
 score/Stage authority는 계속 false다.
+
+### 2026-08-27 — pass 10 현재 JSON 회수와 질문 단위 반복 차단
+
+pass 10 `PROPASS-222c4db866a10be35f8aa25b`는 같은 Pro 대화에서 약 55분 뒤 완료됐다. 현재
+assistant turn에는 최초 전체 dossier가 아니라 다음 이름의 pass delta JSON이 붙었다.
+
+```text
+ResearchDossierV3_SKHynix_000660_PUBLIC_GAP_CLOSURE_
+PROPASS-222c4db866a10be35f8aa25b_delta.json
+```
+
+Library에 남아 있는 `ResearchDossierV3_SKHynix_000660_asof_2026-08-23.json`은 최초 전체 dossier다.
+따라서 파일 형식이 JSON이라는 사실만으로 고르지 않고, **현재 assistant turn + 현재 job/run/pass marker**가
+일치하는 첨부만 다운로드한다. 쉬운 예로 pass 10을 기다리는 중에 최초 JSON의 다운로드 버튼이 보여도
+그 파일을 pass 10 결과로 합치지 않는다.
+
+첫 회수에서는 유효한 보고서 본문에 DART gateway에서 `오류가 발생`했다는 문장이 있다는 이유로 전체
+대화 본문 검색이 `RETRYABLE_ERROR`를 잘못 만들었다. 실제 ChatGPT 오류 alert나 quota toast는 없었고,
+현재 turn에는 완결 marker와 정확한 JSON 첨부가 있었다. 운영 오류 판정은 이제 `role=alert`, assertive
+live region, error/quota/toast 같은 **별도 가시 UI 표면**만 읽는다. 연구 본문이 parser 오류를 사실로
+설명해도 브라우저 장애로 재라벨하지 않는다. 장시간 누적된 전체 대화 본문도 매 poll마다 Python으로
+옮기지 않는다. 첨부 파일명 존재 여부와 최신 assistant 상태는 브라우저 안에서 boolean으로만 계산하고,
+진단 문자열이 꼭 필요할 때만 마지막 2,000자를 가져온다.
+
+수리 후 같은 pass를 다시 전송하지 않고 현재 turn을 회수했다.
+
+```text
+pass id                              PROPASS-222c4db866a10be35f8aa25b
+submit count                         1
+automatic resubmit                   0
+browser submit delta during recovery 0
+assistant turn                       2190eb6d-3952-4570-9fd0-57bc90392435
+capture source                       DIRECT_REPORT_DOM_NORMALIZED
+raw/effective new facts              8 / 5
+effective facts                      92 -> 97
+source documents                     32 -> 32
+source lineages                      30 -> 30
+route receipts                       241 -> 255
+accepted source-backed facts         45 -> 48
+verification query/search            0 / 0
+```
+
+새 fact 8개 중 이전 source/document/predicate 원자와 같은 3개는 중복 계보로 두 번 세지 않았다. 실제로
+추가된 5개는 SEC 잠정 실적표의 매출·영업이익 원자 2개와 감사보고서안 승인·감사결과 보고·회사 관계자
+없는 외부감사인 회의 원자 3개다. 새 문서나 새 독립 계보를 가장해 만들지 않고 기존 source graph에
+append했다.
+
+pass 10 뒤에는 mandatory 28개 중 nonterminal 4개, public material gap 16개, verifier repair pending
+13개, provider/parser core pending 2개, source-linkage incomplete 3개가 남았다. 따라서 점수·Stage 권한은
+계속 false이고 pass 11에는 실제 상태가 바뀐 다섯 질문만 보냈다.
+
+```text
+C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q07
+R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_Q05
+R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_Q01
+R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q01
+R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_Q01
+```
+
+기존 pass는 여러 질문의 aggregate snapshot hash만 저장했다. 그래서 A 질문이 닫혀 전체 fact hash가
+바뀌면 상태가 그대로인 B 질문도 다시 보낼 수 있었다. 이제 각 question마다 status, failure, verified
+fact, source lineage, linked route를 canonical hash로 저장한다. 완료된 같은 question hash는 다음 pass에서
+제외한다. 예를 들어 A에 새 fact가 생겨도 B의 근거·상태가 같으면 B는 재전송하지 않는다.
+
+또한 top-level route receipt만 늘고 새 fact·source lineage·question closure가 전혀 없으면 research
+semantic progress로 세지 않는다. 질문에 실제로 연결되어 attempted role/status가 바뀌는 route는 question
+state 변화로 남지만, 질문과 연결되지 않은 영수증만 반복 생성해서 다음 pass를 여는 일은 막는다.
+
+pass 11의 prompt는 18,275자였다. 장시간 열린 ProseMirror에서 Playwright `fill`의 actionability가
+60초 동안 끝나지 않아 첫 준비는 submit 0으로 안전하게 종료됐다. 8,000자 이상 prompt는 이미 검증된
+browser-local visible DOM 입력을 쓰도록 범위를 넓힌 뒤 같은 durable pass를 정확히 한 번 전송했다.
+현재 pass 11은 같은 conversation에서 `RESEARCH_RUNNING`, submit count 1이며 score/Stage authority는
+false다.
+
+현재 코드 검증은 다음과 같다.
+
+```text
+browser/dossier/saturation/fresh 관련 회귀       161/161 PASS
+최신 browser state poll 회귀                      28/28 PASS
+전체 unittest                                  7,732 PASS
+전체 failure / error                                0 / 0
+기존 skip                                             38
+Pro-first static audit                         PASS / critical 0
+Pro-first V2 static audit                      PASS / critical 0
+fresh efficiency static audit                  PASS / critical 0
+production static audit                        PASS / critical 0
+compileall / git diff check                     PASS / PASS
+```
+
+pass 11의 현재-turn JSON이 생성되면 같은 다운로드·marker 결박·append-only merge·source 재검문을 수행하고,
+그 결과를 별도 receipt로 고정한다. 아직 C06 saturation을 선언하지 않는다.
