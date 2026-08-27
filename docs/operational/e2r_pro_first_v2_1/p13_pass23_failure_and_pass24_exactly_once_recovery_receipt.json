@@ -128,12 +128,17 @@
     "repaired_core_readiness_failure_error_skip_count": [0, 0, 0],
     "compile": "PASS",
     "git_diff_check": "PASS",
-    "full_unittest_rerun_pending": true
+    "full_unittest_rerun_pending": false,
+    "full_unittest_test_count": 7764,
+    "full_unittest_failure_count": 0,
+    "full_unittest_error_count": 0,
+    "full_unittest_existing_skip_count": 38,
+    "full_unittest_elapsed_seconds": 714.125
   },
   "new_query_count": 0,
   "new_fetch_count": 0,
   "score_authority": false,
   "stage_authority": false,
   "next_action": "WAIT_FOR_EXISTING_PASS24_THEN_CAPTURE_ONLY_ITS_LATEST_JSON_WITHOUT_RESUBMIT",
-  "receipt_payload_hash": "61391bf11299d4f3f594f70cb67225d3631c29032889ab80ccc00f0588bf4b65"
+  "receipt_payload_hash": "205e7c488618c26b2f8707452f744d7a6cfd27f44160223a152d4bdc52e26ace"
 }
