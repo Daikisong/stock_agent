@@ -1079,46 +1079,68 @@ def _question_route_progress_state(
         route_by_id[value] for value in requested_ids if value in route_by_id
     )
 
-    def signature(row: Mapping[str, Any]) -> str:
-        return canonical_hash(
+    def route_identities(row: Mapping[str, Any]) -> tuple[str, ...]:
+        """Return transport-stable route identities for progress gating.
+
+        Pro may rephrase an objective, change a source-role label, or split a
+        previously opened URL group into several receipt rows.  None of those
+        presentation changes is a new public route.  Opened URLs are therefore
+        compared atomically.  A query is the identity only when it produced no
+        opened URL; a row with neither collapses to one no-route identity.
+        """
+
+        urls = tuple(
+            sorted(
+                {
+                    str(value).strip()
+                    for value in row.get("opened_source_urls") or ()
+                    if str(value).strip()
+                }
+            )
+        )
+        if urls:
+            return tuple(
+                canonical_hash({"route_kind": "OPENED_URL", "url": url})
+                for url in urls
+            )
+        query = " ".join(str(row.get("query_text") or "").split()).casefold()
+        if query:
+            return (
+                canonical_hash(
+                    {"route_kind": "QUERY_WITHOUT_OPENED_URL", "query": query}
+                ),
+            )
+        return (canonical_hash({"route_kind": "NO_ROUTE"}),)
+
+    route_signatures = tuple(
+        sorted(
             {
-                "source_role_id": row.get("source_role_id"),
-                "query_or_navigation_objective": row.get(
-                    "query_or_navigation_objective"
-                ),
-                "query_text": row.get("query_text"),
-                "opened_source_urls": sorted(
-                    row.get("opened_source_urls") or ()
-                ),
+                identity
+                for row in linked
+                for identity in route_identities(row)
             }
         )
-
-    route_signatures = tuple(sorted({signature(row) for row in linked}))
-    latest_pass_id = str(linked[-1].get("pass_id") or "") if linked else ""
-    latest_cohort = tuple(
-        row
-        for row in linked
-        if str(row.get("pass_id") or "") == latest_pass_id
     )
-    latest_outcome_by_hash = {}
-    for row in latest_cohort:
-        outcome = {
-            "route_signature": signature(row),
-            "provider_status": row.get("provider_status"),
-            "parser_status": row.get("parser_status", "SUCCESS"),
-            "verified_accepted_fact_ids": sorted(
-                verified_fact_ids.intersection(
-                    str(value)
-                    for value in row.get("accepted_fact_ids") or ()
-                )
-            ),
-            "no_new_route_confirmed": bool(
-                str(row.get("no_new_route_reason") or "").strip()
-            ),
-        }
-        latest_outcome_by_hash[canonical_hash(outcome)] = outcome
+    latest_outcome_by_signature = {}
+    for row in linked:
+        for route_signature in route_identities(row):
+            latest_outcome_by_signature[route_signature] = {
+                "route_signature": route_signature,
+                "provider_status": row.get("provider_status"),
+                "parser_status": row.get("parser_status", "SUCCESS"),
+                "verified_accepted_fact_ids": sorted(
+                    verified_fact_ids.intersection(
+                        str(value)
+                        for value in row.get("accepted_fact_ids") or ()
+                    )
+                ),
+                "no_new_route_confirmed": bool(
+                    str(row.get("no_new_route_reason") or "").strip()
+                ),
+            }
     latest_outcomes = tuple(
-        latest_outcome_by_hash[key] for key in sorted(latest_outcome_by_hash)
+        latest_outcome_by_signature[key]
+        for key in sorted(latest_outcome_by_signature)
     )
     return {
         "route_signatures": route_signatures,
@@ -1130,17 +1152,12 @@ def _question_route_progress_state(
                 for value in question_state.get("attempted_source_role_ids")
                 or ()
             }
-            | {
-                str(row.get("source_role_id") or "")
-                for row in linked
-                if str(row.get("source_role_id") or "")
-            }
         ),
         "adequate": route_adequacy.get("adequate"),
         "official_route_attempted": route_adequacy.get(
             "official_route_attempted"
         ),
-        "distinct_route_count": route_adequacy.get("distinct_route_count"),
+        "distinct_route_count": len(route_signatures),
         "independent_no_new_route_confirmation_count": route_adequacy.get(
             "independent_no_new_route_confirmation_count"
         ),

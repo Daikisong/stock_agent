@@ -37,6 +37,7 @@ from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
     _context_already_attempted,
     _followup_context,
     _question_ids_without_completed_context,
+    _question_route_progress_state,
     _repairable_classifications,
     _submitted_unsnapshotted_fresh_nonrepair_plan,
 )
@@ -952,6 +953,9 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             pass_id: str,
             url: str,
             provider_status: str = "PARSER_PENDING",
+            source_role_id: str = "ISSUER_OFFICIAL",
+            objective: str = "same audited objective",
+            query_text: str = "same audited query",
         ) -> dict[str, object]:
             dossier = self._tail_dossier(question_id)
             dossier["question_family_results"][0][
@@ -961,9 +965,9 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 {
                     "route_receipt_id": receipt_id,
                     "pass_id": pass_id,
-                    "source_role_id": "ISSUER_OFFICIAL",
-                    "query_or_navigation_objective": "same audited objective",
-                    "query_text": "same audited query",
+                    "source_role_id": source_role_id,
+                    "query_or_navigation_objective": objective,
+                    "query_text": query_text,
                     "opened_source_urls": [url],
                     "provider_status": provider_status,
                     "parser_status": "SUCCESS",
@@ -1020,6 +1024,9 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 "ROUTE-P2",
                 pass_id="PROPASS-P2",
                 url="https://issuer.example.com/same",
+                source_role_id="OFFICIAL_FILING",
+                objective="rephrased objective for the same opened page",
+                query_text="differently worded query for the same opened page",
             ),
             saturation=self._tail_saturation(
                 (repeated_decision,), fact_hash="4" * 64
@@ -1119,6 +1126,81 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 question_progress_hashes={question_id: "2" * 64},
             )
 
+    def test_grouped_route_split_and_relabel_are_not_progress(self) -> None:
+        question_state = {
+            "search_route_receipt_ids": ["ROUTE-P1"],
+            "attempted_source_role_ids": ["REGULATOR_OFFICIAL"],
+        }
+
+        def decision(*route_ids: str) -> dict[str, object]:
+            return {
+                "route_adequacy": {
+                    "linked_route_receipt_ids": list(route_ids),
+                    "adequate": False,
+                    "official_route_attempted": True,
+                    "distinct_route_count": len(route_ids),
+                    "independent_no_new_route_confirmation_count": 1,
+                    "provider_parser_normal": False,
+                    "semantic_fixpoint": False,
+                    "failure_codes": ["PROVIDER_OR_PARSER_NOT_NORMAL"],
+                }
+            }
+
+        grouped = {
+            "ROUTE-P1": {
+                "route_receipt_id": "ROUTE-P1",
+                "source_role_id": "REGULATOR_OFFICIAL",
+                "query_or_navigation_objective": "감사 원문 두 주소 확인",
+                "query_text": None,
+                "opened_source_urls": [
+                    "https://regulator.example.com/a",
+                    "https://regulator.example.com/b",
+                ],
+                "provider_status": "PARSER_PENDING",
+                "parser_status": "PARSER_PENDING",
+                "accepted_fact_ids": [],
+                "no_new_route_reason": "동일 parser 한계",
+            }
+        }
+        split = {
+            **grouped,
+            "ROUTE-P2": {
+                **grouped["ROUTE-P1"],
+                "route_receipt_id": "ROUTE-P2",
+                "source_role_id": "OFFICIAL_FILING",
+                "query_or_navigation_objective": "rephrased objective A",
+                "opened_source_urls": ["https://regulator.example.com/a"],
+            },
+            "ROUTE-P3": {
+                **grouped["ROUTE-P1"],
+                "route_receipt_id": "ROUTE-P3",
+                "query_or_navigation_objective": "rephrased objective B",
+                "opened_source_urls": ["https://regulator.example.com/b"],
+            },
+        }
+
+        before = _question_route_progress_state(
+            decision=decision("ROUTE-P1"),
+            question_state=question_state,
+            route_by_id=grouped,
+            verified_fact_ids=frozenset(),
+        )
+        after = _question_route_progress_state(
+            decision=decision("ROUTE-P1", "ROUTE-P2", "ROUTE-P3"),
+            question_state={
+                **question_state,
+                "search_route_receipt_ids": [
+                    "ROUTE-P1",
+                    "ROUTE-P2",
+                    "ROUTE-P3",
+                ],
+            },
+            route_by_id=split,
+            verified_fact_ids=frozenset(),
+        )
+
+        self.assertEqual(before, after)
+
     async def test_submitted_followup_is_recovered_before_changed_routing_context(
         self,
     ) -> None:
@@ -1210,6 +1292,77 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertNotEqual(
             _research_semantic_hash(before),
             _research_semantic_hash(new_lineage),
+        )
+
+    def test_question_receipt_and_closure_rephrase_are_not_progress(self) -> None:
+        before = {
+            "question_family_results": [
+                {
+                    "question_family_id": "R13_AUDIT_Q01",
+                    "status": "PARSER_PENDING",
+                    "availability_class": "PARSER_BLOCKED",
+                    "closure_reason": "감사보고서 원문 확인이 남았다.",
+                    "search_route_receipt_ids": ["ROUTE-P1"],
+                    "support_fact_ids": ["FACT-AUDIT", "FACT-GOVERNANCE"],
+                }
+            ],
+            "unresolved_gaps": [
+                {
+                    "gap_id": "GAP-AUDIT",
+                    "stable_gap_key": "issuer:audit:q01",
+                    "question_family_id": "R13_AUDIT_Q01",
+                    "status": "PARSER_PENDING",
+                    "availability_class": "PARSER_BLOCKED",
+                    "closure_note": "감사 원문 parser가 남았다.",
+                    "search_route_receipt_ids": ["ROUTE-P1"],
+                    "attempted_source_role_ids": [
+                        "REGULATOR_OFFICIAL",
+                        "AUDITOR_FILING",
+                    ],
+                }
+            ],
+        }
+        receipt_and_prose_only = {
+            "question_family_results": [
+                {
+                    "question_family_id": "R13_AUDIT_Q01",
+                    "status": "PARSER_PENDING",
+                    "availability_class": "PARSER_BLOCKED",
+                    "closure_reason": "동일한 감사 원문의 parser 문제가 아직 남아 있다.",
+                    "search_route_receipt_ids": ["ROUTE-P1", "ROUTE-P2"],
+                    "support_fact_ids": ["FACT-GOVERNANCE", "FACT-AUDIT"],
+                }
+            ],
+            "unresolved_gaps": [
+                {
+                    **before["unresolved_gaps"][0],
+                    "closure_note": "동일 parser 한계를 다른 문장으로 표현했다.",
+                    "search_route_receipt_ids": ["ROUTE-P1", "ROUTE-P2"],
+                    "attempted_source_role_ids": [
+                        "AUDITOR_FILING",
+                        "REGULATOR_OFFICIAL",
+                    ],
+                }
+            ],
+        }
+        changed_status = {
+            **receipt_and_prose_only,
+            "question_family_results": [
+                {
+                    **receipt_and_prose_only["question_family_results"][0],
+                    "status": "ANSWERED",
+                    "availability_class": "PUBLIC_CONFIRMED",
+                }
+            ]
+        }
+
+        self.assertEqual(
+            _research_semantic_hash(before),
+            _research_semantic_hash(receipt_and_prose_only),
+        )
+        self.assertNotEqual(
+            _research_semantic_hash(before),
+            _research_semantic_hash(changed_status),
         )
 
     async def test_second_semantic_repair_requires_new_conversation(self) -> None:

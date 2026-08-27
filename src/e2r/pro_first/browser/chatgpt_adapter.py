@@ -1186,35 +1186,57 @@ class PlaywrightChatGPTWebAdapter:
                 await candidate.click()
             return await download_info.value
         except Exception as direct_error:
-            preview = await first_visible(self.page, PREVIEW_ROOT_SELECTORS)
-            if preview is None:
-                raise BrowserUIIncompatible(
-                    "file candidate produced neither a Playwright download nor a preview"
-                ) from direct_error
             download_control = None
-            for selector in DOWNLOAD_SELECTORS:
-                matches = preview.locator(selector)
-                for index in range(await matches.count()):
-                    item = matches.nth(index)
-                    if not await item.is_visible() or not await item.is_enabled():
-                        continue
-                    label = " ".join(
-                        filter(
-                            None,
-                            (
-                                (await item.inner_text()).strip(),
-                                await item.get_attribute("aria-label"),
-                                await item.get_attribute("title"),
-                            ),
-                        )
-                    ).lower()
-                    if "앱 다운로드" in label or "download app" in label:
-                        continue
-                    download_control = item
-                    break
+            preview_seen = False
+            for attempt in range(50):
+                for preview_selector in PREVIEW_ROOT_SELECTORS:
+                    previews = self.page.locator(preview_selector)
+                    for preview_index in range(await previews.count()):
+                        preview = previews.nth(preview_index)
+                        if not await preview.is_visible():
+                            continue
+                        preview_seen = True
+                        for selector in DOWNLOAD_SELECTORS:
+                            matches = preview.locator(selector)
+                            for index in range(await matches.count()):
+                                item = matches.nth(index)
+                                if (
+                                    not await item.is_visible()
+                                    or not await item.is_enabled()
+                                ):
+                                    continue
+                                label = " ".join(
+                                    filter(
+                                        None,
+                                        (
+                                            (await item.inner_text()).strip(),
+                                            await item.get_attribute("aria-label"),
+                                            await item.get_attribute("title"),
+                                        ),
+                                    )
+                                ).lower()
+                                if (
+                                    "앱 다운로드" in label
+                                    or "download app" in label
+                                ):
+                                    continue
+                                download_control = item
+                                break
+                            if download_control is not None:
+                                break
+                        if download_control is not None:
+                            break
+                    if download_control is not None:
+                        break
                 if download_control is not None:
                     break
+                if attempt < 49:
+                    await self.page.wait_for_timeout(100)
             if download_control is None:
+                if not preview_seen:
+                    raise BrowserUIIncompatible(
+                        "file candidate produced neither a Playwright download nor a preview"
+                    ) from direct_error
                 raise BrowserUIIncompatible("preview has no enabled real download control")
             try:
                 async with self.page.expect_download(timeout=10_000) as download_info:

@@ -2344,21 +2344,124 @@ def _completed_current_repair_reprocess_pass_id(
 
 
 def _research_semantic_hash(dossier: Mapping[str, Any]) -> str:
+    question_set_fields = {
+        "affected_component_ids",
+        "attempted_source_role_ids",
+        "required_source_roles_missing",
+        "required_source_roles_satisfied",
+        "support_fact_ids",
+        "counter_fact_ids",
+        "resolution_fact_ids",
+    }
+    question_semantics = []
+    for row in dossier.get("question_family_results") or ():
+        if not isinstance(row, Mapping):
+            continue
+        question_semantics.append(
+            {
+                key: (
+                    sorted(
+                        {
+                            str(value)
+                            for value in row.get(key) or ()
+                            if str(value)
+                        }
+                    )
+                    if key in question_set_fields
+                    else row.get(key)
+                )
+                for key in (
+                    "question_family_id",
+                    "archetype_id",
+                    "status",
+                    "availability_class",
+                    "adequate_search_proven",
+                    "could_change_score",
+                    "could_change_stage",
+                    "could_change_hard_break",
+                    "affected_component_ids",
+                    "attempted_source_role_ids",
+                    "required_source_roles_missing",
+                    "required_source_roles_satisfied",
+                    "support_fact_ids",
+                    "counter_fact_ids",
+                    "resolution_fact_ids",
+                )
+            }
+        )
+    question_semantics.sort(
+        key=lambda row: (
+            str(row.get("question_family_id") or ""),
+            str(row.get("archetype_id") or ""),
+        )
+    )
+    gap_set_fields = {
+        "affected_component_ids",
+        "attempted_source_role_ids",
+        "required_source_role_ids",
+    }
+    unresolved_gap_semantics = []
+    for row in dossier.get("unresolved_gaps") or ():
+        if not isinstance(row, Mapping):
+            continue
+        unresolved_gap_semantics.append(
+            {
+                key: (
+                    sorted(
+                        {
+                            str(value)
+                            for value in row.get(key) or ()
+                            if str(value)
+                        }
+                    )
+                    if key in gap_set_fields
+                    else row.get(key)
+                )
+                for key in (
+                    "gap_id",
+                    "stable_gap_key",
+                    "question_family_id",
+                    "archetype_id",
+                    "status",
+                    "availability_class",
+                    "materiality",
+                    "adequate_search_proven",
+                    "resolved_in_pass",
+                    "could_change_score",
+                    "could_change_stage",
+                    "could_change_hard_break",
+                    "affected_component_ids",
+                    "attempted_source_role_ids",
+                    "required_source_role_ids",
+                )
+            }
+        )
+    unresolved_gap_semantics.sort(
+        key=lambda row: (
+            str(row.get("gap_id") or ""),
+            str(row.get("stable_gap_key") or ""),
+        )
+    )
     return canonical_hash(
         {
-            key: dossier.get(key)
-            for key in (
-                "business_model",
-                "material_facts",
-                "counterfacts",
-                "resolution_facts",
-                "question_family_results",
-                "component_research",
-                "structured_metrics",
-                "unresolved_gaps",
-                "source_lineages",
-                "verification_repair_register",
-            )
+            **{
+                key: dossier.get(key)
+                for key in (
+                    "business_model",
+                    "material_facts",
+                    "counterfacts",
+                    "resolution_facts",
+                    "component_research",
+                    "structured_metrics",
+                    "source_lineages",
+                    "verification_repair_register",
+                )
+            },
+            # Receipt ids are append-only audit identities and closure prose
+            # can be paraphrased by Pro.  Neither is deterministic research
+            # progress unless the structured question state above changes.
+            "question_family_results": question_semantics,
+            "unresolved_gaps": unresolved_gap_semantics,
         }
     )
 

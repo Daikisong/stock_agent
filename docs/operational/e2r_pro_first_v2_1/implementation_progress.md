@@ -2688,3 +2688,93 @@ browser_submit_delta=0, submit count 1, automatic resubmit false를 확인했다
 최신 코드 전체 unittest는 7,738개 PASS, failure/error 0/0, 기존 skip 38로 끝났다. 네 static
 audit도 모두 PASS/critical 0이며, 직전 pushed head 1eaa4260의 GitHub Actions 두 필수 workflow도
 SUCCESS다. 새 commit의 GitHub Actions는 push 뒤 다시 별도로 확인한다.
+
+#### pass 13·14의 현재-turn JSON 실다운로드와 문장·receipt 반복 차단
+
+pass 13 완료 화면에는 MD가 아니라 현재 assistant turn의 JSON 파일이 있었다. 실제 ChatGPT DOM에서
+먼저 잡힌 바깥 side-pane shell은 비어 있었고, 다운로드 버튼은 잠시 뒤 별도
+`[data-testid=stage-thread-flyout]`에 나타났다. 따라서 첫 visible root 하나만 고르는 방식은 실제
+`다운로드` 버튼을 놓쳤다. 다운로드 뒤에도 원자 저장기는 파일을 MD로 보고 sentinel을 찾으려 했다.
+
+이제 허용된 모든 visible preview root를 최대 5초 동안 확인하고, `앱 다운로드`가 아닌 실제 다운로드
+버튼을 누른다. 받은 파일이 `DOWNLOAD_JSON`이면 UTF-8 JSON object를 그대로 canonical dossier로
+저장한다. 기존 MD sentinel 경로와 같은 basename의 선택 PDF 경로는 그대로 유지했다. 쉬운 예로 화면에
+빈 서랍이 먼저 뜨고 1.5초 뒤 실제 파일 서랍이 생겨도, 빈 서랍에서 실패하지 않고 실제 서랍의 버튼을
+기다린다.
+
+pass 13은 이 경로로 처음 실캡처됐다.
+
+```text
+pass id / ordinal                 PROPASS-fad7cbf692ef68afca4ac459 / 13
+capture source                    DOWNLOAD_JSON
+submit / automatic resubmit       1 / 0
+new facts / routes                0 / 10
+effective facts                   108
+source documents / lineages       35 / 33
+route receipts                    286
+next questions                    2
+```
+
+10개 receipt가 모두 새 연구를 뜻하지는 않았다. KRX·SEC의 같은 URL을 목적 문장만 바꿔 다시 적거나,
+두 URL을 한 receipt에서 두 receipt로 나눈 경우도 있었다. 기존 진행 hash는 목적 문장, source-role label,
+raw distinct receipt count와 최신 pass의 일부 route만 보아 이런 표현 차이를 새 진행으로 오인할 수 있었다.
+
+진행 identity는 다음처럼 바꿨다.
+
+```text
+opened URL이 있으면 URL 하나씩 atomic route identity
+opened URL이 없을 때만 normalized query가 route identity
+URL도 query도 없으면 한 개의 NO_ROUTE identity
+각 URL의 최신 provider/parser 결과는 이전 pass까지 포함해 유지
+receipt id / 목적 문장 / source-role 재라벨 / URL 묶음 분할은 진행 아님
+```
+
+질문과 unresolved gap의 `closure_reason`/`closure_note`, append-only route receipt ID도 semantic progress
+hash에서 제외했다. 대신 status, availability, verified fact 연결, source-role 충족, score/stage/hard-break
+materiality처럼 구조화된 변화만 남겼다. 배열 순서도 집합 의미로 정규화했다. 쉬운 예로
+`감사보고서 확인이 남음`을 `동일 감사 원문 parser가 남음`으로 바꾼 것만으로 다음 pass를 열지 않는다.
+반대로 `could_change_stage=true -> false` 또는 `PARSER_PENDING -> ANSWERED`는 실제 진행이다.
+
+이 규칙으로 pass 12와 pass 13을 다시 비교하면 prose·receipt 차이를 제거한 뒤 남는 변화는 C06 Q07과
+accounting Q05의 structured materiality flag뿐이었다. 따라서 두 질문을 닫고 남은 audit 질문 두 개로
+pass 14를 연 것은 정당했다.
+
+pass 14도 현재 turn JSON을 직접 받았다.
+
+```text
+pass id / ordinal                 PROPASS-5d18230eac68945d66051427 / 14
+capture source                    DOWNLOAD_JSON
+submit / automatic resubmit       1 / 0
+economic-id dedup 뒤 new facts     2
+new routes                        4
+effective facts                   110
+source documents / lineages       37 / 35
+route receipts                    290
+```
+
+새 fact 2개는 deterministic verifier에서 모두 `REJECTED_QUOTE_MISMATCH`였으므로 accepted fact는 50을
+유지했다. accounting Q01은 기존 검증 fact만으로 terminal이 됐지만, 4B/4C hard-break Q01은 미검증
+P14 fact를 참조해 nonterminal로 남았다. nonterminal mandatory는 2→1, source-linkage incomplete는
+2→0이 됐다. verifier 재검문 query/search는 계속 0/0이다.
+
+따라서 pass 15 `PROPASS-b0ed66f61e76c999cf8555f1`는 그 hard-break 질문 하나만 19,615자로 같은
+conversation에 submit count 1로 전송됐다. score/Stage authority는 계속 false다. pass 15 결과가 같은
+URL·같은 결과를 문장이나 receipt ID만 바꾼 것이면 새 pass를 열지 않고 pending/fixpoint로 멈춘다.
+
+검증은 다음과 같다.
+
+```text
+completion capture module                    26/26 PASS
+browser JSON/MD/PDF/E2E related              65/65 PASS
+fresh orchestration/no-progress guards       31/31 PASS
+full unittest                              7,742 PASS
+failure/error/skip                           0 / 0 / 38
+Pro-first static audit                       PASS / critical 0
+Pro-first V2 static audit                    PASS / critical 0
+fresh efficiency static audit                PASS / critical 0
+production static audit                      PASS / critical 0
+```
+
+직전 pushed head `6eb9467c`의 필수 GitHub Actions 두 workflow도 SUCCESS이고 PR #7은 계속
+Draft/open/mergeable이다. 이 시점은 전체 목표 완료가 아니라 pass 15의 정확한 current-turn JSON을
+기다리는 중간 checkpoint다.

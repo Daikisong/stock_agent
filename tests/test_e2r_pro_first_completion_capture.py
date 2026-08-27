@@ -291,6 +291,8 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
         *,
         with_pdf: bool = False,
         download_job_id: str | None = None,
+        sibling_stage_preview: bool = False,
+        preview_stage_delay_ms: int = 0,
     ):
         job, _prompt_hash = await self._running_job()
         filename = self._json_filename(job.job_id)
@@ -304,6 +306,13 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
             "stage_authority": False,
         }
         self.server.set_download_text(json.dumps(dossier, ensure_ascii=False))
+        await self.page.evaluate(
+            """([useSibling, delayMs]) => {
+                window.__useSiblingStagePreview = useSibling;
+                window.__previewStageDelayMs = delayMs;
+            }""",
+            [sibling_stage_preview, preview_stage_delay_ms],
+        )
         await self.page.evaluate(
             "([state, context]) => window.__setMockState(state, context)",
             [
@@ -365,6 +374,43 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(raw.report_pdf_part_path.read_bytes().startswith(b"%PDF-"))
         self.assertIsNone(raw.optional_pdf_error)
         self.assertEqual(clicks, [filename, Path(filename).with_suffix(".pdf").name])
+
+    async def test_json_download_skips_empty_outer_preview_shell(self) -> None:
+        job, raw, clicks, _dossier = await self._capture_new_json_preview(
+            sibling_stage_preview=True,
+            preview_stage_delay_ms=1500,
+        )
+        self.assertEqual(raw.source, "DOWNLOAD_JSON")
+        self.assertEqual(clicks, [self._json_filename(job.job_id)])
+
+    async def test_downloaded_json_finalizes_without_md_sentinel(self) -> None:
+        job, raw, _clicks, dossier = await self._capture_new_json_preview(
+            sibling_stage_preview=True
+        )
+        root = raw.report_md_part_path.parents[2]
+        result = AtomicCaptureWriter(now=lambda: self.now).finalize(
+            root,
+            identity=CaptureIdentity(
+                job_id=job.job_id,
+                run_id=self.run_id,
+                target_id=self.symbol,
+                as_of_date=self.as_of_date,
+                packet_hash=self.packet_hash,
+                prompt_hash="b" * 64,
+                conversation_id=raw.conversation_id,
+                capture_mode="DOM_CONTRACT_JSON_MOCK",
+            ),
+            raw_capture=raw,
+        )
+        self.assertEqual(result.receipt.capture_source, "DOWNLOAD_JSON")
+        self.assertEqual(
+            json.loads(
+                (root / result.receipt.dossier_json_path).read_text(
+                    encoding="utf-8"
+                )
+            ),
+            dossier,
+        )
 
     async def test_direct_report_fallback(self) -> None:
         job, _prompt_hash = await self._running_job()

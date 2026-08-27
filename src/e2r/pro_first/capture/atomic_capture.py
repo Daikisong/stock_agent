@@ -1,9 +1,10 @@
-"""MD-first atomic capture writer; READY.json is committed last."""
+"""MD/JSON primary capture writer; READY.json is committed last."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime, timezone
+import json
 import os
 from pathlib import Path
 import re
@@ -62,13 +63,24 @@ class AtomicCaptureWriter:
         if report_part != (staging / "pro_report.md.part").resolve():
             raise ValueError("browser capture must use the job staging MD path")
         if not report_part.is_file() or report_part.stat().st_size == 0:
-            raise ValueError("mandatory staged MD report is missing or empty")
+            raise ValueError("mandatory staged primary report is missing or empty")
         report_text = report_part.read_text(encoding="utf-8-sig")
-        dossier_text = (
-            canonical_json(dossier_override)
-            if dossier_override is not None
-            else self._extract_dossier(report_text)
-        )
+        if dossier_override is not None:
+            dossier_text = canonical_json(dossier_override)
+        elif raw_capture.source == "DOWNLOAD_JSON":
+            try:
+                downloaded_dossier = json.loads(report_text)
+            except json.JSONDecodeError as error:
+                raise ValueError(
+                    "downloaded primary JSON report is not valid JSON"
+                ) from error
+            if not isinstance(downloaded_dossier, dict):
+                raise ValueError(
+                    "downloaded primary JSON report must be a JSON object"
+                )
+            dossier_text = canonical_json(downloaded_dossier)
+        else:
+            dossier_text = self._extract_dossier(report_text)
         dossier_part = staging / "research_dossier.json.part"
         self._write_bytes_durable(dossier_part, (dossier_text + "\n").encode("utf-8"))
 

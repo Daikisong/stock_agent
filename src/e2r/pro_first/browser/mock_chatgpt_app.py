@@ -90,6 +90,8 @@ def render_mock_chatgpt(
   <script>
     window.__submitCount = 0;
     window.__downloadClicks = [];
+    window.__useSiblingStagePreview = false;
+    window.__previewStageDelayMs = 0;
     const defaultContext = {json.dumps({"job_id": job_id, "run_id": run_id, "target_id": target_id, "as_of_date": as_of_date, "filename": filename})};
     let suppliedReport = {json.dumps(report_text, ensure_ascii=False)};
     window.__setSuppliedReport = (nextReport) => {{
@@ -118,9 +120,22 @@ def render_mock_chatgpt(
         JSON.stringify(dossier) + '\\n```\\nE2R_RESEARCH_DOSSIER_JSON_END';
     }}
     function openPreview(context, oldFile=false) {{
-      document.querySelector('[role="dialog"]')?.remove();
+      document.querySelectorAll('[data-e2r-mock-preview="true"]').forEach(
+        element => element.remove()
+      );
       const dialog = document.createElement('div');
-      dialog.setAttribute('role', 'dialog');
+      dialog.dataset.e2rMockPreview = 'true';
+      if (window.__useSiblingStagePreview) {{
+        const emptyShell = document.createElement('div');
+        emptyShell.dataset.e2rMockPreview = 'true';
+        emptyShell.setAttribute('data-side-pane-shell-surface', 'true');
+        emptyShell.style.width = '10px';
+        emptyShell.style.height = '10px';
+        document.body.appendChild(emptyShell);
+        dialog.setAttribute('data-testid', 'stage-thread-flyout');
+      }} else {{
+        dialog.setAttribute('role', 'dialog');
+      }}
       const app = document.createElement('button');
       app.textContent = '앱 다운로드';
       dialog.appendChild(app);
@@ -133,7 +148,14 @@ def render_mock_chatgpt(
       link.download = selected;
       link.addEventListener('click', () => window.__downloadClicks.push(selected));
       dialog.appendChild(link);
-      document.body.appendChild(dialog);
+      if (window.__previewStageDelayMs > 0) {{
+        window.setTimeout(
+          () => document.body.appendChild(dialog),
+          window.__previewStageDelayMs
+        );
+      }} else {{
+        document.body.appendChild(dialog);
+      }}
     }}
     window.__setMockState = (nextState, supplied={{}}) => {{
       const context = {{...defaultContext, ...supplied}};
