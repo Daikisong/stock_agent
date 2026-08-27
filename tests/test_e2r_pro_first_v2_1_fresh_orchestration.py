@@ -126,11 +126,14 @@ class _FreshAdapter:
         *,
         conversation_id: str,
         job_id: str,
+        run_id: str | None = None,
         pass_id: str | None = None,
         parent_pass_id: str | None = None,
     ) -> BrowserSubmittedTurnPersistence:
         self.persistence_count += 1
         required = [f"[[E2R_PRO_JOB_ID:{job_id}]]"]
+        if run_id is not None:
+            required.append(f"[[E2R_PRO_RUN_ID:{run_id}]]")
         if pass_id is not None:
             required.extend(
                 (
@@ -143,7 +146,7 @@ class _FreshAdapter:
             observed_at="2026-08-25T01:02:03Z",
             conversation_id=conversation_id,
             job_id=job_id,
-            run_id=None,
+            run_id=run_id,
             pass_id=pass_id,
             parent_pass_id=parent_pass_id,
             persistence_confirmed=True,
@@ -555,6 +558,149 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(submitted.submit_result.job.submit_count, 1)
         self.assertEqual(self.store.get_job(self.fresh_job.job_id).submit_count, 1)
         self.assertEqual(adapter.submit_count, 1)
+
+    async def test_late_server_persistence_waits_for_terminal_without_resubmit(
+        self,
+    ) -> None:
+        conversation_id = "fresh-conversation-late-persistence"
+        submitted_adapter = await self._prepare_and_approve(conversation_id)
+        await self.orchestrator.submit_initial_once(submitted_adapter)
+        running = self.store.get_job(self.fresh_job.job_id)
+        self.store.transition(
+            running.job_id,
+            expected_version=running.state_version,
+            to_status=JobStatus.USER_ATTENTION_REQUIRED,
+            actor="test-late-persistence-timeout",
+            idempotency_key="test-late-persistence-timeout",
+            payload={
+                "submit_count": 1,
+                "automatic_resubmit_allowed": False,
+            },
+            updates={
+                "last_error_class": "RuntimeError",
+                "last_error_message": "fresh public render arrived after poll bound",
+            },
+        )
+
+        terminal = BrowserResultSnapshot(
+            conversation_id=conversation_id,
+            assistant_turn_id="assistant-late-persisted-terminal",
+            report_text=(
+                "[[E2R_PRO_JOB_ID:"
+                + self.fresh_job.job_id
+                + "]]\n[[E2R_PRO_RUN_ID:"
+                + str(self.built.packet_payload["run_id"])
+                + "]]\nterminal dossier"
+            ),
+            report_hash="9" * 64,
+            has_citations=True,
+            has_dossier_marker=True,
+            job_marker_matches=True,
+            run_marker_matches=True,
+            new_attachment_keys=(),
+        )
+
+        class LatePersistenceAdapter(_FreshAdapter):
+            def __init__(self) -> None:
+                super().__init__(submitted_conversation_id=conversation_id)
+                self.current_conversation_id = conversation_id
+                self.submit_count = 1
+                self.inspection_count = 0
+
+            def conversation_id(self) -> str:
+                return str(self.current_conversation_id)
+
+            async def inspect_state(self) -> BrowserInspection:
+                self.inspection_count += 1
+                return self._inspection(
+                    BrowserUIState.RESEARCH_RUNNING
+                    if self.inspection_count == 1
+                    else BrowserUIState.RESEARCH_COMPLETE
+                )
+
+            async def inspect_result(self, **_kwargs) -> BrowserResultSnapshot:
+                return terminal
+
+        adapter = LatePersistenceAdapter()
+        base = load_pro_first_local_config(
+            Path(__file__).parents[1]
+            / "configs/e2r_pro_first_local.example.yaml"
+        )
+        runner = FreshV3InitialLiveCanaryRunner(
+            replace(
+                base,
+                runtime_root=self.boundary.fresh_runtime_root,
+                browser=replace(
+                    base.browser,
+                    poll_interval_seconds=0.001,
+                    required_stable_observations=2,
+                ),
+            ),
+            old_runtime_root=self.boundary.old_runtime_root,
+            fresh_runtime_root=self.boundary.fresh_runtime_root,
+            repo_root=self.root,
+            store=self.store,
+            source_verifier=object(),
+            report_structurer=object(),
+            max_completion_polls=4,
+        )
+
+        recovered = await runner._reverify_user_attention_result(
+            job_id=self.fresh_job.job_id,
+            run_id=str(self.built.packet_payload["run_id"]),
+            adapter=adapter,
+        )
+
+        self.assertEqual(recovered.result.report_hash, "9" * 64)
+        self.assertEqual(
+            self.store.get_job(self.fresh_job.job_id).status,
+            JobStatus.RESULT_DETECTED.value,
+        )
+        self.assertEqual(self.store.get_job(self.fresh_job.job_id).submit_count, 1)
+        self.assertEqual(adapter.submit_count, 1)
+        self.assertEqual(adapter.persistence_count, 1)
+
+        detected = self.store.get_job(self.fresh_job.job_id)
+        capturing = self.store.transition(
+            detected.job_id,
+            expected_version=detected.state_version,
+            to_status=JobStatus.CAPTURING_ARTIFACTS,
+            actor="test-capture-retry-start",
+            idempotency_key="test-capture-retry-start",
+        )
+        self.store.transition(
+            capturing.job_id,
+            expected_version=capturing.state_version,
+            to_status=JobStatus.USER_ATTENTION_REQUIRED,
+            actor="test-empty-download",
+            idempotency_key="test-empty-download",
+            updates={
+                "last_error_class": "BrowserUIIncompatible",
+                "last_error_message": "empty report attachment",
+            },
+        )
+
+        repeated = await runner._reverify_user_attention_result(
+            job_id=self.fresh_job.job_id,
+            run_id=str(self.built.packet_payload["run_id"]),
+            adapter=adapter,
+        )
+
+        self.assertEqual(repeated.result.report_hash, "9" * 64)
+        self.assertEqual(
+            self.store.get_job(self.fresh_job.job_id).status,
+            JobStatus.RESULT_DETECTED.value,
+        )
+        self.assertEqual(self.store.get_job(self.fresh_job.job_id).submit_count, 1)
+        self.assertEqual(adapter.submit_count, 1)
+        self.assertEqual(adapter.persistence_count, 2)
+        reverified_keys = [
+            event.idempotency_key
+            for event in self.store.list_events(self.fresh_job.job_id)
+            if event.idempotency_key.startswith("result-reverified:")
+        ]
+        self.assertEqual(len(reverified_keys), 2)
+        self.assertEqual(len(set(reverified_keys)), 2)
 
     async def test_submitted_recovery_loads_receipt_without_prompt_recompile(self) -> None:
         adapter = await self._prepare_and_approve("fresh-conversation-receipt-load")

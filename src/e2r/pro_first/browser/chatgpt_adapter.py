@@ -64,7 +64,7 @@ class PlaywrightChatGPTWebAdapter:
         self,
         page: Any,
         *,
-        server_persistence_max_polls: int = 300,
+        server_persistence_max_polls: int = 1_200,
         server_persistence_poll_interval_ms: int = 100,
     ) -> None:
         if server_persistence_max_polls < 1:
@@ -490,6 +490,7 @@ class PlaywrightChatGPTWebAdapter:
         *,
         conversation_id: str,
         job_id: str,
+        run_id: str | None = None,
         pass_id: str | None = None,
         parent_pass_id: str | None = None,
     ) -> BrowserSubmittedTurnPersistence:
@@ -526,11 +527,14 @@ class PlaywrightChatGPTWebAdapter:
                 "",
             )
         )
-        run_id = (
+        prepared_run_id = (
             self._prepared_run_id
             if self._prepared_job_id == job_id and self._prepared_run_id
             else None
         )
+        if run_id and prepared_run_id and run_id != prepared_run_id:
+            raise ValueError("explicit run differs from the prepared browser run")
+        run_id = str(run_id or prepared_run_id or "").strip() or None
         required = [f"[[E2R_PRO_JOB_ID:{job_id}]]"]
         if run_id:
             required.append(f"[[E2R_PRO_RUN_ID:{run_id}]]")

@@ -312,6 +312,10 @@ class PreSchemaV3Normalizer:
                                 )
                             )
 
+        _disambiguate_distinct_statement_predicate_collisions(
+            normalized,
+            operations,
+        )
         fact_ids_by_question_field = {
             "support_fact_ids": {
                 str(row.get("dossier_fact_id") or "")
@@ -443,6 +447,73 @@ class PreSchemaV3Normalizer:
             after_hash=canonical_hash(normalized),
             operations=tuple(operations),
         )
+
+
+def _disambiguate_distinct_statement_predicate_collisions(
+    dossier: dict[str, Any],
+    operations: list[PreflightOperation],
+) -> None:
+    """Split only coarse predicate IDs that hide distinct atomic statements.
+
+    A source sentence can contain two independently useful clauses while Pro
+    assigns both facts the same coarse predicate ID and exact excerpt.  The V3
+    duplicate guard must still reject a copied/rephrased duplicate, but it
+    should not collapse two different statements merely because they share
+    the containing source sentence.  For a colliding identity, append a stable
+    hash of the already supplied statement to every predicate ID.  No evidence
+    text, fact ID, source binding, or question binding is changed.
+
+    If any statements remain textually identical after normalization, their
+    hashes also remain identical and strict graph validation still rejects the
+    true duplicate.
+    """
+
+    grouped: dict[tuple[str, str, str, str], list[dict[str, Any]]] = {}
+    for collection in _FACT_COLLECTIONS:
+        for fact in dossier.get(collection) or ():
+            if not isinstance(fact, dict):
+                continue
+            identity = (
+                str(fact.get("source_document_id") or ""),
+                str(fact.get("predicate_id") or ""),
+                _normalized_identity_text(fact.get("subject")),
+                _normalized_identity_text(fact.get("supporting_excerpt")),
+            )
+            grouped.setdefault(identity, []).append(fact)
+
+    for (_source_id, predicate_id, _subject, _excerpt), facts in grouped.items():
+        if len(facts) < 2 or not predicate_id:
+            continue
+        statements = [
+            _normalized_identity_text(fact.get("statement")) for fact in facts
+        ]
+        if any(not statement for statement in statements) or len(set(statements)) < 2:
+            continue
+        for fact, statement in zip(facts, statements, strict=True):
+            fact_id = str(fact.get("dossier_fact_id") or "")
+            disambiguated = (
+                f"{predicate_id}__E2R_ATOMIC_"
+                f"{canonical_hash({'statement': statement})[:16]}"
+            )
+            fact["predicate_id"] = disambiguated
+            operations.append(
+                _operation(
+                    "DISAMBIGUATE_COARSE_PREDICATE_BY_EXACT_STATEMENT_HASH",
+                    "ATOMIC_FACT",
+                    fact_id,
+                    field_name="predicate_id",
+                    before=predicate_id,
+                    after=disambiguated,
+                    detail=(
+                        "same source/subject/excerpt carried multiple distinct "
+                        "normalized statements; evidence text unchanged"
+                    ),
+                )
+            )
+
+
+def _normalized_identity_text(value: Any) -> str:
+    return " ".join(str(value or "").split()).casefold()
 
 
 def _drop_invalid_question_route_references(

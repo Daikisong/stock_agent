@@ -593,13 +593,71 @@ class FreshV3InitialLiveCanaryRunner:
         run_id: str,
         adapter: Any,
     ) -> FreshDetectedInitialResult:
+        """Recover one already submitted turn without another DOM send.
+
+        A large ChatGPT user turn can appear in a freshly opened public page
+        after the submit-time persistence poll expires.  In that case the
+        durable ledger is already at ``submit_count=1`` and must never click
+        again.  Re-prove the exact job/run turn from another public page, then
+        wait read-only for its terminal result while the durable job remains
+        in ``USER_ATTENTION_REQUIRED``.
+        """
+
+        current = self.store.get_job(job_id)
+        if (
+            current.status != JobStatus.USER_ATTENTION_REQUIRED.value
+            or current.submit_count != 1
+            or current.capture_count != 0
+        ):
+            raise ValueError(
+                "late persistence recovery requires one pre-capture submitted job"
+            )
+        conversation_id = str(adapter.conversation_id() or "").strip()
+        if not conversation_id:
+            raise ValueError(
+                "late persistence recovery requires the visible canonical conversation"
+            )
+        persistence = await adapter.inspect_submitted_turn_persistence(
+            conversation_id=conversation_id,
+            job_id=job_id,
+            run_id=run_id,
+        )
+        if not persistence.persistence_confirmed:
+            raise ValueError(
+                "user-attention recovery still lacks the exact durable job/run turn: "
+                f"observation_id={persistence.observation_id}, "
+                f"missing_markers={list(persistence.missing_markers)}"
+            )
+        self._emit(
+            "FRESH_LATE_SERVER_PERSISTENCE_CONFIRMED_NO_SUBMIT",
+            job_id=job_id,
+            run_id=run_id,
+            conversation_id=conversation_id,
+            observation_id=persistence.observation_id,
+            user_turn_id=persistence.user_turn_id,
+            submit_count=current.submit_count,
+            browser_submit_delta=0,
+        )
         last_hash: str | None = None
         stable = 0
         result: BrowserResultSnapshot | None = None
-        for _attempt in range(self.config.browser.required_stable_observations):
+        for poll in range(1, self.max_completion_polls + 1):
             inspection = await adapter.inspect_state()
             if inspection.stop_visible or inspection.state in {
                 BrowserUIState.RESEARCH_RUNNING,
+            }:
+                if poll == 1 or poll % 12 == 0:
+                    self._emit(
+                        "FRESH_LATE_PERSISTED_COMPLETION_POLL_NO_SUBMIT",
+                        job_id=job_id,
+                        poll=poll,
+                        browser_state=inspection.state.value,
+                        submit_count=current.submit_count,
+                        browser_submit_delta=0,
+                    )
+                await asyncio.sleep(self.config.browser.poll_interval_seconds)
+                continue
+            if inspection.state in {
                 BrowserUIState.LOGIN_REQUIRED,
                 BrowserUIState.AWAITING_CLARIFICATION,
                 BrowserUIState.QUOTA_PENDING,
@@ -616,17 +674,23 @@ class FreshV3InitialLiveCanaryRunner:
                 )
             stable = stable + 1 if result.report_hash == last_hash else 1
             last_hash = result.report_hash
-            if _attempt + 1 < self.config.browser.required_stable_observations:
-                await asyncio.sleep(self.config.browser.poll_interval_seconds)
+            if stable >= self.config.browser.required_stable_observations:
+                break
+            await asyncio.sleep(self.config.browser.poll_interval_seconds)
         if result is None or stable < self.config.browser.required_stable_observations:
-            raise ValueError("user-attention recovery result hash was not stable")
+            raise TimeoutError(
+                "late-persisted user-attention result did not become stably terminal"
+            )
         current = self.store.get_job(job_id)
         recovered = self.store.transition(
             job_id,
             expected_version=current.state_version,
             to_status=JobStatus.RESULT_DETECTED,
             actor="v2.1-fresh-v3-result-reverification",
-            idempotency_key=f"result-reverified:{job_id}:{result.report_hash}",
+            idempotency_key=(
+                f"result-reverified:{job_id}:{result.report_hash}:"
+                f"{persistence.observation_id}"
+            ),
             payload={
                 "report_hash": result.report_hash,
                 "conversation_id": result.conversation_id,
@@ -634,6 +698,8 @@ class FreshV3InitialLiveCanaryRunner:
                 "job_marker_matches": True,
                 "run_marker_matches": True,
                 "stable_observations": stable,
+                "server_persistence_observation_id": persistence.observation_id,
+                "server_persistence_user_turn_id": persistence.user_turn_id,
                 "automatic_resubmit_allowed": False,
             },
             context=TransitionContext(completed_result_reverified=True),

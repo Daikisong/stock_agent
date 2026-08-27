@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-28 C06 accepted 66 / pass 24·25 서버 미저장 봉인 / 새 Pro 채팅 successor 준비 / local full 7,769 PASS`
+기준 시각: `2026-08-28 C06 새 Pro 채팅 Initial Gate PASS 23/27 / 28/28 / 전송·캡처 1/1 / full-thesis tail 대기`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -43,8 +43,8 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             IN_PROGRESS (C06 old chat 봉인·새 chat 전환, C17/C28 tail 대기)
-P10 final CI/audit                        IN_PROGRESS (single-click static 수리 뒤 CI 재실행 대기)
+P9 live multi-pass saturation             IN_PROGRESS (C06 새 chat initial PASS·same-chat tail, C17/C28 tail 대기)
+P10 final CI/audit                        IN_PROGRESS (C06/C17/C28 full tail 후 전체 재검증 대기)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -3268,3 +3268,81 @@ pass 17은 서버 연구를 중단하거나 재제출하지 않고 로컬 감시
 재접속 직후 `browser_submit_delta=0`, 기존 `submit_count=1`, 같은 conversation/pass를 확인했다.
 화면에 열려 있던 `ResearchDossierV3_SKHynix_000660_asof_2026-08-23.json`은 최초 dossier이므로
 현재 repair 결과로 연결하지 않았다. 현재 pass 17 전용 첨부가 생성될 때만 자동 캡처한다.
+
+## P15 — 폐기한 C06 대화 대신 새 Pro 채팅에서 Initial Gate 통과
+
+### 새 채팅 전환 판정
+
+기존 conversation `6a8db0ad-8ed0-83e8-888e-dce26c950343`은 pass 24·25가 화면에는
+보였지만 새로 연 공개 conversation에는 서버 user turn으로 존재하지 않았다. 그러므로 계속 사용하지
+않고 diagnostic-only로 봉인했다. 기존 accepted fact 66은 감사 자료로만 보존하고, 새 prompt에 주입한
+개수는 0이다.
+
+쉽게 말하면 기존 채팅은 “임시 저장된 화면”만 보이고 서버 편지함에는 없던 상태였다. 그 화면에서
+계속 보내지 않고, 아예 새 편지함을 만들어 처음부터 서버 저장을 다시 확인한 것이다.
+
+```text
+fresh runtime       20260827T174738Z
+fresh session       FRESH-V2-1-C06-SUCCESSOR-20260827T174738Z
+job / run           PROJOB-821fd91d8204a7c366ec86f0 / PRORUN-f34eb764254e9fd6c7e21cb4
+initial pass        PROPASS-05c3820ffb6f29285d34d702
+new conversation    6a90786a-8234-83e8-b7b4-c03f18b4e725
+durable user turn   58089b79-d992-487c-920e-4089ae859769
+submit / capture    1 / 1
+old-chat submit     0
+```
+
+### 큰 user turn의 느린 서버 hydration과 무전송 복구
+
+61,286자 initial prompt는 새 공개 페이지에 30초 안에 모두 펼쳐지지 않아 최초 서버 저장 검사가
+실패했다. 하지만 같은 pass를 다시 send하지 않고, exact conversation의 새 읽기 전용 화면에서
+job/run marker가 한 user turn에 모두 있는지 다시 검사했다. 실제 durable user turn을 확인한 후에만
+약 5,442초의 Pro 조사를 읽기 전용으로 감시했다.
+
+이 경로는 `USER_ATTENTION_REQUIRED + submit_count=1 + capture_count=0`에서만 열리고 추가 DOM click은
+0이다. 초기 결과 다운로드가 0 byte로 끝났을 때도 prompt를 다시 보내지 않고 같은 완료 turn의 JSON만
+재다운로드했다. 결과적으로 `DOWNLOAD_JSON`이 성공했고 assistant turn·conversation·job·run이 모두
+일치했다.
+
+### 새 C06 initial 결과
+
+```text
+Pro 출력 전체 fact             45
+source document                  16
+mandatory question              28/28
+material current candidate       27
+post-preflight accepted          23
+acceptance ratio                 85.1852%
+genuine semantic repair           4 (상한 5)
+initial output defect             0
+unclassified rejection            0
+source verification query/search  0/0
+Initial Efficiency Gate          PASS
+```
+
+45개 전체 fact에는 current support뿐 아니라 counter·historical·rejected도 들어 있다. 그래서 Gate는
+전체 45개를 임의로 나눈 값이 아니라, 현재 핵심 후보 27개 중 23개가 통과한
+`23 / 27 = 85.1852%`로 계산했다. deterministic source verifier의 전체 분류는 accepted current 25,
+accepted counter 5, historical 2, rejected 13이다.
+
+최초 import는 같은 source·subject·excerpt·coarse predicate를 쓴 두 fact를 중복으로 보았다. 하지만
+하나는 M15X 양산 일정 단축이고 다른 하나는 용인 CAPA 투자로, 실제 statement가 달랐다. 종목명이나
+C06을 조건으로 하드코딩하지 않고, “동일한 충돌 그룹에서 정규화 statement가 서로 다를 때”에만
+statement hash로 predicate를 분리했다. 증거 문장, fact ID, source 결박, question 결박은 바꾸지 않았고
+정말 같은 statement 중복은 여전히 검증기가 차단한다.
+
+### 현재 경계와 검증
+
+```text
+focused regression               111/111 PASS
+Pro-first core                   238/238 PASS
+failure / error                    0 / 0
+production static audit critical   0
+guarded DOM submit path             1
+score / Stage authority          false / false
+publication                      withheld
+```
+
+기계 판독 영수증은 `p15_c06_new_chat_initial_success_receipt.json`이다. 이 시점은 C06 Initial Gate를
+통과한 것이지 전체 목표 완료가 아니다. 다음은 같은 새 C06 conversation에서 bounded full-thesis tail을
+실행하고, 이후 C17·C28 tail과 전체 suite·GitHub Actions를 닫는 것이다.

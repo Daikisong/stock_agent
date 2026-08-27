@@ -91,11 +91,14 @@ class _FakeSameConversationAdapter:
         *,
         conversation_id: str,
         job_id: str,
+        run_id: str | None = None,
         pass_id: str | None = None,
         parent_pass_id: str | None = None,
     ) -> BrowserSubmittedTurnPersistence:
         self.persistence_count += 1
         required = [f"[[E2R_PRO_JOB_ID:{job_id}]]"]
+        if run_id is not None:
+            required.append(f"[[E2R_PRO_RUN_ID:{run_id}]]")
         if pass_id is not None:
             required.extend(
                 (
@@ -111,7 +114,7 @@ class _FakeSameConversationAdapter:
             observed_at="2026-08-22T01:02:03Z",
             conversation_id=conversation_id,
             job_id=job_id,
-            run_id=None,
+            run_id=run_id,
             pass_id=pass_id,
             parent_pass_id=parent_pass_id,
             persistence_confirmed=confirmed,

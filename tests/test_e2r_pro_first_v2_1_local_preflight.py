@@ -629,6 +629,100 @@ class ProFirstV21LocalPreflightTest(unittest.TestCase):
             "COMPLETE",
         )
 
+    def test_distinct_statements_sharing_coarse_predicate_are_disambiguated(self) -> None:
+        dossier = self._dossier()
+        first = dossier["material_facts"][0]
+        first["statement"] = "M15X mass-production schedule accelerated."
+        first["predicate_id"] = "capacity_supply_response"
+        first["supporting_excerpt"] = (
+            "M15X mass-production was accelerated while capacity investment "
+            "expanded after a new cleanroom opened."
+        )
+        second = deepcopy(first)
+        second.update(
+            {
+                "dossier_fact_id": "FACT-TWO",
+                "statement": "Capacity investment expanded after a new cleanroom opened.",
+            }
+        )
+        dossier["material_facts"].append(second)
+        dossier["source_lineages"][0]["fact_ids"].append("FACT-TWO")
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+        predicates = [
+            row["predicate_id"] for row in normalized.payload["material_facts"]
+        ]
+        self.assertEqual(len(set(predicates)), 2)
+        self.assertTrue(
+            all(value.startswith("capacity_supply_response__E2R_ATOMIC_") for value in predicates)
+        )
+        self.assertEqual(
+            [row["statement"] for row in normalized.payload["material_facts"]],
+            [first["statement"], second["statement"]],
+        )
+        self.assertEqual(
+            [row["supporting_excerpt"] for row in normalized.payload["material_facts"]],
+            [first["supporting_excerpt"], second["supporting_excerpt"]],
+        )
+        self.assertEqual(
+            sum(
+                row.operation_code
+                == "DISAMBIGUATE_COARSE_PREDICATE_BY_EXACT_STATEMENT_HASH"
+                for row in normalized.operations
+            ),
+            2,
+        )
+        receipt = ResearchDossierValidator().validate(
+            normalized.payload,
+            DossierValidationContext(
+                job_id=self.job.job_id,
+                run_id="PRORUN-PREFLIGHT",
+                target_id=self.target_id,
+                as_of_date=self.as_of_date,
+                conversation_id="CONVERSATION-PREFLIGHT",
+                candidate_archetype_ids=self.job.archetype_ids,
+                research_pass_id="PROPASS-PREFLIGHT",
+                parent_pass_id=None,
+                enforce_parent_pass_id=True,
+            ),
+        )
+        self.assertEqual(receipt.fact_ids, ("FACT-ONE", "FACT-TWO"))
+
+    def test_identical_statement_duplicate_remains_blocked(self) -> None:
+        dossier = self._dossier()
+        duplicate = deepcopy(dossier["material_facts"][0])
+        duplicate["dossier_fact_id"] = "FACT-DUPLICATE"
+        dossier["material_facts"].append(duplicate)
+        dossier["source_lineages"][0]["fact_ids"].append("FACT-DUPLICATE")
+
+        normalized = PreSchemaV3Normalizer().normalize(
+            dossier,
+            archetype_ids=self.job.archetype_ids,
+        )
+
+        self.assertEqual(
+            [row["predicate_id"] for row in normalized.payload["material_facts"]],
+            ["HBM_CAPACITY_ALLOCATED", "HBM_CAPACITY_ALLOCATED"],
+        )
+        with self.assertRaisesRegex(DossierValidationError, "duplicate atomic"):
+            ResearchDossierValidator().validate(
+                normalized.payload,
+                DossierValidationContext(
+                    job_id=self.job.job_id,
+                    run_id="PRORUN-PREFLIGHT",
+                    target_id=self.target_id,
+                    as_of_date=self.as_of_date,
+                    conversation_id="CONVERSATION-PREFLIGHT",
+                    candidate_archetype_ids=self.job.archetype_ids,
+                    research_pass_id="PROPASS-PREFLIGHT",
+                    parent_pass_id=None,
+                    enforce_parent_pass_id=True,
+                ),
+            )
+
     def test_initial_conversation_alias_accepts_canonical_null_parent(self) -> None:
         dossier = self._dossier()
         dossier["conversation_id"] = "PENDING_NEW_CONVERSATION"

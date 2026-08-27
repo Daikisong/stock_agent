@@ -278,6 +278,7 @@ class ChatGPTWebAdapter(Protocol):
         *,
         conversation_id: str,
         job_id: str,
+        run_id: str | None = None,
         pass_id: str | None = None,
         parent_pass_id: str | None = None,
     ) -> BrowserSubmittedTurnPersistence: ...
