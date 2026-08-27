@@ -2495,3 +2495,61 @@ compileall / git diff check                     PASS / PASS
 
 pass 11의 현재-turn JSON이 생성되면 같은 다운로드·marker 결박·append-only merge·source 재검문을 수행하고,
 그 결과를 별도 receipt로 고정한다. 아직 C06 saturation을 선언하지 않는다.
+
+#### pass 11 현재-turn JSON 병합과 실운영 질문 dedup
+
+pass 11은 약 40분 뒤 완료됐다. 최초 전체 JSON이나 pass 10 첨부를 다시 받지 않고, 현재 assistant turn의
+다음 delta만 `DIRECT_REPORT_DOM_NORMALIZED`로 캡처했다.
+
+```text
+ResearchDossierV3_SKHynix_000660_PUBLIC_GAP_CLOSURE_
+PROPASS-ca6f4aba9e077315067b5f67_delta.json
+```
+
+```text
+submit count                         1
+automatic resubmit                   0
+raw report hash                      7ecf102e...f96a283
+normalized report hash               51fe5707...598ad5d
+V3 JSON hash                         64de2962...841c93
+effective facts                      97 -> 102
+source documents                     32 -> 35
+source lineages                      30 -> 33
+route receipts                       255 -> 266
+mandatory questions                  28 -> 28
+```
+
+새 row는 cutoff-day 종가·거래량·거래대금·외국인 순매수·기관 순매수 5개다. append-only 병합은 성공했지만
+deterministic source verifier는 이 5개를 점수 facts로 채택하지 않았다. accepted fact는 48로 유지됐고,
+quote mismatch 17→21, source unavailable 12→13으로 반려 사유가 정확히 남았다. 즉 Pro가 값을 가져왔다고
+바로 쓰지 않고, 원문 검문을 통과하지 못한 값은 점수 그래프 밖에 둔다.
+
+재검문 후 변화는 다음과 같다.
+
+```text
+nonterminal mandatory questions       4 -> 2
+provider/parser core pending           2 -> 2
+source linkage incomplete              3 -> 2
+verifier repair pending               13 -> 14
+public material gaps                  16 -> 16
+accepted facts                        48 -> 48
+verification query/search              0 / 0
+research saturation valid              false
+```
+
+nonterminal은 audit/restatement residual 두 질문만 남았다. cutoff positioning 질문은 Pro가 terminal로
+제안했지만 새 사실이 verifier에서 탈락했으므로 전체 thesis는 열리지 않고 repair/public gap으로 남았다.
+
+pass 11은 다섯 질문을 받았지만, 다음 routing에서 상태가 그대로인
+`R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_Q01`은 per-question hash가 일치해 제외됐다. pass 12
+`PROPASS-787438355e0c6f2da764cd1e`는 실제로 바뀐 네 질문만 같은 대화에 submit count 1로 전송됐다.
+
+```text
+C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q07
+R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_Q05
+R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q01
+R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_Q01
+```
+
+이는 단위테스트만의 주장이 아니라 실제 SQL ledger의 pass 11/12 question hash와 submit row로 확인했다.
+pass 12 결과가 나올 때까지 점수·Stage authority는 계속 false다.
