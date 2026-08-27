@@ -861,6 +861,11 @@ def _followup_context(
     pass_name: str,
 ) -> Mapping[str, Any]:
     requested = tuple(dict.fromkeys(str(value) for value in question_ids))
+    verified = frozenset(str(value) for value in accepted_fact_ids)
+    route_by_id = {
+        str(row.get("route_receipt_id") or ""): row
+        for row in dossier.get("search_route_receipts") or ()
+    }
     decisions = {
         row.question_family_id: row.to_dict()
         for row in saturation.question_decisions
@@ -873,6 +878,12 @@ def _followup_context(
     for question_id in requested:
         decision = decisions.get(question_id) or {}
         state = dossier_states.get(question_id) or {}
+        route_progress_state = _question_route_progress_state(
+            decision=decision,
+            question_state=state,
+            route_by_id=route_by_id,
+            verified_fact_ids=verified,
+        )
         unresolved.append(
             {
                 "question_family_id": question_id,
@@ -905,6 +916,15 @@ def _followup_context(
                 "missing_core_source_roles": list(
                     decision.get("missing_core_source_roles") or ()
                 ),
+                "missing_corroboration_source_roles": list(
+                    decision.get("missing_corroboration_source_roles") or ()
+                ),
+                "verified_source_roles": list(
+                    decision.get("verified_source_roles") or ()
+                ),
+                "deterministic_terminal": decision.get("terminal"),
+                "deterministic_ready": decision.get("ready"),
+                "route_progress_state": route_progress_state,
             }
         )
     fact_count = sum(
@@ -943,10 +963,47 @@ def _followup_context(
         )
         for row in unresolved
     }
+    # This second identity deliberately excludes append-only receipt ids and
+    # raw Pro dispositions.  A repeated route with a new receipt id is not
+    # research progress; a genuinely different route signature, a changed
+    # provider/parser outcome, a newly verified fact/lineage, or a
+    # deterministic closure is progress.  Keep the older context hash for
+    # immutable audit compatibility while routing on this semantic identity.
+    question_progress_hashes = {
+        row["question_family_id"]: canonical_hash(
+            {
+                "schema_version": "e2r_question_progress_identity_v1",
+                "pass_name": pass_name,
+                "question_family_id": row["question_family_id"],
+                "deterministic_status": row["deterministic_status"],
+                "deterministic_terminal": row["deterministic_terminal"],
+                "deterministic_ready": row["deterministic_ready"],
+                "gap_class": row["gap_class"],
+                "failure_codes": sorted(set(row["failure_codes"])),
+                "verified_linked_fact_ids": sorted(
+                    set(row["verified_linked_fact_ids"])
+                ),
+                "missing_core_source_roles": sorted(
+                    set(row["missing_core_source_roles"])
+                ),
+                "missing_corroboration_source_roles": sorted(
+                    set(row["missing_corroboration_source_roles"])
+                ),
+                "verified_source_roles": sorted(
+                    set(row["verified_source_roles"])
+                ),
+                "linked_source_lineage_ids": sorted(
+                    set(row["linked_source_lineage_ids"])
+                ),
+                "route_progress_state": row["route_progress_state"],
+            }
+        )
+        for row in unresolved
+    }
     gap_context_hash = canonical_hash(
         {
             "pass_name": pass_name,
-            "question_context_hashes": question_context_hashes,
+            "question_progress_hashes": question_progress_hashes,
         }
     )
     return {
@@ -982,6 +1039,7 @@ def _followup_context(
             ),
             "question_family_ids": list(requested),
             "question_context_hashes": question_context_hashes,
+            "question_progress_hashes": question_progress_hashes,
             "deterministic_research_status": (
                 saturation.deterministic_research_status
             ),
@@ -990,6 +1048,107 @@ def _followup_context(
             "score_authority": False,
             "stage_authority": False,
         },
+    }
+
+
+def _question_route_progress_state(
+    *,
+    decision: Mapping[str, Any],
+    question_state: Mapping[str, Any],
+    route_by_id: Mapping[str, Mapping[str, Any]],
+    verified_fact_ids: frozenset[str],
+) -> Mapping[str, Any]:
+    """Compile receipt-id-insensitive progress for one question gap.
+
+    Route receipts are append-only audit rows, so their ids necessarily
+    change on every pass.  Progress instead follows the route signature and
+    the newest cohort's deterministic outcome.  Pro-claimed accepted ids are
+    intersected with the source verifier's accepted roster.
+    """
+
+    route_adequacy = decision.get("route_adequacy") or {}
+    requested_ids = tuple(
+        str(value)
+        for value in (
+            route_adequacy.get("linked_route_receipt_ids")
+            or question_state.get("search_route_receipt_ids")
+            or ()
+        )
+    )
+    linked = tuple(
+        route_by_id[value] for value in requested_ids if value in route_by_id
+    )
+
+    def signature(row: Mapping[str, Any]) -> str:
+        return canonical_hash(
+            {
+                "source_role_id": row.get("source_role_id"),
+                "query_or_navigation_objective": row.get(
+                    "query_or_navigation_objective"
+                ),
+                "query_text": row.get("query_text"),
+                "opened_source_urls": sorted(
+                    row.get("opened_source_urls") or ()
+                ),
+            }
+        )
+
+    route_signatures = tuple(sorted({signature(row) for row in linked}))
+    latest_pass_id = str(linked[-1].get("pass_id") or "") if linked else ""
+    latest_cohort = tuple(
+        row
+        for row in linked
+        if str(row.get("pass_id") or "") == latest_pass_id
+    )
+    latest_outcome_by_hash = {}
+    for row in latest_cohort:
+        outcome = {
+            "route_signature": signature(row),
+            "provider_status": row.get("provider_status"),
+            "parser_status": row.get("parser_status", "SUCCESS"),
+            "verified_accepted_fact_ids": sorted(
+                verified_fact_ids.intersection(
+                    str(value)
+                    for value in row.get("accepted_fact_ids") or ()
+                )
+            ),
+            "no_new_route_confirmed": bool(
+                str(row.get("no_new_route_reason") or "").strip()
+            ),
+        }
+        latest_outcome_by_hash[canonical_hash(outcome)] = outcome
+    latest_outcomes = tuple(
+        latest_outcome_by_hash[key] for key in sorted(latest_outcome_by_hash)
+    )
+    return {
+        "route_signatures": route_signatures,
+        "latest_route_outcomes": latest_outcomes,
+        "unknown_linked_route_reference": len(requested_ids) != len(linked),
+        "attempted_source_roles": sorted(
+            {
+                str(value)
+                for value in question_state.get("attempted_source_role_ids")
+                or ()
+            }
+            | {
+                str(row.get("source_role_id") or "")
+                for row in linked
+                if str(row.get("source_role_id") or "")
+            }
+        ),
+        "adequate": route_adequacy.get("adequate"),
+        "official_route_attempted": route_adequacy.get(
+            "official_route_attempted"
+        ),
+        "distinct_route_count": route_adequacy.get("distinct_route_count"),
+        "independent_no_new_route_confirmation_count": route_adequacy.get(
+            "independent_no_new_route_confirmation_count"
+        ),
+        "provider_parser_normal": route_adequacy.get(
+            "provider_parser_normal"
+        ),
+        "semantic_fixpoint": route_adequacy.get("semantic_fixpoint"),
+        "failure_codes": sorted(set(route_adequacy.get("failure_codes") or ())),
     }
 
 
@@ -1074,14 +1233,18 @@ def _question_ids_without_completed_context(
     """
 
     pass_inputs = context.get("pass_inputs") or {}
-    current = pass_inputs.get("question_context_hashes") or {}
+    current_progress = pass_inputs.get("question_progress_hashes") or {}
+    current_context = pass_inputs.get("question_context_hashes") or {}
     requested = tuple(
         str(value)
         for value in pass_inputs.get("question_family_ids") or ()
     )
-    if not isinstance(current, Mapping):
+    if not isinstance(current_progress, Mapping):
+        raise ValueError("question_progress_hashes must be a mapping")
+    if not isinstance(current_context, Mapping):
         raise ValueError("question_context_hashes must be a mapping")
-    attempted: dict[str, set[str]] = {}
+    attempted_progress: dict[str, set[str]] = {}
+    attempted_context: dict[str, set[str]] = {}
     for row in ledger.list_passes(job_id):
         if (
             row.pass_name != pass_name
@@ -1089,18 +1252,27 @@ def _question_ids_without_completed_context(
             or row.submit_count != 1
         ):
             continue
-        stored = row.detail.get("question_context_hashes")
-        if not isinstance(stored, Mapping):
-            continue
-        for question_id, context_hash in stored.items():
-            attempted.setdefault(str(question_id), set()).add(
-                str(context_hash)
-            )
+        stored_progress = row.detail.get("question_progress_hashes")
+        if isinstance(stored_progress, Mapping):
+            for question_id, progress_hash in stored_progress.items():
+                attempted_progress.setdefault(str(question_id), set()).add(
+                    str(progress_hash)
+                )
+        stored_context = row.detail.get("question_context_hashes")
+        if isinstance(stored_context, Mapping):
+            for question_id, context_hash in stored_context.items():
+                attempted_context.setdefault(str(question_id), set()).add(
+                    str(context_hash)
+                )
     return tuple(
         question_id
         for question_id in requested
-        if str(current.get(question_id) or "")
-        not in attempted.get(question_id, set())
+        if (
+            str(current_progress.get(question_id) or "")
+            not in attempted_progress.get(question_id, set())
+            and str(current_context.get(question_id) or "")
+            not in attempted_context.get(question_id, set())
+        )
     )
 
 

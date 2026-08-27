@@ -444,6 +444,55 @@ class ProMultiPassLedger:
             ).fetchall()
         return tuple(self._pass_from_row(row) for row in rows)
 
+    def record_question_progress_hashes(
+        self,
+        pass_id: str,
+        *,
+        question_progress_hashes: Mapping[str, str],
+    ) -> ResearchPassRecord:
+        """Immutably enrich a legacy/running pass with semantic identities.
+
+        This metadata migration does not alter status, submit count, prompt,
+        response, or dossier lineage.  It is used when a pass was planned
+        before receipt-id-insensitive progress hashes were introduced.
+        """
+
+        progress = {
+            str(question_id): str(progress_hash)
+            for question_id, progress_hash in question_progress_hashes.items()
+        }
+        if not progress or any(
+            not question_id.strip() or len(progress_hash) != 64
+            for question_id, progress_hash in progress.items()
+        ):
+            raise ValueError(
+                "question progress identities require question ids and sha256 hashes"
+            )
+        with self._transaction() as connection:
+            row = self._require_pass(connection, pass_id)
+            detail = json.loads(row["detail_json"])
+            context_hashes = detail.get("question_context_hashes") or {}
+            if not isinstance(context_hashes, Mapping) or set(context_hashes) != set(
+                progress
+            ):
+                raise FollowupSubmitBlocked(
+                    "question progress identities differ from immutable pass questions"
+                )
+            existing = detail.get("question_progress_hashes")
+            if existing not in (None, {}):
+                if existing != progress:
+                    raise FollowupSubmitBlocked(
+                        "question progress identities are already bound differently"
+                    )
+                return self._pass_from_row(row)
+            detail["question_progress_hashes"] = progress
+            connection.execute(
+                "UPDATE pro_research_passes SET detail_json=? WHERE pass_id=?",
+                (canonical_json(detail), pass_id),
+            )
+            result = self._require_pass(connection, pass_id)
+        return self._pass_from_row(result)
+
     def record_dossier_snapshot(
         self,
         *,

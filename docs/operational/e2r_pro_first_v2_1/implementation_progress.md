@@ -2553,3 +2553,45 @@ R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_Q01
 
 이는 단위테스트만의 주장이 아니라 실제 SQL ledger의 pass 11/12 question hash와 submit row로 확인했다.
 pass 12 결과가 나올 때까지 점수·Stage authority는 계속 false다.
+
+#### pass 12 입력의 같은 gap·같은 route 의미 중복 차단
+
+pass 11 뒤의 질문 단위 dedup은 서로 다른 질문이 같이 묶여 재전송되는 문제를 막았지만, route receipt
+ID 자체가 질문 hash에 남아 있었다. append-only ledger에서는 같은 KRX endpoint를 다시 시도해도
+`ROUTE-P11-...`에서 `ROUTE-P12-...`처럼 ID가 달라진다. 따라서 내용·결과가 같은 경로도 ID만 보고
+새 진행으로 오인할 수 있었다.
+
+이제 재시도 권한에는 receipt ID나 Pro의 raw terminal 문구를 쓰지 않고 다음 의미만 쓴다.
+
+```text
+source role + 조사 목적 + query + opened URLs
++ 최신 provider/parser 결과
++ verifier가 실제 채택한 fact
++ accepted question lineage
++ deterministic status/closure/fixpoint
+```
+
+쉬운 예로 같은 KRX URL·같은 query가 또 `PARSER_PENDING`이면 새 receipt가 생겨도 재질문하지 않는다.
+반대로 다른 공식 regulator URL을 열었거나, 같은 route의 parser가 `PARSER_PENDING -> SUCCESS`로 바뀌거나,
+새 fact가 verifier를 통과하면 실제 진행으로 인정한다. Pro가 `accepted_fact_ids`에 적은 값도 deterministic
+verifier의 48개 accepted roster와 교집합을 취하므로, pass 11처럼 Pro가 제안했으나 검문에서 탈락한
+fact만으로 다음 pass를 열지 않는다.
+
+이미 전송된 pass 12의 네 질문에는 이 semantic identity를 metadata-only로 결박했다. status는
+`RESEARCH_RUNNING`, submit count는 1로 그대로이고 prompt·response·dossier lineage는 바꾸지 않았다.
+이는 새 전송이 아니라 pass 12가 시작될 때의 의미 상태를 고정한 것이다.
+
+```text
+새 focused 회귀                              3/3 PASS
+fresh orchestration module                  29/29 PASS
+관련 browser/dossier/saturation/fresh      108/108 PASS
+Pro-first static audit                      PASS / critical 0
+Pro-first V2 static audit                   PASS / critical 0
+fresh efficiency static audit               PASS / critical 0
+production static audit                     PASS / critical 0
+```
+
+전체 unittest도 이 변경 기준으로 7,734개 PASS, failure/error 0/0, 기존 skip 38로 끝났다. pass 12
+current-turn JSON을 회수·병합·재검문한 뒤, 현재 의미 지문과 pass 12 입력 지문을 비교해 같은 경로
+반복이면 추가 submit 없이 pending/fixpoint/repair 경로로 보낸다. 실제 새 경로나 parser 정상화가 있을
+때만 다음 same-conversation pass를 허용한다. score/Stage authority는 계속 false다.

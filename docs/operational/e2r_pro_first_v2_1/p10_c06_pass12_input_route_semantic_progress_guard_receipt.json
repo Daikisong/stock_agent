@@ -1,0 +1,90 @@
+{
+  "schema_version": "e2r_pro_p10_c06_pass12_input_route_semantic_progress_guard_receipt_v1",
+  "status": "PASS12_INPUT_ROUTE_SEMANTIC_PROGRESS_GUARD_PASS",
+  "completion_claimed": false,
+  "final_full_thesis_allowed": false,
+  "job_id": "PROJOB-ab48ce7e94097cf9b6846602",
+  "run_id": "PRORUN-683f5a5423a6e367f443c6de",
+  "target_id": "000660",
+  "as_of_date": "2026-08-23",
+  "conversation_id": "6a8db0ad-8ed0-83e8-888e-dce26c950343",
+  "active_pass": {
+    "pass_id": "PROPASS-787438355e0c6f2da764cd1e",
+    "pass_name": "PUBLIC_GAP_CLOSURE",
+    "pass_ordinal": 12,
+    "status_at_receipt": "RESEARCH_RUNNING",
+    "submit_count": 1,
+    "automatic_resubmit_count": 0,
+    "question_family_count": 4,
+    "prompt_char_count": 16532
+  },
+  "root_cause": {
+    "failure_class": "SAME_GAP_SAME_ROUTE_RECEIPT_ID_CHURN_COULD_REOPEN_RESEARCH",
+    "root_cause_file": "src/e2r/pro_first/fresh_session/full_thesis_live_v3.py",
+    "root_cause_functions": [
+      "_followup_context",
+      "_question_ids_without_completed_context"
+    ],
+    "before_behavior": "append-only route receipt ids were included in the per-question retry identity, so the same route semantics could appear new under a new receipt id",
+    "target_specific_rule_used": false
+  },
+  "generic_patch": {
+    "semantic_identity_schema": "e2r_question_progress_identity_v1",
+    "receipt_ids_excluded_from_progress_identity": true,
+    "raw_pro_disposition_excluded_from_progress_identity": true,
+    "route_signature_fields": [
+      "source_role_id",
+      "query_or_navigation_objective",
+      "query_text",
+      "opened_source_urls"
+    ],
+    "progress_axes": [
+      "genuinely_distinct_route_signature",
+      "latest_provider_parser_outcome",
+      "deterministically_verified_fact",
+      "accepted_question_lineage",
+      "deterministic_question_status_or_closure",
+      "semantic_fixpoint"
+    ],
+    "pro_claimed_fact_ids_intersected_with_verifier_accepted_roster": true,
+    "same_route_new_receipt_id_counts_as_progress": false,
+    "new_route_or_normalized_provider_parser_outcome_counts_as_progress": true
+  },
+  "live_pass_input_binding": {
+    "status": "PASS",
+    "metadata_only": true,
+    "status_changed": false,
+    "submit_count_changed": false,
+    "prompt_changed": false,
+    "response_changed": false,
+    "dossier_lineage_changed": false,
+    "accepted_fact_count_at_binding": 48,
+    "question_progress_hashes": {
+      "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q07": "18721ec4c1bb9053b115062b7339232c9b6db78943ba8c4136d008eefce41ccf",
+      "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q01": "338db86cf5c114eb91d537a1c2375157a350223bd6ccb3fb6f115d83c8e91d7d",
+      "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_Q01": "f0723cd82cdca9e468f814387978acb602095c9047f49a7ef61c61edc012a090",
+      "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_Q05": "2569e966379aad176f260dc8bdb9128fcb96c20f9a38ba3ae657e3b086708dc8"
+    }
+  },
+  "verification": {
+    "focused_new_regressions": "3/3 PASS",
+    "fresh_orchestration_module": "29/29 PASS",
+    "related_browser_dossier_saturation_fresh": "108/108 PASS",
+    "pro_first_static_audit": "PASS / critical 0",
+    "pro_first_v2_static_audit": "PASS / critical 0",
+    "pro_first_v2_static_audit_hash": "3b81075903f75a821dbb18dc0a9aaf59086d4f7b89efd62a721660a30f0e27fe",
+    "fresh_efficiency_static_audit": "PASS / critical 0",
+    "fresh_efficiency_static_audit_hash": "47d96d1f3b602ef0b963ce3772ffc70cbacdb655fb399aefdcf0a61fb9b87b6a",
+    "production_static_audit": "PASS / critical 0",
+    "production_static_audit_hash": "ff981d5bed53ebaec938dbcc3049c4e31a854766cd6517ac306376609c94a27a",
+    "full_suite_status": "PASS",
+    "full_suite_test_count": 7734,
+    "full_suite_failure_count": 0,
+    "full_suite_error_count": 0,
+    "full_suite_skip_count": 38
+  },
+  "score_authority": false,
+  "stage_authority": false,
+  "next_action": "CAPTURE_EXACT_PASS12_CURRENT_TURN_JSON_MERGE_REVERIFY_THEN_APPLY_SEMANTIC_PROGRESS_GUARD_BEFORE_ANY_NEXT_SUBMIT",
+  "receipt_payload_hash": "3634db41f9871bcb9136414ce3219eb6e0388041fd6185fc9a999178e24de518"
+}

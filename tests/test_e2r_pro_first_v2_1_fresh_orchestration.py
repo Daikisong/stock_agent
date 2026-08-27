@@ -933,6 +933,192 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             (question_b,),
         )
 
+    async def test_same_route_with_new_receipt_id_is_not_research_progress(
+        self,
+    ) -> None:
+        adapter = await self._prepare_and_approve(
+            "fresh-conversation-route-semantic-dedup"
+        )
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="9" * 64,
+        )
+        question_id = self.built.prompt.mandatory_question_ids[0]
+
+        def dossier_for(
+            receipt_id: str,
+            *,
+            pass_id: str,
+            url: str,
+            provider_status: str = "PARSER_PENDING",
+        ) -> dict[str, object]:
+            dossier = self._tail_dossier(question_id)
+            dossier["question_family_results"][0][
+                "search_route_receipt_ids"
+            ] = [receipt_id]
+            dossier["search_route_receipts"] = [
+                {
+                    "route_receipt_id": receipt_id,
+                    "pass_id": pass_id,
+                    "source_role_id": "ISSUER_OFFICIAL",
+                    "query_or_navigation_objective": "same audited objective",
+                    "query_text": "same audited query",
+                    "opened_source_urls": [url],
+                    "provider_status": provider_status,
+                    "parser_status": "SUCCESS",
+                    "accepted_fact_ids": [],
+                    "no_new_route_reason": "same audited no-new-route result",
+                }
+            ]
+            return dossier
+
+        first_decision = self._question_decision(
+            question_id,
+            linked_fact_id="FACT-1",
+            route_receipt_id="ROUTE-P1",
+            provider_parser_normal=False,
+        )
+        first_context = _followup_context(
+            dossier=dossier_for(
+                "ROUTE-P1",
+                pass_id="PROPASS-P1",
+                url="https://issuer.example.com/same",
+            ),
+            saturation=self._tail_saturation(
+                (first_decision,), fact_hash="4" * 64
+            ),
+            accepted_fact_ids=("FACT-1",),
+            question_ids=(question_id,),
+            pass_name="PUBLIC_GAP_CLOSURE",
+        )
+        plan, _compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest=first_context["latest_dossier_digest"],
+            unresolved_question_state=first_context[
+                "unresolved_question_state"
+            ],
+            pass_inputs=first_context["pass_inputs"],
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        await self.orchestrator.submit_followup(plan, adapter)
+        self.orchestrator.complete_followup(
+            plan.research_pass.pass_id,
+            response_hash="8" * 64,
+            conversation_id="fresh-conversation-route-semantic-dedup",
+        )
+
+        repeated_decision = self._question_decision(
+            question_id,
+            linked_fact_id="FACT-1",
+            route_receipt_id="ROUTE-P2",
+            provider_parser_normal=False,
+        )
+        repeated_context = _followup_context(
+            dossier=dossier_for(
+                "ROUTE-P2",
+                pass_id="PROPASS-P2",
+                url="https://issuer.example.com/same",
+            ),
+            saturation=self._tail_saturation(
+                (repeated_decision,), fact_hash="4" * 64
+            ),
+            accepted_fact_ids=("FACT-1",),
+            question_ids=(question_id,),
+            pass_name="PUBLIC_GAP_CLOSURE",
+        )
+        self.assertNotEqual(
+            first_context["pass_inputs"]["question_context_hashes"],
+            repeated_context["pass_inputs"]["question_context_hashes"],
+        )
+        self.assertEqual(
+            first_context["pass_inputs"]["question_progress_hashes"],
+            repeated_context["pass_inputs"]["question_progress_hashes"],
+        )
+        self.assertEqual(
+            _question_ids_without_completed_context(
+                self.orchestrator.ledger,
+                job_id=self.fresh_job.job_id,
+                pass_name="PUBLIC_GAP_CLOSURE",
+                context=repeated_context,
+            ),
+            (),
+        )
+
+        different_route_context = _followup_context(
+            dossier=dossier_for(
+                "ROUTE-P3",
+                pass_id="PROPASS-P3",
+                url="https://regulator.example.com/genuinely-new",
+            ),
+            saturation=self._tail_saturation(
+                (
+                    self._question_decision(
+                        question_id,
+                        linked_fact_id="FACT-1",
+                        route_receipt_id="ROUTE-P3",
+                        provider_parser_normal=False,
+                    ),
+                ),
+                fact_hash="4" * 64,
+            ),
+            accepted_fact_ids=("FACT-1",),
+            question_ids=(question_id,),
+            pass_name="PUBLIC_GAP_CLOSURE",
+        )
+        self.assertEqual(
+            _question_ids_without_completed_context(
+                self.orchestrator.ledger,
+                job_id=self.fresh_job.job_id,
+                pass_name="PUBLIC_GAP_CLOSURE",
+                context=different_route_context,
+            ),
+            (question_id,),
+        )
+
+    async def test_running_legacy_pass_can_bind_progress_hashes_once(self) -> None:
+        adapter = await self._prepare_and_approve(
+            "fresh-conversation-progress-hash-migration"
+        )
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="7" * 64,
+        )
+        question_id = self.built.prompt.mandatory_question_ids[0]
+        plan, _compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest={"dossier_hash": "6" * 64},
+            unresolved_question_state=(),
+            pass_inputs={
+                "research_gap_context_hash": "5" * 64,
+                "question_family_ids": [question_id],
+                "question_context_hashes": {question_id: "4" * 64},
+            },
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        await self.orchestrator.submit_followup(plan, adapter)
+        bound = self.orchestrator.ledger.record_question_progress_hashes(
+            plan.research_pass.pass_id,
+            question_progress_hashes={question_id: "3" * 64},
+        )
+        self.assertEqual(
+            bound.detail["question_progress_hashes"],
+            {question_id: "3" * 64},
+        )
+        same = self.orchestrator.ledger.record_question_progress_hashes(
+            plan.research_pass.pass_id,
+            question_progress_hashes={question_id: "3" * 64},
+        )
+        self.assertEqual(same.detail, bound.detail)
+        with self.assertRaisesRegex(Exception, "already bound differently"):
+            self.orchestrator.ledger.record_question_progress_hashes(
+                plan.research_pass.pass_id,
+                question_progress_hashes={question_id: "2" * 64},
+            )
+
     async def test_submitted_followup_is_recovered_before_changed_routing_context(
         self,
     ) -> None:
@@ -1134,7 +1320,10 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         question_id: str,
         *,
         linked_fact_id: str,
+        route_receipt_id: str | None = None,
+        provider_parser_normal: bool = True,
     ) -> SimpleNamespace:
+        route_receipt_id = route_receipt_id or f"ROUTE-{question_id}"
         payload = {
             "question_family_id": question_id,
             "deterministic_status": "PUBLIC_SEARCHABLE",
@@ -1143,8 +1332,23 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             "verified_linked_fact_ids": [linked_fact_id],
             "linked_source_lineage_ids": [f"LINEAGE-{linked_fact_id}"],
             "missing_core_source_roles": ["ISSUER_OFFICIAL"],
+            "missing_corroboration_source_roles": [],
+            "verified_source_roles": ["ISSUER_OFFICIAL"],
+            "terminal": False,
+            "ready": False,
             "route_adequacy": {
-                "linked_route_receipt_ids": [f"ROUTE-{question_id}"],
+                "linked_route_receipt_ids": [route_receipt_id],
+                "adequate": False,
+                "official_route_attempted": True,
+                "distinct_route_count": 1,
+                "independent_no_new_route_confirmation_count": 0,
+                "provider_parser_normal": provider_parser_normal,
+                "semantic_fixpoint": False,
+                "failure_codes": (
+                    []
+                    if provider_parser_normal
+                    else ["PROVIDER_OR_PARSER_NOT_NORMAL"]
+                ),
             },
         }
         return SimpleNamespace(

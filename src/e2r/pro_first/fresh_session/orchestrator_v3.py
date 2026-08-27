@@ -1035,6 +1035,12 @@ class FreshSessionOrchestratorV3:
                         )
                         or {}
                     ),
+                    "question_progress_hashes": dict(
+                        (context.get("pass_inputs") or {}).get(
+                            "question_progress_hashes"
+                        )
+                        or {}
+                    ),
                     "prompt_char_count": len(compiled.prompt_text),
                     "score_authority": False,
                     "stage_authority": False,
