@@ -71,6 +71,12 @@
             "new_events",
             "new_or_superseding_facts",
             "components_to_revisit",
+            "question_families_to_revisit",
+            "prior_question_closure_map",
+            "reused_question_family_ids",
+            "stale_primitive_ids",
+            "monitoring_question_family_ids",
+            "future_event_question_family_ids",
             "prior_receipt_is_current_authority"
           ],
           "properties": {
@@ -78,6 +84,23 @@
             "new_events": {"type": "array", "items": {"type": "object"}},
             "new_or_superseding_facts": {"type": "array", "items": {"type": "object"}},
             "components_to_revisit": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "question_families_to_revisit": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+            "prior_question_closure_map": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "object",
+                "required": ["status", "closure_hash"],
+                "properties": {
+                  "status": {"enum": ["SUPPORTED_SCORING", "PARTIALLY_SUPPORTED_SCORING", "SUPPORTED_NON_SCORING", "COUNTER_SUPPORTED", "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH", "LIKELY_NONPUBLIC", "FUTURE_EVENT_ONLY", "NOT_APPLICABLE_WITH_REASON"]},
+                  "closure_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+                }
+              }
+            },
+            "reused_question_family_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+            "stale_primitive_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+            "monitoring_question_family_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+            "future_event_question_family_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
             "prior_receipt_is_current_authority": {"const": false}
           }
         }

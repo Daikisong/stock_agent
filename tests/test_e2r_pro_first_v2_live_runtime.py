@@ -20,6 +20,7 @@ from e2r.pro_first.dossier import (
     bind_dossier_transport_identity,
 )
 from e2r.pro_first.ids import canonical_hash
+from e2r.pro_first.packet import DeltaResearchContext
 from e2r.pro_first.browser.protocol import (
     BrowserInspection,
     BrowserResultSnapshot,
@@ -48,6 +49,7 @@ from e2r.pro_first.multi_pass import (
 )
 from e2r.pro_first.operations import (
     _git_head,
+    build_delta_job_packet_v2,
     build_job_packet_v2,
     create_forced_validation_canary,
     prepare_v2_job_in_logged_in_browser,
@@ -750,6 +752,73 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
             repo_root=Path(__file__).resolve().parents[1],
         )
 
+    def _build_delta(self):
+        candidate = self.store.create_candidate(
+            symbol="TEST28D",
+            company_name="델타검증기업",
+            as_of_date="2026-08-23",
+            scan_window=ScanWindow.MORNING,
+            trigger_fingerprint="f" * 64,
+            research_mode=ResearchMode.DELTA_RESEARCH,
+            selection_receipt={
+                "trigger_ids": ["TRIGGER-DELTA-1"],
+                "reason_codes": ["MATERIAL_NEW_EVENT"],
+            },
+        )
+        job = self.store.create_job(
+            candidate.candidate_id,
+            archetype_ids=(ARCHETYPE,),
+        )
+        question_id = f"{ARCHETYPE}_Q03"
+        q03_closure = {"status": "SUPPORTED_SCORING"}
+        q05_closure = {"status": "SUPPORTED_SCORING"}
+        delta = DeltaResearchContext(
+            prior_receipt={
+                "prior_job_id": "PROJOB-PRIOR",
+                "dossier_hash": "d" * 64,
+            },
+            new_events=(
+                {
+                    "event_id": "EVENT-DELTA-1",
+                    "event_date": "2026-08-23",
+                    "statement": "새 계약 갱신 공시",
+                },
+            ),
+            new_or_superseding_facts=(),
+            components_to_revisit=(
+                "earnings_visibility",
+                "information_confidence",
+            ),
+            question_families_to_revisit=(question_id,),
+            prior_question_closure_map={
+                question_id: {
+                    **q03_closure,
+                    "closure_hash": canonical_hash(q03_closure),
+                },
+                f"{ARCHETYPE}_Q05": {
+                    **q05_closure,
+                    "closure_hash": canonical_hash(q05_closure),
+                },
+            },
+            stale_primitive_ids=("retention_or_renewal",),
+            monitoring_question_family_ids=(question_id,),
+        )
+        thesis = {
+            "prior_job_id": "PROJOB-PRIOR",
+            "prior_dossier_hash": "d" * 64,
+            "prior_as_of_date": "2026-08-22",
+        }
+        built = build_delta_job_packet_v2(
+            self.store,
+            job_id=job.job_id,
+            runtime_root=self.runtime,
+            config_hash="c" * 64,
+            repo_root=Path(__file__).resolve().parents[1],
+            existing_thesis_digest=thesis,
+            delta_context=delta,
+        )
+        return built, thesis, delta
+
     def test_v2_packet_attaches_hash_bound_contracts_and_initial_pass(self) -> None:
         built = self._build()
         payload = built.packet_payload
@@ -778,6 +847,53 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
         self.assertEqual(first.packet_bundle.packet_hash, second.packet_bundle.packet_hash)
         self.assertEqual(first.initial_pass_id, second.initial_pass_id)
         self.assertEqual(first.prompt.prompt_hash, second.prompt.prompt_hash)
+
+    def test_delta_operational_path_reopens_only_impacted_questions(self) -> None:
+        built, thesis, delta = self._build_delta()
+
+        self.assertEqual(built.prompt.pass_name, ResearchMode.DELTA_RESEARCH.value)
+        self.assertEqual(
+            built.prompt.mandatory_question_ids,
+            (f"{ARCHETYPE}_Q03",),
+        )
+        self.assertTrue(built.output_filename.endswith("_DELTA.md"))
+        self.assertEqual(built.packet_payload["existing_thesis_digest"], thesis)
+        self.assertEqual(
+            built.packet_payload["delta_context"],
+            delta.to_dict(),
+        )
+        self.assertIn("새 계약 갱신 공시", built.prompt.prompt_text)
+        self.assertIn(f"{ARCHETYPE}_Q03", built.prompt.prompt_text)
+        self.assertNotIn(f"1. `{ARCHETYPE}_Q05`", built.prompt.prompt_text)
+        self.assertIn(
+            f'"reused_question_family_ids": [\n        "{ARCHETYPE}_Q05"',
+            built.prompt.prompt_text,
+        )
+
+    def test_delta_operational_path_is_idempotent_and_context_bound(self) -> None:
+        first, thesis, delta = self._build_delta()
+        second = build_delta_job_packet_v2(
+            self.store,
+            job_id=first.job.job_id,
+            runtime_root=self.runtime,
+            config_hash="c" * 64,
+            repo_root=Path(__file__).resolve().parents[1],
+            existing_thesis_digest=thesis,
+            delta_context=delta,
+        )
+        self.assertEqual(first.packet_bundle.packet_hash, second.packet_bundle.packet_hash)
+        self.assertEqual(first.initial_pass_id, second.initial_pass_id)
+        changed_thesis = {**thesis, "prior_dossier_hash": "e" * 64}
+        with self.assertRaisesRegex(ValueError, "differs from requested"):
+            build_delta_job_packet_v2(
+                self.store,
+                job_id=first.job.job_id,
+                runtime_root=self.runtime,
+                config_hash="c" * 64,
+                repo_root=Path(__file__).resolve().parents[1],
+                existing_thesis_digest=changed_thesis,
+                delta_context=delta,
+            )
 
     def test_initial_conversation_binding_changes_only_transport_identity(self) -> None:
         built = self._build()

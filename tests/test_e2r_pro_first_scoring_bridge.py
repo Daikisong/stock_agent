@@ -1366,7 +1366,7 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
         self.assertEqual(len(provider.requests), 21)
         self.assertEqual(fail_if_called.requests, [])
 
-    def test_delta_reopens_only_impacted_components(self) -> None:
+    def test_delta_recomputes_only_impacted_components_judges(self) -> None:
         prior_root = Path(self.temporary_directory.name) / "prior-full-job"
         self._prepare_durable_component_job(prior_root)
         prior_run = self._run_durable_pipeline(

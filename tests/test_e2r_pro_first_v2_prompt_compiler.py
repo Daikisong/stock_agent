@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import unittest
 
+from e2r.pro_first.ids import canonical_hash
 from e2r.pro_first.research_contracts import (
     ProResearchPromptCompilerV2,
     load_research_contract,
@@ -119,8 +120,26 @@ class ProFirstV2PromptCompilerTest(unittest.TestCase):
             "SATURATION_AUDIT",
             "DELTA_RESEARCH",
         ):
+            selected_packet = packet
+            if pass_name == "DELTA_RESEARCH":
+                closure = {"status": "SUPPORTED_SCORING"}
+                selected_packet = {
+                    **packet,
+                    "delta_context": {
+                        "question_families_to_revisit": [
+                            "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION_Q02"
+                        ],
+                        "prior_question_closure_map": {
+                            "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION_Q02": {
+                                **closure,
+                                "closure_hash": canonical_hash(closure),
+                            }
+                        },
+                        "reused_question_family_ids": [],
+                    },
+                }
             compiled = compiler.compile(
-                packet=packet,
+                packet=selected_packet,
                 primary_archetype_ids=("C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",),
                 pass_name=pass_name,
                 conversation_id="CONVERSATION-SAME",
@@ -128,6 +147,80 @@ class ProFirstV2PromptCompilerTest(unittest.TestCase):
             self.assertEqual(compiled.pass_name, pass_name)
             self.assertIn("CONVERSATION-SAME", compiled.prompt_text)
             self.assertEqual(len(compiled.prompt_hash), 64)
+
+    def test_delta_reopens_only_impacted_questions(self) -> None:
+        impacted = "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION_Q02"
+        reused = "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION_Q01"
+        impacted_closure = {"status": "SUPPORTED_SCORING"}
+        reused_closure = {"status": "COUNTER_SUPPORTED"}
+        packet = {
+            "job_id": "PROMPT-DELTA-TEST",
+            "run_id": "PROMPT-DELTA-RUN",
+            "target": {"symbol": "TEST", "company_name": "델타검증"},
+            "as_of_date": "2026-08-22",
+            "candidate_archetypes": [
+                "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
+            ],
+            "delta_context": {
+                "question_families_to_revisit": [impacted],
+                "prior_question_closure_map": {
+                    impacted: {
+                        **impacted_closure,
+                        "closure_hash": canonical_hash(impacted_closure),
+                    },
+                    reused: {
+                        **reused_closure,
+                        "closure_hash": canonical_hash(reused_closure),
+                    },
+                },
+                "reused_question_family_ids": [reused],
+                "stale_primitive_ids": ["renewal_retention"],
+            },
+        }
+
+        compiled = ProResearchPromptCompilerV2().compile(
+            packet=packet,
+            primary_archetype_ids=(
+                "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+            ),
+            pass_name="DELTA_RESEARCH",
+        )
+
+        self.assertEqual(compiled.mandatory_question_ids, (impacted,))
+        self.assertIn(impacted, compiled.prompt_text)
+        self.assertNotIn(f"`{reused}` —", compiled.prompt_text)
+        self.assertIn('"reused_question_family_ids": [', compiled.prompt_text)
+
+    def test_delta_prompt_rejects_tampered_prior_closure(self) -> None:
+        impacted = "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION_Q02"
+        packet = {
+            "job_id": "PROMPT-DELTA-TAMPER",
+            "run_id": "PROMPT-DELTA-TAMPER-RUN",
+            "target": {"symbol": "TEST", "company_name": "델타검증"},
+            "as_of_date": "2026-08-22",
+            "candidate_archetypes": [
+                "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
+            ],
+            "delta_context": {
+                "question_families_to_revisit": [impacted],
+                "prior_question_closure_map": {
+                    impacted: {
+                        "status": "SUPPORTED_SCORING",
+                        "closure_hash": "a" * 64,
+                    },
+                },
+                "reused_question_family_ids": [],
+            },
+        }
+
+        with self.assertRaisesRegex(ValueError, "closure hash mismatch"):
+            ProResearchPromptCompilerV2().compile(
+                packet=packet,
+                primary_archetype_ids=(
+                    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+                ),
+                pass_name="DELTA_RESEARCH",
+            )
 
 
 if __name__ == "__main__":

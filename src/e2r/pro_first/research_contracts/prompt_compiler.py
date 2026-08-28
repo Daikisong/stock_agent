@@ -101,6 +101,65 @@ class ProResearchPromptCompilerV2:
         if not symbol or not company_name or not as_of_date:
             raise ValueError("compiled prompt requires target symbol/company and as_of_date")
         plan = build_research_question_plan(primary_archetype_ids)
+        rendered_question_ids = plan.mandatory_question_ids
+        if pass_name == "DELTA_RESEARCH":
+            delta_context = packet.get("delta_context")
+            if not isinstance(delta_context, Mapping):
+                raise ValueError("DELTA_RESEARCH requires packet delta_context")
+            rendered_question_ids = tuple(
+                dict.fromkeys(
+                    str(value)
+                    for value in delta_context.get(
+                        "question_families_to_revisit"
+                    )
+                    or ()
+                )
+            )
+            if not rendered_question_ids:
+                raise ValueError(
+                    "DELTA_RESEARCH requires impacted question families"
+                )
+            closure_map = delta_context.get("prior_question_closure_map")
+            if not isinstance(closure_map, Mapping) or not set(
+                rendered_question_ids
+            ).issubset(closure_map):
+                raise ValueError(
+                    "DELTA_RESEARCH requires hash-bound prior question closures"
+                )
+            for question_id, receipt in closure_map.items():
+                if not isinstance(receipt, Mapping):
+                    raise ValueError("DELTA_RESEARCH prior closure is malformed")
+                if str(receipt.get("status") or "") not in TERMINAL_STATUSES:
+                    raise ValueError(
+                        "DELTA_RESEARCH prior closure is not terminal: "
+                        + str(question_id)
+                    )
+                closure_hash = str(receipt.get("closure_hash") or "")
+                unsigned = {
+                    key: value
+                    for key, value in receipt.items()
+                    if key != "closure_hash"
+                }
+                if closure_hash != canonical_hash(unsigned):
+                    raise ValueError(
+                        "DELTA_RESEARCH prior closure hash mismatch: "
+                        + str(question_id)
+                    )
+            expected_reused = set(closure_map).difference(rendered_question_ids)
+            declared_reused = set(
+                str(value)
+                for value in delta_context.get("reused_question_family_ids") or ()
+            )
+            if declared_reused != expected_reused:
+                raise ValueError("DELTA_RESEARCH reused question roster mismatch")
+            unknown = set(rendered_question_ids).difference(
+                plan.mandatory_question_ids
+            )
+            if unknown:
+                raise ValueError(
+                    "DELTA_RESEARCH question scope escapes selected contracts: "
+                    + ",".join(sorted(unknown))
+                )
         declared = set(str(value) for value in packet.get("candidate_archetypes") or ())
         if declared and not set(primary_archetype_ids).issubset(declared):
             raise ValueError("compiled primary contracts escape packet candidate roster")
@@ -114,6 +173,7 @@ class ProResearchPromptCompilerV2:
             conversation_id=conversation_id,
             research_pass_id=research_pass_id,
             parent_pass_id=parent_pass_id,
+            rendered_question_ids=rendered_question_ids,
         )
         template_path = self.template_root / PASS_TEMPLATE_FILES[pass_name]
         template = template_path.read_text(encoding="utf-8")
@@ -126,7 +186,7 @@ class ProResearchPromptCompilerV2:
             pass_name=pass_name,
             primary_archetype_ids=tuple(primary_archetype_ids),
             contract_ids=plan.bundle.contract_ids,
-            mandatory_question_ids=plan.mandatory_question_ids,
+            mandatory_question_ids=rendered_question_ids,
             prompt_text=prompt,
             prompt_hash=canonical_hash({"prompt": prompt}),
         )
@@ -201,6 +261,7 @@ class ProResearchPromptCompilerV2:
         conversation_id: str | None,
         research_pass_id: str | None,
         parent_pass_id: str | None,
+        rendered_question_ids: Sequence[str],
     ) -> str:
         target = packet["target"]
         lines = [
@@ -248,11 +309,30 @@ class ProResearchPromptCompilerV2:
             "## 선택된 primary research contracts",
             "",
         ]
+        rendered_question_set = set(rendered_question_ids)
         for contract in plan.bundle.primary_contracts:
-            lines.extend(_render_contract(contract))
+            if any(
+                str(question["question_family_id"]) in rendered_question_set
+                for question in contract["question_families"]
+            ):
+                lines.extend(
+                    _render_contract(
+                        contract,
+                        question_family_ids=rendered_question_set,
+                    )
+                )
         lines.extend(["## 모든 job에 적용되는 R13 cross guards", ""])
         for contract in plan.bundle.cross_guard_contracts:
-            lines.extend(_render_contract(contract))
+            if any(
+                str(question["question_family_id"]) in rendered_question_set
+                for question in contract["question_families"]
+            ):
+                lines.extend(
+                    _render_contract(
+                        contract,
+                        question_family_ids=rendered_question_set,
+                    )
+                )
         context_payload = {
             "packet_context": {
                 "target": packet.get("target"),
@@ -264,6 +344,7 @@ class ProResearchPromptCompilerV2:
                 "revision_valuation_snapshot": packet.get("revision_valuation_snapshot"),
                 "known_positive_facts": packet.get("known_positive_facts"),
                 "known_counterfacts": packet.get("known_counterfacts"),
+                "delta_context": packet.get("delta_context"),
             },
             "existing_verified_ledger_digest": existing_verified_ledger_digest,
             "unresolved_question_state": list(unresolved_question_state),
@@ -283,7 +364,11 @@ class ProResearchPromptCompilerV2:
         return "\n".join(lines)
 
 
-def _render_contract(contract: Mapping[str, Any]) -> list[str]:
+def _render_contract(
+    contract: Mapping[str, Any],
+    *,
+    question_family_ids: set[str] | None = None,
+) -> list[str]:
     lines = [
         f"### `{contract['archetype_id']}`",
         "",
@@ -298,7 +383,13 @@ def _render_contract(contract: Mapping[str, Any]) -> list[str]:
         "Mandatory question families:",
         "",
     ]
-    for index, question in enumerate(contract["question_families"], 1):
+    questions = [
+        question
+        for question in contract["question_families"]
+        if question_family_ids is None
+        or str(question["question_family_id"]) in question_family_ids
+    ]
+    for index, question in enumerate(questions, 1):
         source_roles = ", ".join(question["required_source_roles"])
         primitives = ", ".join(question["required_primitives"]) or "QUESTION_SPECIFIC_DIRECT_PREDICATE"
         components = ", ".join(question["affected_component_ids"]) or "GUARD_ONLY"

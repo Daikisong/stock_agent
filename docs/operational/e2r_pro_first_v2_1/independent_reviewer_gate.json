@@ -1,0 +1,356 @@
+{
+  "receipt_hash": "73de48aa804873149de4e6672b9f0a27e6e50228f8faa690c88054c3da55e9a0",
+  "reviewer_count": 8,
+  "reviewers": [
+    {
+      "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_v2_contract_totality",
+      "exit_code": 0,
+      "finding": "8 leaf-level tests passed for 36 contract totality / primitive coverage.",
+      "input_hash": "52964316eb7633c53bb8c90a3c8cf86afc243f75be70af37957788cae597ecab",
+      "input_manifest": [
+        {
+          "bytes": 1002253,
+          "path": "configs/e2r_archetype_research_contracts_v2.json",
+          "sha256": "47755897c46593b5d3e9ce929a936dc0c55615449e96df1e86d0cd10fba7d69f"
+        },
+        {
+          "bytes": 42567,
+          "path": "configs/e2r_archetype_research_blueprints_v2.json",
+          "sha256": "9b1cc10a8af6f01992c75bc27e2d553230dcb2be7852d6a5422e2605c4b1d259"
+        },
+        {
+          "bytes": 3244,
+          "path": "src/e2r/pro_first/research_contracts/loader.py",
+          "sha256": "47868b51069964f9cececf83494055059f4184e39e60ca9c0db5b1a1cb833a1c"
+        },
+        {
+          "bytes": 2369,
+          "path": "src/e2r/pro_first/research_contracts/question_planner.py",
+          "sha256": "af0b7a35e523c695836cb8bab7fd2c9879e1a26e1a5b2b15237ffc1a6266a0d0"
+        },
+        {
+          "bytes": 3914,
+          "path": "tests/test_e2r_pro_first_v2_contract_totality.py",
+          "sha256": "be38dce57495a2c710cc3f996d66b5e8a3b375b84cd6d9ea78b1c027b0e3b379"
+        }
+      ],
+      "output_hash": "97056e05cda4a549965373146a4f898c718445b3bb867dd2c61083d002b5b824",
+      "reviewer_id": "A",
+      "scope": "36 contract totality / primitive coverage",
+      "test_count": 8,
+      "timed_out": false,
+      "verdict": "PASS"
+    },
+    {
+      "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_v2_prompt_compiler",
+      "exit_code": 0,
+      "finding": "13 leaf-level tests passed for prompt compiler / archetype specificity / no gold leakage.",
+      "input_hash": "88f294cc76e96ef2f2730859e0c6b0d9bf652be0070c484e2bb5202550ac0568",
+      "input_manifest": [
+        {
+          "bytes": 2974,
+          "path": "configs/prompts/e2r_pro_v2_initial_full_research.md",
+          "sha256": "63fbf00aec5e243717f4dbf769ccfd37a76636fc85d92c70a31e594c315e11ad"
+        },
+        {
+          "bytes": 586,
+          "path": "configs/prompts/e2r_pro_v2_delta_research.md",
+          "sha256": "b7a1a5c1fc12fb1b882bd4aad6b043ec4a8b9288117dae3a987fd88621186526"
+        },
+        {
+          "bytes": 20082,
+          "path": "src/e2r/pro_first/research_contracts/prompt_compiler.py",
+          "sha256": "b5a4739d8f4c7edf1d170691cda72e937ee175a1fbf556ec2fafbe23aae48938"
+        },
+        {
+          "bytes": 9682,
+          "path": "tests/test_e2r_pro_first_v2_prompt_compiler.py",
+          "sha256": "cd154604d6b026a4fe25697f69fe0b9d64745d77af0a98f7a690067ae735305f"
+        }
+      ],
+      "output_hash": "7485f868e1f5543d5ed0ba0daa58ef8dcf1841f328c7a15cfaaa3147b797ba60",
+      "reviewer_id": "B",
+      "scope": "prompt compiler / archetype specificity / no gold leakage",
+      "test_count": 13,
+      "timed_out": false,
+      "verdict": "PASS"
+    },
+    {
+      "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_browser_adapter tests.test_e2r_pro_first_v2_multi_pass",
+      "exit_code": 0,
+      "finding": "57 leaf-level tests passed for multi-pass browser state / exactly-once follow-up.",
+      "input_hash": "13e0fd9c8f525a41ec5fba35ca443ad571bc8eb54cef1c6ea33533cfe0152524",
+      "input_manifest": [
+        {
+          "bytes": 81288,
+          "path": "src/e2r/pro_first/browser/chatgpt_adapter.py",
+          "sha256": "a40d2e787eb8fe4fba37aba35afa0aabf70753069ab297afb978dd3cf201bd11"
+        },
+        {
+          "bytes": 49512,
+          "path": "src/e2r/pro_first/multi_pass/ledger.py",
+          "sha256": "f3e91bff0433c364ca2e3981ddfc4840c05e76aeadd20c4d5b1e55ada0212ba0"
+        },
+        {
+          "bytes": 29342,
+          "path": "src/e2r/pro_first/multi_pass/orchestrator.py",
+          "sha256": "2ef8779502db1bc3af014a02fdeb7bbbde7be1da92edaf887d2642fdcafbc526"
+        },
+        {
+          "bytes": 28302,
+          "path": "tests/test_e2r_pro_first_browser_adapter.py",
+          "sha256": "4a69a5f5273638a95cfb558e381c8c308dc38a9da1d68455927deb0803cce170"
+        },
+        {
+          "bytes": 36439,
+          "path": "tests/test_e2r_pro_first_v2_multi_pass.py",
+          "sha256": "72084b715bfd3e39c4b51d109de44a18b2b5aa5b432afd4c108313b5cf5c0c89"
+        }
+      ],
+      "output_hash": "b1db0bdc327ba126965943e23d9d0707125c7b37649ef5bedbad23eece440aa5",
+      "reviewer_id": "C",
+      "scope": "multi-pass browser state / exactly-once follow-up",
+      "test_count": 57,
+      "timed_out": false,
+      "verdict": "PASS"
+    },
+    {
+      "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_gap_adjudication tests.test_e2r_pro_first_v2_saturation",
+      "exit_code": 0,
+      "finding": "54 leaf-level tests passed for gap availability / adequate search / fixpoint.",
+      "input_hash": "3e5e1bf0961ac053542ccf47d7819bbb1a2d804724f02359213b5284724f21d6",
+      "input_manifest": [
+        {
+          "bytes": 21281,
+          "path": "src/e2r/pro_first/gaps/adjudicator.py",
+          "sha256": "58d183deab41d5cfbcacfc3a10dacea0f22640ceda47e746853a894bef93e712"
+        },
+        {
+          "bytes": 4435,
+          "path": "src/e2r/pro_first/gaps/source_family_policy.py",
+          "sha256": "332d5a2600b3f932807d2a7fd7f781b3d4db61acf9f6cadaafb70a822fdb35b4"
+        },
+        {
+          "bytes": 2698,
+          "path": "src/e2r/pro_first/saturation/audit.py",
+          "sha256": "267004841ee1291e0e9dec4165f7c26b02b9ddb90340128baba7be02c90c829f"
+        },
+        {
+          "bytes": 7455,
+          "path": "src/e2r/pro_first/saturation/fixpoint.py",
+          "sha256": "50bedf034e27795954d71f8516b2f30ee7613de5b24aafe758b92b7970bd60fc"
+        },
+        {
+          "bytes": 35826,
+          "path": "tests/test_e2r_pro_first_gap_adjudication.py",
+          "sha256": "51659d2da844e51dc0b7daf377a30a05a38fd1b8933990461a0a7d49d676f659"
+        },
+        {
+          "bytes": 55680,
+          "path": "tests/test_e2r_pro_first_v2_saturation.py",
+          "sha256": "ca5b63c9f252f8f75175a7cabfc57854f543a2742898cb5b95c144feca151074"
+        }
+      ],
+      "output_hash": "997a5c25d0f5f603d02e51063b0367dbbbf2ec500d27f97ec26ac262c93ea4e6",
+      "reviewer_id": "D",
+      "scope": "gap availability / adequate search / fixpoint",
+      "test_count": 54,
+      "timed_out": false,
+      "verdict": "PASS"
+    },
+    {
+      "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_source_verification tests.test_e2r_pro_first_v2_verifier_repair",
+      "exit_code": 0,
+      "finding": "50 leaf-level tests passed for source verifier / repair / lifecycle.",
+      "input_hash": "fcb369222e178be88c71f27a3310673586ce79c60494b85b18841dece8a7cb75",
+      "input_manifest": [
+        {
+          "bytes": 34732,
+          "path": "src/e2r/pro_first/verification/source_verifier.py",
+          "sha256": "e162b34b9285420dc124ec0ff4da64864da244617a8962a51a9a23a1080e1296"
+        },
+        {
+          "bytes": 17776,
+          "path": "src/e2r/pro_first/verification/lifecycle_service.py",
+          "sha256": "79d1f6ff0980806c45c760e21b325af4142f517acdd2414e6a119fd43c4d82e7"
+        },
+        {
+          "bytes": 122998,
+          "path": "src/e2r/pro_first/canary/live_v2.py",
+          "sha256": "fe0757e62899c33295cbf38c3b39166957a5438980584e3f292525a1728b6f57"
+        },
+        {
+          "bytes": 40241,
+          "path": "tests/test_e2r_pro_first_source_verification.py",
+          "sha256": "180536412c82f01977bcba0e2d765faa86f6ad9da7c5f93d1ed3c4d454849826"
+        },
+        {
+          "bytes": 43617,
+          "path": "tests/test_e2r_pro_first_v2_verifier_repair.py",
+          "sha256": "85aebc792cc6a844ed27b4fc8788d301e1f416ab1cf256efe49b26a39d620b1b"
+        }
+      ],
+      "output_hash": "d53ac463d1704923b12e56da679bbb2c329b0607ec0f6626acc709ad31b7c91f",
+      "reviewer_id": "E",
+      "scope": "source verifier / repair / lifecycle",
+      "test_count": 50,
+      "timed_out": false,
+      "verdict": "PASS"
+    },
+    {
+      "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_scoring_bridge tests.test_e2r_pro_first_v2_dossier_status tests.test_e2r_pro_first_v2_readiness_view",
+      "exit_code": 0,
+      "finding": "57 leaf-level tests passed for component/Judge/scoring/Stage publication gate.",
+      "input_hash": "2aa2029ef9ad6182621771588aa074e43089e97663c3e809b6b030108fc7ab5e",
+      "input_manifest": [
+        {
+          "bytes": 57785,
+          "path": "src/e2r/pro_first/scoring/service.py",
+          "sha256": "3ac09d1af273a84d0aa3971ea441bd94e5d8d62cd0c25b619531f045c54ea11b"
+        },
+        {
+          "bytes": 15012,
+          "path": "src/e2r/pro_first/publication.py",
+          "sha256": "c1306c635944de239ac39ee7f5a4ffd5bd497d57cce4536afacfba403963e79a"
+        },
+        {
+          "bytes": 4282,
+          "path": "src/e2r/pro_first/readiness_view.py",
+          "sha256": "b2abdd3704e71fea48ab72dcdcd6e3d4c108dee631f85806c52cd8da4175f0dc"
+        },
+        {
+          "bytes": 62326,
+          "path": "tests/test_e2r_pro_first_scoring_bridge.py",
+          "sha256": "8f357b72f23d82e18d788de3a43685c2447c9531656f1776d27b0e0ba2725f86"
+        },
+        {
+          "bytes": 37567,
+          "path": "tests/test_e2r_pro_first_v2_dossier_status.py",
+          "sha256": "e8a19585b64b2776acea8bb44d5de93f55ff75fa4d81990bc21e2f48d5a391b2"
+        },
+        {
+          "bytes": 2248,
+          "path": "tests/test_e2r_pro_first_v2_readiness_view.py",
+          "sha256": "3aa881df837a4c94b5f603fb09b5bde836b05eb90651a17e044ee746d18bf145"
+        }
+      ],
+      "output_hash": "036ef1f9eb272f04832c1a420dbdafa5e96dacd7f8940c33d45bc8ff79fdad3e",
+      "reviewer_id": "F",
+      "scope": "component/Judge/scoring/Stage publication gate",
+      "test_count": 57,
+      "timed_out": false,
+      "verdict": "PASS"
+    },
+    {
+      "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_v2_generalization tests.test_e2r_pro_first_v2_frozen_replay",
+      "exit_code": 0,
+      "finding": "15 leaf-level tests passed for cross-archetype generalization / known-bad.",
+      "input_hash": "519436485a06532cf71adfeab60d1dd55b3d4dd1938593d861796ac50df2b3ee",
+      "input_manifest": [
+        {
+          "bytes": 13125,
+          "path": "tests/fixtures/pro_first_v2/known_bad_corpus.json",
+          "sha256": "d4cee9d4a2bd46a0b424857014c2fcc44165f9536c145a88612fc701d8566faa"
+        },
+        {
+          "bytes": 4713,
+          "path": "src/e2r/pro_first/generalization/audit.py",
+          "sha256": "476c55fb51311fe0896b66c318ca5c02cd23fb69d85a44c9d2ac69f465539731"
+        },
+        {
+          "bytes": 4885,
+          "path": "src/e2r/pro_first/generalization/known_bad.py",
+          "sha256": "c8cfc44c61644418031e2b9d1485d1e1d2be520f7af1b66540b74c17a9bf09af"
+        },
+        {
+          "bytes": 18137,
+          "path": "src/e2r/pro_first/canary/frozen_replay.py",
+          "sha256": "77a88e9b1d50083f6a73116fb8096cfbb77b3812d8618a5dc8df5135cd8c6836"
+        },
+        {
+          "bytes": 5358,
+          "path": "tests/test_e2r_pro_first_v2_generalization.py",
+          "sha256": "cfa177df8685107f19841b21c811e161f348154e734f762701d2f091002cd2d3"
+        },
+        {
+          "bytes": 5121,
+          "path": "tests/test_e2r_pro_first_v2_frozen_replay.py",
+          "sha256": "2c663c4f4b4d1d1f1b41a80965b9fa07451561a09b09e27bfe998884d50b456f"
+        }
+      ],
+      "output_hash": "bf56cbf93cfc57a8b857a3fa873882a5c7386a0fd9be6aab0a3d55f941a16664",
+      "reviewer_id": "G",
+      "scope": "cross-archetype generalization / known-bad",
+      "test_count": 15,
+      "timed_out": false,
+      "verdict": "PASS"
+    },
+    {
+      "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_v2_static_audit tests.test_e2r_pro_first_v2_1_fresh_efficiency_audit tests.test_e2r_pro_first_v2_live_runtime tests.test_e2r_pro_first_v2_independent_review",
+      "exit_code": 0,
+      "finding": "44 leaf-level tests passed for CI/security/performance/idempotency.",
+      "input_hash": "282817399682b370a90036a747986de3cb20baaff89ee8630328630f4b6cc19c",
+      "input_manifest": [
+        {
+          "bytes": 6099,
+          "path": ".github/workflows/e2r_pro_first_verify.yml",
+          "sha256": "2797ca92cf1ac56e40d6ea4deeae24213f3889509168e7c6865c149ca2a3c060"
+        },
+        {
+          "bytes": 9346,
+          "path": "src/e2r/pro_first/v2_static_audit.py",
+          "sha256": "86a61fce700d4e7c2b3851cec795347a72f4c1b0ef794035393ef0f203858e55"
+        },
+        {
+          "bytes": 16317,
+          "path": "src/e2r/pro_first/fresh_session/efficiency_audit.py",
+          "sha256": "86220447d46596e59179e18c5568de3a1d3bd8fe36cbb6d388b5ae50bd44bbf5"
+        },
+        {
+          "bytes": 37716,
+          "path": "src/e2r/pro_first/operations.py",
+          "sha256": "9cc3f1fc8256aef562a6038733dfe4740c7a57fa7752180087bd5bbfbaa073ed"
+        },
+        {
+          "bytes": 35699,
+          "path": "src/e2r/pro_first/packet.py",
+          "sha256": "d07b374551c9ee59041b3039042db2b5622d3132692cda482150df6eb87aae68"
+        },
+        {
+          "bytes": 9689,
+          "path": "src/e2r/pro_first/independent_review_v2.py",
+          "sha256": "2444bde739d684cc405c1f2ba575c114cab50c6a6c70fde5f00374e00b9b183c"
+        },
+        {
+          "bytes": 1664,
+          "path": "tests/test_e2r_pro_first_v2_static_audit.py",
+          "sha256": "fbda649d33487ea7a1bdb318ec45b9f553f6ec9e04998345daeda256bc169d12"
+        },
+        {
+          "bytes": 4444,
+          "path": "tests/test_e2r_pro_first_v2_1_fresh_efficiency_audit.py",
+          "sha256": "041c9b576833504e17b1a4593f2f9c4f7e8d0fe5cc854543fb3ee93e62de8e93"
+        },
+        {
+          "bytes": 67775,
+          "path": "tests/test_e2r_pro_first_v2_live_runtime.py",
+          "sha256": "f8c9f81645d931ea349c8400cd24944cbb33c179b85ab4a444731a143996c861"
+        },
+        {
+          "bytes": 3207,
+          "path": "tests/test_e2r_pro_first_v2_independent_review.py",
+          "sha256": "c90c04dc709cb6f76a3b514aede13cab0f4659391d8fc3ecb3ce726a8fad71b5"
+        }
+      ],
+      "output_hash": "93755d98a5dad5b08304a3f6a57af889bef1710e7d20d05eab946e38b6632ede",
+      "reviewer_id": "H",
+      "scope": "CI/security/performance/idempotency",
+      "test_count": 44,
+      "timed_out": false,
+      "verdict": "PASS"
+    }
+  ],
+  "schema_version": "e2r_pro_first_v2_independent_reviewer_gate_v1",
+  "shared_report_counter_used": false,
+  "verdict": "PASS"
+}

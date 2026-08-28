@@ -499,7 +499,7 @@ class ProFirstDashboardTest(unittest.TestCase):
         self.assertEqual(response.json(), first.result)
         self.assertIsNotNone(self.store.get_job(self.job.job_id).published_at)
 
-    def test_same_dossier_rerun_zero_browser_zero_supplement(self) -> None:
+    def _same_dossier_reuse(self):
         job_root = self._finalize_job()
         published = ProResultPublisher(self.store).publish(
             self.job.job_id,
@@ -519,10 +519,22 @@ class ProFirstDashboardTest(unittest.TestCase):
         )
 
         self.assertIsNotNone(reused)
+        return reused, published, before_jobs
+
+    def test_same_snapshot_zero_pro_submit(self) -> None:
+        reused, published, before_jobs = self._same_dossier_reuse()
+
         self.assertEqual(reused.result, published.result)
         self.assertEqual(reused.receipt["status"], "SAME_DOSSIER_NOOP")
         self.assertEqual(reused.receipt["browser_submit_count"], 0)
         self.assertEqual(reused.receipt["new_pro_research_count"], 0)
+        self.assertTrue(reused.receipt["no_new_job_created"])
+        self.assertEqual(self.store.list_jobs(), before_jobs)
+
+    def test_same_snapshot_zero_gap_search(self) -> None:
+        reused, published, before_jobs = self._same_dossier_reuse()
+
+        self.assertEqual(reused.result, published.result)
         self.assertEqual(reused.receipt["supplemental_query_count"], 0)
         self.assertEqual(reused.receipt["supplemental_fetch_count"], 0)
         self.assertEqual(reused.receipt["source_fetch_count"], 0)

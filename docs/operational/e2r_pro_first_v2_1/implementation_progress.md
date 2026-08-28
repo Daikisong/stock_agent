@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-29 C06/C17/C28 same-conversation full tail 종료 / 세 canary fail-closed 재현`
+기준 시각: `2026-08-29 세 기존 canary fail-closed 봉인 / 독립 새 C06 ChatGPT Pro 실행 중`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -43,8 +43,8 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             COMPLETE (C06/C17/C28 full tail을 terminal pending까지 실행·봉인)
-P10 final CI/audit                        IN_PROGRESS (local 7,791 PASS·정적감사 PASS, current-head CI 대기)
+P9 live multi-pass saturation             IN_PROGRESS (기존 3개 terminal pending 봉인, 새 C06 blind chat 실행 중)
+P10 final CI/audit                        IN_PROGRESS (Reviewer A~H PASS, 새 live 결과 뒤 최종 회귀·CI 대기)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -3965,3 +3965,89 @@ Playwright focused/전체 테스트는 WSL 시스템에 설치되지 않은 `lib
 `/tmp/e2r-playwright-deps`에서만 로드해 실행했다. 최초 기동 실패는 코드 실패로 세지 않았고, 동일
 테스트를 의존성 경로와 함께 다시 실행해 `31/31 PASS` 및 전체 suite PASS를 확인했다. 저장소·시스템
 패키지·로그인 브라우저는 변경하지 않았다.
+
+## P25 — C06 완전 새 채팅 재실행과 최종 계약 누락 감사
+
+사용자 확인에 따라 장시간 사용한 기존 conversation을 더 재사용하지 않고, 로그인된 전용 Chrome의
+`새 채팅`에서 C06 blind initial을 다시 시작했다. 기존 canary의 accepted fact, score, Stage, 질문
+종결 답안은 새 packet에 넣지 않았다.
+
+```text
+runtime root       C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260828T203034Z
+job                PROJOB-287556cc59c10f124d615c4d
+run                PRORUN-b412396d383c92aaf08e9837
+initial pass        PROPASS-802906d09c9f8769cc87b378
+conversation        6a91f0dd-4fa4-83ee-b2b9-434f39437b07
+durable user turn   7a00534a-f0ed-4c91-94a4-b3432793d5ea
+fresh session       FRESH-V2-1-C06-INDEPENDENT-20260828T203034Z
+prompt chars        61,302
+gold leakage        0
+upload count        1
+submit count        1
+recovery submit     0
+current state       RESEARCH_RUNNING
+```
+
+첫 monitor가 공개 conversation hydration에서 marker를 늦게 읽어 fail-safe 종료했지만, 실제 DOM의 exact
+user turn과 job/run marker가 서버에 저장된 것을 확인했다. 이후에는
+`--resume-submitted-job-id`로 같은 job을 감시할 뿐 composer 입력이나 click을 다시 하지 않는다.
+
+쉬운 예로 택배 접수증은 이미 한 장 발급됐다. 배송 조회 화면이 늦게 뜬다고 같은 택배를 다시 접수하지
+않고, 기존 송장번호만 조회하는 상태다.
+
+새 응답을 기다리는 동안 master goal의 56개 명시 테스트와 운영 연결을 역감사해 다음 누락을 찾고
+수정했다.
+
+```text
+DeltaResearchContext
+  previous verified question closure map
+  impacted question family
+  stale primitive
+  monitoring/future-event question
+  new/superseding fact
+  exact affected component
+
+DELTA_RESEARCH prompt
+  영향받은 question만 contract 본문에 다시 열기
+  변화 없는 question은 closure hash 재검산 뒤 reuse
+  같은 snapshot은 job/submit/query/fetch 전에 중단
+
+delta scoring
+  영향받은 component/Judge만 재계산
+  superseded current risk는 penalty에서 제외
+```
+
+이전에는 `DELTA_RESEARCH requires the dedicated V2 delta path` 오류만 있었으나, 이제
+`build_delta_job_packet_v2()`와 `prepare_delta_v2_job_in_logged_in_browser()`가 explicit prior thesis와
+`DeltaResearchContext`를 받아 실제 packet/prompt/browser-prepare 경로로 연결된다. durable packet 재사용
+시 요청한 prior thesis/delta context와 다르면 hard fail한다. prior question closure는 64자리 문자열 존재만
+보지 않고 closure payload의 canonical hash와 일치하는지 재계산한다.
+
+Section 30의 Reviewer A~H도 공통 report counter를 읽는 방식이 아니라 담당 leaf test command를 직접
+실행하도록 추가했다. 각 reviewer receipt에는 exact command, 입력 파일별 SHA-256, aggregate input hash,
+raw command output hash, test count, finding이 따로 남는다. 첫 rehearsal에서 C는 WSL Chromium shared
+library 부재, H는 공통 browser prepare helper의 `job_id` 전달 누락을 각각 찾아냈다. H 코드 오류는
+수정했다. C의 Chromium shared library는 이전 전체 회귀와 동일하게 저장소 밖
+`/tmp/e2r-playwright-deps`를 `LD_LIBRARY_PATH`에 연결해 전체 adapter/multi-pass를 다시 실행한다.
+GitHub workflow는 `playwright install --with-deps` 뒤 같은 전체 경로를 실행한다.
+
+현재 focused 검증은 다음과 같다.
+
+```text
+delta packet/prompt/context binding       PASS
+tampered prior closure hash rejection     PASS
+same snapshot zero-submit/query/fetch     PASS
+impacted component/Judge only             PASS
+superseded risk current penalty removal   PASS
+Reviewer C Chromium/whole multi-pass      57/57 PASS
+Reviewer H static/efficiency/runtime      40/40 PASS
+Reviewer A~H direct leaf gate             PASS (8/13/57/54/50/57/15/44)
+Reviewer A~H receipt hash                 73de48aa804873149de4e6672b9f0a27e6e50228f8faa690c88054c3da55e9a0
+compileall                                PASS
+git diff --check                          PASS
+```
+
+기준 committed head `229369a586fb9530649498d9bec619701eb4f609`의 GitHub Actions 세 개는 모두
+SUCCESS다. 위 P25 변경은 아직 검토·전체 회귀·한글 commit/push 전 working tree에 있으며, 새 C06 응답의
+capture/import/verify/saturation 결과와 Reviewer A~H 최종 receipt가 확정된 뒤 P9/P10 단계로 나눈다.
+PR #7은 계속 Draft/open이고 main은 병합하지 않는다.

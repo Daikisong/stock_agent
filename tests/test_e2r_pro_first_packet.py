@@ -8,6 +8,7 @@ from tempfile import TemporaryDirectory
 import unittest
 
 from e2r.pro_first.job_store import ProFirstJobStore
+from e2r.pro_first.ids import canonical_hash
 from e2r.pro_first.models import JobStatus, ResearchMode, ScanWindow
 from e2r.pro_first.packet import (
     DeltaResearchContext,
@@ -165,11 +166,12 @@ class ProFirstPacketTest(unittest.TestCase):
         self.assertNotIn("points_mid", guard)
 
     def test_delta_packet_contains_only_delta_context(self) -> None:
+        q03_closure = {"status": "SUPPORTED_SCORING"}
+        q08_closure = {"status": "COUNTER_SUPPORTED"}
         delta = DeltaResearchContext(
             prior_receipt={
                 "receipt_as_of_date": "2026-08-20",
-                "score": 70.0,
-                "stage": "2",
+                "dossier_hash": "d" * 64,
             },
             new_events=(
                 {
@@ -185,7 +187,19 @@ class ProFirstPacketTest(unittest.TestCase):
                     "supersedes": "FACT-OLD",
                 },
             ),
-            components_to_revisit=("growth_quality", "contract_quality"),
+            components_to_revisit=("earnings_visibility", "information_confidence"),
+            question_families_to_revisit=("C06_Q03",),
+            prior_question_closure_map={
+                "C06_Q03": {
+                    **q03_closure,
+                    "closure_hash": canonical_hash(q03_closure),
+                },
+                "C06_Q08": {
+                    **q08_closure,
+                    "closure_hash": canonical_hash(q08_closure),
+                },
+            },
+            stale_primitive_ids=("customer_qualification",),
         )
         packet = self.builder.build(
             replace(
@@ -203,7 +217,107 @@ class ProFirstPacketTest(unittest.TestCase):
         self.assertEqual(packet.payload["known_counterfacts"], [])
         self.assertEqual(packet.payload["research_objectives"], [])
         self.assertEqual(packet.payload["trigger_summary"], list(delta.new_events))
+        self.assertEqual(
+            packet.payload["delta_context"]["question_families_to_revisit"],
+            ["C06_Q03"],
+        )
+        self.assertEqual(
+            packet.payload["delta_context"]["reused_question_family_ids"],
+            ["C06_Q08"],
+        )
         self.assertFalse(packet.payload["delta_context"]["prior_receipt_is_current_authority"])
+
+    def test_same_snapshot_stops_before_delta_job(self) -> None:
+        closure = {"status": "SUPPORTED_SCORING"}
+        with self.assertRaisesRegex(ValueError, "same snapshot"):
+            DeltaResearchContext(
+                prior_receipt={"dossier_hash": "d" * 64},
+                new_events=(),
+                new_or_superseding_facts=(),
+                components_to_revisit=("earnings_visibility",),
+                question_families_to_revisit=("C06_Q07",),
+                prior_question_closure_map={
+                    "C06_Q07": {
+                        **closure,
+                        "closure_hash": canonical_hash(closure),
+                    },
+                },
+            )
+
+    def test_delta_context_rejects_prior_score_stage_gold(self) -> None:
+        closure = {"status": "SUPPORTED_SCORING"}
+        with self.assertRaisesRegex(ValueError, "score/Stage/outcome gold"):
+            DeltaResearchContext(
+                prior_receipt={"score": 70.0},
+                new_events=({"event_id": "EVENT-NEW"},),
+                new_or_superseding_facts=(),
+                components_to_revisit=("earnings_visibility",),
+                question_families_to_revisit=("C06_Q07",),
+                prior_question_closure_map={
+                    "C06_Q07": {
+                        **closure,
+                        "closure_hash": canonical_hash(closure),
+                    },
+                },
+            )
+
+    def test_delta_context_rejects_tampered_prior_closure_hash(self) -> None:
+        with self.assertRaisesRegex(ValueError, "hash does not match"):
+            DeltaResearchContext(
+                prior_receipt={"dossier_hash": "d" * 64},
+                new_events=({"event_id": "EVENT-NEW"},),
+                new_or_superseding_facts=(),
+                components_to_revisit=("earnings_visibility",),
+                question_families_to_revisit=("C06_Q07",),
+                prior_question_closure_map={
+                    "C06_Q07": {
+                        "status": "SUPPORTED_SCORING",
+                        "closure_hash": "a" * 64,
+                    },
+                },
+            )
+
+    def test_delta_context_rejects_nonterminal_prior_closure(self) -> None:
+        closure = {"status": "PUBLIC_SEARCHABLE"}
+        with self.assertRaisesRegex(ValueError, "terminal status"):
+            DeltaResearchContext(
+                prior_receipt={"dossier_hash": "d" * 64},
+                new_events=({"event_id": "EVENT-NEW"},),
+                new_or_superseding_facts=(),
+                components_to_revisit=("earnings_visibility",),
+                question_families_to_revisit=("C06_Q07",),
+                prior_question_closure_map={
+                    "C06_Q07": {
+                        **closure,
+                        "closure_hash": canonical_hash(closure),
+                    },
+                },
+            )
+
+    def test_delta_packet_rejects_prior_thesis_score_stage_gold(self) -> None:
+        closure = {"status": "SUPPORTED_SCORING"}
+        delta = DeltaResearchContext(
+            prior_receipt={"dossier_hash": "d" * 64},
+            new_events=({"event_id": "EVENT-NEW"},),
+            new_or_superseding_facts=(),
+            components_to_revisit=("earnings_visibility",),
+            question_families_to_revisit=("C06_Q07",),
+            prior_question_closure_map={
+                "C06_Q07": {
+                    **closure,
+                    "closure_hash": canonical_hash(closure),
+                },
+            },
+        )
+        with self.assertRaisesRegex(ValueError, "score/Stage/outcome gold"):
+            self.builder.build(
+                replace(
+                    self.base,
+                    research_mode="DELTA_RESEARCH",
+                    existing_thesis_digest={"prior_stage": "2"},
+                    delta_context=delta,
+                )
+            )
 
     def test_packet_hash_stable(self) -> None:
         first = self.builder.build(self.base)

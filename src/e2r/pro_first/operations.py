@@ -17,6 +17,7 @@ from .job_store import ProFirstJobStore
 from .models import JobStatus, ProResearchJob, ResearchMode, ScanWindow
 from .packet import (
     PACKET_V2_SCHEMA_VERSION,
+    DeltaResearchContext,
     PacketBuildInput,
     PacketBundleReceipt,
     ResearchPacketBuilder,
@@ -280,9 +281,63 @@ def build_job_packet_v2(
 ) -> BuiltV2JobPacket:
     """Build one contract-attached V2 packet and its non-circular initial pass."""
 
+    return _build_job_packet_v2(
+        store,
+        job_id=job_id,
+        runtime_root=runtime_root,
+        config_hash=config_hash,
+        repo_root=repo_root,
+        pass_name=INITIAL_PASS_NAME,
+        existing_thesis_digest=None,
+        delta_context=None,
+    )
+
+
+def build_delta_job_packet_v2(
+    store: ProFirstJobStore,
+    *,
+    job_id: str,
+    runtime_root: str | Path,
+    config_hash: str,
+    repo_root: str | Path,
+    existing_thesis_digest: Mapping[str, Any],
+    delta_context: DeltaResearchContext,
+) -> BuiltV2JobPacket:
+    """Build an explicitly scoped V2 delta packet from prior verified closures."""
+
+    return _build_job_packet_v2(
+        store,
+        job_id=job_id,
+        runtime_root=runtime_root,
+        config_hash=config_hash,
+        repo_root=repo_root,
+        pass_name=ResearchMode.DELTA_RESEARCH.value,
+        existing_thesis_digest=existing_thesis_digest,
+        delta_context=delta_context,
+    )
+
+
+def _build_job_packet_v2(
+    store: ProFirstJobStore,
+    *,
+    job_id: str,
+    runtime_root: str | Path,
+    config_hash: str,
+    repo_root: str | Path,
+    pass_name: str,
+    existing_thesis_digest: Mapping[str, Any] | None,
+    delta_context: DeltaResearchContext | None,
+) -> BuiltV2JobPacket:
+    """Shared durable builder for fresh and explicitly scoped delta packets."""
+
     job = store.get_job(job_id)
-    if job.mode == ResearchMode.DELTA_RESEARCH.value:
-        raise ValueError("DELTA_RESEARCH requires the dedicated V2 delta path")
+    is_delta = job.mode == ResearchMode.DELTA_RESEARCH.value
+    if is_delta != (pass_name == ResearchMode.DELTA_RESEARCH.value):
+        raise ValueError("job mode and V2 packet path disagree")
+    if is_delta and (existing_thesis_digest is None or delta_context is None):
+        raise ValueError("DELTA_RESEARCH requires prior thesis and delta context")
+    if not is_delta and (existing_thesis_digest is not None or delta_context is not None):
+        raise ValueError("fresh V2 research cannot receive delta context")
     if not job.archetype_ids:
         raise ValueError("a Pro V2 job requires one to three candidate contracts")
     if job.status == JobStatus.CANDIDATE_SELECTED.value:
@@ -312,6 +367,12 @@ def build_job_packet_v2(
         if packet_payload.get("schema_version") != PACKET_V2_SCHEMA_VERSION:
             raise ValueError("durable job packet is not ResearchPacketV2")
         _verify_v2_contract_snapshot(packet_payload)
+        if is_delta and (
+            packet_payload.get("delta_context") != delta_context.to_dict()
+            or packet_payload.get("existing_thesis_digest")
+            != dict(existing_thesis_digest or {})
+        ):
+            raise ValueError("durable delta packet differs from requested delta context")
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         bundle = PacketBundleReceipt(
             packet_directory=packet_path.parent,
@@ -346,6 +407,8 @@ def build_job_packet_v2(
                 research_objectives=DEFAULT_RESEARCH_OBJECTIVES,
                 source_preferences=DEFAULT_SOURCE_PREFERENCES,
                 forbidden_inferences=DEFAULT_FORBIDDEN_INFERENCES,
+                existing_thesis_digest=existing_thesis_digest,
+                delta_context=delta_context,
             )
         )
         bundle = write_packet_bundle(
@@ -363,7 +426,11 @@ def build_job_packet_v2(
             ),
             packet_hash=packet.packet_hash,
             manifest=manifest,
-            actor="pro-first-v2-packet-builder",
+            actor=(
+                "pro-first-v2-delta-packet-builder"
+                if is_delta
+                else "pro-first-v2-packet-builder"
+            ),
             idempotency_key=f"v2-packet-ready:{job_id}:{packet.packet_hash}",
         )
         packet_payload = dict(packet.payload)
@@ -372,7 +439,7 @@ def build_job_packet_v2(
         {
             "job_id": job_id,
             "run_id": packet_payload["run_id"],
-            "pass_name": INITIAL_PASS_NAME,
+            "pass_name": pass_name,
             "packet_hash": bundle.packet_hash,
             "primary_archetype_ids": list(job.archetype_ids),
         },
@@ -380,12 +447,13 @@ def build_job_packet_v2(
     prompt = ProResearchPromptCompilerV2().compile(
         packet=packet_payload,
         primary_archetype_ids=job.archetype_ids,
-        pass_name=INITIAL_PASS_NAME,
+        pass_name=pass_name,
         conversation_id="PENDING_INITIAL_CONVERSATION",
         research_pass_id=initial_pass_id,
         parent_pass_id=None,
     )
-    output_filename = f"E2R_PRO_{job_id}_{job.symbol}_{job.as_of_date}.md"
+    suffix = "_DELTA" if is_delta else ""
+    output_filename = f"E2R_PRO_{job_id}_{job.symbol}_{job.as_of_date}{suffix}.md"
     return BuiltV2JobPacket(
         job=store.get_job(job_id),
         packet_bundle=bundle,
@@ -411,7 +479,54 @@ async def prepare_v2_job_in_logged_in_browser(
         config_hash=config.config_hash,
         repo_root=repo_root,
     )
+    return await _prepare_built_v2_job_in_logged_in_browser(
+        store,
+        built=built,
+        config=config,
+        screenshot_path=screenshot_path,
+    )
+
+
+async def prepare_delta_v2_job_in_logged_in_browser(
+    store: ProFirstJobStore,
+    *,
+    job_id: str,
+    config: ProFirstLocalConfig,
+    repo_root: str | Path,
+    existing_thesis_digest: Mapping[str, Any],
+    delta_context: DeltaResearchContext,
+    screenshot_path: str | Path | None = None,
+) -> PreparedV2BrowserRuntime:
+    """Prepare a bounded delta pass as a new visible Pro conversation."""
+
+    built = build_delta_job_packet_v2(
+        store,
+        job_id=job_id,
+        runtime_root=config.runtime_root,
+        config_hash=config.config_hash,
+        repo_root=repo_root,
+        existing_thesis_digest=existing_thesis_digest,
+        delta_context=delta_context,
+    )
+    return await _prepare_built_v2_job_in_logged_in_browser(
+        store,
+        built=built,
+        config=config,
+        screenshot_path=screenshot_path,
+    )
+
+
+async def _prepare_built_v2_job_in_logged_in_browser(
+    store: ProFirstJobStore,
+    *,
+    built: BuiltV2JobPacket,
+    config: ProFirstLocalConfig,
+    screenshot_path: str | Path | None,
+) -> PreparedV2BrowserRuntime:
+    """Attach and prepare an already-built V2 packet without submitting it."""
+
     job = built.job
+    job_id = job.job_id
     if job.status in {
         JobStatus.PACKET_READY.value,
         JobStatus.USER_ATTENTION_REQUIRED.value,
@@ -562,12 +677,17 @@ async def recover_submitted_v2_job_in_logged_in_browser(
         packet_hash=job.packet_hash,
         manifest_hash=canonical_hash(manifest),
     )
+    pass_name = (
+        ResearchMode.DELTA_RESEARCH.value
+        if packet_payload.get("research_mode") == ResearchMode.DELTA_RESEARCH.value
+        else INITIAL_PASS_NAME
+    )
     initial_pass_id = stable_id(
         "PROPASS",
         {
             "job_id": job_id,
             "run_id": packet_payload["run_id"],
-            "pass_name": INITIAL_PASS_NAME,
+            "pass_name": pass_name,
             "packet_hash": bundle.packet_hash,
             "primary_archetype_ids": list(job.archetype_ids),
         },
@@ -575,14 +695,15 @@ async def recover_submitted_v2_job_in_logged_in_browser(
     prompt = ProResearchPromptCompilerV2().compile(
         packet=packet_payload,
         primary_archetype_ids=job.archetype_ids,
-        pass_name=INITIAL_PASS_NAME,
+        pass_name=pass_name,
         conversation_id="PENDING_INITIAL_CONVERSATION",
         research_pass_id=initial_pass_id,
         parent_pass_id=None,
     )
     if prompt.prompt_hash != job.approval_prompt_hash:
         raise ValueError("recompiled initial prompt differs from the approved prompt hash")
-    output_filename = f"E2R_PRO_{job_id}_{job.symbol}_{job.as_of_date}.md"
+    suffix = "_DELTA" if pass_name == ResearchMode.DELTA_RESEARCH.value else ""
+    output_filename = f"E2R_PRO_{job_id}_{job.symbol}_{job.as_of_date}{suffix}.md"
     session = await ProBrowserWorker(config.browser).open(job_id=job_id)
     try:
         recovered = await session.adapter.recover_conversation_without_submit(
@@ -847,10 +968,12 @@ __all__ = [
     "BuiltV2JobPacket",
     "PreparedBrowserRuntime",
     "PreparedV2BrowserRuntime",
+    "build_delta_job_packet_v2",
     "build_job_packet",
     "build_job_packet_v2",
     "create_forced_validation_canary",
     "prepare_job_in_logged_in_browser",
+    "prepare_delta_v2_job_in_logged_in_browser",
     "prepare_v2_job_in_logged_in_browser",
     "recover_submitted_v2_job_in_logged_in_browser",
 ]

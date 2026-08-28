@@ -12,6 +12,7 @@ from typing import Any, Mapping, Sequence
 from jsonschema import Draft202012Validator, FormatChecker
 
 from e2r.research_brain.researcher_mode.schemas import (
+    CANONICAL_COMPONENT_ORDER,
     ComponentAnchor,
     HistoricalResearchJudgment,
 )
@@ -28,6 +29,18 @@ PACKET_V2_SCHEMA_VERSION = "e2r_pro_research_packet_v2"
 DOSSIER_V2_SCHEMA_VERSION = "e2r_pro_research_dossier_v2"
 PACKET_V3_SCHEMA_VERSION = "e2r_pro_research_packet_v3"
 DOSSIER_V3_SCHEMA_VERSION = "e2r_pro_research_dossier_v3"
+DELTA_REUSABLE_TERMINAL_STATUSES = frozenset(
+    {
+        "SUPPORTED_SCORING",
+        "PARTIALLY_SUPPORTED_SCORING",
+        "SUPPORTED_NON_SCORING",
+        "COUNTER_SUPPORTED",
+        "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH",
+        "LIKELY_NONPUBLIC",
+        "FUTURE_EVENT_ONLY",
+        "NOT_APPLICABLE_WITH_REASON",
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -36,13 +49,107 @@ class DeltaResearchContext:
     new_events: tuple[Mapping[str, Any], ...]
     new_or_superseding_facts: tuple[Mapping[str, Any], ...]
     components_to_revisit: tuple[str, ...]
+    question_families_to_revisit: tuple[str, ...]
+    prior_question_closure_map: Mapping[str, Mapping[str, Any]]
+    stale_primitive_ids: tuple[str, ...] = ()
+    monitoring_question_family_ids: tuple[str, ...] = ()
+    future_event_question_family_ids: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        components = tuple(
+            dict.fromkeys(str(value) for value in self.components_to_revisit)
+        )
+        questions = tuple(
+            dict.fromkeys(str(value) for value in self.question_families_to_revisit)
+        )
+        if not components:
+            raise ValueError("delta research requires impacted components")
+        if not set(components).issubset(CANONICAL_COMPONENT_ORDER):
+            raise ValueError("delta research contains an unknown component")
+        if not questions or any(not value.strip() for value in questions):
+            raise ValueError("delta research requires impacted question families")
+        closure_map = {
+            str(question_id): _json_copy(receipt)
+            for question_id, receipt in self.prior_question_closure_map.items()
+        }
+        if not closure_map or not set(questions).issubset(closure_map):
+            raise ValueError(
+                "delta research requires a prior closure for every impacted question"
+            )
+        for question_id, receipt in closure_map.items():
+            if not question_id.strip() or not isinstance(receipt, Mapping):
+                raise ValueError("delta prior question closure map is malformed")
+            closure_hash = str(receipt.get("closure_hash") or "")
+            if str(receipt.get("status") or "") not in DELTA_REUSABLE_TERMINAL_STATUSES:
+                raise ValueError(
+                    "delta prior question closure must have a terminal status"
+                )
+            if len(closure_hash) != 64 or any(
+                character not in "0123456789abcdef" for character in closure_hash
+            ):
+                raise ValueError(
+                    "delta prior question closure requires a SHA-256 closure_hash"
+                )
+            unsigned = {
+                key: value for key, value in receipt.items() if key != "closure_hash"
+            }
+            if closure_hash != canonical_hash(unsigned):
+                raise ValueError(
+                    "delta prior question closure hash does not match its payload"
+                )
+        monitoring = tuple(
+            dict.fromkeys(str(value) for value in self.monitoring_question_family_ids)
+        )
+        future = tuple(
+            dict.fromkeys(str(value) for value in self.future_event_question_family_ids)
+        )
+        if not set((*monitoring, *future)).issubset(questions):
+            raise ValueError(
+                "delta monitoring/future-event questions must be impacted questions"
+            )
+        stale = tuple(dict.fromkeys(str(value) for value in self.stale_primitive_ids))
+        if any(not value.strip() for value in (*stale, *monitoring, *future)):
+            raise ValueError("delta scope identities must be non-empty")
+        if not any(
+            (
+                self.new_events,
+                self.new_or_superseding_facts,
+                stale,
+                monitoring,
+                future,
+            )
+        ):
+            raise ValueError("same snapshot must stop before DELTA_RESEARCH")
+        _assert_delta_context_blind_safe(self.prior_receipt or {})
+        _assert_delta_context_blind_safe(closure_map)
+        object.__setattr__(self, "components_to_revisit", components)
+        object.__setattr__(self, "question_families_to_revisit", questions)
+        object.__setattr__(self, "prior_question_closure_map", closure_map)
+        object.__setattr__(self, "stale_primitive_ids", stale)
+        object.__setattr__(self, "monitoring_question_family_ids", monitoring)
+        object.__setattr__(self, "future_event_question_family_ids", future)
 
     def to_dict(self) -> Mapping[str, Any]:
+        questions = sorted(set(self.question_families_to_revisit))
         return {
             "prior_receipt": _json_copy(self.prior_receipt),
             "new_events": _json_copy(self.new_events),
             "new_or_superseding_facts": _json_copy(self.new_or_superseding_facts),
             "components_to_revisit": sorted(set(self.components_to_revisit)),
+            "question_families_to_revisit": questions,
+            "prior_question_closure_map": _json_copy(
+                self.prior_question_closure_map
+            ),
+            "reused_question_family_ids": sorted(
+                set(self.prior_question_closure_map).difference(questions)
+            ),
+            "stale_primitive_ids": sorted(set(self.stale_primitive_ids)),
+            "monitoring_question_family_ids": sorted(
+                set(self.monitoring_question_family_ids)
+            ),
+            "future_event_question_family_ids": sorted(
+                set(self.future_event_question_family_ids)
+            ),
             "prior_receipt_is_current_authority": False,
         }
 
@@ -148,6 +255,7 @@ class ResearchPacketBuilder:
         if mode is ResearchMode.DELTA_RESEARCH:
             if request.existing_thesis_digest is None or request.delta_context is None:
                 raise ValueError("DELTA_RESEARCH requires an existing thesis and delta context")
+            _assert_delta_context_blind_safe(request.existing_thesis_digest)
             delta_context = request.delta_context.to_dict()
             business_snapshot: Mapping[str, Any] = {}
             financial_snapshot: Mapping[str, Any] = {}
@@ -240,6 +348,11 @@ class ResearchPacketV2Builder:
             raise ValueError("ResearchPacketV2 requires selected candidate contracts")
         v1 = self.v1_builder.build(request)
         bundle = select_contract_bundle(primary_ids)
+        if request.delta_context is not None:
+            _validate_delta_contract_scope(
+                delta_context=request.delta_context,
+                contracts=bundle.contracts,
+            )
         mandatory_question_ids = [
             str(question["question_family_id"])
             for contract in bundle.contracts
@@ -558,6 +671,72 @@ def _assert_no_forbidden_answer_fields(value: Any, path: tuple[str, ...] = ()) -
     elif isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
         for index, child in enumerate(value):
             _assert_no_forbidden_answer_fields(child, path + (str(index),))
+
+
+def _assert_delta_context_blind_safe(
+    value: Any,
+    path: tuple[str, ...] = (),
+) -> None:
+    """Keep prior score, Stage, price, and outcome gold out of delta prompts."""
+
+    forbidden = {
+        "score",
+        "stage",
+        "canonical_stage",
+        "price",
+        "mfe",
+        "mae",
+        "forward_return",
+        "outcome",
+    }
+    if isinstance(value, Mapping):
+        for key, child in value.items():
+            normalized = str(key).strip().lower()
+            if (
+                normalized in forbidden
+                or normalized.endswith("_score")
+                or normalized.endswith("_stage")
+            ):
+                raise ValueError(
+                    "delta context exposes prior score/Stage/outcome gold: "
+                    + "/".join(path + (str(key),))
+                )
+            _assert_delta_context_blind_safe(child, path + (str(key),))
+    elif isinstance(value, Sequence) and not isinstance(
+        value,
+        (str, bytes, bytearray),
+    ):
+        for index, child in enumerate(value):
+            _assert_delta_context_blind_safe(child, path + (str(index),))
+
+
+def _validate_delta_contract_scope(
+    *,
+    delta_context: DeltaResearchContext,
+    contracts: Sequence[Mapping[str, Any]],
+) -> None:
+    questions = {
+        str(question["question_family_id"]): question
+        for contract in contracts
+        for question in contract.get("question_families") or ()
+        if question.get("mandatory_for_full_thesis") is True
+    }
+    impacted_ids = set(delta_context.question_families_to_revisit)
+    unknown = impacted_ids.difference(questions)
+    if unknown:
+        raise ValueError(
+            "delta question scope escapes selected contract bundle: "
+            + ",".join(sorted(unknown))
+        )
+    expected_components = {
+        str(component_id)
+        for question_id in impacted_ids
+        for component_id in questions[question_id].get("affected_component_ids") or ()
+    }
+    if set(delta_context.components_to_revisit) != expected_components:
+        raise ValueError(
+            "delta components must exactly match impacted question components"
+        )
 
 
 def _assert_fresh_blind_packet(value: Any, path: tuple[str, ...] = ()) -> None:
