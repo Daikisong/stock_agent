@@ -516,6 +516,18 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
             ),
             SimpleNamespace(
                 pass_ordinal=3,
+                pass_id="PASS-UNPERSISTED",
+                parent_pass_id="PASS-1",
+                pass_name="VERIFIER_REPAIR",
+                status="FAILED_HARD",
+                submit_count=1,
+                prompt_hash="f" * 64,
+                response_hash=None,
+                pass_input_hash="9" * 64,
+                detail={"server_persistence_confirmed": False},
+            ),
+            SimpleNamespace(
+                pass_ordinal=4,
                 pass_id="PASS-CURRENT",
                 parent_pass_id="PASS-1",
                 pass_name="VERIFIER_REPAIR",
@@ -523,6 +535,11 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
                 submit_count=1,
                 prompt_hash="d" * 64,
                 response_hash=None,
+                pass_input_hash="8" * 64,
+                detail={
+                    "supersedes_unpersisted_pass_id": "PASS-UNPERSISTED",
+                    "transport_replacement_root_input_hash": "9" * 64,
+                },
             ),
         )
 
@@ -576,6 +593,73 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
                 current_pass_id="PASS-CURRENT",
                 current_response_hash="e" * 64,
                 prior_dossier=mismatched_prior,
+            )
+
+    def test_durable_pass_rows_reject_unbound_or_mismatched_failed_pass(self) -> None:
+        failed = SimpleNamespace(
+            pass_ordinal=1,
+            pass_id="PASS-FAILED",
+            parent_pass_id=None,
+            pass_name="SATURATION_AUDIT",
+            status="FAILED_HARD",
+            submit_count=1,
+            prompt_hash="a" * 64,
+            response_hash=None,
+            pass_input_hash="b" * 64,
+            detail={"server_persistence_confirmed": False},
+        )
+        current = SimpleNamespace(
+            pass_ordinal=2,
+            pass_id="PASS-CURRENT",
+            parent_pass_id=None,
+            pass_name="SATURATION_AUDIT",
+            status="RESEARCH_RUNNING",
+            submit_count=1,
+            prompt_hash="c" * 64,
+            response_hash=None,
+            pass_input_hash="d" * 64,
+            detail={},
+        )
+
+        class FakeLedger:
+            def __init__(self, rows):
+                self.rows = rows
+
+            def list_passes(self, _job_id):
+                return self.rows
+
+            def get_pass(self, pass_id):
+                return next(row for row in self.rows if row.pass_id == pass_id)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "durable prior pass is missing its response hash",
+        ):
+            _durable_pass_rows(
+                FakeLedger((failed, current)),  # type: ignore[arg-type]
+                "JOB-1",
+                current_pass_id="PASS-CURRENT",
+                current_response_hash="e" * 64,
+            )
+
+        mismatched_current = SimpleNamespace(
+            **{
+                **current.__dict__,
+                "detail": {
+                    "supersedes_unpersisted_pass_id": "PASS-FAILED",
+                    "transport_replacement_root_input_hash": "f" * 64,
+                },
+            }
+        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "differs from replacement lineage",
+        ):
+            _durable_pass_rows(
+                FakeLedger((failed, mismatched_current)),  # type: ignore[arg-type]
+                "JOB-1",
+                current_pass_id="PASS-CURRENT",
+                current_response_hash="e" * 64,
             )
 
     def test_explicit_source_commit_supports_cross_runtime_packet_build(self) -> None:

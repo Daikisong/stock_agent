@@ -2116,6 +2116,15 @@ def _durable_pass_rows(
     current_response_hash: str,
     prior_dossier: Mapping[str, Any] | None = None,
 ) -> list[Mapping[str, Any]]:
+    current_record = ledger.get_pass(current_pass_id)
+    current_detail = current_record.detail or {}
+    superseded_unpersisted_pass_id = str(
+        current_detail.get("supersedes_unpersisted_pass_id") or ""
+    )
+    replacement_root_input_hash = str(
+        current_detail.get("transport_replacement_root_input_hash") or ""
+    )
+    superseded_unpersisted_seen = False
     prior_by_id = {
         str(row.get("pass_id") or ""): row
         for row in (prior_dossier or {}).get("research_passes") or ()
@@ -2123,13 +2132,35 @@ def _durable_pass_rows(
     }
     rows = []
     for record in ledger.list_passes(job_id):
-        if record.pass_ordinal > ledger.get_pass(current_pass_id).pass_ordinal:
+        if record.pass_ordinal > current_record.pass_ordinal:
             continue
         # A zero-submit TRANSPORT_PENDING row is an immutable browser-plan
         # audit record, not a completed research response.  It remains in the
         # SQL pass ledger but must not be fabricated into the dossier's list
         # of actually executed passes.
         if record.status == "TRANSPORT_PENDING" and record.submit_count == 0:
+            continue
+        # A pass that was sent but proved absent from two independent fresh
+        # public views is also transport audit history, not an executed
+        # ResearchDossier pass.  Skip only the exact failed pass named by the
+        # current one-shot replacement and verify the immutable root lineage;
+        # every other missing response hash remains a hard failure.
+        if record.pass_id == superseded_unpersisted_pass_id:
+            failed_detail = record.detail or {}
+            if (
+                record.status != "FAILED_HARD"
+                or record.submit_count != 1
+                or record.response_hash is not None
+                or failed_detail.get("server_persistence_confirmed") is not False
+                or not replacement_root_input_hash
+                or replacement_root_input_hash != record.pass_input_hash
+                or current_record.pass_name != record.pass_name
+                or current_record.parent_pass_id != record.parent_pass_id
+            ):
+                raise ValueError(
+                    "superseded unpersisted pass differs from replacement lineage"
+                )
+            superseded_unpersisted_seen = True
             continue
         response_hash = (
             current_response_hash
@@ -2157,6 +2188,8 @@ def _durable_pass_rows(
             rows.append(deepcopy(dict(prior)))
             continue
         rows.append(durable_row)
+    if superseded_unpersisted_pass_id and not superseded_unpersisted_seen:
+        raise ValueError("replacement names an unknown unpersisted pass")
     return rows
 
 

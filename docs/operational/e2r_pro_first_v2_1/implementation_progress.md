@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-28 C06 새 Pro 채팅 accepted 73 / pass 14 saturation audit 연구 중`
+기준 시각: `2026-08-28 C06 새 Pro 채팅 accepted 73 / pass 15 공개 공백 조사 중`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -3569,3 +3569,57 @@ full regression                 7,779 tests / failure·error 0
 fresh efficiency static audit  PASS / critical 0
 Pro-first V2 static audit       PASS / critical 0
 ```
+
+## P19 — 봉인된 saturation pass 계보 수리와 새 4-question gap
+
+pass 14 응답은 8분 만에 완료돼 `DIRECT_REPORT_DOM`으로 캡처됐다. 첫 적용은 SQL ledger의 pass 13을
+`research_passes`에 넣으려다 중단됐다. pass 13은 두 공개 화면에서 서버 미저장이 증명돼 response
+hash가 없는 것이 정상인데, 기존 함수는 submit count 1인 모든 과거 pass에 response hash를 요구했다.
+
+이를 “실패 pass를 전부 무시”하는 방식으로 풀지 않았다. 다음 조건을 모두 만족하는 정확한 pass 하나만
+실행 dossier 계보에서 제외한다.
+
+```text
+current pass가 supersedes_unpersisted_pass_id로 exact pass를 지목
+failed pass status / submit             FAILED_HARD / 1
+failed response hash                    null
+failed server persistence               false
+replacement root hash                   failed pass_input_hash와 exact match
+pass name / parent                      replacement와 exact match
+```
+
+조건 하나라도 다르면 기존처럼 hard fail한다. SQL pass ledger에서는 pass 13 실패 이력을 삭제하지 않고,
+ResearchDossier의 “실제로 응답을 받은 pass” roster에서만 제외한다. 쉬운 예로 반송된 택배 송장은 감사
+장부에 남기되, 내용물을 받은 목록에는 넣지 않는 것이다.
+
+수리 뒤 pass 14 READY 캡처를 추가 전송 0으로 재사용했다.
+
+```text
+pass id / response hash          PROPASS-739ea5decbf04f0a0298e25f
+                                b086e703ff955b88268be5a693fe48f7f8660e8d6db0802e7100edc309b50946
+capture / recovery submit        DIRECT_REPORT_DOM / 0
+new fact / route                 0 / 0
+question semantic progress       true
+effective facts/routes           77 / 154
+effective dossier hash           901243418201805ebc9e7cba7ff35882abb545cb17563b7d7a2a94620148114b
+accepted fact                    73
+```
+
+audit 응답의 phantom route ID 5개는 실제 route receipt가 없어 local preflight가 question 참조에서
+제거했다. 그래서 숨겨져 있던 비종료 질문이 1개에서 5개로 드러났다. 이 결과를 낮은 점수로 덮지 않고
+saturation pending을 유지한다.
+
+```text
+nonterminal mandatory            5
+provider/parser core pending      0
+source-linkage incomplete         5
+public material gap               4
+verifier repair pending           1
+```
+
+public gap 4개는 pass 12가 조사한 질문과 다르다. phantom route 때문에 조사된 것처럼 보였던
+Stage2 false-positive Q04/Q05와 High-MAE Q03/Q04다. 상태기계는 이 exact 4개만 22,533자 pass 15로
+한 번 제출했다. 첫 공개 화면은 늦었지만 두 번째 읽기 전용 관측에서 durable turn을 확인했고 추가
+submit은 0이다. 현재 pass 15는 `RESEARCH_RUNNING`이다.
+
+live-runtime와 fresh orchestration 회귀는 `74/74 PASS`다.
