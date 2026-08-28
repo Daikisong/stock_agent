@@ -522,6 +522,44 @@ class ProFirstDossierImportTest(unittest.IsolatedAsyncioTestCase):
             parsed.protected_values_after,
         )
 
+    def test_visible_dom_naked_quotes_in_evidence_value_preserve_content(self) -> None:
+        payload = self._valid_dossier()
+        original = "검증기업은 이를 당사라고 설명했다."
+        quoted = '검증기업은 이를 (이하 "당사")라고 설명했다.'
+        payload["material_facts"][0]["supporting_excerpt"] = original
+        text = json.dumps(payload, ensure_ascii=False).replace(
+            original,
+            quoted,
+            1,
+        )
+        parsed = ResearchDossierParser().parse_text(
+            text, parser_source="DOWNLOADED_JSON"
+        )
+        self.assertEqual(
+            parsed.payload["material_facts"][0]["supporting_excerpt"],
+            quoted,
+        )
+        self.assertEqual(
+            parsed.repair_operations,
+            ("ESCAPE_DECODER_PROVEN_NAKED_QUOTES_IN_JSON_STRING_VALUES:2",),
+        )
+        self.assertEqual(
+            parsed.protected_values_before,
+            parsed.protected_values_after,
+        )
+
+    def test_missing_comma_is_not_guessed_as_naked_quote_repair(self) -> None:
+        payload = self._valid_dossier()
+        text = json.dumps(payload, ensure_ascii=False).replace(
+            '", "direction"',
+            '" "direction"',
+            1,
+        )
+        with self.assertRaisesRegex(DossierParseError, "JSON syntax remains invalid"):
+            ResearchDossierParser().parse_text(
+                text, parser_source="DOWNLOADED_JSON"
+            )
+
     def test_parser_prefers_downloaded_json_then_falls_back_to_md(self) -> None:
         payload = self._valid_dossier()
         downloaded = Path(self.temporary_directory.name) / "downloaded.json"

@@ -125,6 +125,20 @@ class ResearchDossierParser:
                 "ESCAPE_RAW_CONTROL_CHARACTERS_IN_JSON_STRING_VALUES:"
                 f"{escaped_value_control_count}"
             )
+        quote_fixed, escaped_naked_quote_count = (
+            _escape_decoder_proven_naked_quotes_in_json_string_values(repaired)
+        )
+        if escaped_naked_quote_count:
+            repaired = quote_fixed
+            operations.append(
+                "ESCAPE_DECODER_PROVEN_NAKED_QUOTES_IN_JSON_STRING_VALUES:"
+                f"{escaped_naked_quote_count}"
+            )
+            # Adding JSON escape bytes does not change the decoded evidence
+            # text.  Re-project protected fields from that syntax-safe form so
+            # the before/after comparison sees the complete original value,
+            # including the literal quote characters that broke the raw JSON.
+            protected_before = _protected_values(repaired)
         trailing_fixed, removed_count = _remove_trailing_commas(repaired)
         if removed_count:
             repaired = trailing_fixed
@@ -313,6 +327,77 @@ def _escape_raw_control_characters_in_json_string_values(
             output.append(token)
         index = end + 1
     return "".join(output), escaped_count
+
+
+def _escape_decoder_proven_naked_quotes_in_json_string_values(
+    text: str,
+    *,
+    max_repairs: int = 32,
+) -> tuple[str, int]:
+    """Escape only quotes that the JSON decoder proves ended a value early.
+
+    A visible ChatGPT code block can preserve a source excerpt such as
+    ``(이하 "당사")`` while omitting the JSON escape bytes around the two
+    inner quote characters.  Guessing quote pairs from prose would be unsafe.
+    Instead, repeatedly ask the standard decoder for the exact failure point
+    and repair only this narrow shape:
+
+    * the decoder reports ``Expecting ',' delimiter``;
+    * the failing character immediately follows an unescaped quote;
+    * that quote was opened inside an existing JSON string value; and
+    * the failing character is not JSON structure.
+
+    Prefixing that literal quote with ``\\`` changes only its JSON encoding;
+    ``json.loads`` decodes the evidence value back to the original quote.  A
+    missing comma, malformed key, or any other structural defect remains a
+    hard parse failure.
+    """
+
+    repaired = text
+    repair_count = 0
+    while repair_count < max_repairs:
+        try:
+            json.loads(repaired)
+            return repaired, repair_count
+        except json.JSONDecodeError as error:
+            quote_index = error.pos - 1
+            if (
+                error.msg != "Expecting ',' delimiter"
+                or quote_index < 0
+                or repaired[quote_index] != '"'
+                or error.pos >= len(repaired)
+                or repaired[error.pos] in '"{}[],: '
+                or _is_escaped_character(repaired, quote_index)
+                or not _quote_is_inside_json_string(repaired, quote_index)
+            ):
+                return repaired, repair_count
+            repaired = repaired[:quote_index] + "\\" + repaired[quote_index:]
+            repair_count += 1
+    return repaired, repair_count
+
+
+def _is_escaped_character(text: str, index: int) -> bool:
+    backslash_count = 0
+    cursor = index - 1
+    while cursor >= 0 and text[cursor] == "\\":
+        backslash_count += 1
+        cursor -= 1
+    return backslash_count % 2 == 1
+
+
+def _quote_is_inside_json_string(text: str, quote_index: int) -> bool:
+    in_string = False
+    escaped = False
+    for character in text[:quote_index]:
+        if escaped:
+            escaped = False
+            continue
+        if character == "\\" and in_string:
+            escaped = True
+            continue
+        if character == '"':
+            in_string = not in_string
+    return in_string
 
 
 def _protected_values(text: str) -> Mapping[str, tuple[str, ...]]:

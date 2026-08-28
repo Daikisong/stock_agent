@@ -3700,3 +3700,55 @@ additional query / search        0 / 0
 exact lineage를 유지했다. 공개적으로 더 조사 가능한 material gap은 0이며, 남은 verifier blocker를 낮은
 점수나 임의 Stage로 덮지 않은 정상 fail-closed 결과다. 다음 실행은 별도 dossier와 conversation을 가진
 C17의 기존 fresh initial 결과에서 full tail을 이어간다.
+
+## P21 — C17 pass 2 진전과 pass 3 무전송 JSON 인코딩 복구
+
+C17은 기존 fresh conversation `6a8e5f55-a7f8-83e8-bd89-82c1e4529916`을 정확히 복구했다. initial
+보고서를 다시 보내거나 새 job을 만들지 않았다. 첫 full-tail 상태는 accepted fact 18개, mandatory
+question 26개 중 nonterminal 7개였다.
+
+pass 2는 41,402자 public-gap prompt를 한 번 제출했고 85분 뒤 현재 turn을
+`DIRECT_REPORT_DOM_NORMALIZED`로 캡처했다. Pro가 제안한 phantom route 참조 17개는 실제 receipt가
+없어 preflight에서 제거했다.
+
+```text
+pass 2                          PROPASS-7aa73ba6775dbd43a441ce57
+status / submit                 COMPLETE / 1
+new fact / route                13 / 33
+accepted fact                   18 -> 27
+effective facts/routes/sources  39 / 67 / 11
+public material gap             15 -> 10
+provider/parser pending          6 -> 4
+source-linkage incomplete        9 -> 5
+nonterminal mandatory            7 -> 6
+verifier repair pending          1 -> 3
+```
+
+pass 3은 남은 공개 공백을 23,090자로 묶어 한 번 제출했다. 69분 뒤 assistant turn이 완료됐고, raw와
+normalized report, extracted dossier, READY, capture receipt까지 모두 저장됐다. 하지만
+`supporting_excerpt`의 `(이하 "당사")` 두 따옴표가 JSON용 escape 없이 출력돼 parser가 적용 전에
+fail-closed 중단했다. 브라우저 재전송은 0이다.
+
+기존 parser는 raw key control 6개와 value control 11개를 이미 내용 보존 방식으로 처리했다. 여기에
+표준 JSON decoder가 `Expecting ',' delimiter`로 조기 문자열 종료를 정확히 증명하고, 실패 문자가 바로
+앞의 unescaped quote에 붙어 있으며 구조 문자가 아닌 경우만 `"` JSON encoding을 삽입한다. 누락 쉼표,
+잘못된 key, 임의 구조 오류는 고치지 않는다.
+
+쉬운 예로 `그는 "당사"라고 말했다`라는 원문은 그대로 두고, JSON 봉투 안에서만 내부 따옴표를
+`\"당사\"`로 인코딩한다. 디코딩된 evidence 값은 원문과 같다.
+
+실제 pass 3 캡처를 대상으로 확인한 결과는 다음과 같다.
+
+```text
+raw key control 삭제             6
+raw value control JSON escape    11
+decoder-proven quote escape       2
+captured fact / route            13 / 16
+protected value before==after    true
+browser submit delta              0
+actual capture parse             PASS
+```
+
+dossier import `20/20`, fresh orchestration·live runtime `75/75`, 합계 `95/95`가 통과했다. 다음 실행은
+pass 3의 hash-bound READY capture를 재사용하며 브라우저 submit 없이 merge·source verifier·saturation을
+재개한다.
