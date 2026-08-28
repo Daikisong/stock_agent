@@ -1121,6 +1121,12 @@ class FreshSessionOrchestratorV3:
                         )
                         or ""
                     ),
+                    "saturation_blocker_identity_hash": str(
+                        (context.get("pass_inputs") or {}).get(
+                            "saturation_blocker_identity_hash"
+                        )
+                        or ""
+                    ),
                     "question_family_ids": list(
                         (context.get("pass_inputs") or {}).get(
                             "question_family_ids"

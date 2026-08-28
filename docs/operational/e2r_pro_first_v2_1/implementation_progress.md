@@ -3752,3 +3752,67 @@ actual capture parse             PASS
 dossier import `20/20`, fresh orchestration·live runtime `75/75`, 합계 `95/95`가 통과했다. 다음 실행은
 pass 3의 hash-bound READY capture를 재사용하며 브라우저 submit 없이 merge·source verifier·saturation을
 재개한다.
+
+## P22 — C17 세션 정상 확인, blocker fixpoint 봉인, 무한 반복 방지
+
+pass 3 캡처를 무전송으로 적용한 뒤 pass 4~6은 같은 fresh conversation에서 각각 한 번만 제출됐다.
+pass 5가 끝난 직후 fact는 1개 늘었지만 deterministic blocker 수가 pass 4와 같았다. 기존 라우터는
+`verified_fact_id`가 달라졌다는 이유로 이 상태를 새 context로 보아 pass 6을 이미 제출했다.
+
+pass 6은 중단하거나 새 채팅에 중복 전송하지 않았다. 별도 fresh public view에서 exact pass marker와
+durable user turn을 확인했고, `server_persistence_confirmed=true`인 같은 assistant turn만 회수했다.
+따라서 이 대화는 맛간 세션이 아니었다.
+
+```text
+pass 6                         PROPASS-e048e03952a3c592799113fe
+submit / recovery submit       1 / 0
+server persistence             true
+capture                         DIRECT_REPORT_DOM_NORMALIZED
+new fact / route               1 / 12
+accepted fact                  41 -> 42
+effective facts/routes/sources 61 / 124 / 14
+response hash                  d3e3eddf118cb894e1c684fcfc1c1f439c68656e46237c6a89fbbbd324bd4352
+next pass submit               0
+```
+
+Pass 6 회수 뒤 브라우저를 열지 않는 `VERIFY_CURRENT_DOSSIER_NO_BROWSER`로 61개 candidate를 다시
+검문했다. 42개가 채택됐고 query/search는 `0/0`이다. 이어서 완전 read-only inspection도 같은
+saturation receipt를 재현했다.
+
+```text
+verification hash              40b2f56c03d353fdbf6fa8b63455fc9dd82ffa0970e21f7587b4432b1626723c
+saturation receipt hash        aa766263865d7113c168e72d33f7beba203d45d54cd2c7f1d51b113ebfe25a1e
+mandatory / nonterminal        26 / 7
+provider/parser core pending   5
+public material gap            9
+source-linkage incomplete      6
+verifier repair pending        3
+component entry                false
+score / Stage                  null / null
+publication                    withheld
+```
+
+pass 4~6의 fact·route는 `59/98 -> 60/112 -> 61/124`, accepted fact는 `40 -> 41 -> 42`로 늘었지만
+위 blocker는 세 번 연속 같았다. 쉬운 예로 서류철은 두꺼워졌지만 미해결 체크박스 7개가 하나도
+줄지 않은 상태다. 여기서 같은 공개 조사를 더 보내지 않고 C17을
+`RESEARCH_BLOCKER_FIXPOINT_PENDING`으로 fail-closed 봉인했다.
+
+재발 방지는 종목이나 C17 조건문이 아닌 세 가지 generic 경계로 구현했다.
+
+```text
+--recover-submitted-only
+  이미 제출된 unsnapshotted turn 하나만 회수하고 새 pass 계획 없이 종료
+
+--verify-and-inspect-only
+  브라우저를 열지 않고 현재 dossier만 source 재검문·saturation 계산
+
+saturation_blocker_identity_hash
+  fact ID와 설명 문구는 제외하고 질문 상태, 누락 source role, linkage,
+  provider/parser 및 route adequacy가 실제로 바뀌었는지만 비교
+```
+
+따라서 fact ID만 바뀌고 blocker identity가 같으면 `RESEARCH_BLOCKER_FIXPOINT_PENDING`에서 멈춘다.
+반대로 누락 source role이 줄거나 provider/parser 상태, route adequacy가 바뀌면 후속 pass를 허용한다.
+fresh orchestration `46/46`, live runtime `31/31`, dossier import `20/20`, Windows browser E2E `2/2`,
+합계 `99/99 PASS`다. 다음 실행은 별도 dossier/job/conversation을 가진 C28 기존 fresh initial에서
+이어간다.

@@ -36,9 +36,12 @@ async def _run(args: argparse.Namespace) -> Mapping[str, Any]:
         progress=_progress,
         max_completion_polls=args.max_completion_polls,
         max_tail_iterations=args.max_tail_iterations,
+        recover_submitted_only=args.recover_submitted_only,
     )
     if args.inspect_only:
         return runner.inspect_current(job_id=args.job_id)
+    if args.verify_and_inspect_only:
+        return runner.verify_and_inspect_current(job_id=args.job_id)
     return await runner.run(job_id=args.job_id)
 
 
@@ -56,9 +59,26 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--max-completion-polls", type=int, default=1_440)
     parser.add_argument("--max-tail-iterations", type=int, default=12)
     parser.add_argument(
+        "--recover-submitted-only",
+        action="store_true",
+        help=(
+            "recover one already-submitted unsnapshotted follow-up and exit "
+            "without planning or sending another pass"
+        ),
+    )
+    inspection_group = parser.add_mutually_exclusive_group()
+    inspection_group.add_argument(
         "--inspect-only",
         action="store_true",
         help="read deterministic current status without opening or sending ChatGPT",
+    )
+    inspection_group.add_argument(
+        "--verify-and-inspect-only",
+        action="store_true",
+        help=(
+            "reverify the current dossier and persist saturation without "
+            "opening or sending ChatGPT"
+        ),
     )
     parser.add_argument(
         "--authorization",
@@ -69,7 +89,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
     if (
-        not args.inspect_only
+        not (args.inspect_only or args.verify_and_inspect_only)
         and args.authorization != FRESH_FULL_THESIS_AUTHORIZATION_PHRASE
     ):
         parser.error(
@@ -100,7 +120,7 @@ def main(argv: list[str] | None = None) -> int:
         json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True),
         flush=True,
     )
-    if args.inspect_only:
+    if args.inspect_only or args.verify_and_inspect_only:
         return 0
     return 0 if result.get("status") == "FRESH_V3_FULL_THESIS_FINAL" else 3
 

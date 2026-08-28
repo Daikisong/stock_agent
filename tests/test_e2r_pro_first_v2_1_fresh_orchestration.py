@@ -36,8 +36,10 @@ from e2r.pro_first.fresh_session.live_canary_v3 import (
 )
 from e2r.pro_first.canary.live_v2 import _research_semantic_hash
 from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
+    _completed_pass_left_blockers_unchanged,
     _context_already_attempted,
     _counter_followup_question_ids,
+    _enforce_recover_submitted_only,
     _followup_context,
     _parse_and_validate_compact_repair_transport,
     _question_ids_without_completed_context,
@@ -193,6 +195,30 @@ class _FreshAdapter:
 
 class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
     now = datetime(2026, 8, 25, 1, 2, 3, tzinfo=timezone.utc)
+
+    def test_recover_submitted_only_never_allows_new_pass_planning(self) -> None:
+        _enforce_recover_submitted_only(enabled=False, recovered=False)
+        _enforce_recover_submitted_only(enabled=False, recovered=True)
+
+        with self.assertRaisesRegex(
+            Exception,
+            "recovery-only mode sent nothing",
+        ) as missing:
+            _enforce_recover_submitted_only(enabled=True, recovered=False)
+        self.assertEqual(
+            getattr(missing.exception, "status", None),
+            "SUBMITTED_PASS_RECOVERY_REQUIRED",
+        )
+
+        with self.assertRaisesRegex(
+            Exception,
+            "additional pass planning is disabled",
+        ) as recovered:
+            _enforce_recover_submitted_only(enabled=True, recovered=True)
+        self.assertEqual(
+            getattr(recovered.exception, "status", None),
+            "SUBMITTED_PASS_RECOVERED_PENDING",
+        )
 
     def setUp(self) -> None:
         self.temporary_directory = TemporaryDirectory()
@@ -1575,6 +1601,108 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 context=changed_b,
             ),
             (question_b,),
+        )
+
+    async def test_new_fact_id_without_blocker_change_reaches_fixpoint(self) -> None:
+        adapter = await self._prepare_and_approve(
+            "fresh-conversation-blocker-fixpoint"
+        )
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="4" * 64,
+        )
+        question_id = self.built.prompt.mandatory_question_ids[0]
+        dossier = self._tail_dossier(question_id)
+        first = _followup_context(
+            dossier=dossier,
+            saturation=self._tail_saturation(
+                (self._question_decision(question_id, linked_fact_id="FACT-A"),),
+                fact_hash="1" * 64,
+            ),
+            accepted_fact_ids=("FACT-A",),
+            question_ids=(question_id,),
+            pass_name="PUBLIC_GAP_CLOSURE",
+        )
+        plan, _compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest=first["latest_dossier_digest"],
+            unresolved_question_state=first["unresolved_question_state"],
+            pass_inputs=first["pass_inputs"],
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        await self.orchestrator.submit_followup(plan, adapter)
+        self.orchestrator.complete_followup(
+            plan.research_pass.pass_id,
+            response_hash="5" * 64,
+            conversation_id="fresh-conversation-blocker-fixpoint",
+        )
+
+        fact_only = _followup_context(
+            dossier={
+                **dossier,
+                "material_facts": [
+                    *dossier["material_facts"],
+                    {"dossier_fact_id": "FACT-B"},
+                ],
+            },
+            saturation=self._tail_saturation(
+                (self._question_decision(question_id, linked_fact_id="FACT-B"),),
+                fact_hash="2" * 64,
+            ),
+            accepted_fact_ids=("FACT-A", "FACT-B"),
+            question_ids=(question_id,),
+            pass_name="PUBLIC_GAP_CLOSURE",
+        )
+        self.assertNotEqual(
+            first["pass_inputs"]["research_gap_context_hash"],
+            fact_only["pass_inputs"]["research_gap_context_hash"],
+        )
+        self.assertEqual(
+            first["pass_inputs"]["saturation_blocker_identity_hash"],
+            fact_only["pass_inputs"]["saturation_blocker_identity_hash"],
+        )
+        self.assertTrue(
+            _completed_pass_left_blockers_unchanged(
+                self.orchestrator.ledger,
+                job_id=self.fresh_job.job_id,
+                pass_name="PUBLIC_GAP_CLOSURE",
+                blocker_identity_hash=fact_only["pass_inputs"][
+                    "saturation_blocker_identity_hash"
+                ],
+            )
+        )
+
+        changed_route = _followup_context(
+            dossier=dossier,
+            saturation=self._tail_saturation(
+                (
+                    self._question_decision(
+                        question_id,
+                        linked_fact_id="FACT-B",
+                        provider_parser_normal=False,
+                    ),
+                ),
+                fact_hash="2" * 64,
+            ),
+            accepted_fact_ids=("FACT-A", "FACT-B"),
+            question_ids=(question_id,),
+            pass_name="PUBLIC_GAP_CLOSURE",
+        )
+        self.assertNotEqual(
+            first["pass_inputs"]["saturation_blocker_identity_hash"],
+            changed_route["pass_inputs"]["saturation_blocker_identity_hash"],
+        )
+        self.assertFalse(
+            _completed_pass_left_blockers_unchanged(
+                self.orchestrator.ledger,
+                job_id=self.fresh_job.job_id,
+                pass_name="PUBLIC_GAP_CLOSURE",
+                blocker_identity_hash=changed_route["pass_inputs"][
+                    "saturation_blocker_identity_hash"
+                ],
+            )
         )
 
     async def test_same_route_with_new_receipt_id_is_not_research_progress(

@@ -120,6 +120,7 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
         progress: ProgressHandler | None = None,
         max_completion_polls: int = 1_440,
         max_tail_iterations: int = 12,
+        recover_submitted_only: bool = False,
         source_verifier: ProSourceVerifier | None = None,
         scoring_input_provider: OperationalProScoringInputProvider | None = None,
     ) -> None:
@@ -137,6 +138,7 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
         self.max_completion_polls = max_completion_polls
         self.repair_pass_limit = 1
         self.max_tail_iterations = max_tail_iterations
+        self.recover_submitted_only = bool(recover_submitted_only)
         self.store = ProFirstJobStore(
             Path(state_database_path).expanduser().resolve()
         )
@@ -265,7 +267,16 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                             status="RESEARCH_NO_PROGRESS_PENDING",
                         )
                     dossier = next_dossier
+                    _enforce_recover_submitted_only(
+                        enabled=self.recover_submitted_only,
+                        recovered=True,
+                    )
                     continue
+
+                _enforce_recover_submitted_only(
+                    enabled=self.recover_submitted_only,
+                    recovered=False,
+                )
 
                 verification_state = self._load_current_verification(
                     job_id=job_id,
@@ -331,6 +342,22 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                         ]
                     ),
                 ):
+                    if _completed_pass_left_blockers_unchanged(
+                        orchestrator.ledger,
+                        job_id=job_id,
+                        pass_name="PUBLIC_GAP_CLOSURE",
+                        blocker_identity_hash=str(
+                            public_context["pass_inputs"].get(
+                                "saturation_blocker_identity_hash"
+                            )
+                            or ""
+                        ),
+                    ):
+                        raise LiveCanaryPending(
+                            "completed public-gap pass left the deterministic "
+                            "blocker identity unchanged",
+                            status="RESEARCH_BLOCKER_FIXPOINT_PENDING",
+                        )
                     plan, _compiled = orchestrator.plan_v3_followup(
                         built,
                         pass_name="PUBLIC_GAP_CLOSURE",
@@ -402,6 +429,22 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                         ]
                     ),
                 ):
+                    if _completed_pass_left_blockers_unchanged(
+                        orchestrator.ledger,
+                        job_id=job_id,
+                        pass_name="COUNTER_SUPERSESSION_CLOSURE",
+                        blocker_identity_hash=str(
+                            counter_context["pass_inputs"].get(
+                                "saturation_blocker_identity_hash"
+                            )
+                            or ""
+                        ),
+                    ):
+                        raise LiveCanaryPending(
+                            "completed counter pass left the deterministic "
+                            "blocker identity unchanged",
+                            status="RESEARCH_BLOCKER_FIXPOINT_PENDING",
+                        )
                     plan, _compiled = orchestrator.plan_v3_followup(
                         built,
                         pass_name="COUNTER_SUPERSESSION_CLOSURE",
@@ -597,6 +640,7 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
             "score_authority": False,
             "stage_authority": False,
             "automatic_initial_resubmit_allowed": False,
+            "recover_submitted_only": self.recover_submitted_only,
             "hidden_chatgpt_api_used": False,
             "finished_at": _utc_now(),
             "elapsed_seconds": round(time.monotonic() - started, 6),
@@ -614,6 +658,33 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
     def inspect_current(self, *, job_id: str) -> Mapping[str, Any]:
         """Read-only deterministic status; this never opens or sends ChatGPT."""
 
+        return self._inspect_current(
+            job_id=job_id,
+            allow_reverification=False,
+            persist_saturation=False,
+            inspection_mode="READ_ONLY",
+        )
+
+    def verify_and_inspect_current(self, *, job_id: str) -> Mapping[str, Any]:
+        """Reverify the current dossier without opening or sending ChatGPT."""
+
+        return self._inspect_current(
+            job_id=job_id,
+            allow_reverification=True,
+            persist_saturation=True,
+            inspection_mode="VERIFY_CURRENT_DOSSIER_NO_BROWSER",
+        )
+
+    def _inspect_current(
+        self,
+        *,
+        job_id: str,
+        allow_reverification: bool,
+        persist_saturation: bool,
+        inspection_mode: str,
+    ) -> Mapping[str, Any]:
+        """Compute the deterministic current state with an explicit write mode."""
+
         boundary = self._load_boundary(job_id)
         orchestrator = FreshSessionOrchestratorV3(self.store, boundary)
         snapshot = ProMultiPassDossierStore(orchestrator.ledger).load_latest(
@@ -627,7 +698,7 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
             job_id=job_id,
             job_root=boundary.fresh_job_root,
             dossier=dossier,
-            allow_reverification=False,
+            allow_reverification=allow_reverification,
         )
         saturation = self._adjudicate_saturation(
             orchestrator.ledger,
@@ -635,10 +706,13 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
             job_root=boundary.fresh_job_root,
             verified_fact_ids=verification.accepted_fact_ids,
         )
+        if persist_saturation:
+            self._persist_saturation(boundary.fresh_job_root, saturation)
         public_ids = _public_followup_question_ids(saturation)
         return {
             "schema_version": "e2r_pro_fresh_v3_full_thesis_inspection_v1",
             "job_id": job_id,
+            "inspection_mode": inspection_mode,
             "job_status": self.store.get_job(job_id).status,
             "effective_dossier_hash": canonical_hash(dossier),
             "accepted_fact_count": len(verification.accepted_fact_ids),
@@ -1110,6 +1184,7 @@ def _followup_context(
                 "deterministic_status": decision.get(
                     "deterministic_status"
                 ),
+                "deterministic_materiality": decision.get("materiality"),
                 "gap_class": decision.get("gap_class"),
                 "failure_codes": list(decision.get("failure_codes") or ()),
                 "verified_linked_fact_ids": list(
@@ -1135,6 +1210,9 @@ def _followup_context(
                 ),
                 "deterministic_terminal": decision.get("terminal"),
                 "deterministic_ready": decision.get("ready"),
+                "question_to_source_linkage_complete": decision.get(
+                    "question_to_source_linkage_complete"
+                ),
                 "route_progress_state": route_progress_state,
             }
         )
@@ -1217,6 +1295,15 @@ def _followup_context(
             "question_progress_hashes": question_progress_hashes,
         }
     )
+    blocker_identity_hash = canonical_hash(
+        {
+            "schema_version": "e2r_saturation_blocker_identity_v1",
+            "pass_name": pass_name,
+            "questions": [
+                _saturation_blocker_identity_row(row) for row in unresolved
+            ],
+        }
+    )
     prompt_question_state = (
         [
             _compact_saturation_audit_question_state(row)
@@ -1268,6 +1355,7 @@ def _followup_context(
                 saturation.deterministic_research_status
             ),
             "research_gap_context_hash": gap_context_hash,
+            "saturation_blocker_identity_hash": blocker_identity_hash,
             "new_research_fact_allowed": pass_name != "SATURATION_AUDIT",
             "score_authority": False,
             "stage_authority": False,
@@ -1626,6 +1714,87 @@ def _context_already_attempted(
     )
 
 
+def _completed_pass_left_blockers_unchanged(
+    ledger: ProMultiPassLedger,
+    *,
+    job_id: str,
+    pass_name: str,
+    blocker_identity_hash: str,
+) -> bool:
+    """Detect a durable follow-up that returned to the same blocker state.
+
+    Evidence IDs and prose are deliberately absent from this identity.  A new
+    fact is useful only when it changes a deterministic question state,
+    missing source role, linkage disposition, or route-adequacy condition.
+    """
+
+    if not blocker_identity_hash:
+        return False
+    return any(
+        row.pass_name == pass_name
+        and row.status == "COMPLETE"
+        and row.submit_count == 1
+        and str(
+            row.detail.get("saturation_blocker_identity_hash") or ""
+        )
+        == blocker_identity_hash
+        for row in ledger.list_passes(job_id)
+    )
+
+
+def _saturation_blocker_identity_row(
+    row: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Project only state that can actually reduce a saturation blocker."""
+
+    route = dict(row.get("route_progress_state") or {})
+    return {
+        "question_family_id": row.get("question_family_id"),
+        "reported_status": row.get("reported_status"),
+        "availability_class": row.get("availability_class"),
+        "required_source_roles_missing": sorted(
+            set(row.get("required_source_roles_missing") or ())
+        ),
+        "deterministic_status": row.get("deterministic_status"),
+        "deterministic_materiality": row.get("deterministic_materiality"),
+        "gap_class": row.get("gap_class"),
+        "failure_codes": sorted(set(row.get("failure_codes") or ())),
+        "missing_core_source_roles": sorted(
+            set(row.get("missing_core_source_roles") or ())
+        ),
+        "missing_corroboration_source_roles": sorted(
+            set(row.get("missing_corroboration_source_roles") or ())
+        ),
+        "verified_source_roles": sorted(
+            set(row.get("verified_source_roles") or ())
+        ),
+        "deterministic_terminal": row.get("deterministic_terminal"),
+        "deterministic_ready": row.get("deterministic_ready"),
+        "question_to_source_linkage_complete": row.get(
+            "question_to_source_linkage_complete"
+        ),
+        "route_progress": {
+            "unknown_linked_route_reference": route.get(
+                "unknown_linked_route_reference"
+            ),
+            "attempted_source_roles": sorted(
+                set(route.get("attempted_source_roles") or ())
+            ),
+            "adequate": route.get("adequate"),
+            "official_route_attempted": route.get(
+                "official_route_attempted"
+            ),
+            "distinct_route_count": route.get("distinct_route_count"),
+            "independent_no_new_route_confirmation_count": route.get(
+                "independent_no_new_route_confirmation_count"
+            ),
+            "provider_parser_normal": route.get("provider_parser_normal"),
+            "semantic_fixpoint": route.get("semantic_fixpoint"),
+            "failure_codes": sorted(set(route.get("failure_codes") or ())),
+        },
+    }
+
+
 def _question_ids_without_completed_context(
     ledger: ProMultiPassLedger,
     *,
@@ -1690,6 +1859,26 @@ _FRESH_NONREPAIR_FOLLOWUP_NAMES = (
     "COUNTER_SUPERSESSION_CLOSURE",
     "SATURATION_AUDIT",
 )
+
+
+def _enforce_recover_submitted_only(
+    *,
+    enabled: bool,
+    recovered: bool,
+) -> None:
+    """Keep a recovery invocation incapable of planning a new Pro turn."""
+
+    if not enabled:
+        return
+    if recovered:
+        raise LiveCanaryPending(
+            "submitted follow-up recovered; additional pass planning is disabled",
+            status="SUBMITTED_PASS_RECOVERED_PENDING",
+        )
+    raise LiveCanaryPending(
+        "no submitted unsnapshotted follow-up exists; recovery-only mode sent nothing",
+        status="SUBMITTED_PASS_RECOVERY_REQUIRED",
+    )
 
 
 def _submitted_unsnapshotted_fresh_nonrepair_plan(
