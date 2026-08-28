@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-28 C06 새 Pro 채팅 accepted 73 / pass 15 공개 공백 조사 중`
+기준 시각: `2026-08-28 C06 새 Pro 채팅 accepted 74 / pass 16 공개 공백 조사 중`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -3623,3 +3623,19 @@ Stage2 false-positive Q04/Q05와 High-MAE Q03/Q04다. 상태기계는 이 exact 
 submit은 0이다. 현재 pass 15는 `RESEARCH_RUNNING`이다.
 
 live-runtime와 fresh orchestration 회귀는 `74/74 PASS`다.
+
+### 대체 계보의 후손 유지
+
+pass 15 current-turn 응답은 새 fact 1개와 route 9개를 정상 캡처했지만, 첫 적용에서 pass 13 response
+hash 오류가 다시 나타났다. pass 14 적용 때는 pass 14가 current라 exact supersession을 찾았지만,
+pass 15에서는 그 edge가 과거 row가 됐기 때문이다.
+
+따라서 current row 하나가 아니라 현재 ordinal까지의 durable pass 전체에서 explicit
+`supersedes_unpersisted_pass_id` edge를 수집한다. 각 edge는 앞 절의 status·submit·persistence·root
+hash·pass name·parent 검문을 똑같이 통과해야 한다. 여러 replacement claim, 미래 ordinal, unknown
+failed pass는 거절한다. 검증된 edge는 후손 dossier에서도 유지돼 봉인 pass가 부활하지 않는다.
+
+pass 15 READY 캡처를 추가 submit 0으로 재사용했고 accepted fact는 `73 → 74`, nonterminal은
+`5 → 3`, public material gap은 `4 → 2`, source-linkage incomplete는 `5 → 1`로 줄었다. 남은 exact
+Stage2 Q04/Q05 두 질문만 pass 16으로 한 번 제출됐고 서버 저장도 확인됐다. descendant 회귀를 포함한
+live-runtime·fresh orchestration은 `75/75 PASS`다.

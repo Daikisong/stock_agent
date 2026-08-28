@@ -2117,23 +2117,30 @@ def _durable_pass_rows(
     prior_dossier: Mapping[str, Any] | None = None,
 ) -> list[Mapping[str, Any]]:
     current_record = ledger.get_pass(current_pass_id)
-    current_detail = current_record.detail or {}
-    superseded_unpersisted_pass_id = str(
-        current_detail.get("supersedes_unpersisted_pass_id") or ""
+    records = tuple(
+        record
+        for record in ledger.list_passes(job_id)
+        if record.pass_ordinal <= current_record.pass_ordinal
     )
-    replacement_root_input_hash = str(
-        current_detail.get("transport_replacement_root_input_hash") or ""
-    )
-    superseded_unpersisted_seen = False
+    replacement_by_superseded_id: dict[str, Any] = {}
+    for replacement in records:
+        replacement_detail = getattr(replacement, "detail", None) or {}
+        superseded_id = str(
+            replacement_detail.get("supersedes_unpersisted_pass_id") or ""
+        )
+        if not superseded_id:
+            continue
+        if superseded_id in replacement_by_superseded_id:
+            raise ValueError("unpersisted pass has multiple replacement claims")
+        replacement_by_superseded_id[superseded_id] = replacement
+    superseded_unpersisted_seen: set[str] = set()
     prior_by_id = {
         str(row.get("pass_id") or ""): row
         for row in (prior_dossier or {}).get("research_passes") or ()
         if isinstance(row, Mapping)
     }
     rows = []
-    for record in ledger.list_passes(job_id):
-        if record.pass_ordinal > current_record.pass_ordinal:
-            continue
+    for record in records:
         # A zero-submit TRANSPORT_PENDING row is an immutable browser-plan
         # audit record, not a completed research response.  It remains in the
         # SQL pass ledger but must not be fabricated into the dossier's list
@@ -2145,8 +2152,14 @@ def _durable_pass_rows(
         # ResearchDossier pass.  Skip only the exact failed pass named by the
         # current one-shot replacement and verify the immutable root lineage;
         # every other missing response hash remains a hard failure.
-        if record.pass_id == superseded_unpersisted_pass_id:
-            failed_detail = record.detail or {}
+        replacement = replacement_by_superseded_id.get(record.pass_id)
+        if replacement is not None:
+            failed_detail = getattr(record, "detail", None) or {}
+            replacement_detail = getattr(replacement, "detail", None) or {}
+            replacement_root_input_hash = str(
+                replacement_detail.get("transport_replacement_root_input_hash")
+                or ""
+            )
             if (
                 record.status != "FAILED_HARD"
                 or record.submit_count != 1
@@ -2154,13 +2167,14 @@ def _durable_pass_rows(
                 or failed_detail.get("server_persistence_confirmed") is not False
                 or not replacement_root_input_hash
                 or replacement_root_input_hash != record.pass_input_hash
-                or current_record.pass_name != record.pass_name
-                or current_record.parent_pass_id != record.parent_pass_id
+                or replacement.pass_name != record.pass_name
+                or replacement.parent_pass_id != record.parent_pass_id
+                or replacement.pass_ordinal <= record.pass_ordinal
             ):
                 raise ValueError(
                     "superseded unpersisted pass differs from replacement lineage"
                 )
-            superseded_unpersisted_seen = True
+            superseded_unpersisted_seen.add(record.pass_id)
             continue
         response_hash = (
             current_response_hash
@@ -2188,7 +2202,10 @@ def _durable_pass_rows(
             rows.append(deepcopy(dict(prior)))
             continue
         rows.append(durable_row)
-    if superseded_unpersisted_pass_id and not superseded_unpersisted_seen:
+    unknown_superseded_ids = set(replacement_by_superseded_id).difference(
+        superseded_unpersisted_seen
+    )
+    if unknown_superseded_ids:
         raise ValueError("replacement names an unknown unpersisted pass")
     return rows
 

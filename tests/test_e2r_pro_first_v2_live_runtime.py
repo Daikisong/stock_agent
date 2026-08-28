@@ -662,6 +662,70 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
                 current_response_hash="e" * 64,
             )
 
+    def test_superseded_unpersisted_pass_stays_excluded_for_descendants(self) -> None:
+        failed = SimpleNamespace(
+            pass_ordinal=1,
+            pass_id="PASS-FAILED",
+            parent_pass_id=None,
+            pass_name="SATURATION_AUDIT",
+            status="FAILED_HARD",
+            submit_count=1,
+            prompt_hash="a" * 64,
+            response_hash=None,
+            pass_input_hash="b" * 64,
+            detail={"server_persistence_confirmed": False},
+        )
+        replacement = SimpleNamespace(
+            pass_ordinal=2,
+            pass_id="PASS-REPLACEMENT",
+            parent_pass_id=None,
+            pass_name="SATURATION_AUDIT",
+            status="COMPLETE",
+            submit_count=1,
+            prompt_hash="c" * 64,
+            response_hash="d" * 64,
+            pass_input_hash="e" * 64,
+            detail={
+                "supersedes_unpersisted_pass_id": "PASS-FAILED",
+                "transport_replacement_root_input_hash": "b" * 64,
+            },
+        )
+        descendant = SimpleNamespace(
+            pass_ordinal=3,
+            pass_id="PASS-DESCENDANT",
+            parent_pass_id="PASS-REPLACEMENT",
+            pass_name="PUBLIC_GAP_CLOSURE",
+            status="RESEARCH_RUNNING",
+            submit_count=1,
+            prompt_hash="f" * 64,
+            response_hash=None,
+            pass_input_hash="1" * 64,
+            detail={},
+        )
+
+        class FakeLedger:
+            def list_passes(self, _job_id):
+                return (failed, replacement, descendant)
+
+            def get_pass(self, pass_id):
+                return next(
+                    row
+                    for row in (failed, replacement, descendant)
+                    if row.pass_id == pass_id
+                )
+
+        rows = _durable_pass_rows(
+            FakeLedger(),  # type: ignore[arg-type]
+            "JOB-1",
+            current_pass_id="PASS-DESCENDANT",
+            current_response_hash="2" * 64,
+        )
+
+        self.assertEqual(
+            [row["pass_id"] for row in rows],
+            ["PASS-REPLACEMENT", "PASS-DESCENDANT"],
+        )
+
     def test_explicit_source_commit_supports_cross_runtime_packet_build(self) -> None:
         source_commit = "a" * 40
         with patch.dict("os.environ", {"E2R_SOURCE_COMMIT_SHA": source_commit}):
