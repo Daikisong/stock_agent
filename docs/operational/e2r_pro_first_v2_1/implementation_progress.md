@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-28 C06 새 Pro 채팅 pass 11 compact repair COMPLETE / accepted 70 / pass 12 서버 지연 확인 중`
+기준 시각: `2026-08-28 C06 새 Pro 채팅 accepted 73 / pass 14 saturation audit 연구 중`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -3487,3 +3487,85 @@ runner는 `TRANSPORT_PENDING`으로 안전 중단했고 자동 재전송은 0이
 hydration이 수분 늦은 뒤 exact turn이 나타났으므로, 같은 pass를 보내지 않고 읽기 전용 late audit만
 수행한다. 결과가 capture·검증되기 전에는 C06 saturation, component/Judge, score 또는 Stage를 선언하지
 않는다. PR #7은 계속 Draft/open이며 병합하지 않는다.
+
+## P18 — C06 pass 12 의미 진전과 saturation replacement 1회 경계
+
+### pass 12 완료
+
+pass 12의 첫 공개 화면 관측은 marker가 일부만 보여 `TRANSPORT_PENDING`이었지만, 약 2분 뒤 같은
+conversation을 읽기 전용으로 재관측했을 때 exact pass/parent marker와 durable user turn이 나타났다.
+추가 submit 없이 기존 assistant turn을 감시했고 42분 뒤 현재-turn JSON을 직접 다운로드했다.
+
+```text
+pass id / ordinal               PROPASS-b38c8ccfb3aca623f77e9538 / 12
+status / submit                 COMPLETE / 1
+server observations             2
+absence / confirmed             1 / true
+recovery browser submit delta   0
+capture source                  DOWNLOAD_JSON
+new fact / route                3 / 16
+accepted fact                   70 -> 73
+effective facts/routes          77 / 154
+effective dossier hash          9742c07af6e51d9d0b2e5927699be6c9b2da0c2b9fce02f9ef15023cc403a87b
+response hash                   b3e56d432e0f90951f0cb05503522e6f5dc7c9faa90930c1f926f13d24d1c731
+query / search                  0 / 0
+```
+
+세 fact는 모두 deterministic verifier를 통과했다. Pro 출력이라는 이유로 채택한 것이 아니라 현재
+source 원문과 excerpt·target·date를 다시 대조한 결과다. saturation은 다음처럼 줄었다.
+
+```text
+nonterminal mandatory            2 -> 1
+provider/parser core pending      0 -> 0
+source-linkage incomplete         4 -> 3
+public material gap              11 -> 4
+verifier repair pending           1 -> 1
+```
+
+남은 nonterminal은 `R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q04` 한 개다. 나머지 public gap 4개와 linkage
+3개가 공개자료로 더 닫히는지, 이미 조사한 공개 경로 밖인지 최종 판정하기 위해 새 search pass가 아닌
+28-question `SATURATION_AUDIT`을 만들었다.
+
+### pass 13 미저장 봉인과 pass 14 replacement
+
+pass 13은 68,037자였고 DOM send click은 한 번 발생했지만, 두 개의 독립 fresh public view 모두에서
+exact pass/parent marker가 없었다. 화면상 전송을 서버 저장으로 간주하지 않고 `FAILED_HARD`로 봉인했다.
+
+```text
+pass 13                         PROPASS-b1184fe6bd83e5f7de8ca23c
+input root hash                 1f01a43575204b42e80390c296e60df038fd7b3ada458dea7bebe1be785bcb49
+submit / absence                1 / 2
+server persistence              false
+status                          FAILED_HARD
+automatic resubmit              false
+```
+
+같은 pass를 다시 보내지 않고, 정책상 허용된 서로 다른 replacement pass를 정확히 한 번 만들었다.
+pass 14는 `supersedes_unpersisted_pass_id=pass 13`과 동일 root input hash를 장부에 남긴다. 첫 관측은
+늦었지만 두 번째 읽기 전용 관측에서 durable user turn을 확인했다.
+
+```text
+pass 14                         PROPASS-739ea5decbf04f0a0298e25f
+pass name                       SATURATION_AUDIT
+prompt chars                    68,512
+submit count                    1
+server observations             2
+absence / confirmed             1 / true
+browser submit delta on recovery 0
+status                          RESEARCH_RUNNING
+```
+
+pass 14도 저장되지 않았다면 동일 saturation 입력의 세 번째 전송은 차단됐을 것이다. 현재는 서버 저장이
+확인돼 같은 assistant turn의 완료만 감시한다. score/Stage/publication authority는 계속
+`false/false/withheld`다.
+
+커밋 `88ec6111`의 GitHub 독립 검증은 다음과 같다.
+
+```text
+E2R Pro-first push run          SUCCESS / 33135805748
+E2R Pro-first PR run            SUCCESS / 33135803705
+E2R v6 operational cutover      SUCCESS / 33135805745
+full regression                 7,779 tests / failure·error 0
+fresh efficiency static audit  PASS / critical 0
+Pro-first V2 static audit       PASS / critical 0
+```
