@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-28 C06 새 Pro 채팅 Initial Gate PASS 23/27 / 28/28 / 전송·캡처 1/1 / full-thesis tail 대기`
+기준 시각: `2026-08-28 C06 새 Pro 채팅 pass 11 compact repair COMPLETE / accepted 70 / pass 12 서버 지연 확인 중`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -3377,3 +3377,113 @@ failure / error                        0 / 0
 
 기계 판독 영수증은 `p16_c06_full_tail_prompt_compaction_receipt.json`이다. 이 checkpoint도 전체 완료가
 아니며, 같은 C06 conversation에 compact된 bounded tail을 아직 전송하지 않은 상태다.
+
+## P17 — C06 새 채팅 full-tail pass 11 수리와 실제 응답 무전송 복구
+
+### 새 채팅 상태와 실제 병목
+
+기존 conversation은 서버 저장 부재로 이미 봉인했고, C06은 새 conversation
+`6a90786a-8234-83e8-b7b4-c03f18b4e725`에서 계속 실행한다. 새 채팅의 Initial Gate는 앞서
+`23/27`, mandatory `28/28`로 통과했다. 이번 병목은 새 채팅 세션 고장이 아니라 pass 11 Pro
+repair JSON의 전송 표현이었다.
+
+쉬운 예로 아래 두 URL은 같은 query 값을 뜻한다.
+
+```text
+contentType=application%2Fpdf&fileName=4010%2Freport.pdf
+contentType=application/pdf&fileName=4010/report.pdf
+```
+
+`CanonicalURLResolver`로 두 URL을 풀었다가 다시 canonicalize하면 같은 URL이 된다. 기존 repair
+normalizer는 이 표현 차이를 immutable URL 변경으로 오인했다. 또한 Pro는 replacement fact 28개에
+원래 rejected `candidate_id`를 그대로 재사용했다. statement·excerpt·source는 유효할 수 있지만,
+append-only dossier에는 기존 fact와 같은 ID를 다시 넣을 수 없다.
+
+### generic 수리
+
+종목명, C06, source host를 조건으로 쓰지 않고 다음 두 transport envelope만 결정적으로 정규화했다.
+
+```text
+동일 canonical URL의 % encoding 차이
+→ prompt의 exact canonical URL로 복원
+
+replacement_fact.dossier_fact_id == rejected candidate_id
+→ repair pass + candidate + replacement semantic payload로 새 PROFACT ID 생성
+→ 현재 repair route accepted_fact_ids도 같은 새 ID로 교체
+
+실제로 다른 canonical URL
+→ 계속 hard fail
+```
+
+새 source document도 resolved canonical URL이 기존 source와 같을 때만 기존 source ID로 결박한다.
+원문 statement, excerpt, value, question scope, target, score/Stage authority는 바꾸지 않는다. 앞으로의
+repair prompt에는 replacement fact가 원래 candidate 및 기존 fact와 다른 새 ID를 사용하라고 명시했다.
+
+별도로 terminal question에 repair 가능한 rejected fact가 결박돼 있으면 public search보다 compact
+repair를 먼저 실행하도록 router를 고쳤다. 하나의 repair candidate가 있는 질문만 보류하며, 관계없는
+진짜 public gap은 계속 조사할 수 있다. 예를 들어 Q-A의 인용 오류를 고치는 동안 Q-B의 미확인 공시까지
+숨기지 않는다.
+
+### pass 11 무전송 복구 결과
+
+완료된 browser capture와 raw Pro JSON은 수정하지 않았다. 기존 prompt hash가 달라지지 않도록 당시
+prompt를 그대로 사용해 `REUSE_CAPTURE`했고, browser submit delta는 0이었다.
+
+```text
+pass id / ordinal               PROPASS-bc8734afba8b99d9a7d37be1 / 11
+status / submit                 COMPLETE / 1
+recovery browser submit delta   0
+repair actions                  31
+Pro replacement / withdraw      28 / 3
+URL encoding normalization       3
+replacement ID reassignment     28
+existing source remap             2
+replacement local reverify       28
+accepted / failed-withdrawn      16 / 12
+unresolved replacement            0
+query / search                    0 / 0
+prior accepted preserved        54 / 54
+effective facts/routes          74 / 138
+effective dossier hash          d096a27de31d0e1ecb11c92b942c0125eca81a501e9a876167f0053e07c30547
+repair receipt hash             4358d29381e55f48a5aa5ccae4dc35ebab9090d57997afaa1508e8ba923e2c83
+```
+
+deterministic source verifier 기준 accepted fact는 `54 → 70`으로 늘었다. 검문에 실패한 replacement
+12개는 두 번째 repair로 보내지 않고 fail-closed 철회했다. 따라서 Pro가 고쳤다는 이유만으로 전부
+사실로 승격하지 않았다.
+
+```text
+nonterminal mandatory            2
+provider/parser core pending      0
+source-linkage incomplete         4
+public material gap              11
+verifier repair pending           1
+research saturation              PENDING
+score / Stage / publication      false / false / withheld
+```
+
+focused compact repair `22/22`, fresh orchestration `44/44`가 통과했다. 새 회귀는 URL의 `%2F`와 `/`가
+같은 주소일 때만 복원되는지, 다른 host/path는 거절되는지, candidate ID 재사용 시 새 ID와 route가 함께
+바뀌는지, repair 가능한 fact가 있는 질문만 public router에서 보류되는지를 검증한다.
+
+### pass 12 현재 상태
+
+pass 11 직후 상태기계는 남은 실제 source gap 7개를 25,658자 context로 묶어 같은 새 conversation에
+pass 12를 정확히 한 번 제출했다.
+
+```text
+pass id / ordinal               PROPASS-b38c8ccfb3aca623f77e9538 / 12
+pass name                       PUBLIC_GAP_CLOSURE
+parent                          PROPASS-bc8734afba8b99d9a7d37be1
+question count                  7
+prompt chars                    25,658
+submit count                    1
+status                          TRANSPORT_PENDING
+automatic resubmit             false
+```
+
+최초 별도 공개 화면 관측은 job/run marker만 보고 pass/parent marker를 아직 보지 못했다. 이 시점에
+runner는 `TRANSPORT_PENDING`으로 안전 중단했고 자동 재전송은 0이다. 앞선 pass 7·9·10도 서버 화면
+hydration이 수분 늦은 뒤 exact turn이 나타났으므로, 같은 pass를 보내지 않고 읽기 전용 late audit만
+수행한다. 결과가 capture·검증되기 전에는 C06 saturation, component/Judge, score 또는 Stage를 선언하지
+않는다. PR #7은 계속 Draft/open이며 병합하지 않는다.

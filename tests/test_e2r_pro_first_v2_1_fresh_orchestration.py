@@ -41,6 +41,7 @@ from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
     _followup_context,
     _parse_and_validate_compact_repair_transport,
     _question_ids_without_completed_context,
+    _question_ids_without_repairable_candidates,
     _question_route_progress_state,
     _repairable_classifications,
     _ensure_durable_conversation_visible,
@@ -1979,6 +1980,73 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(
             tuple(row["candidate_id"] for row in _repairable_classifications(rows)),
             ("FACT-YES",),
+        )
+
+    def test_repairable_linked_fact_is_repaired_before_question_research(self) -> None:
+        dossier = {
+            "question_family_results": [
+                {
+                    "question_family_id": "Q-REPAIR-FIRST",
+                    "support_fact_ids": ["FACT-ACCEPTED"],
+                    "counter_fact_ids": ["FACT-WRONG-SUBJECT"],
+                    "resolution_fact_ids": [],
+                },
+                {
+                    "question_family_id": "Q-REAL-PUBLIC-GAP",
+                    "support_fact_ids": ["FACT-OTHER"],
+                    "counter_fact_ids": [],
+                    "resolution_fact_ids": [],
+                },
+            ]
+        }
+        classifications = (
+            {
+                "candidate_id": "FACT-WRONG-SUBJECT",
+                "material": True,
+                "send_to_pro_allowed": True,
+                "routing": "COMPACT_PRO_REPAIR_ALLOWED",
+            },
+        )
+
+        self.assertEqual(
+            _question_ids_without_repairable_candidates(
+                ("Q-REPAIR-FIRST", "Q-REAL-PUBLIC-GAP"),
+                dossier=dossier,
+                repairable_classifications=_repairable_classifications(
+                    classifications
+                ),
+            ),
+            ("Q-REAL-PUBLIC-GAP",),
+        )
+
+    def test_nonrepairable_rejection_does_not_hide_public_question(self) -> None:
+        dossier = {
+            "question_family_results": [
+                {
+                    "question_family_id": "Q-STILL-PUBLIC",
+                    "support_fact_ids": ["FACT-LOCAL-ONLY"],
+                    "counter_fact_ids": [],
+                    "resolution_fact_ids": [],
+                }
+            ]
+        }
+        classifications = (
+            {
+                "candidate_id": "FACT-LOCAL-ONLY",
+                "material": True,
+                "send_to_pro_allowed": False,
+            },
+        )
+
+        self.assertEqual(
+            _question_ids_without_repairable_candidates(
+                ("Q-STILL-PUBLIC",),
+                dossier=dossier,
+                repairable_classifications=_repairable_classifications(
+                    classifications
+                ),
+            ),
+            ("Q-STILL-PUBLIC",),
         )
 
     def test_route_receipt_only_is_not_semantic_progress(self) -> None:

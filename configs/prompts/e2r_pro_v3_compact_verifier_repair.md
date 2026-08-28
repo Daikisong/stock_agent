@@ -22,7 +22,8 @@ action 하나를 선택한 `e2r_pro_repair_delta_v3` JSON 하나만 반환하라
 - 전체 `ResearchDossierV3` 재출력
 
 replacement fact는 Initial V3 atomic evidence contract와 `verifier_preflight`를 그대로 만족해야
-한다. replacement fact 한 개는 source document 한 개만 참조한다. 같은 source group의
+한다. `replacement_fact.dossier_fact_id`는 원래 `candidate_id` 및 기존 모든 fact ID와 다른
+새 ID여야 한다. replacement fact 한 개는 source document 한 개만 참조한다. 같은 source group의
 `fetched_source_text`는 group에 한 번만 제공되므로 candidate별로 전체 원문을 반복하지 마라.
 각 candidate의 `original_fact_values`는 context 최상단 `original_fact_field_order`와 같은 순서다.
 중복 필드명과 고정 preflight를 48번 반복하지 않기 위한 무손실 compact 표현이므로, replacement를

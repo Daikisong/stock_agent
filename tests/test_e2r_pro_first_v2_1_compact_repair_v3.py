@@ -415,6 +415,79 @@ class ProFirstV21CompactRepairV3Test(unittest.TestCase):
             compiled_prompt=compiled,
         )
 
+    def test_transport_normalizer_restores_equivalent_url_and_new_fact_id(
+        self,
+    ) -> None:
+        encoded_url = (
+            "https://example.com/download?contentType=application%2Fpdf"
+            "&fileName=4010%2Freport.pdf"
+        )
+        decoded_url = (
+            "https://example.com/download?contentType=application/pdf"
+            "&fileName=4010/report.pdf"
+        )
+        self.url = encoded_url
+        dossier = self._dossier()
+        compiled = self._compile(dossier=dossier)
+        delta = self._narrow_delta()
+        action = delta["repair_actions"][0]
+        action["canonical_url"] = decoded_url
+        action["replacement_fact"]["dossier_fact_id"] = "FACT-REJECTED"
+        delta["new_route_receipts"][0]["opened_source_urls"] = [decoded_url]
+        delta["new_route_receipts"][0]["accepted_fact_ids"] = ["FACT-REJECTED"]
+
+        normalized, receipt = normalize_repair_delta_v3_transport(
+            repair_delta=delta,
+            dossier=dossier,
+            compiled_prompt=compiled,
+            performed_at="2026-08-22T03:04:05Z",
+        )
+
+        normalized_action = normalized["repair_actions"][0]
+        replacement_id = normalized_action["replacement_fact"]["dossier_fact_id"]
+        self.assertEqual(normalized_action["canonical_url"], encoded_url)
+        self.assertNotEqual(replacement_id, "FACT-REJECTED")
+        self.assertTrue(replacement_id.startswith("PROFACT-"))
+        self.assertEqual(
+            normalized["new_route_receipts"][0]["opened_source_urls"],
+            [encoded_url],
+        )
+        self.assertEqual(
+            normalized["new_route_receipts"][0]["accepted_fact_ids"],
+            [replacement_id],
+        )
+        self.assertGreaterEqual(
+            receipt["equivalent_url_encoding_normalized_count"],
+            2,
+        )
+        self.assertEqual(receipt["replacement_fact_identity_reassigned_count"], 1)
+        RepairDeltaV3Validator().validate(
+            normalized,
+            dossier=dossier,
+            compiled_prompt=compiled,
+        )
+
+    def test_transport_normalizer_rejects_semantically_different_immutable_url(
+        self,
+    ) -> None:
+        dossier = self._dossier()
+        compiled = self._compile(dossier=dossier)
+        delta = self._narrow_delta()
+        delta["repair_actions"][0]["canonical_url"] = (
+            "https://other.example.org/unrelated"
+        )
+
+        with self.assertRaisesRegex(
+            RepairDeltaV3ValidationError,
+            "changed immutable scope.*canonical_url",
+        ):
+            normalize_repair_delta_v3_transport(
+                repair_delta=delta,
+                dossier=dossier,
+                compiled_prompt=compiled,
+                performed_at="2026-08-22T03:04:05Z",
+            )
+
     def test_delta_cannot_escape_candidate_or_question_scope(self) -> None:
         dossier = self._dossier()
         compiled = self._compile(dossier=dossier)

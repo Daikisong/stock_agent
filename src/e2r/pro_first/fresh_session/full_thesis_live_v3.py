@@ -287,7 +287,14 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                     accepted_fact_count=len(verification_state.accepted_fact_ids),
                 )
 
-                public_ids = _public_followup_question_ids(latest_saturation)
+                repairable = _repairable_classifications(
+                    verification_state.rejection_classifications
+                )
+                public_ids = _question_ids_without_repairable_candidates(
+                    _public_followup_question_ids(latest_saturation),
+                    dossier=dossier,
+                    repairable_classifications=repairable,
+                )
                 public_context = _followup_context(
                     dossier=dossier,
                     saturation=latest_saturation,
@@ -354,7 +361,11 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                     dossier = next_dossier
                     continue
 
-                counter_ids = _counter_followup_question_ids(latest_saturation)
+                counter_ids = _question_ids_without_repairable_candidates(
+                    _counter_followup_question_ids(latest_saturation),
+                    dossier=dossier,
+                    repairable_classifications=repairable,
+                )
                 counter_context = _followup_context(
                     dossier=dossier,
                     saturation=latest_saturation,
@@ -421,9 +432,6 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                     dossier = next_dossier
                     continue
 
-                repairable = _repairable_classifications(
-                    verification_state.rejection_classifications
-                )
                 if repairable:
                     completed_repairs = tuple(
                         row
@@ -1511,6 +1519,49 @@ def _repairable_classifications(
         for row in rows
         if row.get("send_to_pro_allowed") is True
         and row.get("material") is True
+    )
+
+
+def _question_ids_without_repairable_candidates(
+    question_ids: Sequence[str],
+    *,
+    dossier: Mapping[str, Any],
+    repairable_classifications: Sequence[Mapping[str, Any]],
+) -> tuple[str, ...]:
+    """Route a verifier defect to compact repair before searching again.
+
+    A terminal question can still expose a missing deterministic source role
+    when one of its linked facts was rejected for a repairable semantic or
+    source defect.  Sending that question back to public research merely adds
+    more append-only facts and route receipts while the verifier defect stays
+    unresolved.  Keep unrelated acquisition gaps eligible, but hold the
+    affected question for the bounded compact-repair branch below.
+    """
+
+    repairable_candidate_ids = {
+        str(row.get("candidate_id") or "")
+        for row in repairable_classifications
+        if str(row.get("candidate_id") or "")
+    }
+    if not repairable_candidate_ids:
+        return tuple(dict.fromkeys(str(value) for value in question_ids))
+    blocked_question_ids = {
+        str(row.get("question_family_id") or "")
+        for row in dossier.get("question_family_results") or ()
+        if repairable_candidate_ids.intersection(
+            str(value)
+            for field in (
+                "support_fact_ids",
+                "counter_fact_ids",
+                "resolution_fact_ids",
+            )
+            for value in row.get(field) or ()
+        )
+    }
+    return tuple(
+        value
+        for value in dict.fromkeys(str(value) for value in question_ids)
+        if value not in blocked_question_ids
     )
 
 

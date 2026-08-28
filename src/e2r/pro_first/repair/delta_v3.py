@@ -283,8 +283,10 @@ def normalize_repair_delta_v3_transport(
 
     The raw Pro response remains immutable in the browser capture.  This
     normalizer never changes a replacement statement, excerpt, value, question
-    scope, source URL/content, or authority field.  It may canonicalize a new
-    source ID back to an existing document with the exact same canonical URL,
+    scope, semantic source URL/content, or authority field.  It may normalize
+    equivalent URL encodings, canonicalize a new source ID back to an existing
+    document with the same resolved canonical URL, assign a new deterministic
+    envelope ID when Pro reused the rejected candidate ID for its replacement,
     bind a declared new source to the action that already references it,
     relabel a source-changing action as REPLACE, fail closed to WITHDRAW when a
     proposed fact conflicts with the canonical source scope, and create a
@@ -311,17 +313,49 @@ def normalize_repair_delta_v3_transport(
         str(row.get("source_document_id") or ""): row
         for row in dossier.get("source_documents") or ()
     }
-    existing_source_by_url = {
-        str(row.get("canonical_url") or ""): row
-        for row in sources.values()
-        if str(row.get("canonical_url") or "")
-    }
+    resolver = CanonicalURLResolver()
+
+    def resolved_url(value: Any, *, field: str) -> str:
+        try:
+            return resolver.resolve(str(value or "")).canonical_url
+        except ValueError as error:
+            raise RepairDeltaV3ValidationError(
+                f"repair transport normalization received an invalid {field}"
+            ) from error
+
+    existing_source_by_url: dict[str, Mapping[str, Any]] = {}
+    for source in sources.values():
+        canonical_url = str(source.get("canonical_url") or "")
+        if canonical_url:
+            existing_source_by_url.setdefault(
+                resolved_url(canonical_url, field="existing canonical URL"),
+                source,
+            )
     operations: list[Mapping[str, Any]] = []
     source_id_remap: dict[str, str] = {}
     canonical_new_source_rows: list[Mapping[str, Any]] = []
     for source in normalized.get("new_source_documents") or ():
         source_id = str(source.get("source_document_id") or "")
-        canonical_url = str(source.get("canonical_url") or "")
+        canonical_url_before = str(source.get("canonical_url") or "")
+        opened_url_before = str(source.get("opened_url") or "")
+        canonical_url = resolved_url(
+            canonical_url_before,
+            field="new source canonical URL",
+        )
+        opened_url = resolved_url(
+            opened_url_before,
+            field="new source opened URL",
+        )
+        if canonical_url != canonical_url_before or opened_url != opened_url_before:
+            source["canonical_url"] = canonical_url
+            source["opened_url"] = opened_url
+            operations.append(
+                {
+                    "operation": "NORMALIZE_EQUIVALENT_SOURCE_URL_ENCODING",
+                    "source_document_id": source_id,
+                    "canonical_url_hash": canonical_hash(canonical_url),
+                }
+            )
         existing = existing_source_by_url.get(canonical_url)
         if existing is None:
             canonical_new_source_rows.append(source)
@@ -342,6 +376,14 @@ def normalize_repair_delta_v3_transport(
         for row in canonical_new_source_rows
     }
     all_sources = {**sources, **new_sources}
+    declared_source_url_by_resolved_url: dict[str, str] = {}
+    for source in all_sources.values():
+        declared_url = str(source.get("canonical_url") or "")
+        if declared_url:
+            declared_source_url_by_resolved_url.setdefault(
+                resolved_url(declared_url, field="declared source canonical URL"),
+                declared_url,
+            )
     questions = {
         str(row.get("question_family_id") or ""): row
         for row in dossier.get("question_family_results") or ()
@@ -351,6 +393,28 @@ def normalize_repair_delta_v3_transport(
         for row in dossier.get("search_route_receipts") or ()
     }
     routes = list(normalized.get("new_route_receipts") or ())
+    for route in routes:
+        opened_before = tuple(
+            str(value) for value in route.get("opened_source_urls") or ()
+        )
+        opened_after = tuple(
+            dict.fromkeys(
+                declared_source_url_by_resolved_url.get(
+                    resolved_url(value, field="route opened source URL"),
+                    resolved_url(value, field="route opened source URL"),
+                )
+                for value in opened_before
+            )
+        )
+        if opened_after != opened_before:
+            route["opened_source_urls"] = list(opened_after)
+            operations.append(
+                {
+                    "operation": "NORMALIZE_EQUIVALENT_ROUTE_URL_ENCODING",
+                    "route_receipt_id": str(route.get("route_receipt_id") or ""),
+                }
+            )
+    generated_replacement_ids: set[str] = set()
     for action in actions:
         candidate_id = str(action.get("candidate_id") or "")
         candidate = prompt_candidates.get(candidate_id)
@@ -364,7 +428,6 @@ def normalize_repair_delta_v3_transport(
             ("rejection_category", candidate.get("rejection_category")),
             ("original_statement", candidate.get("original_statement")),
             ("source_document_id", candidate.get("source_document_id")),
-            ("canonical_url", candidate.get("canonical_url")),
             ("allowed_action", REPAIR_ACTION_CONTRACT),
         ):
             if action.get(key) != expected:
@@ -372,10 +435,73 @@ def normalize_repair_delta_v3_transport(
                     "repair transport normalization refuses changed immutable "
                     f"scope: {candidate_id}/{key}"
                 )
+        expected_canonical_url = str(candidate.get("canonical_url") or "")
+        action_canonical_url = str(action.get("canonical_url") or "")
+        if action_canonical_url != expected_canonical_url:
+            if resolved_url(
+                action_canonical_url,
+                field="repair action canonical URL",
+            ) != resolved_url(
+                expected_canonical_url,
+                field="packet canonical URL",
+            ):
+                raise RepairDeltaV3ValidationError(
+                    "repair transport normalization refuses changed immutable "
+                    f"scope: {candidate_id}/canonical_url"
+                )
+            action["canonical_url"] = expected_canonical_url
+            operations.append(
+                {
+                    "operation": "RESTORE_EQUIVALENT_IMMUTABLE_CANONICAL_URL",
+                    "candidate_id": candidate_id,
+                    "canonical_url_hash": canonical_hash(
+                        resolved_url(
+                            expected_canonical_url,
+                            field="packet canonical URL",
+                        )
+                    ),
+                }
+            )
         replacement = action.get("replacement_fact")
         if not isinstance(replacement, Mapping):
             continue
         replacement_id = str(replacement.get("dossier_fact_id") or "")
+        if replacement_id == candidate_id:
+            replacement_identity_payload = deepcopy(dict(replacement))
+            replacement_identity_payload.pop("dossier_fact_id", None)
+            replacement_id = stable_id(
+                "PROFACT",
+                {
+                    "repair_pass_id": compiled_prompt.research_pass_id,
+                    "repair_of_candidate_id": candidate_id,
+                    "replacement_fact": replacement_identity_payload,
+                },
+            )
+            if replacement_id in facts or replacement_id in generated_replacement_ids:
+                raise RepairDeltaV3ValidationError(
+                    "deterministic replacement fact id collides with the dossier"
+                )
+            replacement["dossier_fact_id"] = replacement_id
+            generated_replacement_ids.add(replacement_id)
+            for route in routes:
+                accepted_before = tuple(
+                    str(value) for value in route.get("accepted_fact_ids") or ()
+                )
+                accepted_after = tuple(
+                    dict.fromkeys(
+                        replacement_id if value == candidate_id else value
+                        for value in accepted_before
+                    )
+                )
+                if accepted_after != accepted_before:
+                    route["accepted_fact_ids"] = list(accepted_after)
+            operations.append(
+                {
+                    "operation": "ASSIGN_NEW_REPLACEMENT_FACT_ID",
+                    "candidate_id": candidate_id,
+                    "replacement_id": replacement_id,
+                }
+            )
         source_id = str(replacement.get("source_document_id") or "")
         canonical_source_id = source_id_remap.get(source_id)
         if canonical_source_id is not None:
@@ -419,15 +545,17 @@ def normalize_repair_delta_v3_transport(
                 }
             )
             continue
-        if source_id in new_sources and action.get("replacement_source_document") is None:
+        if source_id in new_sources:
+            nested_source_was_missing = action.get("replacement_source_document") is None
             action["replacement_source_document"] = deepcopy(new_sources[source_id])
-            operations.append(
-                {
-                    "operation": "BIND_DECLARED_NEW_SOURCE_TO_ACTION",
-                    "candidate_id": candidate_id,
-                    "source_document_id": source_id,
-                }
-            )
+            if nested_source_was_missing:
+                operations.append(
+                    {
+                        "operation": "BIND_DECLARED_NEW_SOURCE_TO_ACTION",
+                        "candidate_id": candidate_id,
+                        "source_document_id": source_id,
+                    }
+                )
         if (
             str(action.get("action") or "") in {"CORRECT", "NARROW"}
             and source_id != str(original.get("source_document_id") or "")
@@ -582,6 +710,21 @@ def normalize_repair_delta_v3_transport(
             for row in operations
             if row.get("operation")
             == "REMAP_REPLACEMENT_TO_CANONICAL_SOURCE_ID"
+        ),
+        "equivalent_url_encoding_normalized_count": sum(
+            1
+            for row in operations
+            if row.get("operation")
+            in {
+                "NORMALIZE_EQUIVALENT_SOURCE_URL_ENCODING",
+                "NORMALIZE_EQUIVALENT_ROUTE_URL_ENCODING",
+                "RESTORE_EQUIVALENT_IMMUTABLE_CANONICAL_URL",
+            }
+        ),
+        "replacement_fact_identity_reassigned_count": sum(
+            1
+            for row in operations
+            if row.get("operation") == "ASSIGN_NEW_REPLACEMENT_FACT_ID"
         ),
         "scope_mismatched_replacement_withdrawn_count": sum(
             1
