@@ -1,0 +1,119 @@
+{
+  "schema_version": "e2r_pro_first_progress_checkpoint_v1",
+  "recorded_at": "2026-08-28T13:06:52+09:00",
+  "phase": "P20_C06_FULL_TAIL_FAIL_CLOSED",
+  "status": "C06_PUBLIC_RESEARCH_EXHAUSTED_VERIFIER_REPAIR_PENDING",
+  "completion_claimed": false,
+  "job_id": "PROJOB-821fd91d8204a7c366ec86f0",
+  "run_id": "PRORUN-f34eb764254e9fd6c7e21cb4",
+  "conversation_id": "6a90786a-8234-83e8-b7b4-c03f18b4e725",
+  "conversation_policy": {
+    "old_conversation_reused": false,
+    "fresh_chat_initial_gate_passed": true,
+    "same_fresh_chat_tail_used": true,
+    "duplicate_submit_count": 0,
+    "hidden_chatgpt_api_used": false
+  },
+  "pass15": {
+    "pass_id": "PROPASS-27592c5831d15f6e364cb8a6",
+    "pass_name": "PUBLIC_GAP_CLOSURE",
+    "status": "COMPLETE",
+    "submit_count": 1,
+    "server_persistence_observation_count": 2,
+    "server_persistence_absence_confirmation_count": 1,
+    "server_persistence_confirmed": true,
+    "recovery_browser_submit_delta": 0,
+    "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+    "capture_receipt_file_hash": "14f7ef5696cfd562158322bbbc61587819dc03e1cc773c429d4a70d1c5b15a93",
+    "response_hash": "826e93c4b57713619c09b017c1c50afcbeb91bc6dc94e96d9e22292cfcedf0e0",
+    "new_fact_count": 1,
+    "new_route_count": 9,
+    "accepted_fact_count_after": 74,
+    "effective_fact_count_after": 78,
+    "effective_route_count_after": 163
+  },
+  "pass16": {
+    "pass_id": "PROPASS-82648e2e8bc7485d5678edbb",
+    "pass_name": "PUBLIC_GAP_CLOSURE",
+    "status": "COMPLETE",
+    "submit_count": 1,
+    "server_persistence_observation_count": 2,
+    "server_persistence_absence_confirmation_count": 1,
+    "server_persistence_confirmed": true,
+    "recovery_browser_submit_delta": 0,
+    "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+    "capture_receipt_file_hash": "6652d13d6b3a76fe4f0ceaafc9c88bc3b8aea5210ab48bfffcdc4ff0eca4c514",
+    "response_hash": "a75ca0fdace81a6598903ce25159d8f8d4fe93ac351dd3c9f63471a3c8789fac",
+    "new_fact_count": 0,
+    "new_route_count": 5,
+    "accepted_fact_count_after": 74,
+    "effective_fact_count_after": 78,
+    "effective_route_count_after": 168,
+    "public_material_gap_count_after": 0
+  },
+  "pass17": {
+    "pass_id": "PROPASS-feba50bd0347872546862752",
+    "pass_name": "SATURATION_AUDIT",
+    "status": "COMPLETE",
+    "submit_count": 1,
+    "server_persistence_observation_count": 2,
+    "server_persistence_absence_confirmation_count": 1,
+    "server_persistence_confirmed": true,
+    "recovery_browser_submit_delta": 0,
+    "capture_source": "DIRECT_REPORT_DOM",
+    "capture_receipt_file_hash": "43770e6d2a89313762c675a9ed2018e92bc3a17c55bcf5a8c88ae564e433e2bc",
+    "response_hash": "a96b492606972f5918e7824f67abea2b4c0e5b6765243be1df20715dd52011bf",
+    "new_fact_count": 0,
+    "new_route_count": 0,
+    "semantic_progress": true
+  },
+  "terminal_truth": {
+    "accepted_fact_count": 74,
+    "effective_fact_count": 78,
+    "effective_route_count": 168,
+    "expected_mandatory_question_count": 28,
+    "nonterminal_mandatory_question_count": 1,
+    "public_material_gap_count": 0,
+    "provider_parser_core_pending_count": 0,
+    "lifecycle_hard_break_pending_count": 0,
+    "source_linkage_incomplete_count": 1,
+    "verifier_repair_pending_count": 1,
+    "pending_question_ids": [
+      "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q04"
+    ],
+    "pending_failure_codes": [
+      "QUESTION_TO_SOURCE_LINKAGE_INCOMPLETE",
+      "DISTINCT_SOURCE_ROUTE_QUORUM_NOT_MET"
+    ],
+    "missing_core_source_roles": [
+      "ISSUER_OFFICIAL"
+    ],
+    "compact_repair_pass_limit": 1,
+    "compact_repair_pass_used": 1,
+    "second_compact_repair_blocked": true,
+    "research_saturation_valid": false,
+    "component_entry_allowed": false,
+    "score": null,
+    "stagecourt": null,
+    "score_authority": false,
+    "stage_authority": false,
+    "publication_withheld": true,
+    "status": "NEEDS_VERIFIER_REPAIR"
+  },
+  "hashes": {
+    "latest_effective_dossier_hash": "b68b1049137a1fa9fccd1678a6aa3d34253a6bab3b5ab4804bebad96f428a9ce",
+    "source_verification_hash": "ece6e982e937ec1c62bac47656faa1eeaeb91ffaf573c4e16f227d89113a0090",
+    "saturation_receipt_hash": "7a5df230711f416248c82d819f312fc0fd396164000eeb6c2f56f75daec5dec9",
+    "full_tail_receipt_hash": "08784e1c5fd2e35cbe78bc89df39a2298dfe2cfca4f0bb61c7b3b393eb551111",
+    "full_tail_receipt_file_hash": "f30f7f4c9df5b9ecef06c48c0e4a5110602e3e62471b35ffa99167bb456538f1"
+  },
+  "verification": {
+    "live_runtime_and_fresh_orchestration": "75/75 PASS",
+    "failure_count": 0,
+    "error_count": 0,
+    "additional_query_count": 0,
+    "additional_search_count": 0
+  },
+  "next_action": "START_EXISTING_C17_FRESH_CHAT_FULL_TAIL",
+  "receipt_hash": "ca90490c0d62b3c102d84dd7e5fbe823cec3dd44dfa5bede6c0b5549a3d69c5b"
+}

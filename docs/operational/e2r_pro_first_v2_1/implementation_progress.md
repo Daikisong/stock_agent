@@ -3639,3 +3639,64 @@ pass 15 READY 캡처를 추가 submit 0으로 재사용했고 accepted fact는 `
 `5 → 3`, public material gap은 `4 → 2`, source-linkage incomplete는 `5 → 1`로 줄었다. 남은 exact
 Stage2 Q04/Q05 두 질문만 pass 16으로 한 번 제출됐고 서버 저장도 확인됐다. descendant 회귀를 포함한
 live-runtime·fresh orchestration은 `75/75 PASS`다.
+
+## P20 — C06 공개 조사 포화와 검문 수리 1건 fail-closed
+
+pass 16은 남아 있던 Stage2 false-positive Q04/Q05 두 질문만 조사했다. 최초 공개 화면 관측은 marker가
+늦게 보였지만 두 번째 읽기 전용 관측에서 exact user turn을 확인했고 재전송하지 않았다. 응답은
+`DIRECT_REPORT_DOM_NORMALIZED`로 캡처됐으며 새 fact는 없고 새 route 5개가 추가됐다.
+
+```text
+pass 16                         PROPASS-82648e2e8bc7485d5678edbb
+status / submit                 COMPLETE / 1
+server observations             2
+absence / confirmed             1 / true
+recovery browser submit delta   0
+new fact / route                0 / 5
+accepted fact                   74
+effective facts / routes        78 / 168
+public material gap             2 -> 0
+response hash                   a75ca0fdace81a6598903ce25159d8f8d4fe93ac351dd3c9f63471a3c8789fac
+```
+
+마지막 pass 17은 28개 mandatory question 전체를 다시 묶은 `SATURATION_AUDIT`이다. 이 pass도 최초
+관측 1회만으로 다시 보내지 않았고, 두 번째 읽기 전용 관측에서 서버 저장을 확인했다. 신규 fact/route는
+`0/0`이며 동일한 마지막 검문 공백을 다시 확인했다.
+
+```text
+pass 17                         PROPASS-feba50bd0347872546862752
+status / submit                 COMPLETE / 1
+recovery browser submit delta   0
+capture source                  DIRECT_REPORT_DOM
+new fact / route                0 / 0
+accepted fact                   74
+effective facts / routes        78 / 168
+public material gap             0
+provider/parser core pending    0
+nonterminal mandatory           1
+verifier repair pending         1
+saturation receipt hash         7a5df230711f416248c82d819f312fc0fd396164000eeb6c2f56f75daec5dec9
+```
+
+남은 exact 질문은 `R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q04`다. 공식 filing fact 한 개는 verifier를
+통과했지만, contract가 요구하는 issuer official과 서로 다른 route quorum을 모두 채우지 못했다.
+compact V3 repair는 이미 pass 11에서 정책상 허용된 1회를 사용했으므로 두 번째 repair를 보내지 않는다.
+쉬운 예로 원문 영수증 한 장은 유효하지만 계약이 서로 다른 영수증 두 장을 요구하는 상황이다. 한 장을
+두 장으로 세지 않고 해당 canary만 보류한다.
+
+따라서 C06은 공개 검색을 반복하지 않고 다음 truth로 봉인한다.
+
+```text
+status                          NEEDS_VERIFIER_REPAIR
+research saturation valid       false
+component entry allowed          false
+score / Stage                    null / null
+score / Stage authority          false / false
+publication                      withheld
+additional query / search        0 / 0
+```
+
+이는 세션 실패가 아니다. 이전 채팅은 재사용하지 않았고, 새 C06 채팅에서 Initial Gate와 pass 11~17의
+exact lineage를 유지했다. 공개적으로 더 조사 가능한 material gap은 0이며, 남은 verifier blocker를 낮은
+점수나 임의 Stage로 덮지 않은 정상 fail-closed 결과다. 다음 실행은 별도 dossier와 conversation을 가진
+C17의 기존 fresh initial 결과에서 full tail을 이어간다.
