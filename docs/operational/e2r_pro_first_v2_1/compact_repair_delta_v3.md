@@ -152,22 +152,34 @@ validated RepairDeltaV3
 repair 전에 이미 accepted였던 fact는 hash까지 같아야 하고 재검문에서도 accepted 상태를
 유지해야 한다. 둘 중 하나라도 깨지면 `operational_ready_allowed=false`다.
 
-fresh efficiency gate는 compact repair를 최대 한 번만 허용한다.
+repair 횟수를 임의의 숫자로 자르지 않는다. 서로 다른 deterministic candidate 문맥에서
+material verifier rejection이 새로 남으면 같은 승인 범위와 같은 Pro 대화에서 다음 compact
+repair를 허용한다.
 
 ```text
-repair_pass_ordinal = 1  허용
-repair_pass_ordinal > 1  SECOND_REPAIR_PASS_BLOCKS_OPERATIONAL_READY
+새 candidate/question/rejection 문맥     다음 repair pass 허용
+같은 candidate 문맥의 완료 snapshot 존재  VERIFIER_REPAIR_FIXPOINT_PENDING
+repair_pass_ordinal < 1                  hard fail
+prompt와 delta의 repair ordinal 불일치    hard fail
 ```
 
-이는 두 번째 수정이 기술적으로 불가능하다는 뜻이 아니라, 같은 fresh session을 운영 효율
-성공으로 포장하지 않는다는 뜻이다. 후속 정책은 P6 fresh-session orchestration에서 새 대화
-실패 경계와 연결한다.
+쉬운 예로 첫 repair가 매출 인용을 고쳤고, 뒤의 public-gap pass가 새 감사의견 후보를 만들었다면
+감사의견 후보는 두 번째 repair 대상이다. 반대로 이미 완료한 같은 감사의견 후보 7개를 입력 변화
+없이 다시 보내지는 않는다. repair ordinal 자체는 score·Stage·운영 성공 권한이 아니며, 기존
+accepted fact 보존과 재검문 결과가 계속 권한 경계를 결정한다.
+
+fresh initial 효율 영수증의 `second_repair_pass_count=0`은 initial pass만 측정한 사실이다. full-tail
+운영의 repair 횟수를 1회로 제한하는 정책이 아니다.
 
 ## runtime 산출물
 
-`job_root/repair_v3/`에 atomic write한다.
+첫 repair는 기존 경로 호환성을 위해 `job_root/repair_v3/`에 atomic write한다. 두 번째 이후
+repair는 앞선 receipt를 덮어쓰지 않고 pass별 append-only 경로를 쓴다.
 
 ```text
+repair 1: job_root/repair_v3/
+repair N: job_root/repair_v3/passes/{ordinal}_{pass_id}/
+
 compact_repair_prompt.md
 compact_repair_prompt_receipt.json
 repair_delta_v3.json
@@ -192,8 +204,8 @@ tests/test_e2r_pro_first_v2_1_compact_repair_v3.py
 
 테스트는 marker parser, grouping, local/nonmaterial routing 금지, 100k hard fail,
 WITHDRAW/NARROW/REPLACE, accepted fact 보존, question scope 차단, V3 preflight 계약, 새 source
-lineage, 실제 preflight→verifier 재검문, 두 번째 repair 차단을 fixture로 검증한다. ChatGPT Pro나
-live web search는 호출하지 않는다.
+lineage, 실제 preflight→verifier 재검문, 서로 다른 후속 repair 문맥과 pass별 artifact 격리를
+fixture로 검증한다. ChatGPT Pro나 live web search는 호출하지 않는다.
 
 P5 완료는 실제 Pro 전송 완료가 아니다. P6에서 fresh job/pass/conversation identity와 exactly-once
 browser transport에 이 compiler/parser/service를 연결해야 한다.

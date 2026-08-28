@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-28 C06 새 Pro 채팅 accepted 74 / pass 16 공개 공백 조사 중`
+기준 시각: `2026-08-29 C06/C17/C28 same-conversation full tail 종료 / 세 canary fail-closed 재현`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -43,8 +43,8 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             IN_PROGRESS (C06 새 chat initial PASS·same-chat tail, C17/C28 tail 대기)
-P10 final CI/audit                        IN_PROGRESS (C06/C17/C28 full tail 후 전체 재검증 대기)
+P9 live multi-pass saturation             COMPLETE (C06/C17/C28 full tail을 terminal pending까지 실행·봉인)
+P10 final CI/audit                        IN_PROGRESS (local 7,791 PASS·정적감사 PASS, current-head CI 대기)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -3684,6 +3684,12 @@ compact V3 repair는 이미 pass 11에서 정책상 허용된 1회를 사용했�
 쉬운 예로 원문 영수증 한 장은 유효하지만 계약이 서로 다른 영수증 두 장을 요구하는 상황이다. 한 장을
 두 장으로 세지 않고 해당 canary만 보류한다.
 
+> **P24 현재 판정으로 대체:** 위의 “정책상 1회” 설명은 P20 당시 구현의 기록이며 현재 운영 규칙이
+> 아니다. generic multi-repair 수리 뒤 C06을 읽기 전용으로 다시 검문한 결과
+> `verifier_repair_pending=1`이지만 `repairable_candidate_count=0`이었다. 따라서 현재 C06이 멈춘 이유는
+> 횟수 cap이 아니라 서로 다른 source-route quorum을 채울 수 있는 유효 repair 후보가 없기 때문이다.
+> 질문/종목별 우회나 두 번째 repair 금지 규칙으로 막은 것이 아니다.
+
 따라서 C06은 공개 검색을 반복하지 않고 다음 truth로 봉인한다.
 
 ```text
@@ -3816,3 +3822,146 @@ saturation_blocker_identity_hash
 fresh orchestration `46/46`, live runtime `31/31`, dossier import `20/20`, Windows browser E2E `2/2`,
 합계 `99/99 PASS`다. 다음 실행은 별도 dossier/job/conversation을 가진 C28 기존 fresh initial에서
 이어간다.
+
+## P23 — C28 full tail 종료, 다중 repair와 질문별 재개 한도 검증
+
+C28은 기존 fresh conversation `6a8eaee3-d670-83ee-9c01-6f7d438db2f0`에서 pass 16까지 이어갔다.
+새 채팅이나 initial 재전송은 사용하지 않았다. pass 12는 fact 2개와 route 8개를 추가했고, pass 13과
+14는 같은 Q04 공개 공백을 각각 한 번씩 재확인했다. 두 응답은 fact를 늘리지 못했으며 route만
+`2`, `3`개 추가했다.
+
+```text
+pass 12  PUBLIC_GAP_CLOSURE  PROPASS-6356b4f1d941c920205fe57a  fact/route +2/+8
+pass 13  PUBLIC_GAP_CLOSURE  PROPASS-a452995d67d0f319b0ae4500  fact/route +0/+2
+pass 14  PUBLIC_GAP_CLOSURE  PROPASS-21913aaccf85396ea4d2bcde  fact/route +0/+3
+pass 15  VERIFIER_REPAIR     PROPASS-3130cedeb6aee4c22b3c8fc7  candidate/action 2/2
+pass 16  SATURATION_AUDIT    PROPASS-b88c55a3bd13ed600d251c40  fact/route +0/+0
+```
+
+pass 13과 14처럼 응답 batch가 바뀌어도 같은 질문의 안정 공백은 같은 재개 예산을 써야 한다. 이를
+위해 pass detail에 질문별 `question_stable_gap_hashes`를 저장하고, 새 context hash가 생겼다는 이유만으로
+같은 공백을 세 번째 다시 열지 못하게 했다. 반대로 공개 공백이 재개 한도에 도달했더라도 별도의
+verifier repair 후보는 굶기지 않는다. 그래서 pass 15의 compact repair가 실제로 실행됐고, pass 16
+감사까지 완료됐다.
+
+최종 C28 read-only 재현은 다음과 같다.
+
+```text
+accepted fact                    41
+mandatory / nonterminal          27 / 4
+provider/parser core pending     1
+public material gap              4
+source-linkage incomplete        4
+verifier repair pending          1
+repairable candidate             0
+effective dossier hash           d1c163fedcf93a107aae76c5befe785ef3048a48c23f92e23574da89bc92b654
+saturation receipt hash          2199565bb208b4785c14badbc82629a3f8ff41b706d8102d27adee7cc93bbd4b
+normal terminal status           RESEARCH_GAP_REOPEN_LIMIT_PENDING
+normal terminal new pass/submit  0 / 0
+score / Stage                    null / null
+publication                      withheld
+```
+
+쉬운 예로 공개적으로 확인할 수 없는 계약 세부를 세 번째 묻지 않았지만, 그 때문에 별도의 영수증
+수리까지 막지는 않았다. 수리 가능한 것은 먼저 처리하고, 그래도 남은 핵심 공백만 pending으로 봉인했다.
+
+브라우저에서 첨부 JSON 미리보기를 연 뒤 React 입력창이 오래된 파일 상태를 유지하는 문제도 확인했다.
+이는 conversation context limit가 아니었다. exact 파일 미리보기를 닫고 같은 `/c/{conversation_id}` URL을
+다시 로드하면 로그인·대화 ID·Pro 모드를 보존한 채 입력창만 정상화됐다. 새 채팅과 재전송은 0이다.
+
+## P24 — C17 repair starvation 해소와 3-canary 최종 정직한 판정
+
+P22에서 C17을 blocker fixpoint로 봉인한 뒤 generic 라우터를 다시 감사했다. 공개자료 공백이 먼저
+잡히면 독립된 verifier repair 후보가 계속 뒤로 밀리는 starvation이 있었다. 공백 종류별로 독립 라우팅하고
+repair ordinal을 양수 전체로 확장한 뒤, 같은 C17 conversation에서 pass 7 repair를 정확히 한 번 수행했다.
+
+```text
+pass 7  VERIFIER_REPAIR
+  pass id                        PROPASS-36260e1001f007cd9ceffa10
+  candidate ids                  2
+  fact / route snapshot          61/124 -> 61/126
+  accepted fact                  42 -> 44
+  verifier repair pending        3 -> 1
+  response hash                  22ab2add8ecdcbc200bd91d2abbad0923eb6c756e2b5f6624515162bd4efc8aa
+
+pass 8  PUBLIC_GAP_CLOSURE
+  pass id                        PROPASS-7ab9fef365033d28accad74d
+  new fact / route               3 / 6
+  accepted fact                  44 -> 46
+  public material gap            6 -> 2
+  response hash                  d699a3e7218abdb0c3bfe7b64ed2f44e321335c04e965c4160467563d804f426
+
+pass 9  SATURATION_AUDIT
+  pass id                        PROPASS-d770d317bc6680a959dc4ce9
+  new fact / route               0 / 0
+  invalid route reference 정리   yes
+
+pass 10 SATURATION_AUDIT
+  pass id                        PROPASS-fc8f5edbcf70735f89072588
+  new fact / route               0 / 0
+  semantic progress              false
+```
+
+pass 8과 pass 10은 최초 fresh public 관측에서 exact marker가 늦게 보여 fail-safe 중단됐지만,
+`--recover-submitted-only`가 같은 conversation의 이미 제출된 turn만 회수했다. 두 경우 모두
+`browser_submit_delta=0`, 최종 `submit_count=1`이다. 이는 새 채팅으로 우회한 것이 아니라 서버에 이미
+도착한 한 건의 답변을 인수한 것이다.
+
+C17 최종 상태는 verify-and-inspect, inspect-only, 마지막 normal no-submit 세 경로에서 동일하게
+재현됐다.
+
+```text
+accepted fact                    46 (current 31 / counter 13 / resolution 2)
+mandatory / nonterminal          26 / 8
+provider/parser core pending     5
+public material gap              2
+source-linkage incomplete        6
+verifier repair pending          1
+repairable candidate             0
+effective dossier hash           63b01a00581d3d0b2e73a2c706d1e4f565b7e38cf4968052852b7b309c00d6a7
+source verification hash         f4729b5e6fec26cd8d0ba72a743c7d1fbcaca6f73a585773499ccc80bcb1c3b4
+saturation receipt hash          304dd2e46a09cf1c876d032105a8dafd02a994debe335eb34259a6896dd3b603
+normal terminal status           RESEARCH_GAP_REOPEN_LIMIT_PENDING
+normal terminal new pass/submit  0 / 0
+score / Stage                    null / null
+publication                      withheld
+```
+
+C06도 multi-repair 코드에서 재감사했다. `accepted=74`, `public_material_gap=0`,
+`verifier_repair_pending=1`, `repairable_candidate=0`으로 재현됐다. 즉 P20의 낡은 “한 번만 repair” 설명이
+현재 blocker가 아니다.
+
+세 live canary의 최종 판정은 다음과 같다.
+
+```text
+C06  NEEDS_VERIFIER_REPAIR             score/Stage null, publication withheld
+C17  RESEARCH_GAP_REOPEN_LIMIT_PENDING score/Stage null, publication withheld
+C28  RESEARCH_GAP_REOPEN_LIMIT_PENDING score/Stage null, publication withheld
+```
+
+따라서 fresh-session, same-conversation recovery, compact multi-repair, 무한 재개 차단, fail-closed 경계는
+운영 계약대로 작동했다. 그러나 세 canary가 모두 full-thesis component entry에 도달한 것은 아니다.
+이번 단계의 정직한 verdict는 `LIVE_FULL_THESIS_NOT_ACHIEVED`이며
+`PRO_FIRST_V2_1_OPERATIONAL_RESEARCH_READY`를 선언하지 않는다. 새 검색, 점수 보정, Stage 추정으로 이
+결론을 덮지 않는다.
+
+최종 변경분 로컬 검증은 다음과 같다.
+
+```text
+fresh orchestration focused       50/50 PASS
+compact multi-repair focused      23/23 PASS
+browser adapter focused           31/31 PASS
+focused total                    104/104 PASS
+full unittest suite            7,791/7,791 PASS (skip 38, failure/error 0)
+compileall                         PASS
+git diff --check                  PASS
+fresh efficiency audit            PASS / critical 0
+  audit hash                       47d96d1f3b602ef0b963ce3772ffc70cbacdb655fb399aefdcf0a61fb9b87b6a
+production static audit            PASS / critical 0
+  audit hash                       ff981d5bed53ebaec938dbcc3049c4e31a854766cd6517ac306376609c94a27a
+```
+
+Playwright focused/전체 테스트는 WSL 시스템에 설치되지 않은 `libnspr4` 등을 저장소 밖
+`/tmp/e2r-playwright-deps`에서만 로드해 실행했다. 최초 기동 실패는 코드 실패로 세지 않았고, 동일
+테스트를 의존성 경로와 함께 다시 실행해 `31/31 PASS` 및 전체 suite PASS를 확인했다. 저장소·시스템
+패키지·로그인 브라우저는 변경하지 않았다.

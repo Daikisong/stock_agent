@@ -568,11 +568,48 @@ class ProFirstV21CompactRepairV3Test(unittest.TestCase):
                 response_hash="1" * 64,
             )
 
-    def test_second_repair_pass_blocks_operational_ready(self) -> None:
-        with self.assertRaisesRegex(
-            ValueError, "SECOND_REPAIR_PASS_BLOCKS_OPERATIONAL_READY"
-        ):
-            self._compile(repair_pass_ordinal=2)
+    def test_later_repair_pass_keeps_deterministic_authority_boundary(self) -> None:
+        compiled = self._compile(repair_pass_ordinal=2)
+
+        self.assertEqual(compiled.repair_pass_ordinal, 2)
+        self.assertFalse(compiled.to_receipt()["score_authority"])
+        self.assertFalse(compiled.to_receipt()["stage_authority"])
+
+    def test_later_repair_pass_reverifies_and_uses_distinct_artifact_root(
+        self,
+    ) -> None:
+        dossier = self._dossier()
+        compiled = self._compile(dossier=dossier, repair_pass_ordinal=2)
+        fetcher = _CountingFetcher({self.url: self.document})
+        service = CompactRepairServiceV3(
+            verifier=ProSourceVerifier(page_fetcher=fetcher)
+        )
+        artifact_root = self.job_root / "repair_v3/passes/02_PROPASS-REPAIR"
+
+        run = service.apply_and_reverify(
+            job=self.job,
+            job_root=self.job_root,
+            dossier=dossier,
+            repair_delta=self._narrow_delta(),
+            compiled_prompt=compiled,
+            prior_verification_rows=[
+                {"dossier_fact_id": "FACT-ACCEPTED", "status": "ACCEPTED_CURRENT"},
+                {
+                    "dossier_fact_id": "FACT-REJECTED",
+                    "status": "REJECTED_QUOTE_MISMATCH",
+                },
+            ],
+            response_hash="8" * 64,
+            repair_pass_ordinal=2,
+            repair_artifact_root=artifact_root,
+        )
+
+        self.assertEqual(run.repair_root, artifact_root.resolve())
+        self.assertEqual(run.receipt["repair_pass_ordinal"], 2)
+        self.assertTrue(run.receipt["operational_ready_allowed"])
+        self.assertFalse(run.receipt["second_repair_pass_blocked"])
+        self.assertTrue((artifact_root / "compact_repair_receipt.json").is_file())
+        self.assertFalse((self.job_root / "repair_v3/compact_repair_receipt.json").exists())
 
     def test_one_compact_repair_is_reverified_and_persisted(self) -> None:
         dossier = self._dossier()

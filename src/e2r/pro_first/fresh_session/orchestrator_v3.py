@@ -890,10 +890,18 @@ class FreshSessionOrchestratorV3:
             for row in self.ledger.list_passes(built.job.job_id)
             if row.pass_name == "VERIFIER_REPAIR"
         )
-        if repairs and all(row.pass_id != pass_id for row in repairs):
-            raise FreshSessionRerunRequired(
-                "SECOND_REPAIR_PASS_BLOCKS_OPERATIONAL_READY: patch the generic "
-                "defect and start a new conversation"
+        existing = next((row for row in repairs if row.pass_id == pass_id), None)
+        if existing is None:
+            repair_pass_ordinal = 1 + max(
+                (
+                    int(row.detail.get("repair_pass_ordinal") or 1)
+                    for row in repairs
+                ),
+                default=0,
+            )
+        else:
+            repair_pass_ordinal = int(
+                existing.detail.get("repair_pass_ordinal") or 1
             )
         active = tuple(
             row
@@ -911,9 +919,8 @@ class FreshSessionOrchestratorV3:
             job_root=job_root,
             research_pass_id=pass_id,
             parent_pass_id=parent.pass_id,
-            repair_pass_ordinal=1,
+            repair_pass_ordinal=repair_pass_ordinal,
         )
-        existing = next((row for row in repairs if row.pass_id == pass_id), None)
         if existing is None:
             record = self.ledger.create_followup_pass(
                 scope=scope,
@@ -924,7 +931,7 @@ class FreshSessionOrchestratorV3:
                 pass_input_hash=logical_input_hash,
                 detail={
                     "fresh_v3_followup": True,
-                    "repair_pass_ordinal": 1,
+                    "repair_pass_ordinal": repair_pass_ordinal,
                     "candidate_ids": list(compiled.candidate_ids),
                     "prompt_char_count": compiled.prompt_char_count,
                     "full_dossier_reoutput_requested_count": 0,
@@ -1142,6 +1149,12 @@ class FreshSessionOrchestratorV3:
                     "question_progress_hashes": dict(
                         (context.get("pass_inputs") or {}).get(
                             "question_progress_hashes"
+                        )
+                        or {}
+                    ),
+                    "question_stable_gap_hashes": dict(
+                        (context.get("pass_inputs") or {}).get(
+                            "question_stable_gap_hashes"
                         )
                         or {}
                     ),

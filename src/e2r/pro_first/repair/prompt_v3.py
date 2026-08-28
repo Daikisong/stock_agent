@@ -75,8 +75,8 @@ class CompactRepairPromptCompilerV3:
     ) -> CompiledCompactRepairPromptV3:
         if dossier.get("schema_version") != "e2r_pro_research_dossier_v3":
             raise ValueError("compact RepairDeltaV3 requires ResearchDossierV3")
-        if repair_pass_ordinal != 1:
-            raise ValueError("SECOND_REPAIR_PASS_BLOCKS_OPERATIONAL_READY")
+        if repair_pass_ordinal < 1:
+            raise ValueError("repair pass ordinal must be positive")
         if not research_pass_id or not parent_pass_id:
             raise ValueError("compact repair requires pass and parent lineage")
         if maximum_group_source_text_chars < MINIMUM_GROUP_SOURCE_TEXT_CHARS:

@@ -756,9 +756,13 @@ def apply_repair_delta_v3(
     validator: RepairDeltaV3Validator | None = None,
     dossier_validator: ResearchDossierValidator | None = None,
 ) -> RepairApplicationV3:
-    if repair_pass_ordinal != 1 or compiled_prompt.repair_pass_ordinal != 1:
+    if repair_pass_ordinal < 1:
         raise RepairDeltaV3ValidationError(
-            "SECOND_REPAIR_PASS_BLOCKS_OPERATIONAL_READY"
+            "repair pass ordinal must be positive"
+        )
+    if compiled_prompt.repair_pass_ordinal != repair_pass_ordinal:
+        raise RepairDeltaV3ValidationError(
+            "repair pass ordinal differs from compiled prompt"
         )
     if prompt_hash != compiled_prompt.prompt_hash:
         raise RepairDeltaV3ValidationError("repair prompt hash mismatch")

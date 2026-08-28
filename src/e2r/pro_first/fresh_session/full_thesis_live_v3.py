@@ -230,7 +230,7 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
             )
 
             for iteration in range(1, self.max_tail_iterations + 1):
-                recovery_plan = _submitted_unsnapshotted_fresh_nonrepair_plan(
+                recovery_plan = _submitted_unsnapshotted_fresh_plan(
                     orchestrator,
                     job_id=job_id,
                 )
@@ -243,30 +243,49 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                         submit_count=recovery_plan.research_pass.submit_count,
                         browser_submit_delta=0,
                     )
-                    outcome = await self._execute_followup(
-                        prepared=prepared,
-                        orchestrator=orchestrator,
-                        dossier_store=dossier_store,
-                        plan=recovery_plan,
-                        original_dossier=dossier,
-                        job_root=job_root,
-                        persist_effective=True,
-                    )
-                    next_dossier = dict(outcome.effective_dossier or dossier)
-                    pass_outcomes.append(_outcome_summary(outcome, next_dossier))
-                    if (
-                        recovery_plan.research_pass.pass_name
-                        in {
-                            "PUBLIC_GAP_CLOSURE",
-                            "COUNTER_SUPERSESSION_CLOSURE",
-                        }
-                        and not outcome.semantic_progress
-                    ):
-                        raise LiveCanaryPending(
-                            "recovered follow-up produced no deterministic semantic progress",
-                            status="RESEARCH_NO_PROGRESS_PENDING",
+                    if recovery_plan.research_pass.pass_name == "VERIFIER_REPAIR":
+                        verification_state = self._load_current_verification(
+                            job_id=job_id,
+                            job_root=job_root,
+                            dossier=dossier,
                         )
-                    dossier = next_dossier
+                        dossier, repair_summary = await self._execute_compact_repair(
+                            prepared=prepared,
+                            orchestrator=orchestrator,
+                            built=built,
+                            dossier_store=dossier_store,
+                            dossier=dossier,
+                            job_root=job_root,
+                            verification_state=verification_state,
+                        )
+                        pass_outcomes.append(repair_summary)
+                    else:
+                        outcome = await self._execute_followup(
+                            prepared=prepared,
+                            orchestrator=orchestrator,
+                            dossier_store=dossier_store,
+                            plan=recovery_plan,
+                            original_dossier=dossier,
+                            job_root=job_root,
+                            persist_effective=True,
+                        )
+                        next_dossier = dict(outcome.effective_dossier or dossier)
+                        pass_outcomes.append(
+                            _outcome_summary(outcome, next_dossier)
+                        )
+                        if (
+                            recovery_plan.research_pass.pass_name
+                            in {
+                                "PUBLIC_GAP_CLOSURE",
+                                "COUNTER_SUPERSESSION_CLOSURE",
+                            }
+                            and not outcome.semantic_progress
+                        ):
+                            raise LiveCanaryPending(
+                                "recovered follow-up produced no deterministic semantic progress",
+                                status="RESEARCH_NO_PROGRESS_PENDING",
+                            )
+                        dossier = next_dossier
                     _enforce_recover_submitted_only(
                         enabled=self.recover_submitted_only,
                         recovered=True,
@@ -301,6 +320,7 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                 repairable = _repairable_classifications(
                     verification_state.rejection_classifications
                 )
+                exhausted_gap_status: str | None = None
                 public_ids = _question_ids_without_repairable_candidates(
                     _public_followup_question_ids(latest_saturation),
                     dossier=dossier,
@@ -332,6 +352,25 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                         question_ids=public_ids,
                         pass_name="PUBLIC_GAP_CLOSURE",
                     )
+                budgeted_public_ids = _question_ids_with_reopen_budget(
+                    orchestrator.ledger,
+                    job_id=job_id,
+                    pass_name="PUBLIC_GAP_CLOSURE",
+                    question_ids=public_ids,
+                    context=public_context,
+                )
+                if budgeted_public_ids != public_ids:
+                    exhausted_gap_status = (
+                        "RESEARCH_GAP_REOPEN_LIMIT_PENDING"
+                    )
+                    public_ids = budgeted_public_ids
+                    public_context = _followup_context(
+                        dossier=dossier,
+                        saturation=latest_saturation,
+                        accepted_fact_ids=verification_state.accepted_fact_ids,
+                        question_ids=public_ids,
+                        pass_name="PUBLIC_GAP_CLOSURE",
+                    )
                 if public_ids and not _context_already_attempted(
                     orchestrator.ledger,
                     job_id=job_id,
@@ -342,7 +381,16 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                         ]
                     ),
                 ):
-                    if _completed_pass_left_blockers_unchanged(
+                    if _same_question_reopen_limit_reached(
+                        orchestrator.ledger,
+                        job_id=job_id,
+                        pass_name="PUBLIC_GAP_CLOSURE",
+                        question_ids=public_ids,
+                    ):
+                        exhausted_gap_status = (
+                            "RESEARCH_GAP_REOPEN_LIMIT_PENDING"
+                        )
+                    elif _completed_pass_left_blockers_unchanged(
                         orchestrator.ledger,
                         job_id=job_id,
                         pass_name="PUBLIC_GAP_CLOSURE",
@@ -353,40 +401,44 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                             or ""
                         ),
                     ):
-                        raise LiveCanaryPending(
-                            "completed public-gap pass left the deterministic "
-                            "blocker identity unchanged",
-                            status="RESEARCH_BLOCKER_FIXPOINT_PENDING",
+                        exhausted_gap_status = (
+                            "RESEARCH_BLOCKER_FIXPOINT_PENDING"
                         )
-                    plan, _compiled = orchestrator.plan_v3_followup(
-                        built,
-                        pass_name="PUBLIC_GAP_CLOSURE",
-                        latest_dossier_digest=public_context[
-                            "latest_dossier_digest"
-                        ],
-                        unresolved_question_state=public_context[
-                            "unresolved_question_state"
-                        ],
-                        pass_inputs=public_context["pass_inputs"],
-                    )
-                    outcome = await self._execute_followup(
-                        prepared=prepared,
-                        orchestrator=orchestrator,
-                        dossier_store=dossier_store,
-                        plan=plan,
-                        original_dossier=dossier,
-                        job_root=job_root,
-                        persist_effective=True,
-                    )
-                    next_dossier = dict(outcome.effective_dossier or dossier)
-                    pass_outcomes.append(_outcome_summary(outcome, next_dossier))
-                    if not outcome.semantic_progress:
-                        raise LiveCanaryPending(
-                            "public-gap follow-up produced no deterministic semantic progress",
-                            status="RESEARCH_NO_PROGRESS_PENDING",
+                    else:
+                        plan, _compiled = orchestrator.plan_v3_followup(
+                            built,
+                            pass_name="PUBLIC_GAP_CLOSURE",
+                            latest_dossier_digest=public_context[
+                                "latest_dossier_digest"
+                            ],
+                            unresolved_question_state=public_context[
+                                "unresolved_question_state"
+                            ],
+                            pass_inputs=public_context["pass_inputs"],
                         )
-                    dossier = next_dossier
-                    continue
+                        outcome = await self._execute_followup(
+                            prepared=prepared,
+                            orchestrator=orchestrator,
+                            dossier_store=dossier_store,
+                            plan=plan,
+                            original_dossier=dossier,
+                            job_root=job_root,
+                            persist_effective=True,
+                        )
+                        next_dossier = dict(
+                            outcome.effective_dossier or dossier
+                        )
+                        pass_outcomes.append(
+                            _outcome_summary(outcome, next_dossier)
+                        )
+                        if not outcome.semantic_progress:
+                            raise LiveCanaryPending(
+                                "public-gap follow-up produced no "
+                                "deterministic semantic progress",
+                                status="RESEARCH_NO_PROGRESS_PENDING",
+                            )
+                        dossier = next_dossier
+                        continue
 
                 counter_ids = _question_ids_without_repairable_candidates(
                     _counter_followup_question_ids(latest_saturation),
@@ -419,6 +471,26 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                         question_ids=counter_ids,
                         pass_name="COUNTER_SUPERSESSION_CLOSURE",
                     )
+                budgeted_counter_ids = _question_ids_with_reopen_budget(
+                    orchestrator.ledger,
+                    job_id=job_id,
+                    pass_name="COUNTER_SUPERSESSION_CLOSURE",
+                    question_ids=counter_ids,
+                    context=counter_context,
+                )
+                if budgeted_counter_ids != counter_ids:
+                    exhausted_gap_status = (
+                        exhausted_gap_status
+                        or "RESEARCH_GAP_REOPEN_LIMIT_PENDING"
+                    )
+                    counter_ids = budgeted_counter_ids
+                    counter_context = _followup_context(
+                        dossier=dossier,
+                        saturation=latest_saturation,
+                        accepted_fact_ids=verification_state.accepted_fact_ids,
+                        question_ids=counter_ids,
+                        pass_name="COUNTER_SUPERSESSION_CLOSURE",
+                    )
                 if counter_ids and not _context_already_attempted(
                     orchestrator.ledger,
                     job_id=job_id,
@@ -429,7 +501,17 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                         ]
                     ),
                 ):
-                    if _completed_pass_left_blockers_unchanged(
+                    if _same_question_reopen_limit_reached(
+                        orchestrator.ledger,
+                        job_id=job_id,
+                        pass_name="COUNTER_SUPERSESSION_CLOSURE",
+                        question_ids=counter_ids,
+                    ):
+                        exhausted_gap_status = (
+                            exhausted_gap_status
+                            or "RESEARCH_GAP_REOPEN_LIMIT_PENDING"
+                        )
+                    elif _completed_pass_left_blockers_unchanged(
                         orchestrator.ledger,
                         job_id=job_id,
                         pass_name="COUNTER_SUPERSESSION_CLOSURE",
@@ -440,53 +522,47 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                             or ""
                         ),
                     ):
-                        raise LiveCanaryPending(
-                            "completed counter pass left the deterministic "
-                            "blocker identity unchanged",
-                            status="RESEARCH_BLOCKER_FIXPOINT_PENDING",
+                        exhausted_gap_status = (
+                            exhausted_gap_status
+                            or "RESEARCH_BLOCKER_FIXPOINT_PENDING"
                         )
-                    plan, _compiled = orchestrator.plan_v3_followup(
-                        built,
-                        pass_name="COUNTER_SUPERSESSION_CLOSURE",
-                        latest_dossier_digest=counter_context[
-                            "latest_dossier_digest"
-                        ],
-                        unresolved_question_state=counter_context[
-                            "unresolved_question_state"
-                        ],
-                        pass_inputs=counter_context["pass_inputs"],
-                    )
-                    outcome = await self._execute_followup(
-                        prepared=prepared,
-                        orchestrator=orchestrator,
-                        dossier_store=dossier_store,
-                        plan=plan,
-                        original_dossier=dossier,
-                        job_root=job_root,
-                        persist_effective=True,
-                    )
-                    next_dossier = dict(outcome.effective_dossier or dossier)
-                    pass_outcomes.append(_outcome_summary(outcome, next_dossier))
-                    if not outcome.semantic_progress:
-                        raise LiveCanaryPending(
-                            "counter/supersession follow-up produced no semantic progress",
-                            status="RESEARCH_NO_PROGRESS_PENDING",
+                    else:
+                        plan, _compiled = orchestrator.plan_v3_followup(
+                            built,
+                            pass_name="COUNTER_SUPERSESSION_CLOSURE",
+                            latest_dossier_digest=counter_context[
+                                "latest_dossier_digest"
+                            ],
+                            unresolved_question_state=counter_context[
+                                "unresolved_question_state"
+                            ],
+                            pass_inputs=counter_context["pass_inputs"],
                         )
-                    dossier = next_dossier
-                    continue
+                        outcome = await self._execute_followup(
+                            prepared=prepared,
+                            orchestrator=orchestrator,
+                            dossier_store=dossier_store,
+                            plan=plan,
+                            original_dossier=dossier,
+                            job_root=job_root,
+                            persist_effective=True,
+                        )
+                        next_dossier = dict(
+                            outcome.effective_dossier or dossier
+                        )
+                        pass_outcomes.append(
+                            _outcome_summary(outcome, next_dossier)
+                        )
+                        if not outcome.semantic_progress:
+                            raise LiveCanaryPending(
+                                "counter/supersession follow-up produced no "
+                                "semantic progress",
+                                status="RESEARCH_NO_PROGRESS_PENDING",
+                            )
+                        dossier = next_dossier
+                        continue
 
                 if repairable:
-                    completed_repairs = tuple(
-                        row
-                        for row in orchestrator.ledger.list_passes(job_id)
-                        if row.pass_name == "VERIFIER_REPAIR"
-                        and row.status == "COMPLETE"
-                    )
-                    if completed_repairs:
-                        raise LiveCanaryPending(
-                            "one compact V3 repair was already used and material verifier candidates remain",
-                            status="VERIFIER_REPAIR_PENDING",
-                        )
                     dossier, repair_summary = await self._execute_compact_repair(
                         prepared=prepared,
                         orchestrator=orchestrator,
@@ -543,7 +619,10 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                 if not latest_saturation.research_saturation_valid:
                     raise LiveCanaryPending(
                         "deterministic full-thesis conditions remain incomplete after all changed contexts were attempted",
-                        status=latest_saturation.deterministic_research_status,
+                        status=(
+                            exhausted_gap_status
+                            or latest_saturation.deterministic_research_status
+                        ),
                     )
 
                 current = self.store.get_job(job_id)
@@ -800,6 +879,17 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
             verification_rows=verification_state.verification_rows,
             job_root=job_root,
         )
+        completed_snapshot = (
+            orchestrator.ledger.latest_dossier_snapshot_for_pass(
+                job_id=prepared.job.job_id,
+                pass_id=plan.research_pass.pass_id,
+            )
+        )
+        if plan.research_pass.status == "COMPLETE" and completed_snapshot is not None:
+            raise LiveCanaryPending(
+                "completed verifier-repair pass left the exact candidate context unchanged",
+                status="VERIFIER_REPAIR_FIXPOINT_PENDING",
+            )
         pass_root = (
             job_root
             / "research_passes"
@@ -808,6 +898,11 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
         receipt_path = pass_root / "capture/incoming/browser_capture_receipt.json"
         pass_id = plan.research_pass.pass_id
         parent_id = str(plan.research_pass.parent_pass_id or "")
+        repair_artifact_root = _compact_repair_artifact_root(
+            job_root,
+            pass_id=pass_id,
+            repair_pass_ordinal=compiled.repair_pass_ordinal,
+        )
         mode = _followup_execution_mode(
             plan.research_pass,
             pass_root=pass_root,
@@ -889,7 +984,7 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
             performed_at=capture_receipt.captured_at,
         )
         _write_json_atomic(
-            job_root / "repair_v3/repair_delta_transport_normalization.json",
+            repair_artifact_root / "repair_delta_transport_normalization.json",
             normalization_receipt,
         )
         repaired = CompactRepairServiceV3(
@@ -902,6 +997,8 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
             compiled_prompt=compiled,
             prior_verification_rows=verification_state.verification_rows,
             response_hash=capture_receipt.report_md_hash,
+            repair_pass_ordinal=compiled.repair_pass_ordinal,
+            repair_artifact_root=repair_artifact_root,
         )
         orchestrator.complete_followup(
             pass_id,
@@ -957,8 +1054,17 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
         research_pass = orchestrator.ledger.get_pass(pass_id)
         if research_pass.pass_name != "VERIFIER_REPAIR":
             return dossier, None
+        repair_pass_ordinal = int(
+            research_pass.detail.get("repair_pass_ordinal") or 1
+        )
+        repair_artifact_root = _compact_repair_artifact_root(
+            job_root,
+            pass_id=research_pass.pass_id,
+            repair_pass_ordinal=repair_pass_ordinal,
+        )
         reconciliation_path = (
-            job_root / "repair_v3/completed_repair_fail_closed_reconciliation.json"
+            repair_artifact_root
+            / "completed_repair_fail_closed_reconciliation.json"
         )
         if reconciliation_path.is_file():
             receipt = _read_json(reconciliation_path)
@@ -967,8 +1073,8 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                     "completed repair reconciliation receipt differs from latest dossier"
                 )
             return dossier, None
-        repair_receipt_path = job_root / "repair_v3/compact_repair_receipt.json"
-        repair_delta_path = job_root / "repair_v3/repair_delta_v3.json"
+        repair_receipt_path = repair_artifact_root / "compact_repair_receipt.json"
+        repair_delta_path = repair_artifact_root / "repair_delta_v3.json"
         if not repair_receipt_path.is_file() or not repair_delta_path.is_file():
             return dossier, None
         repair_receipt = _read_json(repair_receipt_path)
@@ -1022,7 +1128,7 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
             raise ValueError("completed repair reconciliation snapshot hash mismatch")
         _write_json_atomic(reconciliation_path, receipt)
         _write_json_atomic(
-            job_root / "repair_v3/research_dossier.reconciled.json",
+            repair_artifact_root / "research_dossier.reconciled.json",
             effective,
         )
         return effective, receipt
@@ -1289,6 +1395,29 @@ def _followup_context(
         )
         for row in unresolved
     }
+    question_stable_gap_hashes = {
+        row["question_family_id"]: canonical_hash(
+            {
+                "schema_version": "e2r_question_stable_gap_identity_v1",
+                "pass_name": pass_name,
+                "question_family_id": row["question_family_id"],
+                "deterministic_materiality": row[
+                    "deterministic_materiality"
+                ],
+                "gap_class": row["gap_class"],
+                "required_source_roles_missing": sorted(
+                    set(row["required_source_roles_missing"])
+                ),
+                "missing_core_source_roles": sorted(
+                    set(row["missing_core_source_roles"])
+                ),
+                "missing_corroboration_source_roles": sorted(
+                    set(row["missing_corroboration_source_roles"])
+                ),
+            }
+        )
+        for row in unresolved
+    }
     gap_context_hash = canonical_hash(
         {
             "pass_name": pass_name,
@@ -1351,6 +1480,7 @@ def _followup_context(
             "question_family_ids": list(requested),
             "question_context_hashes": question_context_hashes,
             "question_progress_hashes": question_progress_hashes,
+            "question_stable_gap_hashes": question_stable_gap_hashes,
             "deterministic_research_status": (
                 saturation.deterministic_research_status
             ),
@@ -1742,6 +1872,102 @@ def _completed_pass_left_blockers_unchanged(
     )
 
 
+def _same_question_reopen_limit_reached(
+    ledger: ProMultiPassLedger,
+    *,
+    job_id: str,
+    pass_name: str,
+    question_ids: Sequence[str],
+    completed_attempt_limit: int = 2,
+) -> bool:
+    """Stop a third consecutive reopen of the same exact question set.
+
+    Route/provider wording can oscillate even when the economic gap is the
+    same.  The richer blocker identity remains the primary fixpoint guard;
+    this transport-independent ceiling prevents that oscillation from
+    manufacturing an unlimited series of nominally changed contexts.
+    """
+
+    requested = tuple(str(value) for value in question_ids if str(value))
+    if not requested:
+        return False
+    if completed_attempt_limit < 1:
+        raise ValueError("completed attempt limit must be positive")
+    matched = 0
+    completed = tuple(
+        row
+        for row in ledger.list_passes(job_id)
+        if row.pass_name == pass_name
+        and row.status == "COMPLETE"
+        and row.submit_count == 1
+    )
+    for row in reversed(completed):
+        stored = tuple(
+            str(value)
+            for value in row.detail.get("question_family_ids") or ()
+            if str(value)
+        )
+        if stored != requested:
+            break
+        matched += 1
+        if matched >= completed_attempt_limit:
+            return True
+    return False
+
+
+def _question_ids_with_reopen_budget(
+    ledger: ProMultiPassLedger,
+    *,
+    job_id: str,
+    pass_name: str,
+    question_ids: Sequence[str],
+    context: Mapping[str, Any],
+    completed_attempt_limit: int = 2,
+) -> tuple[str, ...]:
+    """Drop questions whose same stable economic gap already ran twice."""
+
+    if completed_attempt_limit < 1:
+        raise ValueError("completed attempt limit must be positive")
+    requested = tuple(str(value) for value in question_ids if str(value))
+    stable = dict(
+        (context.get("pass_inputs") or {}).get(
+            "question_stable_gap_hashes"
+        )
+        or {}
+    )
+    attempts = {question_id: 0 for question_id in requested}
+    for row in ledger.list_passes(job_id):
+        if (
+            row.pass_name != pass_name
+            or row.status != "COMPLETE"
+            or row.submit_count != 1
+        ):
+            continue
+        stored_ids = {
+            str(value)
+            for value in row.detail.get("question_family_ids") or ()
+            if str(value)
+        }
+        stored_stable = dict(
+            row.detail.get("question_stable_gap_hashes") or {}
+        )
+        for question_id in requested:
+            if question_id not in stored_ids:
+                continue
+            current_hash = str(stable.get(question_id) or "")
+            stored_hash = str(stored_stable.get(question_id) or "")
+            # Older durable passes predate this field.  Conservatively treat
+            # their same question identity as the same stable gap; this is a
+            # fail-closed migration boundary, not a score or Stage decision.
+            if not stored_hash or stored_hash == current_hash:
+                attempts[question_id] += 1
+    return tuple(
+        question_id
+        for question_id in requested
+        if attempts[question_id] < completed_attempt_limit
+    )
+
+
 def _saturation_blocker_identity_row(
     row: Mapping[str, Any],
 ) -> Mapping[str, Any]:
@@ -1854,10 +2080,11 @@ def _question_ids_without_completed_context(
     )
 
 
-_FRESH_NONREPAIR_FOLLOWUP_NAMES = (
+_FRESH_RECOVERABLE_FOLLOWUP_NAMES = (
     "PUBLIC_GAP_CLOSURE",
     "COUNTER_SUPERSESSION_CLOSURE",
     "SATURATION_AUDIT",
+    "VERIFIER_REPAIR",
 )
 
 
@@ -1881,7 +2108,7 @@ def _enforce_recover_submitted_only(
     )
 
 
-def _submitted_unsnapshotted_fresh_nonrepair_plan(
+def _submitted_unsnapshotted_fresh_plan(
     orchestrator: FreshSessionOrchestratorV3,
     *,
     job_id: str,
@@ -1902,13 +2129,34 @@ def _submitted_unsnapshotted_fresh_nonrepair_plan(
                 job_id=job_id,
                 pass_name=pass_name,
             )
-            for pass_name in _FRESH_NONREPAIR_FOLLOWUP_NAMES
+            for pass_name in _FRESH_RECOVERABLE_FOLLOWUP_NAMES
         )
         if row is not None
     )
     if len(matches) > 1:
         raise ValueError("multiple submitted fresh follow-ups lack snapshots")
     return matches[0] if matches else None
+
+
+def _compact_repair_artifact_root(
+    job_root: Path,
+    *,
+    pass_id: str,
+    repair_pass_ordinal: int,
+) -> Path:
+    """Preserve the legacy first receipt and append later repairs by pass."""
+
+    if repair_pass_ordinal < 1:
+        raise ValueError("repair pass ordinal must be positive")
+    if not pass_id:
+        raise ValueError("repair artifact root requires a pass id")
+    if repair_pass_ordinal == 1:
+        return job_root / "repair_v3"
+    return (
+        job_root
+        / "repair_v3/passes"
+        / f"{repair_pass_ordinal:02d}_{pass_id}"
+    )
 
 
 def _read_json(path: Path) -> Mapping[str, Any]:

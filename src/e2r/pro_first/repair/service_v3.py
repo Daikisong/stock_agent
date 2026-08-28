@@ -1,4 +1,4 @@
-"""Apply one compact V3 repair, reverify it, and persist deterministic receipts."""
+"""Apply a compact V3 repair, reverify it, and persist deterministic receipts."""
 
 from __future__ import annotations
 
@@ -58,6 +58,7 @@ class CompactRepairServiceV3:
         prior_verification_rows: Sequence[Mapping[str, Any]],
         response_hash: str,
         repair_pass_ordinal: int = 1,
+        repair_artifact_root: str | Path | None = None,
     ) -> CompactRepairRunV3:
         prior_accepted = tuple(
             str(row.get("dossier_fact_id") or "")
@@ -143,9 +144,7 @@ class CompactRepairServiceV3:
             ),
         )
         unresolved_replacements: tuple[str, ...] = ()
-        operational_ready_allowed = not (
-            prior_accepted_not_preserved or repair_pass_ordinal != 1
-        )
+        operational_ready_allowed = not prior_accepted_not_preserved
         receipt_payload = {
             "schema_version": "e2r_compact_repair_v3_receipt_v1",
             "status": (
@@ -214,7 +213,7 @@ class CompactRepairServiceV3:
             "full_dossier_reoutput_count": 0,
             "query_count": 0,
             "search_count": 0,
-            "second_repair_pass_blocked": repair_pass_ordinal != 1,
+            "second_repair_pass_blocked": False,
             "operational_ready_allowed": operational_ready_allowed,
             "score_authority": False,
             "stage_authority": False,
@@ -223,7 +222,15 @@ class CompactRepairServiceV3:
             **receipt_payload,
             "receipt_hash": canonical_hash(receipt_payload),
         }
-        repair_root = root / "repair_v3"
+        repair_root = (
+            Path(repair_artifact_root).resolve()
+            if repair_artifact_root is not None
+            else root / "repair_v3"
+        )
+        try:
+            repair_root.relative_to(root)
+        except ValueError as error:
+            raise ValueError("repair artifact root escapes the job root") from error
         _write_atomic(
             repair_root / "compact_repair_prompt.md",
             compiled_prompt.prompt_text,

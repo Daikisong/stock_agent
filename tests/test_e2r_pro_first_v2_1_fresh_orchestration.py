@@ -34,8 +34,9 @@ from e2r.pro_first.fresh_session.live_canary_v3 import (
     _requires_browser_result_recovery,
     build_old_answer_leakage_manifest,
 )
-from e2r.pro_first.canary.live_v2 import _research_semantic_hash
+from e2r.pro_first.canary.live_v2 import LiveCanaryPending, _research_semantic_hash
 from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
+    FreshV3FullThesisLiveRunner,
     _completed_pass_left_blockers_unchanged,
     _context_already_attempted,
     _counter_followup_question_ids,
@@ -44,10 +45,12 @@ from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
     _parse_and_validate_compact_repair_transport,
     _question_ids_without_completed_context,
     _question_ids_without_repairable_candidates,
+    _question_ids_with_reopen_budget,
     _question_route_progress_state,
     _repairable_classifications,
+    _same_question_reopen_limit_reached,
     _ensure_durable_conversation_visible,
-    _submitted_unsnapshotted_fresh_nonrepair_plan,
+    _submitted_unsnapshotted_fresh_plan,
 )
 from e2r.pro_first.ids import canonical_hash
 from e2r.pro_first.job_store import ProFirstJobStore
@@ -1705,6 +1708,104 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             )
         )
 
+    def test_same_question_set_is_not_reopened_a_third_time(self) -> None:
+        question_id = self.built.prompt.mandatory_question_ids[0]
+        rows = (
+            SimpleNamespace(
+                pass_name="PUBLIC_GAP_CLOSURE",
+                status="COMPLETE",
+                submit_count=1,
+                detail={"question_family_ids": [question_id]},
+            ),
+            SimpleNamespace(
+                pass_name="PUBLIC_GAP_CLOSURE",
+                status="COMPLETE",
+                submit_count=1,
+                detail={"question_family_ids": [question_id]},
+            ),
+        )
+        ledger = SimpleNamespace(list_passes=lambda _job_id: rows)
+
+        self.assertTrue(
+            _same_question_reopen_limit_reached(
+                ledger,
+                job_id="PROJOB-REOPEN-LIMIT",
+                pass_name="PUBLIC_GAP_CLOSURE",
+                question_ids=(question_id,),
+            )
+        )
+        self.assertFalse(
+            _same_question_reopen_limit_reached(
+                ledger,
+                job_id="PROJOB-REOPEN-LIMIT",
+                pass_name="PUBLIC_GAP_CLOSURE",
+                question_ids=(question_id, "QUESTION-SIBLING"),
+            )
+        )
+
+    def test_reopen_budget_is_question_scoped_across_changed_batches(self) -> None:
+        question_a, question_b = self.built.prompt.mandatory_question_ids[:2]
+        rows = (
+            SimpleNamespace(
+                pass_name="PUBLIC_GAP_CLOSURE",
+                status="COMPLETE",
+                submit_count=1,
+                detail={"question_family_ids": [question_a, question_b]},
+            ),
+            SimpleNamespace(
+                pass_name="PUBLIC_GAP_CLOSURE",
+                status="COMPLETE",
+                submit_count=1,
+                detail={"question_family_ids": [question_a]},
+            ),
+        )
+        ledger = SimpleNamespace(list_passes=lambda _job_id: rows)
+        context = {
+            "pass_inputs": {
+                "question_stable_gap_hashes": {
+                    question_a: "a" * 64,
+                    question_b: "b" * 64,
+                }
+            }
+        }
+
+        self.assertEqual(
+            _question_ids_with_reopen_budget(
+                ledger,
+                job_id="PROJOB-QUESTION-BUDGET",
+                pass_name="PUBLIC_GAP_CLOSURE",
+                question_ids=(question_a, question_b),
+                context=context,
+            ),
+            (question_b,),
+        )
+
+        rows_with_new_identity = (
+            *rows,
+            SimpleNamespace(
+                pass_name="PUBLIC_GAP_CLOSURE",
+                status="COMPLETE",
+                submit_count=1,
+                detail={
+                    "question_family_ids": [question_b],
+                    "question_stable_gap_hashes": {question_b: "c" * 64},
+                },
+            ),
+        )
+        changed_ledger = SimpleNamespace(
+            list_passes=lambda _job_id: rows_with_new_identity
+        )
+        self.assertEqual(
+            _question_ids_with_reopen_budget(
+                changed_ledger,
+                job_id="PROJOB-QUESTION-BUDGET",
+                pass_name="PUBLIC_GAP_CLOSURE",
+                question_ids=(question_b,),
+                context=context,
+            ),
+            (question_b,),
+        )
+
     async def test_same_route_with_new_receipt_id_is_not_research_progress(
         self,
     ) -> None:
@@ -2074,7 +2175,7 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             reason="visible result recovery must precede changed routing",
         )
 
-        recovered = _submitted_unsnapshotted_fresh_nonrepair_plan(
+        recovered = _submitted_unsnapshotted_fresh_plan(
             self.orchestrator,
             job_id=self.fresh_job.job_id,
         )
@@ -2086,6 +2187,34 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(recovered.research_pass.submit_count, 1)
         self.assertEqual(recovered.prompt_text, "")
         self.assertEqual(adapter.submit_count, 2)  # initial one + follow-up one
+
+    def test_submitted_verifier_repair_is_visible_to_recovery_only_mode(self) -> None:
+        scope = SimpleNamespace(job_id="PROJOB-REPAIR-RECOVERY")
+        research_pass = SimpleNamespace(
+            pass_id="PROPASS-REPAIR-RUNNING",
+            pass_name="VERIFIER_REPAIR",
+            submit_count=1,
+            status="TRANSPORT_PENDING",
+            prompt_hash="a" * 64,
+        )
+        ledger = SimpleNamespace(
+            list_passes=lambda _job_id: (research_pass,),
+            latest_dossier_snapshot_for_pass=lambda **_kwargs: None,
+            get_scope=lambda _job_id: scope,
+        )
+        orchestrator = SimpleNamespace(ledger=ledger)
+
+        recovered = _submitted_unsnapshotted_fresh_plan(
+            orchestrator,
+            job_id="PROJOB-REPAIR-RECOVERY",
+        )
+
+        self.assertIsNotNone(recovered)
+        assert recovered is not None
+        self.assertIs(recovered.scope, scope)
+        self.assertIs(recovered.research_pass, research_pass)
+        self.assertEqual(recovered.prompt_text, "")
+        self.assertEqual(recovered.prompt_hash, "a" * 64)
 
     def test_full_thesis_tail_routes_only_material_pro_repair_candidates(self) -> None:
         rows = (
@@ -2282,7 +2411,7 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             _research_semantic_hash(changed_status),
         )
 
-    async def test_second_semantic_repair_requires_new_conversation(self) -> None:
+    async def test_new_semantic_repair_context_reuses_same_conversation(self) -> None:
         adapter = await self._prepare_and_approve("fresh-conversation-repair-limit")
         await self.orchestrator.submit_initial_once(adapter)
         self.orchestrator.establish_followup_scope(
@@ -2319,17 +2448,60 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 "dossier_fact_id": "FACT-SECOND-DEFECT",
             }
         ]
-        with self.assertRaisesRegex(
-            FreshSessionRerunRequired,
-            "SECOND_REPAIR_PASS",
-        ):
-            self.orchestrator.plan_compact_repair(
-                self.built,
-                dossier=dossier,
-                rejection_classifications=second_classification,
-                verification_rows=second_verification,
-                job_root=job_root,
+        second_plan, second_compiled = self.orchestrator.plan_compact_repair(
+            self.built,
+            dossier=dossier,
+            rejection_classifications=second_classification,
+            verification_rows=second_verification,
+            job_root=job_root,
+        )
+
+        self.assertNotEqual(second_plan.research_pass.pass_id, plan.research_pass.pass_id)
+        self.assertEqual(second_plan.research_pass.conversation_id, plan.research_pass.conversation_id)
+        self.assertEqual(second_plan.research_pass.detail["repair_pass_ordinal"], 2)
+        self.assertEqual(second_compiled.repair_pass_ordinal, 2)
+        self.assertEqual(second_plan.research_pass.submit_count, 0)
+
+    async def test_completed_exact_repair_context_stops_at_fixpoint(self) -> None:
+        research_pass = SimpleNamespace(
+            pass_id="PROPASS-COMPLETED-REPAIR",
+            status="COMPLETE",
+        )
+        plan = SimpleNamespace(research_pass=research_pass)
+        ledger = SimpleNamespace(
+            latest_dossier_snapshot_for_pass=lambda **_kwargs: {
+                "snapshot_hash": "a" * 64
+            }
+        )
+        orchestrator = SimpleNamespace(
+            ledger=ledger,
+            plan_compact_repair=lambda *_args, **_kwargs: (
+                plan,
+                SimpleNamespace(repair_pass_ordinal=2),
+            ),
+        )
+        runner = object.__new__(FreshV3FullThesisLiveRunner)
+
+        with self.assertRaises(LiveCanaryPending) as captured:
+            await runner._execute_compact_repair(
+                prepared=SimpleNamespace(
+                    job=SimpleNamespace(job_id="PROJOB-FIXPOINT")
+                ),
+                orchestrator=orchestrator,
+                built=SimpleNamespace(),
+                dossier_store=SimpleNamespace(),
+                dossier={},
+                job_root=self.root / "repair-fixpoint",
+                verification_state=SimpleNamespace(
+                    rejection_classifications=(),
+                    verification_rows=(),
+                ),
             )
+
+        self.assertEqual(
+            captured.exception.status,
+            "VERIFIER_REPAIR_FIXPOINT_PENDING",
+        )
 
     def test_nonempty_unrelated_runtime_root_is_rejected(self) -> None:
         occupied = self.root / "occupied-fresh-runtime"

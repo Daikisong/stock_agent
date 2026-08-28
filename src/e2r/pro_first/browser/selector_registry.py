@@ -159,6 +159,11 @@ PREVIEW_ROOT_SELECTORS = (
     '[data-testid="screen-threadFlyOut"]',
 )
 
+PREVIEW_CLOSE_SELECTORS = (
+    '[data-testid="stage-thread-flyout"] button[data-testid="close-button"]',
+    '[data-testid="screen-threadFlyOut"] button[data-testid="close-button"]',
+)
+
 DOWNLOAD_SELECTORS = (
     'a[download]',
     'button[aria-label="다운로드"]',

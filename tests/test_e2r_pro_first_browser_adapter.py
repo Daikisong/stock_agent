@@ -187,6 +187,54 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual((await editor.inner_text()).strip(), followup.strip())
         self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
 
+    async def test_followup_closes_download_preview_before_preparing_composer(
+        self,
+    ) -> None:
+        await self.page.evaluate(
+            """() => {
+                const send = document.querySelector('#composer-submit-button');
+                send.disabled = true;
+                const flyout = document.createElement('div');
+                flyout.dataset.testid = 'stage-thread-flyout';
+                const close = document.createElement('button');
+                close.dataset.testid = 'close-button';
+                close.setAttribute('aria-label', '닫기');
+                close.addEventListener('click', () => {
+                    flyout.remove();
+                    send.disabled = false;
+                });
+                flyout.appendChild(close);
+                document.body.appendChild(flyout);
+            }"""
+        )
+        prompt = (
+            "파일 미리보기 종료 후 후속 조사\n"
+            "[[E2R_PRO_RUN_ID:PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb]]\n"
+            "[[E2R_PRO_JOB_ID:PROJOB-aaaaaaaaaaaaaaaaaaaaaaaa]]\n"
+            "[[E2R_PRO_PASS_ID:PROPASS-cccccccccccccccccccccccc]]\n"
+            "[[E2R_PRO_PARENT_PASS_ID:PROPASS-dddddddddddddddddddddddd]]"
+        )
+
+        prepared = await self.adapter.prepare_followup_without_submit(
+            browser_session_id="BROWSER-session",
+            conversation_id="mock-conversation",
+            job_id="PROJOB-aaaaaaaaaaaaaaaaaaaaaaaa",
+            pass_id="PROPASS-cccccccccccccccccccccccc",
+            parent_pass_id="PROPASS-dddddddddddddddddddddddd",
+            prompt=prompt,
+            prompt_hash=canonical_hash({"prompt": prompt}),
+        )
+
+        self.assertTrue(prepared.send_ready)
+        self.assertEqual(prepared.submit_count, 0)
+        self.assertEqual(
+            await self.page.locator(
+                '[data-testid="stage-thread-flyout"]'
+            ).count(),
+            0,
+        )
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
+
     async def test_pro_mode_uses_visible_ordinary_chat_composer(self) -> None:
         inspection = await self.adapter.ensure_deep_research_mode()
         self.assertTrue(inspection.deep_research_ready)

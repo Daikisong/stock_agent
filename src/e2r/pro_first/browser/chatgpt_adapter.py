@@ -48,6 +48,7 @@ from .selector_registry import (
     MD_CANDIDATE_SELECTORS,
     OPERATIONAL_NOTICE_SELECTORS,
     PDF_CANDIDATE_SELECTORS,
+    PREVIEW_CLOSE_SELECTORS,
     PREVIEW_ROOT_SELECTORS,
     PRO_REASONING_ACTIVE_SELECTORS,
     SEND_SELECTORS,
@@ -370,6 +371,11 @@ class PlaywrightChatGPTWebAdapter:
         await self.ensure_logged_in()
         if self.conversation_id() != conversation_id:
             raise BrowserUIIncompatible("follow-up must reuse the approved ChatGPT conversation")
+        preview_reloaded = await self._dismiss_visible_file_preview()
+        if preview_reloaded and self.conversation_id() != conversation_id:
+            raise BrowserUIIncompatible(
+                "file-preview reload left the approved ChatGPT conversation"
+            )
         await self.ensure_deep_research_mode()
         await self.set_prompt(prompt)
         current = await first_visible(self.page, EDITOR_SELECTORS)
@@ -412,6 +418,27 @@ class PlaywrightChatGPTWebAdapter:
             send_ready=True,
             preexisting_attachment_keys=preexisting,
             submit_count=0,
+        )
+
+    async def _dismiss_visible_file_preview(self) -> bool:
+        """Return from a downloaded report preview to a fresh same-chat composer."""
+
+        close = await first_visible(self.page, PREVIEW_CLOSE_SELECTORS)
+        if close is None:
+            return False
+        await close.click()
+        for attempt in range(50):
+            if await first_visible(self.page, PREVIEW_CLOSE_SELECTORS) is None:
+                # The public ChatGPT UI can leave the React composer disabled
+                # after its file flyout disappears.  Reload this exact URL once
+                # before inserting the next durable prompt; this neither opens
+                # a new conversation nor clicks send.
+                await self.page.reload(wait_until="domcontentloaded")
+                return True
+            if attempt < 49:
+                await self.page.wait_for_timeout(100)
+        raise BrowserUIIncompatible(
+            "ChatGPT file preview remained visible after its close control was clicked"
         )
 
     async def submit_once(self, approval_proof: Any) -> BrowserInspection:
