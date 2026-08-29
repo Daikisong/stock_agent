@@ -8,11 +8,13 @@ from e2r.pro_first.dossier import (
     DossierDeltaMergeError,
     DossierValidationContext,
     DossierValidationError,
+    ResearchDossierDialectAdapter,
     ResearchDossierNormalizer,
     ResearchDossierValidator,
     apply_research_dossier_delta,
     bind_dossier_transport_identity,
 )
+from e2r.pro_first.research_contracts import select_contract_bundle
 from e2r.pro_first.dossier.delta_merge import (
     _project_overclaimed_route_closures,
 )
@@ -202,6 +204,57 @@ class ProFirstV3DossierTest(unittest.TestCase):
         self.assertEqual(receipt.source_urls, ("https://example.com/filing",))
         self.assertFalse(receipt.score_authority)
         self.assertFalse(receipt.stage_authority)
+
+    def test_v3_pro_status_divergence_is_projected_from_question_closure(self) -> None:
+        payload = self._dossier()
+        question_contracts = [
+            (
+                str(contract["archetype_id"]),
+                str(question["question_family_id"]),
+            )
+            for contract in select_contract_bundle((self.archetype_id,)).contracts
+            for question in contract["question_families"]
+            if question["mandatory_for_full_thesis"] is True
+        ]
+        payload["question_family_results"] = []
+        for contract_id, question_id in question_contracts:
+            row = self._question_result(question_id=question_id)
+            row["archetype_id"] = contract_id
+            row["status"] = "SUPPORTED_NON_SCORING"
+            row["support_fact_ids"] = []
+            payload["question_family_results"].append(row)
+        payload["question_family_results"][0]["status"] = "PARSER_PENDING"
+        payload["question_family_results"][0]["availability_class"] = (
+            "PARSER_BLOCKED"
+        )
+
+        adapted = ResearchDossierDialectAdapter().adapt(payload)
+        receipt = ResearchDossierValidator().validate(
+            adapted.payload, self._context()
+        )
+
+        self.assertEqual(receipt.research_status, "PROVIDER_PENDING")
+        self.assertEqual(
+            adapted.payload["research_saturation"][
+                "pro_reported_research_status"
+            ],
+            "NEEDS_PUBLIC_GAP_CLOSURE",
+        )
+        self.assertEqual(
+            adapted.payload["research_saturation"][
+                "deterministic_dialect_research_status"
+            ],
+            "PROVIDER_PENDING",
+        )
+        self.assertEqual(adapted.payload["material_facts"], payload["material_facts"])
+        self.assertEqual(
+            adapted.payload["source_documents"], payload["source_documents"]
+        )
+        self.assertIn(
+            "PROJECT_PRO_REPORTED_RESEARCH_STATUS_TO_"
+            "DETERMINISTIC_QUESTION_CLOSURE",
+            adapted.operations,
+        )
 
     def test_same_document_supports_separate_facts_and_derived_metric(self) -> None:
         payload = self._dossier()

@@ -4138,3 +4138,41 @@ new scorer / Stage engine        0 / 0
 source cache는 Git에 넣지 않았고 SHA-256과 canonical count만 게시했다. C06 하나로
 `OPERATIONAL_RESEARCH_READY`를 선언하지 않으며, 서로 다른 mechanism의 C17·C28 live full-thesis
 canary와 P10 전체 회귀·CI가 남아 있다.
+
+## P27 — C17 R7 V3 상태 투영 수리와 손상 conversation 봉인
+
+C17 독립 fresh canary R7은 새 ChatGPT Pro conversation에서 initial submit/capture를 각각 한 번만
+수행했고, 같은 conversation의 공개 공백 및 verifier repair를 이어 갔다. initial V3 dossier의 전체
+mandatory question detail에는 `PARSER_PENDING`이 있었지만 Pro의 최상위 요약 상태는
+`NEEDS_PUBLIC_GAP_CLOSURE`였다. 기존 adapter는 V2에만 deterministic 상태 투영을 적용해 V3 import를
+거부했다.
+
+generic 수리는 V2와 V3 모두에서 Pro의 요약 상태를 diagnostics로 보존하고, 운영 상태는 전체 mandatory
+question roster로 다시 계산하도록 통일했다. source document와 material fact는 고치거나 추가하지 않는다.
+
+```text
+Pro top-level status             research_saturation.pro_reported_research_status
+deterministic operational state  mandatory question closure로 계산
+focused V2/V3 status tests       41 / 41 PASS
+fact/source mutation             0 / 0
+```
+
+수리 뒤 R7은 같은 conversation에서 pass 7까지 실자료 보완을 진행했다. 그러나 다음 follow-up 전송 직전
+브라우저 public history에서 직전 exact follow-up turn을 다시 확인하지 못해 `FollowupSubmitBlocked`로
+fail-closed됐다.
+
+```text
+job                              PROJOB-9c71890eb783720160b97e4e
+run                              PRORUN-30cbfcaf7502aa7cbafc6ada
+conversation                     6a92600d-77c4-83e8-ac7f-203415582daa
+last accepted facts              33
+remaining nonterminal questions  2
+verifier repair pending          0
+failure                          exact follow-up turn persistence 미확인
+automatic resubmit               금지
+score / Stage authority          없음
+```
+
+이는 연구 내용 부족이나 낮은 점수 판정이 아니라 conversation transport 계보 실패다. R7 답을 새 답처럼
+재라벨하거나 같은 채팅에 자동 재전송하지 않는다. R7은 진단용으로 보존하고, 새 `fresh_session_id`, job,
+run, pass, conversation을 가진 C17 successor를 initial prompt부터 다시 시작한다.

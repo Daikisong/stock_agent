@@ -149,11 +149,17 @@ class ResearchDossierDialectAdapter:
         before_hash = canonical_hash(payload)
         adapted = deepcopy(dict(payload))
         if adapted.get("schema_version") == "e2r_pro_research_dossier_v3":
+            adapted, status_operations = (
+                _project_deterministic_research_status(adapted)
+            )
             return AdaptedDossier(
                 payload=adapted,
                 before_hash=before_hash,
-                after_hash=before_hash,
-                operations=("V3_CANONICAL_DIALECT_NO_LEGACY_REWRITE",),
+                after_hash=canonical_hash(adapted),
+                operations=(
+                    "V3_CANONICAL_DIALECT_NO_LEGACY_REWRITE",
+                    *status_operations,
+                ),
                 id_map={},
             )
         if adapted.get("schema_version") == "e2r_pro_research_dossier_v2":
@@ -175,7 +181,7 @@ class ResearchDossierDialectAdapter:
                     )
                     operations.extend(lineage_operations)
                 adapted, status_operations = (
-                    _project_deterministic_v2_research_status(adapted)
+                    _project_deterministic_research_status(adapted)
                 )
                 operations.extend(status_operations)
                 return AdaptedDossier(
@@ -207,7 +213,7 @@ class ResearchDossierDialectAdapter:
                 )
                 compact_operations.extend(lineage_operations)
             compact_payload, status_operations = (
-                _project_deterministic_v2_research_status(compact_payload)
+                _project_deterministic_research_status(compact_payload)
             )
             compact_operations.extend(status_operations)
             return AdaptedDossier(
@@ -376,10 +382,10 @@ class ResearchDossierDialectAdapter:
         return id_map
 
 
-def _project_deterministic_v2_research_status(
+def _project_deterministic_research_status(
     payload: Mapping[str, Any],
 ) -> tuple[dict[str, Any], tuple[str, ...]]:
-    """Keep Pro's status as diagnostics and derive the operational enum.
+    """Keep Pro's V2/V3 status as diagnostics and derive the operational enum.
 
     A repair response may describe its workflow state in free text, but Pro
     never owns the score/stage readiness state. The canonical status is
