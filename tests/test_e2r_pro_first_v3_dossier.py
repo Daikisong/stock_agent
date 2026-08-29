@@ -755,6 +755,52 @@ class ProFirstV3DossierTest(unittest.TestCase):
         self.assertEqual(extension["added_fact_ids"], ["FACT-002"])
         self.assertEqual(extension["added_source_document_ids"], ["SRC-002"])
 
+        stale_roster = deepcopy(response)
+        stale_roster["source_documents"][0]["lineage_id"] = "SL-FOLLOWUP"
+        stale_roster["source_lineages"] = [
+            {
+                "lineage_id": "SL-FOLLOWUP",
+                "source_document_ids": ["SRC-STALE-NOT-ADMITTED", "SRC-002"],
+                "fact_ids": ["FACT-STALE-NOT-ADMITTED", "FACT-002"],
+                "independence_group_id": "FOLLOWUP-OFFICIAL-FILING",
+                "status": "ACTIVE",
+            }
+        ]
+        stale_roster_merged = apply_research_dossier_delta(
+            original_dossier=original,
+            response_dossier=stale_roster,
+            validation_context=DossierValidationContext(
+                job_id="PROJOB-v3",
+                run_id="PRORUN-v3",
+                target_id=self.target_id,
+                as_of_date="2026-08-23",
+                conversation_id="conversation-v3",
+                candidate_archetype_ids=(self.archetype_id,),
+                research_pass_id="PROPASS-v3-followup",
+                parent_pass_id=self.pass_id,
+                enforce_parent_pass_id=True,
+            ),
+        )
+        followup_lineage = next(
+            row
+            for row in stale_roster_merged.effective_dossier["source_lineages"]
+            if row["lineage_id"] == "SL-FOLLOWUP"
+        )
+        self.assertEqual(followup_lineage["source_document_ids"], ["SRC-002"])
+        self.assertEqual(followup_lineage["fact_ids"], ["FACT-002"])
+        roster_projection = stale_roster_merged.effective_dossier[
+            "research_saturation"
+        ]["v3_graph_lineage_roster_projections"][0]
+        self.assertEqual(
+            roster_projection["removed_source_document_ids"],
+            ["SRC-STALE-NOT-ADMITTED"],
+        )
+        self.assertEqual(
+            roster_projection["removed_fact_ids"],
+            ["FACT-STALE-NOT-ADMITTED"],
+        )
+        self.assertFalse(roster_projection["fact_content_mutation_allowed"])
+
         detached = deepcopy(response)
         detached["source_documents"].append(
             {

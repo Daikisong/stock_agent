@@ -4051,3 +4051,90 @@ git diff --check                          PASS
 SUCCESS다. 위 P25 변경은 아직 검토·전체 회귀·한글 commit/push 전 working tree에 있으며, 새 C06 응답의
 capture/import/verify/saturation 결과와 Reviewer A~H 최종 receipt가 확정된 뒤 P9/P10 단계로 나눈다.
 PR #7은 계속 Draft/open이고 main은 병합하지 않는다.
+
+## P26 — C06 새 채팅 full-thesis FINAL과 V3 component 계보 수리
+
+P25에서 시작한 완전 새 C06 Pro 채팅은 같은 conversation과 exact job/run marker를 유지한 채
+공개 조사·검증·saturation을 끝냈다. 이전 Gate 1의 996-fact snapshot, 70.2점, Stage 2를 prompt나
+scoring 입력에 답안으로 넣지 않았다.
+
+```text
+job / run                        PROJOB-287556cc59c10f124d615c4d
+                                 PRORUN-b412396d383c92aaf08e9837
+conversation                     6a91f0dd-4fa4-83ee-b2b9-434f39437b07
+as_of_date                        2026-08-23
+mandatory / nonterminal          28 / 0
+public material gap              0
+verifier repair pending          0
+provider/parser core pending     0
+hard-break lifecycle pending     0
+source-linkage incomplete        0
+candidate / compiled facts       69 / 56
+current/counter/resolution       46 / 6 / 4
+historical/superseded            12 / 1
+saturation                       FULL_THESIS_READY
+component / Judge / impact       7 / 21 / 19
+```
+
+첫 scoring 재개에서 `validated impact lacks fact lineage in its component memo`가 발생했다. 자료가
+부족한 문제가 아니라 V3 dossier와 기존 component bridge의 field dialect가 달랐다.
+
+```text
+V3 dossier                       support_fact_ids
+기존 bridge가 읽던 field         positive_fact_ids
+결과                              C06 support fact가 positive roster에서 사라짐
+추가 문제                         다른 component에도 eligible한 verified fact가 memo에서 완전 소실
+```
+
+generic 수리는 두 부분이다.
+
+1. V2 `positive_fact_ids`와 V3 `support_fact_ids`를 같은 검증 positive roster로 투영한다.
+2. 해당 component의 explicit positive/counter/resolution에 직접 배치되지 않았더라도 contract상
+   eligible한 verified fact는 삭제하지 않고 `context_fact_ids`에 둔다. context는 Judge가 positive
+   support로 인용할 수 없지만 impact의 source/fact lineage 검문에는 남는다.
+
+쉬운 예로 Pro가 현금흐름 fact를 EPS/FCF의 직접 support 목록에 쓰고 earnings visibility에도 의미가
+있다고 판정한 경우, 전자는 positive이고 후자는 context다. 같은 fact를 두 번 점수 주거나 어느 쪽에서도
+버리지 않는다.
+
+이 변경은 아직 점수 영수증이 없던 `SCORING` 상태에서 발견됐다. 이전 component/Judge artifact는
+덮어쓰거나 삭제하지 않고 runtime의 hash-bound `semantic_migrations` 아래 보존했다. score receipt와
+StageCourt receipt가 하나라도 존재하면 이 복구 경로를 사용할 수 없다. score 확정 전 Judge artifact가
+없는 경우에만 21개를 재구축하는 회귀시험도 추가했다.
+
+```text
+focused scoring tests            41 / 41 PASS
+new Pro research submit          0
+recovery browser submit          0
+scoring query / fetch            0 / 0
+component bridge semantics       e2r_pro_component_bridge_v2_support_alias_and_context_retention
+```
+
+수리 뒤 기존 deterministic scorer와 `AtomicStageCourtV2`가 낸 canonical 결과는 다음과 같다.
+
+```text
+score_valid                       true
+score                             23.275
+interval                          23.275 ~ 23.275
+component vector                 EPS/FCF 7.0
+                                  visibility 8.65
+                                  bottleneck/pricing 1.5
+                                  market mispricing 1.0
+                                  valuation 2.0
+                                  capital allocation 2.125
+                                  information confidence 1.0
+canonical Stage                  0 FINAL
+scorer critical                  0
+new scorer / Stage engine        0 / 0
+```
+
+이 점수는 기존 Gate 1의 `70.2 / Stage 2`를 대체하거나 비교 재현하는 값이 아니다. Gate 1은 frozen
+996-fact corpus이고, P26은 새 Pro-first 56-fact corpus다. master goal의 live canary PASS 기준은 높은
+점수가 아니라 mandatory question terminality, verifier 완료, public-gap closure, source-backed lineage다.
+따라서 낮다는 이유로 추가 검색하거나 threshold를 조정하지 않는다.
+
+정규화된 외부 검수 영수증은
+`p26_c06_full_thesis_scoring_final_receipt.json`에 기록했다. raw Pro report, browser profile, runtime DB,
+source cache는 Git에 넣지 않았고 SHA-256과 canonical count만 게시했다. C06 하나로
+`OPERATIONAL_RESEARCH_READY`를 선언하지 않으며, 서로 다른 mechanism의 C17·C28 live full-thesis
+canary와 P10 전체 회귀·CI가 남아 있다.

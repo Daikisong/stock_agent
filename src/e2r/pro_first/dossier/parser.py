@@ -343,7 +343,8 @@ def _escape_decoder_proven_naked_quotes_in_json_string_values(
     and repair only this narrow shape:
 
     * the decoder reports ``Expecting ',' delimiter``;
-    * the failing character immediately follows an unescaped quote;
+    * the failing token follows an unescaped quote, with only optional
+      whitespace between them;
     * that quote was opened inside an existing JSON string value; and
     * the failing character is not JSON structure.
 
@@ -361,12 +362,18 @@ def _escape_decoder_proven_naked_quotes_in_json_string_values(
             return repaired, repair_count
         except json.JSONDecodeError as error:
             quote_index = error.pos - 1
+            while quote_index >= 0 and repaired[quote_index].isspace():
+                quote_index -= 1
             if (
                 error.msg != "Expecting ',' delimiter"
                 or quote_index < 0
                 or repaired[quote_index] != '"'
                 or error.pos >= len(repaired)
                 or repaired[error.pos] in '"{}[],: '
+                or any(
+                    not character.isspace()
+                    for character in repaired[quote_index + 1 : error.pos]
+                )
                 or _is_escaped_character(repaired, quote_index)
                 or not _quote_is_inside_json_string(repaired, quote_index)
             ):

@@ -45,6 +45,10 @@ from ..capture.receipt import CaptureReceipt, load_capture_receipt, verify_captu
 from ..config import ProFirstLocalConfig
 from ..dossier import DossierValidationContext, ResearchDossierValidator
 from ..ids import canonical_hash, canonical_json
+from ..gaps.service import (
+    ProGapAdjudicationService,
+    compile_saturated_gap_contexts,
+)
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
 from ..multi_pass import (
@@ -61,7 +65,6 @@ from ..repair import (
 )
 from ..saturation import ResearchSaturationReceipt, compile_saturation_audit
 from ..scoring import ProScoringPipelineService
-from ..state_machine import TransitionContext
 from ..verification import (
     CodexMechanismScopeMapper,
     ProSourceVerificationService,
@@ -185,8 +188,25 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                 orchestrator=orchestrator,
             )
         )
-        if self.store.get_job(job_id).status != JobStatus.GAP_ADJUDICATION.value:
-            raise ValueError("fresh full-thesis tail must start at GAP_ADJUDICATION")
+        starting_job = self.store.get_job(job_id)
+        if starting_job.status not in {
+            JobStatus.GAP_ADJUDICATION.value,
+            JobStatus.COMPONENT_RESEARCH.value,
+            JobStatus.JUDGING.value,
+            JobStatus.SCORING.value,
+            JobStatus.STAGECOURT.value,
+        }:
+            raise ValueError(
+                "fresh full-thesis tail must start at GAP_ADJUDICATION or the "
+                "strict skipped-gap recovery boundary"
+            )
+        if starting_job.status == JobStatus.COMPONENT_RESEARCH.value and (
+            starting_job.score_receipt_id is not None
+            or starting_job.stagecourt_receipt_id is not None
+        ):
+            raise ValueError(
+                "component recovery is forbidden after scoring output exists"
+            )
 
         session = await ProBrowserWorker(self.config.browser).open(job_id=job_id)
         prepared: PreparedFreshV3TailRuntime | None = None
@@ -280,6 +300,10 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                                 "COUNTER_SUPERSESSION_CLOSURE",
                             }
                             and not outcome.semantic_progress
+                            and not _new_no_new_route_confirmation_candidate(
+                                dossier,
+                                next_dossier,
+                            )
                         ):
                             raise LiveCanaryPending(
                                 "recovered follow-up produced no deterministic semantic progress",
@@ -307,6 +331,9 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                     dossier,
                     job_root=job_root,
                     verified_fact_ids=verification_state.accepted_fact_ids,
+                )
+                route_snapshot_bindings = _load_route_snapshot_bindings(
+                    job_root
                 )
                 self._persist_saturation(job_root, latest_saturation)
                 self._emit_fresh(
@@ -358,6 +385,14 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                     pass_name="PUBLIC_GAP_CLOSURE",
                     question_ids=public_ids,
                     context=public_context,
+                    dossier=dossier,
+                    route_snapshot_bindings=route_snapshot_bindings,
+                    current_fact_snapshot_hash=(
+                        latest_saturation.fact_snapshot_hash
+                    ),
+                    current_accepted_lineage_roster_hash=(
+                        latest_saturation.accepted_lineage_roster_hash
+                    ),
                 )
                 if budgeted_public_ids != public_ids:
                     exhausted_gap_status = (
@@ -431,7 +466,14 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                         pass_outcomes.append(
                             _outcome_summary(outcome, next_dossier)
                         )
-                        if not outcome.semantic_progress:
+                        if (
+                            not outcome.semantic_progress
+                            and not _new_no_new_route_confirmation_candidate(
+                                dossier,
+                                next_dossier,
+                                question_ids=public_ids,
+                            )
+                        ):
                             raise LiveCanaryPending(
                                 "public-gap follow-up produced no "
                                 "deterministic semantic progress",
@@ -477,6 +519,14 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                     pass_name="COUNTER_SUPERSESSION_CLOSURE",
                     question_ids=counter_ids,
                     context=counter_context,
+                    dossier=dossier,
+                    route_snapshot_bindings=route_snapshot_bindings,
+                    current_fact_snapshot_hash=(
+                        latest_saturation.fact_snapshot_hash
+                    ),
+                    current_accepted_lineage_roster_hash=(
+                        latest_saturation.accepted_lineage_roster_hash
+                    ),
                 )
                 if budgeted_counter_ids != counter_ids:
                     exhausted_gap_status = (
@@ -553,7 +603,14 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                         pass_outcomes.append(
                             _outcome_summary(outcome, next_dossier)
                         )
-                        if not outcome.semantic_progress:
+                        if (
+                            not outcome.semantic_progress
+                            and not _new_no_new_route_confirmation_candidate(
+                                dossier,
+                                next_dossier,
+                                question_ids=counter_ids,
+                            )
+                        ):
                             raise LiveCanaryPending(
                                 "counter/supersession follow-up produced no "
                                 "semantic progress",
@@ -625,27 +682,31 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                         ),
                     )
 
-                current = self.store.get_job(job_id)
-                if current.status != JobStatus.GAP_ADJUDICATION.value:
-                    raise RuntimeError(
-                        "full-thesis component entry requires GAP_ADJUDICATION"
-                    )
-                current = self.store.transition(
+                gap_run = ProGapAdjudicationService(self.store).adjudicate_job(
                     job_id,
-                    expected_version=current.state_version,
-                    to_status=JobStatus.COMPONENT_RESEARCH,
-                    actor="fresh-v3-full-thesis-saturation-gate",
-                    idempotency_key=(
-                        f"fresh-full-thesis-entry:{latest_saturation.receipt_hash}"
+                    job_root=job_root,
+                    deterministic_contexts=compile_saturated_gap_contexts(
+                        dossier=dossier,
+                        saturation=latest_saturation,
                     ),
-                    context=TransitionContext(research_saturation_valid=True),
-                    payload={
-                        "research_saturation_receipt_hash": (
-                            latest_saturation.receipt_hash
-                        ),
-                        "component_entry_allowed": True,
-                    },
+                    verified_dossier=dossier,
                 )
+                current = gap_run.job
+                if (
+                    current.status
+                    not in {
+                        JobStatus.COMPONENT_RESEARCH.value,
+                        JobStatus.JUDGING.value,
+                        JobStatus.SCORING.value,
+                        JobStatus.STAGECOURT.value,
+                    }
+                    or int(gap_run.receipt.get("supplemental_task_count") or 0)
+                    != 0
+                ):
+                    raise LiveCanaryPending(
+                        "saturated gap ledger did not release component scoring",
+                        status="GAP_ADJUDICATION_PENDING",
+                    )
                 inputs = self.scoring_input_provider(current, dossier, job_root)
                 scoring = ProScoringPipelineService(self.store).run_job(
                     job_id,
@@ -1694,7 +1755,6 @@ def _public_followup_question_ids(
     saturation: ResearchSaturationReceipt,
 ) -> tuple[str, ...]:
     blocked = {
-        *saturation.verifier_repair_pending_ids,
         *saturation.lifecycle_hard_break_pending_ids,
     }
     return tuple(
@@ -1705,10 +1765,59 @@ def _public_followup_question_ids(
                 *saturation.public_material_gap_question_ids,
                 *saturation.provider_parser_core_pending_question_ids,
                 *saturation.source_linkage_incomplete_question_ids,
+                # A verifier-pending question without a repairable candidate
+                # is an acquisition/fixpoint gap, not a compact fact repair.
+                # The caller below removes questions that do have a bounded
+                # repair candidate before any public follow-up is planned.
+                *saturation.verifier_repair_pending_ids,
             )
         )
         if value not in blocked
     )
+
+
+def _new_no_new_route_confirmation_candidate(
+    before: Mapping[str, Any],
+    after: Mapping[str, Any],
+    *,
+    question_ids: Sequence[str] = (),
+) -> bool:
+    """Recognize a new normal, empty route as fixpoint *input*, not closure.
+
+    Raw receipt growth remains non-semantic.  This narrow exception merely
+    permits the next deterministic iteration when Pro recorded an actual
+    normal route with no accepted fact and an explicit no-new-route reason.
+    Two independent passes and identical snapshots are still required by the
+    semantic fixpoint evaluator before any question can become terminal.
+    """
+
+    previous_ids = {
+        str(row.get("route_receipt_id") or "")
+        for row in before.get("search_route_receipts") or ()
+    }
+    requested = {
+        str(value) for value in question_ids if str(value)
+    }
+    for row in after.get("search_route_receipts") or ():
+        receipt_id = str(row.get("route_receipt_id") or "")
+        if not receipt_id or receipt_id in previous_ids:
+            continue
+        if requested and str(row.get("question_family_id") or "") not in requested:
+            continue
+        route_attempted = bool(
+            tuple(row.get("opened_source_urls") or ())
+            or str(row.get("query_text") or "").strip()
+            or str(row.get("query_or_navigation_objective") or "").strip()
+        )
+        if (
+            route_attempted
+            and str(row.get("provider_status") or "") == "SUCCESS"
+            and str(row.get("parser_status") or "SUCCESS") == "SUCCESS"
+            and not tuple(row.get("accepted_fact_ids") or ())
+            and str(row.get("no_new_route_reason") or "").strip()
+        ):
+            return True
+    return False
 
 
 def _counter_followup_question_ids(
@@ -1922,9 +2031,19 @@ def _question_ids_with_reopen_budget(
     pass_name: str,
     question_ids: Sequence[str],
     context: Mapping[str, Any],
+    dossier: Mapping[str, Any] | None = None,
+    route_snapshot_bindings: Mapping[str, Mapping[str, Any]] | None = None,
+    current_fact_snapshot_hash: str | None = None,
+    current_accepted_lineage_roster_hash: str | None = None,
     completed_attempt_limit: int = 2,
 ) -> tuple[str, ...]:
-    """Drop questions whose same stable economic gap already ran twice."""
+    """Drop questions whose same stable economic gap actually ran twice.
+
+    A multi-question prompt does not spend a question's reopen budget when
+    Pro omits every route receipt for that question.  The durable requested
+    roster remains audit evidence, while the effective dossier proves which
+    question routes were actually attempted in each completed pass.
+    """
 
     if completed_attempt_limit < 1:
         raise ValueError("completed attempt limit must be positive")
@@ -1936,6 +2055,47 @@ def _question_ids_with_reopen_budget(
         or {}
     )
     attempts = {question_id: 0 for question_id in requested}
+    exact_snapshot_requested = any(
+        value is not None
+        for value in (
+            route_snapshot_bindings,
+            current_fact_snapshot_hash,
+            current_accepted_lineage_roster_hash,
+        )
+    )
+    if exact_snapshot_requested and (
+        route_snapshot_bindings is None
+        or not current_fact_snapshot_hash
+        or not current_accepted_lineage_roster_hash
+    ):
+        raise ValueError(
+            "exact reopen accounting requires route bindings and both current hashes"
+        )
+    actual_route_questions: set[tuple[str, str]] | None = None
+    if dossier is not None:
+        actual_route_questions = set()
+        for route in dossier.get("search_route_receipts") or ():
+            pass_id = str(route.get("pass_id") or "")
+            question_id = str(route.get("question_family_id") or "")
+            if not pass_id or not question_id:
+                continue
+            if exact_snapshot_requested:
+                receipt_id = str(route.get("route_receipt_id") or "")
+                binding = (route_snapshot_bindings or {}).get(receipt_id)
+                if (
+                    not isinstance(binding, Mapping)
+                    or str(binding.get("pass_id") or "") != pass_id
+                    or str(binding.get("question_family_id") or "")
+                    != question_id
+                    or str(binding.get("fact_snapshot_hash") or "")
+                    != current_fact_snapshot_hash
+                    or str(
+                        binding.get("accepted_lineage_roster_hash") or ""
+                    )
+                    != current_accepted_lineage_roster_hash
+                ):
+                    continue
+            actual_route_questions.add((pass_id, question_id))
     for row in ledger.list_passes(job_id):
         if (
             row.pass_name != pass_name
@@ -1954,6 +2114,11 @@ def _question_ids_with_reopen_budget(
         for question_id in requested:
             if question_id not in stored_ids:
                 continue
+            if (
+                actual_route_questions is not None
+                and (row.pass_id, question_id) not in actual_route_questions
+            ):
+                continue
             current_hash = str(stable.get(question_id) or "")
             stored_hash = str(stored_stable.get(question_id) or "")
             # Older durable passes predate this field.  Conservatively treat
@@ -1966,6 +2131,23 @@ def _question_ids_with_reopen_budget(
         for question_id in requested
         if attempts[question_id] < completed_attempt_limit
     )
+
+
+def _load_route_snapshot_bindings(
+    job_root: Path,
+) -> Mapping[str, Mapping[str, Any]]:
+    path = job_root / "saturation/route_snapshot_bindings.json"
+    if not path.is_file():
+        raise ValueError("current route snapshot binding receipt is missing")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    bindings = payload.get("bindings")
+    if not isinstance(bindings, Mapping):
+        raise ValueError("route snapshot binding receipt has no binding map")
+    return {
+        str(receipt_id): dict(binding)
+        for receipt_id, binding in bindings.items()
+        if isinstance(binding, Mapping)
+    }
 
 
 def _saturation_blocker_identity_row(

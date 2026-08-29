@@ -4,13 +4,17 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from types import SimpleNamespace
 import unittest
 
 from e2r.pro_first.gaps.adjudicator import (
     DeterministicGapContext,
     ProGapAdjudicator,
 )
-from e2r.pro_first.gaps.service import ProGapAdjudicationService
+from e2r.pro_first.gaps.service import (
+    ProGapAdjudicationService,
+    compile_saturated_gap_contexts,
+)
 from e2r.pro_first.gaps.supplemental_planner import (
     MaterialGapSupplementalPlanner,
 )
@@ -18,6 +22,7 @@ from e2r.pro_first.gaps.supplemental_service import (
     CodexBoundedSupplementalExecutor,
     ProSupplementalResearchService,
     SupplementalTaskResult,
+    load_effective_dossier_facts,
     load_effective_verified_evidence,
     resolved_supplemental_gap_keys,
 )
@@ -409,6 +414,104 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
         self.assertFalse(row["production_score_authority"])
         self.assertFalse(row["production_stage_authority"])
 
+    def test_v3_cross_guard_gap_uses_gap_alias_and_empty_component_roster(self) -> None:
+        gap = {
+            "gap_id": "GAP-R13-MONITORING",
+            "stable_gap_key": "123456:R13:Q01:monitoring",
+            "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+            "question_family_id": (
+                "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_Q01"
+            ),
+            "affected_component_ids": [],
+            "required_source_role_ids": ["CURRENT_MARKET_DATA"],
+            "status": "PUBLIC_SEARCHABLE",
+            "availability_class": "PUBLIC_SEARCHABLE",
+            "could_change_score": False,
+        }
+        context = DeterministicGapContext(
+            dossier_gap_id=gap["gap_id"],
+            component_lower_delta={},
+            component_upper_delta={},
+            could_change_score=False,
+            monitoring_only=True,
+            rationale="교차 가드의 비점수 모니터링 공백",
+        )
+        result = self.adjudicator.adjudicate(
+            dossier=self._dossier(gap),
+            job=self.job,
+            verified_facts=(),
+            claim_fact_links=(),
+            deterministic_contexts={gap["gap_id"]: context},
+        )
+        decision = result.decisions[0]
+        self.assertEqual(decision.dossier_gap_id, gap["gap_id"])
+        self.assertEqual(decision.planner_label, "MONITORING_GAP")
+        self.assertFalse(decision.supplemental_allowed)
+        self.assertEqual(decision.assessment.affected_component_ids, ())
+        self.assertEqual(
+            decision.key.economic_mechanism_id,
+            "QUESTION_FAMILY/R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_Q01",
+        )
+
+    def test_saturation_bridge_binds_exact_question_and_zeroes_old_gap_effect(self) -> None:
+        decision = SimpleNamespace(
+            question_family_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q01",
+            ready=True,
+            gap_class="NO_GAP",
+            required_source_roles=("ISSUER_OFFICIAL",),
+            verified_source_roles=("ISSUER_OFFICIAL", "INDEPENDENT_NEWS"),
+            route_adequacy=SimpleNamespace(
+                official_route_attempted=True,
+                semantic_fixpoint=False,
+            ),
+        )
+        saturation = SimpleNamespace(
+            research_saturation_valid=True,
+            component_entry_allowed=True,
+            question_decisions=(decision,),
+        )
+        dossier = {
+            "unresolved_gaps": [
+                {
+                    "gap_id": "GAP-C06-Q01-OLD",
+                    "question_family_id": decision.question_family_id,
+                    "affected_component_ids": ["earnings_visibility"],
+                }
+            ]
+        }
+        contexts = compile_saturated_gap_contexts(
+            dossier=dossier,
+            saturation=saturation,
+        )
+        context = contexts["GAP-C06-Q01-OLD"]
+        self.assertTrue(context.monitoring_only)
+        self.assertEqual(context.component_lower_delta, {"earnings_visibility": 0.0})
+        self.assertEqual(context.component_upper_delta, {"earnings_visibility": 0.0})
+        self.assertEqual(context.question_family_id, decision.question_family_id)
+        self.assertEqual(context.verified_primary_source_roles, ("ISSUER_OFFICIAL",))
+
+        decision.ready = False
+        with self.assertRaisesRegex(ValueError, "cannot be bypassed"):
+            compile_saturated_gap_contexts(
+                dossier=dossier,
+                saturation=saturation,
+            )
+
+    def test_effective_dossier_facts_include_resolution_evidence(self) -> None:
+        dossier = {
+            "material_facts": [{"dossier_fact_id": "FACT-SUPPORT"}],
+            "counterfacts": [{"dossier_fact_id": "FACT-COUNTER"}],
+            "resolution_facts": [{"dossier_fact_id": "FACT-RESOLUTION"}],
+        }
+        rows = load_effective_dossier_facts(
+            dossier,
+            Path(self.temporary_directory.name) / "resolution-roster",
+        )
+        self.assertEqual(
+            tuple(row["dossier_fact_id"] for row in rows),
+            ("FACT-SUPPORT", "FACT-COUNTER", "FACT-RESOLUTION"),
+        )
+
     def test_full_research_restart_count_zero(self) -> None:
         gap = self._gap(source_family="CASH_FLOW")
         result = self._adjudicate(
@@ -475,6 +578,46 @@ class ProFirstGapAdjudicationTest(unittest.TestCase):
             if event.to_status == JobStatus.COMPONENT_RESEARCH.value
         ]
         self.assertEqual(len(matching_events), 1)
+
+    def test_legacy_saturation_transition_recovers_missing_gap_ledger_once(self) -> None:
+        root = Path(self.temporary_directory.name) / "legacy-gap-recovery"
+        gap = self._gap()
+        dossier = {
+            "job_id": self.job.job_id,
+            "unresolved_gaps": [gap],
+        }
+        self._prepare_source_verified(root=root, dossier=dossier)
+        self.job = self.store.transition(
+            self.job.job_id,
+            expected_version=self.job.state_version,
+            to_status=JobStatus.COMPONENT_RESEARCH,
+            actor="fresh-v3-full-thesis-saturation-gate",
+            idempotency_key="legacy-skipped-gap-ledger",
+            context=TransitionContext(research_saturation_valid=True),
+            payload={
+                "research_saturation_receipt_hash": "a" * 64,
+                "component_entry_allowed": True,
+            },
+        )
+        result = ProGapAdjudicationService(self.store).adjudicate_job(
+            self.job.job_id,
+            job_root=root,
+            deterministic_contexts={
+                gap["dossier_gap_id"]: self._context(monitoring_only=True)
+            },
+        )
+        self.assertEqual(result.job.status, JobStatus.COMPONENT_RESEARCH.value)
+        self.assertTrue(result.receipt["legacy_saturation_gate_recovery"])
+        self.assertEqual(result.receipt["supplemental_task_count"], 0)
+        self.assertEqual(len(self.store.get_gap_decisions(self.job.job_id)), 1)
+        reused = ProGapAdjudicationService(self.store).adjudicate_job(
+            self.job.job_id,
+            job_root=root,
+            deterministic_contexts={
+                gap["dossier_gap_id"]: self._context(monitoring_only=True)
+            },
+        )
+        self.assertIsNone(reused.adjudication)
 
     def test_durable_material_gap_records_one_bounded_task(self) -> None:
         root = Path(self.temporary_directory.name) / "durable-material-gap"

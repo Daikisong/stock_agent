@@ -6,6 +6,8 @@ peer, and so on), never on a target, sector, archetype, or missing slot.
 
 from __future__ import annotations
 
+from urllib.parse import urlsplit
+
 
 _SUPPORTING_AUTHORITY_PREFIXES = (
     "CUSTOMER_",
@@ -44,6 +46,14 @@ _CORE_AUTHORITY_FRAGMENTS = (
     "FINANCIAL_STATEMENT",
     "CASH_FLOW",
     "REGULATORY_FILING",
+)
+
+_REGULATOR_FILING_HOSTS = frozenset(
+    {
+        "sec.gov",
+        "dart.fss.or.kr",
+        "kind.krx.co.kr",
+    }
 )
 
 
@@ -136,10 +146,32 @@ def source_family_requires_general_web(value: str) -> bool:
     )
 
 
+def source_authority_roles_from_urls(*values: str) -> tuple[str, ...]:
+    """Infer only objective official-registry roles from exact URL hosts.
+
+    A verified fact can arrive with a Pro-authored role roster that omits the
+    authority represented by its canonical URL.  The registry host is stable
+    provenance: an SEC filing remains ``REGULATOR_OFFICIAL`` regardless of
+    target, sector, archetype, or the wording used by Pro.  Lookalike hosts
+    such as ``sec.gov.example.com`` are deliberately excluded.
+    """
+
+    for value in values:
+        try:
+            host = (urlsplit(str(value or "")).hostname or "").lower()
+        except ValueError:
+            continue
+        normalized = host.removeprefix("www.")
+        if normalized in _REGULATOR_FILING_HOSTS:
+            return ("OFFICIAL_FILING", "REGULATOR_OFFICIAL")
+    return ()
+
+
 __all__ = [
     "canonical_gap_source_family",
     "normalized_source_family",
     "route_source_classes",
     "source_family_evidence_role",
     "source_family_requires_general_web",
+    "source_authority_roles_from_urls",
 ]

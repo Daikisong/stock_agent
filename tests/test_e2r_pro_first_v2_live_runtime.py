@@ -494,6 +494,58 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
             {row.operation_code for row in normalized.operations},
         )
 
+    def test_followup_delta_keeps_exact_prior_route_reference_during_preflight(self) -> None:
+        question_id = "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q01"
+        archetype_id = "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
+        payload = {
+            "schema_version": "e2r_pro_research_dossier_v3",
+            "job_id": "PROJOB-FOLLOWUP-PRIOR-ROUTE",
+            "source_documents": [],
+            "material_facts": [],
+            "counterfacts": [],
+            "resolution_facts": [],
+            "source_lineages": [],
+            "derived_metrics": [],
+            "search_route_receipts": [],
+            "question_family_results": [
+                {
+                    "archetype_id": archetype_id,
+                    "question_family_id": question_id,
+                    "status": "PUBLIC_SEARCHABLE",
+                    "search_route_receipt_ids": ["ROUTE-PRIOR-EXACT"],
+                    "adequate_search_proven": False,
+                }
+            ],
+        }
+        prior = {
+            "search_route_receipts": [
+                {
+                    "route_receipt_id": "ROUTE-PRIOR-EXACT",
+                    "pass_id": "PROPASS-PRIOR",
+                    "archetype_id": archetype_id,
+                    "question_family_id": question_id,
+                }
+            ]
+        }
+
+        normalized = _normalize_followup_dossier_pre_schema(
+            payload,
+            archetype_ids=(archetype_id,),
+            prior_dossier=prior,
+        )
+
+        self.assertEqual(
+            normalized.payload["question_family_results"][0][
+                "search_route_receipt_ids"
+            ],
+            ["ROUTE-PRIOR-EXACT"],
+        )
+        self.assertEqual(normalized.payload["search_route_receipts"], [])
+        self.assertNotIn(
+            "DROP_INVALID_QUESTION_ROUTE_REFERENCE",
+            {row.operation_code for row in normalized.operations},
+        )
+
     def test_durable_dossier_pass_rows_skip_only_unsubmitted_transport_plan(self) -> None:
         rows = (
             SimpleNamespace(
@@ -526,7 +578,17 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
                 prompt_hash="f" * 64,
                 response_hash=None,
                 pass_input_hash="9" * 64,
-                detail={"server_persistence_confirmed": False},
+                detail={
+                    "failure_domain": "TRANSPORT",
+                    "failure_class": (
+                        "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED"
+                    ),
+                    "server_persistence_confirmed": False,
+                    "server_persistence_absence_confirmation_count": 2,
+                    "server_persistence_failure_evidence_hash": "7" * 64,
+                    "transport_failure_root_input_hash": "9" * 64,
+                    "replacement_pass_allowed": True,
+                },
             ),
             SimpleNamespace(
                 pass_ordinal=4,
@@ -596,6 +658,63 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
                 current_response_hash="e" * 64,
                 prior_dossier=mismatched_prior,
             )
+
+    def test_durable_pass_rows_skip_sealed_unpersisted_different_context(self) -> None:
+        failed = SimpleNamespace(
+            pass_ordinal=1,
+            pass_id="PASS-FAILED-OLD-CONTEXT",
+            parent_pass_id=None,
+            pass_name="SATURATION_AUDIT",
+            status="FAILED_HARD",
+            submit_count=1,
+            prompt_hash="a" * 64,
+            response_hash=None,
+            pass_input_hash="b" * 64,
+            detail={
+                "failure_domain": "TRANSPORT",
+                "failure_class": (
+                    "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED"
+                ),
+                "server_persistence_confirmed": False,
+                "server_persistence_absence_confirmation_count": 2,
+                "server_persistence_failure_evidence_hash": "c" * 64,
+                "transport_failure_root_input_hash": "b" * 64,
+                "replacement_pass_allowed": True,
+            },
+        )
+        current = SimpleNamespace(
+            pass_ordinal=2,
+            pass_id="PASS-CURRENT-NEW-CONTEXT",
+            parent_pass_id=None,
+            pass_name="SATURATION_AUDIT",
+            status="RESEARCH_RUNNING",
+            submit_count=1,
+            prompt_hash="d" * 64,
+            response_hash=None,
+            pass_input_hash="e" * 64,
+            detail={},
+        )
+
+        class FakeLedger:
+            def list_passes(self, _job_id):
+                return (failed, current)
+
+            def get_pass(self, pass_id):
+                return next(
+                    row for row in (failed, current) if row.pass_id == pass_id
+                )
+
+        rows = _durable_pass_rows(
+            FakeLedger(),  # type: ignore[arg-type]
+            "JOB-1",
+            current_pass_id=current.pass_id,
+            current_response_hash="f" * 64,
+        )
+
+        self.assertEqual(
+            [row["pass_id"] for row in rows],
+            ["PASS-CURRENT-NEW-CONTEXT"],
+        )
 
     def test_durable_pass_rows_reject_unbound_or_mismatched_failed_pass(self) -> None:
         failed = SimpleNamespace(
@@ -675,7 +794,17 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
             prompt_hash="a" * 64,
             response_hash=None,
             pass_input_hash="b" * 64,
-            detail={"server_persistence_confirmed": False},
+            detail={
+                "failure_domain": "TRANSPORT",
+                "failure_class": (
+                    "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED"
+                ),
+                "server_persistence_confirmed": False,
+                "server_persistence_absence_confirmation_count": 2,
+                "server_persistence_failure_evidence_hash": "3" * 64,
+                "transport_failure_root_input_hash": "b" * 64,
+                "replacement_pass_allowed": True,
+            },
         )
         replacement = SimpleNamespace(
             pass_ordinal=2,

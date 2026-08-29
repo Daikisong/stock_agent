@@ -26,6 +26,7 @@ from e2r.pro_first.scoring.codex_dossier_impact_provider import (
     CodexDossierImpactProvider,
 )
 from e2r.pro_first.scoring.impact_compiler import ProValidatedImpactCompiler
+from e2r.pro_first.scoring.publication_gate import FullThesisPublicationGate
 from e2r.pro_first.scoring.judge_bridge import ProEvidenceOnlyJudgeBridge
 from e2r.pro_first.scoring.scorer_bridge import ProCalibratedScorerBridge
 from e2r.pro_first.scoring.service import ProScoringPipelineService
@@ -158,7 +159,7 @@ class _WholeDossierImpactProvider:
         for claim in payload["verified_claim_catalog"]:
             edge = dict(claim["allowed_impact_edges"][0])
             if self.tamper_mapping:
-                edge["mapping_id"] = "PROVIDER-INVENTED-MAPPING"
+                edge["allowed_edge_id"] = "PROVIDER-INVENTED-EDGE"
             impacts.append(
                 {
                     "claim_id": claim["claim_id"],
@@ -598,6 +599,77 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
         )
         self.assertEqual(pricing.source_coverage, ("PROSRC-verified",))
 
+    def test_component_bridge_accepts_v3_support_fact_ids(self) -> None:
+        dossier = self._dossier()
+        pricing = dossier["component_research"]["bottleneck_pricing"]
+        pricing["support_fact_ids"] = pricing.pop("positive_fact_ids")
+
+        result = ProComponentMemoCompiler().compile(
+            dossier=dossier,
+            job=self.job,
+            selected_archetype_id=self.archetype_id,
+            verified_facts=(self.fact,),
+            source_verifications=(
+                {
+                    "dossier_fact_id": "PROFACT-verified",
+                    "status": "ACCEPTED_CURRENT",
+                    "compiled_claim_id": "C1",
+                },
+                {
+                    "dossier_fact_id": "PROFACT-unverified",
+                    "status": "REJECTED_QUOTE_MISMATCH",
+                    "compiled_claim_id": None,
+                },
+            ),
+            claim_fact_links=(
+                {"claim_id": "C1", "fact_id": self.fact.fact_id},
+            ),
+            gap_decisions=(),
+            historical_anchors=self.anchors,
+        )
+
+        memo = next(
+            row for row in result.memos if row.component_id == "bottleneck_pricing"
+        )
+        self.assertEqual(memo.positive_fact_ids, (self.fact.fact_id,))
+        self.assertIn(
+            "PROFACT-unverified",
+            result.removed_unverified_dossier_fact_ids,
+        )
+
+    def test_component_bridge_preserves_unassigned_eligible_fact_as_context(self) -> None:
+        dossier = self._dossier()
+        cross_component_fact = replace(
+            self.fact,
+            allowed_component_ids=("bottleneck_pricing", "earnings_visibility"),
+        )
+
+        result = ProComponentMemoCompiler().compile(
+            dossier=dossier,
+            job=self.job,
+            selected_archetype_id=self.archetype_id,
+            verified_facts=(cross_component_fact,),
+            source_verifications=(
+                {
+                    "dossier_fact_id": "PROFACT-verified",
+                    "status": "ACCEPTED_CURRENT",
+                    "compiled_claim_id": "C1",
+                },
+            ),
+            claim_fact_links=(
+                {"claim_id": "C1", "fact_id": cross_component_fact.fact_id},
+            ),
+            gap_decisions=(),
+            historical_anchors=self.anchors,
+        )
+
+        visibility = next(
+            row for row in result.memos if row.component_id == "earnings_visibility"
+        )
+        self.assertNotIn(cross_component_fact.fact_id, visibility.positive_fact_ids)
+        self.assertIn(cross_component_fact.fact_id, visibility.context_fact_ids)
+        self.assertEqual(visibility.source_coverage, ("PROSRC-verified",))
+
     def test_component_bridge_conservatively_normalizes_qualitative_confidence(self) -> None:
         dossier = self._dossier()
         dossier["component_research"]["eps_fcf_explosion"]["confidence"] = (
@@ -738,6 +810,59 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
             second.receipt_payload["provider_response_reuse_count"], 21
         )
 
+    def test_invalid_judge_cache_is_quarantined_and_retried_once(self) -> None:
+        class InvalidOnceProvider(_EvidenceOnlyProvider):
+            invalid_response = None
+
+            def judge(inner_self, request):
+                payload = super(InvalidOnceProvider, inner_self).judge(request)
+                if inner_self.invalid_response is None:
+                    payload["support_fact_ids"] = ["EFACT-OUTSIDE-MEMO"]
+                    inner_self.invalid_response = dict(payload)
+                return payload
+
+        component = self._component_result()
+        provider = InvalidOnceProvider()
+        cache_root = Path(self.temporary_directory.name) / "invalid-judge-cache"
+        first = ProEvidenceOnlyJudgeBridge(provider).run(
+            memos=component.memos,
+            evidence_facts=(self.fact,),
+            historical_anchors=self.anchors,
+            gap_decisions=(),
+            response_cache_root=cache_root,
+        )
+        self.assertEqual(first.status, "JUDGING_PROVIDER_PENDING")
+        failed = first.call_receipts[0]
+        invalid_response = dict(provider.invalid_response)
+        cache_root.mkdir(parents=True, exist_ok=True)
+        (cache_root / f"{failed.judge_call_id}.json").write_text(
+            canonical_json(
+                {
+                    "schema_version": "e2r_pro_judge_response_cache_v1",
+                    "judge_call_id": failed.judge_call_id,
+                    "prompt_hash": failed.prompt_hash,
+                    "response_hash": canonical_hash(invalid_response),
+                    "provider_name": provider.provider_name,
+                    "provider_original_call_count": 1,
+                    "query_count": 0,
+                    "fetch_count": 0,
+                    "response": invalid_response,
+                }
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        second = ProEvidenceOnlyJudgeBridge(provider).run(
+            memos=component.memos,
+            evidence_facts=(self.fact,),
+            historical_anchors=self.anchors,
+            gap_decisions=(),
+            response_cache_root=cache_root,
+        )
+        self.assertEqual(second.status, "JUDGING_COMPLETE")
+        self.assertEqual(len(provider.requests), 22)
+        self.assertEqual(len(tuple((cache_root / "invalid").glob("*.json"))), 1)
+
     def test_judge_provider_failure_pending(self) -> None:
         component = self._component_result()
         provider = _EvidenceOnlyProvider(fail_after=2)
@@ -810,6 +935,11 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
         self.assertIn("Never browse", prompt)
         self.assertNotIn("canonical_stage", prompt)
         self.assertNotIn("uniqueItems", str(transport.calls[0]["output_schema"]))
+        output_properties = transport.calls[0]["output_schema"]["properties"]
+        self.assertEqual(output_properties["support_fact_ids"]["maxItems"], 0)
+        self.assertEqual(output_properties["counter_fact_ids"]["maxItems"], 0)
+        self.assertEqual(output_properties["nearest_anchor_ids"]["maxItems"], 0)
+        self.assertEqual(output_properties["proposed_points"]["maximum"], 0.0)
 
     def test_codex_whole_dossier_provider_excludes_score_and_stage_authority(self) -> None:
         transport = _JudgeTransport(
@@ -835,6 +965,8 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
         self.assertNotIn("stage", impact_properties)
         self.assertNotIn("direction", impact_properties)
         self.assertNotIn("source_family", impact_properties)
+        self.assertIn("allowed_edge_id", impact_properties)
+        self.assertNotIn("mapping_id", impact_properties)
         self.assertNotIn("uniqueItems", str(call["output_schema"]))
         self.assertIn("Do not browse", call["prompt"])
         self.assertIn("deterministic pipeline", call["prompt"])
@@ -1246,6 +1378,32 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
         self.assertIsNone(run.score_receipt)
         self.assertIsNone(run.stagecourt_receipt)
 
+    def test_v3_dossier_uses_the_same_hash_bound_saturation_gate(self) -> None:
+        dossier = v2_scoring_dossier(
+            self._dossier(),
+            job=self.job,
+            selected_archetype_ids=(self.archetype_id,),
+        )
+        dossier["schema_version"] = "e2r_pro_research_dossier_v3"
+        receipt = passing_research_saturation_receipt(
+            job=self.job,
+            dossier=dossier,
+            selected_archetype_ids=(self.archetype_id,),
+        )
+        decision = FullThesisPublicationGate().evaluate_research(
+            job=self.job,
+            dossier=dossier,
+            selected_archetype_id=self.archetype_id,
+            saturation_receipt=receipt,
+            evidence_facts=(self.fact,),
+            claim_fact_links=(
+                {"claim_id": "C1", "fact_id": self.fact.fact_id},
+            ),
+        )
+        self.assertTrue(decision.research_saturation_valid)
+        self.assertTrue(decision.component_entry_allowed)
+        self.assertEqual(decision.withhold_reasons, ())
+
     def test_pro_score_stage_fields_ignored(self) -> None:
         scoring = self._score_result()
         stage = ProAtomicStageCourtBridge().decide(
@@ -1365,6 +1523,37 @@ class ProFirstScoringBridgeTest(unittest.TestCase):
         self.assertEqual(resumed.job.status, JobStatus.FINAL.value)
         self.assertEqual(len(provider.requests), 21)
         self.assertEqual(fail_if_called.requests, [])
+
+    def test_scoring_status_without_score_receipt_rebuilds_missing_judges(self) -> None:
+        root = Path(self.temporary_directory.name) / "pre-score-judge-recovery"
+        self._prepare_durable_component_job(root)
+        self.job = self.store.transition(
+            self.job.job_id,
+            expected_version=self.job.state_version,
+            to_status=JobStatus.JUDGING,
+            actor="pre-score-recovery-fixture",
+            idempotency_key="pre-score-recovery-judging",
+            context=TransitionContext(
+                component_coverage_complete=True,
+                research_saturation_valid=True,
+            ),
+        )
+        self.job = self.store.transition(
+            self.job.job_id,
+            expected_version=self.job.state_version,
+            to_status=JobStatus.SCORING,
+            actor="pre-score-recovery-fixture",
+            idempotency_key="pre-score-recovery-scoring",
+            context=TransitionContext(judge_coverage_complete=True),
+        )
+        provider = _EvidenceOnlyProvider()
+
+        run = self._run_durable_pipeline(root, provider)
+
+        self.assertEqual(run.job.status, JobStatus.FINAL.value)
+        self.assertEqual(len(provider.requests), 21)
+        self.assertTrue((root / "scoring/judge_bridge_receipt.json").is_file())
+        self.assertTrue(run.score_receipt["score_valid"])
 
     def test_delta_recomputes_only_impacted_components_judges(self) -> None:
         prior_root = Path(self.temporary_directory.name) / "prior-full-job"

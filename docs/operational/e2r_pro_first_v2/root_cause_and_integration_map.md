@@ -208,7 +208,7 @@ phase의 코드·지정 회귀시험·한글 커밋이 branch에 존재한다는
 | P6 | 완료 | 11종 verifier rejection packet, 동일 대화 repair/withdraw, deterministic re-verification |
 | P7 | 완료 | saturation 선행 gate, diagnostic/full score 분리, Stage/publication withheld, 기존 scorer/StageCourt 재사용 |
 | P8 | 완료 | 36 prompt snapshot, 13 mechanism golden, known-bad 30종·detector 29개 |
-| P9 | 진행 중 | 000660 pass 11 first repair 완료. 111-15+11=107 facts/211 routes, replacement accepted 4/rejected 7/withdrawn 4, compiled 53. pending repair 42와 saturation/score, C17/C28가 남음 |
+| P9 | 진행 중 | 기존 repair-heavy C06은 diagnostic-only로 봉인. 완전 새 C06 V3 job은 28/28 terminal, 56 verified facts, component 7/7, Judge 21/21, score 23.275, Stage 0 FINAL, query/fetch 0/0으로 full-thesis 완료. C17/C28 live full-thesis와 최종 CI가 남음 |
 | P10 | 부분 완료 | V2 static audit 20/20 zero·critical 0 구현. P9 완료 뒤 full CI·최종 receipt가 남음 |
 
 ### 2026-08-24 live P9 진행 기록

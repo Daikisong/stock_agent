@@ -4,7 +4,10 @@ from __future__ import annotations
 
 from typing import Any, Mapping, Sequence
 
-from ..gaps.source_family_policy import source_family_evidence_role
+from ..gaps.source_family_policy import (
+    source_authority_roles_from_urls,
+    source_family_evidence_role,
+)
 from .availability import adjudicate_availability
 from .fixpoint import NoNewRouteConfirmation
 from .models import (
@@ -134,6 +137,24 @@ def compile_question_closure_decision(
         verified_roles.update(
             str(value) for value in source_document.get("source_role_ids") or ()
         )
+        lineage = lineage_by_id.get(
+            _fact_lineage_id(
+                fact,
+                source_document_by_id=source_document_by_id,
+            )
+        ) or {}
+        verified_roles.update(
+            source_authority_roles_from_urls(
+                str(fact.get("source_url") or ""),
+                str(fact.get("url") or ""),
+                str(source_document.get("canonical_url") or ""),
+                str(source_document.get("opened_url") or ""),
+                *(
+                    str(value)
+                    for value in lineage.get("source_urls") or ()
+                ),
+            )
+        )
     required_roles = tuple(
         str(value) for value in question_contract.get("required_source_roles") or ()
     )
@@ -221,10 +242,28 @@ def compile_question_closure_decision(
     if status != "NOT_APPLICABLE_WITH_REASON":
         failures.extend(route_adequacy.failure_codes)
 
+    deterministic_absence_fixpoint = bool(
+        status
+        in {
+            "PUBLIC_SEARCHABLE",
+            "UNKNOWN_ROUTE_NOT_YET_TESTED",
+            "SOURCE_PENDING",
+            "VERIFIER_REPAIR_REQUIRED",
+        }
+        and str(question_result.get("availability_class") or "")
+        == "PUBLIC_SEARCHABLE"
+        and route_adequacy.adequate
+        and route_adequacy.semantic_fixpoint
+        and not missing_core
+        and not missing_corroboration
+        and not failures
+    )
+
     materiality = _materiality(question_contract, deterministic_bound)
     public_material = bool(
         status in {"PUBLIC_SEARCHABLE", "UNKNOWN_ROUTE_NOT_YET_TESTED", "SOURCE_PENDING"}
         and materiality not in {"NON_MATERIAL", "MONITORING"}
+        and not deterministic_absence_fixpoint
     )
     hard_break_pending = bool(
         status == "CONTRADICTED_UNRESOLVED"
@@ -236,10 +275,19 @@ def compile_question_closure_decision(
     provider_parser_pending = status in {"PROVIDER_PENDING", "PARSER_PENDING"} or str(
         question_result.get("availability_class") or ""
     ) in {"PROVIDER_BLOCKED", "PARSER_BLOCKED"}
-    terminal = availability.terminal and status in TERMINAL_QUESTION_STATUSES
-    deterministic_status = status
+    terminal = bool(
+        (availability.terminal and status in TERMINAL_QUESTION_STATUSES)
+        or deterministic_absence_fixpoint
+    )
+    deterministic_status = (
+        "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH"
+        if deterministic_absence_fixpoint
+        else status
+    )
     gap_class = "NO_GAP"
-    if hard_break_pending:
+    if deterministic_absence_fixpoint:
+        gap_class = "NO_GAP"
+    elif hard_break_pending:
         gap_class = "HARD_BREAK_GAP"
         deterministic_status = "CONTRADICTED_UNRESOLVED"
     elif (
@@ -280,7 +328,10 @@ def compile_question_closure_decision(
             failures.append("CORROBORATION_CAP_CONDITIONS_NOT_MET")
     elif materiality == "MONITORING" and status in NONTERMINAL_QUESTION_STATUSES:
         gap_class = "MONITORING_GAP"
-    if status in NONTERMINAL_QUESTION_STATUSES:
+    if (
+        status in NONTERMINAL_QUESTION_STATUSES
+        and not deterministic_absence_fixpoint
+    ):
         terminal = False
     proposal = {
         "could_change_score": question_result.get("could_change_score") is True,

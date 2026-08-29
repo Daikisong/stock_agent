@@ -121,6 +121,10 @@ class CodexStructuredProviderTransport:
             str(output_path),
             "--color",
             "never",
+            # Structured providers receive the complete bounded payload over
+            # stdin and never depend on repository discovery.  This also
+            # makes the Windows .CMD launcher valid from a neutral user home.
+            "--skip-git-repo-check",
         ]
         if self.working_directory is not None:
             command.extend(("-C", str(self.working_directory)))
@@ -136,6 +140,11 @@ def run_codex_command(
     timeout: float,
 ) -> subprocess.CompletedProcess[str]:
     process_command = list(command)
+    working_directory = None
+    if "-C" in process_command:
+        position = process_command.index("-C")
+        if position + 1 < len(process_command):
+            working_directory = process_command[position + 1]
     if os.name == "nt":
         executable = shutil.which(process_command[0])
         if executable is None:
@@ -159,6 +168,7 @@ def run_codex_command(
         text=True,
         encoding="utf-8",
         errors="replace",
+        cwd=working_directory,
         start_new_session=(os.name == "posix"),
         env=codex_subprocess_env(),
     )

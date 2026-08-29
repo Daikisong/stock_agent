@@ -323,7 +323,7 @@ def compile_conservative_gap_contexts(
 
     contexts: dict[str, DeterministicGapContext] = {}
     for gap in dossier.get("unresolved_gaps") or ():
-        gap_id = str(gap.get("dossier_gap_id") or "")
+        gap_id = str(gap.get("dossier_gap_id") or gap.get("gap_id") or "")
         archetype_id = str(gap.get("archetype_id") or "")
         affected = tuple(str(value) for value in gap.get("affected_component_ids") or ())
         if not gap_id or archetype_id not in set(job.archetype_ids):
@@ -331,7 +331,14 @@ def compile_conservative_gap_contexts(
         contract = load_archetype_scoring_contract(archetype_id)
         if not set(affected).issubset(contract.component_max_points):
             raise ValueError("dossier gap affects a component outside the scoring contract")
-        required = tuple(str(value).upper() for value in gap.get("required_source_families") or ())
+        required = tuple(
+            str(value).upper()
+            for value in (
+                gap.get("required_source_families")
+                or gap.get("required_source_role_ids")
+                or ()
+            )
+        )
         general_web_requested = any(
             source_family_requires_general_web(value) for value in required
         )

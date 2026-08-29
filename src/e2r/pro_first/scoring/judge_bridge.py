@@ -222,10 +222,39 @@ class ProEvidenceOnlyJudgeBridge:
                         judge_call_id=judge_call_id,
                         prompt_hash=prompt_hash,
                     )
+                    if response is not None:
+                        response_hash = canonical_hash(response)
+                        try:
+                            decision = self._decision(
+                                response=response,
+                                memo=memo,
+                                role=role,
+                                judge_call_id=judge_call_id,
+                                prompt_hash=prompt_hash,
+                                response_hash=response_hash,
+                            )
+                        except (KeyError, TypeError, ValueError):
+                            _quarantine_invalid_judge_response(
+                                cache_root=cache_root,
+                                judge_call_id=judge_call_id,
+                                response_hash=response_hash,
+                            )
+                            response = None
+                            response_hash = None
+                        else:
+                            response_reused = True
                     if response is None:
                         provider_called = True
                         response = dict(self.provider.judge(request))
                         response_hash = canonical_hash(response)
+                        decision = self._decision(
+                            response=response,
+                            memo=memo,
+                            role=role,
+                            judge_call_id=judge_call_id,
+                            prompt_hash=prompt_hash,
+                            response_hash=response_hash,
+                        )
                         _write_cached_judge_response(
                             cache_root=cache_root,
                             judge_call_id=judge_call_id,
@@ -240,17 +269,6 @@ class ProEvidenceOnlyJudgeBridge:
                             ),
                             response=response,
                         )
-                    else:
-                        response_reused = True
-                        response_hash = canonical_hash(response)
-                    decision = self._decision(
-                        response=response,
-                        memo=memo,
-                        role=role,
-                        judge_call_id=judge_call_id,
-                        prompt_hash=prompt_hash,
-                        response_hash=response_hash,
-                    )
                 except Exception as error:
                     receipts.append(
                         JudgeCallReceipt(
@@ -443,6 +461,25 @@ def _write_cached_judge_response(
         os.fsync(stream.fileno())
     os.replace(part, path)
     fsync_directory(path.parent)
+
+
+def _quarantine_invalid_judge_response(
+    *,
+    cache_root: Path | None,
+    judge_call_id: str,
+    response_hash: str,
+) -> None:
+    if cache_root is None:
+        return
+    source = cache_root / f"{judge_call_id}.json"
+    if not source.is_file():
+        return
+    destination_root = cache_root / "invalid"
+    destination_root.mkdir(parents=True, exist_ok=True)
+    destination = destination_root / f"{judge_call_id}.{response_hash}.json"
+    os.replace(source, destination)
+    fsync_directory(destination_root)
+    fsync_directory(cache_root)
 
 
 __all__ = [

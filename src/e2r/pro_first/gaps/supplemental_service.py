@@ -737,6 +737,7 @@ def load_effective_dossier_facts(
     rows = [
         *(dossier.get("material_facts") or ()),
         *(dossier.get("counterfacts") or ()),
+        *(dossier.get("resolution_facts") or ()),
     ]
     receipt_path = root / "supplemental/supplemental_execution_receipt.json"
     if receipt_path.is_file() and _read_json(receipt_path).get("status") == "SUPPLEMENTAL_RESEARCH_COMPLETE":

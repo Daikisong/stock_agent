@@ -1442,6 +1442,7 @@ class ProV2LiveCanaryRunner:
         pre_schema = _normalize_followup_dossier_pre_schema(
             adapted.payload,
             archetype_ids=prepared.job.archetype_ids,
+            prior_dossier=original_dossier,
         )
         if pre_schema.operations:
             self._emit(
@@ -2154,17 +2155,13 @@ def _durable_pass_rows(
         # every other missing response hash remains a hard failure.
         replacement = replacement_by_superseded_id.get(record.pass_id)
         if replacement is not None:
-            failed_detail = getattr(record, "detail", None) or {}
             replacement_detail = getattr(replacement, "detail", None) or {}
             replacement_root_input_hash = str(
                 replacement_detail.get("transport_replacement_root_input_hash")
                 or ""
             )
             if (
-                record.status != "FAILED_HARD"
-                or record.submit_count != 1
-                or record.response_hash is not None
-                or failed_detail.get("server_persistence_confirmed") is not False
+                not _is_sealed_unpersisted_dispatch(record)
                 or not replacement_root_input_hash
                 or replacement_root_input_hash != record.pass_input_hash
                 or replacement.pass_name != record.pass_name
@@ -2175,6 +2172,13 @@ def _durable_pass_rows(
                     "superseded unpersisted pass differs from replacement lineage"
                 )
             superseded_unpersisted_seen.add(record.pass_id)
+            continue
+        # A rigorously sealed turn that two independent fresh public views
+        # proved never reached the conversation is transport audit history,
+        # even when later semantic context changed and therefore no exact
+        # replacement was required.  It has no response hash by construction
+        # and must never be fabricated into the ResearchDossier pass ledger.
+        if _is_sealed_unpersisted_dispatch(record):
             continue
         response_hash = (
             current_response_hash
@@ -2208,6 +2212,32 @@ def _durable_pass_rows(
     if unknown_superseded_ids:
         raise ValueError("replacement names an unknown unpersisted pass")
     return rows
+
+
+def _is_sealed_unpersisted_dispatch(record: Any) -> bool:
+    detail = getattr(record, "detail", None) or {}
+    evidence_hash = str(
+        detail.get("server_persistence_failure_evidence_hash") or ""
+    )
+    root_input_hash = str(
+        detail.get("transport_failure_root_input_hash") or ""
+    )
+    return bool(
+        record.status == "FAILED_HARD"
+        and record.submit_count == 1
+        and record.response_hash is None
+        and str(detail.get("failure_domain") or "") == "TRANSPORT"
+        and str(detail.get("failure_class") or "")
+        == "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED"
+        and detail.get("server_persistence_confirmed") is False
+        and int(
+            detail.get("server_persistence_absence_confirmation_count") or 0
+        )
+        >= 2
+        and len(evidence_hash) == 64
+        and len(root_input_hash) == 64
+        and detail.get("replacement_pass_allowed") is True
+    )
 
 
 def _load_snapshot_dossiers(
@@ -2872,6 +2902,7 @@ def _normalize_followup_dossier_pre_schema(
     payload: Mapping[str, Any],
     *,
     archetype_ids: Sequence[str],
+    prior_dossier: Mapping[str, Any] | None = None,
 ) -> StaticPreflightNormalization:
     """Apply the same deterministic V3 pre-schema boundary as initial import.
 
@@ -2880,9 +2911,70 @@ def _normalize_followup_dossier_pre_schema(
     aliases; it never edits the source-backed fact statement or excerpt.
     """
 
-    return PreSchemaV3Normalizer().normalize(
-        payload,
+    if not prior_dossier or payload.get("schema_version") != "e2r_pro_research_dossier_v3":
+        return PreSchemaV3Normalizer().normalize(
+            payload,
+            archetype_ids=archetype_ids,
+        )
+
+    # A follow-up is allowed to be a delta.  Its question rows can therefore
+    # point at immutable facts/routes already admitted by the prior effective
+    # dossier without repeating those full rows.  Give preflight a temporary
+    # cumulative view so it can distinguish a valid prior reference from an
+    # invented id, then remove only the rows injected for that check.  The raw
+    # response and the eventual delta remain unchanged; strict merged-dossier
+    # validation still decides admission.
+    expanded = deepcopy(dict(payload))
+    injected_ids: dict[str, set[str]] = {}
+    append_only_collections = {
+        "source_documents": "source_document_id",
+        "material_facts": "dossier_fact_id",
+        "counterfacts": "dossier_fact_id",
+        "resolution_facts": "dossier_fact_id",
+        "source_lineages": "lineage_id",
+        "search_route_receipts": "route_receipt_id",
+        "derived_metrics": "derived_metric_id",
+    }
+    for collection, id_key in append_only_collections.items():
+        incoming = list(expanded.get(collection) or ())
+        existing_ids = {
+            str(row.get(id_key) or "")
+            for row in incoming
+            if isinstance(row, Mapping)
+        }
+        injected: set[str] = set()
+        for prior_row in prior_dossier.get(collection) or ():
+            if not isinstance(prior_row, Mapping):
+                continue
+            prior_id = str(prior_row.get(id_key) or "")
+            if not prior_id or prior_id in existing_ids:
+                continue
+            incoming.append(deepcopy(dict(prior_row)))
+            existing_ids.add(prior_id)
+            injected.add(prior_id)
+        expanded[collection] = incoming
+        injected_ids[collection] = injected
+
+    normalized = PreSchemaV3Normalizer().normalize(
+        expanded,
         archetype_ids=archetype_ids,
+    )
+    projected = deepcopy(dict(normalized.payload))
+    for collection, id_key in append_only_collections.items():
+        injected = injected_ids[collection]
+        if not injected:
+            continue
+        projected[collection] = [
+            deepcopy(row)
+            for row in projected.get(collection) or ()
+            if not isinstance(row, Mapping)
+            or str(row.get(id_key) or "") not in injected
+        ]
+    return StaticPreflightNormalization(
+        payload=projected,
+        before_hash=canonical_hash(payload),
+        after_hash=canonical_hash(projected),
+        operations=normalized.operations,
     )
 
 

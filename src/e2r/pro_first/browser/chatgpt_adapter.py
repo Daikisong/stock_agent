@@ -7,7 +7,7 @@ import re
 import secrets
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 from urllib.parse import quote, urlsplit, urlunsplit
 
 from ..ids import canonical_hash, canonical_json
@@ -115,9 +115,18 @@ class PlaywrightChatGPTWebAdapter:
         chat = await first_visible(self.page, CHAT_MODE_CONTROL_SELECTORS)
         if chat is not None and await chat.is_enabled():
             await chat.click()
-            await self.page.wait_for_timeout(100)
+
+        # After a report-preview close the exact conversation is reloaded.
+        # The editor commonly appears before the reasoning selector, so one
+        # immediate probe can misclassify a healthy Pro conversation as Light.
+        # Wait finitely for the public Pro control; never click or infer Pro.
+        for attempt in range(50):
             if await self._deep_research_ready():
                 return await self.inspect_state()
+            if await first_visible(self.page, DEEP_RESEARCH_ACTIVE_SELECTORS) is not None:
+                break
+            if attempt < 49:
+                await self.page.wait_for_timeout(100)
 
         raise BrowserUIIncompatible(
             "ordinary Chat composer + Pro mode is not active; legacy Deep "
@@ -967,48 +976,42 @@ class PlaywrightChatGPTWebAdapter:
     ) -> tuple[bool, bool, bool, str]:
         """Inspect the newest assistant turn without transferring full prose."""
 
-        turns = await self._assistant_turns()
-        if not turns:
+        snapshot = await self._latest_assistant_turn_snapshot()
+        if snapshot is None:
             return False, False, False, ""
-        flags = await turns[-1].evaluate(
-            r"""element => {
-                const raw = (element.innerText || '').trim();
-                const text = raw.toLowerCase();
-                const clarification = [
-                    'before i start, please clarify',
-                    '시작하기 전에 확인',
-                    'need clarification'
-                ].some(token => text.includes(token));
-                const controls = Array.from(element.querySelectorAll('button'))
-                    .map(node => (node.innerText || '').trim().toLowerCase());
-                const visibleFailure = [
-                    '생각 실패',
-                    'thinking failed',
-                    '조사 실패',
-                    'research failed'
-                ].some(token => controls.includes(token) || text.startsWith(token));
-                return {
-                    dossierComplete: text.includes(
-                        'e2r_research_dossier_json_end'
-                    ),
-                    clarification,
-                    visibleFailure,
-                    detail: (clarification || visibleFailure)
-                        ? raw.slice(-2000)
-                        : ''
-                };
-            }"""
+        raw = str(snapshot.get("raw_text") or "").strip()
+        text = raw.lower()
+        clarification = any(
+            token in text
+            for token in (
+                "before i start, please clarify",
+                "시작하기 전에 확인",
+                "need clarification",
+            )
+        )
+        controls = {
+            str(value).strip().lower()
+            for value in snapshot.get("button_texts") or ()
+        }
+        visible_failure = any(
+            token in controls or text.startswith(token)
+            for token in (
+                "생각 실패",
+                "thinking failed",
+                "조사 실패",
+                "research failed",
+            )
         )
         return (
-            bool(flags.get("dossierComplete")),
-            bool(flags.get("clarification")),
-            bool(flags.get("visibleFailure")),
-            str(flags.get("detail") or ""),
+            "e2r_research_dossier_json_end" in text,
+            clarification,
+            visible_failure,
+            raw[-2000:] if clarification or visible_failure else "",
         )
 
     async def inspect_result(self, *, job_id: str, run_id: str) -> BrowserResultSnapshot:
-        turns = await self._assistant_turns()
-        if not turns:
+        snapshot = await self._latest_assistant_turn_snapshot()
+        if snapshot is None:
             return BrowserResultSnapshot(
                 conversation_id=self.conversation_id(),
                 assistant_turn_id=None,
@@ -1020,11 +1023,10 @@ class PlaywrightChatGPTWebAdapter:
                 run_marker_matches=False,
                 new_attachment_keys=(),
             )
-        turn = turns[-1]
-        raw_report_text = (await turn.inner_text()).strip()
+        raw_report_text = str(snapshot.get("raw_text") or "").strip()
         normalization = normalize_visible_dossier_transport(raw_report_text)
         report_text = normalization.normalized_text
-        citation_registry = await self._visible_citation_registry(turn)
+        citation_registry = tuple(snapshot.get("citation_registry") or ())
         transport_operations = list(normalization.operations)
         if citation_registry:
             report_text = "\n".join(
@@ -1037,7 +1039,7 @@ class PlaywrightChatGPTWebAdapter:
                 )
             )
             transport_operations.append("APPEND_VISIBLE_CITATION_HREF_REGISTRY")
-        turn_id = await self._turn_id(turn)
+        turn_id = str(snapshot.get("turn_id") or "").strip() or None
         has_dossier = (
             "E2R_RESEARCH_DOSSIER_JSON_BEGIN" in report_text
             and "E2R_RESEARCH_DOSSIER_JSON_END" in report_text
@@ -1046,11 +1048,7 @@ class PlaywrightChatGPTWebAdapter:
             "E2R_REPAIR_DELTA_JSON_BEGIN" in report_text
             and "E2R_REPAIR_DELTA_JSON_END" in report_text
         )
-        citations = bool(citation_registry)
-        for selector in CITATION_SELECTORS:
-            if await turn.locator(selector).count() > 0:
-                citations = True
-                break
+        citations = bool(snapshot.get("has_citations"))
         new_attachment_rows: list[tuple[AttachmentKey, Any]] = []
         for selectors in (
             MD_CANDIDATE_SELECTORS,
@@ -1667,6 +1665,115 @@ class PlaywrightChatGPTWebAdapter:
             seen.add(identity)
             turns.append(item)
         return turns
+
+    async def _latest_assistant_turn_snapshot(
+        self,
+    ) -> Mapping[str, Any] | None:
+        """Read the newest assistant turn in one atomic browser evaluation.
+
+        ChatGPT can replace the hydrated conversation DOM while a response is
+        finishing.  A ``count()`` followed by ``nth(index)`` can therefore
+        point past the newly rendered list and wait for a node that will never
+        exist.  This helper resolves the ordered turn, its identity, visible
+        text, controls, and citations inside one JavaScript task.  A bounded
+        retry only covers a full document navigation that destroys that task's
+        execution context; it never submits or clicks anything.
+        """
+
+        selector = ", ".join(ASSISTANT_TURN_SELECTORS)
+        last_error: Exception | None = None
+        for attempt in range(10):
+            try:
+                snapshot = await self.page.evaluate(
+                    r"""selector => {
+                        const matches = Array.from(
+                            document.querySelectorAll(selector)
+                        );
+                        const turns = [];
+                        const seen = new Set();
+                        for (const match of matches) {
+                            const turn = match.closest(
+                                'section[data-turn="assistant"]'
+                            ) || match;
+                            if (seen.has(turn)) continue;
+                            seen.add(turn);
+                            const style = window.getComputedStyle(turn);
+                            const visible = turn.isConnected
+                                && style.display !== 'none'
+                                && style.visibility !== 'hidden'
+                                && (turn.getClientRects().length > 0
+                                    || turn.offsetWidth > 0
+                                    || turn.offsetHeight > 0);
+                            if (visible) turns.push(turn);
+                        }
+                        const element = turns.at(-1);
+                        if (!element) return null;
+                        const identified = element.closest(
+                            '[data-message-id], [data-turn-id]'
+                        ) || element.querySelector(
+                            '[data-message-id], [data-turn-id]'
+                        );
+                        const anchors = Array.from(
+                            element.querySelectorAll('a[href]')
+                        ).map(node => ({
+                            url: node.href || node.getAttribute('href') || '',
+                            text: (node.innerText || '').trim(),
+                            aria_label: node.getAttribute('aria-label') || '',
+                            title: node.getAttribute('title') || ''
+                        })).filter(row => /^https?:\/\//i.test(row.url));
+                        const buttonTexts = Array.from(
+                            element.querySelectorAll('button')
+                        ).map(node => (node.innerText || '').trim());
+                        const labelledCitation = Boolean(
+                            element.querySelector(
+                                '[data-testid*="citation"], '
+                                + '[data-testid*="source"]'
+                            )
+                        ) || buttonTexts.some(value => {
+                            const text = value.toLowerCase();
+                            return text === 'sources' || text === '출처';
+                        });
+                        return {
+                            raw_text: (element.innerText || '').trim(),
+                            turn_id: identified
+                                ? (identified.getAttribute('data-message-id')
+                                    || identified.getAttribute('data-turn-id'))
+                                : null,
+                            button_texts: buttonTexts,
+                            citation_registry: anchors,
+                            has_citations: anchors.length > 0 || labelledCitation
+                        };
+                    }""",
+                    selector,
+                )
+                if snapshot is None:
+                    return None
+                registry: list[dict[str, str]] = []
+                seen_registry: set[tuple[str, str, str, str]] = set()
+                for row in snapshot.get("citation_registry") or ():
+                    normalized = {
+                        key: " ".join(str(row.get(key) or "").split())
+                        for key in ("url", "text", "aria_label", "title")
+                    }
+                    identity = tuple(
+                        normalized[key]
+                        for key in ("url", "text", "aria_label", "title")
+                    )
+                    if identity in seen_registry:
+                        continue
+                    seen_registry.add(identity)
+                    registry.append(normalized)
+                return {
+                    **snapshot,
+                    "citation_registry": tuple(registry),
+                }
+            except Exception as error:
+                last_error = error
+                if attempt < 9:
+                    await self.page.wait_for_timeout(100)
+        raise BrowserUIIncompatible(
+            "assistant turn DOM remained unstable during atomic snapshot"
+        ) from last_error
 
     @staticmethod
     async def _turn_id(locator: Any) -> str | None:

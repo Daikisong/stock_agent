@@ -19,6 +19,7 @@ from e2r.research_brain.researcher_mode.evidence_gap import (
 
 from ..ids import canonical_hash
 from ..models import ProResearchJob
+from ..research_contracts import select_contract_bundle
 
 
 SUPPLEMENTAL_ALLOWED_LABELS = frozenset(
@@ -295,7 +296,7 @@ class ProGapAdjudicator:
         )
         lineage_hash = str(lineage["accepted_lineage_roster_hash"])
         gap_rows = tuple(dossier.get("unresolved_gaps") or ())
-        gap_ids = tuple(str(row.get("dossier_gap_id") or "") for row in gap_rows)
+        gap_ids = tuple(_dossier_gap_id(row) for row in gap_rows)
         if not all(gap_ids) or len(gap_ids) != len(set(gap_ids)):
             raise ValueError("dossier unresolved gaps require unique stable ids")
         if set(deterministic_contexts) != set(gap_ids):
@@ -305,21 +306,41 @@ class ProGapAdjudicator:
         }
         if len(previous_by_semantic_id) != len(tuple(prior_dispositions)):
             raise ValueError("multiple prior dispositions exist for one semantic gap")
+        allowed_contract_ids = set(
+            select_contract_bundle(job.archetype_ids).contract_ids
+        )
         decisions: list[ProGapDecision] = []
         for gap in gap_rows:
-            gap_id = str(gap["dossier_gap_id"])
+            gap_id = _dossier_gap_id(gap)
             context = deterministic_contexts[gap_id]
             if context.dossier_gap_id != gap_id:
                 raise ValueError("deterministic context belongs to another Pro gap")
             required_families = tuple(
-                str(value) for value in gap.get("required_source_families") or ()
+                str(value)
+                for value in (
+                    gap.get("required_source_families")
+                    or gap.get("required_source_role_ids")
+                    or ()
+                )
             )
             affected = tuple(
                 str(value) for value in gap.get("affected_component_ids") or ()
             )
             archetype_id = str(gap.get("archetype_id") or "")
-            if archetype_id not in set(job.archetype_ids):
-                raise ValueError("Pro gap archetype is outside the selected job")
+            if archetype_id not in allowed_contract_ids:
+                raise ValueError("Pro gap archetype is outside the selected contract bundle")
+            question_family_id = str(gap.get("question_family_id") or "")
+            stable_gap_identity = str(
+                gap.get("stable_gap_key") or gap_id
+            )
+            economic_mechanism_id = str(
+                gap.get("economic_mechanism_id")
+                or f"QUESTION_FAMILY/{question_family_id}"
+            )
+            predicate_or_fact_need_id = str(
+                gap.get("predicate_or_fact_need_id")
+                or f"GAP_OBJECTIVE/{stable_gap_identity}"
+            )
             key = EvidenceGapKey(
                 target_id=job.symbol,
                 as_of_date=job.as_of_date,
@@ -328,6 +349,8 @@ class ProGapAdjudicator:
                     stable_objective_id=(
                         str(gap["stable_objective_id"])
                         if gap.get("stable_objective_id") is not None
+                        else str(gap["stable_gap_key"])
+                        if gap.get("stable_gap_key") is not None
                         else None
                     ),
                     affected_component_ids=affected,
@@ -339,10 +362,8 @@ class ProGapAdjudicator:
                 ),
                 affected_component_ids=affected,
                 required_source_family=required_families,
-                economic_mechanism_id=str(gap.get("economic_mechanism_id") or ""),
-                predicate_or_fact_need_id=str(
-                    gap.get("predicate_or_fact_need_id") or ""
-                ),
+                economic_mechanism_id=economic_mechanism_id,
+                predicate_or_fact_need_id=predicate_or_fact_need_id,
                 fact_snapshot_hash=fact_snapshot_hash,
                 accepted_lineage_roster_hash=lineage_hash,
             )
@@ -381,7 +402,11 @@ class ProGapAdjudicator:
                     context.direct_contradiction_or_hard_break_unresolved
                 ),
                 economic_reason=context.rationale,
-                llm_proposed_gap_class=str(gap.get("proposed_gap_class") or ""),
+                llm_proposed_gap_class=str(
+                    gap.get("proposed_gap_class")
+                    or gap.get("status")
+                    or ""
+                ),
             )
             crossing_without_route = bool(
                 context.deterministic_lower_stage is not None
@@ -436,19 +461,29 @@ class ProGapAdjudicator:
                     materiality=materiality,
                     planner_label=planner_label,
                     supplemental_allowed=supplemental_allowed,
-                    pro_proposed_gap_class=str(gap.get("proposed_gap_class") or ""),
+                    pro_proposed_gap_class=str(
+                        gap.get("proposed_gap_class")
+                        or gap.get("status")
+                        or ""
+                    ),
                     pro_proposed_missing_source_role=str(
-                        gap.get("proposed_missing_source_role") or ""
+                        gap.get("proposed_missing_source_role")
+                        or gap.get("availability_class")
+                        or ""
                     ),
                     pro_proposed_materiality={
-                        "could_change_score": gap.get("proposed_could_change_score")
-                        is True,
-                        "could_change_stage": gap.get("proposed_could_change_stage")
-                        is True,
+                        "could_change_score": (
+                            gap.get("proposed_could_change_score") is True
+                            or gap.get("could_change_score") is True
+                        ),
+                        "could_change_stage": (
+                            gap.get("proposed_could_change_stage") is True
+                            or gap.get("could_change_stage") is True
+                        ),
                         "could_change_hard_break": gap.get(
                             "proposed_could_change_hard_break"
-                        )
-                        is True,
+                        ) is True
+                        or gap.get("could_change_hard_break") is True,
                     },
                     deterministic_context=context,
                     reopen_reason=reopen_reason,
@@ -470,6 +505,12 @@ def _mapping(row: Mapping[str, Any] | Any) -> Mapping[str, Any]:
         if isinstance(value, Mapping):
             return value
     raise TypeError("verified fact lineage rows must be mappings or expose to_dict")
+
+
+def _dossier_gap_id(gap: Mapping[str, Any]) -> str:
+    """Read the stable gap identity from either canonical dossier dialect."""
+
+    return str(gap.get("dossier_gap_id") or gap.get("gap_id") or "")
 
 
 def _planner_label(

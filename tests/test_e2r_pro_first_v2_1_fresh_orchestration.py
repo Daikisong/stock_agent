@@ -42,7 +42,9 @@ from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
     _counter_followup_question_ids,
     _enforce_recover_submitted_only,
     _followup_context,
+    _new_no_new_route_confirmation_candidate,
     _parse_and_validate_compact_repair_transport,
+    _public_followup_question_ids,
     _question_ids_without_completed_context,
     _question_ids_without_repairable_candidates,
     _question_ids_with_reopen_budget,
@@ -1806,6 +1808,192 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             (question_b,),
         )
 
+    def test_reopen_budget_ignores_requested_question_without_returned_route(
+        self,
+    ) -> None:
+        question_a, question_b = self.built.prompt.mandatory_question_ids[:2]
+        rows = (
+            SimpleNamespace(
+                pass_id="PASS-ONE",
+                pass_name="PUBLIC_GAP_CLOSURE",
+                status="COMPLETE",
+                submit_count=1,
+                detail={
+                    "question_family_ids": [question_a, question_b],
+                    "question_stable_gap_hashes": {
+                        question_a: "a" * 64,
+                        question_b: "b" * 64,
+                    },
+                },
+            ),
+            SimpleNamespace(
+                pass_id="PASS-TWO",
+                pass_name="PUBLIC_GAP_CLOSURE",
+                status="COMPLETE",
+                submit_count=1,
+                detail={
+                    "question_family_ids": [question_a, question_b],
+                    "question_stable_gap_hashes": {
+                        question_a: "a" * 64,
+                        question_b: "b" * 64,
+                    },
+                },
+            ),
+        )
+        ledger = SimpleNamespace(list_passes=lambda _job_id: rows)
+        context = {
+            "pass_inputs": {
+                "question_stable_gap_hashes": {
+                    question_a: "a" * 64,
+                    question_b: "b" * 64,
+                }
+            }
+        }
+        dossier = {
+            "search_route_receipts": [
+                {
+                    "route_receipt_id": "ROUTE-A-ONE",
+                    "pass_id": "PASS-ONE",
+                    "question_family_id": question_a,
+                },
+                {
+                    "route_receipt_id": "ROUTE-A-TWO",
+                    "pass_id": "PASS-TWO",
+                    "question_family_id": question_a,
+                },
+            ]
+        }
+
+        self.assertEqual(
+            _question_ids_with_reopen_budget(
+                ledger,
+                job_id="PROJOB-ACTUAL-ROUTE-BUDGET",
+                pass_name="PUBLIC_GAP_CLOSURE",
+                question_ids=(question_a, question_b),
+                context=context,
+                dossier=dossier,
+            ),
+            (question_b,),
+        )
+
+    def test_reopen_budget_counts_only_routes_on_current_verified_snapshot(
+        self,
+    ) -> None:
+        question_id = self.built.prompt.mandatory_question_ids[0]
+        stable_hash = "a" * 64
+        current_fact_hash = "b" * 64
+        current_lineage_hash = "c" * 64
+
+        def pass_row(pass_id: str):
+            return SimpleNamespace(
+                pass_id=pass_id,
+                pass_name="PUBLIC_GAP_CLOSURE",
+                status="COMPLETE",
+                submit_count=1,
+                detail={
+                    "question_family_ids": [question_id],
+                    "question_stable_gap_hashes": {
+                        question_id: stable_hash
+                    },
+                },
+            )
+
+        old_pass = pass_row("PASS-OLD-SNAPSHOT")
+        current_pass = pass_row("PASS-CURRENT-SNAPSHOT-ONE")
+        context = {
+            "pass_inputs": {
+                "question_stable_gap_hashes": {
+                    question_id: stable_hash
+                }
+            }
+        }
+        dossier = {
+            "search_route_receipts": [
+                {
+                    "route_receipt_id": "ROUTE-OLD-SNAPSHOT",
+                    "pass_id": old_pass.pass_id,
+                    "question_family_id": question_id,
+                },
+                {
+                    "route_receipt_id": "ROUTE-CURRENT-SNAPSHOT-ONE",
+                    "pass_id": current_pass.pass_id,
+                    "question_family_id": question_id,
+                },
+            ]
+        }
+        bindings = {
+            "ROUTE-OLD-SNAPSHOT": {
+                "pass_id": old_pass.pass_id,
+                "question_family_id": question_id,
+                "fact_snapshot_hash": "d" * 64,
+                "accepted_lineage_roster_hash": "e" * 64,
+            },
+            "ROUTE-CURRENT-SNAPSHOT-ONE": {
+                "pass_id": current_pass.pass_id,
+                "question_family_id": question_id,
+                "fact_snapshot_hash": current_fact_hash,
+                "accepted_lineage_roster_hash": current_lineage_hash,
+            },
+        }
+        ledger = SimpleNamespace(
+            list_passes=lambda _job_id: (old_pass, current_pass)
+        )
+
+        self.assertEqual(
+            _question_ids_with_reopen_budget(
+                ledger,
+                job_id="PROJOB-EXACT-SNAPSHOT-BUDGET",
+                pass_name="PUBLIC_GAP_CLOSURE",
+                question_ids=(question_id,),
+                context=context,
+                dossier=dossier,
+                route_snapshot_bindings=bindings,
+                current_fact_snapshot_hash=current_fact_hash,
+                current_accepted_lineage_roster_hash=(
+                    current_lineage_hash
+                ),
+            ),
+            (question_id,),
+        )
+
+        second_current = pass_row("PASS-CURRENT-SNAPSHOT-TWO")
+        dossier["search_route_receipts"].append(
+            {
+                "route_receipt_id": "ROUTE-CURRENT-SNAPSHOT-TWO",
+                "pass_id": second_current.pass_id,
+                "question_family_id": question_id,
+            }
+        )
+        bindings["ROUTE-CURRENT-SNAPSHOT-TWO"] = {
+            "pass_id": second_current.pass_id,
+            "question_family_id": question_id,
+            "fact_snapshot_hash": current_fact_hash,
+            "accepted_lineage_roster_hash": current_lineage_hash,
+        }
+        exhausted_ledger = SimpleNamespace(
+            list_passes=lambda _job_id: (
+                old_pass,
+                current_pass,
+                second_current,
+            )
+        )
+        self.assertEqual(
+            _question_ids_with_reopen_budget(
+                exhausted_ledger,
+                job_id="PROJOB-EXACT-SNAPSHOT-BUDGET",
+                pass_name="PUBLIC_GAP_CLOSURE",
+                question_ids=(question_id,),
+                context=context,
+                dossier=dossier,
+                route_snapshot_bindings=bindings,
+                current_fact_snapshot_hash=current_fact_hash,
+                current_accepted_lineage_roster_hash=(
+                    current_lineage_hash
+                ),
+            ),
+            (),
+        )
+
     async def test_same_route_with_new_receipt_id_is_not_research_progress(
         self,
     ) -> None:
@@ -2304,6 +2492,74 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 ),
             ),
             ("Q-STILL-PUBLIC",),
+        )
+
+    def test_verifier_pending_without_candidate_routes_to_public_followup(self) -> None:
+        saturation = SimpleNamespace(
+            missing_mandatory_question_ids=(),
+            public_material_gap_question_ids=(),
+            provider_parser_core_pending_question_ids=(),
+            source_linkage_incomplete_question_ids=(),
+            verifier_repair_pending_ids=("Q-FIXPOINT",),
+            lifecycle_hard_break_pending_ids=(),
+        )
+        dossier = {
+            "question_family_results": [
+                {
+                    "question_family_id": "Q-FIXPOINT",
+                    "support_fact_ids": [],
+                    "counter_fact_ids": [],
+                    "resolution_fact_ids": [],
+                }
+            ]
+        }
+
+        public_ids = _public_followup_question_ids(saturation)
+
+        self.assertEqual(public_ids, ("Q-FIXPOINT",))
+        self.assertEqual(
+            _question_ids_without_repairable_candidates(
+                public_ids,
+                dossier=dossier,
+                repairable_classifications=(),
+            ),
+            ("Q-FIXPOINT",),
+        )
+
+    def test_new_normal_empty_route_is_fixpoint_input_not_semantic_hash(self) -> None:
+        before = {"search_route_receipts": []}
+        after = {
+            "search_route_receipts": [
+                {
+                    "route_receipt_id": "ROUTE-FIXPOINT-ONE",
+                    "question_family_id": "Q-FIXPOINT",
+                    "query_text": "issuer official cancellation check",
+                    "opened_source_urls": ["https://issuer.example/filing"],
+                    "accepted_fact_ids": [],
+                    "provider_status": "SUCCESS",
+                    "parser_status": "SUCCESS",
+                    "no_new_route_reason": "No current cancellation was found.",
+                }
+            ]
+        }
+
+        self.assertTrue(
+            _new_no_new_route_confirmation_candidate(
+                before,
+                after,
+                question_ids=("Q-FIXPOINT",),
+            )
+        )
+        self.assertFalse(
+            _new_no_new_route_confirmation_candidate(
+                before,
+                after,
+                question_ids=("Q-OTHER",),
+            )
+        )
+        after["search_route_receipts"][0]["no_new_route_reason"] = ""
+        self.assertFalse(
+            _new_no_new_route_confirmation_candidate(before, after)
         )
 
     def test_route_receipt_only_is_not_semantic_progress(self) -> None:

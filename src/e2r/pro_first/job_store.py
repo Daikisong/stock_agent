@@ -1696,6 +1696,7 @@ class ProFirstJobStore:
         receipt: Mapping[str, Any],
         actor: str,
         idempotency_key: str,
+        recover_legacy_component_transition: bool = False,
     ) -> ProResearchJob:
         decision_rows = tuple(dict(row) for row in decisions)
         decision_hashes = tuple(str(row.get("decision_hash") or "") for row in decision_rows)
@@ -1749,6 +1750,10 @@ class ProFirstJobStore:
             if supplemental_count
             else JobStatus.COMPONENT_RESEARCH
         )
+        if recover_legacy_component_transition and target is not JobStatus.COMPONENT_RESEARCH:
+            raise ValueError(
+                "legacy gap recovery cannot create supplemental research"
+            )
         if receipt.get("next_status") != target.value:
             raise ValueError("gap adjudication next status disagrees with tasks")
         payload = {
@@ -1770,9 +1775,59 @@ class ProFirstJobStore:
             row = self._require_job_row(connection, job_id)
             self._require_version(row, expected_version)
             source = JobStatus(row["status"])
-            if source is not JobStatus.GAP_ADJUDICATION or row["dossier_id"] != dossier_id:
+            if row["dossier_id"] != dossier_id:
                 raise ValueError("gap adjudication must match the verified dossier")
-            self.state_machine.validate(source, target)
+            if recover_legacy_component_transition:
+                existing_decision = connection.execute(
+                    "SELECT 1 FROM pro_gap_decisions WHERE job_id=? LIMIT 1",
+                    (job_id,),
+                ).fetchone()
+                last_event = connection.execute(
+                    """
+                    SELECT from_status, to_status, actor, payload_json
+                    FROM pro_job_events WHERE job_id=?
+                    ORDER BY rowid DESC LIMIT 1
+                    """,
+                    (job_id,),
+                ).fetchone()
+                last_payload = (
+                    json.loads(last_event["payload_json"])
+                    if last_event is not None
+                    else {}
+                )
+                if (
+                    source is not JobStatus.COMPONENT_RESEARCH
+                    or target is not JobStatus.COMPONENT_RESEARCH
+                    or existing_decision is not None
+                    or row["score_receipt_id"] is not None
+                    or row["stagecourt_receipt_id"] is not None
+                    or last_event is None
+                    or last_event["from_status"]
+                    != JobStatus.GAP_ADJUDICATION.value
+                    or last_event["to_status"]
+                    != JobStatus.COMPONENT_RESEARCH.value
+                    or last_event["actor"]
+                    != "fresh-v3-full-thesis-saturation-gate"
+                    or last_payload.get("component_entry_allowed") is not True
+                    or len(
+                        str(
+                            last_payload.get(
+                                "research_saturation_receipt_hash"
+                            )
+                            or ""
+                        )
+                    )
+                    != 64
+                ):
+                    raise ValueError(
+                        "legacy component recovery lacks the exact skipped-gap boundary"
+                    )
+            else:
+                if source is not JobStatus.GAP_ADJUDICATION:
+                    raise ValueError(
+                        "gap adjudication must start at the verified gap boundary"
+                    )
+                self.state_machine.validate(source, target)
             created_at = self._now_text()
             for decision in decision_rows:
                 decision_id = stable_id(

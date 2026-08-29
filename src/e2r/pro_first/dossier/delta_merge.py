@@ -59,6 +59,10 @@ def apply_research_dossier_delta(
             original_dossier,
             response,
         )
+        response = _project_v3_response_lineage_rosters_from_graph(
+            original_dossier,
+            response,
+        )
     effective = deepcopy(dict(original_dossier))
     new_fact_ids: list[str] = []
     for collection in ("material_facts", "counterfacts", "resolution_facts"):
@@ -448,6 +452,134 @@ def _prune_empty_v3_response_lineages(response: dict[str, Any]) -> None:
         or raw_lineage.get("source_document_ids")
         or raw_lineage.get("fact_ids")
     ]
+
+
+def _project_v3_response_lineage_rosters_from_graph(
+    original: Mapping[str, Any],
+    response: dict[str, Any],
+) -> dict[str, Any]:
+    """Rebuild redundant response lineage rosters from primary graph edges.
+
+    A V3 source document owns its ``lineage_id`` and an atomic fact owns its
+    ``source_document_id``.  ``source_lineages[*].source_document_ids`` and
+    ``fact_ids`` repeat those relationships for audit convenience.  Pro can
+    carry a stale, never-admitted id in that repeated roster while still
+    returning a valid new document and fact.  Preserve the raw capture, but
+    project the merge input onto the exact combined graph instead of dropping
+    the valid evidence or inventing the stale object.
+
+    This does not repair a broken primary edge: a document with an unknown
+    lineage or a fact with a missing document still fails strict validation.
+    """
+
+    documents_by_id: dict[str, Mapping[str, Any]] = {}
+    document_order: list[str] = []
+    for payload in (original, response):
+        for raw_document in payload.get("source_documents") or ():
+            if not isinstance(raw_document, Mapping):
+                continue
+            document_id = str(raw_document.get("source_document_id") or "")
+            if not document_id:
+                continue
+            if document_id not in documents_by_id:
+                document_order.append(document_id)
+                documents_by_id[document_id] = raw_document
+
+    facts_by_id: dict[str, Mapping[str, Any]] = {}
+    fact_order: list[str] = []
+    for payload in (original, response):
+        for collection in _V3_FACT_COLLECTIONS:
+            for raw_fact in payload.get(collection) or ():
+                if not isinstance(raw_fact, Mapping):
+                    continue
+                fact_id = str(raw_fact.get("dossier_fact_id") or "")
+                if not fact_id:
+                    continue
+                if fact_id not in facts_by_id:
+                    fact_order.append(fact_id)
+                    facts_by_id[fact_id] = raw_fact
+
+    expected_documents: dict[str, list[str]] = {}
+    for document_id in document_order:
+        lineage_id = str(documents_by_id[document_id].get("lineage_id") or "")
+        if lineage_id:
+            expected_documents.setdefault(lineage_id, []).append(document_id)
+
+    expected_facts: dict[str, list[str]] = {}
+    for fact_id in fact_order:
+        source_id = str(facts_by_id[fact_id].get("source_document_id") or "")
+        document = documents_by_id.get(source_id)
+        lineage_id = str((document or {}).get("lineage_id") or "")
+        if lineage_id:
+            expected_facts.setdefault(lineage_id, []).append(fact_id)
+
+    projections: list[dict[str, Any]] = []
+    retained: list[Any] = []
+    for raw_lineage in response.get("source_lineages") or ():
+        if not isinstance(raw_lineage, Mapping):
+            retained.append(deepcopy(raw_lineage))
+            continue
+        lineage = deepcopy(dict(raw_lineage))
+        lineage_id = str(lineage.get("lineage_id") or "")
+        before_documents = [
+            str(value)
+            for value in lineage.get("source_document_ids") or ()
+            if str(value)
+        ]
+        before_facts = [
+            str(value)
+            for value in lineage.get("fact_ids") or ()
+            if str(value)
+        ]
+        after_documents = list(expected_documents.get(lineage_id, ()))
+        after_facts = list(expected_facts.get(lineage_id, ()))
+        lineage["source_document_ids"] = after_documents
+        lineage["fact_ids"] = after_facts
+        retained.append(lineage)
+        if (
+            before_documents == after_documents
+            and before_facts == after_facts
+        ):
+            continue
+        projections.append(
+            {
+                "lineage_id": lineage_id,
+                "removed_source_document_ids": [
+                    value for value in before_documents if value not in after_documents
+                ],
+                "added_source_document_ids": [
+                    value for value in after_documents if value not in before_documents
+                ],
+                "removed_fact_ids": [
+                    value for value in before_facts if value not in after_facts
+                ],
+                "added_fact_ids": [
+                    value for value in after_facts if value not in before_facts
+                ],
+                "before_roster_hash": canonical_hash(
+                    {
+                        "source_document_ids": before_documents,
+                        "fact_ids": before_facts,
+                    }
+                ),
+                "after_roster_hash": canonical_hash(
+                    {
+                        "source_document_ids": after_documents,
+                        "fact_ids": after_facts,
+                    }
+                ),
+                "derivation": (
+                    "SOURCE_DOCUMENT_LINEAGE_AND_FACT_SOURCE_DOCUMENT_EDGES"
+                ),
+                "fact_content_mutation_allowed": False,
+            }
+        )
+    response["source_lineages"] = retained
+    if projections:
+        saturation = dict(response.get("research_saturation") or {})
+        saturation["v3_graph_lineage_roster_projections"] = projections
+        response["research_saturation"] = saturation
+    return response
 
 
 def _coalesce_prior_v3_atomic_fact_duplicates(

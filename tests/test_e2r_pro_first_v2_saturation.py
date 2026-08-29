@@ -6,6 +6,9 @@ from pathlib import Path
 import unittest
 
 from e2r.pro_first.ids import canonical_hash
+from e2r.pro_first.gaps.source_family_policy import (
+    source_authority_roles_from_urls,
+)
 from e2r.pro_first.research_contracts import select_contract_bundle
 from e2r.pro_first.saturation import (
     DeterministicQuestionBound,
@@ -686,7 +689,7 @@ class ProFirstV2SaturationTest(unittest.TestCase):
             fixpoint_confirmations=confirmations,
         )
         decision = _decision(receipt, question_id)
-        self.assertTrue(decision.terminal)
+        self.assertTrue(decision.terminal, decision.to_dict())
         self.assertEqual(decision.gap_class, "CORROBORATION_CAP")
         self.assertTrue(decision.availability.known_evidence_preserved)
         self.assertTrue(decision.availability.information_confidence_cap_allowed)
@@ -896,6 +899,49 @@ class ProFirstV2SaturationTest(unittest.TestCase):
         self.assertEqual(decision.gap_class, "NO_GAP")
         self.assertTrue(receipt.research_saturation_valid)
 
+    def test_verified_regulator_url_restores_omitted_authority_role(self) -> None:
+        dossier = deepcopy(self.dossier)
+        question_id = "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW_Q02"
+        result = next(
+            row
+            for row in dossier["question_family_results"]
+            if row["question_family_id"] == question_id
+        )
+        fact_id = result["support_fact_ids"][0]
+        fact = next(
+            row
+            for row in dossier["material_facts"]
+            if row["dossier_fact_id"] == fact_id
+        )
+        fact["source_role_ids"] = ["ISSUER_OFFICIAL"]
+        fact["source_url"] = (
+            "https://www.sec.gov/Archives/edgar/data/1/example.htm"
+        )
+        for route in dossier["search_route_receipts"]:
+            if route["question_family_id"] == question_id:
+                route["source_role_id"] = "ISSUER_OFFICIAL"
+
+        receipt = self._adjudicate(dossier)
+        decision = _decision(receipt, question_id)
+
+        self.assertIn("REGULATOR_OFFICIAL", decision.verified_source_roles)
+        self.assertNotIn("REGULATOR_OFFICIAL", decision.missing_core_source_roles)
+        self.assertTrue(decision.terminal)
+
+    def test_regulator_url_role_rejects_lookalike_host(self) -> None:
+        self.assertEqual(
+            source_authority_roles_from_urls(
+                "https://sec.gov.example.com/fake-filing"
+            ),
+            (),
+        )
+        self.assertEqual(
+            source_authority_roles_from_urls(
+                "https://www.sec.gov/Archives/edgar/data/1/filing.htm"
+            ),
+            ("OFFICIAL_FILING", "REGULATOR_OFFICIAL"),
+        )
+
     def test_question_missing_blocks_saturation(self) -> None:
         dossier = deepcopy(self.dossier)
         removed = dossier["question_family_results"].pop()["question_family_id"]
@@ -914,6 +960,83 @@ class ProFirstV2SaturationTest(unittest.TestCase):
             fixpoint_confirmations=confirmations,
         )
         self.assertTrue(_decision(receipt, question_id).route_adequacy.semantic_fixpoint)
+
+    def test_deterministic_fixpoint_closes_stale_verifier_status(self) -> None:
+        dossier = deepcopy(self.dossier)
+        result = dossier["question_family_results"][0]
+        question_id = result["question_family_id"]
+        question = self._contract_question(question_id)
+        routes = []
+        for index, role in enumerate(question["required_source_roles"][:2], 1):
+            route = {
+                "route_receipt_id": f"ROUTE-STALE-STATUS-{index}",
+                "pass_id": f"PASS-STALE-STATUS-{index}",
+                "archetype_id": result["archetype_id"],
+                "question_family_id": question_id,
+                "gap_id": "GAP-STALE-VERIFIER-STATUS",
+                "source_role_id": role,
+                "query_or_navigation_objective": f"{role} 독립 부재 확인",
+                "query_text": f"{question_id} {role} current hard break",
+                "result_count_seen": 0,
+                "opened_source_urls": [
+                    f"https://official.example/stale-status/{index}"
+                ],
+                "accepted_fact_ids": [],
+                "rejected_candidate_ids": [],
+                "provider_status": "SUCCESS",
+                "parser_status": "SUCCESS",
+                "no_new_route_reason": "현재 공개 경로에 새 hard-break 사실이 없다.",
+                "performed_at": f"2026-08-23T0{index}:00:00Z",
+            }
+            dossier["search_route_receipts"].append(route)
+            result["search_route_receipt_ids"].append(
+                route["route_receipt_id"]
+            )
+            routes.append(route)
+        result.update(
+            {
+                "status": "VERIFIER_REPAIR_REQUIRED",
+                "availability_class": "PUBLIC_SEARCHABLE",
+                "attempted_source_role_ids": list(
+                    question["required_source_roles"]
+                ),
+                "closure_reason": (
+                    "deterministic fixpoint 전 상태라 Pro 표지는 수리 필요로 남았다."
+                ),
+            }
+        )
+        provisional = self._adjudicate(dossier)
+        attempted_hash = canonical_hash(
+            sorted(question["required_source_roles"])
+        )
+        confirmations = tuple(
+            NoNewRouteConfirmation.from_route_receipt(
+                receipt=route,
+                stable_gap_key="STALE-VERIFIER-STATUS-GAP",
+                fact_snapshot_hash=provisional.fact_snapshot_hash,
+                accepted_lineage_roster_hash=(
+                    provisional.accepted_lineage_roster_hash
+                ),
+                attempted_source_roles_hash=attempted_hash,
+            )
+            for route in routes
+        )
+
+        receipt = self._adjudicate(
+            dossier,
+            fixpoint_confirmations=confirmations,
+            verifier_repair_pending_ids=(question_id,),
+        )
+        decision = _decision(receipt, question_id)
+
+        self.assertTrue(decision.route_adequacy.semantic_fixpoint)
+        self.assertTrue(decision.terminal)
+        self.assertEqual(
+            decision.deterministic_status,
+            "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH",
+        )
+        self.assertNotIn(question_id, receipt.verifier_repair_pending_ids)
+        self.assertTrue(receipt.research_saturation_valid)
 
     def test_runtime_compiler_binds_confirmations_to_exact_question_snapshots(self) -> None:
         dossier, question_id, _manual, bound = self._likely_nonpublic_fixture()

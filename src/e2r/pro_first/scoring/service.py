@@ -320,7 +320,15 @@ class ProScoringPipelineService:
             job_id=job_id,
         )
         if judges is None:
-            if job.status != JobStatus.JUDGING.value:
+            pre_score_judge_recovery = (
+                job.status == JobStatus.SCORING.value
+                and self.store.get_score_receipt(job_id) is None
+                and self.store.get_stagecourt_receipt(job_id) is None
+            )
+            if (
+                job.status != JobStatus.JUDGING.value
+                and not pre_score_judge_recovery
+            ):
                 raise ValueError(
                     "durable 21-Judge artifacts are required after JUDGING"
                 )

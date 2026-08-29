@@ -2,8 +2,9 @@
 
 The Pro dossier may contain proposed score or Stage fields, but neither those
 fields nor component/Judge completeness can establish research adequacy.  This
-module binds the downstream deterministic pipeline to the V2 question-closure
-receipt and keeps incomplete research in a non-publishable diagnostic shape.
+module binds the downstream deterministic pipeline to the V2/V3
+question-closure receipt and keeps incomplete research in a non-publishable
+diagnostic shape.
 """
 
 from __future__ import annotations
@@ -353,8 +354,11 @@ def _saturation_failure_reasons(
     receipt: Mapping[str, Any],
 ) -> tuple[str, ...]:
     reasons: list[str] = []
-    if dossier.get("schema_version") != "e2r_pro_research_dossier_v2":
-        reasons.append("RESEARCH_DOSSIER_V2_REQUIRED")
+    if dossier.get("schema_version") not in {
+        "e2r_pro_research_dossier_v2",
+        "e2r_pro_research_dossier_v3",
+    }:
+        reasons.append("RESEARCH_DOSSIER_V2_OR_V3_REQUIRED")
     if receipt.get("schema_version") != "e2r_pro_research_saturation_receipt_v2":
         reasons.append("SATURATION_SCHEMA_INVALID")
     if receipt.get("job_id") != job.job_id:

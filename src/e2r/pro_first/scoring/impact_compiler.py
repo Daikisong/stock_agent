@@ -57,7 +57,7 @@ _DIRECTION_BY_FACT = {
     "NEUTRAL": "NEUTRAL",
 }
 
-_WHOLE_DOSSIER_IMPACT_SEMANTICS = "e2r_pro_whole_dossier_impact_v1"
+_WHOLE_DOSSIER_IMPACT_SEMANTICS = "e2r_pro_whole_dossier_impact_v2_compact_edges"
 
 _FORBIDDEN_PROVIDER_KEYS = frozenset(
     {
@@ -655,6 +655,14 @@ class ProValidatedImpactCompiler:
                             if not edge["component_subcriterion_id"] or edge_key in edge_keys:
                                 continue
                             edge_keys.add(edge_key)
+                            edge["allowed_edge_id"] = stable_id(
+                                "PROIMPACTEDGE",
+                                {
+                                    "job_id": job.job_id,
+                                    "claim_id": claim_id,
+                                    "edge": edge,
+                                },
+                            )
                             edges.append(edge)
                             relevant_primitive_ids.add(primitive_id)
             allowed_edges_by_claim[claim_id] = tuple(edges)
@@ -686,7 +694,14 @@ class ProValidatedImpactCompiler:
                     "direction": prepared["direction"],
                     "verified_confidence_cap": fact.confidence,
                     "allowed_component_ids": list(allowed_components),
-                    "allowed_impact_edges": edges,
+                    "allowed_impact_edges": [
+                        {
+                            "allowed_edge_id": edge["allowed_edge_id"],
+                            "primitive_id": edge["primitive_id"],
+                            "component_id": edge["component_id"],
+                        }
+                        for edge in edges
+                    ],
                 }
             )
         if not claim_catalog:
@@ -706,7 +721,14 @@ class ProValidatedImpactCompiler:
             },
             "as_of_date": job.as_of_date,
             "archetype_id": selected_archetype_id,
-            "pro_report_markdown": pro_report_markdown,
+            "pro_report_context": {
+                "content_hash": canonical_hash(pro_report_markdown),
+                "raw_report_included": False,
+                "reason": (
+                    "raw Pro prose is untrusted and duplicated by normalized "
+                    "component research plus the source-verified claim catalog"
+                ),
+            },
             "normalized_component_research": dossier.get("component_research")
             or (),
             "verified_claim_catalog": claim_catalog,
@@ -716,7 +738,7 @@ class ProValidatedImpactCompiler:
                 if row.get("polarity") == "COUNTER"
             ),
             "deterministic_gap_dispositions": [
-                dict(row) for row in gap_decisions
+                _compact_gap_disposition(row) for row in gap_decisions
             ],
             "applicable_impact_rubrics": [
                 rubric_by_primitive[primitive_id].to_dict()
@@ -797,11 +819,12 @@ class ProValidatedImpactCompiler:
             if not isinstance(row, Mapping):
                 continue
             claim_id = str(row.get("claim_id") or "")
-            if any(
-                _batch_edge_key(candidate) == _batch_edge_key(row)
-                for candidate in allowed_edges_by_claim.get(claim_id, ())
-            ):
-                raw_covered_components.add(str(row.get("component_id") or ""))
+            edge = _allowed_edge_for_response(
+                allowed_edges_by_claim.get(claim_id, ()),
+                row,
+            )
+            if edge is not None:
+                raw_covered_components.add(str(edge["component_id"]))
         repair_component_ids = tuple(
             sorted(set(CANONICAL_COMPONENT_ORDER) - raw_covered_components)
         )
@@ -809,9 +832,17 @@ class ProValidatedImpactCompiler:
         if repair_component_ids:
             repair_component_set = set(repair_component_ids)
             for claim in claim_catalog:
+                full_edges = allowed_edges_by_claim.get(
+                    str(claim.get("claim_id") or ""),
+                    (),
+                )
                 repair_edges = [
-                    dict(edge)
-                    for edge in claim["allowed_impact_edges"]
+                    {
+                        "allowed_edge_id": edge["allowed_edge_id"],
+                        "primitive_id": edge["primitive_id"],
+                        "component_id": edge["component_id"],
+                    }
+                    for edge in full_edges
                     if str(edge.get("component_id") or "")
                     in repair_component_set
                 ]
@@ -923,13 +954,9 @@ class ProValidatedImpactCompiler:
                 prepared = prepared_by_claim.get(claim_id)
                 if prepared is None:
                     raise ValueError("impact claim is outside verified catalog")
-                edge = next(
-                    (
-                        candidate
-                        for candidate in allowed_edges_by_claim.get(claim_id, ())
-                        if _batch_edge_key(candidate) == _batch_edge_key(row)
-                    ),
-                    None,
+                edge = _allowed_edge_for_response(
+                    allowed_edges_by_claim.get(claim_id, ()),
+                    row,
                 )
                 if edge is None:
                     raise ValueError("impact edge is outside deterministic catalog")
@@ -1002,14 +1029,8 @@ class ProValidatedImpactCompiler:
                         ),
                         "proposed_edge": (
                             {
-                                key: str(row.get(key) or "")
-                                for key in (
-                                    "mapping_id",
-                                    "primitive_id",
-                                    "question_family_id",
-                                    "question_contract_hash",
-                                    "component_id",
-                                    "component_subcriterion_id",
+                                "allowed_edge_id": str(
+                                    row.get("allowed_edge_id") or ""
                                 )
                             }
                             if isinstance(row, Mapping)
@@ -1440,7 +1461,7 @@ def _source_family(fact: Mapping[str, Any], *, job: ProResearchJob) -> str:
     return "TRUSTED_INDEPENDENT"
 
 
-def _document_context(path: Path, *, maximum_chars: int = 6000) -> str:
+def _document_context(path: Path, *, maximum_chars: int = 1500) -> str:
     try:
         text = path.read_text(encoding="utf-8")
     except OSError:
@@ -1460,6 +1481,50 @@ def _batch_edge_key(row: Mapping[str, Any]) -> tuple[str, ...]:
             "component_subcriterion_id",
         )
     )
+
+
+def _allowed_edge_for_response(
+    candidates: Sequence[Mapping[str, Any]],
+    row: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    """Resolve one provider-selected opaque edge through deterministic state."""
+
+    allowed_edge_id = str(row.get("allowed_edge_id") or "")
+    matches = tuple(
+        candidate
+        for candidate in candidates
+        if str(candidate.get("allowed_edge_id") or "") == allowed_edge_id
+    )
+    return matches[0] if len(matches) == 1 else None
+
+
+def _compact_gap_disposition(row: Mapping[str, Any]) -> Mapping[str, Any]:
+    """Project only fields the semantic impact analyst can legitimately use."""
+
+    assessment = row.get("assessment") or {}
+    materiality = row.get("materiality") or {}
+    return {
+        "dossier_gap_id": row.get("dossier_gap_id"),
+        "evidence_gap_key": row.get("evidence_gap_key"),
+        "planner_label": row.get("planner_label"),
+        "supplemental_allowed": row.get("supplemental_allowed") is True,
+        "affected_component_ids": list(
+            assessment.get("affected_component_ids") or ()
+        ),
+        "missing_source_role": assessment.get("missing_source_role"),
+        "component_range_bounded": (
+            assessment.get("component_range_bounded") is True
+        ),
+        "could_change_score_valid": (
+            materiality.get("could_change_score_valid") is True
+        ),
+        "could_cross_stage_boundary": (
+            materiality.get("could_cross_stage_boundary") is True
+        ),
+        "could_change_hard_break": (
+            materiality.get("could_change_hard_break") is True
+        ),
+    }
 
 
 def _forbidden_provider_key_count(value: Any) -> int:

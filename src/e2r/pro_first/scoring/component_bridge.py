@@ -19,6 +19,11 @@ from ..ids import stable_id
 from ..models import ProResearchJob
 
 
+COMPONENT_BRIDGE_SEMANTICS = (
+    "e2r_pro_component_bridge_v2_support_alias_and_context_retention"
+)
+
+
 @dataclass(frozen=True)
 class ComponentBridgeResult:
     memos: tuple[ComponentResearchMemo, ...]
@@ -29,6 +34,7 @@ class ComponentBridgeResult:
     def receipt_payload(self) -> Mapping[str, Any]:
         return {
             "schema_version": "e2r_pro_component_bridge_receipt_v1",
+            "component_bridge_semantics": COMPONENT_BRIDGE_SEMANTICS,
             "status": "COMPONENT_BRIDGE_COMPLETE",
             "component_count": len(self.memos),
             "research_complete_count": sum(row.research_complete for row in self.memos),
@@ -106,6 +112,7 @@ class ProComponentMemoCompiler:
             }
             explicit_keys = {
                 "positive_fact_ids",
+                "support_fact_ids",
                 "counter_fact_ids",
                 "counterfact_ids",
                 "resolution_fact_ids",
@@ -113,7 +120,14 @@ class ProComponentMemoCompiler:
             explicit = bool(explicit_keys & set(row))
             if explicit:
                 positive, removed_positive = _project_dossier_ids(
-                    row.get("positive_fact_ids") or (),
+                    tuple(
+                        dict.fromkeys(
+                            (
+                                *(row.get("positive_fact_ids") or ()),
+                                *(row.get("support_fact_ids") or ()),
+                            )
+                        )
+                    ),
                     dossier_to_fact=dossier_to_fact,
                     eligible={
                         fact_id
@@ -197,10 +211,12 @@ class ProComponentMemoCompiler:
                     for fact in facts
                     if fact.fact_id in eligible and fact.direction == "RESOLUTION"
                 )
+            assigned_fact_ids = {*positive, *counter, *resolution}
             context_fact_ids = tuple(
                 fact.fact_id
                 for fact in facts
-                if fact.fact_id in eligible and fact.direction == "NEUTRAL"
+                if fact.fact_id in eligible
+                and fact.fact_id not in assigned_fact_ids
             )
             fact_ids = {*positive, *counter, *resolution, *context_fact_ids}
             source_coverage = tuple(
@@ -475,6 +491,7 @@ def _probability(value: Any, *, default: float) -> float:
 
 
 __all__ = [
+    "COMPONENT_BRIDGE_SEMANTICS",
     "ComponentBridgeResult",
     "ProComponentMemoCompiler",
     "evidence_fact_from_mapping",

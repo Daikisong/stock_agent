@@ -271,6 +271,29 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         inspection = await self.adapter.ensure_deep_research_mode()
         self.assertTrue(inspection.deep_research_ready)
 
+    async def test_reload_waits_for_delayed_pro_control_without_clicking_send(self) -> None:
+        await self.page.set_content(
+            "<html><body><form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button id="composer-submit-button" type="submit">Send</button>'
+            "</form><script>"
+            "setTimeout(() => {"
+            "  const button = document.createElement('button');"
+            "  button.type = 'button';"
+            "  button.id = 'delayed-pro';"
+            "  button.textContent = 'Pro';"
+            "  document.querySelector('form').prepend(button);"
+            "}, 500);"
+            "</script></body></html>"
+        )
+
+        inspection = await self.adapter.ensure_deep_research_mode()
+
+        self.assertTrue(inspection.deep_research_ready)
+        self.assertEqual(await self.page.locator("#delayed-pro").inner_text(), "Pro")
+        self.assertEqual(await self.page.locator("article").count(), 0)
+
     async def test_legacy_deep_research_is_not_a_pro_substitute(self) -> None:
         await self.page.set_content(
             "<html><body>"
@@ -390,6 +413,33 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(result.structurally_complete)
         self.assertTrue(result.job_marker_matches)
         self.assertTrue(result.run_marker_matches)
+
+    async def test_latest_result_uses_atomic_dom_snapshot_not_count_then_nth(
+        self,
+    ) -> None:
+        job_id = "PROJOB-aaaaaaaaaaaaaaaaaaaaaaaa"
+        run_id = "PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb"
+        await self.page.set_content(
+            "<html><body>"
+            '<section data-turn="assistant" data-turn-id="atomic-turn">'
+            f"[[E2R_PRO_JOB_ID:{job_id}]] "
+            f"[[E2R_PRO_RUN_ID:{run_id}]] "
+            "E2R_RESEARCH_DOSSIER_JSON_BEGIN {} "
+            "E2R_RESEARCH_DOSSIER_JSON_END"
+            '<a href="https://example.com/source">source</a>'
+            "</section></body></html>"
+        )
+
+        async def stale_count_then_nth_path() -> list[object]:
+            raise AssertionError("count-then-nth assistant lookup must not run")
+
+        self.adapter._assistant_turns = stale_count_then_nth_path  # type: ignore[method-assign]
+        result = await self.adapter.inspect_result(job_id=job_id, run_id=run_id)
+
+        self.assertEqual(result.assistant_turn_id, "atomic-turn")
+        self.assertTrue(result.structurally_complete)
+        self.assertTrue(result.has_citations)
+        self.assertIn("https://example.com/source", result.report_text)
 
     async def test_work_plus_pro_switches_to_chat_before_becoming_ready(self) -> None:
         await self.page.set_content(

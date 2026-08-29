@@ -548,6 +548,40 @@ class ProFirstDossierImportTest(unittest.IsolatedAsyncioTestCase):
             parsed.protected_values_after,
         )
 
+    def test_visible_dom_closing_naked_quote_before_prose_preserves_content(self) -> None:
+        payload = self._valid_dossier()
+        original = "검증기업은 출하를 시작했고 다음 발표도 확인했다."
+        quoted = (
+            '검증기업은 "The company began shipments." '
+            "The next release also confirmed it."
+        )
+        payload["material_facts"][0]["supporting_excerpt"] = original
+        text = json.dumps(payload, ensure_ascii=False).replace(
+            original,
+            quoted,
+            1,
+        )
+
+        parsed = ResearchDossierParser().parse_text(
+            text,
+            parser_source="DOWNLOADED_JSON",
+        )
+
+        self.assertEqual(
+            parsed.payload["material_facts"][0]["supporting_excerpt"],
+            quoted,
+        )
+        self.assertEqual(
+            parsed.repair_operations,
+            (
+                "ESCAPE_DECODER_PROVEN_NAKED_QUOTES_IN_JSON_STRING_VALUES:2",
+            ),
+        )
+        self.assertEqual(
+            parsed.protected_values_before,
+            parsed.protected_values_after,
+        )
+
     def test_missing_comma_is_not_guessed_as_naked_quote_repair(self) -> None:
         payload = self._valid_dossier()
         text = json.dumps(payload, ensure_ascii=False).replace(

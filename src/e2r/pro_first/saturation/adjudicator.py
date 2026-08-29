@@ -169,7 +169,18 @@ class ResearchSaturationAdjudicator:
         )
         repair_pending = tuple(
             dict.fromkeys(
-                [str(value) for value in verifier_repair_pending_ids]
+                [
+                    str(value)
+                    for value in verifier_repair_pending_ids
+                    if not any(
+                        row.question_family_id == str(value)
+                        and row.terminal
+                        and row.deterministic_status
+                        == "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH"
+                        and row.route_adequacy.semantic_fixpoint
+                        for row in decisions
+                    )
+                ]
                 + [
                     row.question_family_id
                     for row in decisions
