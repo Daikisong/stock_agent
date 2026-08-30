@@ -4452,3 +4452,61 @@ Windows browser/approval/capture/multi-pass         99 / 99 PASS
 packet 본문, browser profile은 추적하지 않고 SHA-256과 canonical count만 게시한다. 다음 R14는 새 창이나
 새 탭을 열지 않고 지금 로그인된 기존 ChatGPT 탭 하나를 새 대화로 이동해, JSON packet 1회 첨부와 짧은
 transport envelope로 독립 C17 initial을 시작한다.
+
+## P33 — C17 R14 pre-browser CDP 실패와 기존 ChatGPT page 격리 연결
+
+R14 packet은 새 attachment-backed 방식으로 정상 생성됐다. full contract 50,856자는 packet에 유지되고
+composer envelope는 1,585자였으며 packet/prompt leakage는 0이었다. 그러나 browser-level WebSocket에
+연결된 뒤 Playwright 초기화가 180초 안에 끝나지 않아 prepare 전에 안전 중단됐다.
+
+```text
+fresh session                    FRESH-V2-1-C17-R14-20260830T050553Z
+job / run                        PROJOB-3de09b498e48dcd86c35625b
+                                 PRORUN-f401ed47f41227ada896c41f
+initial pass                     PROPASS-fb547d9210da25bcc09e4f4f
+transport / full contract        1,585 / 50,856 chars
+browser session                  없음
+upload / approval / submit       0 / 0 / 0
+새 탭 / Chrome 재시작            0 / 0
+```
+
+raw CDP의 `Browser.getVersion`, `Target.getTargets`, ChatGPT page attach와 `document.title`은 즉시
+응답했다. 반면 Playwright protocol log에서는 browser가 가진 페이지 5개를 전부 auto-attach한 뒤, 실제
+작업과 무관한 Naver page session 2개가 `Page.enable`, `Runtime.enable` 등에 답하지 않았다. 사용할 수
+있는 ChatGPT 탭 1개가 다른 탭의 디버깅 초기화에 같이 묶여 막힌 것이다.
+
+쉬운 예로 ChatGPT 방 하나에 들어가려는데 건물의 다른 방 네 개까지 모두 안전점검이 끝나야 문을 열어
+주는 구조였다. 다른 방 두 개가 응답하지 않자 ChatGPT 방이 정상이어도 입장이 멈췄다. 해결은 다른 방을
+닫는 것이 아니라, 점검 대상에서 ChatGPT 방만 선택하는 것이다.
+
+`ExistingPageCDPProxy`는 loopback 임시 WebSocket에서 client 한 개만 받고, 기존 browser CDP와
+Playwright 사이에서 다음 경계만 적용한다.
+
+```text
+ChatGPT origin의 기존 page       Playwright에 전달
+다른 page / browser_ui target    Playwright에서 숨김, 실제 탭은 계속 열어 둠
+root Target.getTargetInfo        Playwright가 값은 쓰지 않는 동기화 응답만 제공
+그 외 CDP message                변경 없이 전달
+```
+
+proxy는 context/page/window를 생성하지 않고 사용자 탭을 닫지도 않는다. CDP endpoint와 proxy listener
+모두 loopback만 허용한다. 기존 ChatGPT page가 없으면 Worker가 새 탭을 만들지 않고 fail closed한다.
+Windows 실행환경도 저장소 요구사항인 Playwright 1.62로 맞췄고, WebSocket dependency를 explicit
+`pro-first` dependency와 hash lock에 추가했다.
+
+실제 같은 Chrome에서 read-only Worker proof를 실행하자 5개 page는 그대로인 채 Worker에는
+`https://chatgpt.com/` page 1개만 보였고 editor ready까지 4.2초에 확인한 뒤 정상 분리됐다. R14는
+browser mutation·submit 모두 0인 진단으로 봉인했으며 새 commit에 묶인 successor만 시작한다.
+
+```text
+Linux proxy unit                                  2 / 2 PASS
+Windows proxy + worker targeted                   4 / 4 PASS
+Windows proxy + browser regression               38 / 38 PASS
+운영 new_page/new_context fallback                 0 / 0
+실제 Chrome page / ChatGPT page 유지               5 / 1
+```
+
+정규화된 외부 검수 영수증은
+`p33_c17_r14_existing_page_cdp_proxy_receipt.json`에 기록했다. raw protocol log, runtime DB, packet 본문,
+browser profile은 추적하지 않는다. 다음 R15는 새 창·새 탭·Chrome 재시작 없이 지금 로그인된 기존
+ChatGPT 탭 하나만 격리 연결해 독립 C17 initial을 시작한다.

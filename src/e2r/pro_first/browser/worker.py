@@ -10,6 +10,7 @@ from urllib.parse import urlparse
 
 from ..config import BrowserConnectionMode, ProBrowserConfig
 from ..ids import stable_id
+from .cdp_existing_page_proxy import ExistingPageCDPProxy
 from .chatgpt_adapter import PlaywrightChatGPTWebAdapter
 
 
@@ -22,11 +23,16 @@ class BrowserWorkerSession:
     browser: Any | None
     context: Any
     attached_over_cdp: bool
+    cdp_proxy: ExistingPageCDPProxy | None = None
 
     async def close(self) -> None:
-        if not self.attached_over_cdp:
-            await self.context.close()
-        await self.playwright.stop()
+        try:
+            if not self.attached_over_cdp:
+                await self.context.close()
+            await self.playwright.stop()
+        finally:
+            if self.cdp_proxy is not None:
+                await self.cdp_proxy.close()
 
 
 class ProBrowserWorker:
@@ -42,11 +48,17 @@ class ProBrowserWorker:
             ) from error
         playwright = await async_playwright().start()
         browser: Any | None = None
+        cdp_proxy: ExistingPageCDPProxy | None = None
         attached = self.config.mode is BrowserConnectionMode.CDP_ATTACH
         try:
             if attached:
+                cdp_proxy = await ExistingPageCDPProxy.start(
+                    upstream_endpoint=self._resolve_cdp_endpoint(),
+                    allowed_origin=self.config.chatgpt_url,
+                )
                 browser = await playwright.chromium.connect_over_cdp(
-                    self._resolve_cdp_endpoint()
+                    cdp_proxy.endpoint,
+                    timeout=30_000,
                 )
                 context = self._require_existing_context(browser)
             else:
@@ -79,9 +91,14 @@ class ProBrowserWorker:
                 browser=browser,
                 context=context,
                 attached_over_cdp=attached,
+                cdp_proxy=cdp_proxy,
             )
         except Exception:
-            await playwright.stop()
+            try:
+                await playwright.stop()
+            finally:
+                if cdp_proxy is not None:
+                    await cdp_proxy.close()
             raise
 
     def _resolve_cdp_endpoint(self) -> str:
