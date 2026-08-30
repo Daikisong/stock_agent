@@ -565,12 +565,28 @@ class ProMultiPassLedger:
             if row["status"] == ResearchPassStatus.COMPLETE.value:
                 if row["response_hash"] != response_hash:
                     raise FollowupSubmitBlocked("completed pass response hash changed")
+                detail = json.loads(row["detail_json"])
+                if detail.get("research_status") != "COMPLETE":
+                    detail["research_status"] = "COMPLETE"
+                    connection.execute(
+                        "UPDATE pro_research_passes SET detail_json=? WHERE pass_id=?",
+                        (canonical_json(detail), pass_id),
+                    )
+                    row = self._require_pass(connection, pass_id)
                 return self._pass_from_row(row)
             if row["status"] != ResearchPassStatus.RESEARCH_RUNNING.value:
                 raise FollowupSubmitBlocked("only a running pass can complete")
+            detail = json.loads(row["detail_json"])
+            detail["research_status"] = "COMPLETE"
             connection.execute(
-                "UPDATE pro_research_passes SET status=?, response_hash=?, completed_at=? WHERE pass_id=?",
-                (ResearchPassStatus.COMPLETE.value, response_hash, now, pass_id),
+                "UPDATE pro_research_passes SET status=?, response_hash=?, detail_json=?, completed_at=? WHERE pass_id=?",
+                (
+                    ResearchPassStatus.COMPLETE.value,
+                    response_hash,
+                    canonical_json(detail),
+                    now,
+                    pass_id,
+                ),
             )
             result = self._require_pass(connection, pass_id)
         return self._pass_from_row(result)
@@ -699,6 +715,7 @@ class ProMultiPassLedger:
             detail = json.loads(row["detail_json"])
             detail["transport_pending_result_recovered"] = True
             detail["automatic_resubmit_allowed"] = False
+            detail["research_status"] = "RESEARCH_RUNNING"
             connection.execute(
                 """
                 UPDATE pro_research_passes
@@ -737,12 +754,23 @@ class ProMultiPassLedger:
                 )
             detail = json.loads(row["detail_json"])
             reason = str(detail.get("transport_pending_reason") or "")
-            required = (
-                "Locator.click: Timeout",
-                "modal-global-search",
-                "intercepts pointer events",
+            modal_interception = all(
+                token in reason
+                for token in (
+                    "Locator.click: Timeout",
+                    "modal-global-search",
+                    "intercepts pointer events",
+                )
             )
-            if any(token not in reason for token in required):
+            unstable_send_control = all(
+                token in reason
+                for token in (
+                    "Locator.click: Timeout",
+                    "composer-submit-button",
+                    "waiting for element to be visible, enabled and stable",
+                )
+            )
+            if not (modal_interception or unstable_send_control):
                 raise FollowupSubmitBlocked(
                     "transport receipt does not prove a pre-dispatch interception"
                 )
@@ -754,6 +782,12 @@ class ProMultiPassLedger:
                 {
                     "research_status": "RESEARCH_RUNNING",
                     "intercepted_submit_recovered": True,
+                    "predispatch_submit_recovered": True,
+                    "predispatch_failure_kind": (
+                        "MODAL_INTERCEPTION"
+                        if modal_interception
+                        else "UNSTABLE_SEND_CONTROL"
+                    ),
                     "intercepted_submit_recovered_at": now,
                     "prior_transport_failure_hash": prior_failure_hash,
                     "actual_dom_send_click_count": 1,

@@ -19,8 +19,8 @@ import asyncio
 import ipaddress
 import json
 from typing import Any, Mapping
-from urllib.parse import urlparse
-from urllib.request import urlopen
+from urllib.parse import quote, urlparse
+from urllib.request import Request, urlopen
 
 
 class ExistingPageCDPProxy:
@@ -61,8 +61,12 @@ class ExistingPageCDPProxy:
                 "websockets optional dependency is required: install project[pro-first]"
             ) from error
 
-        upstream_url = await cls._resolve_upstream_websocket(upstream_endpoint)
         normalized_origin = cls._origin(allowed_origin)
+        await cls._activate_single_existing_page(
+            upstream_endpoint,
+            allowed_origin=normalized_origin,
+        )
+        upstream_url = await cls._resolve_upstream_websocket(upstream_endpoint)
         holder: dict[str, ExistingPageCDPProxy] = {}
 
         async def handler(client: Any) -> None:
@@ -161,7 +165,8 @@ class ExistingPageCDPProxy:
                 if method == "Target.attachedToTarget":
                     target = params.get("targetInfo")
                     target = target if isinstance(target, Mapping) else {}
-                    if self._hide_target(target):
+                    hidden = self._hide_target(target)
+                    if hidden:
                         session_id = str(params.get("sessionId") or "")
                         if session_id:
                             hidden_sessions.add(session_id)
@@ -209,7 +214,15 @@ class ExistingPageCDPProxy:
         target_url = str(target.get("url") or "")
         if target_type == "browser_ui":
             return True
-        return target_type == "page" and self._origin(target_url) != self.allowed_origin
+        if target_type in {
+            "page",
+            "iframe",
+            "service_worker",
+            "shared_worker",
+            "worker",
+        }:
+            return self._origin(target_url) != self.allowed_origin
+        return False
 
     @staticmethod
     def _is_root_target_info_barrier(
@@ -254,6 +267,52 @@ class ExistingPageCDPProxy:
         websocket_url = await asyncio.to_thread(fetch)
         cls._require_loopback(websocket_url)
         return websocket_url
+
+    @classmethod
+    async def _activate_single_existing_page(
+        cls,
+        endpoint: str,
+        *,
+        allowed_origin: str,
+    ) -> None:
+        """Wake one existing allowed tab without creating a browser target.
+
+        Chrome can freeze a background renderer under Memory Saver.  In that
+        state the browser CDP socket responds, but Playwright waits forever for
+        the existing page's initialization commands.  Chrome's loopback
+        ``/json/activate`` command only foregrounds an already listed target;
+        it never opens a tab, window, context, or conversation.
+        """
+
+        parsed = urlparse(endpoint)
+        if parsed.scheme not in {"http", "https"}:
+            return
+        cls._require_loopback(endpoint)
+        base = endpoint.rstrip("/")
+
+        def activate() -> None:
+            with urlopen(base + "/json/list", timeout=5) as response:
+                rows = json.load(response)
+            matches = [
+                row
+                for row in rows
+                if isinstance(row, Mapping)
+                and row.get("type") == "page"
+                and cls._origin(str(row.get("url") or "")) == allowed_origin
+                and str(row.get("id") or "").strip()
+            ]
+            if len(matches) != 1:
+                return
+            target_id = str(matches[0]["id"])
+            request = Request(
+                base + "/json/activate/" + quote(target_id, safe=""),
+                method="PUT",
+            )
+            with urlopen(request, timeout=5) as response:
+                response.read()
+
+        await asyncio.to_thread(activate)
+        await asyncio.sleep(0.25)
 
     @staticmethod
     def _require_loopback(url: str) -> None:

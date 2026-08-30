@@ -35,6 +35,11 @@ INTERCEPTED_CLICK_REASON = (
     '<div role="dialog" data-testid="modal-global-search"> '
     "intercepts pointer events"
 )
+UNSTABLE_SEND_REASON = (
+    "TimeoutError: Locator.click: Timeout 30000ms exceeded; "
+    "waiting for element to be visible, enabled and stable; "
+    'locator(\'[data-testid="composer-submit-button"]\')'
+)
 
 
 class _FakeSameConversationAdapter:
@@ -126,6 +131,18 @@ class _FakeSameConversationAdapter:
             fresh_page_loaded=True,
         )
 
+    async def inspect_state(self) -> BrowserInspection:
+        return BrowserInspection(
+            state=BrowserUIState.RESEARCH_RUNNING,
+            conversation_id=self.conversation_id,
+            editor_ready=True,
+            deep_research_ready=True,
+            packet_uploaded=True,
+            prompt_ready=False,
+            send_ready=False,
+            stop_visible=True,
+        )
+
     async def prepare_intercepted_followup_submit_recovery(
         self,
         proof,
@@ -134,7 +151,10 @@ class _FakeSameConversationAdapter:
     ) -> None:
         if not proof.ledger_verified or proof.submit_count != 1:
             raise PermissionError("durable claimed proof required")
-        if transport_pending_reason != INTERCEPTED_CLICK_REASON:
+        if transport_pending_reason not in {
+            INTERCEPTED_CLICK_REASON,
+            UNSTABLE_SEND_REASON,
+        }:
             raise PermissionError("transport proof changed")
 
 
@@ -640,7 +660,10 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
 
     async def test_modal_interception_resumes_existing_claim_exactly_once(self) -> None:
         plan = self._public_plan()
-        adapter = _FakeSameConversationAdapter(self.scope.conversation_id)
+        adapter = _FakeSameConversationAdapter(
+            self.scope.conversation_id,
+            persistence_results=(False, True),
+        )
         await self.orchestrator.prepare_followup(plan, adapter)
         claimed = self.orchestrator.ledger.claim_submit(
             plan.research_pass.pass_id
@@ -664,6 +687,62 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
                 plan,
                 adapter,
             )
+
+    async def test_unstable_send_control_resumes_existing_claim_once(self) -> None:
+        plan = self._public_plan()
+        adapter = _FakeSameConversationAdapter(
+            self.scope.conversation_id,
+            persistence_results=(False, True),
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        claimed = self.orchestrator.ledger.claim_submit(
+            plan.research_pass.pass_id
+        )
+        self.orchestrator.ledger.mark_transport_pending(
+            claimed.pass_id,
+            reason=UNSTABLE_SEND_REASON,
+        )
+
+        resumed = await self.orchestrator.resume_intercepted_followup_submit(
+            plan,
+            adapter,
+        )
+
+        self.assertEqual(resumed.research_pass.status, "RESEARCH_RUNNING")
+        self.assertEqual(resumed.research_pass.submit_count, 1)
+        self.assertEqual(adapter.submit_count, 1)
+        self.assertTrue(resumed.research_pass.detail["predispatch_submit_recovered"])
+        self.assertEqual(
+            resumed.research_pass.detail["predispatch_failure_kind"],
+            "UNSTABLE_SEND_CONTROL",
+        )
+
+    async def test_late_persistence_reconciles_without_second_click(self) -> None:
+        plan = self._public_plan()
+        adapter = _FakeSameConversationAdapter(
+            self.scope.conversation_id,
+            persistence_results=(True,),
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        claimed = self.orchestrator.ledger.claim_submit(
+            plan.research_pass.pass_id
+        )
+        self.orchestrator.ledger.mark_transport_pending(
+            claimed.pass_id,
+            reason=UNSTABLE_SEND_REASON,
+        )
+
+        resumed = await self.orchestrator.resume_intercepted_followup_submit(
+            plan,
+            adapter,
+        )
+
+        self.assertEqual(resumed.research_pass.status, "RESEARCH_RUNNING")
+        self.assertEqual(resumed.research_pass.submit_count, 1)
+        self.assertEqual(adapter.submit_count, 0)
+        self.assertTrue(
+            resumed.research_pass.detail["server_persistence_confirmed"]
+        )
 
     def test_visible_provider_failure_closes_claimed_pass_without_resubmit(self) -> None:
         plan = self._public_plan()

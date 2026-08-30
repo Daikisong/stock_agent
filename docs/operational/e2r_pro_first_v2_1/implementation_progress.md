@@ -4510,3 +4510,89 @@ Windows proxy + browser regression               38 / 38 PASS
 `p33_c17_r14_existing_page_cdp_proxy_receipt.json`에 기록했다. raw protocol log, runtime DB, packet 본문,
 browser profile은 추적하지 않는다. 다음 R15는 새 창·새 탭·Chrome 재시작 없이 지금 로그인된 기존
 ChatGPT 탭 하나만 격리 연결해 독립 C17 initial을 시작한다.
+
+## P34 — C17 R15 initial PASS와 기존 탭 artifact 재내보내기 복구
+
+R15는 P33의 기존 page 격리 proxy와 attachment-backed 1,585자 envelope로 실제 C17 initial을 전송했다.
+새 창·새 탭·새 context는 만들지 않았고, 현재 로그인된 ChatGPT 대화 하나에서 initial user turn을 정확히
+한 번 서버에 남겼다. Pro는 13개 source document, 60개 atomic fact, 26개 mandatory question, 57개
+search-route receipt를 포함한 ResearchDossierV3를 작성했다.
+
+```text
+fresh session                    FRESH-V2-1-C17-R15-20260830T052335Z
+job / run                        PROJOB-312387371378cd5a5c1e378c
+                                 PRORUN-6121ceae520bb75519b0acfa
+initial / re-export pass         PROPASS-4b0a65bd8315e8bc2ed18aaf
+                                 PROPASS-b025ba306b41347200a148d0
+conversation                     6a93be74-db60-83ee-a7ab-c8262cbb0b39
+initial submit / capture          1 / 1
+새 탭 / 새 창 / 자동 재전송          0 / 0 / 0
+```
+
+최초 Pro 응답의 연구 내용은 존재했지만, 첨부 링크 세 개가 가리키는 sandbox 파일은 실제로 생성되지
+않았다. 대화 내부 실행 기록에서는 dossier를 읽으려던 코드가 `FileNotFoundError`를 냈고, 화면의 다운로드
+control도 `file_not_found`를 반환했다. 링크가 오래돼 만료된 문제가 아니라, 파일을 만들기 전에 검증하려다
+실패한 뒤 존재하지 않는 링크를 최종 응답에 붙인 transport 결함이었다.
+
+따라서 새 조사나 새 initial을 시작하지 않고 같은 대화에 `ARTIFACT_REEXPORT` 한 번만 보냈다. 이 pass는
+웹 검색·새 자료·새 fact 판단·점수·Stage 권한을 모두 금지하고, initial dossier의
+`research_pass_id=PROPASS-4b0a65bd8315e8bc2ed18aaf`를 그대로 보존한 채 파일만 다시 쓰게 한다.
+
+첫 전송 시 Playwright가 계속 움직이는 send control의 `stable` 상태를 기다리다 click timeout을 냈지만,
+native DOM click은 이미 서버에 도달해 exact user turn이 생겼다. 재시작 복구는 먼저 job/pass/parent marker가
+모두 같은 durable user turn을 읽고, 있으면 click하지 않는다. 실제 R15에서도 두 번째 click 없이
+`browser_submit_delta=0`으로 기존 pass를 복구했다.
+
+생성된 파일을 누르면 실제 dossier보다 먼저 다음 다운로드 안내 JSON이 온다는 사실도 확인했다.
+
+```text
+1차 응답    status/file_name/file_id/download_url를 가진 약 500-byte manifest
+2차 응답    같은 origin의 /backend-api/estuary/content 실제 파일
+실제 파일    279,348 bytes / SHA-256 f857328a6a74...
+```
+
+쉬운 예로 1차 응답은 택배 내용물이 아니라 수령 주소가 적힌 송장이다. adapter는 이제 화면 filename,
+manifest `file_name/file_id`, signed URL의 `fn/id`, same-origin estuary path가 전부 일치할 때만 2차 파일을
+받는다. 다른 origin·다른 filename·다른 file ID는 거부한다. 다운로드는 기존 파일 control에서 시작하며
+private endpoint를 추측하거나 composer를 건드리지 않는다.
+
+Chrome Memory Saver가 백그라운드 ChatGPT renderer를 잠들게 해 browser socket은 응답하지만 page의
+`Page.enable/Runtime.enable`이 멈춘 사례도 있었다. Worker는 loopback target 목록에 ChatGPT page가 정확히
+하나일 때 그 **기존 target만 activate**해 깨운다. page/window/context를 생성하지 않고, 여러 ChatGPT
+page가 있거나 기존 page가 없으면 기존 fail-closed 경계를 유지한다. iframe·service worker도 허용 origin이
+아니면 Playwright 초기화에서 숨기되 실제 사용자 탭과 worker는 닫지 않는다.
+
+최종 dossier capture/import/source verification 결과는 다음과 같다.
+
+```text
+schema / validation              e2r_pro_research_dossier_v3 / PASS
+source / atomic fact             13 / 60
+material / counter / resolution  38 / 14 / 8
+derived metric                   7
+mandatory question               26 / 26
+compiled evidence fact           45
+현재성 제외 material              4
+post-preflight material          31 accepted / 34 = 91.1765%
+genuine semantic repair 후보      3
+query / search                    0 / 0
+partial score publication         0
+initial efficiency gate           PASS
+```
+
+관련 Windows browser/proxy/multi-pass/fresh regression은 134/134 PASS, focused Linux recovery는 4/4
+PASS이며 `compileall`과 `git diff --check`도 통과했다. 임시 probe·다운로드 manifest 사본은 0개로
+정리했다. 정규화 영수증은
+`p34_c17_r15_initial_efficiency_and_artifact_reexport_receipt.json`에 기록하고 raw runtime DB, source page
+본문, dossier 원문, browser profile은 추적하지 않는다.
+
+저장소 전체 Windows 회귀도 `PYTHONPATH=src python -m unittest discover -s tests -q`로 실제 실행했다.
+7,714개를 2,883.265초 동안 수행한 결과는 76 failure, 462 error, 38 skip으로 **전체 PASS가 아니다**.
+대표 원인은 이 변경의 선택 테스트가 아니라 Windows Python이 명시적 encoding 없는 UTF-8 fixture를
+CP949로 읽은 오류, clean PR에서 의도적으로 제외한 legacy `output/`·과거 giant research fixture를
+unrelated 테스트가 요구한 오류, Windows Git이 WSL UNC worktree를 `safe.directory`로 거부한 오류다.
+따라서 외부 판정에서는 134/134 관련 회귀 PASS와 7,714개 전체 실행의 환경·legacy fixture 비호환을
+분리하며, 후자를 전체 PASS로 주장하지 않는다.
+
+R15는 initial efficiency gate를 통과했지만 아직 점수/Stage 완료가 아니다. 현재 durable job 상태는
+`GAP_ADJUDICATION`이고 genuine semantic repair 후보가 3개 남아 있다. 다음 작업은 새 initial이나 다른
+창이 아니라 **이 R15의 deterministic adjudication과 bounded same-conversation full-thesis tail**이다.

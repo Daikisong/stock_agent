@@ -160,6 +160,21 @@ class BrowserResultSnapshot:
     has_repair_delta_marker: bool = False
 
     @property
+    def has_json_attachment_candidate(self) -> bool:
+        """Return whether the exact assistant turn exposes a JSON artifact.
+
+        ChatGPT Pro may keep a large ResearchDossierV3 out of the visible prose
+        and expose it only as a generated JSON file.  This is only a transport
+        candidate: capture still downloads the file and proves its schema plus
+        exact job/run identity before any import or scoring authority exists.
+        """
+
+        return any(
+            key.button_text.strip().casefold().endswith(".json")
+            for key in self.new_attachment_keys
+        )
+
+    @property
     def structurally_complete(self) -> bool:
         return bool(
             self.assistant_turn_id
@@ -168,6 +183,7 @@ class BrowserResultSnapshot:
                 self.has_citations
                 or self.has_dossier_marker
                 or self.has_repair_delta_marker
+                or self.has_json_attachment_candidate
             )
             and self.job_marker_matches
             and self.run_marker_matches
@@ -335,6 +351,10 @@ class BrowserUIIncompatible(RuntimeError):
     pass
 
 
+class BrowserArtifactUnavailable(BrowserUIIncompatible):
+    """A visible ChatGPT artifact link has no backing sandbox file."""
+
+
 class SubmitAuthorizationRequired(PermissionError):
     pass
 
@@ -346,6 +366,7 @@ __all__ = [
     "BrowserJsonAttachmentRequest",
     "BrowserResultSnapshot",
     "BrowserSubmittedTurnPersistence",
+    "BrowserArtifactUnavailable",
     "BrowserUIIncompatible",
     "BrowserUIState",
     "ChatGPTWebAdapter",

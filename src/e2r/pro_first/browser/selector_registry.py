@@ -160,12 +160,19 @@ PREVIEW_ROOT_SELECTORS = (
 )
 
 PREVIEW_CLOSE_SELECTORS = (
+    '[role="dialog"][aria-label$=".md" i] button[data-testid="close-button"]',
+    '[role="dialog"][aria-label$=".json" i] button[data-testid="close-button"]',
+    '[role="dialog"][aria-label$=".pdf" i] button[data-testid="close-button"]',
     '[data-testid="stage-thread-flyout"] button[data-testid="close-button"]',
     '[data-testid="screen-threadFlyOut"] button[data-testid="close-button"]',
 )
 
 DOWNLOAD_SELECTORS = (
     'a[download]',
+    'button[aria-label*="파일 다운로드"]',
+    'a[aria-label*="파일 다운로드"]',
+    'button[aria-label*="Download file" i]',
+    'a[aria-label*="Download file" i]',
     'button[aria-label="다운로드"]',
     'button[aria-label="Download"]',
     'a[aria-label="다운로드"]',

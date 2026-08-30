@@ -85,6 +85,7 @@ class _FreshAdapter:
         self.prepared_followup: PreparedFollowupPass | None = None
         self.submit_count = 0
         self.persistence_count = 0
+        self.persistence_results: tuple[bool, ...] = (True,)
 
     async def ensure_logged_in(self) -> BrowserInspection:
         return self._inspection(BrowserUIState.READY_FOR_INPUT)
@@ -150,6 +151,9 @@ class _FreshAdapter:
                     f"[[E2R_PRO_PARENT_PASS_ID:{parent_pass_id}]]",
                 )
             )
+        confirmed = self.persistence_results[
+            min(self.persistence_count - 1, len(self.persistence_results) - 1)
+        ]
         return BrowserSubmittedTurnPersistence(
             observation_id=f"PROSERVERVIEW-FRESH-{self.persistence_count}",
             observed_at="2026-08-25T01:02:03Z",
@@ -158,14 +162,19 @@ class _FreshAdapter:
             run_id=run_id,
             pass_id=pass_id,
             parent_pass_id=parent_pass_id,
-            persistence_confirmed=True,
-            user_turn_id=f"fresh-user-{self.persistence_count}",
+            persistence_confirmed=confirmed,
+            user_turn_id=(
+                f"fresh-user-{self.persistence_count}" if confirmed else None
+            ),
             required_markers=tuple(required),
-            missing_markers=(),
-            observed_user_turn_count=1,
+            missing_markers=(() if confirmed else tuple(required)),
+            observed_user_turn_count=(1 if confirmed else 0),
             fresh_page_url=f"https://chatgpt.com/c/{conversation_id}",
             fresh_page_loaded=True,
         )
+
+    async def inspect_state(self) -> BrowserInspection:
+        return self._inspection(BrowserUIState.RESEARCH_RUNNING)
 
     async def open_exact_conversation_without_submit(
         self,
@@ -458,6 +467,8 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
     async def test_fresh_wrapper_resumes_proven_intercepted_claim(self) -> None:
         adapter = await self._prepare_and_approve("fresh-conversation-intercepted")
         await self.orchestrator.submit_initial_once(adapter)
+        adapter.persistence_count = 0
+        adapter.persistence_results = (False, True)
         self.orchestrator.establish_followup_scope(
             self.built,
             initial_response_hash="d" * 64,
@@ -1219,6 +1230,132 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             all(row.conversation_id == "fresh-conversation-tail" for row in passes)
         )
         self.assertTrue(all(row.submit_count == 1 for row in passes))
+
+    async def test_artifact_reexport_is_transport_only_and_not_semantic_parent(self) -> None:
+        conversation_id = "fresh-conversation-artifact-reexport"
+        adapter = await self._prepare_and_approve(conversation_id)
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="d" * 64,
+        )
+        plan, compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="ARTIFACT_REEXPORT",
+            latest_dossier_digest={
+                "initial_response_hash": "d" * 64,
+                "transport_only": True,
+            },
+            pass_inputs={
+                "route_reason": "CHATGPT_SANDBOX_ARTIFACT_FILE_NOT_FOUND",
+                "expected_artifact_filename": "ResearchDossierV3.json",
+                "initial_research_pass_id": self.built.initial_pass_id,
+                "new_research_allowed": False,
+            },
+        )
+
+        self.assertIn("웹 검색, 새 자료 수집, 새 사실 판단은 전부 금지", compiled.prompt_text)
+        self.assertIn("실제 저장", compiled.prompt_text)
+        self.assertIn(self.built.initial_pass_id, compiled.prompt_text)
+        self.assertNotIn("ResearchDossierV3 **delta JSON**", compiled.prompt_text)
+        await self.orchestrator.prepare_followup(plan, adapter)
+        await self.orchestrator.submit_followup(plan, adapter)
+        self.orchestrator.complete_followup(
+            plan.research_pass.pass_id,
+            response_hash="e" * 64,
+            conversation_id=conversation_id,
+        )
+
+        saturation, _compiled_saturation = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="SATURATION_AUDIT",
+            latest_dossier_digest={"dossier_hash": "f" * 64},
+            pass_inputs={"transport_reexport_completed": True},
+        )
+        self.assertEqual(
+            saturation.research_pass.parent_pass_id,
+            self.built.initial_pass_id,
+        )
+
+    async def test_visible_artifact_reexport_reconciles_without_second_send(self) -> None:
+        conversation_id = "fresh-conversation-visible-artifact-reexport"
+        adapter = await self._prepare_and_approve(conversation_id)
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="d" * 64,
+        )
+        plan, _compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="ARTIFACT_REEXPORT",
+            latest_dossier_digest={
+                "initial_response_hash": "d" * 64,
+                "transport_only": True,
+            },
+            pass_inputs={
+                "route_reason": "CHATGPT_SANDBOX_ARTIFACT_FILE_NOT_FOUND",
+                "expected_artifact_filename": "ResearchDossierV3.json",
+                "initial_research_pass_id": self.built.initial_pass_id,
+                "new_research_allowed": False,
+            },
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        claimed = self.orchestrator.ledger.claim_submit(plan.research_pass.pass_id)
+        self.orchestrator.ledger.mark_transport_pending(
+            claimed.pass_id,
+            reason=(
+                "TimeoutError: Locator.click: Timeout 30000ms exceeded; "
+                "waiting for element to be visible, enabled and stable; "
+                "composer-submit-button"
+            ),
+        )
+        response_hash = "e" * 64
+        result = BrowserResultSnapshot(
+            conversation_id=conversation_id,
+            assistant_turn_id="artifact-reexport-turn",
+            report_text="\n".join(
+                (
+                    f"[[E2R_PRO_JOB_ID:{self.fresh_job.job_id}]]",
+                    f"[[E2R_PRO_RUN_ID:{self.built.packet_payload['run_id']}]]",
+                    f"[[E2R_PRO_PASS_ID:{plan.research_pass.pass_id}]]",
+                    f"[[E2R_PRO_PARENT_PASS_ID:{self.built.initial_pass_id}]]",
+                    "ARTIFACT_REEXPORT 완료",
+                )
+            ),
+            report_hash=response_hash,
+            has_citations=False,
+            has_dossier_marker=False,
+            job_marker_matches=True,
+            run_marker_matches=True,
+            new_attachment_keys=(),
+        )
+        base = load_pro_first_local_config(
+            Path(__file__).parents[1]
+            / "configs/e2r_pro_first_local.example.yaml"
+        )
+        runner = FreshV3InitialLiveCanaryRunner(
+            replace(base, runtime_root=self.boundary.fresh_runtime_root),
+            old_runtime_root=self.boundary.old_runtime_root,
+            fresh_runtime_root=self.boundary.fresh_runtime_root,
+            repo_root=self.root,
+            store=self.store,
+            source_verifier=object(),
+            report_structurer=object(),
+        )
+
+        reconciled = runner._reconcile_visible_artifact_reexport(
+            orchestrator=self.orchestrator,
+            built=self.built,
+            result=result,
+        )
+
+        current = self.orchestrator.ledger.get_pass(plan.research_pass.pass_id)
+        self.assertTrue(reconciled)
+        self.assertEqual(current.status, "COMPLETE")
+        self.assertEqual(current.submit_count, 1)
+        self.assertEqual(current.response_hash, response_hash)
+        self.assertEqual(current.detail["research_status"], "COMPLETE")
+        self.assertEqual(adapter.submit_count, 1)
 
     async def test_failed_hard_followup_does_not_block_later_compact_repair(self) -> None:
         adapter = await self._prepare_and_approve("fresh-conversation-failed-before-repair")

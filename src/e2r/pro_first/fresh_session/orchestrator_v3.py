@@ -15,6 +15,7 @@ from ..ids import canonical_hash, canonical_json, stable_id
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
 from ..multi_pass import (
+    ARTIFACT_REEXPORT_PASS_NAME,
     FollowupPassPlan,
     ProMultiPassLedger,
     ProMultiPassResearchOrchestrator,
@@ -57,7 +58,9 @@ from .boundary import (
 _GAP_PASS_NAMES = frozenset(
     {"PUBLIC_GAP_CLOSURE", COUNTER_SUPERSESSION_PASS_NAME}
 )
-_NON_REPAIR_V3_FOLLOWUPS = frozenset((*_GAP_PASS_NAMES, "SATURATION_AUDIT"))
+_NON_REPAIR_V3_FOLLOWUPS = frozenset(
+    (*_GAP_PASS_NAMES, "SATURATION_AUDIT", ARTIFACT_REEXPORT_PASS_NAME)
+)
 _MAX_FOLLOWUP_PROMPT_CHARS = 100_000
 # Repeated inline-contract new-chat submissions, including one at 50,856
 # characters through framework-owned input, cleared the visible composer
@@ -1349,7 +1352,10 @@ class FreshSessionOrchestratorV3:
         )
         passes = self.ledger.list_passes(job.job_id)
         completed = tuple(
-            row for row in passes if row.status == ResearchPassStatus.COMPLETE.value
+            row
+            for row in passes
+            if row.status == ResearchPassStatus.COMPLETE.value
+            and row.pass_name != ARTIFACT_REEXPORT_PASS_NAME
         )
         if not completed:
             raise FreshSessionBoundaryError("fresh follow-up has no completed parent")
@@ -1407,7 +1413,37 @@ def _compile_fresh_followup_v3(
     context: Mapping[str, Any],
 ) -> CompiledFreshFollowupV3:
     context_hash = canonical_hash(context)
-    if pass_name == "SATURATION_AUDIT":
+    if pass_name == ARTIFACT_REEXPORT_PASS_NAME:
+        expected_artifact = str(
+            (context.get("pass_inputs") or {}).get(
+                "expected_artifact_filename"
+            )
+            or "ResearchDossierV3.json"
+        )
+        initial_pass_id = str(
+            (context.get("pass_inputs") or {}).get(
+                "initial_research_pass_id"
+            )
+            or scope.initial_pass_id
+        )
+        objective = (
+            "직전 연구의 링크가 가리키는 sandbox 파일이 실제로 존재하지 않았다. "
+            "웹 검색, 새 자료 수집, 새 사실 판단은 전부 금지한다. 직전 연구에서 이미 "
+            "완료한 ResearchDossierV3만 실제 파일로 다시 내보내라."
+        )
+        output_instruction = (
+            f"직전 전체 dossier를 `{expected_artifact}`에 UTF-8 JSON으로 실제 저장하고, "
+            "그 파일을 즉시 다시 열어 JSON parse와 packet의 dossier_output_schema 검증을 "
+            "통과시켜라. 파일이 존재하고 byte_count>0임을 확인하기 전에는 sandbox 링크를 "
+            "출력하지 마라. dossier 내부 research_pass_id는 원래 initial pass "
+            f"`{initial_pass_id}`를 유지하고 parent_pass_id는 원래 값 `NONE`을 유지하라. "
+            "이번 ARTIFACT_REEXPORT pass id로 dossier 내부 연구 계보를 바꾸지 마라. "
+            "최종 응답 맨 앞에는 위 job/run/pass/parent marker를 각각 정확히 한 번 출력하라. "
+            "실제 파일 링크와 schema validation 결과, sha256, byte_count를 함께 출력하라. "
+            "파일 저장이 불가능할 때만 전체 JSON을 "
+            "E2R_RESEARCH_DOSSIER_JSON_BEGIN/END 사이에 직접 출력하라."
+        )
+    elif pass_name == "SATURATION_AUDIT":
         objective = (
             "최신 question closure와 source-lineage digest를 감사하라. 공개적으로 더 "
             "조사 가능한 material gap이 남았으면 COMPLETE로 만들지 말고 정확한 "
@@ -1418,10 +1454,21 @@ def _compile_fresh_followup_v3(
             "아래에 열거된 material public gap만 official-first로 조사하고, 실제로 "
             "연 source와 exact excerpt를 새 atomic fact/route receipt로 연결하라."
         )
+        output_instruction = ""
     else:
         objective = (
             "아래에 열거된 counterfact의 current/resolved/superseded 상태만 공개 "
             "근거로 닫고 기존 accepted fact를 삭제하지 마라."
+        )
+        output_instruction = ""
+    if pass_name != ARTIFACT_REEXPORT_PASS_NAME:
+        output_instruction = (
+            "최종 응답 맨 앞에 위 job/run/pass/parent marker를 각각 정확히 한 번 "
+            "출력하고, `E2R_RESEARCH_DOSSIER_JSON_BEGIN/END` 사이에 "
+            "ResearchDossierV3 **delta JSON** 하나를 출력하라. 이전 전체 dossier를 "
+            "반복하지 말고 이번 pass의 새 source/fact/route와 실제로 갱신한 question/gap만 "
+            "배열에 넣어라. schema의 나머지 필수 배열·객체는 빈 값으로 유지해도 되며, "
+            "deterministic merger가 이전 append-only ledger와 합친다."
         )
     prompt = "\n".join(
         (
@@ -1443,12 +1490,7 @@ def _compile_fresh_followup_v3(
             "",
             "초기 V3의 one fact/one predicate/one source/one exact excerpt 계약과 "
             "verifier_preflight를 그대로 지켜라. 기존 accepted fact는 append-only다.",
-            "최종 응답 맨 앞에 위 job/run/pass/parent marker를 각각 정확히 한 번 "
-            "출력하고, `E2R_RESEARCH_DOSSIER_JSON_BEGIN/END` 사이에 "
-            "ResearchDossierV3 **delta JSON** 하나를 출력하라. 이전 전체 dossier를 "
-            "반복하지 말고 이번 pass의 새 source/fact/route와 실제로 갱신한 question/gap만 "
-            "배열에 넣어라. schema의 나머지 필수 배열·객체는 빈 값으로 유지해도 되며, "
-            "deterministic merger가 이전 append-only ledger와 합친다.",
+            output_instruction,
             "",
             "## Compact deterministic context",
             "",

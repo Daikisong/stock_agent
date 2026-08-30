@@ -174,8 +174,8 @@ def render_mock_chatgpt(
       app.textContent = '앱 다운로드';
       dialog.appendChild(app);
       const link = document.createElement('a');
-      link.setAttribute('aria-label', 'Download');
-      link.textContent = 'Download';
+      link.setAttribute('aria-label', '파일 다운로드');
+      link.textContent = '파일 다운로드';
       const selected = oldFile ? 'old_result.md' : context.filename;
       const params = new URLSearchParams({{...context, filename: selected}});
       link.href = '/download?' + params.toString();
@@ -280,7 +280,23 @@ class _MockHandler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:  # noqa: N802 - BaseHTTPRequestHandler API
         parsed = urlparse(self.path)
         query = parse_qs(parsed.query)
-        if parsed.path == "/download":
+        if parsed.path == "/backend-api/estuary/content":
+            filename = query.get("fn", ["generated.json"])[0]
+            supplied = getattr(self.server, "estuary_text", None)
+            report = str(supplied or "{}").encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header(
+                "Content-Disposition",
+                f'attachment; filename="{filename}"',
+            )
+            self.send_header("Content-Length", str(len(report)))
+            self.end_headers()
+            self.wfile.write(report)
+            return
+        if parsed.path == "/download" or parsed.path.endswith(
+            "/interpreter/download"
+        ):
             filename = query.get("filename", ["E2R_PRO_mock.md"])[0]
             if filename.lower().endswith(".pdf"):
                 report = b"%PDF-1.4\n% E2R mock PDF\n1 0 obj<<>>endobj\n%%EOF\n"
@@ -340,6 +356,7 @@ class MockChatGPTServer(AbstractContextManager["MockChatGPTServer"]):
         self.server = ThreadingHTTPServer(("127.0.0.1", 0), _MockHandler)
         self.server.report_text = report_text  # type: ignore[attr-defined]
         self.server.download_text = None  # type: ignore[attr-defined]
+        self.server.estuary_text = None  # type: ignore[attr-defined]
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
 
     @property
@@ -359,6 +376,11 @@ class MockChatGPTServer(AbstractContextManager["MockChatGPTServer"]):
         if not download_text.strip():
             raise ValueError("mock download text must be nonempty")
         self.server.download_text = download_text  # type: ignore[attr-defined]
+
+    def set_estuary_text(self, estuary_text: str) -> None:
+        if not estuary_text.strip():
+            raise ValueError("mock estuary text must be nonempty")
+        self.server.estuary_text = estuary_text  # type: ignore[attr-defined]
 
     def __exit__(self, *_args: object) -> None:
         self.server.shutdown()

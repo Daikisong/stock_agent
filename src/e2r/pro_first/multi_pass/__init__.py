@@ -7,6 +7,7 @@ from .dossier_store import (
     load_effective_research_dossier,
 )
 from .models import (
+    ARTIFACT_REEXPORT_PASS_NAME,
     BOUNDED_FOLLOWUP_PASS_NAMES,
     FollowupPassPlan,
     FollowupSubmitBlocked,
@@ -26,6 +27,7 @@ from .orchestrator import (
 )
 
 __all__ = [
+    "ARTIFACT_REEXPORT_PASS_NAME",
     "BOUNDED_FOLLOWUP_PASS_NAMES",
     "FollowupPassPlan",
     "FollowupPersistenceAuditResult",

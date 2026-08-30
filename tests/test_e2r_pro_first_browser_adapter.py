@@ -14,6 +14,8 @@ from urllib.request import urlopen
 from e2r.pro_first.browser.chatgpt_adapter import PlaywrightChatGPTWebAdapter
 from e2r.pro_first.browser.mock_chatgpt_app import MockChatGPTServer
 from e2r.pro_first.browser.protocol import (
+    BrowserArtifactUnavailable,
+    BrowserCaptureRequest,
     BrowserUIIncompatible,
     BrowserUIState,
     ManualLoginRequired,
@@ -440,6 +442,255 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(result.structurally_complete)
         self.assertTrue(result.job_marker_matches)
         self.assertTrue(result.run_marker_matches)
+
+    async def test_attachment_backed_dossier_selects_schema_matched_json(self) -> None:
+        job_id = "PROJOB-aaaaaaaaaaaaaaaaaaaaaaaa"
+        run_id = "PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb"
+        dossier_filename = "generated_dossier.json"
+        validation_filename = "generated_validation.json"
+        await self.page.set_content(
+            "<html><body>"
+            '<section data-turn="assistant" data-turn-id="attachment-turn">'
+            f"[[E2R_PRO_JOB_ID:{job_id}]] "
+            f"[[E2R_PRO_RUN_ID:{run_id}]] "
+            "전체 dossier와 validation 결과를 첨부했습니다."
+            f'<button class="entity-underline">{validation_filename}</button>'
+            f'<button class="entity-underline">{dossier_filename}</button>'
+            "</section></body></html>"
+        )
+        payloads = {
+            validation_filename: {
+                "schema_version": "e2r_pro_research_dossier_validation_v1",
+                "job_id": job_id,
+                "run_id": run_id,
+                "valid": True,
+            },
+            dossier_filename: {
+                "schema_version": "e2r_pro_research_dossier_v3",
+                "job_id": job_id,
+                "run_id": run_id,
+                "source_documents": [],
+                "facts": [],
+            },
+        }
+
+        class FakeDownload:
+            def __init__(self, filename: str) -> None:
+                self.suggested_filename = filename
+
+            async def save_as(self, destination: str) -> None:
+                Path(destination).write_text(
+                    json.dumps(payloads[self.suggested_filename]),
+                    encoding="utf-8",
+                )
+
+        async def fake_download(candidate: object) -> FakeDownload:
+            filename = (await candidate.inner_text()).strip()  # type: ignore[attr-defined]
+            return FakeDownload(filename)
+
+        self.adapter._download_from_candidate = fake_download  # type: ignore[method-assign]
+        result = await self.adapter.inspect_result(job_id=job_id, run_id=run_id)
+        self.assertTrue(result.has_json_attachment_candidate)
+        self.assertTrue(result.structurally_complete)
+        self.assertFalse(result.has_citations)
+        self.assertFalse(result.has_dossier_marker)
+
+        staging = Path(self.temporary_directory.name) / "attachment-backed"
+        raw = await self.adapter.capture_result(
+            BrowserCaptureRequest(
+                job_id=job_id,
+                run_id=run_id,
+                expected_filename="legacy_expected.md",
+                expected_report_hash=result.report_hash,
+                staging_directory=staging,
+            )
+        )
+        self.assertEqual(raw.source, "DOWNLOAD_JSON")
+        self.assertEqual(raw.downloaded_filename, dossier_filename)
+        self.assertEqual(
+            json.loads(raw.report_md_part_path.read_text(encoding="utf-8")),
+            payloads[dossier_filename],
+        )
+
+    async def test_direct_artifact_row_download_closes_stale_preview(self) -> None:
+        filename = "generated_dossier.json"
+        download_url = (
+            f"{self.server.base_url}/download?filename={filename}"
+            "&job_id=PROJOB-aaaaaaaaaaaaaaaaaaaaaaaa"
+            "&run_id=PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb"
+        )
+        await self.page.set_content(
+            "<html><body>"
+            '<div role="dialog" aria-label="generated_dossier.json">'
+            '<button data-testid="close-button" aria-label="닫기" '
+            "onclick=\"this.parentElement.remove()\"></button>"
+            "</div>"
+            '<section data-turn="assistant" data-turn-id="artifact-turn">'
+            '<div class="group/artifact-row">'
+            f'<button class="entity-underline">{filename}</button>'
+            f'<a aria-label="파일 다운로드" href="{download_url}" '
+            f'download="{filename}">다운로드</a>'
+            "</div></section></body></html>"
+        )
+
+        candidate = self.page.locator(".entity-underline")
+        download = await self.adapter._download_from_candidate(candidate)
+
+        self.assertEqual(download.suggested_filename, filename)
+        self.assertEqual(await self.page.locator('[role="dialog"]').count(), 0)
+
+    async def test_direct_artifact_row_accepts_exact_authenticated_fetch(self) -> None:
+        filename = "generated_dossier.json"
+        self.server.server.download_text = json.dumps({"schema_version": "fetch-test"})  # type: ignore[attr-defined]
+        download_url = (
+            f"{self.server.base_url}/backend-api/conversation/mock-conversation/"
+            f"interpreter/download?filename={filename}"
+            f"&sandbox_path=%2Fmnt%2Fdata%2F{filename}"
+        )
+        await self.page.set_content(
+            "<html><body>"
+            '<section data-turn="assistant" data-turn-id="artifact-turn">'
+            '<div class="group/artifact-row">'
+            f'<button class="entity-underline">{filename}</button>'
+            '<button aria-label="파일 다운로드">다운로드</button>'
+            "</div></section>"
+            "<script>"
+            "document.querySelector('button[aria-label=\"파일 다운로드\"]')"
+            f".addEventListener('click', () => fetch('{download_url}'));"
+            "</script></body></html>"
+        )
+
+        candidate = self.page.locator(".entity-underline")
+        download = await self.adapter._download_from_candidate(candidate)
+        destination = Path(self.temporary_directory.name) / filename
+        await download.save_as(str(destination))
+
+        self.assertEqual(download.suggested_filename, filename)
+        self.assertEqual(
+            json.loads(destination.read_text(encoding="utf-8")),
+            {"schema_version": "fetch-test"},
+        )
+
+    async def test_authenticated_fetch_file_not_found_is_transport_error(self) -> None:
+        filename = "missing_dossier.json"
+        self.server.server.download_text = json.dumps({  # type: ignore[attr-defined]
+            "status": "error",
+            "error_code": "file_not_found",
+            "error_type": "GetDownloadLinkError",
+            "error_message": None,
+        })
+        download_url = (
+            f"{self.server.base_url}/backend-api/conversation/mock-conversation/"
+            f"interpreter/download?filename={filename}"
+            f"&sandbox_path=%2Fmnt%2Fdata%2F{filename}"
+        )
+        await self.page.set_content(
+            "<html><body><div>"
+            f'<button class="entity-underline">{filename}</button>'
+            '<button aria-label="파일 다운로드">다운로드</button>'
+            "</div><script>"
+            "document.querySelector('button[aria-label=\"파일 다운로드\"]')"
+            f".addEventListener('click', () => fetch('{download_url}'));"
+            "</script></body></html>"
+        )
+
+        with self.assertRaisesRegex(
+            BrowserArtifactUnavailable,
+            "no backing sandbox file",
+        ):
+            await self.adapter._download_from_candidate(
+                self.page.locator(".entity-underline")
+            )
+
+    async def test_authenticated_fetch_follows_exact_estuary_manifest(self) -> None:
+        filename = "generated_dossier.json"
+        file_id = "file_exact_generated_dossier"
+        dossier = {
+            "schema_version": "e2r_pro_research_dossier_v3",
+            "job_id": "PROJOB-aaaaaaaaaaaaaaaaaaaaaaaa",
+            "run_id": "PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb",
+        }
+        self.server.set_estuary_text(json.dumps(dossier))
+        manifest_url = (
+            f"{self.server.base_url}/backend-api/estuary/content"
+            f"?fn={filename}&id={file_id}"
+        )
+        self.server.set_download_text(
+            json.dumps(
+                {
+                    "status": "success",
+                    "file_name": filename,
+                    "mime_type": "application/json",
+                    "metadata": {"file_id": file_id},
+                    "download_url": manifest_url,
+                }
+            )
+        )
+        first_url = (
+            f"{self.server.base_url}/backend-api/conversation/mock-conversation/"
+            f"interpreter/download?filename={filename}"
+            f"&sandbox_path=%2Fmnt%2Fdata%2F{filename}"
+        )
+        await self.page.set_content(
+            "<html><body><div>"
+            f'<button class="entity-underline">{filename}</button>'
+            '<button aria-label="파일 다운로드">다운로드</button>'
+            "</div><script>"
+            "document.querySelector('button[aria-label=\"파일 다운로드\"]')"
+            f".addEventListener('click', () => fetch('{first_url}'));"
+            "</script></body></html>"
+        )
+
+        download = await self.adapter._download_from_candidate(
+            self.page.locator(".entity-underline")
+        )
+        destination = Path(self.temporary_directory.name) / filename
+        await download.save_as(str(destination))
+
+        self.assertEqual(
+            json.loads(destination.read_text(encoding="utf-8")),
+            dossier,
+        )
+
+    async def test_authenticated_fetch_rejects_unbound_estuary_manifest(self) -> None:
+        filename = "generated_dossier.json"
+        file_id = "file_exact_generated_dossier"
+        self.server.set_download_text(
+            json.dumps(
+                {
+                    "status": "success",
+                    "file_name": filename,
+                    "mime_type": "application/json",
+                    "metadata": {"file_id": file_id},
+                    "download_url": (
+                        f"{self.server.base_url}/backend-api/estuary/content"
+                        f"?fn=other.json&id={file_id}"
+                    ),
+                }
+            )
+        )
+        first_url = (
+            f"{self.server.base_url}/backend-api/conversation/mock-conversation/"
+            f"interpreter/download?filename={filename}"
+            f"&sandbox_path=%2Fmnt%2Fdata%2F{filename}"
+        )
+        await self.page.set_content(
+            "<html><body><div>"
+            f'<button class="entity-underline">{filename}</button>'
+            '<button aria-label="파일 다운로드">다운로드</button>'
+            "</div><script>"
+            "document.querySelector('button[aria-label=\"파일 다운로드\"]')"
+            f".addEventListener('click', () => fetch('{first_url}'));"
+            "</script></body></html>"
+        )
+
+        with self.assertRaisesRegex(
+            BrowserUIIncompatible,
+            "not bound to the exact visible file",
+        ):
+            await self.adapter._download_from_candidate(
+                self.page.locator(".entity-underline")
+            )
 
     async def test_latest_result_uses_atomic_dom_snapshot_not_count_then_nth(
         self,

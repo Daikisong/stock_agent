@@ -2,19 +2,23 @@
 
 from __future__ import annotations
 
+import asyncio
+import base64
 import json
 import re
 import secrets
+from dataclasses import dataclass
 from datetime import datetime, timezone
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Mapping
-from urllib.parse import quote, urlsplit, urlunsplit
+from urllib.parse import parse_qs, quote, unquote, urlsplit, urlunsplit
 
 from ..ids import canonical_hash, canonical_json
 from .page_helpers import editor_text, first_existing, first_visible, locator_enabled
 from .result_transport import normalize_visible_dossier_transport
 from .protocol import (
     AttachmentKey,
+    BrowserArtifactUnavailable,
     BrowserCaptureRequest,
     BrowserInspection,
     BrowserJsonAttachmentRequest,
@@ -56,6 +60,17 @@ from .selector_registry import (
     USER_TURN_SELECTORS,
     WORK_MODE_ACTIVE_SELECTORS,
 )
+
+
+@dataclass(frozen=True)
+class _ResponseBackedDownload:
+    """Playwright-download compatible wrapper for ChatGPT's fetched artifact."""
+
+    suggested_filename: str
+    content: bytes
+
+    async def save_as(self, destination: str) -> None:
+        Path(destination).write_bytes(self.content)
 
 
 class PlaywrightChatGPTWebAdapter:
@@ -428,7 +443,11 @@ class PlaywrightChatGPTWebAdapter:
             submit_count=0,
         )
 
-    async def _dismiss_visible_file_preview(self) -> bool:
+    async def _dismiss_visible_file_preview(
+        self,
+        *,
+        reload_after_close: bool = True,
+    ) -> bool:
         """Return from a downloaded report preview to a fresh same-chat composer."""
 
         close = await first_visible(self.page, PREVIEW_CLOSE_SELECTORS)
@@ -441,7 +460,8 @@ class PlaywrightChatGPTWebAdapter:
                 # after its file flyout disappears.  Reload this exact URL once
                 # before inserting the next durable prompt; this neither opens
                 # a new conversation nor clicks send.
-                await self.page.reload(wait_until="domcontentloaded")
+                if reload_after_close:
+                    await self.page.reload(wait_until="domcontentloaded")
                 return True
             if attempt < 49:
                 await self.page.wait_for_timeout(100)
@@ -498,7 +518,12 @@ class PlaywrightChatGPTWebAdapter:
             raise BrowserUIIncompatible("ChatGPT send button is not ready")
         self._submit_attempted = True
         try:
-            await send.click()
+            # The exact enabled send control is already bound to a consumed
+            # durable proof above.  ChatGPT can continuously animate this
+            # button, causing Playwright's coordinate click to wait for
+            # "stable" until timeout before dispatch.  Native click avoids
+            # that pre-dispatch-only wait without adding a second send path.
+            await send.evaluate("element => element.click()")
         except Exception:
             # ChatGPT can start a same-page navigation after the DOM click and
             # keep Playwright waiting until its click timeout even though the
@@ -758,17 +783,25 @@ class PlaywrightChatGPTWebAdapter:
             raise SubmitAuthorizationRequired(
                 "intercepted follow-up recovery requires the durable scoped proof"
             )
-        required_failure_tokens = (
-            "Locator.click: Timeout",
-            "modal-global-search",
-            "intercepts pointer events",
+        modal_interception = all(
+            token in transport_pending_reason
+            for token in (
+                "Locator.click: Timeout",
+                "modal-global-search",
+                "intercepts pointer events",
+            )
         )
-        if any(
-            token not in transport_pending_reason
-            for token in required_failure_tokens
-        ):
+        unstable_send_pre_dispatch = all(
+            token in transport_pending_reason
+            for token in (
+                "Locator.click: Timeout",
+                "composer-submit-button",
+                "waiting for element to be visible, enabled and stable",
+            )
+        )
+        if not (modal_interception or unstable_send_pre_dispatch):
             raise SubmitAuthorizationRequired(
-                "transport evidence does not prove a pre-dispatch modal interception"
+                "transport evidence does not prove a supported pre-dispatch click failure"
             )
         if self._submit_attempted:
             raise SubmitAuthorizationRequired(
@@ -1291,14 +1324,11 @@ class PlaywrightChatGPTWebAdapter:
         ]
         selected_filename = request.expected_filename
         selected_suffix = expected_suffix
+        schema_matched_json_candidates: list[tuple[AttachmentKey, Any]] = []
         if not matching and expected_suffix == ".md":
-            current_json_candidates = await self._new_json_candidates(
+            schema_matched_json_candidates = await self._new_json_candidates(
                 assistant_turn_id=snapshot.assistant_turn_id,
             )
-            if len(current_json_candidates) == 1:
-                matching = current_json_candidates
-                selected_filename = matching[0][0].button_text.strip()
-                selected_suffix = ".json"
         if matching:
             key, locator = matching[-1]
             download = await self._download_from_candidate(locator)
@@ -1356,6 +1386,22 @@ class PlaywrightChatGPTWebAdapter:
                 else:
                     source = "DOWNLOAD_MD"
             downloaded_filename = suggested
+            attachment_key = key
+        elif schema_matched_json_candidates:
+            (
+                key,
+                selected_filename,
+                downloaded_json,
+            ) = await self._download_schema_matched_dossier_json(
+                candidates=schema_matched_json_candidates,
+                assistant_turn_id=snapshot.assistant_turn_id,
+                part_path=part_path,
+                job_id=request.job_id,
+                run_id=request.run_id,
+            )
+            selected_suffix = ".json"
+            source = "DOWNLOAD_JSON"
+            downloaded_filename = selected_filename
             attachment_key = key
         else:
             if not (
@@ -1421,6 +1467,76 @@ class PlaywrightChatGPTWebAdapter:
             optional_pdf_error=optional_pdf_error,
             raw_report_md_part_path=raw_part_path,
             transport_normalization_operations=transport_operations,
+        )
+
+    async def _download_schema_matched_dossier_json(
+        self,
+        *,
+        candidates: list[tuple[AttachmentKey, Any]],
+        assistant_turn_id: str | None,
+        part_path: Path,
+        job_id: str,
+        run_id: str,
+    ) -> tuple[AttachmentKey, str, dict[str, Any]]:
+        """Select a generated dossier by content, never by a filename guess.
+
+        A Pro response can expose both the dossier and a validation receipt as
+        JSON attachments.  Each candidate is downloaded through the visible UI
+        and remains non-authoritative until its canonical dossier schema and
+        exact durable job/run identity match.  No composer or send action is
+        involved.
+        """
+
+        candidate_keys = tuple(key for key, _locator in candidates)
+        for index, expected_key in enumerate(candidate_keys):
+            current_candidates = await self._new_json_candidates(
+                assistant_turn_id=assistant_turn_id,
+            )
+            current = next(
+                (
+                    (key, locator)
+                    for key, locator in current_candidates
+                    if key.stable_key == expected_key.stable_key
+                ),
+                None,
+            )
+            if current is None:
+                raise BrowserUIIncompatible(
+                    "JSON attachment candidate changed during schema-bound capture"
+                )
+            key, locator = current
+            download = await self._download_from_candidate(locator)
+            suggested = str(download.suggested_filename or "").strip()
+            if (
+                Path(suggested).name != suggested
+                or not suggested.casefold().endswith(".json")
+                or suggested != key.button_text.strip()
+            ):
+                raise BrowserUIIncompatible(
+                    "downloaded JSON candidate filename differs from its visible attachment"
+                )
+            candidate_path = part_path.with_name(
+                f"{part_path.name}.candidate-{index}.json"
+            )
+            await download.save_as(str(candidate_path))
+            try:
+                payload = json.loads(candidate_path.read_text(encoding="utf-8-sig"))
+            except (UnicodeDecodeError, json.JSONDecodeError):
+                candidate_path.unlink(missing_ok=True)
+                payload = None
+            if (
+                isinstance(payload, dict)
+                and payload.get("schema_version") == "e2r_pro_research_dossier_v3"
+                and str(payload.get("job_id") or "") == job_id
+                and str(payload.get("run_id") or "") == run_id
+            ):
+                candidate_path.replace(part_path)
+                return key, suggested, payload
+            candidate_path.unlink(missing_ok=True)
+            if await first_visible(self.page, PREVIEW_CLOSE_SELECTORS) is not None:
+                await self._dismiss_visible_file_preview()
+        raise BrowserUIIncompatible(
+            "no generated JSON attachment matched the ResearchDossierV3 schema and exact job/run identity"
         )
 
     async def download_json_attachment_without_submit(
@@ -1616,6 +1732,31 @@ class PlaywrightChatGPTWebAdapter:
         return str(values[-1] or "").strip()
 
     async def _download_from_candidate(self, candidate: Any) -> Any:
+        # A prior interrupted capture can leave the same file's fullscreen
+        # preview over the conversation.  Close only a filename-labelled file
+        # preview here and keep the exact public conversation loaded.
+        if await first_visible(self.page, PREVIEW_CLOSE_SELECTORS) is not None:
+            await self._dismiss_visible_file_preview(reload_after_close=False)
+
+        # Current ChatGPT artifact rows expose two different controls: the
+        # filename opens a preview, while a sibling aria-labelled control
+        # performs the actual download.  Bind that control to the candidate's
+        # *nearest* containing row so a neighbouring validation JSON (or an
+        # unrelated old turn) cannot be downloaded by mistake.
+        direct_control = await self._direct_download_control(candidate)
+        if direct_control is not None:
+            try:
+                return await self._click_direct_download_or_capture_fetch(
+                    control=direct_control,
+                    candidate=candidate,
+                )
+            except Exception as error:
+                if isinstance(error, BrowserUIIncompatible):
+                    raise
+                raise BrowserUIIncompatible(
+                    "artifact-row direct download was not observed by Playwright"
+                ) from error
+
         try:
             async with self.page.expect_download(timeout=1_000) as download_info:
                 await candidate.click()
@@ -1679,6 +1820,268 @@ class PlaywrightChatGPTWebAdapter:
                 return await download_info.value
             except Exception as error:
                 raise BrowserUIIncompatible("preview download was not observed by Playwright") from error
+
+    async def _direct_download_control(self, candidate: Any) -> Any | None:
+        """Find one download control scoped to the candidate's nearest row."""
+
+        labelled_download = (
+            './/button[contains(@aria-label, "파일 다운로드") '
+            'or contains(translate(@aria-label, '
+            '"ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"), '
+            '"download file")] '
+            '| .//a[contains(@aria-label, "파일 다운로드") '
+            'or contains(translate(@aria-label, '
+            '"ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"), '
+            '"download file")]'
+        )
+        container = candidate.locator(
+            "xpath=ancestor::*[" + labelled_download + "][1]"
+        )
+        if await container.count() != 1:
+            return None
+        controls = container.locator("xpath=" + labelled_download)
+        enabled: list[Any] = []
+        for index in range(await controls.count()):
+            item = controls.nth(index)
+            if await item.is_visible() and await item.is_enabled():
+                enabled.append(item)
+        if len(enabled) != 1:
+            return None
+        return enabled[0]
+
+    async def _click_direct_download_or_capture_fetch(
+        self,
+        *,
+        control: Any,
+        candidate: Any,
+    ) -> Any:
+        """Capture either a browser download or ChatGPT's authenticated fetch.
+
+        The current public UI downloads generated artifacts with ``fetch`` and
+        therefore emits a normal network response instead of Playwright's
+        ``download`` event.  Both paths still start with the user-visible file
+        card control.  The response path is accepted only when its sandbox
+        basename exactly matches this candidate in this conversation.
+        """
+
+        expected_filename = await self._attachment_candidate_name(candidate)
+        if Path(expected_filename).name != expected_filename:
+            raise BrowserUIIncompatible(
+                "artifact-row candidate filename must be one safe basename"
+            )
+
+        def url_matches(url: str) -> bool:
+            parsed = urlsplit(url)
+            page_origin = urlsplit(str(self.page.url or ""))
+            if (
+                parsed.scheme.casefold() != page_origin.scheme.casefold()
+                or parsed.netloc.casefold() != page_origin.netloc.casefold()
+                or not parsed.path.endswith("/interpreter/download")
+            ):
+                return False
+            values = parse_qs(parsed.query).get("sandbox_path", ())
+            return len(values) == 1 and PurePosixPath(
+                unquote(str(values[0]))
+            ).name == expected_filename
+
+        def response_matches(response: Any) -> bool:
+            return url_matches(str(response.url or ""))
+
+        cdp_session = None
+        cdp_queue: asyncio.Queue[Mapping[str, Any]] | None = None
+        try:
+            cdp_session = await self.page.context.new_cdp_session(self.page)
+            cdp_queue = asyncio.Queue()
+
+            def observe_cdp_response(params: Mapping[str, Any]) -> None:
+                response = params.get("response")
+                if not isinstance(response, Mapping):
+                    return
+                if url_matches(str(response.get("url") or "")):
+                    cdp_queue.put_nowait(params)
+
+            cdp_session.on("Network.responseReceived", observe_cdp_response)
+            await cdp_session.send("Network.enable")
+        except Exception:
+            if cdp_session is not None:
+                try:
+                    await cdp_session.detach()
+                except Exception:
+                    pass
+            cdp_session = None
+            cdp_queue = None
+
+        download_task = asyncio.create_task(
+            self.page.wait_for_event("download", timeout=10_000)
+        )
+        response_task = asyncio.create_task(
+            self.page.wait_for_event(
+                "response",
+                predicate=response_matches,
+                timeout=10_000,
+            )
+        )
+        cdp_task = (
+            asyncio.create_task(asyncio.wait_for(cdp_queue.get(), timeout=10))
+            if cdp_queue is not None
+            else None
+        )
+        tasks = {download_task, response_task}
+        if cdp_task is not None:
+            tasks.add(cdp_task)
+        try:
+            # ChatGPT renders this control inside a hover-only wrapper.  A
+            # coordinate click can make React replace the hovered node between
+            # hit-testing and dispatch, producing no request and no error.
+            # Dispatch the native click on the already exact, enabled control.
+            await control.evaluate("element => element.click()")
+            done, _pending = await asyncio.wait(
+                tasks,
+                return_when=asyncio.FIRST_COMPLETED,
+            )
+            successful = [
+                task for task in done if not task.cancelled() and task.exception() is None
+            ]
+            if not successful:
+                # The first waiter can fail before the other succeeds.  Keep
+                # the shared ten-second boundary rather than treating one
+                # missing transport surface as the final result.
+                done, _pending = await asyncio.wait(tasks)
+                successful = [
+                    task
+                    for task in done
+                    if not task.cancelled() and task.exception() is None
+                ]
+            if download_task in successful:
+                return download_task.result()
+            if response_task in successful:
+                response = response_task.result()
+                return await self._validated_response_download(
+                    expected_filename=expected_filename,
+                    status=int(response.status),
+                    content=await response.body(),
+                )
+            if cdp_task is not None and cdp_task in successful:
+                if cdp_session is None:
+                    raise BrowserUIIncompatible(
+                        "artifact CDP response lost its observing session"
+                    )
+                params = cdp_task.result()
+                response = params.get("response")
+                if not isinstance(response, Mapping):
+                    raise BrowserUIIncompatible(
+                        "artifact CDP response metadata is malformed"
+                    )
+                body_result = await cdp_session.send(
+                    "Network.getResponseBody",
+                    {"requestId": str(params.get("requestId") or "")},
+                )
+                raw_body = str(body_result.get("body") or "")
+                content = (
+                    base64.b64decode(raw_body)
+                    if body_result.get("base64Encoded") is True
+                    else raw_body.encode("utf-8")
+                )
+                return await self._validated_response_download(
+                    expected_filename=expected_filename,
+                    status=int(response.get("status") or 0),
+                    content=content,
+                )
+            raise BrowserUIIncompatible(
+                "artifact-row direct control produced neither a download nor an exact artifact fetch"
+            )
+        finally:
+            for task in tasks:
+                if not task.done():
+                    task.cancel()
+            await asyncio.gather(*tasks, return_exceptions=True)
+            if cdp_session is not None:
+                try:
+                    await cdp_session.detach()
+                except Exception:
+                    pass
+
+    async def _validated_response_download(
+        self,
+        *,
+        expected_filename: str,
+        status: int,
+        content: bytes,
+        allow_download_manifest: bool = True,
+    ) -> _ResponseBackedDownload:
+        if status != 200:
+            raise BrowserUIIncompatible(
+                "artifact fetch response did not return HTTP 200"
+            )
+        if not content:
+            raise BrowserUIIncompatible(
+                "artifact fetch response returned an empty body"
+            )
+        try:
+            error_payload = json.loads(content.decode("utf-8-sig"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            error_payload = None
+        if (
+            isinstance(error_payload, Mapping)
+            and error_payload.get("status") == "error"
+            and error_payload.get("error_code") == "file_not_found"
+        ):
+            raise BrowserArtifactUnavailable(
+                "visible ChatGPT artifact has no backing sandbox file: "
+                f"{expected_filename}"
+            )
+        if (
+            allow_download_manifest
+            and isinstance(error_payload, Mapping)
+            and error_payload.get("status") == "success"
+            and isinstance(error_payload.get("download_url"), str)
+        ):
+            manifest_filename = str(error_payload.get("file_name") or "")
+            metadata = error_payload.get("metadata")
+            file_id = (
+                str(metadata.get("file_id") or "")
+                if isinstance(metadata, Mapping)
+                else ""
+            )
+            download_url = str(error_payload["download_url"])
+            parsed = urlsplit(download_url)
+            page_origin = urlsplit(str(self.page.url or ""))
+            query = parse_qs(parsed.query)
+            if (
+                manifest_filename != expected_filename
+                or parsed.scheme.casefold() != page_origin.scheme.casefold()
+                or parsed.netloc.casefold() != page_origin.netloc.casefold()
+                or parsed.path != "/backend-api/estuary/content"
+                or query.get("fn") != [expected_filename]
+                or not file_id
+                or query.get("id") != [file_id]
+            ):
+                raise BrowserUIIncompatible(
+                    "artifact download manifest is not bound to the exact visible file"
+                )
+            response = await self.page.context.request.get(
+                download_url,
+                timeout=10_000,
+            )
+            return await self._validated_response_download(
+                expected_filename=expected_filename,
+                status=int(response.status),
+                content=await response.body(),
+                allow_download_manifest=False,
+            )
+        if (
+            not allow_download_manifest
+            and isinstance(error_payload, Mapping)
+            and error_payload.get("status") == "success"
+            and "download_url" in error_payload
+        ):
+            raise BrowserUIIncompatible(
+                "artifact content endpoint returned another download manifest"
+            )
+        return _ResponseBackedDownload(
+            suggested_filename=expected_filename,
+            content=content,
+        )
 
     async def _assistant_turns(self) -> list[Any]:
         """Return unique assistant turns in document order.

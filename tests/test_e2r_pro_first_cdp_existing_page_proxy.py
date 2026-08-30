@@ -17,6 +17,34 @@ class ExistingPageCDPProxyTest(unittest.IsolatedAsyncioTestCase):
         self.received_methods: list[str] = []
 
         async def upstream_handler(socket) -> None:
+            for session_id, target_type, target_url in (
+                (
+                    "NONCHAT-IFRAME-SESSION",
+                    "iframe",
+                    "https://ads.example/frame",
+                ),
+                (
+                    "NONCHAT-WORKER-SESSION",
+                    "service_worker",
+                    "chrome-extension://example/background.js",
+                ),
+            ):
+                await socket.send(
+                    json.dumps(
+                        {
+                            "method": "Target.attachedToTarget",
+                            "params": {
+                                "sessionId": session_id,
+                                "targetInfo": {
+                                    "targetId": session_id,
+                                    "type": target_type,
+                                    "url": target_url,
+                                },
+                                "waitingForDebugger": False,
+                            },
+                        }
+                    )
+                )
             await socket.send(
                 json.dumps(
                     {

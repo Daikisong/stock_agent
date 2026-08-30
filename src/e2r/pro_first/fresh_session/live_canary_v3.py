@@ -24,7 +24,11 @@ from ..browser.completion_monitor import (
     BrowserCompletionMonitor,
     ProCompletionStateService,
 )
-from ..browser.protocol import BrowserResultSnapshot, BrowserUIState
+from ..browser.protocol import (
+    BrowserArtifactUnavailable,
+    BrowserResultSnapshot,
+    BrowserUIState,
+)
 from ..browser.worker import ProBrowserWorker
 from ..capture.coordinator import CaptureFilesystemReconciler, ProCaptureCoordinator
 from ..capture.expanded_dossier import (
@@ -46,7 +50,12 @@ from ..ids import canonical_hash, canonical_json
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
 from ..state_machine import TransitionContext
-from ..multi_pass import ProMultiPassDossierStore, ProMultiPassLedger
+from ..multi_pass import (
+    ARTIFACT_REEXPORT_PASS_NAME,
+    ProMultiPassDossierStore,
+    ProMultiPassLedger,
+    ResearchPassStatus,
+)
 from ..verification import (
     ACCEPTED_SOURCE_STATUSES,
     CodexMechanismScopeMapper,
@@ -301,12 +310,11 @@ class FreshV3InitialLiveCanaryRunner:
                 boundary=boundary,
             )
             initial_research_seconds = time.monotonic() - submitted_at
-            captured_job, capture = await ProCaptureCoordinator(self.store).capture(
-                fresh_job.job_id,
-                run_id=str(built.packet_payload["run_id"]),
-                expected_filename=built.output_filename,
-                expected_report_hash=result.report_hash,
-                job_root=boundary.fresh_job_root,
+            captured_job, capture = await self._capture_initial_with_artifact_reexport(
+                boundary=boundary,
+                orchestrator=orchestrator,
+                built=built,
+                result=result,
                 adapter=runtime.session.adapter,
                 capture_mode=(
                     "CHATGPT_WEB_VISIBLE_CHAT_PRO_FRESH_V3_CODEX_STRUCTURED_REPORT"
@@ -441,12 +449,11 @@ class FreshV3InitialLiveCanaryRunner:
                     built=built,
                     boundary=boundary,
                 )
-                captured_job, capture = await ProCaptureCoordinator(self.store).capture(
-                    job.job_id,
-                    run_id=str(built.packet_payload["run_id"]),
-                    expected_filename=built.output_filename,
-                    expected_report_hash=result.report_hash,
-                    job_root=boundary.fresh_job_root,
+                captured_job, capture = await self._capture_initial_with_artifact_reexport(
+                    boundary=boundary,
+                    orchestrator=orchestrator,
+                    built=built,
+                    result=result,
                     adapter=runtime.adapter,
                     capture_mode=(
                         "CHATGPT_WEB_VISIBLE_CHAT_PRO_FRESH_V3_RECOVERED_CODEX_STRUCTURED_NO_SUBMIT"
@@ -788,6 +795,277 @@ class FreshV3InitialLiveCanaryRunner:
         )
         return dict(structured.dossier)
 
+    async def _capture_initial_with_artifact_reexport(
+        self,
+        *,
+        boundary: Any,
+        orchestrator: FreshSessionOrchestratorV3,
+        built: Any,
+        result: BrowserResultSnapshot,
+        adapter: Any,
+        capture_mode: str,
+        dossier_override: Mapping[str, object] | None,
+    ):
+        """Capture once, or re-export one missing generated file in-place.
+
+        This is not a research retry.  The exact completed initial response is
+        already hash-bound and becomes the completed parent pass.  A single
+        same-conversation pass may only recreate its missing transport file;
+        it cannot browse, add evidence, alter score, or change Stage.
+        """
+
+        run_id = str(built.packet_payload["run_id"])
+        self._reconcile_visible_artifact_reexport(
+            orchestrator=orchestrator,
+            built=built,
+            result=result,
+        )
+        try:
+            return await ProCaptureCoordinator(self.store).capture(
+                built.job.job_id,
+                run_id=run_id,
+                expected_filename=built.output_filename,
+                expected_report_hash=result.report_hash,
+                job_root=boundary.fresh_job_root,
+                adapter=adapter,
+                capture_mode=capture_mode,
+                dossier_override=dossier_override,
+            )
+        except BrowserArtifactUnavailable as error:
+            if dossier_override is not None:
+                raise
+            scope = orchestrator.ledger.get_scope(built.job.job_id)
+            if scope is None:
+                scope = orchestrator.establish_followup_scope(
+                    built,
+                    initial_response_hash=result.report_hash,
+                )
+            expected_artifact = (
+                f"E2R_ResearchDossierV3_{scope.target_id}_{scope.as_of_date}.json"
+            )
+            plan, _compiled = orchestrator.plan_v3_followup(
+                built,
+                pass_name=ARTIFACT_REEXPORT_PASS_NAME,
+                latest_dossier_digest={
+                    "initial_response_hash": result.report_hash,
+                    "initial_research_pass_id": built.initial_pass_id,
+                    "transport_only": True,
+                },
+                pass_inputs={
+                    "route_reason": "CHATGPT_SANDBOX_ARTIFACT_FILE_NOT_FOUND",
+                    "failed_artifact_error": str(error),
+                    "expected_artifact_filename": expected_artifact,
+                    "initial_research_pass_id": built.initial_pass_id,
+                    "new_research_allowed": False,
+                    "score_authority": False,
+                    "stage_authority": False,
+                },
+            )
+            current = orchestrator.ledger.get_pass(plan.research_pass.pass_id)
+            if current.submit_count == 0:
+                if current.status == ResearchPassStatus.PLANNED.value:
+                    await orchestrator.prepare_followup(plan, adapter)
+                elif current.status != ResearchPassStatus.PREPARED.value:
+                    raise RuntimeError(
+                        "artifact re-export has an invalid zero-submit state"
+                    )
+                await orchestrator.submit_followup(plan, adapter)
+                self._emit(
+                    "FRESH_ARTIFACT_REEXPORT_SUBMITTED_SAME_CONVERSATION",
+                    job_id=built.job.job_id,
+                    pass_id=plan.research_pass.pass_id,
+                    parent_pass_id=plan.research_pass.parent_pass_id,
+                    conversation_id=scope.conversation_id,
+                    new_research_allowed=False,
+                )
+            elif current.status not in {
+                ResearchPassStatus.RESEARCH_RUNNING.value,
+                ResearchPassStatus.TRANSPORT_PENDING.value,
+                ResearchPassStatus.COMPLETE.value,
+            }:
+                raise RuntimeError(
+                    "artifact re-export has no unambiguous exactly-once recovery path"
+                )
+            elif current.status == ResearchPassStatus.TRANSPORT_PENDING.value:
+                await orchestrator.resume_intercepted_followup_submit(
+                    plan,
+                    adapter,
+                )
+                self._emit(
+                    "FRESH_ARTIFACT_REEXPORT_PREDISPATCH_CLAIM_RECOVERED",
+                    job_id=built.job.job_id,
+                    pass_id=plan.research_pass.pass_id,
+                    conversation_id=scope.conversation_id,
+                    submit_count=1,
+                )
+
+            reexported = await self._wait_for_artifact_reexport_result(
+                plan=plan,
+                run_id=run_id,
+                adapter=adapter,
+            )
+            current = orchestrator.ledger.get_pass(plan.research_pass.pass_id)
+            if current.status == ResearchPassStatus.TRANSPORT_PENDING.value:
+                orchestrator.confirm_transport_pending_result_visible(current.pass_id)
+                current = orchestrator.ledger.get_pass(current.pass_id)
+            if current.status != ResearchPassStatus.COMPLETE.value:
+                orchestrator.complete_followup(
+                    current.pass_id,
+                    response_hash=reexported.report_hash,
+                    conversation_id=scope.conversation_id,
+                )
+            self._emit(
+                "FRESH_ARTIFACT_REEXPORT_COMPLETED_NO_NEW_RESEARCH",
+                job_id=built.job.job_id,
+                pass_id=plan.research_pass.pass_id,
+                report_hash=reexported.report_hash,
+                conversation_id=scope.conversation_id,
+            )
+
+            detected = await self._reverify_user_attention_result(
+                job_id=built.job.job_id,
+                run_id=run_id,
+                adapter=adapter,
+            )
+            return await ProCaptureCoordinator(self.store).capture(
+                built.job.job_id,
+                run_id=run_id,
+                expected_filename=built.output_filename,
+                expected_report_hash=detected.result.report_hash,
+                job_root=boundary.fresh_job_root,
+                adapter=adapter,
+                capture_mode=f"{capture_mode}_ARTIFACT_REEXPORT",
+                dossier_override=None,
+            )
+
+    def _reconcile_visible_artifact_reexport(
+        self,
+        *,
+        orchestrator: FreshSessionOrchestratorV3,
+        built: Any,
+        result: BrowserResultSnapshot,
+    ) -> bool:
+        """Bind an already visible transport-only result without another send.
+
+        A process can restart after the browser dispatched ARTIFACT_REEXPORT
+        but before the ledger recorded persistence.  The latest assistant turn
+        is sufficient only when it contains the exact pass and parent markers
+        in the exact durable conversation.  This transition never touches the
+        composer or browser send control.
+        """
+
+        artifact_passes = tuple(
+            record
+            for record in orchestrator.ledger.list_passes(built.job.job_id)
+            if record.pass_name == ARTIFACT_REEXPORT_PASS_NAME
+        )
+        if not artifact_passes:
+            return False
+        if len(artifact_passes) != 1:
+            raise RuntimeError(
+                "artifact re-export recovery requires exactly one transport pass"
+            )
+        current = artifact_passes[0]
+        pass_marker = f"[[E2R_PRO_PASS_ID:{current.pass_id}]]"
+        parent_marker = (
+            f"[[E2R_PRO_PARENT_PASS_ID:{current.parent_pass_id}]]"
+        )
+        if (
+            pass_marker not in result.report_text
+            or parent_marker not in result.report_text
+        ):
+            return False
+        if (
+            result.conversation_id != current.conversation_id
+            or current.parent_pass_id != built.initial_pass_id
+        ):
+            raise RuntimeError(
+                "visible artifact re-export differs from its durable lineage"
+            )
+        if current.status == ResearchPassStatus.TRANSPORT_PENDING.value:
+            current = orchestrator.confirm_transport_pending_result_visible(
+                current.pass_id
+            )
+        if current.status == ResearchPassStatus.RESEARCH_RUNNING.value:
+            current = orchestrator.complete_followup(
+                current.pass_id,
+                response_hash=result.report_hash,
+                conversation_id=str(result.conversation_id),
+            )
+        elif current.status == ResearchPassStatus.COMPLETE.value:
+            if current.response_hash != result.report_hash:
+                raise RuntimeError(
+                    "completed artifact re-export response hash changed"
+                )
+            current = orchestrator.complete_followup(
+                current.pass_id,
+                response_hash=result.report_hash,
+                conversation_id=str(result.conversation_id),
+            )
+        else:
+            raise RuntimeError(
+                "visible artifact re-export has no recoverable durable status"
+            )
+        self._emit(
+            "FRESH_VISIBLE_ARTIFACT_REEXPORT_RECONCILED_NO_SUBMIT",
+            job_id=built.job.job_id,
+            pass_id=current.pass_id,
+            report_hash=result.report_hash,
+            conversation_id=result.conversation_id,
+            submit_count=current.submit_count,
+            browser_submit_delta=0,
+        )
+        return True
+
+    async def _wait_for_artifact_reexport_result(
+        self,
+        *,
+        plan: Any,
+        run_id: str,
+        adapter: Any,
+    ) -> BrowserResultSnapshot:
+        monitor = BrowserCompletionMonitor(
+            adapter,
+            required_stable_observations=(
+                self.config.browser.required_stable_observations
+            ),
+            poll_interval_seconds=self.config.browser.poll_interval_seconds,
+        )
+        for poll in range(1, self.max_completion_polls + 1):
+            observation = await monitor.observe(
+                job_id=plan.scope.job_id,
+                run_id=run_id,
+                expected_pass_id=plan.research_pass.pass_id,
+            )
+            if poll == 1 or poll % 12 == 0 or observation.completion_confirmed:
+                self._emit(
+                    "FRESH_ARTIFACT_REEXPORT_COMPLETION_POLL",
+                    job_id=plan.scope.job_id,
+                    pass_id=plan.research_pass.pass_id,
+                    poll=poll,
+                    browser_state=observation.inspection.state.value,
+                    stable_observations=observation.stable_observations,
+                )
+            if observation.completion_confirmed and observation.result is not None:
+                if observation.result.conversation_id != plan.scope.conversation_id:
+                    raise RuntimeError(
+                        "artifact re-export escaped the approved conversation"
+                    )
+                return observation.result
+            if observation.inspection.state in {
+                BrowserUIState.LOGIN_REQUIRED,
+                BrowserUIState.AWAITING_CLARIFICATION,
+                BrowserUIState.QUOTA_PENDING,
+                BrowserUIState.RETRYABLE_ERROR,
+                BrowserUIState.UI_INCOMPATIBLE,
+            }:
+                raise RuntimeError(
+                    observation.inspection.detail
+                    or observation.inspection.state.value
+                )
+            await asyncio.sleep(self.config.browser.poll_interval_seconds)
+        raise TimeoutError("artifact re-export completion poll bound reached")
+
     def _finish_initial_verification(
         self,
         *,
@@ -805,10 +1083,12 @@ class FreshV3InitialLiveCanaryRunner:
             expected_research_pass_id=built.initial_pass_id,
             expected_parent_pass_id=None,
         )
-        scope = orchestrator.establish_followup_scope(
-            built,
-            initial_response_hash=capture_receipt.report_md_hash,
-        )
+        scope = orchestrator.ledger.get_scope(fresh_job_id)
+        if scope is None:
+            scope = orchestrator.establish_followup_scope(
+                built,
+                initial_response_hash=capture_receipt.report_md_hash,
+            )
         ProMultiPassDossierStore(ProMultiPassLedger(self.store)).persist(
             job_id=fresh_job_id,
             pass_id=scope.initial_pass_id,

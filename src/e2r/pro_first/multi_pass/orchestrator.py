@@ -585,6 +585,32 @@ class ProMultiPassResearchOrchestrator:
             )
         reason = str(current.detail.get("transport_pending_reason") or "")
         failure_hash = canonical_hash({"transport_pending_reason": reason})
+
+        # The send click may have reached ChatGPT even when the local browser
+        # call timed out before the ledger transition completed.  Reconcile the
+        # exact durable user turn first so a process restart can never click the
+        # same claimed pass twice.
+        existing = await adapter.inspect_submitted_turn_persistence(
+            conversation_id=current.conversation_id,
+            job_id=current.job_id,
+            pass_id=current.pass_id,
+            parent_pass_id=current.parent_pass_id,
+        )
+        if existing.persistence_confirmed:
+            running = self.ledger.record_server_persistence_observation(
+                current.pass_id,
+                observation=existing,
+            )
+            inspection = await adapter.inspect_state()
+            if inspection.conversation_id != current.conversation_id:
+                raise FollowupSubmitBlocked(
+                    "persisted follow-up recovery moved to another conversation"
+                )
+            return FollowupSubmitResult(
+                research_pass=running,
+                inspection=inspection,
+            )
+
         proof = ScopedFollowupProof(
             job_id=current.job_id,
             pass_id=current.pass_id,
