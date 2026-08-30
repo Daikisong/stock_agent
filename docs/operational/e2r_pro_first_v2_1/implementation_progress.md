@@ -4911,3 +4911,34 @@ R16 제출 후 복구 preflight도 다시 확인했다. durable job은 `submit_c
 있으면 현 CLI로 재전송 없이 복구할 수 있다. 현재 E2R Chrome은 page 12개, ChatGPT page 0개이므로 다른
 Threads·쇼핑 탭을 이동시키지 않았고 새 window/tab도 만들지 않았다. live full thesis는 여전히 1/3이며,
 C17과 새 blind C28이 닫히기 전 `OPERATIONAL_RESEARCH_READY`는 금지한다.
+
+## P41 — 최신 head CI 확정과 R16 방문 기록 복구 단서
+
+`2ba0151d` head에서 두 GitHub Actions를 다시 검산했다. Pro-first run `33311986597`과 V6 operational
+cutover run `33311986620`은 모두 `SUCCESS`다. Pro-first full suite는 7,860개, failure/error 0,
+기존 skip 38이며 Reviewer A~H도 `A8 B13 C70 D63 E50 F62 G15 H47`로 모두 PASS했다. V6 workflow는
+Gate 1 tracked receipt 4/4와 전체 7,860개를 함께 통과했고 production static critical 합계도 0이다.
+먼저 시작된 중복 run `33311984958`은 취소됐으며 완료 권한으로 세지 않는다.
+
+R16 durable state를 실제 중앙 DB에서 다시 읽었다. 상태는 여전히 다음과 같다.
+
+```text
+job / run              PROJOB-6ec66fa741cd95ba92bc9672 / PRORUN-9986fb0a09050c540cbbb5aa
+status                 USER_ATTENTION_REQUIRED
+conversation           null
+submit / capture       1 / 0
+missing exact markers  2
+automatic resend       금지
+```
+
+E2R Chrome profile의 `History`를 immutable read-only SQLite로 확인하자 R16 전송 시각에
+`/c/6a940328-b848-83e8-ab85-ee7079eaeac2`가 약 0.5초 보인 뒤 다시 ChatGPT root로 이동한 기록이 있었다.
+이는 복구 후보 URL이지 전송 성공 증거가 아니다. 쉬운 예로 우편함 번호표가 잠깐 보였다는 뜻일 뿐,
+봉투 안에 정확한 job/run 이름표가 들어갔다는 뜻은 아니다. 기존 로그인 ChatGPT target 하나가 다시
+존재할 때 이 URL의 화면에서 두 marker를 직접 확인해야만 `--resume-submitted-job-id` 경로를 사용한다.
+marker가 없으면 R16을 재전송하지 않고 실패 상태를 그대로 봉인한다.
+
+55초 동안 CDP page 목록을 감시했지만 ChatGPT page는 0개였다. 새 window/tab을 만들지 않았고,
+Threads·쇼핑 등 12개 기존 page도 이동시키지 않았다. 정규화 영수증은
+`p41_current_ci_and_r16_history_recovery_receipt.json`이다. master 완료 상태는 여전히 live full thesis
+1/3이며 C17·C28이 실제로 닫히기 전 운영 준비 판정과 PR draft 해제·main 병합은 금지한다.
