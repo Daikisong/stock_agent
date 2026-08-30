@@ -4721,3 +4721,59 @@ material source replay          login/cookie/JS challenge 없는 공개 represen
 
 다음 R16은 이 수정 commit에 묶인 새 packet/job/run/conversation을 사용한다. 기존 R15 dossier, score,
 Stage, fact checkpoint는 재사용하지 않으며, Chrome을 재시작하거나 새 window/tab을 만들지 않는다.
+
+## P37 — C17 R16 서버 지속성 FAIL과 기존 탭 소유권 봉인
+
+R16은 P36 commit에 묶인 새 job/run/pass와 blind packet으로 시작했다. 운영 Chrome에서 이미 열려 있던
+ChatGPT page 한 개를 사용해 새 대화를 준비했고 새 browser window/tab/context는 만들지 않았다. 승인된
+initial 전송은 한 번 claim됐지만, 전송 직후 공개 conversation에서 정확한 job/run marker를 찾지 못했다.
+
+```text
+job / run                     PROJOB-6ec66fa741cd95ba92bc9672 / PRORUN-9986fb0a09050c540cbbb5aa
+initial pass                  PROPASS-fc5bbd72814520298efeeaf6
+submit / capture              1 / 0
+server persistence            false (job/run marker 2개 미확인)
+durable status                USER_ATTENTION_REQUIRED
+automatic resend              금지
+score / Stage                 없음 / 없음
+query / search                0 / 0
+```
+
+쉬운 예로 우체국 접수 버튼은 한 번 눌렀지만 서버 우편함에서 봉투의 job/run 이름표를 확인하지 못한
+상태다. 이때 같은 봉투를 다시 보내면 중복 전송이 될 수 있으므로 R16은 재전송하지 않는다. 나중에 정확한
+서버 turn이 확인될 때만 submitted-only 복구를 사용한다.
+
+실패 후 read-only CDP 목록에서 운영 Chrome의 page는 8개였지만 ChatGPT page는 0개였다. 정상적인
+attached-session 종료를 fixture에서 반복해도 기존 page는 닫히지 않아, 실제 탭 소실 원인은 재현하거나
+단정하지 못했다. 원인 미확인을 코드 문제 없음으로 오해하지 않도록 existing-page proxy의 소유권 경계를
+더 강하게 봉인했다.
+
+```text
+허용                         이미 열려 있는 ChatGPT page의 같은 탭 navigation
+Browser/Page/Target close     upstream에 보내지 않고 local success로 무해화
+Browser/Page crash            upstream에 보내지 않고 local success로 무해화
+Target/context 생성           protocol error로 거부
+ChatGPT page 없음             새 탭을 만들지 않고 fail closed
+cleanup 뒤 검증               동일 URL뿐 아니라 동일 target id 유지
+```
+
+예를 들어 `/c/old`에서 `새 채팅`을 눌러 `/c/new`로 가는 것은 같은 책상에서 종이만 바꾸는 일이라
+허용한다. `Target.createTarget`으로 새 책상을 들이거나 `Target.closeTarget`으로 사용자 책상을 치우는 것은
+proxy 경계에서 막는다.
+
+현재 코드의 proxy unit은 Linux 3/3 PASS다. Linux 실제 Chromium 테스트는 test body 전에
+`libnspr4.so` 부재로 실행되지 않았고 assertion failure는 아니다. 동일 변경을 실제 Windows Chromium에서
+검증한 targeted 회귀는 4/4, proxy+browser 전체 관련 회귀는 45/45 PASS다. 기존 page URL과 target id가
+cleanup 뒤에도 같고, 같은 Worker가 그 target에 재접속한 뒤 종료해도 browser process가 살아 있음을
+확인했다. `compileall`과 `git diff --check`도 PASS다.
+
+요구사항 단위 V2 static audit은 critical 0으로 PASS다. 더 오래된 production static audit은 이번 변경과
+무관한 `multi_pass/orchestrator.py`의 두 번째 guarded `submit_once` 호출을
+`duplicate_submit_path_count=1`로 계속 집계해 FAIL이다. 이번 patch의 변경 경로에는 submit coordinator가
+없으며 이 값을 0으로 숨기지 않았다. R16도 동일 job 자동 재전송 금지를 그대로 유지한다.
+
+정규화 영수증은
+`p37_c17_r16_persistence_failure_and_existing_tab_ownership_receipt.json`에 기록한다. runtime DB, packet
+본문, browser profile, screenshot은 추적하지 않는다. 다음 단계의 선행조건은 같은 E2R Chrome 창에
+로그인된 ChatGPT page 한 개가 다시 존재하는 것이다. 코드는 대체 page를 자동 생성하지 않는다. page가
+존재하면 R16의 이미 보낸 turn이 늦게 지속됐는지 먼저 확인하고, R16 요청은 재전송하지 않는다.

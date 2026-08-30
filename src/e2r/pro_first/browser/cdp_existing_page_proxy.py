@@ -7,6 +7,11 @@ single ChatGPT page that E2R actually needs.  This proxy leaves every browser
 target open but hides non-ChatGPT page targets from the attached Playwright
 client.
 
+The attached browser and its pages are owned by the user, not by E2R.  The
+proxy therefore rejects target/context creation and absorbs destructive close
+commands locally.  A worker may navigate the one existing ChatGPT page, but it
+may neither open a replacement tab/window nor close the user's tab/browser.
+
 Chrome 151 also leaves Playwright's root ``Target.getTargetInfo`` barrier
 unanswered.  Playwright does not consume that response value, so the proxy
 supplies the protocol-shaped synchronization response locally.  All other CDP
@@ -150,6 +155,17 @@ class ExistingPageCDPProxy:
                         )
                     )
                     continue
+                ownership_response = self._existing_page_ownership_response(
+                    request
+                )
+                if ownership_response is not None:
+                    await send_client(
+                        json.dumps(
+                            ownership_response,
+                            separators=(",", ":"),
+                        )
+                    )
+                    continue
                 await send_upstream(message)
 
         async def upstream_to_client() -> None:
@@ -234,6 +250,47 @@ class ExistingPageCDPProxy:
             return False
         params = request.get("params")
         return not isinstance(params, Mapping) or not params.get("targetId")
+
+    @staticmethod
+    def _existing_page_ownership_response(
+        request: Mapping[str, Any] | None,
+    ) -> Mapping[str, Any] | None:
+        """Keep an attached user browser and its existing target immutable.
+
+        Close commands receive the same success-shaped response Chrome would
+        return so library shutdown stays harmless.  Creation commands receive
+        a protocol error because pretending that a new target exists would be
+        unsafe and would leave the client in a corrupt state.
+        """
+
+        if request is None or not isinstance(request.get("id"), int):
+            return None
+        method = str(request.get("method") or "")
+        response: dict[str, Any] = {"id": request["id"]}
+        if request.get("sessionId"):
+            response["sessionId"] = request["sessionId"]
+        if method == "Target.closeTarget":
+            response["result"] = {"success": True}
+            return response
+        if method in {
+            "Browser.close",
+            "Browser.crash",
+            "Page.close",
+            "Page.crash",
+            "Target.disposeBrowserContext",
+        }:
+            response["result"] = {}
+            return response
+        if method in {"Target.createTarget", "Target.createBrowserContext"}:
+            response["error"] = {
+                "code": -32000,
+                "message": (
+                    "E2R existing-page policy forbids creating a browser "
+                    "target or context"
+                ),
+            }
+            return response
+        return None
 
     @staticmethod
     def _json_object(message: Any) -> Mapping[str, Any] | None:

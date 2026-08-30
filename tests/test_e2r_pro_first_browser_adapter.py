@@ -897,6 +897,21 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
                     await asyncio.sleep(0.1)
             else:
                 self.fail("CDP endpoint did not become ready")
+            initially_listed = json.loads(
+                await asyncio.to_thread(
+                    lambda: urlopen(
+                        f"http://127.0.0.1:{port}/json/list",
+                        timeout=1,
+                    ).read()
+                )
+            )
+            existing_target_id = next(
+                str(row["id"])
+                for row in initially_listed
+                if row.get("type") == "page"
+                and row.get("url")
+                == f"{self.server.base_url}/c/worker-existing-conversation"
+            )
             worker = ProBrowserWorker(
                 ProBrowserConfig(
                     cdp_url=f"http://127.0.0.1:{port}",
@@ -913,10 +928,38 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
                 f"{self.server.base_url}/c/worker-existing-conversation",
             )
             self.assertEqual(len(session.context.pages), 1)
-            await session.page.goto("about:blank")
             await session.close()
-            with self.assertRaisesRegex(RuntimeError, "existing ChatGPT tab"):
-                await worker.open(job_id="PROJOB-bbbbbbbbbbbbbbbbbbbbbbbb")
+            listed = json.loads(
+                await asyncio.to_thread(
+                    lambda: urlopen(
+                        f"http://127.0.0.1:{port}/json/list",
+                        timeout=1,
+                    ).read()
+                )
+            )
+            retained = next(
+                (
+                    row
+                    for row in listed
+                    if row.get("type") == "page"
+                    and row.get("url")
+                    == f"{self.server.base_url}/c/worker-existing-conversation"
+                ),
+                None,
+            )
+            self.assertIsNotNone(
+                retained,
+                "CDP session cleanup closed the pre-existing user page",
+            )
+            self.assertEqual(str(retained["id"]), existing_target_id)
+            reopened = await worker.open(
+                job_id="PROJOB-bbbbbbbbbbbbbbbbbbbbbbbb"
+            )
+            self.assertEqual(
+                reopened.page.url,
+                f"{self.server.base_url}/c/worker-existing-conversation",
+            )
+            await reopened.close()
             self.assertIsNone(process.returncode)
         finally:
             if process.returncode is None:

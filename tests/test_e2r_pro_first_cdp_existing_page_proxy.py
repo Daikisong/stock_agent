@@ -136,6 +136,74 @@ class ExistingPageCDPProxyTest(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn("Target.getTargetInfo", self.received_methods)
         self.assertIn("Browser.getVersion", self.received_methods)
 
+    async def test_preserves_existing_page_ownership(self) -> None:
+        async with self.connect(
+            self.proxy.endpoint,
+            ping_interval=None,
+        ) as client:
+            attached = json.loads(await client.recv())
+            self.assertEqual(
+                attached["params"]["targetInfo"]["url"],
+                "https://chatgpt.com/",
+            )
+
+            cases = (
+                (11, "Browser.close", {}),
+                (12, "Target.closeTarget", {"success": True}),
+                (13, "Target.disposeBrowserContext", {}),
+                (16, "Page.close", {}),
+                (17, "Page.crash", {}),
+                (18, "Browser.crash", {}),
+            )
+            for request_id, method, expected_result in cases:
+                request = {
+                    "id": request_id,
+                    "method": method,
+                    "params": {"targetId": "CHATGPT-PAGE"},
+                }
+                if method.startswith("Page."):
+                    request["sessionId"] = "CHATGPT-SESSION"
+                await client.send(
+                    json.dumps(request)
+                )
+                response = json.loads(await client.recv())
+                self.assertEqual(response["id"], request_id)
+                self.assertEqual(response["result"], expected_result)
+                if method.startswith("Page."):
+                    self.assertEqual(
+                        response["sessionId"],
+                        "CHATGPT-SESSION",
+                    )
+
+            for request_id, method in (
+                (14, "Target.createTarget"),
+                (15, "Target.createBrowserContext"),
+            ):
+                await client.send(
+                    json.dumps(
+                        {
+                            "id": request_id,
+                            "method": method,
+                            "params": {"url": "https://chatgpt.com/"},
+                        }
+                    )
+                )
+                response = json.loads(await client.recv())
+                self.assertEqual(response["id"], request_id)
+                self.assertEqual(response["error"]["code"], -32000)
+
+        for method in (
+            "Browser.close",
+            "Browser.crash",
+            "Page.close",
+            "Page.crash",
+            "Target.closeTarget",
+            "Target.disposeBrowserContext",
+            "Target.createTarget",
+            "Target.createBrowserContext",
+        ):
+            self.assertNotIn(method, self.received_methods)
+
     def test_rejects_non_loopback_upstream(self) -> None:
         with self.assertRaisesRegex(RuntimeError, "loopback"):
             ExistingPageCDPProxy._require_loopback(
