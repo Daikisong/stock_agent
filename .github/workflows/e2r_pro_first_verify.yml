@@ -6,8 +6,13 @@ name: E2R Pro-first verification
     paths:
       - ".github/workflows/e2r_pro_first_verify.yml"
       - "configs/e2r_pro_first_*"
+      - "configs/e2r_archetype_research_*"
+      - "configs/e2r_pro_research_*"
+      - "configs/e2r_pro_repair_*"
+      - "configs/prompts/e2r_pro_*"
       - "docs/operational/e2r_pro_first_v1/**"
       - "docs/operational/e2r_pro_first_v2/**"
+      - "docs/operational/e2r_pro_first_v2_1/**"
       - "requirements/e2r_pro_first_py310_linux_x86_64.lock"
       - "scripts/*e2r_pro_first*"
       - "scripts/start_e2r_pro_chrome.ps1"
@@ -15,12 +20,19 @@ name: E2R Pro-first verification
       - "src/e2r/cli/*e2r_pro_first*"
       - "tests/test_e2r_pro_first*"
       - "tests/fixtures/pro_first/**"
+      - "tests/fixtures/pro_first_v2/**"
+      - "tests/research_saturation_fixture.py"
   pull_request:
     paths:
       - ".github/workflows/e2r_pro_first_verify.yml"
       - "configs/e2r_pro_first_*"
+      - "configs/e2r_archetype_research_*"
+      - "configs/e2r_pro_research_*"
+      - "configs/e2r_pro_repair_*"
+      - "configs/prompts/e2r_pro_*"
       - "docs/operational/e2r_pro_first_v1/**"
       - "docs/operational/e2r_pro_first_v2/**"
+      - "docs/operational/e2r_pro_first_v2_1/**"
       - "requirements/e2r_pro_first_py310_linux_x86_64.lock"
       - "scripts/*e2r_pro_first*"
       - "scripts/start_e2r_pro_chrome.ps1"
@@ -28,6 +40,8 @@ name: E2R Pro-first verification
       - "src/e2r/cli/*e2r_pro_first*"
       - "tests/test_e2r_pro_first*"
       - "tests/fixtures/pro_first/**"
+      - "tests/fixtures/pro_first_v2/**"
+      - "tests/research_saturation_fixture.py"
   workflow_dispatch:
 
 permissions:
@@ -39,6 +53,7 @@ concurrency:
 
 env:
   E2R_RUN_LIVE_TESTS: "0"
+  E2R_FULL_UNIT_TEST_FLOOR: "7858"
   PYTHONPATH: src
 
 jobs:
@@ -105,6 +120,25 @@ jobs:
             echo "The Pro-first change adds a skip/xfail path."
             exit 1
           fi
+      - name: Reject a reduced full unittest discovery roster
+        shell: bash
+        run: |
+          set -euo pipefail
+          discovered="$(python - <<'PY'
+          import unittest
+
+          print(unittest.defaultTestLoader.discover("tests").countTestCases())
+          PY
+          )"
+          if ! [[ "${discovered}" =~ ^[0-9]+$ ]]; then
+            echo "Could not compute the full unittest discovery count: ${discovered}"
+            exit 1
+          fi
+          if (( discovered < E2R_FULL_UNIT_TEST_FLOOR )); then
+            echo "Full unittest roster decreased: ${discovered} < ${E2R_FULL_UNIT_TEST_FLOOR}"
+            exit 1
+          fi
+          echo "Full unittest discovery roster: ${discovered}"
       - name: Run the full existing regression suite
         run: python -m unittest discover -s tests -v
       - name: Run independent Reviewer A-H leaf gates

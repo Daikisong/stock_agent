@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-import ast
 from pathlib import Path
 import unittest
+
+from e2r.pro_first.static_audit import audit_python_source
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,23 +13,17 @@ class ProFirstSubmitStaticGuardTest(unittest.TestCase):
     def test_all_dom_click_submit_paths_require_consumed_ledger_proof(self) -> None:
         adapter_path = ROOT / "src/e2r/pro_first/browser/chatgpt_adapter.py"
         source = adapter_path.read_text(encoding="utf-8")
-        tree = ast.parse(source)
-        send_click_owners: list[str] = []
-        for node in ast.walk(tree):
-            if not isinstance(node, (ast.AsyncFunctionDef, ast.FunctionDef)):
-                continue
-            for child in ast.walk(node):
-                if not isinstance(child, ast.Call) or not isinstance(child.func, ast.Attribute):
-                    continue
-                if child.func.attr != "click" or not isinstance(child.func.value, ast.Name):
-                    continue
-                if child.func.value.id == "send":
-                    send_click_owners.append(node.name)
-        self.assertEqual(send_click_owners, ["submit_once"])
+        findings, send_dispatch_lines = audit_python_source(
+            source,
+            relative_path="src/e2r/pro_first/browser/chatgpt_adapter.py",
+        )
+        self.assertEqual(findings, ())
+        self.assertEqual(len(send_dispatch_lines), 1)
         submit_source = source[
             source.index("    async def submit_once") : source.index("    async def inspect_state")
         ]
-        click_offset = submit_source.index("await send.click()")
+        dispatch = 'await send.evaluate("element => element.click()")'
+        click_offset = submit_source.index(dispatch)
         prefix = submit_source[:click_offset]
         self.assertIn("ledger_verified", prefix)
         self.assertIn("_prepared_binding", prefix)

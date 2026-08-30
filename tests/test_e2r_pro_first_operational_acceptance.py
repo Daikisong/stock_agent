@@ -262,6 +262,27 @@ class ProFirstOperationalStackTest(unittest.TestCase):
 
 
 class ProFirstStaticAuditTest(unittest.TestCase):
+    def test_ci_covers_v2_1_inputs_and_enforces_current_test_floor(self) -> None:
+        workflow = (
+            ROOT / ".github/workflows/e2r_pro_first_verify.yml"
+        ).read_text(encoding="utf-8")
+        for required_path in (
+            '"configs/e2r_archetype_research_*"',
+            '"configs/e2r_pro_research_*"',
+            '"configs/e2r_pro_repair_*"',
+            '"configs/prompts/e2r_pro_*"',
+            '"docs/operational/e2r_pro_first_v2_1/**"',
+            '"tests/fixtures/pro_first_v2/**"',
+            '"tests/research_saturation_fixture.py"',
+        ):
+            self.assertEqual(workflow.count(required_path), 2)
+        self.assertIn('E2R_FULL_UNIT_TEST_FLOOR: "7858"', workflow)
+        self.assertIn("countTestCases()", workflow)
+        self.assertIn(
+            "discovered < E2R_FULL_UNIT_TEST_FLOOR",
+            workflow,
+        )
+
     def test_production_surface_has_zero_critical_findings(self) -> None:
         result = compile_pro_first_static_audit(ROOT)
         self.assertEqual(result["critical_count_sum"], 0, result["findings"])
@@ -273,6 +294,24 @@ class ProFirstStaticAuditTest(unittest.TestCase):
             relative_path="src/e2r/pro_first/unsafe.py",
         )
         self.assertEqual([row.key for row in findings], ["submit_without_approval_count"])
+
+    def test_native_locator_click_is_counted_as_the_send_boundary(self) -> None:
+        findings, send_dispatches = audit_python_source(
+            "async def submit_once(send):\n"
+            '    await send.evaluate("element => element.click()")\n',
+            relative_path="src/e2r/pro_first/browser/chatgpt_adapter.py",
+        )
+        self.assertEqual(findings, ())
+        self.assertEqual(send_dispatches, (2,))
+
+    def test_coordinate_and_native_send_paths_are_both_counted(self) -> None:
+        _findings, send_dispatches = audit_python_source(
+            "async def submit_once(send):\n"
+            "    await send.click()\n"
+            '    await send.evaluate("element => element.click()")\n',
+            relative_path="src/e2r/pro_first/browser/chatgpt_adapter.py",
+        )
+        self.assertEqual(send_dispatches, (2, 3))
 
     def test_only_exact_intercepted_recovery_coordinator_may_call_submit_once(self) -> None:
         allowed, _ = audit_python_source(

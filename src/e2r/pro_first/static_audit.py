@@ -132,10 +132,8 @@ class _PythonSurfaceVisitor(ast.NodeVisitor):
                     node,
                     "submit_once outside initial/scoped exactly-once coordinator",
                 )
-        if lowered.endswith(".click") and isinstance(node.func, ast.Attribute):
-            owner = _expression_name(node.func.value).casefold()
-            if owner in {"send", "send_button", "submit_button"}:
-                self.send_click_lines.append(node.lineno)
+        if _is_guarded_send_dispatch(node):
+            self.send_click_lines.append(node.lineno)
         if lowered.endswith((".fill", ".type")):
             rendered = ast.unparse(node).casefold()
             if any(token in rendered for token in ("password", "passwd", "username", "email")):
@@ -219,6 +217,35 @@ def audit_python_source(
     visitor = _PythonSurfaceVisitor(relative_path=relative_path)
     visitor.visit(tree)
     return tuple(visitor.findings), tuple(visitor.send_click_lines)
+
+
+def _is_guarded_send_dispatch(node: ast.Call) -> bool:
+    """Recognize the one physical DOM send action independent of click API.
+
+    Playwright's coordinate click and a locator-scoped native DOM click are
+    two implementations of the same dispatch boundary.  The latter is used
+    when an animated ChatGPT button never becomes coordinate-stable.  Both
+    must count, so changing APIs can never make the exactly-one audit report
+    a false zero.
+    """
+
+    if not isinstance(node.func, ast.Attribute):
+        return False
+    owner = _expression_name(node.func.value).casefold()
+    if owner not in {"send", "send_button", "submit_button"}:
+        return False
+    method = node.func.attr.casefold()
+    if method == "click":
+        return True
+    if method != "evaluate" or not node.args:
+        return False
+    expression = node.args[0]
+    return (
+        isinstance(expression, ast.Constant)
+        and isinstance(expression.value, str)
+        and re.search(r"\b[A-Za-z_$][\w$]*\.click\s*\(", expression.value)
+        is not None
+    )
 
 
 def _text_surface_findings(root: Path) -> Iterable[StaticFinding]:

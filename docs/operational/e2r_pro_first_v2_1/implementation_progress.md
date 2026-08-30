@@ -4777,3 +4777,51 @@ cleanup 뒤에도 같고, 같은 Worker가 그 target에 재접속한 뒤 종료
 본문, browser profile, screenshot은 추적하지 않는다. 다음 단계의 선행조건은 같은 E2R Chrome 창에
 로그인된 ChatGPT page 한 개가 다시 존재하는 것이다. 코드는 대체 page를 자동 생성하지 않는다. page가
 존재하면 R16의 이미 보낸 turn이 늦게 지속됐는지 먼저 확인하고, R16 요청은 재전송하지 않는다.
+
+## P38 — master goal 전수 완료 감사와 CI hard gate 복구
+
+원본 master goal 2,669줄과 fresh-session 보조 goal 1,659줄을 현재 파일 hash 기준으로 다시 전수
+검토했다. 구현 존재 여부가 아니라 각 hard gate를 증명하는 현재 leaf receipt와 runtime 상태를 대조했다.
+
+```text
+36 contract totality                 PASS / 36·36 / critical 0
+Initial Prompt V3 snapshot           PASS / 36 / critical 0
+generalization                       PASS / critical 0
+fresh efficiency static receipt      PASS / critical 0
+C06 live full thesis                 PASS / 28 terminal / 7 component / 21 Judge
+C17 live full thesis                 PENDING / R16 persistence 미확인
+C28 live full thesis                 PENDING / 과거 repair-heavy run 대체 필요
+operational live canary              1 / required 3
+OPERATIONAL_RESEARCH_READY           선언 금지
+```
+
+현재 production static audit가 `duplicate_submit_path_count=1`로 FAIL하던 원인은 실제 두 번째 submit 경로가
+아니었다. ChatGPT의 움직이는 send control 때문에 production adapter가 한 번의
+`send.evaluate("element => element.click()")`를 사용하는데, audit visitor는 `send.click()`만 세어 실제
+dispatch 한 개를 0개로 오인했다. audit가 coordinate click과 locator-scoped native DOM click을 모두 같은
+물리적 dispatch로 세도록 수정한 뒤에도 정확히 한 개만 허용한다. 두 방식을 같이 둔 fixture는 2개로
+집계되므로 중복 경로를 숨기지 않는다.
+
+```text
+before guarded dispatch / critical   0 / 1
+actual production dispatch           1
+after guarded dispatch / critical    1 / 0
+production static audit              PASS
+V2 requirement static audit          PASS / critical 0
+```
+
+CI도 master goal의 입력 범위를 정확히 보지 못했다. V2.1 문서, V3 research/repair schema, dynamic Pro prompt,
+V2 fixture만 변경하면 전용 workflow가 실행되지 않을 수 있었다. 이 경로들을 push/PR trigger에 추가하고,
+현재 전체 unittest discovery `7,858`을 하한으로 고정했다. 삭제 test와 새 skip/xfail 금지에 더해 discovery
+roster가 7,858보다 작아져도 CI가 실패한다. workflow YAML parse와 실제 floor shell은 PASS다.
+
+현재 master 핵심 offline 묶음은 논리적 430개를 검증했다. Linux에서 427개는 PASS했고 세 browser test는
+test body 전에 `libnspr4.so` 부재로 종료됐다. 같은 세 test를 Playwright가 설치된 Windows Chromium에서
+실행해 3/3 PASS를 확인했으므로 코드 failure는 0이다. 최종 patch compileall·diff check·GitHub Actions는
+commit/push 뒤 별도 receipt로 갱신한다.
+
+정규화 완료 감사는
+`p38_master_goal_completion_audit_and_ci_guard_receipt.json`에 기록한다. 현재 운영 Chrome의 CDP page는
+10개지만 ChatGPT page는 0개다. 임의의 unrelated shopping tab을 덮어쓰거나 새 target을 만들지 않는다.
+남은 실제 완료 경로는 R16 무재전송 서버 확인, C17 full thesis, 새 blind C28 full thesis, 최종 A~H·full
+suite·CI green이다.
