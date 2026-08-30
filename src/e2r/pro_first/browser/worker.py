@@ -48,7 +48,7 @@ class ProBrowserWorker:
                 browser = await playwright.chromium.connect_over_cdp(
                     self._resolve_cdp_endpoint()
                 )
-                context = browser.contexts[0] if browser.contexts else await browser.new_context()
+                context = self._require_existing_context(browser)
             else:
                 profile = Path(self.config.persistent_profile_path or "").resolve()
                 profile.mkdir(parents=True, exist_ok=True)
@@ -115,6 +115,16 @@ class ProBrowserWorker:
             if self._same_origin(page.url, self.config.chatgpt_url):
                 return page
         return None
+
+    @staticmethod
+    def _require_existing_context(browser: Any) -> Any:
+        contexts = tuple(browser.contexts)
+        if not contexts:
+            raise RuntimeError(
+                "an existing browser context is required; the worker will not "
+                "open a new browser context, tab, or window"
+            )
+        return contexts[0]
 
     @staticmethod
     def _origin(url: str) -> str:

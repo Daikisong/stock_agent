@@ -21,7 +21,10 @@
     "research_objectives",
     "source_preferences",
     "forbidden_inferences",
+    "initial_research_protocol",
     "research_contract_snapshot",
+    "dossier_output_schema",
+    "dossier_output_schema_hash",
     "fresh_blind_boundary",
     "output_contract",
     "score_authority",
@@ -70,6 +73,16 @@
       "items": {"type": "string"},
       "uniqueItems": true
     },
+    "initial_research_protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "instructions_markdown", "protocol_hash"],
+      "properties": {
+        "schema_version": {"const": "e2r_pro_initial_research_protocol_v3"},
+        "instructions_markdown": {"type": "string", "minLength": 1},
+        "protocol_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
     "research_contract_snapshot": {
       "type": "object",
       "additionalProperties": false,
@@ -103,6 +116,14 @@
         },
         "snapshot_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
       }
+    },
+    "dossier_output_schema": {
+      "type": "object",
+      "required": ["$schema", "type", "properties", "required"]
+    },
+    "dossier_output_schema_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
     },
     "fresh_blind_boundary": {
       "type": "object",

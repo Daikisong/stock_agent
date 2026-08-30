@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import json
+from types import SimpleNamespace
 import unittest
 from urllib.request import urlopen
 
@@ -681,6 +682,19 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
             ProBrowserConfig(hidden_api_access=True)
         with self.assertRaisesRegex(ValueError, "loopback-only"):
             ProBrowserConfig(cdp_url="http://remote.example:9222")
+
+    def test_worker_requires_existing_context_without_creating_one(self) -> None:
+        worker = ProBrowserWorker()
+        with self.assertRaisesRegex(RuntimeError, "existing browser context"):
+            worker._require_existing_context(SimpleNamespace(contexts=[]))
+
+        existing = object()
+        self.assertIs(
+            worker._require_existing_context(
+                SimpleNamespace(contexts=[existing])
+            ),
+            existing,
+        )
 
     def test_package_import_does_not_eagerly_load_posix_research_provider(self) -> None:
         completed = subprocess.run(

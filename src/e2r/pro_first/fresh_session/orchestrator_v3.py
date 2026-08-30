@@ -59,11 +59,12 @@ _GAP_PASS_NAMES = frozenset(
 )
 _NON_REPAIR_V3_FOLLOWUPS = frozenset((*_GAP_PASS_NAMES, "SATURATION_AUDIT"))
 _MAX_FOLLOWUP_PROMPT_CHARS = 100_000
-# Two live new-chat submissions above 60,000 characters cleared the visible
-# composer without creating a durable user turn.  This initial-pass transport
-# guard keeps a small margin below that observed public-UI boundary.  The V3
-# compiler itself still supports larger 1-3-contract offline snapshots.
-_MAX_LIVE_INITIAL_PROMPT_CHARS = 59_800
+# Repeated inline-contract new-chat submissions, including one at 50,856
+# characters through framework-owned input, cleared the visible composer
+# without a durable user turn.  Live initial transport therefore uses a short
+# envelope whose complete protocol/contracts/schema live in the hash-bound
+# packet.  The full V3 compiler still supports larger offline audit snapshots.
+_MAX_LIVE_INITIAL_PROMPT_CHARS = 10_000
 
 
 @dataclass(frozen=True)
@@ -313,13 +314,31 @@ class FreshSessionOrchestratorV3:
             self.boundary.leakage_manifest.old_research_pass_ids
         ):
             raise FreshSessionBoundaryError("fresh initial pass reused an old pass ID")
-        prompt = self.initial_compiler.compile(
+        contract_prompt = self.initial_compiler.compile(
             packet=packet_payload,
             primary_archetype_ids=job.archetype_ids,
             conversation_id="PENDING_NEW_CONVERSATION",
             research_pass_id=initial_pass_id,
             parent_pass_id=None,
         )
+        prompt = self.initial_compiler.compile_transport_envelope(
+            packet=packet_payload,
+            primary_archetype_ids=job.archetype_ids,
+            conversation_id="PENDING_NEW_CONVERSATION",
+            research_pass_id=initial_pass_id,
+            parent_pass_id=None,
+        )
+        if (
+            prompt.primary_archetype_ids != contract_prompt.primary_archetype_ids
+            or prompt.contract_ids != contract_prompt.contract_ids
+            or prompt.mandatory_question_ids
+            != contract_prompt.mandatory_question_ids
+            or prompt.dossier_schema_hash
+            != contract_prompt.dossier_schema_hash
+        ):
+            raise FreshSessionBoundaryError(
+                "attachment-backed transport envelope differs from the compiled V3 contract"
+            )
         prompt_audit = assert_fresh_prompt_has_no_old_answers(
             prompt.prompt_text,
             self.boundary.leakage_manifest,
@@ -335,7 +354,37 @@ class FreshSessionOrchestratorV3:
         )
         write_runtime_json_once(
             audit_root / "initial_prompt_v3_receipt.json",
-            prompt.to_receipt(),
+            {
+                **prompt.to_receipt(),
+                "delivery_mode": "ATTACHMENT_BACKED_TRANSPORT_ENVELOPE",
+                "compiled_contract_prompt_hash": contract_prompt.prompt_hash,
+                "compiled_contract_prompt_char_count": len(
+                    contract_prompt.prompt_text
+                ),
+                "initial_protocol_hash": packet_payload[
+                    "initial_research_protocol"
+                ]["protocol_hash"],
+                "contract_snapshot_hash": packet_payload[
+                    "research_contract_snapshot"
+                ]["snapshot_hash"],
+                "dossier_output_schema_hash": packet_payload[
+                    "dossier_output_schema_hash"
+                ],
+            },
+        )
+        write_runtime_json_once(
+            audit_root / "initial_prompt_v3_contract_receipt.json",
+            {
+                **contract_prompt.to_receipt(),
+                "delivery_mode": "HASH_BOUND_RESEARCH_PACKET_FIELDS",
+                "packet_field_paths": [
+                    "initial_research_protocol.instructions_markdown",
+                    "research_contract_snapshot.contracts",
+                    "dossier_output_schema",
+                ],
+                "transport_prompt_hash": prompt.prompt_hash,
+                "transport_prompt_char_count": len(prompt.prompt_text),
+            },
         )
         return BuiltFreshV3JobPacket(
             boundary=self.boundary,

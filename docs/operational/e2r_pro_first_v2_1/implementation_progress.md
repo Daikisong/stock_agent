@@ -4391,3 +4391,64 @@ browser/approval/capture/multi-pass 98 / 98 PASS
 본문, browser profile은 추적하지 않고 SHA-256과 canonical count만 게시한다. 다음 R13은 새 창을 열지
 않고 지금 로그인된 기존 ChatGPT 탭 하나를 새 대화 화면으로 이동한 뒤, framework input 경로로 initial
 prompt를 실제 전송한다.
+
+## P32 — C17 R13 inline 계약 전송 실패와 첨부 기반 envelope 전환
+
+R13은 P31의 framework `fill()` 수리를 사용해 50,856자 prompt를 문자 단위로 보존했고, 올바른 send
+button과 기존 로그인 ChatGPT 탭 하나에서 정확히 한 번 전송했다. 그런데도 conversation ID와 exact user
+turn이 서버에 남지 않았다.
+
+```text
+fresh session                    FRESH-V2-1-C17-R13-20260830T042425Z
+job / run                        PROJOB-3dc5a68ca72b7f687251488f
+                                 PRORUN-9de41d057e09c2535da38e8c
+initial pass                     PROPASS-5d4f1b9d099234d90fadc023
+prompt chars                     50,856
+upload / approval / submit       1 / 1 / 1
+conversation / exact user turn   없음 / 없음
+capture                          0
+새 ChatGPT 탭                    0
+```
+
+최초 CDP 연결은 browser mutation 전에 180초 timeout이 났다. 누적된 `chrome-devtools-mcp` 18개만
+종료하고 전용 E2R Chrome을 같은 profile로 재시작했으며 로그인 상태와 ChatGPT 탭 1개를 유지했다. 그 뒤
+새 job을 만들지 않고 같은 R13 job/run/pass를 복구해 준비·승인·전송했다. 전송 후 exact marker가 없는
+것을 확인했으므로 재전송하지 않고 `USER_ATTENTION_REQUIRED`로 봉인했다.
+
+이 결과로 P31 설명도 좁혀졌다. synthetic DOM 입력은 실제 결함이었지만 **유일한 원인**은 아니었다.
+R13은 framework 입력을 썼는데도 실패했기 때문이다. 쉬운 예로 신청서 입력 방식 하나를 고쳤는데도
+50쪽짜리 계약서 전체를 접수창에 다시 붙여 넣는 방식 자체가 여전히 안정적으로 접수되지 않은 셈이다.
+
+수리는 계약을 줄이지 않고 전달 위치만 바꾼다. `research_packet.json` 안에 다음 세 가지 전체를 넣고
+각각 canonical hash로 결박했다.
+
+```text
+initial_research_protocol.instructions_markdown   공통 조사·검증 규칙 전체
+research_contract_snapshot.contracts              선택 contract와 cross guard 전체
+dossier_output_schema                             ResearchDossierV3 schema 전체
+```
+
+composer에는 job/run/pass와 위 field path·hash를 가리키는 짧은 transport envelope만 넣는다. 격리된
+C17 fixture 기준 packet은 153,508자, 외부 감사용 full contract prompt는 50,206자 그대로이고, 실제
+composer envelope만 1,553자다. 즉 문제를 피하려고 질문이나 schema를 삭제한 것이 아니라, 서류 원본은
+첨부하고 접수창에는 “첨부 원본의 1~3번 조항을 모두 실행하라”는 표지만 넣은 것이다.
+
+packet의 protocol·contract roster·mandatory question roster·schema가 로컬 canonical 원본과 정확히
+같지 않으면 브라우저 준비 전에 실패한다. full contract prompt도 계속 컴파일해 별도 receipt로 남기고,
+transport envelope와 contract/question/schema roster가 다르면 중단한다. 종목명이나 누락 슬롯별 검색어
+하드코딩, 점수/Stage 권한, 자동 재전송은 추가하지 않았다. CDP에 기존 browser context가 없는 경우도
+새 context를 만들지 않고 실패하도록 해, 운영 경로에는 새 context/page/window fallback이 하나도 없다.
+
+```text
+Linux initial/fresh/live-runtime regression       106 / 106 PASS
+Windows fresh browser E2E                            2 / 2 PASS
+Windows browser/approval/capture/multi-pass         99 / 99 PASS
+운영 src/e2r/pro_first new_page()                    0
+기존 ChatGPT 탭 없음                                 fail closed
+```
+
+정규화된 외부 검수 영수증은
+`p32_c17_r13_inline_transport_failure_and_attachment_envelope_receipt.json`에 기록했다. raw runtime DB,
+packet 본문, browser profile은 추적하지 않고 SHA-256과 canonical count만 게시한다. 다음 R14는 새 창이나
+새 탭을 열지 않고 지금 로그인된 기존 ChatGPT 탭 하나를 새 대화로 이동해, JSON packet 1회 첨부와 짧은
+transport envelope로 독립 C17 initial을 시작한다.

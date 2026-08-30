@@ -394,12 +394,29 @@ class ResearchPacketV2Builder:
 class ResearchPacketV3Builder:
     """Build a fresh-session packet that cannot carry old Pro answers."""
 
-    def __init__(self, schema_path: str | Path | None = None) -> None:
-        default = (
-            Path(__file__).resolve().parents[3]
-            / "configs/e2r_pro_research_packet_v3.schema.json"
+    def __init__(
+        self,
+        schema_path: str | Path | None = None,
+        *,
+        initial_protocol_path: str | Path | None = None,
+        dossier_schema_path: str | Path | None = None,
+    ) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        self.schema_path = (
+            Path(schema_path)
+            if schema_path
+            else repo_root / "configs/e2r_pro_research_packet_v3.schema.json"
         )
-        self.schema_path = Path(schema_path) if schema_path else default
+        self.initial_protocol_path = (
+            Path(initial_protocol_path)
+            if initial_protocol_path
+            else repo_root / "configs/prompts/e2r_pro_v3_initial_full_research.md"
+        )
+        self.dossier_schema_path = (
+            Path(dossier_schema_path)
+            if dossier_schema_path
+            else repo_root / "configs/e2r_pro_research_dossier_v3.schema.json"
+        )
         self.schema = json.loads(self.schema_path.read_text(encoding="utf-8"))
         Draft202012Validator.check_schema(self.schema)
         self.validator = Draft202012Validator(
@@ -462,6 +479,34 @@ class ResearchPacketV3Builder:
             **snapshot_base,
             "snapshot_hash": canonical_hash(snapshot_base),
         }
+        protocol_template = self.initial_protocol_path.read_text(encoding="utf-8")
+        if protocol_template.count("{{COMPILED_CONTEXT}}") != 1:
+            raise ValueError(
+                "Initial Research Protocol V3 requires one compiled context slot"
+            )
+        protocol_markdown = (
+            protocol_template.replace("{{COMPILED_CONTEXT}}", "").rstrip() + "\n"
+        )
+        initial_research_protocol = {
+            "schema_version": "e2r_pro_initial_research_protocol_v3",
+            "instructions_markdown": protocol_markdown,
+            "protocol_hash": canonical_hash(
+                {"instructions_markdown": protocol_markdown}
+            ),
+        }
+        dossier_output_schema = json.loads(
+            self.dossier_schema_path.read_text(encoding="utf-8")
+        )
+        Draft202012Validator.check_schema(dossier_output_schema)
+        if (
+            dossier_output_schema.get("properties", {})
+            .get("schema_version", {})
+            .get("const")
+            != DOSSIER_V3_SCHEMA_VERSION
+        ):
+            raise ValueError(
+                "ResearchPacketV3 embedded output schema is not ResearchDossierV3"
+            )
         payload = _json_copy(
             {
                 "schema_version": PACKET_V3_SCHEMA_VERSION,
@@ -495,7 +540,12 @@ class ResearchPacketV3Builder:
                 "forbidden_inferences": list(
                     dict.fromkeys(request.forbidden_inferences)
                 ),
+                "initial_research_protocol": initial_research_protocol,
                 "research_contract_snapshot": contract_snapshot,
+                "dossier_output_schema": dossier_output_schema,
+                "dossier_output_schema_hash": canonical_hash(
+                    dossier_output_schema
+                ),
                 "fresh_blind_boundary": {
                     "old_pro_fact_input_count": 0,
                     "old_route_receipt_input_count": 0,
@@ -740,6 +790,12 @@ def _validate_delta_contract_scope(
 
 
 def _assert_fresh_blind_packet(value: Any, path: tuple[str, ...] = ()) -> None:
+    if path and path[0] == "dossier_output_schema":
+        # This subtree is the canonical JSON Schema contract, not research
+        # answer data.  Its ``properties.score_authority`` member is a schema
+        # definition whose const is validated separately, not an authority
+        # value carried by the packet.
+        return
     forbidden = {
         "existing_thesis_digest",
         "historical_anchor_digest",

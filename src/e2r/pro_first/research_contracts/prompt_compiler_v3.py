@@ -122,6 +122,87 @@ class ProResearchPromptCompilerV3:
             parent_pass_id=parent_pass_id,
         )
 
+    def compile_transport_envelope(
+        self,
+        *,
+        packet: Mapping[str, Any],
+        primary_archetype_ids: Sequence[str],
+        conversation_id: str | None = None,
+        research_pass_id: str | None = None,
+        parent_pass_id: str | None = None,
+    ) -> CompiledProResearchPromptV3:
+        """Compile a short public-composer envelope for a self-contained packet.
+
+        The complete protocol, archetype contracts, mandatory-question roster,
+        and exact output schema remain inside the hash-bound attachment.  The
+        composer carries only their immutable field identities and the current
+        job/run/pass lineage, avoiding a second inline copy of the same contract.
+        """
+
+        _validate_packet(packet)
+        plan = build_research_question_plan(primary_archetype_ids)
+        compiled_primary_ids = tuple(str(value) for value in primary_archetype_ids)
+        selected = tuple(str(value) for value in packet.get("selected_archetypes") or ())
+        if compiled_primary_ids != selected:
+            raise ValueError(
+                "transport envelope primary contracts must exactly match packet selected_archetypes"
+            )
+        self._validate_attachment_backed_contract(packet=packet, plan=plan)
+        target = packet["target"]
+        target_id = target.get("target_id") or target.get("symbol")
+        pass_id = research_pass_id or "TO_BE_BOUND_BY_ORCHESTRATOR"
+        parent_id = parent_pass_id or "NONE"
+        protocol = packet["initial_research_protocol"]
+        contract_snapshot = packet["research_contract_snapshot"]
+        dossier_schema_hash = str(packet["dossier_output_schema_hash"])
+        lines = [
+            "당신은 E2R의 선임 기업 연구원이다.",
+            "",
+            "첨부된 `research_packet.json` 한 파일이 이 요청의 완전하고 권위 있는 실행 계약이다.",
+            "첨부를 일부만 요약하거나 표본 추출하지 말고 다음 세 필드를 끝까지 읽어 모두 실행하라.",
+            "",
+            "1. `initial_research_protocol.instructions_markdown`: 공통 조사·atomic evidence·source-saturation·JSON-first 규칙 전체",
+            "2. `research_contract_snapshot.contracts`: 선택 contract와 모든 cross guard의 question/source/adequate-search 규칙 전체",
+            "3. `dossier_output_schema`: 최종 ResearchDossierV3 JSON이 정확히 만족해야 할 전체 JSON Schema",
+            "",
+            f"- job_id: `{packet.get('job_id')}`",
+            f"- run_id: `{packet.get('run_id')}`",
+            f"- target: `{target_id} {target.get('company_name')}`",
+            f"- as_of_date: `{packet.get('as_of_date')}`",
+            f"- conversation_id: `{conversation_id or 'PENDING_NEW_CONVERSATION'}`",
+            f"- research_pass_id: `{pass_id}`",
+            f"- parent_pass_id: `{parent_id}`",
+            f"- primary_archetype_ids: `{','.join(compiled_primary_ids)}`",
+            f"- contract_snapshot_hash: `{contract_snapshot['snapshot_hash']}`",
+            f"- initial_protocol_hash: `{protocol['protocol_hash']}`",
+            f"- dossier_output_schema_hash: `{dossier_schema_hash}`",
+            f"- mandatory_question_count: `{len(plan.mandatory_question_ids)}`",
+            "- score_authority: `false`",
+            "- stage_authority: `false`",
+            "- future_source_allowed: `false`",
+            "- investment_recommendation_allowed: `false`",
+            "",
+            "첨부의 mandatory question을 하나도 생략하지 말고, protocol의 공개경로·검증·직렬화 gate를 약화하지 마라.",
+            "최종 응답은 protocol대로 dossier JSON을 먼저 출력하고 score나 Stage를 계산·제안하지 마라.",
+            "",
+            f"최종 응답에 `[[E2R_PRO_RUN_ID:{packet.get('run_id')}]]`,",
+            f"`[[E2R_PRO_JOB_ID:{packet.get('job_id')}]]`,",
+            f"`[[E2R_PRO_PASS_ID:{pass_id}]]`,",
+            f"`[[E2R_PRO_PARENT_PASS_ID:{parent_id}]]` marker를 각각 정확히 한 번 포함하라.",
+        ]
+        prompt = "\n".join(lines).rstrip() + "\n"
+        if len(prompt) > MAX_INITIAL_PROMPT_CHARS:
+            raise ValueError("compiled V3 transport envelope exceeds the prompt boundary")
+        return CompiledProResearchPromptV3(
+            pass_name="INITIAL_FULL_RESEARCH",
+            primary_archetype_ids=compiled_primary_ids,
+            contract_ids=plan.bundle.contract_ids,
+            mandatory_question_ids=plan.mandatory_question_ids,
+            prompt_text=prompt,
+            prompt_hash=canonical_hash({"prompt": prompt}),
+            dossier_schema_hash=dossier_schema_hash,
+        )
+
     def compile_contract_snapshot(
         self,
         *,
@@ -223,6 +304,71 @@ class ProResearchPromptCompilerV3:
         if expected != RESEARCH_DOSSIER_V3_SCHEMA_VERSION:
             raise ValueError("compiled output schema is not ResearchDossierV3")
         return schema
+
+    def _validate_attachment_backed_contract(
+        self,
+        *,
+        packet: Mapping[str, Any],
+        plan: ResearchQuestionPlan,
+    ) -> None:
+        protocol = packet.get("initial_research_protocol")
+        if not isinstance(protocol, Mapping):
+            raise ValueError("ResearchPacketV3 is missing initial_research_protocol")
+        local_template = (
+            self.template_root / INITIAL_PROMPT_V3_TEMPLATE
+        ).read_text(encoding="utf-8")
+        if local_template.count("{{COMPILED_CONTEXT}}") != 1:
+            raise ValueError("Initial Research Protocol V3 template slot is invalid")
+        expected_protocol = (
+            local_template.replace("{{COMPILED_CONTEXT}}", "").rstrip() + "\n"
+        )
+        if (
+            protocol.get("schema_version")
+            != "e2r_pro_initial_research_protocol_v3"
+            or protocol.get("instructions_markdown") != expected_protocol
+            or protocol.get("protocol_hash")
+            != canonical_hash({"instructions_markdown": expected_protocol})
+        ):
+            raise ValueError(
+                "ResearchPacketV3 initial research protocol differs from the canonical template"
+            )
+
+        snapshot = packet.get("research_contract_snapshot")
+        if not isinstance(snapshot, Mapping):
+            raise ValueError("ResearchPacketV3 is missing research_contract_snapshot")
+        expected_base = {
+            "catalog_schema_version": "e2r_archetype_research_contracts_v2",
+            "primary_archetype_ids": [
+                str(contract["archetype_id"])
+                for contract in plan.bundle.primary_contracts
+            ],
+            "contract_ids": list(plan.bundle.contract_ids),
+            "mandatory_question_ids": list(plan.mandatory_question_ids),
+            "contracts": json.loads(
+                json.dumps(plan.bundle.contracts, ensure_ascii=False)
+            ),
+        }
+        expected_snapshot = {
+            **expected_base,
+            "snapshot_hash": canonical_hash(expected_base),
+        }
+        if snapshot != expected_snapshot:
+            raise ValueError(
+                "ResearchPacketV3 contract snapshot differs from the canonical selected bundle"
+            )
+
+        dossier_schema = packet.get("dossier_output_schema")
+        if not isinstance(dossier_schema, Mapping):
+            raise ValueError("ResearchPacketV3 is missing dossier_output_schema")
+        local_schema = self._load_dossier_schema()
+        if (
+            dossier_schema != local_schema
+            or packet.get("dossier_output_schema_hash")
+            != canonical_hash(local_schema)
+        ):
+            raise ValueError(
+                "ResearchPacketV3 dossier output schema differs from the canonical V3 schema"
+            )
 
     def _render_context(
         self,

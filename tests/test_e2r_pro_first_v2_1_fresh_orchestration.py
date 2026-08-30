@@ -291,6 +291,83 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             self.fresh_job.job_id,
         )
 
+    def test_live_initial_transport_envelope_uses_complete_packet_contract(self) -> None:
+        packet = self.built.packet_payload
+        protocol = packet["initial_research_protocol"]
+        contracts = packet["research_contract_snapshot"]
+        schema = packet["dossier_output_schema"]
+        prompt = self.built.prompt.prompt_text
+
+        self.assertEqual(
+            protocol["protocol_hash"],
+            canonical_hash(
+                {"instructions_markdown": protocol["instructions_markdown"]}
+            ),
+        )
+        self.assertEqual(
+            contracts["snapshot_hash"],
+            canonical_hash(
+                {
+                    key: value
+                    for key, value in contracts.items()
+                    if key != "snapshot_hash"
+                }
+            ),
+        )
+        self.assertEqual(
+            packet["dossier_output_schema_hash"],
+            canonical_hash(schema),
+        )
+        self.assertEqual(
+            schema["properties"]["schema_version"]["const"],
+            "e2r_pro_research_dossier_v3",
+        )
+        self.assertLess(len(prompt), 10_000)
+        for field_path in (
+            "initial_research_protocol.instructions_markdown",
+            "research_contract_snapshot.contracts",
+            "dossier_output_schema",
+        ):
+            self.assertIn(field_path, prompt)
+        self.assertIn(self.fresh_job.job_id, prompt)
+        self.assertIn(str(self.built.packet_payload["run_id"]), prompt)
+        self.assertNotIn(f"`{ARCHETYPE}_Q01`", prompt)
+
+        transport_receipt = json.loads(
+            (
+                self.boundary.fresh_job_root
+                / "fresh_session/initial_prompt_v3_receipt.json"
+            ).read_text(encoding="utf-8")
+        )
+        contract_receipt = json.loads(
+            (
+                self.boundary.fresh_job_root
+                / "fresh_session/initial_prompt_v3_contract_receipt.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            transport_receipt["delivery_mode"],
+            "ATTACHMENT_BACKED_TRANSPORT_ENVELOPE",
+        )
+        self.assertEqual(
+            contract_receipt["delivery_mode"],
+            "HASH_BOUND_RESEARCH_PACKET_FIELDS",
+        )
+
+    def test_transport_envelope_rejects_tampered_packet_schema(self) -> None:
+        tampered = json.loads(
+            json.dumps(self.built.packet_payload, ensure_ascii=False)
+        )
+        tampered["dossier_output_schema_hash"] = "0" * 64
+
+        with self.assertRaisesRegex(ValueError, "dossier output schema differs"):
+            self.orchestrator.initial_compiler.compile_transport_envelope(
+                packet=tampered,
+                primary_archetype_ids=self.fresh_job.archetype_ids,
+                conversation_id="PENDING_NEW_CONVERSATION",
+                research_pass_id=self.built.initial_pass_id,
+            )
+
     async def test_live_initial_prompt_over_public_composer_boundary_stops_before_browser(
         self,
     ) -> None:

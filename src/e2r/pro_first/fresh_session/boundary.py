@@ -597,6 +597,12 @@ def audit_fresh_blind_payload(
     }
 
     def visit(value: Any, path: tuple[str, ...] = ()) -> None:
+        if path and path[0] == "dossier_output_schema":
+            # The embedded canonical JSON Schema contains property names such
+            # as score_authority for validation purposes.  It is code-owned
+            # contract metadata, not prior-run answer input, and is separately
+            # protected by its canonical schema hash.
+            return
         if isinstance(value, Mapping):
             for key, child in value.items():
                 normalized = str(key).strip().casefold().replace("-", "_")
