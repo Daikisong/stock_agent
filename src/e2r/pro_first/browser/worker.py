@@ -59,10 +59,10 @@ class ProBrowserWorker:
                 )
             page = self._matching_page(context.pages)
             if page is None:
-                page = await context.new_page()
-                await page.goto(self.config.chatgpt_url, wait_until="domcontentloaded")
-            elif not self._same_origin(page.url, self.config.chatgpt_url):
-                await page.goto(self.config.chatgpt_url, wait_until="domcontentloaded")
+                raise RuntimeError(
+                    "an existing ChatGPT tab is required; the worker will not "
+                    "open a new browser tab or window"
+                )
             browser_session_id = stable_id(
                 "BROWSER",
                 {
@@ -111,7 +111,7 @@ class ProBrowserWorker:
         return f"ws://127.0.0.1:{port}{path}"
 
     def _matching_page(self, pages: list[Any]) -> Any | None:
-        for page in pages:
+        for page in reversed(pages):
             if self._same_origin(page.url, self.config.chatgpt_url):
                 return page
         return None

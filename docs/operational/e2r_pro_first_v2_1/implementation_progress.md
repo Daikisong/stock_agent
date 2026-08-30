@@ -4249,3 +4249,49 @@ new browser submit during freeze   0
 source cache와 브라우저 profile은 추적하지 않고 SHA-256과 canonical count만 게시한다. 다음 실행은 새
 브라우저 창이 아니라 현재 로그인된 기존 탭 안에서 새 ChatGPT conversation을 만든 C17 R9 blind fresh
 run이다.
+
+## P29 — C17 R9 초기 전송 취소 경계 봉인
+
+C17 R9은 기존 로그인된 ChatGPT 탭 하나를 새 대화 화면으로 이동한 뒤 packet 1회 업로드와 submit
+claim 1회를 수행했다. 그러나 60,439자 initial prompt의 exact user turn이 화면과 서버 conversation에
+남지 않았고 conversation ID도 만들어지지 않았다.
+
+```text
+fresh session                    FRESH-V2-1-C17-R9-20260830T030222Z
+job                              PROJOB-61af1aacb152d31ff4af16f3
+run                              PRORUN-278c60ac5d42c6bea0e317f9
+initial pass                     PROPASS-b9831d09cdaa64b34e4c7fa0
+packet / prompt leakage          0 / 0
+upload / submit claim            1 / 1
+conversation / exact user turn   없음 / 없음
+새 ChatGPT 탭                    0
+```
+
+원인은 새 창 여부가 아니라 같은 탭의 검증 순서였다. 큰 요청의 클릭 직후 user turn이 아직 DOM에
+나타나기 전에 같은 탭을 conversation URL로 새로고침할 수 있었고, 그 navigation이 진행 중인
+new-chat 요청을 취소할 수 있었다. 쉬운 예로, 우편물을 접수 창구에 내려놓자마자 접수 도장이 찍혔는지
+기다리지 않고 창구 페이지를 닫아 버린 것과 같다.
+
+운영 adapter는 이제 exact job/run marker를 가진 optimistic user turn이 현재 DOM에 실제로 나타날
+때까지 먼저 기다린다. 나타나지 않으면 같은 탭 새로고침을 생략해 진행 중인 요청을 취소하지 않는다.
+나타난 경우에도 최소 1초를 더 기다린 뒤, 그 **기존 탭 하나**에서만 exact conversation을 새로고침해
+서버 저장을 검사한다. CDP worker에 남아 있던 `ChatGPT 탭 없음 -> context.new_page()` fallback도
+제거했다. 이제 기존 ChatGPT 탭을 찾지 못하면 새 탭을 열지 않고 명시적으로 실패한다.
+`new_page()`나 임시 검증 탭은 운영 경로에 남기지 않았다.
+
+```text
+exact optimistic turn 없음       same-tab refresh 금지
+exact optimistic turn 있음       최소 1초 settle 후 같은 탭 reload
+새 창/새 탭                       항상 0
+기존 ChatGPT 탭 없음              fail closed
+자동 재전송                       금지
+```
+
+R9은 `FRESH_SESSION_DIAGNOSTIC_ONLY / NEW_CONVERSATION_REQUIRED`로 공식 봉인했다. submit count는 1로
+유지되고 자동 재전송은 불가능하다. Windows Python 3.14 Playwright에서 browser adapter,
+exactly-once submit, completion capture, multi-pass 97개 회귀 테스트와, 새로고침이 없을 때만 살아남는
+DOM sentinel 검증을 모두 통과했다. worker의 새 탭 fallback 제거 뒤에는 CDP attach worker test를
+1/1로 다시 실행해 기존 탭 1개 유지와 ChatGPT 탭 부재 시 fail-closed를 확인했다. 정규화된 외부 검수 영수증은
+`p29_c17_r9_initial_transport_failure_receipt.json`에 기록했고 raw runtime DB·browser profile·packet
+본문은 추적하지 않았다. 다음 C17 R10은 새 브라우저 창이 아니라 현재 로그인된 기존 탭을 새 대화로
+이동해 실행한다.

@@ -178,6 +178,9 @@ class ProFirstApprovalSubmitTest(unittest.IsolatedAsyncioTestCase):
     async def test_optimistic_running_without_server_turn_fails_closed(self) -> None:
         job, prompt_hash = await self._prepare_durable_job()
         await self.page.evaluate("window.__persistSubmittedTurn = false")
+        await self.page.evaluate(
+            "window.__sameTabSentinel = 'must-survive-without-refresh'"
+        )
         service = ProApprovalService(self.store, now=lambda: self.now)
         grant = service.issue(job.job_id, prompt_hash=prompt_hash)
         service.approve(grant)
@@ -194,6 +197,10 @@ class ProFirstApprovalSubmitTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(attention.submit_count, 1)
         self.assertEqual(await self.page.evaluate("window.__submitCount"), 1)
         self.assertEqual(len(self.page.context.pages), page_count_before)
+        self.assertEqual(
+            await self.page.evaluate("window.__sameTabSentinel"),
+            "must-survive-without-refresh",
+        )
         persistence_event = next(
             event
             for event in self.store.list_events(job.job_id)

@@ -590,97 +590,85 @@ class PlaywrightChatGPTWebAdapter:
         inspection_page = self.page
         observed_url = fresh_url
         try:
-            # Refresh the exact durable conversation in the already attached
-            # public tab.  A same-tab navigation proves that the submitted
-            # turn survived a server-backed load without leaving duplicate
-            # ChatGPT windows/tabs behind.  This occurs only after the guarded
-            # one-shot submit boundary and can never dispatch another prompt.
-            # Yield once before navigation so the public click handler and its
-            # server-persistence callback can finish their current event turn.
-            await inspection_page.wait_for_timeout(
-                self._server_persistence_poll_interval_ms
-            )
-            await inspection_page.goto(
-                fresh_url,
-                wait_until="domcontentloaded",
-                timeout=60_000,
-            )
-            observed_url = str(inspection_page.url or fresh_url)
-            fresh_page_loaded = bool(
-                urlsplit(observed_url).path.rstrip("/")
-                == f"/c/{conversation_id}".rstrip("/")
-            )
             user_selector = ", ".join(USER_TURN_SELECTORS)
-            for attempt in range(self._server_persistence_max_polls):
-                snapshot = await inspection_page.evaluate(
-                    r"""([selector, requiredMarkers]) => {
-                        const matches = Array.from(
-                            document.querySelectorAll(selector)
-                        );
-                        const turns = [];
-                        const seen = new Set();
-                        for (const match of matches) {
-                            const turn = match.closest(
-                                'section[data-turn="user"], '
-                                + 'article[data-turn="user"]'
-                            ) || match;
-                            if (seen.has(turn)) continue;
-                            seen.add(turn);
-                            turns.push(turn);
-                        }
-                        let bestMissing = [...requiredMarkers];
-                        for (const turn of turns) {
-                            const text = turn.textContent || '';
-                            const missing = requiredMarkers.filter(
-                                marker => !text.includes(marker)
-                            );
-                            if (missing.length < bestMissing.length) {
-                                bestMissing = missing;
-                            }
-                            if (missing.length) continue;
-                            const identified = turn.closest(
-                                '[data-message-id], [data-turn-id]'
-                            ) || turn.querySelector(
-                                '[data-message-id], [data-turn-id]'
-                            );
-                            const turnId = identified && (
-                                identified.getAttribute('data-message-id')
-                                || identified.getAttribute('data-turn-id')
-                            );
-                            if (turnId) {
-                                return {
-                                    observedUserTurnCount: turns.length,
-                                    missingMarkers: [],
-                                    userTurnId: turnId
-                                };
-                            }
-                        }
-                        return {
-                            observedUserTurnCount: turns.length,
-                            missingMarkers: bestMissing,
-                            userTurnId: null
-                        };
-                    }""",
-                    [user_selector, list(required_markers)],
+            optimistic_snapshot: Mapping[str, Any] = {}
+            optimistic_poll_limit = min(
+                self._server_persistence_max_polls,
+                300,
+            )
+            for attempt in range(optimistic_poll_limit):
+                optimistic_snapshot = await self._user_turn_marker_snapshot(
+                    selector=user_selector,
+                    required_markers=required_markers,
                 )
                 observed_user_turn_count = max(
                     observed_user_turn_count,
-                    int(snapshot.get("observedUserTurnCount") or 0),
+                    int(
+                        optimistic_snapshot.get("observedUserTurnCount") or 0
+                    ),
                 )
-                user_turn_id = str(snapshot.get("userTurnId") or "").strip() or None
-                if user_turn_id:
-                    missing_markers = ()
+                missing_markers = tuple(
+                    optimistic_snapshot.get("missingMarkers") or ()
+                )
+                if optimistic_snapshot.get("markerMatched") is True:
                     break
-                missing_markers = tuple(snapshot.get("missingMarkers") or ())
-                if attempt + 1 < self._server_persistence_max_polls:
+                if attempt + 1 < optimistic_poll_limit:
                     await inspection_page.wait_for_timeout(
                         self._server_persistence_poll_interval_ms
                     )
-            if user_turn_id is None:
+            if optimistic_snapshot.get("markerMatched") is not True:
                 detail = (
-                    "fresh public conversation did not contain one user turn "
-                    "with all exact submission markers"
+                    "optimistic public conversation did not render one user "
+                    "turn with all exact submission markers; same-tab refresh "
+                    "was skipped to avoid cancelling an in-flight submit"
                 )
+            else:
+                # Refresh the exact durable conversation in the already
+                # attached public tab only after the guarded click has rendered
+                # the exact local user turn.  Navigating a large new-chat
+                # submission before that point can cancel its in-flight public
+                # request.  The settle interval lets the browser finish the
+                # turn's persistence callback without opening another tab.
+                await inspection_page.wait_for_timeout(
+                    max(1_000, self._server_persistence_poll_interval_ms * 10)
+                )
+                await inspection_page.goto(
+                    fresh_url,
+                    wait_until="domcontentloaded",
+                    timeout=60_000,
+                )
+                observed_url = str(inspection_page.url or fresh_url)
+                fresh_page_loaded = bool(
+                    urlsplit(observed_url).path.rstrip("/")
+                    == f"/c/{conversation_id}".rstrip("/")
+                )
+                for attempt in range(self._server_persistence_max_polls):
+                    snapshot = await self._user_turn_marker_snapshot(
+                        selector=user_selector,
+                        required_markers=required_markers,
+                    )
+                    observed_user_turn_count = max(
+                        observed_user_turn_count,
+                        int(snapshot.get("observedUserTurnCount") or 0),
+                    )
+                    user_turn_id = (
+                        str(snapshot.get("userTurnId") or "").strip() or None
+                    )
+                    if user_turn_id:
+                        missing_markers = ()
+                        break
+                    missing_markers = tuple(
+                        snapshot.get("missingMarkers") or ()
+                    )
+                    if attempt + 1 < self._server_persistence_max_polls:
+                        await inspection_page.wait_for_timeout(
+                            self._server_persistence_poll_interval_ms
+                        )
+                if user_turn_id is None:
+                    detail = (
+                        "fresh public conversation did not contain one user "
+                        "turn with all exact submission markers"
+                    )
         except Exception as error:
             detail = f"{type(error).__name__}: {error}"
             missing_markers = required_markers
@@ -944,6 +932,66 @@ class PlaywrightChatGPTWebAdapter:
                 """,
                 value.lower(),
             )
+        )
+
+    async def _user_turn_marker_snapshot(
+        self,
+        *,
+        selector: str,
+        required_markers: tuple[str, ...],
+    ) -> Mapping[str, Any]:
+        """Inspect exact public user-turn markers in one DOM task."""
+
+        return await self.page.evaluate(
+            r"""([userSelector, requiredMarkers]) => {
+                const matches = Array.from(
+                    document.querySelectorAll(userSelector)
+                );
+                const turns = [];
+                const seen = new Set();
+                for (const match of matches) {
+                    const turn = match.closest(
+                        'section[data-turn="user"], '
+                        + 'article[data-turn="user"]'
+                    ) || match;
+                    if (seen.has(turn)) continue;
+                    seen.add(turn);
+                    turns.push(turn);
+                }
+                let bestMissing = [...requiredMarkers];
+                for (const turn of turns) {
+                    const text = turn.textContent || '';
+                    const missing = requiredMarkers.filter(
+                        marker => !text.includes(marker)
+                    );
+                    if (missing.length < bestMissing.length) {
+                        bestMissing = missing;
+                    }
+                    if (missing.length) continue;
+                    const identified = turn.closest(
+                        '[data-message-id], [data-turn-id]'
+                    ) || turn.querySelector(
+                        '[data-message-id], [data-turn-id]'
+                    );
+                    const turnId = identified && (
+                        identified.getAttribute('data-message-id')
+                        || identified.getAttribute('data-turn-id')
+                    );
+                    return {
+                        observedUserTurnCount: turns.length,
+                        missingMarkers: [],
+                        markerMatched: true,
+                        userTurnId: turnId || null
+                    };
+                }
+                return {
+                    observedUserTurnCount: turns.length,
+                    missingMarkers: bestMissing,
+                    markerMatched: false,
+                    userTurnId: null
+                };
+            }""",
+            [selector, list(required_markers)],
         )
 
     async def _body_tail_text(self) -> str:

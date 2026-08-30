@@ -605,7 +605,7 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
             f"--user-data-dir={profile}",
             "--headless=new",
             "--no-sandbox",
-            "about:blank",
+            f"{self.server.base_url}/c/worker-existing-conversation",
             stdout=asyncio.subprocess.DEVNULL,
             stderr=asyncio.subprocess.DEVNULL,
         )
@@ -630,7 +630,15 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
             inspection = await session.adapter.ensure_logged_in()
             self.assertTrue(inspection.editor_ready)
             self.assertTrue(session.attached_over_cdp)
+            self.assertEqual(
+                session.page.url,
+                f"{self.server.base_url}/c/worker-existing-conversation",
+            )
+            self.assertEqual(len(session.context.pages), 1)
+            await session.page.goto("about:blank")
             await session.close()
+            with self.assertRaisesRegex(RuntimeError, "existing ChatGPT tab"):
+                await worker.open(job_id="PROJOB-bbbbbbbbbbbbbbbbbbbbbbbb")
             self.assertIsNone(process.returncode)
         finally:
             if process.returncode is None:
