@@ -4295,3 +4295,51 @@ DOM sentinel 검증을 모두 통과했다. worker의 새 탭 fallback 제거 �
 `p29_c17_r9_initial_transport_failure_receipt.json`에 기록했고 raw runtime DB·browser profile·packet
 본문은 추적하지 않았다. 다음 C17 R10은 새 브라우저 창이 아니라 현재 로그인된 기존 탭을 새 대화로
 이동해 실행한다.
+
+## P30 — C17 R10 public composer 60,000자 경계와 무손실 schema compact
+
+R10을 처음 predecessor 방식으로 준비하려 한 호출은 브라우저 전 단계에서 멈췄다. R9에는 answer-bearing
+dossier/capture가 없으므로 old-answer manifest의 선행 실행이 될 수 없었다. runtime/job/upload/submit은
+모두 0이었고, 같은 R10 ID를 원래 C17 계약에 맞는 independent fresh boundary로 다시 시작했다.
+
+```text
+fresh session                    FRESH-V2-1-C17-R10-20260830T032712Z
+job                              PROJOB-fa068a50ec045802bbb8d448
+run                              PRORUN-7b5e5a8f4454bd8dd8a31954
+prompt chars                    60,455
+packet / prompt leakage          0 / 0
+upload / submit claim            1 / 1
+conversation / exact user turn   없음 / 없음
+same-tab post-submit reload       0
+새 ChatGPT 탭                    0
+```
+
+R10은 R9에서 고친 safe-no-refresh 경로를 탔다. click 뒤 composer는 0자로 비워졌지만 conversation ID,
+user turn, assistant turn은 모두 0이었고 job/run marker도 남지 않았다. read-only CDP 점검 당시
+ChatGPT page는 기존 탭 1개뿐이고 URL은 `https://chatgpt.com/`, Pro control은 보였으며 별도 오류 문구는
+없었다. 따라서 이번 실패는 너무 이른 reload가 요청을 취소한 R9과 다르다.
+
+직전 성공한 R8 prompt는 59,270자였고 R9/R10 실패 prompt는 각각 60,439/60,455자였다. 두 실행 모두
+60,000자를 넘긴 composer가 로컬에서 비워졌지만 durable user turn을 만들지 못했다. 최근 추가한
+source-saturation 계약을 삭제하거나 축약하지 않고, prompt에 그대로 들어가던 complete JSON Schema의
+비의미 공백만 compact했다.
+
+```text
+JSON Schema pretty               23,412 chars
+JSON Schema compact              13,813 chars
+제거한 비의미 공백                9,599 chars
+schema hash before / after        동일
+R10 packet 재컴파일 prompt       50,856 chars
+live initial 사전 차단            59,800 chars
+```
+
+쉬운 예로 계약서 조항을 지운 것이 아니라 JSON의 들여쓰기와 줄바꿈만 제거했다. compact block을 다시
+`json.loads`했을 때 `e2r_pro_research_dossier_v3`와 모든 properties가 유지됐고 schema hash도
+`40647e7e...`로 동일하다. compiler의 offline 1~3 contract 100,000자 능력은 유지하되, 실제 live initial
+browser transport만 59,800자를 넘으면 upload/approval/send 전에 fail closed한다.
+
+36개 canonical prompt snapshot을 모두 재생성했다. 최소/최대는 29,200/52,247자, audit 36/36 PASS,
+critical 0이다. initial prompt와 fresh orchestration 테스트도 69/69 PASS다. R10은
+`FRESH_SESSION_DIAGNOSTIC_ONLY / NEW_CONVERSATION_REQUIRED`로 공식 봉인했으며 정규화 영수증은
+`p30_c17_r10_public_composer_boundary_receipt.json`에 기록했다. 다음 R11도 새 창이 아니라 현재
+로그인된 기존 ChatGPT 탭 하나를 새 대화로 이동해 실행한다.

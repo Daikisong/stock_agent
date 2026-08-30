@@ -291,6 +291,35 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             self.fresh_job.job_id,
         )
 
+    async def test_live_initial_prompt_over_public_composer_boundary_stops_before_browser(
+        self,
+    ) -> None:
+        oversized = replace(
+            self.built,
+            prompt=replace(self.built.prompt, prompt_text="x" * 59_801),
+        )
+        config = replace(
+            load_pro_first_local_config(
+                Path(__file__).parents[1]
+                / "configs/e2r_pro_first_local.example.yaml"
+            ),
+            runtime_root=self.boundary.fresh_runtime_root,
+        )
+
+        with self.assertRaisesRegex(
+            FreshSessionBoundaryError,
+            "public-composer safety boundary",
+        ):
+            await self.orchestrator.prepare_initial_in_logged_in_browser(
+                oversized,
+                config=config,
+            )
+
+        self.assertEqual(
+            self.store.get_job(self.fresh_job.job_id).status,
+            JobStatus.PACKET_READY.value,
+        )
+
     async def test_exact_open_conversation_bypasses_changed_history_search_ui(
         self,
     ) -> None:

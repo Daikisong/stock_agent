@@ -59,6 +59,11 @@ _GAP_PASS_NAMES = frozenset(
 )
 _NON_REPAIR_V3_FOLLOWUPS = frozenset((*_GAP_PASS_NAMES, "SATURATION_AUDIT"))
 _MAX_FOLLOWUP_PROMPT_CHARS = 100_000
+# Two live new-chat submissions above 60,000 characters cleared the visible
+# composer without creating a durable user turn.  This initial-pass transport
+# guard keeps a small margin below that observed public-UI boundary.  The V3
+# compiler itself still supports larger 1-3-contract offline snapshots.
+_MAX_LIVE_INITIAL_PROMPT_CHARS = 59_800
 
 
 @dataclass(frozen=True)
@@ -611,6 +616,11 @@ class FreshSessionOrchestratorV3:
         *,
         config: ProFirstLocalConfig,
     ) -> PreparedFreshV3BrowserRuntime:
+        if len(built.prompt.prompt_text) > _MAX_LIVE_INITIAL_PROMPT_CHARS:
+            raise FreshSessionBoundaryError(
+                "fresh initial prompt exceeds the 59,800 character "
+                "public-composer safety boundary"
+            )
         self._ensure_browser_preparing(built.job.job_id)
         try:
             session = await ProBrowserWorker(config.browser).open(

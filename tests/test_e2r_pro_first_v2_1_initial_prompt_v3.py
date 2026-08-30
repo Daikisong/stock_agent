@@ -97,9 +97,17 @@ class ProFirstV21InitialPromptV3Test(unittest.TestCase):
         for path in SNAPSHOTS.glob("*.md"):
             prompt = path.read_text(encoding="utf-8")
             lowered = prompt.casefold()
-            self.assertIn('"const": "e2r_pro_research_dossier_v3"', prompt)
-            self.assertIn('"source_documents"', prompt)
-            self.assertIn('"derived_metrics"', prompt)
+            schema_blob = prompt.split(
+                "## ResearchDossierV3 exact output schema",
+                1,
+            )[1].split("```json\n", 1)[1].split("\n```", 1)[0]
+            schema = json.loads(schema_blob)
+            self.assertEqual(
+                schema["properties"]["schema_version"]["const"],
+                "e2r_pro_research_dossier_v3",
+            )
+            self.assertIn("source_documents", schema["properties"])
+            self.assertIn("derived_metrics", schema["properties"])
             self.assertIn("score_authority: `false`", prompt)
             self.assertIn("stage_authority: `false`", prompt)
             self.assertNotIn('"score_authority": true', lowered)

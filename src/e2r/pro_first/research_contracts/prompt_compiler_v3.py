@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from datetime import date
 import json
 from pathlib import Path
+import re
 from typing import Any, Mapping, Sequence
 
 from e2r.pro_first.ids import canonical_hash
@@ -208,7 +209,7 @@ class ProResearchPromptCompilerV3:
         if template.count("{{COMPILED_CONTEXT}}") != 1:
             raise ValueError(f"prompt template requires one context slot: {template_path}")
         prompt = template.replace("{{COMPILED_CONTEXT}}", context).rstrip() + "\n"
-        if "{{" in prompt or "}}" in prompt:
+        if re.search(r"\{\{[A-Z][A-Z0-9_]*\}\}", prompt):
             raise ValueError("compiled V3 prompt contains an unresolved template variable")
         if len(prompt) > MAX_INITIAL_PROMPT_CHARS:
             raise ValueError(
@@ -320,7 +321,15 @@ class ProResearchPromptCompilerV3:
                 "`E2R_RESEARCH_DOSSIER_JSON_END` 사이에 정확히 하나 출력한다.",
                 "",
                 "```json",
-                json.dumps(dossier_schema, ensure_ascii=False, indent=2, sort_keys=True),
+                # Preserve the complete exact schema while avoiding almost
+                # 10k characters of non-semantic indentation.  The schema
+                # hash and every key/value remain unchanged.
+                json.dumps(
+                    dossier_schema,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ),
                 "```",
                 "",
                 "schema의 `verifier_preflight`에서 다음 9개 필드는 모두 true여야 한다: "

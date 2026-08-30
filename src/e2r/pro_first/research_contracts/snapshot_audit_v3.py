@@ -174,8 +174,9 @@ def compile_initial_prompt_v3_snapshot_audit(
                 "`formula`",
                 "quoted atomic fact에 계산 결과를 섞지 않는다",
                 '"derived_calculation_mixed_into_fact"',
-                '"const": false',
             )
+        ) and (
+            '"const": false' in prompt or '"const":false' in prompt
         )
         if not derived_separation_present:
             failures.append("DERIVED_METRIC_SEPARATION_MISSING")
@@ -211,20 +212,29 @@ def compile_initial_prompt_v3_snapshot_audit(
             failures.append("SOURCE_ROLE_POLICY_MISSING")
             counters["source_role_policy_missing_snapshot_count"] += 1
 
-        output_schema_present = all(
-            marker in prompt
-            for marker in (
-                '"const": "e2r_pro_research_dossier_v3"',
-                '"source_documents"',
-                '"material_facts"',
-                '"counterfacts"',
-                '"resolution_facts"',
-                '"derived_metrics"',
-                '"question_family_results"',
-                '"search_route_receipts"',
-                "E2R_RESEARCH_DOSSIER_JSON_BEGIN",
-                "E2R_RESEARCH_DOSSIER_JSON_END",
-            )
+        try:
+            schema_blob = prompt.split(
+                "## ResearchDossierV3 exact output schema",
+                1,
+            )[1].split("```json\n", 1)[1].split("\n```", 1)[0]
+            embedded_schema = json.loads(schema_blob)
+        except (IndexError, TypeError, ValueError, json.JSONDecodeError):
+            embedded_schema = {}
+        schema_properties = embedded_schema.get("properties") or {}
+        output_schema_present = (
+            schema_properties.get("schema_version", {}).get("const")
+            == "e2r_pro_research_dossier_v3"
+            and {
+                "source_documents",
+                "material_facts",
+                "counterfacts",
+                "resolution_facts",
+                "derived_metrics",
+                "question_family_results",
+                "search_route_receipts",
+            }.issubset(schema_properties)
+            and "E2R_RESEARCH_DOSSIER_JSON_BEGIN" in prompt
+            and "E2R_RESEARCH_DOSSIER_JSON_END" in prompt
         )
         if not output_schema_present:
             failures.append("OUTPUT_V3_SCHEMA_MISSING")
