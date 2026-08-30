@@ -4666,3 +4666,58 @@ cross-runtime source SHA 입력으로 같은 148개를 재실행해 전부 통�
 현재 R15는 initial과 pass 3이 유효하지만 saturation·점수·Stage 완료 상태는 아니다. 다음 단계는 새 창이나
 새 채팅이 아니라 conversation `6a93be74-db60-83ee-a7ab-c8262cbb0b39`의 기존 ChatGPT 탭에서 bounded
 full-thesis tail을 계속하는 것이다.
+
+## P36 — C17 R15 operational efficiency FAIL과 R16 공통 prompt guard
+
+P35 이후 R15 full-thesis runner를 기존 ChatGPT 탭·기존 conversation으로 재개했다. 브라우저 연결은
+정상이었고 전송 delta는 0이었지만, deterministic operational efficiency gate가 두 번째 public-gap pass를
+보내기 전에 중단했다.
+
+```text
+initial                         1
+public-gap/counter              1 / allowed 1
+semantic repair                0
+saturation audit               0
+두 번째 public-gap submit       0
+verdict                         OPERATIONAL_EFFICIENCY_GATE_FAILED
+```
+
+이는 세션 고장이나 브라우저 창 문제가 아니다. master goal의 정상 목표는 initial 1회,
+public-gap/counter 0~1회, semantic repair 0~1회, saturation audit 1회다. fixed pass limit 때문에 연구가
+COMPLETE인 것처럼 만들지 않고, 더 조사가 필요하면 현재 run을 diagnostic-only로 봉인해 새 blind
+conversation에서 초기 품질을 다시 검증해야 한다. 따라서 R15는 score/Stage 없이
+`FRESH_SESSION_DIAGNOSTIC_ONLY`로 봉인했다.
+
+새 conversation은 새 창이나 새 탭을 뜻하지 않는다. 로그인된 기존 ChatGPT 탭을 그대로 두고 그 탭의
+URL만 새 채팅으로 전환한다. 쉬운 예로 브라우저 책상은 그대로 두고 같은 책상 위의 새 빈 종이를 쓰는
+것이다.
+
+R15의 6개 genuine semantic/source defect를 원문과 verification row로 분해했다.
+
+```text
+REJECTED_WRONG_SUBJECT          4
+REJECTED_SOURCE_UNAVAILABLE     2
+```
+
+wrong-subject 4개는 `issuer_scoped=false` fact가 원문에 실제로 연속 등장하지 않는 합성 subject를 쓴
+사례였다. 예를 들어 source의 짧은 표현 여러 개를 합쳐 “시설+거래+당사회사” 같은 구조화 subject를
+만들면 exact quote는 맞아도 후속 verifier가 그 주체 문자열을 원문에서 확인할 수 없다. unavailable 2개는
+시장 데이터 canonical page가 Pro에서는 보였지만 verifier의 공개 fetch에는 HTTP 403을 반환한 사례였다.
+
+수리는 C17·롯데케미칼·시장가격 검색어를 코드에 넣지 않고 모든 아키타입의 Initial V3와 follow-up delta
+계약에 적용했다.
+
+```text
+issuer_scoped=false subject     source 원문의 가장 짧은 연속 주체 표현을 직구
+여러 위치의 주체 합성           금지
+material source replay          login/cookie/JS challenge 없는 공개 representation
+401/403/login/anti-bot          official/filing/issuer-data/public mirror로 교체
+대체 representation 없음        fact 대신 attempted route와 source gap
+```
+
+36개 canonical prompt snapshot을 모두 재생성해 critical 0 PASS를 확인했다. prompt/fresh orchestration
+회귀는 Windows 75/75, Linux 75/75 PASS이며 `compileall`과 `git diff --check`도 통과했다. 정규화
+영수증은 `p36_c17_r15_efficiency_failure_and_r16_prompt_guard_receipt.json`에 기록한다.
+
+다음 R16은 이 수정 commit에 묶인 새 packet/job/run/conversation을 사용한다. 기존 R15 dossier, score,
+Stage, fact checkpoint는 재사용하지 않으며, Chrome을 재시작하거나 새 window/tab을 만들지 않는다.

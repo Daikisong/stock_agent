@@ -35,6 +35,8 @@ ATOMIC_EVIDENCE_REQUIREMENT_MARKERS = (
     "동일 lineage의 재인용을 독립 source로 세지 않는다",
     "verifier_preflight 9개 true 항목",
     "accepted material fact로 제출하지 않는다",
+    "issuer_scoped=false`인 fact의 `subject`는 source 원문에 실제로 연속 등장",
+    "로그인·개인 cookie·JavaScript challenge 없이 다시 받을 수 있는 공개",
 )
 FORCED_COMPLETE_MARKERS = (
     "research_status`는 `COMPLETE`",

@@ -1468,7 +1468,14 @@ def _compile_fresh_followup_v3(
             "ResearchDossierV3 **delta JSON** 하나를 출력하라. 이전 전체 dossier를 "
             "반복하지 말고 이번 pass의 새 source/fact/route와 실제로 갱신한 question/gap만 "
             "배열에 넣어라. schema의 나머지 필수 배열·객체는 빈 값으로 유지해도 되며, "
-            "deterministic merger가 이전 append-only ledger와 합친다."
+            "deterministic merger가 이전 append-only ledger와 합친다. "
+            "issuer_scoped=false인 새 fact의 subject는 source 원문에 실제로 연속 등장하는 "
+            "가장 짧은 주체 표현을 그대로 복사하고, 여러 위치의 회사·시설·거래 이름을 "
+            "합성하지 마라. 새 fact의 canonical source는 후속 verifier가 로그인·개인 "
+            "cookie·JavaScript challenge 없이 다시 받을 수 있는 공개 representation이어야 "
+            "한다. 401/403·로그인·anti-bot으로 재수집할 수 없으면 official 원문·filing·issuer "
+            "data·공개 mirror를 사용하고, 대체 표현도 없으면 fact 대신 attempted route와 "
+            "source gap을 남겨라."
         )
     prompt = "\n".join(
         (

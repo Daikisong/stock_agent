@@ -73,6 +73,19 @@ class ProFirstV21InitialPromptV3Test(unittest.TestCase):
             for marker in required:
                 self.assertIn(marker, prompt, f"{path.name}: {marker}")
 
+    def test_subject_literal_and_public_replayability_guards_are_common(self) -> None:
+        required = (
+            "issuer_scoped=false`인 fact의 `subject`는 source 원문에 실제로 연속 등장",
+            "합성 subject를 만들지 않는다",
+            "로그인·개인 cookie·JavaScript challenge 없이 다시 받을 수 있는 공개",
+            "401/403, 로그인 화면, anti-bot challenge",
+            "fact를 만들지 말고 attempted route와 source gap을 기록",
+        )
+        for path in SNAPSHOTS.glob("*.md"):
+            prompt = path.read_text(encoding="utf-8")
+            for marker in required:
+                self.assertIn(marker, prompt, f"{path.name}: {marker}")
+
     def test_all_preflight_fields_and_derived_separation_are_explicit(self) -> None:
         fields = (*VERIFIER_PREFLIGHT_TRUE_FIELDS, *VERIFIER_PREFLIGHT_FALSE_FIELDS)
         for path in SNAPSHOTS.glob("*.md"):

@@ -1764,6 +1764,8 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         )
         self.assertIn("ResearchDossierV3 **delta JSON**", compiled.prompt_text)
         self.assertIn("이전 전체 dossier를", compiled.prompt_text)
+        self.assertIn("subject는 source 원문에 실제로 연속 등장", compiled.prompt_text)
+        self.assertIn("401/403·로그인·anti-bot", compiled.prompt_text)
         self.assertEqual(
             plan.research_pass.detail["research_gap_context_hash"],
             gap_hash,
