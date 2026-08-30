@@ -4825,3 +4825,49 @@ commit/push 뒤 별도 receipt로 갱신한다.
 10개지만 ChatGPT page는 0개다. 임의의 unrelated shopping tab을 덮어쓰거나 새 target을 만들지 않는다.
 남은 실제 완료 경로는 R16 무재전송 서버 확인, C17 full thesis, 새 blind C28 full thesis, 최종 A~H·full
 suite·CI green이다.
+
+## P39 — artifact 다운로드 결박과 CI 회귀 복구
+
+`aed9f813` head의 GitHub Actions에서 Pro-first core/browser/full-regression과 V6 offline-contract가 함께
+실패했다. V6 별도 결함이 아니라 같은 artifact capture 결함이었다. 로컬 전체 7,858개에서도 정확히 네
+건만 재현됐고 나머지 failure/error는 없었다.
+
+첫 번째 원인은 파일 후보의 direct download control을 찾는 ancestor XPath가 artifact row를 벗어나
+`BODY`까지 올라갈 수 있었던 점이다. 예를 들어 MD 다운로드 뒤 PDF를 고르면, 화면에 남은 MD preview의
+다운로드 버튼이 `BODY` 아래 유일한 control이라는 이유만으로 PDF 후보에 다시 붙었다. 그래서 실제 클릭은
+`MD → PDF`가 아니라 `MD → MD`였다. 이제 page 전체·assistant turn 전체 container는 direct binding으로
+인정하지 않고, local container의 visible filename roster와 control의 `download` filename이 정확히 현재
+후보 하나에 결박될 때만 direct control을 쓴다. 애매하면 현재 PDF 후보를 눌러 그 파일 preview의 다운로드
+control을 찾는다.
+
+두 번째 원인은 Chromium의 CDP `Network.responseReceived`가 실제 body 준비보다 먼저 도착할 수 있다는
+순서 경쟁이었다. 이미 같은 exact URL에 대해 Playwright download/response observer를 걸어 두었으므로,
+CDP가 먼저 와도 짧게 그 observer를 우선 기다린다. CDP body가 아직 없으면 새로 클릭하지 않고 같은 observer
+결과만 사용한다. exact origin, sandbox basename, manifest filename/file id 검사는 낮추지 않았다.
+
+세 번째로 canonical ResearchDossierV3 schema는 맞지만 job/run이 다른 JSON을 본 사실을 candidate loop
+끝까지 보존한다. 따라서 일반 `no match`로 뭉개지 않고 exact identity mismatch로 차단한다.
+
+```text
+base full suite                    7,858 / failure 4 / error 0
+targeted reproduction             4 / failure 4
+targeted after repair             4 / PASS
+browser adapter + capture         70 / PASS
+static + submit guards            14 / PASS
+master key offline bundle         430 / 430 PASS / 단일 Linux 환경
+final full suite                  7,858 / failure 0 / error 0 / skip 38
+production static audit           PASS / critical 0 / guarded submit 1
+V2 requirement static audit       PASS / critical 0
+```
+
+P38의 Linux 427 PASS + 환경 오류 3이라는 분할 결과도 로컬 Playwright 공유 라이브러리를 보완한 뒤 같은
+23-module 명령을 재실행해 430/430 단일 환경 PASS로 대체됐다. 정규화 영수증은
+`p39_artifact_capture_ci_repair_and_full_regression_receipt.json`이다.
+
+브라우저 경계는 바꾸지 않았다. E2R Chrome PID 18964는 살아 있지만 현재 page 14개 중 ChatGPT page는
+0개다. Threads·Amazon·Coupang 등 사용자 page를 이동시키지 않았고, 새 window/tab도 만들지 않았다.
+R16도 재전송하지 않았다. 다음 browser 단계는 기존 E2R Chrome 창에 로그인된 ChatGPT page 한 개가
+존재할 때 그 동일 target만 재사용하는 것이다.
+
+master 완료 상태는 아직 1/3 live full thesis다. C17의 R16 무재전송 복구와 C17 full thesis, 새 blind C28
+full thesis가 남았으므로 `OPERATIONAL_RESEARCH_READY`는 계속 금지한다.

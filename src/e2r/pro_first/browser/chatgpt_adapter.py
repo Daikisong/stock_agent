@@ -1488,6 +1488,7 @@ class PlaywrightChatGPTWebAdapter:
         """
 
         candidate_keys = tuple(key for key, _locator in candidates)
+        schema_identity_mismatch_seen = False
         for index, expected_key in enumerate(candidate_keys):
             current_candidates = await self._new_json_candidates(
                 assistant_turn_id=assistant_turn_id,
@@ -1524,17 +1525,23 @@ class PlaywrightChatGPTWebAdapter:
             except (UnicodeDecodeError, json.JSONDecodeError):
                 candidate_path.unlink(missing_ok=True)
                 payload = None
-            if (
-                isinstance(payload, dict)
-                and payload.get("schema_version") == "e2r_pro_research_dossier_v3"
-                and str(payload.get("job_id") or "") == job_id
-                and str(payload.get("run_id") or "") == run_id
+            if isinstance(payload, dict) and (
+                payload.get("schema_version") == "e2r_pro_research_dossier_v3"
             ):
-                candidate_path.replace(part_path)
-                return key, suggested, payload
+                if (
+                    str(payload.get("job_id") or "") == job_id
+                    and str(payload.get("run_id") or "") == run_id
+                ):
+                    candidate_path.replace(part_path)
+                    return key, suggested, payload
+                schema_identity_mismatch_seen = True
             candidate_path.unlink(missing_ok=True)
             if await first_visible(self.page, PREVIEW_CLOSE_SELECTORS) is not None:
                 await self._dismiss_visible_file_preview()
+        if schema_identity_mismatch_seen:
+            raise BrowserUIIncompatible(
+                "downloaded JSON report job/run identity differs from the capture request"
+            )
         raise BrowserUIIncompatible(
             "no generated JSON attachment matched the ResearchDossierV3 schema and exact job/run identity"
         )
@@ -1839,6 +1846,23 @@ class PlaywrightChatGPTWebAdapter:
         )
         if await container.count() != 1:
             return None
+        # ``ancestor::*`` can otherwise escape an artifact row and bind a
+        # candidate to a stale preview's download control through BODY.  That
+        # is especially dangerous when an MD preview is still mounted while
+        # the next PDF attachment is selected.  A direct control is accepted
+        # only from a local row-like container, never from the whole page or
+        # the whole assistant turn.
+        if await container.evaluate(
+            """element => {
+                const tag = element.tagName.toLowerCase();
+                return tag === 'html' || tag === 'body'
+                    || element.matches(
+                        'article, section[data-turn], '
+                        + '[data-message-author-role], [data-message-id], [data-turn-id]'
+                    );
+            }"""
+        ):
+            return None
         controls = container.locator("xpath=" + labelled_download)
         enabled: list[Any] = []
         for index in range(await controls.count()):
@@ -1847,7 +1871,37 @@ class PlaywrightChatGPTWebAdapter:
                 enabled.append(item)
         if len(enabled) != 1:
             return None
-        return enabled[0]
+        control = enabled[0]
+        expected_filename = await self._attachment_candidate_name(candidate)
+        control_download = str(
+            await control.get_attribute("download") or ""
+        ).strip()
+        if control_download and control_download != expected_filename:
+            return None
+
+        # The local container may have several attachment rows but only one
+        # visible download control.  Refuse that ambiguous binding as well.
+        # The broad locator is intentionally de-duplicated by the browser and
+        # direct controls are excluded from the filename roster.
+        visible_filenames: set[str] = set()
+        row_items = container.locator(
+            'button, a, [data-testid*="behavior-btn"], .entity-underline'
+        )
+        for index in range(await row_items.count()):
+            item = row_items.nth(index)
+            if not await item.is_visible():
+                continue
+            aria_label = str(
+                await item.get_attribute("aria-label") or ""
+            ).casefold()
+            if "파일 다운로드" in aria_label or "download file" in aria_label:
+                continue
+            filename = await self._attachment_candidate_name(item)
+            if re.search(r"\.(?:md|pdf|json)$", filename, re.IGNORECASE):
+                visible_filenames.add(filename)
+        if visible_filenames != {expected_filename}:
+            return None
+        return control
 
     async def _click_direct_download_or_capture_fetch(
         self,
@@ -1952,6 +2006,33 @@ class PlaywrightChatGPTWebAdapter:
                     for task in done
                     if not task.cancelled() and task.exception() is None
                 ]
+            # CDP publishes ``Network.responseReceived`` before the response
+            # body is always readable.  Give the normal Playwright download
+            # or response surface a short chance to finish before asking CDP
+            # for the body.  This removes a scheduler-dependent race without
+            # weakening the exact URL/filename checks below.
+            if (
+                cdp_task is not None
+                and cdp_task in successful
+                and download_task not in successful
+                and response_task not in successful
+            ):
+                primary_pending = {
+                    task
+                    for task in (download_task, response_task)
+                    if not task.done()
+                }
+                if primary_pending:
+                    primary_done, _still_pending = await asyncio.wait(
+                        primary_pending,
+                        timeout=0.25,
+                        return_when=asyncio.FIRST_COMPLETED,
+                    )
+                    successful.extend(
+                        task
+                        for task in primary_done
+                        if not task.cancelled() and task.exception() is None
+                    )
             if download_task in successful:
                 return download_task.result()
             if response_task in successful:
@@ -1972,10 +2053,41 @@ class PlaywrightChatGPTWebAdapter:
                     raise BrowserUIIncompatible(
                         "artifact CDP response metadata is malformed"
                     )
-                body_result = await cdp_session.send(
-                    "Network.getResponseBody",
-                    {"requestId": str(params.get("requestId") or "")},
-                )
+                try:
+                    body_result = await cdp_session.send(
+                        "Network.getResponseBody",
+                        {"requestId": str(params.get("requestId") or "")},
+                    )
+                except Exception as cdp_body_error:
+                    # On some Chromium/Python schedules the CDP event wins the
+                    # race but getResponseBody is still premature.  Wait for
+                    # the already-armed public response/download observers;
+                    # do not click again and do not accept a different URL.
+                    primary_pending = {
+                        task
+                        for task in (download_task, response_task)
+                        if not task.done()
+                    }
+                    if primary_pending:
+                        await asyncio.wait(primary_pending)
+                    if (
+                        not download_task.cancelled()
+                        and download_task.exception() is None
+                    ):
+                        return download_task.result()
+                    if (
+                        not response_task.cancelled()
+                        and response_task.exception() is None
+                    ):
+                        fallback_response = response_task.result()
+                        return await self._validated_response_download(
+                            expected_filename=expected_filename,
+                            status=int(fallback_response.status),
+                            content=await fallback_response.body(),
+                        )
+                    raise BrowserUIIncompatible(
+                        "artifact fetch body was unavailable on every observed transport"
+                    ) from cdp_body_error
                 raw_body = str(body_result.get("body") or "")
                 content = (
                     base64.b64decode(raw_body)
