@@ -1,5 +1,5 @@
 {
-  "receipt_hash": "73de48aa804873149de4e6672b9f0a27e6e50228f8faa690c88054c3da55e9a0",
+  "receipt_hash": "ac0e3e60146c28243d98882d17dc5b7ffa74420945bcbca60532aecf1deae097",
   "reviewer_count": 8,
   "reviewers": [
     {
@@ -34,7 +34,7 @@
           "sha256": "be38dce57495a2c710cc3f996d66b5e8a3b375b84cd6d9ea78b1c027b0e3b379"
         }
       ],
-      "output_hash": "97056e05cda4a549965373146a4f898c718445b3bb867dd2c61083d002b5b824",
+      "output_hash": "b3610d1864717b3de56f51069f9a223930b91f02c74f89f026f210d644553fc5",
       "reviewer_id": "A",
       "scope": "36 contract totality / primitive coverage",
       "test_count": 8,
@@ -68,7 +68,7 @@
           "sha256": "cd154604d6b026a4fe25697f69fe0b9d64745d77af0a98f7a690067ae735305f"
         }
       ],
-      "output_hash": "7485f868e1f5543d5ed0ba0daa58ef8dcf1841f328c7a15cfaaa3147b797ba60",
+      "output_hash": "8460018b90fdb6c9496509ad2f9783d9aa14ccb6ff14a786f81502d147d176e9",
       "reviewer_id": "B",
       "scope": "prompt compiler / archetype specificity / no gold leakage",
       "test_count": 13,
@@ -78,57 +78,67 @@
     {
       "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_browser_adapter tests.test_e2r_pro_first_v2_multi_pass",
       "exit_code": 0,
-      "finding": "57 leaf-level tests passed for multi-pass browser state / exactly-once follow-up.",
-      "input_hash": "13e0fd9c8f525a41ec5fba35ca443ad571bc8eb54cef1c6ea33533cfe0152524",
+      "finding": "70 leaf-level tests passed for multi-pass browser state / exactly-once follow-up.",
+      "input_hash": "ca97f6f59dbca17a3be88497d43f037f56e1860322b9e9c171a575848bf5535d",
       "input_manifest": [
         {
-          "bytes": 81288,
+          "bytes": 113927,
           "path": "src/e2r/pro_first/browser/chatgpt_adapter.py",
-          "sha256": "a40d2e787eb8fe4fba37aba35afa0aabf70753069ab297afb978dd3cf201bd11"
+          "sha256": "32f363b7e93b4959cf5f987bfdf112da6e9f88251121ba88b8d55762e71730a8"
         },
         {
-          "bytes": 49512,
+          "bytes": 50975,
           "path": "src/e2r/pro_first/multi_pass/ledger.py",
-          "sha256": "f3e91bff0433c364ca2e3981ddfc4840c05e76aeadd20c4d5b1e55ada0212ba0"
+          "sha256": "6b3e6097bf76640a3612628e62f25e8a812021d0de68e30933cea0054d622493"
         },
         {
-          "bytes": 29342,
+          "bytes": 30476,
           "path": "src/e2r/pro_first/multi_pass/orchestrator.py",
-          "sha256": "2ef8779502db1bc3af014a02fdeb7bbbde7be1da92edaf887d2642fdcafbc526"
+          "sha256": "c6f473beb653230c36303700ff4d70032b4c2e6652f656900da189518ed11d86"
         },
         {
-          "bytes": 28302,
+          "bytes": 45817,
           "path": "tests/test_e2r_pro_first_browser_adapter.py",
-          "sha256": "4a69a5f5273638a95cfb558e381c8c308dc38a9da1d68455927deb0803cce170"
+          "sha256": "ff96cf6394c44a2c2898aebe5dd0de710d0e5439079a0b1c2064705973a8eba8"
         },
         {
-          "bytes": 36439,
+          "bytes": 39289,
           "path": "tests/test_e2r_pro_first_v2_multi_pass.py",
-          "sha256": "72084b715bfd3e39c4b51d109de44a18b2b5aa5b432afd4c108313b5cf5c0c89"
+          "sha256": "e9f1b251b9f839a835540ac22e4aba5878e57e91537f1087e95d5cbddc692a6c"
         }
       ],
-      "output_hash": "b1db0bdc327ba126965943e23d9d0707125c7b37649ef5bedbad23eece440aa5",
+      "output_hash": "4ab017d2a6924f332233eb5a10672407ce7d5f4d561aaeb40958f84cedcf5371",
       "reviewer_id": "C",
       "scope": "multi-pass browser state / exactly-once follow-up",
-      "test_count": 57,
+      "test_count": 70,
       "timed_out": false,
       "verdict": "PASS"
     },
     {
-      "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_gap_adjudication tests.test_e2r_pro_first_v2_saturation",
+      "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_evidence_contract_utf8 tests.test_e2r_pro_first_gap_adjudication tests.test_e2r_pro_first_v2_saturation",
       "exit_code": 0,
-      "finding": "54 leaf-level tests passed for gap availability / adequate search / fixpoint.",
-      "input_hash": "3e5e1bf0961ac053542ccf47d7819bbb1a2d804724f02359213b5284724f21d6",
+      "finding": "63 leaf-level tests passed for gap availability / adequate search / fixpoint.",
+      "input_hash": "c10c7c556aea55b84b5a6d2bba0b9388242ef8a3603f85bab332569d593a2c00",
       "input_manifest": [
         {
-          "bytes": 21281,
-          "path": "src/e2r/pro_first/gaps/adjudicator.py",
-          "sha256": "58d183deab41d5cfbcacfc3a10dacea0f22640ceda47e746853a894bef93e712"
+          "bytes": 8770,
+          "path": "src/e2r/agentic/evidence_contract.py",
+          "sha256": "509c0a381b1bceb28eeb366622d5049eb09fd37490c59cb5b1deb7dcf0cb8884"
         },
         {
-          "bytes": 4435,
+          "bytes": 10865,
+          "path": "src/e2r/agentic/evidence_contract_v2.py",
+          "sha256": "65961f12947d905f47e2b054625129ea69640e9fa01dad487414d8774715c723"
+        },
+        {
+          "bytes": 22869,
+          "path": "src/e2r/pro_first/gaps/adjudicator.py",
+          "sha256": "9b8c61cf17ef9377ee5b18bf26c4baf8af47cb63016d255c005d3d8a4a2dd5ba"
+        },
+        {
+          "bytes": 5488,
           "path": "src/e2r/pro_first/gaps/source_family_policy.py",
-          "sha256": "332d5a2600b3f932807d2a7fd7f781b3d4db61acf9f6cadaafb70a822fdb35b4"
+          "sha256": "1110cdb795353983ebb157304c725e81939080b7ac35eba63af6895c3b2c45ab"
         },
         {
           "bytes": 2698,
@@ -141,20 +151,25 @@
           "sha256": "50bedf034e27795954d71f8516b2f30ee7613de5b24aafe758b92b7970bd60fc"
         },
         {
-          "bytes": 35826,
-          "path": "tests/test_e2r_pro_first_gap_adjudication.py",
-          "sha256": "51659d2da844e51dc0b7daf377a30a05a38fd1b8933990461a0a7d49d676f659"
+          "bytes": 1487,
+          "path": "tests/test_e2r_evidence_contract_utf8.py",
+          "sha256": "e836fa52933c8f5c1b5c7cbc82ca1f948e6c6c606f8437eb786bea52d269fdcb"
         },
         {
-          "bytes": 55680,
+          "bytes": 41820,
+          "path": "tests/test_e2r_pro_first_gap_adjudication.py",
+          "sha256": "6d8ec2ca16e801c5336e069c2fb377282671197f5d577b5be82439ae663fa0d2"
+        },
+        {
+          "bytes": 60761,
           "path": "tests/test_e2r_pro_first_v2_saturation.py",
-          "sha256": "ca5b63c9f252f8f75175a7cabfc57854f543a2742898cb5b95c144feca151074"
+          "sha256": "94741f6b7f5a9d497418d44a89d3069aae6469978514c017f78f8c30773426e5"
         }
       ],
-      "output_hash": "997a5c25d0f5f603d02e51063b0367dbbbf2ec500d27f97ec26ac262c93ea4e6",
+      "output_hash": "5ab948f1b7488358d9697da166a333978b98343d6074f7c20c8e5a4d2ca23789",
       "reviewer_id": "D",
       "scope": "gap availability / adequate search / fixpoint",
-      "test_count": 54,
+      "test_count": 63,
       "timed_out": false,
       "verdict": "PASS"
     },
@@ -162,7 +177,7 @@
       "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_source_verification tests.test_e2r_pro_first_v2_verifier_repair",
       "exit_code": 0,
       "finding": "50 leaf-level tests passed for source verifier / repair / lifecycle.",
-      "input_hash": "fcb369222e178be88c71f27a3310673586ce79c60494b85b18841dece8a7cb75",
+      "input_hash": "f3d8d7d41e210eb78bd7729d984af34a16abf0c7e617b4e176e550a6f5a7ea60",
       "input_manifest": [
         {
           "bytes": 34732,
@@ -175,9 +190,9 @@
           "sha256": "79d1f6ff0980806c45c760e21b325af4142f517acdd2414e6a119fd43c4d82e7"
         },
         {
-          "bytes": 122998,
+          "bytes": 127302,
           "path": "src/e2r/pro_first/canary/live_v2.py",
-          "sha256": "fe0757e62899c33295cbf38c3b39166957a5438980584e3f292525a1728b6f57"
+          "sha256": "efc8945e7d86bdc4f4bac4a1c64bf38b1431bfbd7417686b547b6f02967e0f5f"
         },
         {
           "bytes": 40241,
@@ -190,7 +205,7 @@
           "sha256": "85aebc792cc6a844ed27b4fc8788d301e1f416ab1cf256efe49b26a39d620b1b"
         }
       ],
-      "output_hash": "d53ac463d1704923b12e56da679bbb2c329b0607ec0f6626acc709ad31b7c91f",
+      "output_hash": "cee4cb8a2c799f9d58b68476c8a211d75733a067a7ad7c54576d3dccb46f387d",
       "reviewer_id": "E",
       "scope": "source verifier / repair / lifecycle",
       "test_count": 50,
@@ -200,13 +215,13 @@
     {
       "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_scoring_bridge tests.test_e2r_pro_first_v2_dossier_status tests.test_e2r_pro_first_v2_readiness_view",
       "exit_code": 0,
-      "finding": "57 leaf-level tests passed for component/Judge/scoring/Stage publication gate.",
-      "input_hash": "2aa2029ef9ad6182621771588aa074e43089e97663c3e809b6b030108fc7ab5e",
+      "finding": "62 leaf-level tests passed for component/Judge/scoring/Stage publication gate.",
+      "input_hash": "4ca6fca508781921b54fe891af1522c92bdc965d5bcf373353ae6a66dd51ec5d",
       "input_manifest": [
         {
-          "bytes": 57785,
+          "bytes": 58110,
           "path": "src/e2r/pro_first/scoring/service.py",
-          "sha256": "3ac09d1af273a84d0aa3971ea441bd94e5d8d62cd0c25b619531f045c54ea11b"
+          "sha256": "8fb906e90b977a1b941e479aee9cd1d3c44bcd9b2dd08ca4220812cc822e9c8e"
         },
         {
           "bytes": 15012,
@@ -219,9 +234,9 @@
           "sha256": "b2abdd3704e71fea48ab72dcdcd6e3d4c108dee631f85806c52cd8da4175f0dc"
         },
         {
-          "bytes": 62326,
+          "bytes": 70364,
           "path": "tests/test_e2r_pro_first_scoring_bridge.py",
-          "sha256": "8f357b72f23d82e18d788de3a43685c2447c9531656f1776d27b0e0ba2725f86"
+          "sha256": "74b6309f3a7d3a1832a9599b0f923400c9decbfef088a7cca18e2b9cb819954c"
         },
         {
           "bytes": 37567,
@@ -234,10 +249,10 @@
           "sha256": "3aa881df837a4c94b5f603fb09b5bde836b05eb90651a17e044ee746d18bf145"
         }
       ],
-      "output_hash": "036ef1f9eb272f04832c1a420dbdafa5e96dacd7f8940c33d45bc8ff79fdad3e",
+      "output_hash": "f6706bfddb30580b646882be5a163fd3f878022679129fd2aa58e9df3608ec63",
       "reviewer_id": "F",
       "scope": "component/Judge/scoring/Stage publication gate",
-      "test_count": 57,
+      "test_count": 62,
       "timed_out": false,
       "verdict": "PASS"
     },
@@ -278,7 +293,7 @@
           "sha256": "2c663c4f4b4d1d1f1b41a80965b9fa07451561a09b09e27bfe998884d50b456f"
         }
       ],
-      "output_hash": "bf56cbf93cfc57a8b857a3fa873882a5c7386a0fd9be6aab0a3d55f941a16664",
+      "output_hash": "a90e33b3469bf4f758740dfb1e89ccce0b9ad2e50c2868297d67a7186cc9d610",
       "reviewer_id": "G",
       "scope": "cross-archetype generalization / known-bad",
       "test_count": 15,
@@ -288,13 +303,13 @@
     {
       "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_v2_static_audit tests.test_e2r_pro_first_v2_1_fresh_efficiency_audit tests.test_e2r_pro_first_v2_live_runtime tests.test_e2r_pro_first_v2_independent_review",
       "exit_code": 0,
-      "finding": "44 leaf-level tests passed for CI/security/performance/idempotency.",
-      "input_hash": "282817399682b370a90036a747986de3cb20baaff89ee8630328630f4b6cc19c",
+      "finding": "47 leaf-level tests passed for CI/security/performance/idempotency.",
+      "input_hash": "6eb96eca6423467da53f8e18329f20f20aa44363776fa6cb42c1d9631f6644d4",
       "input_manifest": [
         {
-          "bytes": 6099,
+          "bytes": 7433,
           "path": ".github/workflows/e2r_pro_first_verify.yml",
-          "sha256": "2797ca92cf1ac56e40d6ea4deeae24213f3889509168e7c6865c149ca2a3c060"
+          "sha256": "a22206121daccd115aa80c07734fbda4760c181730f0c1c5a4eff01e3eef3e69"
         },
         {
           "bytes": 9346,
@@ -312,14 +327,14 @@
           "sha256": "9cc3f1fc8256aef562a6038733dfe4740c7a57fa7752180087bd5bbfbaa073ed"
         },
         {
-          "bytes": 35699,
+          "bytes": 38050,
           "path": "src/e2r/pro_first/packet.py",
-          "sha256": "d07b374551c9ee59041b3039042db2b5622d3132692cda482150df6eb87aae68"
+          "sha256": "42cf21f913275e18e59130f927f096d51bdfa3f49333fd8fa4c7dfa6990b6ad5"
         },
         {
-          "bytes": 9689,
+          "bytes": 9905,
           "path": "src/e2r/pro_first/independent_review_v2.py",
-          "sha256": "2444bde739d684cc405c1f2ba575c114cab50c6a6c70fde5f00374e00b9b183c"
+          "sha256": "5c65a8b3a040323b89ce661f11d79ad57335d152a4ce10875282e2d05cbe38bb"
         },
         {
           "bytes": 1664,
@@ -332,9 +347,9 @@
           "sha256": "041c9b576833504e17b1a4593f2f9c4f7e8d0fe5cc854543fb3ee93e62de8e93"
         },
         {
-          "bytes": 67775,
+          "bytes": 74899,
           "path": "tests/test_e2r_pro_first_v2_live_runtime.py",
-          "sha256": "f8c9f81645d931ea349c8400cd24944cbb33c179b85ab4a444731a143996c861"
+          "sha256": "75d3dbc007ebe97555c03267c974c1888fbe9a737e51274d7e96652a0b1832d6"
         },
         {
           "bytes": 3207,
@@ -342,10 +357,10 @@
           "sha256": "c90c04dc709cb6f76a3b514aede13cab0f4659391d8fc3ecb3ce726a8fad71b5"
         }
       ],
-      "output_hash": "93755d98a5dad5b08304a3f6a57af889bef1710e7d20d05eab946e38b6632ede",
+      "output_hash": "5cbefd813cf55373c6859f2f4ebd21aa3c25db3a6c9ebfb298779b13f561716a",
       "reviewer_id": "H",
       "scope": "CI/security/performance/idempotency",
-      "test_count": 44,
+      "test_count": 47,
       "timed_out": false,
       "verdict": "PASS"
     }

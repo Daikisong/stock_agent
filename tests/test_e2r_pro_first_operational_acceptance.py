@@ -276,7 +276,7 @@ class ProFirstStaticAuditTest(unittest.TestCase):
             '"tests/research_saturation_fixture.py"',
         ):
             self.assertEqual(workflow.count(required_path), 2)
-        self.assertIn('E2R_FULL_UNIT_TEST_FLOOR: "7858"', workflow)
+        self.assertIn('E2R_FULL_UNIT_TEST_FLOOR: "7860"', workflow)
         self.assertIn("countTestCases()", workflow)
         self.assertIn(
             "discovered < E2R_FULL_UNIT_TEST_FLOOR",

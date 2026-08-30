@@ -71,14 +71,18 @@ REVIEWER_SPECS = (
         "D",
         "gap availability / adequate search / fixpoint",
         (
+            "tests.test_e2r_evidence_contract_utf8",
             "tests.test_e2r_pro_first_gap_adjudication",
             "tests.test_e2r_pro_first_v2_saturation",
         ),
         (
+            "src/e2r/agentic/evidence_contract.py",
+            "src/e2r/agentic/evidence_contract_v2.py",
             "src/e2r/pro_first/gaps/adjudicator.py",
             "src/e2r/pro_first/gaps/source_family_policy.py",
             "src/e2r/pro_first/saturation/audit.py",
             "src/e2r/pro_first/saturation/fixpoint.py",
+            "tests/test_e2r_evidence_contract_utf8.py",
             "tests/test_e2r_pro_first_gap_adjudication.py",
             "tests/test_e2r_pro_first_v2_saturation.py",
         ),

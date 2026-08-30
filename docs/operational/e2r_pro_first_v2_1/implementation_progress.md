@@ -4871,3 +4871,43 @@ R16도 재전송하지 않았다. 다음 browser 단계는 기존 E2R Chrome 창
 
 master 완료 상태는 아직 1/3 live full thesis다. C17의 R16 무재전송 복구와 C17 full thesis, 새 blind C28
 full thesis가 남았으므로 `OPERATIONAL_RESEARCH_READY`는 계속 금지한다.
+
+## P40 — Windows UTF-8 이식성 수리와 최신 Reviewer A–H 재검증
+
+최신 `e7b650d4` head에서 Reviewer A–H를 다시 실행하던 중 Linux와 Windows가 서로 다른 실패를 보였다.
+Linux Reviewer C는 Playwright headless shell의 `libnspr4/libnss3/libasound2` 공유 라이브러리가 없어 test
+body 전에 종료됐고, Windows Reviewer D는 Evidence Contract JSON을 CP949로 해석하다
+`UnicodeDecodeError`가 났다. Windows Reviewer H의 Git 오류는 `\\wsl.localhost` UNC 경로에서 Windows Git을
+실행한 환경 경계였으므로, 저장소가 실제로 존재하는 Linux 환경에 사용자 권한 Playwright 라이브러리를
+연결해 A–H를 한 환경에서 다시 검증했다.
+
+코드 결함은 Evidence Contract V1/V2 loader가 `Path.read_text()`에 encoding을 명시하지 않은 것이었다.
+Linux의 기본 UTF-8에서는 숨어 있었지만 Windows 기본 CP949에서는 한글 JSON을 읽을 수 없었다. 두 loader를
+`read_text(encoding="utf-8")`로 고치고, 두 공개 loader가 어느 플랫폼에서도 UTF-8을 명시하는지 mock으로
+직접 검사하는 회귀 2개를 추가했다. Reviewer D의 leaf input manifest에도 두 loader와 새 테스트를 넣어
+간접 테스트만 하고 입력 hash에서 빠지는 일이 없게 했다.
+
+```text
+portable loader regression          2 / 2 PASS
+Reviewer C browser/exactly-once      70 / 70 PASS
+Reviewer D gap/saturation            63 / 63 PASS
+changed-surface focused              91 / 91 PASS
+Reviewer A~H                         PASS / A8 B13 C70 D63 E50 F62 G15 H47
+review receipt hash                  ac0e3e60146c28243d98882d17dc5b7ffa74420945bcbca60532aecf1deae097
+full unittest discovery              7,860 / exit 0 / failure·error 0
+production static audit              PASS / critical 0 / guarded submit 1
+V2 requirement static audit          PASS / critical 0
+compileall / diff check              PASS / PASS
+```
+
+새 테스트 2개를 보존하도록 Pro-first CI discovery 하한도 7,858에서 7,860으로 올렸다. 과거 P38/P39의
+7,858 결과는 당시 head의 사실이므로 수정하지 않는다. 정규화 영수증은
+`p40_windows_utf8_portability_and_current_independent_review_receipt.json`이며, 이 patch의 GitHub Actions는
+commit/push 뒤 별도로 확인한다.
+
+R16 제출 후 복구 preflight도 다시 확인했다. durable job은 `submit_count=1`, `capture_count=0`,
+`USER_ATTENTION_REQUIRED`이고, packet manifest와 Windows runtime config hash는 모두
+`f079a7a459ca58e17046f1d0e566d20501ef193cef4ec9dd62ec91587f8e7a1c`로 정확히 같다. 같은 ChatGPT page가
+있으면 현 CLI로 재전송 없이 복구할 수 있다. 현재 E2R Chrome은 page 12개, ChatGPT page 0개이므로 다른
+Threads·쇼핑 탭을 이동시키지 않았고 새 window/tab도 만들지 않았다. live full thesis는 여전히 1/3이며,
+C17과 새 blind C28이 닫히기 전 `OPERATIONAL_RESEARCH_READY`는 금지한다.
