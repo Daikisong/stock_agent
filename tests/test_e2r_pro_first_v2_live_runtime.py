@@ -716,6 +716,76 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
             ["PASS-CURRENT-NEW-CONTEXT"],
         )
 
+    def test_durable_pass_rows_keep_artifact_reexport_only_in_transport_ledger(self) -> None:
+        initial = SimpleNamespace(
+            pass_ordinal=1,
+            pass_id="PASS-INITIAL",
+            parent_pass_id=None,
+            pass_name="INITIAL_FULL_RESEARCH",
+            status="COMPLETE",
+            submit_count=1,
+            prompt_hash="a" * 64,
+            response_hash="b" * 64,
+            detail={},
+        )
+        artifact = SimpleNamespace(
+            pass_ordinal=2,
+            pass_id="PASS-ARTIFACT",
+            parent_pass_id="PASS-INITIAL",
+            pass_name="ARTIFACT_REEXPORT",
+            status="COMPLETE",
+            submit_count=1,
+            prompt_hash="c" * 64,
+            response_hash="d" * 64,
+            detail={"transport_only": True},
+        )
+        current = SimpleNamespace(
+            pass_ordinal=3,
+            pass_id="PASS-CURRENT",
+            parent_pass_id="PASS-INITIAL",
+            pass_name="PUBLIC_GAP_CLOSURE",
+            status="RESEARCH_RUNNING",
+            submit_count=1,
+            prompt_hash="e" * 64,
+            response_hash=None,
+            detail={},
+        )
+
+        class FakeLedger:
+            def list_passes(self, _job_id):
+                return (initial, artifact, current)
+
+            def get_pass(self, pass_id):
+                return next(
+                    row
+                    for row in (initial, artifact, current)
+                    if row.pass_id == pass_id
+                )
+
+        rows = _durable_pass_rows(
+            FakeLedger(),  # type: ignore[arg-type]
+            "JOB-1",
+            current_pass_id=current.pass_id,
+            current_response_hash="f" * 64,
+            prior_dossier={
+                "research_passes": [
+                    {
+                        "pass_id": initial.pass_id,
+                        "parent_pass_id": initial.parent_pass_id,
+                        "pass_name": initial.pass_name,
+                        "status": "COMPLETE",
+                        "prompt_hash": initial.prompt_hash,
+                        "response_hash": initial.response_hash,
+                    }
+                ]
+            },
+        )
+
+        self.assertEqual(
+            [row["pass_id"] for row in rows],
+            ["PASS-INITIAL", "PASS-CURRENT"],
+        )
+
     def test_durable_pass_rows_reject_unbound_or_mismatched_failed_pass(self) -> None:
         failed = SimpleNamespace(
             pass_ordinal=1,

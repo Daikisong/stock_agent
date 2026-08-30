@@ -67,7 +67,10 @@ class ProDossierImporter:
         final_response_text: str | None = None,
         expected_research_pass_id: str | None = None,
         expected_parent_pass_id: str | None = None,
+        expected_response_hash: str | None = None,
     ) -> DossierImportResult:
+        if expected_response_hash is not None and len(expected_response_hash) != 64:
+            raise ValueError("expected response hash must be sha256")
         root = Path(job_root).resolve()
         incoming = root / "capture/incoming"
         receipt = load_capture_receipt(incoming / "browser_capture_receipt.json")
@@ -100,6 +103,22 @@ class ProDossierImporter:
                 raise ValueError("durable dossier import exists without canonical import artifacts")
             file_receipt = json.loads(import_receipt_path.read_text(encoding="utf-8"))
             normalized_payload = json.loads(normalized_path.read_text(encoding="utf-8"))
+            if expected_response_hash is not None:
+                matching_passes = [
+                    row
+                    for row in normalized_payload.get("research_passes") or ()
+                    if isinstance(row, Mapping)
+                    and str(row.get("pass_id") or "")
+                    == str(expected_research_pass_id or "")
+                ]
+                if (
+                    len(matching_passes) != 1
+                    or matching_passes[0].get("response_hash")
+                    != expected_response_hash
+                ):
+                    raise ValueError(
+                        "canonical imported dossier differs from the expected durable response hash"
+                    )
             if canonical_hash(normalized_payload) != stored.get(
                 "normalized_dossier_hash"
             ):
@@ -181,7 +200,11 @@ class ProDossierImporter:
                     receipt.prompt_hash if expected_parent_pass_id is None else None
                 ),
                 response_hash=(
-                    receipt.report_md_hash if expected_parent_pass_id is None else None
+                    (
+                        expected_response_hash or receipt.report_md_hash
+                    )
+                    if expected_parent_pass_id is None
+                    else None
                 ),
             )
             validation = self.validator.validate(

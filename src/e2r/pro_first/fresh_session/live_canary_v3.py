@@ -1077,17 +1077,23 @@ class FreshV3InitialLiveCanaryRunner:
         started: float,
         initial_research_seconds: float,
     ) -> Mapping[str, Any]:
+        scope = orchestrator.ledger.get_scope(fresh_job_id)
+        initial_response_hash = (
+            scope.initial_response_hash
+            if scope is not None
+            else capture_receipt.report_md_hash
+        )
         imported = ProDossierImporter(self.store).import_job(
             fresh_job_id,
             job_root=boundary.fresh_job_root,
             expected_research_pass_id=built.initial_pass_id,
             expected_parent_pass_id=None,
+            expected_response_hash=initial_response_hash,
         )
-        scope = orchestrator.ledger.get_scope(fresh_job_id)
         if scope is None:
             scope = orchestrator.establish_followup_scope(
                 built,
-                initial_response_hash=capture_receipt.report_md_hash,
+                initial_response_hash=initial_response_hash,
             )
         ProMultiPassDossierStore(ProMultiPassLedger(self.store)).persist(
             job_id=fresh_job_id,

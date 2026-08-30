@@ -49,6 +49,7 @@ from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
     _question_ids_without_repairable_candidates,
     _question_ids_with_reopen_budget,
     _question_route_progress_state,
+    _reconcile_artifact_reexport_initial_pass_row,
     _repairable_classifications,
     _require_operational_followup_budget,
     _same_question_reopen_limit_reached,
@@ -1276,6 +1277,107 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             saturation.research_pass.parent_pass_id,
             self.built.initial_pass_id,
         )
+
+    async def test_artifact_reexport_capture_hash_reconciles_only_initial_pass_metadata(
+        self,
+    ) -> None:
+        conversation_id = "fresh-conversation-artifact-hash"
+        adapter = await self._prepare_and_approve(conversation_id)
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="d" * 64,
+        )
+        plan, _compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="ARTIFACT_REEXPORT",
+            latest_dossier_digest={
+                "initial_response_hash": "d" * 64,
+                "transport_only": True,
+            },
+            pass_inputs={
+                "route_reason": "CHATGPT_SANDBOX_ARTIFACT_FILE_NOT_FOUND",
+                "expected_artifact_filename": "ResearchDossierV3.json",
+                "initial_research_pass_id": self.built.initial_pass_id,
+                "new_research_allowed": False,
+            },
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        await self.orchestrator.submit_followup(plan, adapter)
+        artifact = self.orchestrator.complete_followup(
+            plan.research_pass.pass_id,
+            response_hash="e" * 64,
+            conversation_id=conversation_id,
+        )
+        initial = self.orchestrator.ledger.get_pass(self.built.initial_pass_id)
+        captured_file_hash = "f" * 64
+        dossier = {
+            "schema_version": "e2r_pro_research_dossier_v3",
+            "material_facts": [{"dossier_fact_id": "PROFACT-UNCHANGED"}],
+            "research_passes": [
+                {
+                    "pass_id": initial.pass_id,
+                    "parent_pass_id": None,
+                    "pass_name": initial.pass_name,
+                    "status": "COMPLETE",
+                    "prompt_hash": initial.prompt_hash,
+                    "response_hash": captured_file_hash,
+                }
+            ],
+        }
+        capture = CaptureReceipt(
+            schema_version="e2r_pro_capture_receipt_v1",
+            event_type="PRO_RESEARCH_CAPTURE_COMPLETE",
+            job_id=self.fresh_job.job_id,
+            run_id=str(self.built.packet_payload["run_id"]),
+            target_id=self.fresh_job.symbol,
+            as_of_date=self.fresh_job.as_of_date,
+            packet_hash=str(self.built.job.packet_hash),
+            prompt_hash=initial.prompt_hash,
+            conversation_id=conversation_id,
+            assistant_turn_id="artifact-file-turn",
+            report_md_hash=captured_file_hash,
+            report_pdf_hash=None,
+            dossier_json_hash="9" * 64,
+            submit_count=1,
+            capture_count=1,
+            captured_at="2026-08-25T01:02:03Z",
+            capture_mode=(
+                "CHATGPT_WEB_VISIBLE_CHAT_PRO_FRESH_V3_RECOVERED_NO_SUBMIT"
+            ),
+            capture_source="DOWNLOAD_JSON",
+            optional_pdf_error=None,
+        )
+
+        corrected, receipt = _reconcile_artifact_reexport_initial_pass_row(
+            dossier=dossier,
+            initial_pass=initial,
+            artifact_pass=artifact,
+            capture_receipt=capture,
+        )
+
+        self.assertEqual(
+            corrected["research_passes"][0]["response_hash"],
+            "d" * 64,
+        )
+        self.assertEqual(
+            corrected["material_facts"],
+            dossier["material_facts"],
+        )
+        self.assertEqual(
+            dossier["research_passes"][0]["response_hash"],
+            captured_file_hash,
+        )
+        self.assertEqual(receipt["browser_submit_delta"], 0)
+        self.assertFalse(receipt["fact_content_mutation_allowed"])
+
+        with self.assertRaisesRegex(ValueError, "exact artifact re-export proof"):
+            _reconcile_artifact_reexport_initial_pass_row(
+                dossier=dossier,
+                initial_pass=initial,
+                artifact_pass=None,
+                capture_receipt=capture,
+            )
 
     async def test_visible_artifact_reexport_reconciles_without_second_send(self) -> None:
         conversation_id = "fresh-conversation-visible-artifact-reexport"

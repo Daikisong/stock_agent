@@ -58,6 +58,7 @@ from ..ids import canonical_hash, canonical_json
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
 from ..multi_pass import (
+    ARTIFACT_REEXPORT_PASS_NAME,
     FollowupPassPlan,
     ProMultiPassDossierStore,
     ProMultiPassLedger,
@@ -2143,6 +2144,12 @@ def _durable_pass_rows(
     }
     rows = []
     for record in records:
+        # ARTIFACT_REEXPORT is a transport-only audit turn.  It deliberately
+        # preserves the original dossier research_pass_id and therefore must
+        # remain in the SQL/browser ledger without being projected as a new
+        # semantic ResearchDossier pass.
+        if record.pass_name == ARTIFACT_REEXPORT_PASS_NAME:
+            continue
         # A zero-submit TRANSPORT_PENDING row is an immutable browser-plan
         # audit record, not a completed research response.  It remains in the
         # SQL pass ledger but must not be fabricated into the dossier's list

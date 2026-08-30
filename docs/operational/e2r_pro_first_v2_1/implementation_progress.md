@@ -4596,3 +4596,73 @@ unrelated 테스트가 요구한 오류, Windows Git이 WSL UNC worktree를 `saf
 R15는 initial efficiency gate를 통과했지만 아직 점수/Stage 완료가 아니다. 현재 durable job 상태는
 `GAP_ADJUDICATION`이고 genuine semantic repair 후보가 3개 남아 있다. 다음 작업은 새 initial이나 다른
 창이 아니라 **이 R15의 deterministic adjudication과 bounded same-conversation full-thesis tail**이다.
+
+## P35 — C17 R15 pass 3 무전송 복구와 response/artifact hash 계보 분리
+
+R15 full-thesis 첫 `PUBLIC_GAP_CLOSURE`는 기존 conversation에서 정확히 한 번 전송돼 응답 캡처까지
+끝났지만, effective dossier를 durable pass 장부와 대조하는 단계에서 멈췄다. 원인은 Pro 연구 내용이나
+fact가 아니라 P34의 artifact 재내보내기 경로가 서로 다른 두 byte stream의 SHA-256을 같은 필드로
+취급한 것이었다.
+
+```text
+initial visible response hash   d811ba7b29e03cf6...
+downloaded dossier file hash    f857328a6a740765...
+허용한 변경                      research_passes.initial.response_hash 한 칸
+fact / score / Stage 변경        0 / 0 / 0
+```
+
+쉬운 예로 편지 본문과 그 편지를 담은 JSON 첨부파일은 내용상 연결돼도 바이트는 다르므로 지문도 다르다.
+기존 initial import는 첨부파일 지문을 편지 본문 지문 칸에 적었고, 후속 pass 병합기의 엄격한 대조가 이를
+정상적으로 잡았다.
+
+수리는 종목·아키타입 조건문 없이 generic fail-closed 경계로 구현했다. 초기 import는 이미 durable
+approval scope가 있으면 그 scope의 initial response hash를 사용한다. 과거 R15 snapshot은 exact initial
+pass, 정확히 하나인 `ARTIFACT_REEXPORT` 자식, 같은 conversation/prompt, 검증된 `DOWNLOAD_JSON` capture,
+`COMPLETE/submit_count=1`, score/Stage 권한 없음이 모두 맞을 때만 initial pass row의 response hash 한 칸을
+메모리에서 정규화한다. 원본 snapshot과 runtime DB를 손으로 고치지 않고 새 후속 snapshot이 정정된
+계보를 이어받게 했다.
+
+`ARTIFACT_REEXPORT`는 SQL/browser 감사 장부에는 계속 남지만 semantic ResearchDossier pass가 아니다.
+이 pass의 지시문 자체가 original initial `research_pass_id`를 보존하고 새 연구·fact 판단을 금지했기
+때문이다. 따라서 durable pass projection은 이 운송 전용 행을 dossier의 새 연구 행으로 넣지 않는다.
+이 경계를 회귀 테스트로 추가했다.
+
+같은 기존 탭에 이미 있던 pass 3 capture를 `--recover-submitted-only`로 회수한 결과는 다음과 같다.
+
+```text
+pass                             PROPASS-32e644fe538d1b659cd982bd
+status / submit_count            COMPLETE / 1
+recovery browser submit delta    0
+new fact / lineage / route       5 / 2 / 23
+effective fact / question/route  65 / 26 / 80
+effective dossier hash           8af6f88eb814747f...
+새 탭 / 새 창 / 새 initial         0 / 0 / 0
+```
+
+복구 직후 이전 verification receipt는 새 dossier보다 오래됐으므로 read-only inspection이 그대로 쓰지 않고
+거부했다. 이어서 브라우저를 열지 않는 `VERIFY_CURRENT_DOSSIER_NO_BROWSER`로 65개 fact를 재검문했고,
+그 뒤 완전 read-only inspection도 같은 결과를 재현했다.
+
+```text
+candidate / terminal / accepted  65 / 65 / 47
+accepted current/counter/resolve  32 / 10 / 5
+semantic/source repair candidate  6
+query / search                    0 / 0
+mandatory / nonterminal           26 / 6
+provider-parser core pending      5
+public material gap               14
+source linkage incomplete         5
+verifier repair pending           7
+component entry                   false
+score / Stage publication         없음 / 없음
+```
+
+관련 네 모듈의 Windows 회귀는 명시적 `E2R_SOURCE_COMMIT_SHA`로 148/148 PASS다. 첫 실행에서는 Windows
+Git이 WSL UNC worktree에서 `HEAD`를 읽지 못해 10개가 setup error였고 assertion failure는 0이었다. 공식
+cross-runtime source SHA 입력으로 같은 148개를 재실행해 전부 통과했다. targeted Windows/Linux는 각각
+2/2 PASS, `compileall`과 `git diff --check`도 PASS다. 정규화 영수증은
+`p35_c17_r15_pass3_recovery_and_hash_lineage_receipt.json`에 기록한다.
+
+현재 R15는 initial과 pass 3이 유효하지만 saturation·점수·Stage 완료 상태는 아니다. 다음 단계는 새 창이나
+새 채팅이 아니라 conversation `6a93be74-db60-83ee-a7ab-c8262cbb0b39`의 기존 ChatGPT 탭에서 bounded
+full-thesis tail을 계속하는 것이다.

@@ -9,6 +9,7 @@ the deterministic services.
 
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass
 from datetime import datetime, timezone
 import json
@@ -52,6 +53,7 @@ from ..gaps.service import (
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
 from ..multi_pass import (
+    ARTIFACT_REEXPORT_PASS_NAME,
     FollowupPassPlan,
     ProMultiPassDossierStore,
     ProMultiPassLedger,
@@ -191,6 +193,14 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                 orchestrator=orchestrator,
             )
         )
+        dossier, artifact_hash_reconciliation = (
+            self._reconcile_artifact_reexport_initial_pass_hash(
+                job_id=job_id,
+                job_root=job_root,
+                dossier=dossier,
+                orchestrator=orchestrator,
+            )
+        )
         starting_job = self.store.get_job(job_id)
         if starting_job.status not in {
             JobStatus.GAP_ADJUDICATION.value,
@@ -213,11 +223,14 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
 
         session = await ProBrowserWorker(self.config.browser).open(job_id=job_id)
         prepared: PreparedFreshV3TailRuntime | None = None
-        pass_outcomes: list[Mapping[str, Any]] = (
-            [completed_repair_reconciliation]
-            if completed_repair_reconciliation is not None
-            else []
-        )
+        pass_outcomes: list[Mapping[str, Any]] = [
+            row
+            for row in (
+                completed_repair_reconciliation,
+                artifact_hash_reconciliation,
+            )
+            if row is not None
+        ]
         latest_saturation: ResearchSaturationReceipt | None = None
         verification_state: FreshVerificationState | None = None
         score_receipt: Mapping[str, Any] | None = None
@@ -1237,6 +1250,58 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
         )
         return effective, receipt
 
+    def _reconcile_artifact_reexport_initial_pass_hash(
+        self,
+        *,
+        job_id: str,
+        job_root: Path,
+        dossier: Mapping[str, Any],
+        orchestrator: FreshSessionOrchestratorV3,
+    ) -> tuple[Mapping[str, Any], Mapping[str, Any] | None]:
+        """Repair only the historical transport hash field from the R15 bug.
+
+        The initial visible response and the generated dossier file are two
+        different byte streams.  An artifact-only re-export capture used the
+        file hash while the durable pass ledger correctly retained the initial
+        visible-response hash.  Reconcile that one field only when the exact
+        transport-only lineage and capture bundle prove the mismatch.
+        """
+
+        scope = orchestrator.ledger.get_scope(job_id)
+        if scope is None:
+            return dossier, None
+        initial_pass = orchestrator.ledger.get_pass(scope.initial_pass_id)
+        artifact_passes = tuple(
+            row
+            for row in orchestrator.ledger.list_passes(job_id)
+            if row.pass_name == ARTIFACT_REEXPORT_PASS_NAME
+            and row.parent_pass_id == initial_pass.pass_id
+        )
+        capture_path = job_root / "capture/incoming/browser_capture_receipt.json"
+        if not capture_path.is_file():
+            return dossier, None
+        capture_receipt = load_capture_receipt(capture_path)
+        verify_capture_bundle(job_root, capture_receipt)
+        artifact_pass = artifact_passes[0] if len(artifact_passes) == 1 else None
+        reconciled, receipt = _reconcile_artifact_reexport_initial_pass_row(
+            dossier=dossier,
+            initial_pass=initial_pass,
+            artifact_pass=artifact_pass,
+            capture_receipt=capture_receipt,
+        )
+        if receipt is None:
+            return reconciled, None
+        receipt_path = (
+            job_root
+            / "fresh_session/initial_artifact_response_hash_reconciliation.json"
+        )
+        if receipt_path.is_file() and _read_json(receipt_path) != receipt:
+            raise ValueError(
+                "initial artifact response-hash reconciliation receipt changed"
+            )
+        _write_json_atomic(receipt_path, receipt)
+        return reconciled, receipt
+
     def _emit_fresh(self, phase: str, **payload: Any) -> None:
         self.progress(
             {
@@ -1246,6 +1311,98 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                 **payload,
             }
         )
+
+
+def _reconcile_artifact_reexport_initial_pass_row(
+    *,
+    dossier: Mapping[str, Any],
+    initial_pass: Any,
+    artifact_pass: Any | None,
+    capture_receipt: CaptureReceipt,
+) -> tuple[Mapping[str, Any], Mapping[str, Any] | None]:
+    """Normalize one proven attachment-hash/response-hash transport mismatch."""
+
+    rows = tuple(dossier.get("research_passes") or ())
+    indexes = [
+        index
+        for index, row in enumerate(rows)
+        if isinstance(row, Mapping)
+        and str(row.get("pass_id") or "") == str(initial_pass.pass_id)
+    ]
+    if len(indexes) != 1:
+        raise ValueError(
+            "effective dossier must contain exactly one durable initial pass row"
+        )
+    durable_row = {
+        "pass_id": initial_pass.pass_id,
+        "parent_pass_id": initial_pass.parent_pass_id,
+        "pass_name": initial_pass.pass_name,
+        "status": "COMPLETE",
+        "prompt_hash": initial_pass.prompt_hash,
+        "response_hash": initial_pass.response_hash,
+    }
+    current = dict(rows[indexes[0]])
+    mismatches = tuple(
+        key for key, value in durable_row.items() if current.get(key) != value
+    )
+    if not mismatches:
+        return dossier, None
+    if mismatches != ("response_hash",):
+        raise ValueError(
+            "initial effective-dossier pass differs beyond the response hash"
+        )
+    if (
+        initial_pass.status != "COMPLETE"
+        or initial_pass.submit_count != 1
+        or not isinstance(initial_pass.response_hash, str)
+        or len(initial_pass.response_hash) != 64
+        or artifact_pass is None
+        or artifact_pass.pass_name != ARTIFACT_REEXPORT_PASS_NAME
+        or artifact_pass.parent_pass_id != initial_pass.pass_id
+        or artifact_pass.conversation_id != initial_pass.conversation_id
+        or artifact_pass.status != "COMPLETE"
+        or artifact_pass.submit_count != 1
+        or not isinstance(artifact_pass.response_hash, str)
+        or len(artifact_pass.response_hash) != 64
+        or artifact_pass.score_valid
+        or not artifact_pass.publication_withheld
+        or capture_receipt.capture_source != "DOWNLOAD_JSON"
+        or capture_receipt.conversation_id != initial_pass.conversation_id
+        or capture_receipt.prompt_hash != initial_pass.prompt_hash
+        or current.get("response_hash") != capture_receipt.report_md_hash
+        or not (
+            "ARTIFACT_REEXPORT" in capture_receipt.capture_mode
+            or capture_receipt.capture_mode
+            == "CHATGPT_WEB_VISIBLE_CHAT_PRO_FRESH_V3_RECOVERED_NO_SUBMIT"
+        )
+    ):
+        raise ValueError(
+            "initial response-hash mismatch lacks exact artifact re-export proof"
+        )
+    corrected = deepcopy(dict(dossier))
+    corrected_rows = [deepcopy(dict(row)) for row in rows]
+    corrected_rows[indexes[0]] = durable_row
+    corrected["research_passes"] = corrected_rows
+    receipt: Mapping[str, Any] = {
+        "schema_version": (
+            "e2r_pro_fresh_v3_initial_artifact_response_hash_reconciliation_v1"
+        ),
+        "status": "INITIAL_ARTIFACT_RESPONSE_HASH_RECONCILED",
+        "initial_pass_id": initial_pass.pass_id,
+        "artifact_reexport_pass_id": artifact_pass.pass_id,
+        "capture_source": capture_receipt.capture_source,
+        "capture_mode": capture_receipt.capture_mode,
+        "captured_artifact_hash": capture_receipt.report_md_hash,
+        "durable_initial_response_hash": initial_pass.response_hash,
+        "changed_fields": ["research_passes.initial.response_hash"],
+        "before_effective_dossier_hash": canonical_hash(dossier),
+        "after_effective_dossier_hash": canonical_hash(corrected),
+        "fact_content_mutation_allowed": False,
+        "browser_submit_delta": 0,
+        "score_authority": False,
+        "stage_authority": False,
+    }
+    return corrected, receipt
 
 
 def _parse_and_validate_compact_repair_transport(
