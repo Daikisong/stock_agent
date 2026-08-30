@@ -162,60 +162,53 @@ class PlaywrightChatGPTWebAdapter:
         editor = await first_visible(self.page, EDITOR_SELECTORS)
         if editor is None:
             raise BrowserUIIncompatible("ChatGPT prompt editor was not found")
-        # Real long-lived ChatGPT conversations can keep ProseMirror visibly
-        # mounted while Playwright's actionability check for ``fill`` never
-        # settles.  Browser-local DOM input has already proven reliable for
-        # full-thesis prompts, so use it well below the former 20k cutoff where
-        # this has occurred in live operation.
-        used_direct_dom_input = len(prompt) >= 8_000
-        if used_direct_dom_input:
-            # Playwright ``fill`` and ``document.execCommand('insertText')`` can
-            # spend their entire action timeout making ProseMirror process a
-            # full-thesis prompt character by character.  Replace the editor's
-            # text node directly, then emit one browser-local input event.  The
-            # operation is scoped to the located ChatGPT editor: it does not use
-            # the OS keyboard, clipboard, window focus, or a hidden ChatGPT API.
-            await editor.evaluate(
-                """
-                (element, text) => {
-                    const fragment = document.createDocumentFragment();
-                    const lines = text.split('\\n');
-                    for (let index = 0; index < lines.length; index += 1) {
-                        fragment.appendChild(document.createTextNode(lines[index]));
-                        if (index + 1 < lines.length) {
-                            fragment.appendChild(document.createElement('br'));
-                        }
-                    }
-                    element.replaceChildren(fragment);
-                    element.dispatchEvent(new InputEvent('input', {
-                        bubbles: true,
-                        cancelable: false,
-                        inputType: 'insertText',
-                        data: null,
-                    }));
-                }
-                """,
-                prompt,
-            )
-            await self.page.wait_for_timeout(250)
-        else:
-            await editor.fill(prompt, timeout=60_000)
+        # Directly replacing ProseMirror children can make the public DOM look
+        # correct while leaving ChatGPT's framework-owned editor state empty.
+        # The send button then clears the composer without a durable user turn.
+        # Use Playwright's public framework input path and fail before approval
+        # if it cannot finish; there is no synthetic-DOM fallback.
+        await editor.fill(prompt, timeout=120_000)
         current = await editor_text(editor)
-        retained_dom_text = (
-            await self._editor_exact_text(editor) if used_direct_dom_input else current
+        reconstructed = await self._editor_exact_text(editor)
+        raw_text_content = (await editor.text_content()) or ""
+        # Chromium represents leading contenteditable spaces as NBSP so they
+        # survive HTML whitespace collapsing.  Canonicalize only that browser
+        # representation; all other characters and line boundaries must still
+        # match the compiled prompt exactly.
+        browser_canonical = reconstructed.replace("\u00a0", " ")
+        expected = prompt.rstrip()
+        retained_dom_text = next(
+            (
+                candidate
+                for candidate in (
+                    reconstructed,
+                    browser_canonical,
+                    current,
+                    raw_text_content,
+                )
+                if candidate.rstrip() == expected
+            ),
+            reconstructed,
         )
         required_markers = tuple(
             marker for marker in ("[[E2R_PRO_RUN_ID:", "[[E2R_PRO_JOB_ID:") if marker in prompt
         )
-        retained_exactly = retained_dom_text.rstrip() == prompt.rstrip()
+        retained_exactly = retained_dom_text.rstrip() == expected
         if (
             not retained_dom_text
-            or (
-                not retained_exactly
-                and len(current) < len(prompt.strip()) * 0.95
-            )
+            or not retained_exactly
             or any(marker not in retained_dom_text for marker in required_markers)
         ):
+            def first_difference(candidate: str) -> int | None:
+                for index, (expected_char, actual_char) in enumerate(
+                    zip(expected, candidate.rstrip(), strict=False)
+                ):
+                    if expected_char != actual_char:
+                        return index
+                if len(expected) != len(candidate.rstrip()):
+                    return min(len(expected), len(candidate.rstrip()))
+                return None
+
             missing_markers = [
                 marker
                 for marker in required_markers
@@ -226,6 +219,12 @@ class PlaywrightChatGPTWebAdapter:
                 f"expected_chars={len(prompt.strip())}, "
                 f"retained_dom_chars={len(retained_dom_text)}, "
                 f"rendered_chars={len(current)}, "
+                "candidate_diagnostics="
+                f"reconstructed(chars={len(reconstructed)},newlines={reconstructed.count(chr(10))},first_difference={first_difference(reconstructed)}),"
+                f"browser_canonical(chars={len(browser_canonical)},newlines={browser_canonical.count(chr(10))},first_difference={first_difference(browser_canonical)}),"
+                f"rendered(chars={len(current)},newlines={current.count(chr(10))},first_difference={first_difference(current)}),"
+                f"text_content(chars={len(raw_text_content)},newlines={raw_text_content.count(chr(10))},first_difference={first_difference(raw_text_content)}),"
+                f"expected(newlines={expected.count(chr(10))}); "
                 f"missing_marker_prefixes={missing_markers}"
             )
 
@@ -1891,7 +1890,7 @@ class PlaywrightChatGPTWebAdapter:
 
     @staticmethod
     async def _editor_exact_text(editor: Any) -> str:
-        """Reconstruct only the located editor DOM, preserving ``br`` lines."""
+        """Reconstruct the located ProseMirror DOM with exact line boundaries."""
 
         return await editor.evaluate(
             r"""
@@ -1904,6 +1903,32 @@ class PlaywrightChatGPTWebAdapter:
                     if (node.tagName === 'BR') return '\n';
                     return Array.from(node.childNodes).map(visit).join('');
                 };
+                const rows = Array.from(element.childNodes);
+                if (
+                    rows.length
+                    && rows.some(
+                        child => child.nodeType === Node.ELEMENT_NODE
+                            && (child.tagName === 'P' || child.tagName === 'DIV')
+                    )
+                    && rows.every(
+                        child => child.nodeType === Node.TEXT_NODE
+                            || (
+                                child.nodeType === Node.ELEMENT_NODE
+                                && (child.tagName === 'P' || child.tagName === 'DIV')
+                            )
+                    )
+                ) {
+                    return rows.map(row => {
+                        // ``innerText`` applies layout whitespace collapsing
+                        // and can silently remove indentation from JSON or
+                        // Markdown.  ProseMirror already expresses line
+                        // boundaries as top-level blocks, so preserve every
+                        // character inside a row with ``textContent`` and add
+                        // exactly one newline only between rows.
+                        const text = row.textContent || '';
+                        return text.endsWith('\n') ? text.slice(0, -1) : text;
+                    }).join('\n');
+                }
                 return Array.from(element.childNodes).map(visit).join('');
             }
             """

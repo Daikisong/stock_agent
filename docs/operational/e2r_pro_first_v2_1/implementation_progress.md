@@ -4343,3 +4343,51 @@ critical 0이다. initial prompt와 fresh orchestration 테스트도 69/69 PASS�
 `FRESH_SESSION_DIAGNOSTIC_ONLY / NEW_CONVERSATION_REQUIRED`로 공식 봉인했으며 정규화 영수증은
 `p30_c17_r10_public_composer_boundary_receipt.json`에 기록했다. 다음 R11도 새 창이 아니라 현재
 로그인된 기존 ChatGPT 탭 하나를 새 대화로 이동해 실행한다.
+
+## P31 — C17 R11·R12 framework 입력 계층 진단과 기존 탭 경계 확정
+
+R11은 P30에서 compact한 동일 50,856자 prompt를 기존 로그인 ChatGPT 탭 하나에서 다시 전송했지만,
+conversation과 exact user turn이 생성되지 않았다. 따라서 `60,000자 초과가 유일한 원인`이라는 P30
+가설은 기각됐다. schema compact와 59,800자 live preflight는 안전 경계로 유지하지만, 그것만으로
+transport 문제가 해결됐다고 보지 않는다.
+
+```text
+R11 prompt                      50,856 chars
+upload / submit claim           1 / 1
+conversation / exact user turn  없음 / 없음
+same-tab reload / 새 탭         0 / 0
+```
+
+R12는 같은 계약을 새 job/run/pass로 준비하되 approval과 submit을 모두 0으로 둔 pre-submit
+진단이었다. 현재 UI에서 선택된 전송 control은 실제 `BUTTON#composer-submit-button`,
+`data-testid=send-button`, `aria-label=프롬프트 보내기`였고 enabled/form 내부 상태도 확인됐다. 즉 잘못된
+버튼을 누른 문제가 아니다. 이어서 Playwright의 framework `fill()`로 동일 prompt를 넣자 약 27.165초
+뒤 ProseMirror 581개 paragraph가 생성됐고, 각 paragraph를 줄바꿈 하나로 이어 붙인 값이 compiled
+prompt와 끝 줄바꿈 제외 문자 단위로 일치했다. 이 진단은 submit하지 않은 채 봉인했다.
+
+실제 원인은 8,000자 이상 prompt에 쓰던 `replaceChildren + synthetic InputEvent`였다. 이 방식은 화면
+DOM과 send button을 정상처럼 보이게 하지만 ChatGPT framework가 소유한 editor state를 갱신하지 않을
+수 있다. 쉬운 예로 종이 신청서 위에 글자는 보이지만 접수 시스템에는 빈 신청서로 남은 상태다. 클릭하면
+화면 글자만 사라지고 서버 user turn은 생기지 않는다.
+
+운영 adapter는 이제 길이에 관계없이 public framework `fill()`만 사용하고 최대 120초를 기다린다.
+실패하면 approval/send 전 중단하며 synthetic-DOM fallback은 없다. ProseMirror가 실제 ChatGPT처럼
+top-level paragraph를 쓰거나 테스트 Chromium처럼 첫 줄 text node와 후속 `div`를 섞어도 모든 줄과
+들여쓰기를 복원한다. Chromium이 contenteditable 선행 공백을 NBSP로 보존하는 경우에는
+`NBSP -> 일반 공백` 하나만 정규화하고, 나머지 전체 prompt가 100% 같아야 통과한다. 과거의 95% 길이
+허용은 제거했다.
+
+```text
+운영 src/e2r/pro_first new_page()  0
+현재 로그인 ChatGPT page          1
+기존 탭 없음                       fail closed
+새 탭/새 창 fallback               없음
+focused framework tests            4 / 4 PASS
+browser/approval/capture/multi-pass 98 / 98 PASS
+```
+
+정규화된 외부 검수 영수증은
+`p31_c17_r11_r12_framework_input_diagnosis_receipt.json`에 기록했다. R11·R12의 raw runtime DB, packet
+본문, browser profile은 추적하지 않고 SHA-256과 canonical count만 게시한다. 다음 R13은 새 창을 열지
+않고 지금 로그인된 기존 ChatGPT 탭 하나를 새 대화 화면으로 이동한 뒤, framework input 경로로 initial
+prompt를 실제 전송한다.

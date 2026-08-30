@@ -168,13 +168,39 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual((await editor.inner_text()).strip(), self.prompt)
         self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
 
-    async def test_large_prompt_uses_editor_local_dom_input_without_submitting(self) -> None:
-        large = self.prompt + "\n" + ("긴 full-thesis 검증 문장\n" * 25_000)
-        self.assertGreater(len(large), 500_000)
+    async def test_large_prompt_uses_framework_fill_without_submitting(self) -> None:
+        large = self.prompt + "\n" + ("긴 full-thesis 검증 문장\n" * 2_500)
+        self.assertGreater(len(large), 50_000)
+        self.assertLess(len(large), 60_000)
         await self.adapter.set_prompt(large)
         editor = self.page.locator('#prompt-textarea')
         self.assertEqual((await editor.inner_text()).strip(), large.strip())
         self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
+
+    async def test_prosemirror_paragraph_rows_reconstruct_exact_prompt(self) -> None:
+        prompt = "첫째 줄\n\n둘째 줄\n마지막 줄\n"
+        editor = self.page.locator("#prompt-textarea")
+        await editor.evaluate(
+            """(element, text) => {
+                element.replaceChildren();
+                const newline = String.fromCharCode(10);
+                const normalized = text.endsWith(newline)
+                    ? text.slice(0, -1)
+                    : text;
+                for (const line of normalized.split(newline)) {
+                    const paragraph = document.createElement('p');
+                    if (line) paragraph.textContent = line;
+                    else paragraph.appendChild(document.createElement('br'));
+                    element.appendChild(paragraph);
+                }
+            }""",
+            prompt,
+        )
+
+        self.assertEqual(
+            (await self.adapter._editor_exact_text(editor)).rstrip(),
+            prompt.rstrip(),
+        )
 
     async def test_followup_sized_prompt_uses_exact_editor_input(self) -> None:
         followup = self.prompt + "\n" + ("질문별 증분 검증 문장\n" * 700)
