@@ -50,6 +50,7 @@ from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
     _question_ids_with_reopen_budget,
     _question_route_progress_state,
     _repairable_classifications,
+    _require_operational_followup_budget,
     _same_question_reopen_limit_reached,
     _ensure_durable_conversation_visible,
     _submitted_unsnapshotted_fresh_plan,
@@ -1112,6 +1113,53 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             all(row.conversation_id == "fresh-conversation-tail" for row in passes)
         )
         self.assertTrue(all(row.submit_count == 1 for row in passes))
+
+    async def test_failed_hard_followup_does_not_block_later_compact_repair(self) -> None:
+        adapter = await self._prepare_and_approve("fresh-conversation-failed-before-repair")
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="d" * 64,
+        )
+        failed, _compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest={
+                "dossier_hash": "e" * 64,
+                "mandatory_question_nonterminal_count": 1,
+            },
+            unresolved_question_state=(
+                {
+                    "question_family_id": self.built.prompt.mandatory_question_ids[0],
+                    "deterministic_status": "PUBLIC_SEARCHABLE",
+                },
+            ),
+            pass_inputs={"research_gap_context_hash": "f" * 64},
+        )
+        await self.orchestrator.prepare_followup(failed, adapter)
+        await self.orchestrator.submit_followup(failed, adapter)
+        self.orchestrator.ledger.mark_failed_hard(
+            failed.research_pass.pass_id,
+            response_hash="1" * 64,
+            failure_class="CHATGPT_VISIBLE_RESPONSE_FAILURE",
+            reason="sealed provider response cannot be reused",
+        )
+
+        dossier, classifications, verifications, job_root = self._repair_inputs()
+        repair, _compiled_repair = self.orchestrator.plan_compact_repair(
+            self.built,
+            dossier=dossier,
+            rejection_classifications=classifications,
+            verification_rows=verifications,
+            job_root=job_root,
+        )
+
+        self.assertEqual(repair.research_pass.pass_name, "VERIFIER_REPAIR")
+        self.assertEqual(repair.research_pass.submit_count, 0)
+        self.assertEqual(
+            repair.research_pass.parent_pass_id,
+            self.built.initial_pass_id,
+        )
 
     async def test_visible_provider_failure_gets_one_feedback_retry_then_blocks(self) -> None:
         adapter = await self._prepare_and_approve("fresh-conversation-failure")
@@ -2425,6 +2473,60 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(
             tuple(row["candidate_id"] for row in _repairable_classifications(rows)),
             ("FACT-YES",),
+        )
+
+    def test_operational_gap_budget_counts_every_submitted_attempt(self) -> None:
+        rows = (
+            SimpleNamespace(
+                pass_name="INITIAL_FULL_RESEARCH",
+                submit_count=1,
+            ),
+            SimpleNamespace(
+                pass_name="PUBLIC_GAP_CLOSURE",
+                submit_count=1,
+            ),
+            SimpleNamespace(
+                pass_name="COUNTER_SUPERSESSION_CLOSURE",
+                submit_count=0,
+            ),
+        )
+        ledger = SimpleNamespace(list_passes=lambda _job_id: rows)
+
+        with self.assertRaises(LiveCanaryPending) as captured:
+            _require_operational_followup_budget(
+                ledger,
+                job_id="PROJOB-EFFICIENCY",
+                pass_names=frozenset(
+                    {
+                        "PUBLIC_GAP_CLOSURE",
+                        "COUNTER_SUPERSESSION_CLOSURE",
+                    }
+                ),
+                limit=1,
+                label="public-gap/counter",
+            )
+
+        self.assertEqual(
+            captured.exception.status,
+            "OPERATIONAL_EFFICIENCY_GATE_FAILED",
+        )
+
+    def test_operational_gap_budget_ignores_unsubmitted_plan(self) -> None:
+        ledger = SimpleNamespace(
+            list_passes=lambda _job_id: (
+                SimpleNamespace(
+                    pass_name="PUBLIC_GAP_CLOSURE",
+                    submit_count=0,
+                ),
+            )
+        )
+
+        _require_operational_followup_budget(
+            ledger,
+            job_id="PROJOB-EFFICIENCY",
+            pass_names=frozenset({"PUBLIC_GAP_CLOSURE"}),
+            limit=1,
+            label="public-gap/counter",
         )
 
     def test_repairable_linked_fact_is_repaired_before_question_research(self) -> None:

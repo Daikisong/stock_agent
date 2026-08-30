@@ -203,6 +203,57 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
         observed = await monitor.observe(job_id=job.job_id, run_id="PRORUN-wrong")
         self.assertFalse(observed.completion_confirmed)
 
+    async def test_stale_prior_pass_cannot_complete_expected_followup(self) -> None:
+        job, _prompt_hash = await self._running_job()
+        await self._complete_page(job.job_id)
+        monitor = BrowserCompletionMonitor(
+            self.adapter,
+            required_stable_observations=2,
+            max_mismatched_ready_observations=2,
+        )
+
+        first = await monitor.observe(
+            job_id=job.job_id,
+            run_id=self.run_id,
+            expected_pass_id="PROPASS-current-followup",
+        )
+        second = await monitor.observe(
+            job_id=job.job_id,
+            run_id=self.run_id,
+            expected_pass_id="PROPASS-current-followup",
+        )
+
+        self.assertFalse(first.completion_confirmed)
+        self.assertFalse(second.completion_confirmed)
+        self.assertEqual(second.inspection.state, BrowserUIState.RETRYABLE_ERROR)
+        self.assertIn("PROPASS-current-followup", second.inspection.detail or "")
+
+    async def test_exact_expected_followup_pass_can_complete(self) -> None:
+        job, _prompt_hash = await self._running_job()
+        await self._complete_page(job.job_id)
+        await self.page.locator('[data-message-id="final-turn"] pre').evaluate(
+            "(node, marker) => node.textContent += `\\n${marker}`",
+            "[[E2R_PRO_PASS_ID:PROPASS-current-followup]]",
+        )
+        monitor = BrowserCompletionMonitor(
+            self.adapter,
+            required_stable_observations=2,
+        )
+
+        first = await monitor.observe(
+            job_id=job.job_id,
+            run_id=self.run_id,
+            expected_pass_id="PROPASS-current-followup",
+        )
+        second = await monitor.observe(
+            job_id=job.job_id,
+            run_id=self.run_id,
+            expected_pass_id="PROPASS-current-followup",
+        )
+
+        self.assertFalse(first.completion_confirmed)
+        self.assertTrue(second.completion_confirmed)
+
     async def test_changed_hash_restarts_stability_count(self) -> None:
         job, _prompt_hash = await self._running_job()
         await self._complete_page(job.job_id)

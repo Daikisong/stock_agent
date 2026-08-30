@@ -29,6 +29,16 @@
 9. 공개적으로 더 조사 가능한 material gap을 UNKNOWN으로 남기고 COMPLETE라고 선언하지 않는다.
 10. 비공개 가능성이 높은 정보는 공개 경계와 attempted routes를 근거로 LIKELY_NONPUBLIC로 제안한다.
 
+[최초 조사 source-saturation gate]
+
+1. 이 최초 요청이 주 조사다. 후속 PUBLIC_GAP_CLOSURE는 verifier가 발견한 소수 잔여 공백을 한 번 보정하는 예외이며, 최초 조사에서 쉽게 갈 수 있는 공개 경로를 미루는 두 번째 본조사가 아니다.
+2. mandatory question을 roster에 적었다는 사실은 coverage가 아니다. terminal evidence, 검증 가능한 공개경계, 또는 실제 실패한 attempted route receipt 중 하나가 있어야 조사된 question으로 취급한다.
+3. `PUBLIC_SEARCHABLE`로 남길 question은 답변을 직렬화하기 전에 그 question의 official-first required source role을 실제로 시도한다. 아직 시도하지 않은 required source role이 하나라도 있으면 새 source 탐색을 계속한다.
+4. `PARSER_PENDING`은 첫 PDF/HTML 표현을 읽지 못했다는 이유만으로 선택하지 않는다. 동일 official source의 공개 HTML, 첨부 PDF, 텍스트 보기, regulator mirror 등 눈에 보이는 대체 representation을 시도하고 각 실패를 route receipt로 기록한 뒤에만 허용한다.
+5. 여러 mandatory question을 함께 지지하는 official filing/earnings/IR을 우선 열고, 한 source 안의 서로 다른 문장·표 행을 여러 atomic fact로 각각 보존한다. source 하나당 fact 하나로 인위적으로 제한하지 않는다.
+6. final 직렬화 전에 non-terminal roster를 다시 순회한다. provider/tool이 실제로 중단되지 않았다면 `UNKNOWN_ROUTE_NOT_YET_TESTED`, 시도하지 않은 `PUBLIC_SEARCHABLE`, 대체 representation을 시도하지 않은 `PARSER_PENDING`을 남긴 채 출력을 시작하지 않는다.
+7. 실제 provider/tool 중단 때문에 위 gate를 통과하지 못하면 연구가 끝난 것처럼 보이게 하지 말고 `PROVIDER_PENDING` 또는 `TRANSPORT_PENDING`으로 명시한다. 이 결과는 operational efficiency 실패로 봉인될 수 있다.
+
 [조사와 동시에 증거 그래프 유지 — 마지막 일괄 직렬화 금지]
 
 1. mandatory question roster와 빈 QuestionFamilyResultV3 골격을 조사 시작 시 먼저 만든다.

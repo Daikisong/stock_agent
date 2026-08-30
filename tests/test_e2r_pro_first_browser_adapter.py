@@ -478,6 +478,27 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         inspection = await self.adapter.inspect_state()
         self.assertEqual(inspection.state, BrowserUIState.LOGIN_REQUIRED)
 
+    async def test_extension_shadow_body_is_not_treated_as_page_body(self) -> None:
+        await self.page.evaluate(
+            """() => {
+                const host = document.createElement('hypeduck-coupang-badge');
+                const shadow = host.attachShadow({mode: 'open'});
+                const shadowHtml = document.createElement('html');
+                const decoy = document.createElement('body');
+                decoy.setAttribute('data-mock-state', 'ERROR');
+                decoy.innerText = '로그인 오류가 발생했습니다 decoy-only.json';
+                shadowHtml.appendChild(decoy);
+                shadow.appendChild(shadowHtml);
+                document.documentElement.appendChild(host);
+            }"""
+        )
+
+        inspection = await self.adapter.inspect_state()
+
+        self.assertNotEqual(inspection.state, BrowserUIState.RETRYABLE_ERROR)
+        self.assertFalse(await self.adapter._manual_login_required())
+        self.assertFalse(await self.adapter._body_contains_text("decoy-only.json"))
+
     async def test_history_recovery_opens_exact_marked_result_without_submit(self) -> None:
         job_id = "PROJOB-aaaaaaaaaaaaaaaaaaaaaaaa"
         run_id = "PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb"

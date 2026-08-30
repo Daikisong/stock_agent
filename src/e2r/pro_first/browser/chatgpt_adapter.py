@@ -587,79 +587,93 @@ class PlaywrightChatGPTWebAdapter:
         observed_user_turn_count = 0
         fresh_page_loaded = False
         detail: str | None = None
-        fresh_page = None
+        inspection_page = self.page
         observed_url = fresh_url
         try:
-            try:
-                fresh_page = await self.page.context.new_page()
-            except Exception:
-                # ``browser.new_page()`` is a Playwright convenience API that
-                # owns a one-page implicit context; that context rejects a
-                # later ``context.new_page()`` even though a normal public
-                # popup in the same authenticated context is valid.  CI's DOM
-                # mock uses that convenience API.  Opening a read-only popup
-                # keeps the same cookies/localStorage and still exercises the
-                # exact fresh-public-view contract used by a normal CDP
-                # context.  This is navigation only and cannot dispatch a
-                # prompt.
-                async with self.page.expect_popup(timeout=10_000) as popup_info:
-                    await self.page.evaluate(
-                        "url => window.open(url, '_blank')",
-                        fresh_url,
-                    )
-                fresh_page = await popup_info.value
-            await fresh_page.goto(
+            # Refresh the exact durable conversation in the already attached
+            # public tab.  A same-tab navigation proves that the submitted
+            # turn survived a server-backed load without leaving duplicate
+            # ChatGPT windows/tabs behind.  This occurs only after the guarded
+            # one-shot submit boundary and can never dispatch another prompt.
+            # Yield once before navigation so the public click handler and its
+            # server-persistence callback can finish their current event turn.
+            await inspection_page.wait_for_timeout(
+                self._server_persistence_poll_interval_ms
+            )
+            await inspection_page.goto(
                 fresh_url,
                 wait_until="domcontentloaded",
                 timeout=60_000,
             )
-            observed_url = str(fresh_page.url or fresh_url)
+            observed_url = str(inspection_page.url or fresh_url)
             fresh_page_loaded = bool(
                 urlsplit(observed_url).path.rstrip("/")
                 == f"/c/{conversation_id}".rstrip("/")
             )
+            user_selector = ", ".join(USER_TURN_SELECTORS)
             for attempt in range(self._server_persistence_max_polls):
-                turns = fresh_page.locator(", ".join(USER_TURN_SELECTORS))
-                observed_user_turn_count = max(
-                    observed_user_turn_count,
-                    await turns.count(),
-                )
-                best_missing = required_markers
-                for index in range(await turns.count()):
-                    turn = turns.nth(index)
-                    try:
-                        turn_text = str(await turn.text_content() or "")
-                    except Exception:
-                        continue
-                    current_missing = tuple(
-                        marker for marker in required_markers if marker not in turn_text
-                    )
-                    if len(current_missing) < len(best_missing):
-                        best_missing = current_missing
-                    if current_missing:
-                        continue
-                    user_turn_id = await turn.evaluate(
-                        r"""element => {
-                            const identified = element.closest(
+                snapshot = await inspection_page.evaluate(
+                    r"""([selector, requiredMarkers]) => {
+                        const matches = Array.from(
+                            document.querySelectorAll(selector)
+                        );
+                        const turns = [];
+                        const seen = new Set();
+                        for (const match of matches) {
+                            const turn = match.closest(
+                                'section[data-turn="user"], '
+                                + 'article[data-turn="user"]'
+                            ) || match;
+                            if (seen.has(turn)) continue;
+                            seen.add(turn);
+                            turns.push(turn);
+                        }
+                        let bestMissing = [...requiredMarkers];
+                        for (const turn of turns) {
+                            const text = turn.textContent || '';
+                            const missing = requiredMarkers.filter(
+                                marker => !text.includes(marker)
+                            );
+                            if (missing.length < bestMissing.length) {
+                                bestMissing = missing;
+                            }
+                            if (missing.length) continue;
+                            const identified = turn.closest(
                                 '[data-message-id], [data-turn-id]'
-                            ) || element.querySelector(
+                            ) || turn.querySelector(
                                 '[data-message-id], [data-turn-id]'
                             );
-                            if (identified) {
-                                return identified.getAttribute('data-message-id')
-                                    || identified.getAttribute('data-turn-id');
+                            const turnId = identified && (
+                                identified.getAttribute('data-message-id')
+                                || identified.getAttribute('data-turn-id')
+                            );
+                            if (turnId) {
+                                return {
+                                    observedUserTurnCount: turns.length,
+                                    missingMarkers: [],
+                                    userTurnId: turnId
+                                };
                             }
-                            return null;
-                        }"""
-                    )
-                    if user_turn_id:
-                        missing_markers = ()
-                        break
+                        }
+                        return {
+                            observedUserTurnCount: turns.length,
+                            missingMarkers: bestMissing,
+                            userTurnId: null
+                        };
+                    }""",
+                    [user_selector, list(required_markers)],
+                )
+                observed_user_turn_count = max(
+                    observed_user_turn_count,
+                    int(snapshot.get("observedUserTurnCount") or 0),
+                )
+                user_turn_id = str(snapshot.get("userTurnId") or "").strip() or None
                 if user_turn_id:
+                    missing_markers = ()
                     break
-                missing_markers = best_missing
+                missing_markers = tuple(snapshot.get("missingMarkers") or ())
                 if attempt + 1 < self._server_persistence_max_polls:
-                    await fresh_page.wait_for_timeout(
+                    await inspection_page.wait_for_timeout(
                         self._server_persistence_poll_interval_ms
                     )
             if user_turn_id is None:
@@ -670,9 +684,6 @@ class PlaywrightChatGPTWebAdapter:
         except Exception as error:
             detail = f"{type(error).__name__}: {error}"
             missing_markers = required_markers
-        finally:
-            if fresh_page is not None:
-                await fresh_page.close()
         return BrowserSubmittedTurnPersistence(
             observation_id=f"PROSERVERVIEW-{secrets.token_hex(12)}",
             observed_at=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
@@ -847,7 +858,7 @@ class PlaywrightChatGPTWebAdapter:
         send = await first_visible(self.page, SEND_SELECTORS)
         stop = await first_visible(self.page, STOP_SELECTORS)
         editor_value = await editor_text(editor) if editor is not None else ""
-        body = self.page.locator("body")
+        body = self._main_document_body()
         mock_state = (await body.get_attribute("data-mock-state") or "").upper()
         operational_notice_text = await self._operational_notice_text()
         (
@@ -925,7 +936,7 @@ class PlaywrightChatGPTWebAdapter:
     async def _body_contains_text(self, value: str) -> bool:
         """Match a small token locally without transferring the whole chat."""
 
-        body = self.page.locator("body")
+        body = self._main_document_body()
         return bool(
             await body.evaluate(
                 """(element, needle) =>
@@ -938,7 +949,7 @@ class PlaywrightChatGPTWebAdapter:
     async def _body_tail_text(self) -> str:
         """Return only bounded diagnostic text from an incompatible page."""
 
-        body = self.page.locator("body")
+        body = self._main_document_body()
         return str(
             await body.evaluate(
                 """element => (element.innerText || '').trim().slice(-2000)"""
@@ -1925,7 +1936,7 @@ class PlaywrightChatGPTWebAdapter:
             return True
         if await first_visible(self.page, LOGIN_INDICATOR_SELECTORS) is not None:
             return True
-        body = self.page.locator("body")
+        body = self._main_document_body()
         try:
             body_text = (await body.inner_text()).lower()
         except Exception:
@@ -1939,6 +1950,18 @@ class PlaywrightChatGPTWebAdapter:
                 "회원가입",
             )
         )
+
+    def _main_document_body(self) -> Any:
+        """Select the page body without piercing extension shadow roots.
+
+        Playwright CSS locators pierce open shadow DOM by default. Browser
+        extensions can inject a custom element containing another complete
+        ``html > body`` tree, so even that CSS selector can violate strict
+        mode. Absolute XPath stays in the top-level document tree and selects
+        only the operational ChatGPT body.
+        """
+
+        return self.page.locator("xpath=/html/body")
 
 
 __all__ = ["PlaywrightChatGPTWebAdapter"]

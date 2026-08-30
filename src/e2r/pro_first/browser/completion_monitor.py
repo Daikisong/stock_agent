@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Awaitable, Callable
 
 from ..job_store import ProFirstJobStore
@@ -31,18 +31,29 @@ class BrowserCompletionMonitor:
         *,
         required_stable_observations: int = 3,
         poll_interval_seconds: float = 5.0,
+        max_mismatched_ready_observations: int = 6,
     ) -> None:
         if required_stable_observations < 2:
             raise ValueError("completion requires at least two stable observations")
         if poll_interval_seconds <= 0:
             raise ValueError("poll interval must be positive")
+        if max_mismatched_ready_observations < 2:
+            raise ValueError("mismatched ready bound must be at least two")
         self.adapter = adapter
         self.required_stable_observations = required_stable_observations
         self.poll_interval_seconds = poll_interval_seconds
+        self.max_mismatched_ready_observations = max_mismatched_ready_observations
         self._last_hash: str | None = None
         self._stable_observations = 0
+        self._mismatched_ready_observations = 0
 
-    async def observe(self, *, job_id: str, run_id: str) -> CompletionObservation:
+    async def observe(
+        self,
+        *,
+        job_id: str,
+        run_id: str,
+        expected_pass_id: str | None = None,
+    ) -> CompletionObservation:
         inspection = await self.adapter.inspect_state()
         if inspection.stop_visible or inspection.state is BrowserUIState.RESEARCH_RUNNING:
             self._reset()
@@ -57,6 +68,36 @@ class BrowserCompletionMonitor:
             self._reset()
             return CompletionObservation(inspection, None, 0, False)
         result = await self.adapter.inspect_result(job_id=job_id, run_id=run_id)
+        expected_pass_marker = (
+            f"[[E2R_PRO_PASS_ID:{expected_pass_id}]]" if expected_pass_id else None
+        )
+        if expected_pass_marker and (
+            not result.structurally_complete
+            or result.report_text.count(expected_pass_marker) != 1
+        ):
+            # The composer can return to its ready state after a Pro turn is
+            # dropped without rendering the requested assistant response.  A
+            # prior pass from the same job/run is not completion evidence for
+            # the current follow-up.  Give hydration several polls, then make
+            # the visible provider failure actionable instead of waiting for
+            # hours or capturing the stale pass.
+            self._last_hash = None
+            self._stable_observations = 0
+            self._mismatched_ready_observations += 1
+            if (
+                self._mismatched_ready_observations
+                >= self.max_mismatched_ready_observations
+            ):
+                inspection = replace(
+                    inspection,
+                    state=BrowserUIState.RETRYABLE_ERROR,
+                    detail=(
+                        "ChatGPT returned to ready state without the exact "
+                        f"assistant result for {expected_pass_id}"
+                    ),
+                )
+            return CompletionObservation(inspection, result, 0, False)
+        self._mismatched_ready_observations = 0
         if not result.structurally_complete:
             self._reset()
             return CompletionObservation(inspection, result, 0, False)
@@ -100,6 +141,7 @@ class BrowserCompletionMonitor:
     def _reset(self) -> None:
         self._last_hash = None
         self._stable_observations = 0
+        self._mismatched_ready_observations = 0
 
 
 class ProCompletionStateService:

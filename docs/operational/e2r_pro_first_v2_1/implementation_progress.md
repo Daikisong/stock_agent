@@ -4176,3 +4176,76 @@ score / Stage authority          없음
 이는 연구 내용 부족이나 낮은 점수 판정이 아니라 conversation transport 계보 실패다. R7 답을 새 답처럼
 재라벨하거나 같은 채팅에 자동 재전송하지 않는다. R7은 진단용으로 보존하고, 새 `fresh_session_id`, job,
 run, pass, conversation을 가진 C17 successor를 initial prompt부터 다시 시작한다.
+
+## P28 — C17 R8 repair-heavy 진단 봉인과 기존 탭 전용 transport 수리
+
+C17 R8은 별도 fresh job/run/conversation에서 initial을 시작했지만 full-thesis tail이 18개 pass까지
+늘어났다. 최초 efficiency receipt는 mandatory `26/26`과 acceptance `6/6`을 PASS로 기록했으나, 실제
+최초 question status를 다시 세면 terminal은 4개뿐이었다.
+
+```text
+PUBLIC_SEARCHABLE                   16
+PARSER_PENDING                       6
+NOT_APPLICABLE_WITH_REASON           3
+SUPPORTED_NON_SCORING                1
+```
+
+즉 question row 26개가 존재한다는 사실을 research coverage로 센 것이 문제였다. 쉬운 예로 시험지
+26칸에 `아직 더 찾아야 함`이라고 적어 놓고 26문제를 완료했다고 집계한 셈이다. R8 tail은 이를
+public-gap 11회와 verifier repair 5회로 뒤늦게 메웠고, accepted fact 44개까지 갔지만 mandatory 3개와
+core parser/source-linkage 공백을 닫지 못했다.
+
+```text
+job / run                         PROJOB-22fdf2fdb1c458be082f3cbd
+                                  PRORUN-56ff66fa86b4ab918f0d5e55
+conversation                      6a92a26e-bee8-83e8-a424-bbd9eb59ff79
+pass total / complete / failed    18 / 16 / 2
+initial / public / repair / audit 1 / 11 / 5 / 1
+accepted facts                    44
+remaining mandatory              3
+score / Stage receipt             없음 / 없음
+```
+
+브라우저 transport에도 두 결함이 있었다. 첫째, extension shadow root 안의 가짜 `html > body`를
+Playwright CSS가 main document body로 오인할 수 있었다. 둘째, 서버 저장 확인이 임시 ChatGPT 탭을
+열어 사용자 화면에 중복 탭을 남길 수 있었다. main-document XPath body를 사용하고, 서버 저장 확인은
+기존 탭에서 exact conversation을 새로고침하도록 바꿨다. user-turn 검사는 한 번의 atomic DOM
+evaluation으로 합쳤다.
+
+Pass 17은 한 번 제출된 뒤 기존 탭 새로고침에서 서버 결과가 복구되어 새 fact 2개와 route 3개를
+캡처했다. Pass 18은 사용자 턴이 뒤늦게 서버에 나타났지만 정확한 assistant pass 결과가 생성되지
+않았다. 이제 completion monitor가 current `PROPASS` marker를 요구하므로 같은 job/run의 오래된 답을
+현재 답으로 잘못 캡처하지 않고 `FAILED_HARD`로 봉인한다. `FAILED_HARD`는 다음 compact repair
+planner의 active pass에서도 제외한다.
+
+fresh operational proof에는 master goal의 좁은 pass budget을 강제했다.
+
+```text
+public-gap + counter              최대 1회
+verifier repair                   최대 1회
+saturation audit                  최대 1회
+초과 시                            OPERATIONAL_EFFICIENCY_GATE_FAILED
+                                    DIAGNOSTIC_ONLY
+                                    NEW_CONVERSATION_REQUIRED
+```
+
+이는 일반 연구 상태기계의 의미 탐색을 COMPLETE로 잘라내는 cap이 아니다. 운영 효율 canary가
+repair-heavy해졌다는 사실을 성공으로 포장하지 않는 proof gate다. 최초 prompt에도 모든 종목에 공통인
+source-saturation gate를 추가했다. required official route를 실제로 시도하지 않은
+`PUBLIC_SEARCHABLE`, 대체 HTML/PDF/regulator representation을 시도하지 않은 `PARSER_PENDING`을 남긴
+채 직렬화하지 못하게 한다. 종목명·C17·누락 슬롯별 검색어 하드코딩은 추가하지 않았다.
+
+```text
+browser/completion/multi-pass      88 / 88 PASS
+same-tab persistence/multi-pass    60 / 60 PASS
+all-archetype prompt/fresh         68 / 68 PASS
+R8 final disposition               OPERATIONAL_EFFICIENCY_GATE_FAILED
+old job frozen                     true
+new browser submit during freeze   0
+```
+
+정규화된 외부 검수 영수증은
+`p28_c17_r8_operational_efficiency_failure_receipt.json`에 기록했다. raw Pro report, runtime DB,
+source cache와 브라우저 profile은 추적하지 않고 SHA-256과 canonical count만 게시한다. 다음 실행은 새
+브라우저 창이 아니라 현재 로그인된 기존 탭 안에서 새 ChatGPT conversation을 만든 C17 R9 blind fresh
+run이다.

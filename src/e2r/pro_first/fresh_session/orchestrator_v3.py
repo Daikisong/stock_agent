@@ -906,7 +906,11 @@ class FreshSessionOrchestratorV3:
         active = tuple(
             row
             for row in self.ledger.list_passes(built.job.job_id)
-            if row.status != ResearchPassStatus.COMPLETE.value
+            if row.status
+            not in {
+                ResearchPassStatus.COMPLETE.value,
+                ResearchPassStatus.FAILED_HARD.value,
+            }
         )
         if active and all(row.pass_id != pass_id for row in active):
             raise FreshSessionBoundaryError(

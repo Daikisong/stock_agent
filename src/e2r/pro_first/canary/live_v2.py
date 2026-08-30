@@ -1561,6 +1561,7 @@ class ProV2LiveCanaryRunner:
             observation = await monitor.observe(
                 job_id=plan.scope.job_id,
                 run_id=str(prepared.packet_payload["run_id"]),
+                expected_pass_id=plan.research_pass.pass_id,
             )
             if poll == 1 or poll % 12 == 0 or observation.completion_confirmed:
                 self._emit(

@@ -53,8 +53,8 @@ class BrowserInspection:
 class BrowserSubmittedTurnPersistence:
     """Fresh public-UI evidence that one submitted user turn is durable.
 
-    The observation is intentionally read-only.  It comes from a temporary
-    page opened in the same authenticated browser context, never from a
+    The observation is intentionally read-only.  It comes from a fresh load of
+    the exact conversation in the same authenticated public tab, never from a
     private ChatGPT endpoint and never from the optimistic DOM that performed
     the send click.
     """

@@ -86,6 +86,9 @@ FRESH_FULL_THESIS_AUTHORIZATION_PHRASE = (
 )
 FRESH_FULL_THESIS_RECEIPT_SCHEMA = "e2r_pro_fresh_v3_full_thesis_receipt_v1"
 ProgressHandler = Callable[[Mapping[str, Any]], None]
+_OPERATIONAL_GAP_PASS_NAMES = frozenset(
+    {"PUBLIC_GAP_CLOSURE", "COUNTER_SUPERSESSION_CLOSURE"}
+)
 
 
 @dataclass
@@ -440,6 +443,13 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                             "RESEARCH_BLOCKER_FIXPOINT_PENDING"
                         )
                     else:
+                        _require_operational_followup_budget(
+                            orchestrator.ledger,
+                            job_id=job_id,
+                            pass_names=_OPERATIONAL_GAP_PASS_NAMES,
+                            limit=1,
+                            label="public-gap/counter",
+                        )
                         plan, _compiled = orchestrator.plan_v3_followup(
                             built,
                             pass_name="PUBLIC_GAP_CLOSURE",
@@ -577,6 +587,13 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                             or "RESEARCH_BLOCKER_FIXPOINT_PENDING"
                         )
                     else:
+                        _require_operational_followup_budget(
+                            orchestrator.ledger,
+                            job_id=job_id,
+                            pass_names=_OPERATIONAL_GAP_PASS_NAMES,
+                            limit=1,
+                            label="public-gap/counter",
+                        )
                         plan, _compiled = orchestrator.plan_v3_followup(
                             built,
                             pass_name="COUNTER_SUPERSESSION_CLOSURE",
@@ -620,6 +637,13 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                         continue
 
                 if repairable:
+                    _require_operational_followup_budget(
+                        orchestrator.ledger,
+                        job_id=job_id,
+                        pass_names=frozenset({"VERIFIER_REPAIR"}),
+                        limit=1,
+                        label="verifier-repair",
+                    )
                     dossier, repair_summary = await self._execute_compact_repair(
                         prepared=prepared,
                         orchestrator=orchestrator,
@@ -649,6 +673,13 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                         ]
                     ),
                 ):
+                    _require_operational_followup_budget(
+                        orchestrator.ledger,
+                        job_id=job_id,
+                        pass_names=frozenset({"SATURATION_AUDIT"}),
+                        limit=1,
+                        label="saturation-audit",
+                    )
                     plan, _compiled = orchestrator.plan_v3_followup(
                         built,
                         pass_name="SATURATION_AUDIT",
@@ -746,6 +777,18 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
         except LiveCanaryPending as error:
             status = error.status
             pending_reason = error.reason
+            if status == "OPERATIONAL_EFFICIENCY_GATE_FAILED":
+                frozen = orchestrator.seal_failed_run_for_new_conversation(
+                    reason=error.reason
+                )
+                self._emit_fresh(
+                    "FRESH_FULL_THESIS_OPERATIONAL_EFFICIENCY_FAILED",
+                    job_id=job_id,
+                    conversation_id=frozen.conversation_id,
+                    old_job_frozen=True,
+                    new_conversation_required=True,
+                    automatic_resubmit_allowed=False,
+                )
         finally:
             if prepared is not None:
                 await prepared.close()
@@ -2268,6 +2311,40 @@ _FRESH_RECOVERABLE_FOLLOWUP_NAMES = (
     "SATURATION_AUDIT",
     "VERIFIER_REPAIR",
 )
+
+
+def _require_operational_followup_budget(
+    ledger: ProMultiPassLedger,
+    *,
+    job_id: str,
+    pass_names: frozenset[str],
+    limit: int,
+    label: str,
+) -> None:
+    """Fail a fresh operational canary before it becomes repair-heavy.
+
+    The broader research state machine may continue investigating without a
+    fixed semantic cap.  A V2.1 *operational efficiency canary* has a narrower
+    proof contract: one gap/counter delta, one repair, and one saturation
+    audit.  Every submitted attempt consumes that proof budget, including a
+    visible provider failure, because the user still paid the browser turn.
+    """
+
+    if limit < 1 or not pass_names or not label.strip():
+        raise ValueError("operational follow-up budget requires names/label/limit")
+    submitted = tuple(
+        row
+        for row in ledger.list_passes(job_id)
+        if row.pass_name in pass_names and int(row.submit_count) > 0
+    )
+    if len(submitted) < limit:
+        return
+    raise LiveCanaryPending(
+        f"{label} submitted pass budget exceeded: "
+        f"allowed={limit}, already_submitted={len(submitted)}; "
+        "seal this diagnostic run and start a new conversation",
+        status="OPERATIONAL_EFFICIENCY_GATE_FAILED",
+    )
 
 
 def _enforce_recover_submitted_only(

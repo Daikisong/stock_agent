@@ -89,7 +89,9 @@ def render_mock_chatgpt(
   {login_markup}
   {composer}
   <script>
-    window.__submitCount = 0;
+    window.__submitCount = Number(
+      sessionStorage.getItem('__e2r_mock_submit_count__') || '0'
+    );
     window.__downloadClicks = [];
     window.__useSiblingStagePreview = false;
     window.__previewStageDelayMs = 0;
@@ -190,6 +192,7 @@ def render_mock_chatgpt(
       }}
     }}
     window.__setMockState = (nextState, supplied={{}}) => {{
+      sessionStorage.setItem('__e2r_mock_state__', nextState);
       const context = {{...defaultContext, ...supplied}};
       document.body.dataset.mockState = nextState;
       const results = document.querySelector('#conversation-results');
@@ -247,6 +250,9 @@ def render_mock_chatgpt(
     const send = document.querySelector('#composer-submit-button');
     if (send) send.addEventListener('click', () => {{
       window.__submitCount += 1;
+      sessionStorage.setItem(
+        '__e2r_mock_submit_count__', String(window.__submitCount)
+      );
       if (!window.location.pathname.startsWith('/c/')) {{
         const freshId = 'mock-' + defaultContext.job_id.toLowerCase();
         window.history.pushState({{}}, '', '/c/' + freshId);
@@ -261,7 +267,10 @@ def render_mock_chatgpt(
     const oldMd = document.querySelector('#old-md');
     if (oldMd) oldMd.addEventListener('click', () => openPreview(defaultContext, true));
     renderPersistedSubmittedTurns();
-    window.__setMockState({json.dumps(state)}, defaultContext);
+    window.__setMockState(
+      sessionStorage.getItem('__e2r_mock_state__') || {json.dumps(state)},
+      defaultContext
+    );
   </script>
 </body>
 </html>"""
