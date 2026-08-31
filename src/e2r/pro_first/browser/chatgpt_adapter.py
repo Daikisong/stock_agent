@@ -2143,6 +2143,14 @@ class PlaywrightChatGPTWebAdapter:
                 f"{expected_filename}"
             )
         if (
+            isinstance(error_payload, Mapping)
+            and error_payload.get("status") == "retry"
+        ):
+            raise BrowserArtifactUnavailable(
+                "visible ChatGPT artifact is still a retry placeholder without "
+                f"a backing dossier file: {expected_filename}"
+            )
+        if (
             allow_download_manifest
             and isinstance(error_payload, Mapping)
             and error_payload.get("status") == "success"

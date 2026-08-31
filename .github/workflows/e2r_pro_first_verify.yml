@@ -53,7 +53,7 @@ concurrency:
 
 env:
   E2R_RUN_LIVE_TESTS: "0"
-  E2R_FULL_UNIT_TEST_FLOOR: "7860"
+  E2R_FULL_UNIT_TEST_FLOOR: "7862"
   PYTHONPATH: src
 
 jobs:

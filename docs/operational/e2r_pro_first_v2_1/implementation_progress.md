@@ -4872,6 +4872,55 @@ R16도 재전송하지 않았다. 다음 browser 단계는 기존 E2R Chrome 창
 master 완료 상태는 아직 1/3 live full thesis다. C17의 R16 무재전송 복구와 C17 full thesis, 새 blind C28
 full thesis가 남았으므로 `OPERATIONAL_RESEARCH_READY`는 계속 금지한다.
 
+## P42 — C17 R18 retry placeholder와 늦은 hydration 경합 수리
+
+R16은 기존 탭의 과거 conversation을 exact marker로 다시 찾아 재전송 없이 initial dossier를 실제
+수입했지만, public-gap pass가 provider `생각 중지됨`으로 끝나 운영 효율 gate에서 봉인됐다. R17은
+전송 전 draft packet이 사라져 submit/capture 0/0 상태로 취소했다. R18은 같은 로그인 ChatGPT 탭에서
+새 대화를 준비했으며 새 window/tab/target은 만들지 않았다.
+
+R18 initial Pro 연구는 94분 7초 뒤 정확한 job/run/initial-pass marker와 JSON attachment 이름을 반환했다.
+그러나 같은 첨부를 실제로 내려받은 결과는 dossier가 아니라 18바이트 `{"status":"retry"}`였다. 10분간
+60회 bounded 재다운로드해도 한 번도 바뀌지 않았다. 화면에 파일 이름이 있다는 이유로 이 값을 parser나
+score에 넣지 않았다.
+
+기존 코드의 `ARTIFACT_REEXPORT`는 새 조사 없이 직전 dossier 파일만 다시 저장하는 transport 전용 pass다.
+첫 re-export는 서버 user turn까지 정확히 지속됐지만 화면이 잠시 `생각 중지됨`으로 돌아왔다. completion
+monitor의 ready-state mismatch 기본 한도는 6회, 약 30초라 이를 provider failure로 너무 빨리 보았다.
+그 실패 피드백으로 마지막 허용 retry turn이 지속된 뒤, 첫 pass가 23분 25초 만에 정상 응답으로 늦게
+hydration됐다. 결과적으로 두 user turn과 한 늦은 assistant result가 겹쳐 R18 계보는 운영 성공으로 쓸 수
+없게 됐다.
+
+늦게 보인 파일은 화면상 218,640바이트와 SHA-256을 보고했지만 실제 download manifest가 표시된 파일명에
+결박되지 않아 adapter가 거부했다. 화면의 `Schema validation PASS` 문구만 믿지 않았고, 첫 re-export는
+early failure disposition을 보존했으며 retry pass는 `TRANSPORT_PENDING`으로 남겼다. R18 job은
+`DIAGNOSTIC_ONLY / NEW_CONVERSATION_REQUIRED`로 freeze했고 score/Stage 권한은 없다.
+
+일반 수리는 두 가지다.
+
+```text
+artifact body == {"status":"retry"}
+  → BrowserArtifactUnavailable
+  → 기존 bounded ARTIFACT_REEXPORT 경로
+
+정확한 follow-up pass marker가 아직 없음
+  → 과거 pass를 capture하지 않음
+  → 기본 6 poll 조기 실패 대신 live completion ceiling 1,440 poll까지 hydration 대기
+```
+
+쉬운 예로 첫 번째는 택배 송장만 생기고 상자 내용이 아직 없는 상태다. 두 번째는 배송 조회가 잠깐
+`중지됨`으로 보여도 30초 만에 같은 주문을 다시 넣지 않고, 원래 주문이 실제 도착하는지 정해진 한도까지
+기다리는 것이다.
+
+신규 회귀 2개를 포함한 Windows 실제 Playwright browser adapter+capture 테스트는 72/72 PASS다. WSL
+실행은 test body 전에 `libnspr4.so` 부재로 종료됐고 코드 failure로 세지 않았다. 전체 discovery는
+7,862개가 되어 CI floor도 7,862로 올렸다. 정규화 영수증은
+`p42_c17_r18_retry_placeholder_and_late_hydration_receipt.json`이다.
+
+master live full-thesis는 여전히 C06 1/3이다. 다음 단계는 이 일반 수리가 포함된 새 commit에서 같은 기존
+탭 안의 새 대화 R19로 C17을 다시 실행하는 것이다. C17과 blind C28이 실제로 닫히기 전
+`OPERATIONAL_RESEARCH_READY`, PR draft 해제, main 병합은 계속 금지한다.
+
 ## P40 — Windows UTF-8 이식성 수리와 최신 Reviewer A–H 재검증
 
 최신 `e7b650d4` head에서 Reviewer A–H를 다시 실행하던 중 Linux와 Windows가 서로 다른 실패를 보였다.

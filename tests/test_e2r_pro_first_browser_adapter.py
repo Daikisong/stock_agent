@@ -602,6 +602,36 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
                 self.page.locator(".entity-underline")
             )
 
+    async def test_authenticated_fetch_retry_placeholder_is_transport_error(
+        self,
+    ) -> None:
+        filename = "pending_dossier.json"
+        self.server.server.download_text = json.dumps(  # type: ignore[attr-defined]
+            {"status": "retry"}
+        )
+        download_url = (
+            f"{self.server.base_url}/backend-api/conversation/mock-conversation/"
+            f"interpreter/download?filename={filename}"
+            f"&sandbox_path=%2Fmnt%2Fdata%2F{filename}"
+        )
+        await self.page.set_content(
+            "<html><body><div>"
+            f'<button class="entity-underline">{filename}</button>'
+            '<button aria-label="파일 다운로드">다운로드</button>'
+            "</div><script>"
+            "document.querySelector('button[aria-label=\"파일 다운로드\"]')"
+            f".addEventListener('click', () => fetch('{download_url}'));"
+            "</script></body></html>"
+        )
+
+        with self.assertRaisesRegex(
+            BrowserArtifactUnavailable,
+            "retry placeholder",
+        ):
+            await self.adapter._download_from_candidate(
+                self.page.locator(".entity-underline")
+            )
+
     async def test_authenticated_fetch_follows_exact_estuary_manifest(self) -> None:
         filename = "generated_dossier.json"
         file_id = "file_exact_generated_dossier"

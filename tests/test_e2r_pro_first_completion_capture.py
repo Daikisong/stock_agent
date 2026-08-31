@@ -228,6 +228,31 @@ class ProFirstCompletionCaptureTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(second.inspection.state, BrowserUIState.RETRYABLE_ERROR)
         self.assertIn("PROPASS-current-followup", second.inspection.detail or "")
 
+    async def test_default_followup_grace_does_not_fail_after_six_ready_polls(self) -> None:
+        job, _prompt_hash = await self._running_job()
+        await self._complete_page(job.job_id)
+        monitor = BrowserCompletionMonitor(
+            self.adapter,
+            required_stable_observations=2,
+        )
+
+        observations = [
+            await monitor.observe(
+                job_id=job.job_id,
+                run_id=self.run_id,
+                expected_pass_id="PROPASS-late-hydrating-followup",
+            )
+            for _ in range(6)
+        ]
+
+        self.assertTrue(
+            all(
+                row.inspection.state is not BrowserUIState.RETRYABLE_ERROR
+                for row in observations
+            )
+        )
+        self.assertTrue(all(not row.completion_confirmed for row in observations))
+
     async def test_exact_expected_followup_pass_can_complete(self) -> None:
         job, _prompt_hash = await self._running_job()
         await self._complete_page(job.job_id)

@@ -31,7 +31,7 @@ class BrowserCompletionMonitor:
         *,
         required_stable_observations: int = 3,
         poll_interval_seconds: float = 5.0,
-        max_mismatched_ready_observations: int = 6,
+        max_mismatched_ready_observations: int = 1_440,
     ) -> None:
         if required_stable_observations < 2:
             raise ValueError("completion requires at least two stable observations")
@@ -78,9 +78,12 @@ class BrowserCompletionMonitor:
             # The composer can return to its ready state after a Pro turn is
             # dropped without rendering the requested assistant response.  A
             # prior pass from the same job/run is not completion evidence for
-            # the current follow-up.  Give hydration several polls, then make
-            # the visible provider failure actionable instead of waiting for
-            # hours or capturing the stale pass.
+            # the current follow-up.  A public Pro turn can temporarily show
+            # ``thinking stopped``/ready and still hydrate the exact response
+            # many minutes later.  Keep the stale result non-authoritative and
+            # wait up to the normal two-hour live poll ceiling by default.
+            # Tests and explicitly bounded transports can still provide a
+            # smaller value when they need an earlier pending disposition.
             self._last_hash = None
             self._stable_observations = 0
             self._mismatched_ready_observations += 1
