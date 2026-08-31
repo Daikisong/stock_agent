@@ -457,8 +457,16 @@ class FreshSessionBoundaryService:
         *,
         fresh_runtime_root: str | Path,
         leakage_manifest: OldAnswerLeakageManifest,
+        allow_frozen_submitted_recovery: bool = False,
     ) -> tuple[FreshSessionBoundary, ProResearchJob]:
-        """Load one immutable boundary without creating another successor."""
+        """Load one immutable boundary without creating another successor.
+
+        A failed persistence poll can freeze a job after its one permitted
+        submit even though the public conversation hydrates later.  Recovery
+        may read and capture that already-submitted turn, but this exception
+        never applies to a zero-submit frozen job.  The durable freeze still
+        blocks every follow-up submit path.
+        """
 
         fresh_root = Path(fresh_runtime_root).expanduser().resolve()
         boundary_path = fresh_root / "fresh_session_boundary_receipt.json"
@@ -484,12 +492,20 @@ class FreshSessionBoundaryService:
         predecessor_required = boundary_mode != INDEPENDENT_CANARY_BOUNDARY
         fresh_job_id = str(receipt.get("fresh_job_id") or "")
         fresh = self.store.get_job(fresh_job_id)
+        frozen_recovery_allowed = bool(
+            allow_frozen_submitted_recovery
+            and fresh.old_job_frozen_at is not None
+            and fresh.submit_count == 1
+        )
         if predecessor_required:
             old = self.store.get_job(leakage_manifest.old_job_id)
             if (
                 old.superseded_by_fresh_job_id != fresh_job_id
                 or fresh.job_id == old.job_id
-                or fresh.old_job_frozen_at is not None
+                or (
+                    fresh.old_job_frozen_at is not None
+                    and not frozen_recovery_allowed
+                )
             ):
                 raise FreshSessionBoundaryError(
                     "durable old/fresh successor binding is not recoverable"
@@ -498,7 +514,10 @@ class FreshSessionBoundaryService:
             target = receipt.get("target") or {}
             if (
                 receipt.get("predecessor_required") is not False
-                or fresh.old_job_frozen_at is not None
+                or (
+                    fresh.old_job_frozen_at is not None
+                    and not frozen_recovery_allowed
+                )
                 or target.get("symbol") != fresh.symbol
                 or target.get("company_name") != fresh.company_name
                 or target.get("as_of_date") != fresh.as_of_date

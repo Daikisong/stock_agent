@@ -371,6 +371,7 @@ class FreshV3InitialLiveCanaryRunner:
         boundary, fresh_job = FreshSessionBoundaryService(self.store).load_existing(
             fresh_runtime_root=self.fresh_runtime_root,
             leakage_manifest=manifest,
+            allow_frozen_submitted_recovery=True,
         )
         if (
             fresh_job.job_id != submitted_job_id

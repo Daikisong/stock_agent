@@ -5028,3 +5028,43 @@ submit guard 55개가 failure/error 없이 끝난 뒤, UNC 경로의 Windows Git
 브라우저 window/tab/target 신규 생성은 계속 0이다. master live full-thesis는 C06 1/3이고, 다음 단계는 이
 수리가 포함된 새 commit에서 동일 기존 탭의 R21 C17을 실행하는 것이다. C17과 blind C28이 실제로 닫히기
 전 운영 준비 판정, PR draft 해제, main 병합은 금지한다.
+
+## P44 — R21 late persistence 확인과 frozen submit 1회 읽기 전용 복구
+
+R21은 `7b076a93` head에서 기존 ChatGPT 탭 하나로 실행했다. 처음 2분 동안 정확한 job/run marker가 보이지
+않아 `USER_ATTENTION_REQUIRED`로 종료됐고, 같은 job의 재전송을 막기 위해 freeze했다. 여기까지는 안전한
+fail-closed였지만, 이 상태를 즉시 새 fresh canary 생성 사유로 쓰면 안 됐다.
+
+약 20분 뒤 같은 정상 대화 `6a9548fa-5844-83e8-b426-c66f79a8dac1`을 읽기 전용으로 다시 열자 정확한 user
+turn과 marker가 hydrate되어 있었고, 공식 자료 검색·PDF 확인·증거 정리가 실제 진행 중이었다. R19의 정상
+대화에도 늦게 exact marker가 나타났다. 실제 ChatGPT 편집기에서 `fill` input event와 Playwright pointer
+click event는 모두 `isTrusted=true`였으므로 P43의 synthetic click 원인 추정은 확정 원인이 아니다.
+
+쉬운 예로 택배가 접수되지 않은 게 아니라 배송조회 화면에 송장이 늦게 나타난 것이다. 2분 안에 송장이
+안 보인다는 이유로 새 주문을 넣으면 같은 연구가 여러 개 생긴다. 따라서 submit count 1은 그대로 두고
+늦게 나타난 원래 주문만 감시해야 한다.
+
+기존 freeze는 새 submit 차단에는 맞지만 `load_existing` 단계에서 읽기 전용 복구도 함께 막았다. 다음의
+좁은 예외만 추가했다.
+
+```text
+old_job_frozen_at != null
++ submit_count == 1
++ --resume-submitted-job-id 명시
+→ 기존 turn 읽기·terminal 대기·capture 허용
+→ 새 submit 권한은 얻지 못함
+
+submit_count == 0 frozen
+→ 계속 복구 금지
+```
+
+집중 회귀 3/3, compileall, diff check는 PASS다. R21 resume은
+`PROSERVERVIEW-fca95fba0739e71823736964`에서 user turn
+`50980e11-f54b-47bc-bac1-8b62d10f884c`를 확인했고 `browser_submit_delta=0`으로 현재
+`RESEARCH_RUNNING`을 감시 중이다. source head의 GitHub Actions도 Pro-first `33377674135`, V6
+`33377674162` 모두 SUCCESS다.
+
+정규화 영수증은 `p44_c17_r21_late_persistence_read_only_recovery_receipt.json`이다. 아직 terminal dossier,
+score, Stage는 없으므로 C17 PASS가 아니다. master live full-thesis는 C06 1/3이고, R21 terminal capture와
+full-thesis tail을 끝낸 뒤에만 C17을 올릴 수 있다. C28도 여전히 남아 있으며 PR draft 해제와 main 병합은
+금지한다.

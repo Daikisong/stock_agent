@@ -710,6 +710,35 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.store.get_job(self.fresh_job.job_id).submit_count, 1)
         self.assertEqual(adapter.submit_count, 1)
 
+    async def test_frozen_submitted_boundary_allows_read_only_recovery(self) -> None:
+        adapter = await self._prepare_and_approve("fresh-conversation-late-frozen")
+        submitted = await self.orchestrator.submit_initial_once(adapter)
+        job = submitted.submit_result.job
+        frozen = self.store.seal_fresh_efficiency_failure(
+            job.job_id,
+            expected_version=job.state_version,
+            reason="public conversation hydrated after the persistence poll bound",
+            actor="test-late-frozen-recovery",
+            idempotency_key="test-late-frozen-recovery",
+        )
+
+        service = FreshSessionBoundaryService(self.store)
+        with self.assertRaisesRegex(FreshSessionBoundaryError, "not recoverable"):
+            service.load_existing(
+                fresh_runtime_root=self.boundary.fresh_runtime_root,
+                leakage_manifest=self.manifest,
+            )
+        loaded, recovered = service.load_existing(
+            fresh_runtime_root=self.boundary.fresh_runtime_root,
+            leakage_manifest=self.manifest,
+            allow_frozen_submitted_recovery=True,
+        )
+
+        self.assertEqual(loaded.fresh_job_id, frozen.job_id)
+        self.assertEqual(recovered.submit_count, 1)
+        self.assertIsNotNone(recovered.old_job_frozen_at)
+        self.assertEqual(adapter.submit_count, 1)
+
     async def test_late_server_persistence_waits_for_terminal_without_resubmit(
         self,
     ) -> None:
