@@ -772,6 +772,93 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(FollowupSubmitBlocked):
             self.orchestrator.ledger.claim_submit(pass_id)
 
+    def test_exact_same_turn_late_result_reconciles_failed_pass_without_resubmit(
+        self,
+    ) -> None:
+        plan = self._public_plan()
+        pass_id = plan.research_pass.pass_id
+        self.orchestrator.ledger.mark_prepared(pass_id)
+        self.orchestrator.ledger.claim_submit(pass_id)
+        self.orchestrator.ledger.mark_running(pass_id)
+        self.orchestrator.ledger.mark_failed_hard(
+            pass_id,
+            response_hash="9" * 64,
+            failure_class="CHATGPT_VISIBLE_THINKING_FAILED",
+            reason="ready-state cutoff preceded late hydration",
+        )
+
+        completed = self.orchestrator.ledger.complete_failed_hard_late_result(
+            pass_id,
+            failed_response_hash="9" * 64,
+            late_response_hash="8" * 64,
+            assistant_turn_id="same-assistant-turn",
+            reconciliation_receipt_hash="7" * 64,
+        )
+        repeated = self.orchestrator.ledger.complete_failed_hard_late_result(
+            pass_id,
+            failed_response_hash="9" * 64,
+            late_response_hash="8" * 64,
+            assistant_turn_id="same-assistant-turn",
+            reconciliation_receipt_hash="7" * 64,
+        )
+
+        self.assertEqual(completed.status, ResearchPassStatus.COMPLETE.value)
+        self.assertEqual(completed.submit_count, 1)
+        self.assertEqual(completed.response_hash, "8" * 64)
+        self.assertEqual(repeated.response_hash, "8" * 64)
+        self.assertEqual(
+            completed.detail["provisional_provider_failure_response_hash"],
+            "9" * 64,
+        )
+        self.assertEqual(
+            completed.detail["failure_disposition"],
+            "SUPERSEDED_BY_EXACT_SAME_TURN_LATE_HYDRATION",
+        )
+        self.assertFalse(completed.detail["automatic_resubmit_allowed"])
+        self.assertFalse(completed.detail["score_valid"])
+        with self.assertRaises(FollowupSubmitBlocked):
+            self.orchestrator.ledger.complete_failed_hard_late_result(
+                pass_id,
+                failed_response_hash="9" * 64,
+                late_response_hash="6" * 64,
+                assistant_turn_id="same-assistant-turn",
+                reconciliation_receipt_hash="7" * 64,
+            )
+
+    def test_late_result_is_blocked_after_a_successor_pass_exists(self) -> None:
+        plan = self._public_plan()
+        failed_id = plan.research_pass.pass_id
+        self.orchestrator.ledger.mark_prepared(failed_id)
+        self.orchestrator.ledger.claim_submit(failed_id)
+        self.orchestrator.ledger.mark_running(failed_id)
+        self.orchestrator.ledger.mark_failed_hard(
+            failed_id,
+            response_hash="9" * 64,
+            failure_class="CHATGPT_VISIBLE_THINKING_FAILED",
+            reason="ready-state cutoff preceded late hydration",
+        )
+        self.orchestrator.ledger.create_followup_pass(
+            scope=self.scope,
+            pass_id="PROPASS-successor-after-provider-failure",
+            pass_name="PUBLIC_GAP_CLOSURE",
+            parent_pass_id=self.scope.initial_pass_id,
+            prompt_hash="5" * 64,
+            pass_input_hash="4" * 64,
+            detail={"supersedes_failed_pass_id": failed_id},
+        )
+
+        with self.assertRaisesRegex(
+            FollowupSubmitBlocked,
+            "after a descendant pass was created",
+        ):
+            self.orchestrator.ledger.complete_failed_hard_late_result(
+                failed_id,
+                failed_response_hash="9" * 64,
+                late_response_hash="8" * 64,
+                assistant_turn_id="same-assistant-turn",
+                reconciliation_receipt_hash="7" * 64,
+            )
+
     def test_same_gap_third_reopen_hard_fails(self) -> None:
         values = {
             "job_id": self.job.job_id,

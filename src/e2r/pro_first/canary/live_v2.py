@@ -1152,7 +1152,22 @@ class ProV2LiveCanaryRunner:
             plan.research_pass,
             pass_root=pass_root,
         )
-        if execution_mode == "REUSE_CAPTURE":
+        late_failure_recovery = execution_mode in {
+            "RECOVER_FAILED_LATE_RESULT",
+            "REUSE_FAILED_LATE_CAPTURE",
+        }
+        late_failure_receipt = (
+            _load_visible_failure_receipt_for_late_result(
+                pass_root=pass_root,
+                plan=plan,
+            )
+            if late_failure_recovery
+            else None
+        )
+        if execution_mode in {
+            "REUSE_CAPTURE",
+            "REUSE_FAILED_LATE_CAPTURE",
+        }:
             capture_receipt = load_capture_receipt(capture_receipt_path)
             verify_capture_bundle(pass_root, capture_receipt)
             if (
@@ -1182,7 +1197,11 @@ class ProV2LiveCanaryRunner:
                     expected_pass_id=plan.research_pass.pass_id,
                     expected_parent_pass_id=parent_id,
                 )
-                execution_mode = "RECOVER_SUBMITTED_RESULT"
+                execution_mode = (
+                    "RECOVER_FAILED_LATE_RESULT"
+                    if late_failure_recovery
+                    else "RECOVER_SUBMITTED_RESULT"
+                )
                 self._emit(
                     self.store.get_job(plan.scope.job_id),
                     "FOLLOWUP_MISBOUND_CAPTURE_QUARANTINED",
@@ -1200,8 +1219,40 @@ class ProV2LiveCanaryRunner:
                     "response_hash": capture_receipt.report_md_hash,
                 },
             )
+        elif execution_mode == "REUSE_FAILED_LATE_CAPTURE":
+            self._emit(
+                self.store.get_job(plan.scope.job_id),
+                "FOLLOWUP_FAILED_PASS_LATE_CAPTURE_REUSED",
+                {
+                    "pass_id": plan.research_pass.pass_id,
+                    "pass_name": plan.research_pass.pass_name,
+                    "submit_count": plan.research_pass.submit_count,
+                    "capture_source": capture_receipt.capture_source,
+                    "response_hash": capture_receipt.report_md_hash,
+                    "browser_submit_delta": 0,
+                    "automatic_resubmit_allowed": False,
+                },
+            )
         else:
-            if execution_mode == "RECOVER_SUBMITTED_RESULT":
+            if execution_mode == "RECOVER_FAILED_LATE_RESULT":
+                self._emit(
+                    self.store.get_job(plan.scope.job_id),
+                    "FOLLOWUP_FAILED_PASS_LATE_HYDRATION_DETECTED",
+                    {
+                        "pass_id": plan.research_pass.pass_id,
+                        "pass_name": plan.research_pass.pass_name,
+                        "submit_count": plan.research_pass.submit_count,
+                        "assistant_turn_id": late_failure_receipt[
+                            "assistant_turn_id"
+                        ],
+                        "failure_receipt_hash": late_failure_receipt[
+                            "receipt_hash"
+                        ],
+                        "browser_submit_delta": 0,
+                        "automatic_resubmit_allowed": False,
+                    },
+                )
+            elif execution_mode == "RECOVER_SUBMITTED_RESULT":
                 durable_pending = orchestrator.ledger.get_pass(
                     plan.research_pass.pass_id
                 )
@@ -1315,7 +1366,10 @@ class ProV2LiveCanaryRunner:
                     plan=plan,
                 )
             except LiveCanaryPending as error:
-                if error.status == BrowserUIState.RETRYABLE_ERROR.value:
+                if (
+                    error.status == BrowserUIState.RETRYABLE_ERROR.value
+                    and not late_failure_recovery
+                ):
                     durable_failure_pass = orchestrator.ledger.get_pass(
                         plan.research_pass.pass_id
                     )
@@ -1504,11 +1558,48 @@ class ProV2LiveCanaryRunner:
             new_lineage_count = len(merge.new_source_lineage_ids)
             new_route_count = len(merge.new_route_receipt_ids)
             updated_question_count = len(merge.updated_question_family_ids)
-        orchestrator.complete_followup(
-            plan.research_pass.pass_id,
-            response_hash=capture_receipt.report_md_hash,
-            conversation_id=plan.scope.conversation_id,
-        )
+        if late_failure_recovery:
+            assert late_failure_receipt is not None
+            reconciliation = _persist_late_hydration_reconciliation(
+                pass_root=pass_root,
+                plan=plan,
+                failure_receipt=late_failure_receipt,
+                capture_receipt=capture_receipt,
+            )
+            completed = orchestrator.ledger.complete_failed_hard_late_result(
+                plan.research_pass.pass_id,
+                failed_response_hash=str(
+                    late_failure_receipt["browser_report_hash"]
+                ),
+                late_response_hash=capture_receipt.report_md_hash,
+                assistant_turn_id=str(capture_receipt.assistant_turn_id or ""),
+                reconciliation_receipt_hash=str(
+                    reconciliation["receipt_hash"]
+                ),
+            )
+            self._emit(
+                self.store.get_job(plan.scope.job_id),
+                "FOLLOWUP_FAILED_PASS_LATE_RESULT_RECONCILED",
+                {
+                    "pass_id": completed.pass_id,
+                    "pass_name": completed.pass_name,
+                    "submit_count": completed.submit_count,
+                    "response_hash": completed.response_hash,
+                    "reconciliation_receipt_hash": reconciliation[
+                        "receipt_hash"
+                    ],
+                    "browser_submit_delta": 0,
+                    "automatic_resubmit_allowed": False,
+                    "score_authority": False,
+                    "stage_authority": False,
+                },
+            )
+        else:
+            orchestrator.complete_followup(
+                plan.research_pass.pass_id,
+                response_hash=capture_receipt.report_md_hash,
+                conversation_id=plan.scope.conversation_id,
+            )
         if effective is not None:
             dossier_store.persist(
                 job_id=plan.scope.job_id,
@@ -2722,6 +2813,17 @@ def _followup_execution_mode(research_pass: Any, *, pass_root: Path) -> str:
     submit_count = int(research_pass.submit_count)
     if status in {"RESEARCH_RUNNING", "TRANSPORT_PENDING"} and submit_count == 1:
         return "REUSE_CAPTURE" if ready else "RECOVER_SUBMITTED_RESULT"
+    if status == "FAILED_HARD" and submit_count == 1:
+        detail = getattr(research_pass, "detail", None) or {}
+        if (
+            str(detail.get("failure_domain") or "") == "PROVIDER"
+            and detail.get("automatic_resubmit_allowed") is False
+        ):
+            return (
+                "REUSE_FAILED_LATE_CAPTURE"
+                if ready
+                else "RECOVER_FAILED_LATE_RESULT"
+            )
     if status == "COMPLETE" and submit_count == 1 and ready:
         return "REUSE_CAPTURE"
     if status in {"PLANNED", "PREPARED"} and submit_count == 0 and not ready:
@@ -2868,6 +2970,108 @@ def _persist_failed_visible_followup(
     }
     receipt = {**payload, "receipt_hash": canonical_hash(payload)}
     _write_json_atomic(failure_root / "visible_failure_receipt.json", receipt)
+    return receipt
+
+
+def _load_visible_failure_receipt_for_late_result(
+    *,
+    pass_root: Path,
+    plan: FollowupPassPlan,
+) -> Mapping[str, Any]:
+    """Validate the immutable provisional failure before late reconciliation."""
+
+    path = pass_root / "failure/visible_failure_receipt.json"
+    if not path.is_file():
+        raise RuntimeError("late result recovery requires the visible failure receipt")
+    receipt = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(receipt, Mapping):
+        raise RuntimeError("visible failure receipt must be an object")
+    receipt_hash = str(receipt.get("receipt_hash") or "")
+    payload = {
+        key: value for key, value in receipt.items() if key != "receipt_hash"
+    }
+    durable = plan.research_pass
+    failure_report = pass_root / str(
+        receipt.get("failure_report_relative_path") or ""
+    )
+    if (
+        len(receipt_hash) != 64
+        or canonical_hash(payload) != receipt_hash
+        or receipt.get("status") != "PROVIDER_FAILURE_NOT_IMPORTED"
+        or receipt.get("job_id") != plan.scope.job_id
+        or receipt.get("conversation_id") != plan.scope.conversation_id
+        or receipt.get("pass_id") != durable.pass_id
+        or receipt.get("parent_pass_id") != durable.parent_pass_id
+        or receipt.get("pass_name") != durable.pass_name
+        or int(receipt.get("submit_count") or 0) != 1
+        or receipt.get("automatic_resubmit_allowed") is not False
+        or receipt.get("fact_import_allowed") is not False
+        or str(receipt.get("browser_report_hash") or "")
+        != str(durable.response_hash or "")
+        or not str(receipt.get("assistant_turn_id") or "").strip()
+        or not failure_report.is_file()
+        or file_sha256(failure_report)
+        != str(receipt.get("failure_report_file_hash") or "")
+    ):
+        raise RuntimeError(
+            "late result recovery differs from its immutable failure evidence"
+        )
+    return receipt
+
+
+def _persist_late_hydration_reconciliation(
+    *,
+    pass_root: Path,
+    plan: FollowupPassPlan,
+    failure_receipt: Mapping[str, Any],
+    capture_receipt: CaptureReceipt,
+) -> Mapping[str, Any]:
+    """Bind a validated same-turn late result without hiding the prior failure."""
+
+    assistant_turn_id = str(capture_receipt.assistant_turn_id or "").strip()
+    failed_turn_id = str(failure_receipt.get("assistant_turn_id") or "").strip()
+    failed_hash = str(failure_receipt.get("browser_report_hash") or "")
+    if (
+        assistant_turn_id != failed_turn_id
+        or capture_receipt.job_id != plan.scope.job_id
+        or capture_receipt.conversation_id != plan.scope.conversation_id
+        or capture_receipt.report_md_hash == failed_hash
+    ):
+        raise RuntimeError(
+            "late capture is not the exact changed assistant turn that failed"
+        )
+    payload = {
+        "schema_version": "e2r_pro_late_hydration_reconciliation_v1",
+        "status": "EXACT_SAME_TURN_LATE_RESULT_VALIDATED",
+        "job_id": plan.scope.job_id,
+        "conversation_id": plan.scope.conversation_id,
+        "pass_id": plan.research_pass.pass_id,
+        "parent_pass_id": plan.research_pass.parent_pass_id,
+        "pass_name": plan.research_pass.pass_name,
+        "submit_count": 1,
+        "assistant_turn_id": assistant_turn_id,
+        "provisional_failure_receipt_hash": failure_receipt["receipt_hash"],
+        "provisional_failure_browser_report_hash": failed_hash,
+        "late_capture_report_hash": capture_receipt.report_md_hash,
+        "late_capture_source": capture_receipt.capture_source,
+        "automatic_resubmit_allowed": False,
+        "browser_submit_delta": 0,
+        "schema_and_lineage_validation_passed": True,
+        "score_authority": False,
+        "stage_authority": False,
+    }
+    receipt = {**payload, "receipt_hash": canonical_hash(payload)}
+    receipt_path = (
+        pass_root / "failure/late_hydration_reconciliation_receipt.json"
+    )
+    if receipt_path.is_file():
+        existing = json.loads(receipt_path.read_text(encoding="utf-8"))
+        if existing != receipt:
+            raise RuntimeError(
+                "late hydration reconciliation receipt changed identity"
+            )
+    else:
+        _write_json_atomic(receipt_path, receipt)
     return receipt
 
 

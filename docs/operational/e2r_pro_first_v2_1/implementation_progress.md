@@ -5232,3 +5232,55 @@ target ID와 conversation URL이 그대로다. 관련 영수증은
 아직 C17 live full-thesis PASS가 아니고 master live full-thesis는 C06 1/3이다. 이 patch를 한글 커밋·푸시한
 뒤 새 head의 Pro-first와 V6 GitHub Actions가 모두 SUCCESS일 때만, 같은 기존 탭 안의 새 conversation에서
 R24를 deny-only predecessor로 삼는 R25를 시작한다. PR #7은 draft/open을 유지하고 main 병합은 금지한다.
+
+## P49 — C17 R25 provider 실패 봉인과 동일-turn 늦은 결과의 무전송 회수 경계
+
+R25는 R24의 조사 답안을 재사용하지 않는 fresh job으로, 기존 로그인 ChatGPT target
+`F6DC0979950E8B311DC6F6207BF6197E` 하나에서만 실행했다. 새 브라우저 창·탭·target은 만들지 않았다.
+최초 결과는 source document 12개, serialized material fact 21개, 현재 material candidate 20개 중
+19개 수용, mandatory question 26/26으로 초기 효율 검문을 통과했다. acceptance ratio는 `0.95`이며
+초기 영수증 hash는 `eb82143538eed4c1f5fa301c621efd1d76b44cb587879dcb8e3690867a5f3851`이다.
+
+후반 `PUBLIC_GAP_CLOSURE`는 같은 대화에서 정확히 한 번 전송됐다. 그러나 1,440회 bounded poll 뒤에도
+최종 delta marker나 JSON/MD 산출물 대신 463자의 조사 진행 문구만 남고 ChatGPT가 ready state로 돌아왔다.
+따라서 pass `PROPASS-1d4f21e0fdb697f6b0902f1c`를
+`CHATGPT_VISIBLE_THINKING_FAILED`로 봉인했다. 실패 assistant turn은
+`7e04f887-30ea-449a-a762-3bf1d6c3fc0c`, visible report hash는
+`1612948733de0516a2931a935a2939504fd974a16df6c54ed9d2b8e560fa3d34`, 실패 영수증 hash는
+`7a51a3fc9a1997a2524dd2894b233da786cb83f586fcc48f3440cb00daf9b904`다. fact import, score,
+Stage 권한은 모두 false다.
+
+처음에는 실패 직후 보인 조사 진행 문구가 늦게 hydrate된 새 내용처럼 보였다. 실제 ChatGPT 탭을 같은
+Windows Playwright adapter로 읽어 재검산하자 turn ID와 정규화 report hash가 실패 영수증과 정확히 같았다.
+쉬운 예로 새 택배가 도착한 것이 아니라, 이미 실패 사진에 찍혀 있던 같은 상자를 다시 본 것이다. 그래서
+recovery-only 실행이 `SUBMITTED_PASS_RECOVERY_REQUIRED`로 아무것도 보내지 않은 것은 맞다. R25는 C17
+full-thesis PASS가 아니며 같은 pass 재전송과 retry 버튼 클릭은 계속 0이다.
+
+다만 ChatGPT가 실패 표시 뒤 **같은 assistant turn**을 실제 완성본으로 늦게 바꾸는 일반 경합은 과거에도
+관측됐으므로 다음의 좁은 복구 경계를 추가했다.
+
+```text
+FAILED_HARD + PROVIDER + submit_count=1
++ immutable failure receipt/hash
++ exact same conversation/assistant turn
++ changed visible response hash
++ later successor pass 없음
+→ prepare/upload/send 0
+→ 완성 산출물 schema·lineage 검증
+→ 기존 실패를 숨기지 않는 reconciliation receipt
+→ 그때만 같은 pass를 COMPLETE로 조정
+```
+
+turn이 다르거나 hash가 그대로이거나 successor pass가 이미 만들어졌으면 회수를 거부한다. late capture
+receipt도 다른 내용으로 덮어쓸 수 없다. full-thesis 실행 영수증은 최신 view를 갱신하기 전에 각
+`receipt_hash`별 history에 보존하도록 바꿨다. 이번 진단 중 recovery-only view가 기존 단일 latest 파일을
+갱신한 사실도 숨기지 않는다. 기존 파일의 이전 hash
+`50e63bfd75169d5c5ea7d3a72e297a878e8d117d480e0c20f9ac55ab6f8b394a`는 기록으로 남기고, 이후 실행부터는
+append-only history가 같은 손실을 막는다.
+
+집중 5/5, multi-pass·live-runtime·fresh-orchestration 관련 회귀 137/137, compileall, diff check가 모두
+PASS했다. Pro-first V1/V2/contracts, 36개 initial prompt snapshot, V6 production static audit도 모두
+PASS/critical 0이다. C17을 성공으로 꾸미거나 같은 공백을 무한 재전송하지 않는다. master가 허용한 조합
+`C06 + (C17 또는 C15) + (C24 또는 C28)`에 따라 C17 진단은 봉인하고, 다음 실전 두 번째 mechanism은
+기존 브라우저 탭 안의 새 ChatGPT 대화에서 C15로 진행한다. 현재 live full-thesis는 여전히 C06 1/3이며,
+PR #7은 draft/open, main unmerged를 유지한다.

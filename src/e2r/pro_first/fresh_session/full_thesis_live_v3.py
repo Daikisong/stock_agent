@@ -35,6 +35,7 @@ from ..canary.live_v2 import (
     _accepted_dossier_fact_ids,
     _followup_execution_mode,
     _is_sealed_unpersisted_dispatch,
+    _load_visible_failure_receipt_for_late_result,
     _outcome_summary,
     _question_states_for_ids,
     _redact_saturation,
@@ -271,6 +272,23 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                     orchestrator,
                     job_id=job_id,
                 )
+                if (
+                    recovery_plan is None
+                    and _latest_fresh_pass_is_provider_failed(
+                        orchestrator,
+                        job_id=job_id,
+                    )
+                ):
+                    visible_result = await prepared.session.adapter.inspect_result(
+                        job_id=job_id,
+                        run_id=str(built.packet_payload["run_id"]),
+                    )
+                    recovery_plan = _late_hydrated_failed_fresh_plan(
+                        orchestrator,
+                        job_id=job_id,
+                        job_root=job_root,
+                        visible_result=visible_result,
+                    )
                 if recovery_plan is not None:
                     self._emit_fresh(
                         "FRESH_FULL_THESIS_SUBMITTED_PASS_RECOVERY",
@@ -846,7 +864,7 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
             **receipt_payload,
             "receipt_hash": canonical_hash(receipt_payload),
         }
-        _write_json_atomic(
+        _write_append_only_receipt_with_latest_view(
             job_root / "canary/fresh_v3_full_thesis_receipt.json",
             receipt,
         )
@@ -2471,6 +2489,83 @@ _FRESH_RECOVERABLE_FOLLOWUP_NAMES = (
 )
 
 
+def _latest_fresh_pass_is_provider_failed(
+    orchestrator: FreshSessionOrchestratorV3,
+    *,
+    job_id: str,
+) -> bool:
+    passes = orchestrator.ledger.list_passes(job_id)
+    if not passes:
+        return False
+    latest = passes[-1]
+    detail = latest.detail or {}
+    return bool(
+        latest.pass_name in _FRESH_RECOVERABLE_FOLLOWUP_NAMES
+        and latest.status == "FAILED_HARD"
+        and latest.submit_count == 1
+        and str(detail.get("failure_domain") or "") == "PROVIDER"
+        and detail.get("automatic_resubmit_allowed") is False
+        and orchestrator.ledger.latest_dossier_snapshot_for_pass(
+            job_id=job_id,
+            pass_id=latest.pass_id,
+        )
+        is None
+    )
+
+
+def _late_hydrated_failed_fresh_plan(
+    orchestrator: FreshSessionOrchestratorV3,
+    *,
+    job_id: str,
+    job_root: Path,
+    visible_result: Any,
+) -> FollowupPassPlan | None:
+    """Recover only a changed result on the exact failed assistant turn."""
+
+    if not _latest_fresh_pass_is_provider_failed(
+        orchestrator,
+        job_id=job_id,
+    ):
+        return None
+    research_pass = orchestrator.ledger.list_passes(job_id)[-1]
+    scope = orchestrator.ledger.get_scope(job_id)
+    if scope is None:
+        raise RuntimeError("provider-failed follow-up lacks its durable scope")
+    plan = FollowupPassPlan(
+        scope=scope,
+        research_pass=research_pass,
+        prompt_text="",
+        prompt_hash=research_pass.prompt_hash,
+    )
+    pass_root = (
+        job_root
+        / "research_passes"
+        / f"{research_pass.pass_ordinal:02d}_{research_pass.pass_id}"
+    )
+    failure = _load_visible_failure_receipt_for_late_result(
+        pass_root=pass_root,
+        plan=plan,
+    )
+    ready = (pass_root / "capture/incoming/READY.json").is_file()
+    capture_receipt = (
+        pass_root / "capture/incoming/browser_capture_receipt.json"
+    ).is_file()
+    if ready != capture_receipt:
+        raise RuntimeError("late follow-up capture bundle is partially committed")
+    if ready:
+        return plan
+    if (
+        visible_result is None
+        or visible_result.conversation_id != scope.conversation_id
+        or visible_result.assistant_turn_id
+        != str(failure.get("assistant_turn_id") or "")
+        or visible_result.report_hash
+        == str(failure.get("browser_report_hash") or "")
+    ):
+        return None
+    return plan
+
+
 def _require_operational_followup_budget(
     ledger: ProMultiPassLedger,
     *,
@@ -2610,6 +2705,39 @@ def _write_json_atomic(path: Path, payload: Mapping[str, Any]) -> None:
         os.fsync(stream.fileno())
     os.replace(part, path)
     fsync_directory(path.parent)
+
+
+def _write_append_only_receipt_with_latest_view(
+    path: Path,
+    payload: Mapping[str, Any],
+) -> None:
+    """Preserve every distinct canary result before refreshing its latest view.
+
+    ``path`` remains the convenient current-status view.  Its immutable inputs
+    are stored by receipt hash first, so a recovery-only inspection cannot
+    erase the earlier timeout/failure evidence that led to it.
+    """
+
+    def validate_receipt(value: Mapping[str, Any]) -> str:
+        receipt_hash = str(value.get("receipt_hash") or "")
+        unsigned = {key: item for key, item in value.items() if key != "receipt_hash"}
+        if len(receipt_hash) != 64 or canonical_hash(unsigned) != receipt_hash:
+            raise ValueError("full-thesis receipt hash is invalid")
+        return receipt_hash
+
+    def preserve(value: Mapping[str, Any]) -> None:
+        receipt_hash = validate_receipt(value)
+        archive = path.parent / f"{path.stem}.history" / f"{receipt_hash}.json"
+        if archive.is_file():
+            if _read_json(archive) != dict(value):
+                raise ValueError("full-thesis receipt history hash collision")
+            return
+        _write_json_atomic(archive, value)
+
+    if path.is_file():
+        preserve(_read_json(path))
+    preserve(payload)
+    _write_json_atomic(path, payload)
 
 
 def _utc_now() -> str:

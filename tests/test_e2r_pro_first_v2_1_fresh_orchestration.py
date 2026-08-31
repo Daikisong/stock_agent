@@ -42,6 +42,8 @@ from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
     _counter_followup_question_ids,
     _enforce_recover_submitted_only,
     _followup_context,
+    _late_hydrated_failed_fresh_plan,
+    _latest_fresh_pass_is_provider_failed,
     _new_no_new_route_confirmation_candidate,
     _parse_and_validate_compact_repair_transport,
     _public_followup_question_ids,
@@ -55,6 +57,7 @@ from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
     _same_question_reopen_limit_reached,
     _ensure_durable_conversation_visible,
     _submitted_unsnapshotted_fresh_plan,
+    _write_append_only_receipt_with_latest_view,
 )
 from e2r.pro_first.ids import canonical_hash
 from e2r.pro_first.job_store import ProFirstJobStore
@@ -2952,6 +2955,155 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(recovered.research_pass.submit_count, 1)
         self.assertEqual(recovered.prompt_text, "")
         self.assertEqual(adapter.submit_count, 2)  # initial one + follow-up one
+
+    async def test_same_failed_assistant_turn_changed_hash_is_late_recovery(
+        self,
+    ) -> None:
+        adapter = await self._prepare_and_approve("fresh-late-hydration")
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="4" * 64,
+        )
+        plan, _compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest={"dossier_hash": "5" * 64},
+            unresolved_question_state=(),
+            pass_inputs={"research_gap_context_hash": "6" * 64},
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        await self.orchestrator.submit_followup(plan, adapter)
+        failed = self.orchestrator.ledger.mark_failed_hard(
+            plan.research_pass.pass_id,
+            response_hash="9" * 64,
+            failure_class="CHATGPT_VISIBLE_THINKING_FAILED",
+            reason="ready-state cutoff preceded late hydration",
+        )
+        pass_root = (
+            self.boundary.fresh_job_root
+            / "research_passes"
+            / f"{failed.pass_ordinal:02d}_{failed.pass_id}"
+        )
+        failure_root = pass_root / "failure"
+        failure_root.mkdir(parents=True)
+        report_path = failure_root / "visible_assistant_failure.md"
+        report_path.write_text("생각 중지됨\n", encoding="utf-8")
+        failure_payload = {
+            "schema_version": "e2r_pro_visible_followup_failure_v1",
+            "status": "PROVIDER_FAILURE_NOT_IMPORTED",
+            "job_id": failed.job_id,
+            "conversation_id": failed.conversation_id,
+            "pass_id": failed.pass_id,
+            "parent_pass_id": failed.parent_pass_id,
+            "pass_name": failed.pass_name,
+            "submit_count": 1,
+            "assistant_turn_id": "same-assistant-turn",
+            "browser_report_hash": "9" * 64,
+            "failure_report_file_hash": file_sha256(report_path),
+            "failure_report_relative_path": (
+                "failure/visible_assistant_failure.md"
+            ),
+            "failure_class": "CHATGPT_VISIBLE_THINKING_FAILED",
+            "failure_reason": "ready-state cutoff preceded late hydration",
+            "automatic_resubmit_allowed": False,
+            "fact_import_allowed": False,
+            "score_authority": False,
+            "stage_authority": False,
+        }
+        failure_receipt = {
+            **failure_payload,
+            "receipt_hash": canonical_hash(failure_payload),
+        }
+        (failure_root / "visible_failure_receipt.json").write_text(
+            json.dumps(failure_receipt, ensure_ascii=False),
+            encoding="utf-8",
+        )
+
+        self.assertTrue(
+            _latest_fresh_pass_is_provider_failed(
+                self.orchestrator,
+                job_id=self.fresh_job.job_id,
+            )
+        )
+        unchanged = BrowserResultSnapshot(
+            conversation_id=failed.conversation_id,
+            assistant_turn_id="same-assistant-turn",
+            report_text="생각 중지됨",
+            report_hash="9" * 64,
+            has_citations=False,
+            has_dossier_marker=False,
+            job_marker_matches=False,
+            run_marker_matches=False,
+            new_attachment_keys=(),
+        )
+        changed = replace(
+            unchanged,
+            report_text="늦게 hydration된 동일 응답",
+            report_hash="8" * 64,
+        )
+
+        self.assertIsNone(
+            _late_hydrated_failed_fresh_plan(
+                self.orchestrator,
+                job_id=self.fresh_job.job_id,
+                job_root=self.boundary.fresh_job_root,
+                visible_result=unchanged,
+            )
+        )
+        recovered = _late_hydrated_failed_fresh_plan(
+            self.orchestrator,
+            job_id=self.fresh_job.job_id,
+            job_root=self.boundary.fresh_job_root,
+            visible_result=changed,
+        )
+        self.assertIsNotNone(recovered)
+        assert recovered is not None
+        self.assertEqual(recovered.research_pass.pass_id, failed.pass_id)
+        self.assertEqual(recovered.prompt_text, "")
+        self.assertEqual(adapter.submit_count, 2)
+
+    def test_full_thesis_latest_view_preserves_every_prior_receipt(self) -> None:
+        latest = self.root / "canary/fresh_v3_full_thesis_receipt.json"
+        first_payload = {
+            "schema_version": "test_receipt_v1",
+            "status": "RETRYABLE_ERROR",
+        }
+        first = {
+            **first_payload,
+            "receipt_hash": canonical_hash(first_payload),
+        }
+        second_payload = {
+            "schema_version": "test_receipt_v1",
+            "status": "SUBMITTED_PASS_RECOVERY_REQUIRED",
+        }
+        second = {
+            **second_payload,
+            "receipt_hash": canonical_hash(second_payload),
+        }
+
+        _write_append_only_receipt_with_latest_view(latest, first)
+        _write_append_only_receipt_with_latest_view(latest, second)
+        _write_append_only_receipt_with_latest_view(latest, second)
+
+        history = latest.parent / f"{latest.stem}.history"
+        self.assertEqual(json.loads(latest.read_text(encoding="utf-8")), second)
+        self.assertEqual(
+            json.loads(
+                (history / f"{first['receipt_hash']}.json").read_text(
+                    encoding="utf-8"
+                )
+            ),
+            first,
+        )
+        self.assertEqual(
+            json.loads(
+                (history / f"{second['receipt_hash']}.json").read_text(
+                    encoding="utf-8"
+                )
+            ),
+            second,
+        )
 
     def test_submitted_verifier_repair_is_visible_to_recovery_only_mode(self) -> None:
         scope = SimpleNamespace(job_id="PROJOB-REPAIR-RECOVERY")

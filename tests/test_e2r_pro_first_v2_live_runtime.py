@@ -133,6 +133,45 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
             "RECOVER_SUBMITTED_RESULT",
         )
 
+    def test_provider_failed_pass_accepts_only_late_capture_recovery_mode(self) -> None:
+        pass_root = self.root / "provider-failed-late-result"
+        research_pass = SimpleNamespace(
+            status="FAILED_HARD",
+            submit_count=1,
+            detail={
+                "failure_domain": "PROVIDER",
+                "automatic_resubmit_allowed": False,
+            },
+        )
+
+        self.assertEqual(
+            _followup_execution_mode(research_pass, pass_root=pass_root),
+            "RECOVER_FAILED_LATE_RESULT",
+        )
+        incoming = pass_root / "capture/incoming"
+        incoming.mkdir(parents=True)
+        (incoming / "READY.json").write_text("{}", encoding="utf-8")
+        (incoming / "browser_capture_receipt.json").write_text(
+            "{}", encoding="utf-8"
+        )
+        self.assertEqual(
+            _followup_execution_mode(research_pass, pass_root=pass_root),
+            "REUSE_FAILED_LATE_CAPTURE",
+        )
+
+        with self.assertRaisesRegex(RuntimeError, "unambiguous"):
+            _followup_execution_mode(
+                SimpleNamespace(
+                    status="FAILED_HARD",
+                    submit_count=1,
+                    detail={
+                        "failure_domain": "TRANSPORT",
+                        "automatic_resubmit_allowed": False,
+                    },
+                ),
+                pass_root=self.root / "transport-failed",
+            )
+
     def test_stale_verifier_roster_is_refreshed_before_repair_packets(self) -> None:
         dossier = _base_v2()
         current_hash = canonical_hash(dossier)

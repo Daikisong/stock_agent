@@ -591,6 +591,110 @@ class ProMultiPassLedger:
             result = self._require_pass(connection, pass_id)
         return self._pass_from_row(result)
 
+    def complete_failed_hard_late_result(
+        self,
+        pass_id: str,
+        *,
+        failed_response_hash: str,
+        late_response_hash: str,
+        assistant_turn_id: str,
+        reconciliation_receipt_hash: str,
+    ) -> ResearchPassRecord:
+        """Reconcile one exact provider-failed turn that hydrated late.
+
+        ChatGPT can briefly expose a terminal ``thinking stopped`` turn and
+        hydrate the structured result much later.  A failed pass is normally
+        immutable; this narrow exception is allowed only before any descendant
+        pass exists and only when the caller has already captured and validated
+        the same assistant turn.  No browser submit capability is created.
+        """
+
+        for label, value in (
+            ("failed response", failed_response_hash),
+            ("late response", late_response_hash),
+            ("reconciliation receipt", reconciliation_receipt_hash),
+        ):
+            if len(value) != 64:
+                raise ValueError(f"{label} hash must be sha256")
+        if failed_response_hash == late_response_hash:
+            raise ValueError("late result must differ from the failed placeholder")
+        if not assistant_turn_id.strip():
+            raise ValueError("late result requires an assistant turn id")
+        now = self.store._now_text()
+        with self._transaction() as connection:
+            row = self._require_pass(connection, pass_id)
+            detail = json.loads(row["detail_json"])
+            if row["status"] == ResearchPassStatus.COMPLETE.value:
+                if (
+                    row["response_hash"] != late_response_hash
+                    or detail.get("late_hydration_reconciliation_receipt_hash")
+                    != reconciliation_receipt_hash
+                    or detail.get("late_hydration_assistant_turn_id")
+                    != assistant_turn_id.strip()
+                ):
+                    raise FollowupSubmitBlocked(
+                        "completed late-hydration reconciliation changed identity"
+                    )
+                return self._pass_from_row(row)
+            if (
+                row["status"] != ResearchPassStatus.FAILED_HARD.value
+                or int(row["submit_count"]) != 1
+                or row["response_hash"] != failed_response_hash
+                or str(detail.get("failure_domain") or "") != "PROVIDER"
+                or detail.get("automatic_resubmit_allowed") is not False
+            ):
+                raise FollowupSubmitBlocked(
+                    "only one exact provider-failed pass can accept a late result"
+                )
+            later = connection.execute(
+                """
+                SELECT pass_id FROM pro_research_passes
+                WHERE job_id=? AND pass_ordinal>?
+                ORDER BY pass_ordinal ASC
+                """,
+                (row["job_id"], int(row["pass_ordinal"])),
+            ).fetchall()
+            if later:
+                raise FollowupSubmitBlocked(
+                    "late result arrived after a descendant pass was created"
+                )
+            detail.update(
+                {
+                    "provisional_provider_failure_response_hash": (
+                        failed_response_hash
+                    ),
+                    "late_hydration_response_hash": late_response_hash,
+                    "late_hydration_assistant_turn_id": assistant_turn_id.strip(),
+                    "late_hydration_reconciliation_receipt_hash": (
+                        reconciliation_receipt_hash
+                    ),
+                    "late_hydration_reconciled_at": now,
+                    "failure_disposition": (
+                        "SUPERSEDED_BY_EXACT_SAME_TURN_LATE_HYDRATION"
+                    ),
+                    "research_status": "COMPLETE",
+                    "automatic_resubmit_allowed": False,
+                    "score_valid": False,
+                    "publication_withheld": True,
+                }
+            )
+            connection.execute(
+                """
+                UPDATE pro_research_passes
+                SET status=?, response_hash=?, detail_json=?, completed_at=?
+                WHERE pass_id=?
+                """,
+                (
+                    ResearchPassStatus.COMPLETE.value,
+                    late_response_hash,
+                    canonical_json(detail),
+                    now,
+                    pass_id,
+                ),
+            )
+            result = self._require_pass(connection, pass_id)
+        return self._pass_from_row(result)
+
     def mark_transport_pending(
         self,
         pass_id: str,
