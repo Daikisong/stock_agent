@@ -5185,3 +5185,50 @@ critical count는 0이다.
 정규화 영수증은 `p47_c17_r22_full_thesis_and_r23_provider_failure_receipt.json`이다. 아직 C17 live full-thesis
 PASS가 아니며 master는 C06 1/3이다. 관련 전체 회귀·정적 감사·새 head CI green 뒤에만, 같은 브라우저 탭의
 새 conversation에서 R23의 provider-failure receipt를 deny-only predecessor로 삼는 successor를 시작한다.
+
+## P48 — C17 R24 초기 효율 실패와 원문 인용·다운로드 결박 수리
+
+R24도 새 브라우저 창·탭·target을 만들지 않았다. 기존 로그인 ChatGPT target
+`F6DC0979950E8B311DC6F6207BF6197E` 하나를 새 채팅 route로 이동해 job
+`PROJOB-427ef40a6f9913ce05325529`, run `PRORUN-6e468b1e5894b5ad0a0a3284`, initial pass
+`PROPASS-d792c76811300af295884f2b`, conversation `6a95b562-7a6c-83ee-af0f-cbc7f5edf6ad`를 만들었다.
+최초 submit은 1회뿐이고, 늦은 완료와 산출물 회수 과정의 browser submit delta는 계속 0이다.
+
+약 87분의 Pro 조사 결과는 mandatory question 26/26, source document 15개, material fact 27개를
+직렬화했다. 그러나 현재 material candidate 15개 중 verifier가 수용한 것은 10개여서
+post-preflight acceptance ratio가 `0.666667`에 그쳤다. 요구값 0.8 미만이므로 R24는
+`OPERATIONAL_EFFICIENCY_GATE_FAILED / INITIAL_ACCEPTANCE_RATIO_BELOW_80_PERCENT`로 정확히 봉인했다.
+score·Stage는 생성하지 않았고, initial pass를 같은 대화에서 다시 보내지 않는다.
+
+거절 원인은 파서가 Pro 자료를 임의로 버린 문제가 아니다. 실제 source representation과 대조한 결과,
+일부 supporting excerpt가 원문 문장을 바꾸어 썼거나 서로 떨어진 표의 header·row label·값을 `|`로
+이어 하나의 인용문처럼 재조립했다. 쉬운 예로 표의 `주당순이익(원)`과 아래쪽 `5,199`를 계산용 입력으로
+쓰는 것은 가능하지만, 원문에서 연속하지 않는 두 셀을 `주당순이익(원) | 5,199`라는 exact quote로 만들 수는
+없다. 값이 맞더라도 verifier의 literal substring 검문은 실패하는 것이 맞다.
+
+generic 수리는 특정 회사·C17·질문 ID를 조건으로 넣지 않았다. 모든 36개 archetype 공통 initial protocol과
+짧은 transport envelope에 다음을 명시했다.
+
+- supporting excerpt는 source의 원래 언어와 글자를 그대로 유지한다.
+- 번역·의역·문법 교정·단위 환산·숫자 표기 변경은 statement/derived metric에서만 하고 quote에서는 금지한다.
+- fact 추가 직전에 실제 공개 representation에서 excerpt 전체를 문자 그대로 다시 찾는다.
+- 서로 떨어진 표 cell을 재조립하지 않고, 연속 원문이 없으면 다른 공개 representation 또는 unresolved gap을 쓴다.
+- mandatory question을 채워 보이게 하려고 검증 불가능한 current material candidate를 추가하지 않는다.
+
+동시에 ChatGPT가 같은 visible sandbox artifact를 내려줄 때 Estuary server filename만
+`lotte_chemical_research_dossier_v3(2).json`처럼 숫자 충돌 suffix로 바꾸는 실제 UI 변화를 수용했다. visible
+파일의 exact stem/suffix, 같은 origin과 content path, manifest filename과 URL `fn`, exact file ID가 모두
+결박된 경우에만 허용한다. 다른 stem, 다른 ID, 다른 path는 계속 거부한다. 이 보정으로 R24 dossier
+261,801 bytes, SHA-256 `980c84eb1ad282daf49622def140f491fec6199ec0e27c009097a51230227956`를
+재제출 없이 `DOWNLOAD_JSON`으로 회수했다.
+
+36개 prompt snapshot을 재생성했고 snapshot audit은 36/36 PASS, critical 0이다. 집중 prompt/fresh
+orchestration 80/80, Windows Chromium adapter 47/47, Linux browser mock E2E 89/89, 전체 회귀
+7,876/7,876(failure/error 0, 기존 skip 38), Reviewer A–H, Pro-first/V2/V2.1/V6 정적 감사가 모두 PASS다.
+compileall과 diff check도 PASS다. 검증 시점의 Chrome은 전체 page 13개 중 ChatGPT page가 정확히 하나이며
+target ID와 conversation URL이 그대로다. 관련 영수증은
+`p48_c17_r24_literal_quote_and_download_binding_receipt.json`이다.
+
+아직 C17 live full-thesis PASS가 아니고 master live full-thesis는 C06 1/3이다. 이 patch를 한글 커밋·푸시한
+뒤 새 head의 Pro-first와 V6 GitHub Actions가 모두 SUCCESS일 때만, 같은 기존 탭 안의 새 conversation에서
+R24를 deny-only predecessor로 삼는 R25를 시작한다. PR #7은 draft/open을 유지하고 main 병합은 금지한다.

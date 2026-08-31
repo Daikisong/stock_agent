@@ -2192,12 +2192,33 @@ class PlaywrightChatGPTWebAdapter:
             parsed = urlsplit(download_url)
             page_origin = urlsplit(str(self.page.url or ""))
             query = parse_qs(parsed.query)
+            # ChatGPT can allocate a collision-safe Estuary filename after the
+            # exact visible sandbox artifact has already been selected.  For
+            # example, a visible ``report.json`` can yield ``report(2).json``
+            # on a later authenticated GET.  The first interpreter request is
+            # still bound to the visible sandbox basename by ``url_matches``
+            # above.  Accept only this narrow numeric collision form, while
+            # continuing to require the manifest filename, ``fn`` query and
+            # file id to bind to one another exactly.
+            manifest_filename_matches = manifest_filename == expected_filename
+            if not manifest_filename_matches:
+                expected_path = Path(expected_filename)
+                suffix = expected_path.suffix
+                stem = expected_filename[: -len(suffix)] if suffix else expected_filename
+                manifest_filename_matches = bool(
+                    suffix
+                    and Path(manifest_filename).name == manifest_filename
+                    and re.fullmatch(
+                        rf"{re.escape(stem)}\([1-9][0-9]{{0,5}}\){re.escape(suffix)}",
+                        manifest_filename,
+                    )
+                )
             if (
-                manifest_filename != expected_filename
+                not manifest_filename_matches
                 or parsed.scheme.casefold() != page_origin.scheme.casefold()
                 or parsed.netloc.casefold() != page_origin.netloc.casefold()
                 or parsed.path != "/backend-api/estuary/content"
-                or query.get("fn") != [expected_filename]
+                or query.get("fn") != [manifest_filename]
                 or not file_id
                 or query.get("id") != [file_id]
             ):

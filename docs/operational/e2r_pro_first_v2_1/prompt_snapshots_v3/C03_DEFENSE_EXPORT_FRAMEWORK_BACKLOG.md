@@ -80,6 +80,10 @@
 22. 같은 predicate의 더 최신 관측치가 있으면 이전 관측치를 CURRENT material candidate로 중복 제출하지 않는다. 과거 맥락은 HISTORICAL_ONLY 경계를 명시하고, 최신 관측치와 섞어 현재 사실처럼 서술하지 않는다.
 23. `issuer_scoped=false`인 fact의 `subject`는 source 원문에 실제로 연속 등장하는 가장 짧은 주체 표현을 그대로 복사한다. 원문의 여러 위치에서 회사·시설·거래 이름을 모아 합성 subject를 만들지 않는다. exact excerpt 자체가 target을 직접 언급하지 않으면 source 본문에서 그 subject와 target의 관계가 각각 문자 그대로 확인돼야 하며, 그렇지 않으면 fact가 아니라 unresolved gap으로 남긴다.
 24. material/counter/resolution fact의 canonical source는 후속 verifier가 로그인·개인 cookie·JavaScript challenge 없이 다시 받을 수 있는 공개 HTML/PDF/data representation이어야 한다. 현재 연구 도구에서만 열리고 일반 공개 fetch가 401/403, 로그인 화면, anti-bot challenge로 끝나는 페이지는 그대로 제출하지 말고 official 원문·filing·issuer data·공개 mirror 중 재수집 가능한 representation을 찾아 source_document에 연결한다. 찾지 못하면 fact를 만들지 말고 attempted route와 source gap을 기록한다.
+25. supporting_excerpt는 source의 원래 언어와 글자를 유지한 채 verifier가 내려받는 representation에서 그대로 복사한다. 번역, 의역, 문법 교정, 단위 환산, 숫자 표기 변경은 statement나 derived_metrics에서만 할 수 있고 supporting_excerpt에서는 금지한다.
+26. fact를 추가하기 직전에 supporting_excerpt 전체를 실제로 연 source representation 안에서 문자 그대로 다시 찾아보는 literal-search self-check를 한다. 공백·줄바꿈·Unicode 문장부호 정규화 외의 변경 없이 찾히지 않으면 exact excerpt가 아니므로 다른 연속 원문을 선택하거나 그 fact를 unresolved gap으로 내린다.
+27. 표의 header, row label, 값이 내려받은 representation에서 서로 떨어져 있으면 `|`, 줄바꿈 또는 설명어를 넣어 하나의 인용문으로 재조립하지 않는다. label과 값이 함께 연속 등장하는 다른 공개 representation을 찾고, 없으면 계산·추론 fact로 승격하지 않는다.
+28. current material candidate는 위 literal-search와 공개 재수집 preflight를 통과한 fact만 직렬화한다. mandatory question을 채워 보이게 하려고 검증 불가능한 후보를 추가하지 말고, 해당 question에는 attempted route와 구체적 gap을 남긴다.
 
 [Question closure]
 
@@ -150,6 +154,8 @@ LIKELY_NONPUBLIC은 단순히 찾지 못했다는 뜻이 아니며 공개의무,
 - as_of_date 이후 source 0
 - duplicate lineage credit 0
 - derived calculation mixed into quoted fact 0
+- source-language literal-search 실패 0
+- 번역·의역·표 재조립 supporting excerpt 0
 
 조건을 만족하지 못한 후보는 fact에서 제거하고 unresolved gap에 남긴다.
 
@@ -560,4 +566,5 @@ Mandatory question families:
 schema의 `verifier_preflight`에서 다음 9개 필드는 모두 true여야 한다: `source_opened`, `canonical_url_used`, `exact_excerpt_copied_from_source`, `statement_not_broader_than_excerpt`, `single_atomic_predicate`, `target_subject_scope_confirmed`, `publication_date_confirmed`, `as_of_cutoff_pass`, `lineage_duplicate_checked`.
 `derived_calculation_mixed_into_fact`는 false여야 한다.
 DerivedMetricV3는 `input_fact_ids`와 `formula`로 계산 계보를 분리하며 quoted atomic fact에 계산 결과를 섞지 않는다.
+supporting_excerpt는 source의 원래 언어를 유지하고 실제 공개 representation에서 문자 그대로 다시 찾을 수 있어야 한다. 번역·의역·문법 교정·단위 환산·표 cell 재조립은 금지한다.
 검증을 통과하지 못한 candidate는 accepted fact로 강행하지 말고 unresolved gap에 남긴다.

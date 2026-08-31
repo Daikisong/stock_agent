@@ -183,6 +183,8 @@ class ProResearchPromptCompilerV3:
             "- investment_recommendation_allowed: `false`",
             "",
             "첨부의 mandatory question을 하나도 생략하지 말고, protocol의 공개경로·검증·직렬화 gate를 약화하지 마라.",
+            "각 supporting_excerpt는 실제로 연 공개 source의 원래 언어 문장을 그대로 복사하고, 최종 fact 추가 직전에 source 안에서 문자 그대로 다시 찾으라. 번역·의역·문법 교정·단위 환산·표 cell 재조립은 supporting_excerpt에서 금지한다.",
+            "literal-search가 실패하거나 label과 값이 연속 원문으로 함께 나오지 않으면 그 후보를 fact로 강행하지 말고 attempted route와 unresolved gap으로 남겨라.",
             "`ID-PLACEHOLDER`, `확인값`, 예시 URL·예시 ID를 실제 결과로 출력하지 마라. provider가 정상인데 source와 atomic fact가 모두 0인 빈 스캐폴드를 최종 제출하지 마라.",
             "최종 응답은 protocol대로 dossier JSON을 먼저 출력하고 score나 Stage를 계산·제안하지 마라.",
             "",
@@ -484,6 +486,7 @@ class ProResearchPromptCompilerV3:
                 + ".",
                 "`derived_calculation_mixed_into_fact`는 false여야 한다.",
                 "DerivedMetricV3는 `input_fact_ids`와 `formula`로 계산 계보를 분리하며 quoted atomic fact에 계산 결과를 섞지 않는다.",
+                "supporting_excerpt는 source의 원래 언어를 유지하고 실제 공개 representation에서 문자 그대로 다시 찾을 수 있어야 한다. 번역·의역·문법 교정·단위 환산·표 cell 재조립은 금지한다.",
                 "검증을 통과하지 못한 candidate는 accepted fact로 강행하지 말고 unresolved gap에 남긴다.",
             ]
         )

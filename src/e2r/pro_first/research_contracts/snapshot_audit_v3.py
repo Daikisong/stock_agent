@@ -37,6 +37,9 @@ ATOMIC_EVIDENCE_REQUIREMENT_MARKERS = (
     "accepted material fact로 제출하지 않는다",
     "issuer_scoped=false`인 fact의 `subject`는 source 원문에 실제로 연속 등장",
     "로그인·개인 cookie·JavaScript challenge 없이 다시 받을 수 있는 공개",
+    "source의 원래 언어와 글자를 유지",
+    "literal-search self-check",
+    "하나의 인용문으로 재조립하지 않는다",
 )
 FORCED_COMPLETE_MARKERS = (
     "research_status`는 `COMPLETE`",

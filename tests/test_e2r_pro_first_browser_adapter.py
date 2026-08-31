@@ -720,6 +720,103 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
             dossier,
         )
 
+    async def test_authenticated_fetch_accepts_bound_numeric_collision_manifest(
+        self,
+    ) -> None:
+        visible_filename = "generated_dossier.json"
+        manifest_filename = "generated_dossier(2).json"
+        file_id = "file_exact_collision_generated_dossier"
+        dossier = {
+            "schema_version": "e2r_pro_research_dossier_v3",
+            "job_id": "PROJOB-aaaaaaaaaaaaaaaaaaaaaaaa",
+            "run_id": "PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb",
+        }
+        self.server.set_estuary_text(json.dumps(dossier))
+        manifest_url = (
+            f"{self.server.base_url}/backend-api/estuary/content"
+            f"?fn={manifest_filename}&id={file_id}"
+        )
+        self.server.set_download_text(
+            json.dumps(
+                {
+                    "status": "success",
+                    "file_name": manifest_filename,
+                    "mime_type": "application/json",
+                    "metadata": {"file_id": file_id},
+                    "download_url": manifest_url,
+                }
+            )
+        )
+        first_url = (
+            f"{self.server.base_url}/backend-api/conversation/mock-conversation/"
+            f"interpreter/download?filename={visible_filename}"
+            f"&sandbox_path=%2Fmnt%2Fdata%2F{visible_filename}"
+        )
+        await self.page.set_content(
+            "<html><body><div>"
+            f'<button class="entity-underline">{visible_filename}</button>'
+            '<button aria-label="파일 다운로드">다운로드</button>'
+            "</div><script>"
+            "document.querySelector('button[aria-label=\"파일 다운로드\"]')"
+            f".addEventListener('click', () => fetch('{first_url}'));"
+            "</script></body></html>"
+        )
+
+        download = await self.adapter._download_from_candidate(
+            self.page.locator(".entity-underline")
+        )
+        destination = Path(self.temporary_directory.name) / visible_filename
+        await download.save_as(str(destination))
+
+        self.assertEqual(download.suggested_filename, visible_filename)
+        self.assertEqual(
+            json.loads(destination.read_text(encoding="utf-8")),
+            dossier,
+        )
+
+    async def test_authenticated_fetch_rejects_collision_suffix_on_other_stem(
+        self,
+    ) -> None:
+        visible_filename = "generated_dossier.json"
+        manifest_filename = "other_dossier(2).json"
+        file_id = "file_wrong_collision_stem"
+        self.server.set_download_text(
+            json.dumps(
+                {
+                    "status": "success",
+                    "file_name": manifest_filename,
+                    "mime_type": "application/json",
+                    "metadata": {"file_id": file_id},
+                    "download_url": (
+                        f"{self.server.base_url}/backend-api/estuary/content"
+                        f"?fn={manifest_filename}&id={file_id}"
+                    ),
+                }
+            )
+        )
+        first_url = (
+            f"{self.server.base_url}/backend-api/conversation/mock-conversation/"
+            f"interpreter/download?filename={visible_filename}"
+            f"&sandbox_path=%2Fmnt%2Fdata%2F{visible_filename}"
+        )
+        await self.page.set_content(
+            "<html><body><div>"
+            f'<button class="entity-underline">{visible_filename}</button>'
+            '<button aria-label="파일 다운로드">다운로드</button>'
+            "</div><script>"
+            "document.querySelector('button[aria-label=\"파일 다운로드\"]')"
+            f".addEventListener('click', () => fetch('{first_url}'));"
+            "</script></body></html>"
+        )
+
+        with self.assertRaisesRegex(
+            BrowserUIIncompatible,
+            "not bound to the exact visible file",
+        ):
+            await self.adapter._download_from_candidate(
+                self.page.locator(".entity-underline")
+            )
+
     async def test_authenticated_fetch_rejects_unbound_estuary_manifest(self) -> None:
         filename = "generated_dossier.json"
         file_id = "file_exact_generated_dossier"

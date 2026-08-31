@@ -98,6 +98,22 @@ class ProFirstV21InitialPromptV3Test(unittest.TestCase):
             for marker in required:
                 self.assertIn(marker, prompt, f"{path.name}: {marker}")
 
+    def test_source_language_literal_search_guards_are_common(self) -> None:
+        required = (
+            "source의 원래 언어와 글자를 유지",
+            "번역, 의역, 문법 교정, 단위 환산, 숫자 표기 변경",
+            "literal-search self-check",
+            "표의 header, row label, 값",
+            "하나의 인용문으로 재조립하지 않는다",
+            "검증 불가능한 후보를 추가하지 말고",
+            "source-language literal-search 실패 0",
+            "번역·의역·표 재조립 supporting excerpt 0",
+        )
+        for path in SNAPSHOTS.glob("*.md"):
+            prompt = path.read_text(encoding="utf-8")
+            for marker in required:
+                self.assertIn(marker, prompt, f"{path.name}: {marker}")
+
     def test_all_preflight_fields_and_derived_separation_are_explicit(self) -> None:
         fields = (*VERIFIER_PREFLIGHT_TRUE_FIELDS, *VERIFIER_PREFLIGHT_FALSE_FIELDS)
         for path in SNAPSHOTS.glob("*.md"):
