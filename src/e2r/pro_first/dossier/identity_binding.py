@@ -10,6 +10,11 @@ from ..ids import canonical_hash
 
 
 INITIAL_CONVERSATION_PLACEHOLDER = "PENDING_INITIAL_CONVERSATION"
+INITIAL_CONVERSATION_PLACEHOLDER_ALIASES = frozenset(
+    {"PENDING_NEW_CONVERSATION"}
+)
+INITIAL_PARENT_PASS_NULL_ALIAS = "NONE"
+INITIAL_PASS_NAME = "INITIAL_FULL_RESEARCH"
 
 
 class DossierIdentityBindingError(ValueError):
@@ -62,24 +67,40 @@ def bind_dossier_transport_identity(
     if research_pass_id is None or actual_pass_id != research_pass_id:
         raise DossierIdentityBindingError("V2/V3 research pass id differs from durable pass")
     actual_parent = payload.get("parent_pass_id")
-    if actual_parent != parent_pass_id:
+    initial_alias_scope = (
+        allow_initial_conversation_placeholder
+        and parent_pass_id is None
+        and pass_name == INITIAL_PASS_NAME
+    )
+    parent_is_initial_null_alias = (
+        initial_alias_scope
+        and actual_parent == INITIAL_PARENT_PASS_NULL_ALIAS
+    )
+    if actual_parent != parent_pass_id and not parent_is_initial_null_alias:
         raise DossierIdentityBindingError("V2/V3 parent pass id differs from durable lineage")
 
     current = str(payload.get("conversation_id") or "")
     bound = deepcopy(dict(payload))
     operations: list[str] = []
+    if parent_is_initial_null_alias:
+        bound["parent_pass_id"] = None
+        operations.append("BIND_INITIAL_PARENT_PASS_NULL_ALIAS")
     if current == conversation_id:
         operations.append("CONVERSATION_ID_ALREADY_CAPTURE_BOUND")
     else:
+        initial_placeholder = current == INITIAL_CONVERSATION_PLACEHOLDER or (
+            initial_alias_scope
+            and current in INITIAL_CONVERSATION_PLACEHOLDER_ALIASES
+        )
         if not (
             allow_initial_conversation_placeholder
             and parent_pass_id is None
-            and current == INITIAL_CONVERSATION_PLACEHOLDER
+            and initial_placeholder
         ):
             raise DossierIdentityBindingError(
                 "V2/V3 conversation id is neither capture-bound nor the exact initial placeholder"
             )
-        if _count_exact_string(payload, INITIAL_CONVERSATION_PLACEHOLDER) != 1:
+        if _count_exact_string(payload, current) != 1:
             raise DossierIdentityBindingError(
                 "initial conversation placeholder must occur only at the top level"
             )

@@ -339,6 +339,8 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             "dossier_output_schema",
         ):
             self.assertIn(field_path, prompt)
+        self.assertIn("`ID-PLACEHOLDER`", prompt)
+        self.assertIn("source와 atomic fact가 모두 0인 빈 스캐폴드", prompt)
         self.assertIn(self.fresh_job.job_id, prompt)
         self.assertIn(str(self.built.packet_payload["run_id"]), prompt)
         self.assertNotIn(f"`{ARCHETYPE}_Q01`", prompt)

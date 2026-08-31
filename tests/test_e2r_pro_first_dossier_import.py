@@ -10,7 +10,10 @@ import unittest
 from e2r.pro_first.browser.protocol import RawBrowserCapture
 from e2r.pro_first.capture.atomic_capture import AtomicCaptureWriter, CaptureIdentity
 from e2r.pro_first.capture.coordinator import CaptureFilesystemReconciler
-from e2r.pro_first.dossier.importer import ProDossierImporter
+from e2r.pro_first.dossier.importer import (
+    ProDossierImporter,
+    _reject_scaffold_only_initial_dossier,
+)
 from e2r.pro_first.dossier.dialect_adapter import (
     DossierDialectError,
     ResearchDossierDialectAdapter,
@@ -241,6 +244,77 @@ class ProFirstDossierImportTest(unittest.IsolatedAsyncioTestCase):
             if event.to_status == JobStatus.DOSSIER_IMPORTED.value
         ]
         self.assertEqual(len(matching), 1)
+
+    def test_scaffold_only_v3_output_is_an_explicit_initial_defect(self) -> None:
+        dossier = {
+            "schema_version": "e2r_pro_research_dossier_v3",
+            "source_documents": [],
+            "material_facts": [],
+            "counterfacts": [],
+            "resolution_facts": [],
+            "question_family_results": [
+                {"closure_reason": "확인값"},
+            ],
+            "search_route_receipts": [
+                {
+                    "archetype_id": "ID-PLACEHOLDER",
+                    "query_text": "확인값",
+                    "provider_status": "SUCCESS",
+                }
+            ],
+        }
+
+        with self.assertRaisesRegex(
+            DossierValidationError,
+            "INITIAL_PROMPT_OUTPUT_DEFECT: scaffold-only dossier",
+        ):
+            _reject_scaffold_only_initial_dossier(dossier)
+
+    def test_truthful_zero_fact_provider_pending_is_not_called_scaffold(self) -> None:
+        dossier = {
+            "schema_version": "e2r_pro_research_dossier_v3",
+            "source_documents": [],
+            "material_facts": [],
+            "counterfacts": [],
+            "resolution_facts": [],
+            "question_family_results": [
+                {"closure_reason": "Provider access failed after official route."},
+            ],
+            "search_route_receipts": [
+                {
+                    "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+                    "query_text": "issuer official filing",
+                    "provider_status": "PROVIDER_ERROR",
+                }
+            ],
+        }
+
+        _reject_scaffold_only_initial_dossier(dossier)
+
+    def test_zero_fact_supported_question_is_rejected_without_literal_filler(self) -> None:
+        dossier = {
+            "schema_version": "e2r_pro_research_dossier_v3",
+            "source_documents": [],
+            "material_facts": [],
+            "counterfacts": [],
+            "resolution_facts": [],
+            "question_family_results": [
+                {
+                    "status": "SUPPORTED_SCORING",
+                    "closure_reason": "The question is supported.",
+                    "support_fact_ids": [],
+                    "counter_fact_ids": [],
+                    "resolution_fact_ids": [],
+                },
+            ],
+            "search_route_receipts": [],
+        }
+
+        with self.assertRaisesRegex(
+            DossierValidationError,
+            "unsupported terminal fields",
+        ):
+            _reject_scaffold_only_initial_dossier(dossier)
 
     async def test_post_import_attention_reuses_durable_import_without_transition(self) -> None:
         await self._capture(self._valid_dossier())

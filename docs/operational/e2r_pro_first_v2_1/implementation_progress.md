@@ -5068,3 +5068,36 @@ submit_count == 0 frozen
 score, Stage는 없으므로 C17 PASS가 아니다. master live full-thesis는 C06 1/3이고, R21 terminal capture와
 full-thesis tail을 끝낸 뒤에만 C17을 올릴 수 있다. C28도 여전히 남아 있으며 PR draft 해제와 main 병합은
 금지한다.
+
+## P45 — R21 빈 스캐폴드 출력 확정과 기존 탭 안 새 채팅 경계
+
+R21은 같은 제출을 다시 보내지 않고 terminal 안정성 3회 확인과 `DOWNLOAD_JSON` 캡처까지 완료했다. 최초
+import에서 `parent_pass_id="NONE"`과 durable `null`의 전송 표기 차이를 발견해, 정확한 최초 패스·부모
+없음·`INITIAL_FULL_RESEARCH` 범위에서만 `NONE → null`을 허용했다. 후속 패스 계보는 전혀 완화하지
+않았다.
+
+이 표기 차이를 통과시킨 뒤 원본 JSON을 조사하자 파서가 사실을 버린 것이 아니었다. 다운로드된 파일
+자체가 source document 0, material/counter/resolution fact 0인 빈 스캐폴드였고, 62개 route에는
+`ID-PLACEHOLDER`와 `확인값`이 들어 있었다. 쉬운 예로 완성된 조사 보고서에서 표를 잘못 읽은 것이 아니라,
+Pro가 이름표와 빈 칸만 있는 양식을 최종 파일로 낸 것이다. 따라서 이 결과를 사실로 승격하거나 점수로
+보내지 않고 `INITIAL_PROMPT_OUTPUT_DEFECT` 진단으로 봉인한다. R21 submit/capture는 1/1 그대로이며 재전송은
+0이다.
+
+generic 수리는 두 겹이다. 첫째, source/fact가 모두 0이면서 literal filler가 있는 V3 dossier를 evidence
+import 전에 명시적으로 차단한다. 실제 provider 실패를 정직한 pending receipt로 기록한 zero-fact 결과는
+진단을 위해 이 scaffold guard와 구분한다. 둘째, 최초 protocol과 짧은 transport envelope 모두에
+`ID-PLACEHOLDER`, `확인값`, 가짜 SUCCESS route, provider 정상 상태의 zero-fact scaffold 금지를 직접
+추가했다. 36개 전 아키타입 snapshot을 다시 생성했고 audit은 36/36, critical 0이다.
+
+집중 회귀는 21/21, 실제 R21 원본 guard probe, compileall, diff check가 모두 PASS다. 이 회귀에는 literal
+filler가 없어도 zero-fact 상태에서 `SUPPORTED_SCORING`을 주장하면 차단하는 generic contradiction 검사가
+포함된다. 브라우저에는 로그인된
+ChatGPT page가 정확히 하나만 있으며 새 window/tab/target은 0이다. 다음 C17 canary는 새 브라우저 창이
+아니라 이 기존 target 안에서 ChatGPT의 새 채팅 route로만 이동한다. master live full-thesis는 여전히 C06
+1/3이고, C17·C28이 실제 full-thesis까지 닫히기 전 PR draft 해제와 main 병합은 금지한다. 정규화 영수증은
+`p45_c17_r21_scaffold_only_output_and_single_tab_recovery_receipt.json`이다.
+
+전체 로컬 discovery도 fail-fast로 재확인했다. 1,220개까지 코드 failure 0, 기존 skip 14였고 첫 error는
+Linux Playwright `chrome-headless-shell`이 system `libnspr4.so`를 찾지 못해 browser test `asyncSetUp` 전에
+종료된 환경 오류다. 동일 변경영역의 browser-independent 회귀와 정적 감사 3종은 모두 PASS이며, 전체
+독립 Linux 재실행은 push 후 GitHub Actions의 Playwright dependency 설치 환경에서 판정한다.

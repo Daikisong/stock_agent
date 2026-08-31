@@ -21,7 +21,11 @@ from .dialect_adapter import ResearchDossierDialectAdapter
 from .identity_binding import bind_dossier_transport_identity
 from .normalizer import ResearchDossierNormalizer
 from .parser import ResearchDossierParser
-from .validator import DossierValidationContext, ResearchDossierValidator
+from .validator import (
+    DossierValidationContext,
+    DossierValidationError,
+    ResearchDossierValidator,
+)
 from ..multi_pass.models import INITIAL_PASS_NAME
 
 
@@ -178,6 +182,7 @@ class ProDossierImporter:
                 adapted.payload,
                 archetype_ids=job.archetype_ids,
             )
+            _reject_scaffold_only_initial_dossier(pre_schema.payload)
             browser_state = self.store.get_browser_session_state(job_id) or {}
             durable_browser_detail = browser_state.get("state") or {}
             durable_initial_pass_id = str(
@@ -347,6 +352,71 @@ class ProDossierImporter:
         if value.tzinfo is None or value.utcoffset() is None:
             raise ValueError("dossier import clock must be timezone-aware")
         return value.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def _reject_scaffold_only_initial_dossier(payload: Mapping[str, Any]) -> None:
+    """Fail closed on a copied schema scaffold before identity normalization.
+
+    A real provider failure may legitimately return no accepted fact, but it
+    must carry truthful pending/failure receipts.  A dossier with no sources,
+    no facts, and literal template filler is neither research nor an absence
+    proof.  Keeping this check before transport binding also preserves the raw
+    capture unchanged for diagnosis.
+    """
+
+    if payload.get("schema_version") != "e2r_pro_research_dossier_v3":
+        return
+    if payload.get("source_documents"):
+        return
+    if any(
+        payload.get(collection)
+        for collection in ("material_facts", "counterfacts", "resolution_facts")
+    ):
+        return
+    placeholder_values = {"ID-PLACEHOLDER", "확인값"}
+    route_fields = (
+        "archetype_id",
+        "gap_id",
+        "pass_id",
+        "query_text",
+        "query_or_navigation_objective",
+        "no_new_route_reason",
+    )
+    route_placeholder = any(
+        str(row.get(field) or "") in placeholder_values
+        for row in payload.get("search_route_receipts") or ()
+        if isinstance(row, Mapping)
+        for field in route_fields
+    )
+    question_placeholder = any(
+        str(row.get("closure_reason") or "") in placeholder_values
+        for row in payload.get("question_family_results") or ()
+        if isinstance(row, Mapping)
+    )
+    supported_statuses = {
+        "SUPPORTED_SCORING",
+        "PARTIALLY_SUPPORTED_SCORING",
+        "SUPPORTED_NON_SCORING",
+        "COUNTER_SUPPORTED",
+    }
+    unsupported_terminal_claim = any(
+        str(row.get("status") or "") in supported_statuses
+        and not any(
+            row.get(field)
+            for field in (
+                "support_fact_ids",
+                "counter_fact_ids",
+                "resolution_fact_ids",
+            )
+        )
+        for row in payload.get("question_family_results") or ()
+        if isinstance(row, Mapping)
+    )
+    if route_placeholder or question_placeholder or unsupported_terminal_claim:
+        raise DossierValidationError(
+            "INITIAL_PROMPT_OUTPUT_DEFECT: scaffold-only dossier contains "
+            "placeholder or unsupported terminal fields and zero source-backed facts"
+        )
 
 
 __all__ = ["DossierImportResult", "ProDossierImporter"]

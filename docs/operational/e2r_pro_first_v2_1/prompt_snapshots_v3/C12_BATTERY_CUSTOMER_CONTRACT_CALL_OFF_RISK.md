@@ -38,6 +38,9 @@
 5. 여러 mandatory question을 함께 지지하는 official filing/earnings/IR을 우선 열고, 한 source 안의 서로 다른 문장·표 행을 여러 atomic fact로 각각 보존한다. source 하나당 fact 하나로 인위적으로 제한하지 않는다.
 6. final 직렬화 전에 non-terminal roster를 다시 순회한다. provider/tool이 실제로 중단되지 않았다면 `UNKNOWN_ROUTE_NOT_YET_TESTED`, 시도하지 않은 `PUBLIC_SEARCHABLE`, 대체 representation을 시도하지 않은 `PARSER_PENDING`을 남긴 채 출력을 시작하지 않는다.
 7. 실제 provider/tool 중단 때문에 위 gate를 통과하지 못하면 연구가 끝난 것처럼 보이게 하지 말고 `PROVIDER_PENDING` 또는 `TRANSPORT_PENDING`으로 명시한다. 이 결과는 operational efficiency 실패로 봉인될 수 있다.
+8. `ID-PLACEHOLDER`, `확인값`, 예시 URL·예시 ID 같은 스캐폴드 값을 실제 조사 결과처럼 출력하지 않는다. 실제 값을 확인하지 못한 필드는 허용된 null/빈 배열과 구체적인 non-terminal 사유로 표현한다.
+9. provider가 정상 동작했는데 `source_documents`, `material_facts`, `counterfacts`, `resolution_facts`가 전부 빈 최종 JSON은 금지한다. 최소 한 개의 실제 공개 source와 그 원문에 결박된 atomic fact를 보존할 때까지 조사·직렬화를 계속한다.
+10. provider 자체가 막혀 source와 fact를 하나도 만들 수 없다면 가짜 `SUCCESS` route를 만들지 않는다. 실제 실패 상태·실제로 시도한 query/URL·`PROVIDER_PENDING` 또는 `TRANSPORT_PENDING`만 기록한다.
 
 [조사와 동시에 증거 그래프 유지 — 마지막 일괄 직렬화 금지]
 

@@ -73,6 +73,18 @@ class ProFirstV21InitialPromptV3Test(unittest.TestCase):
             for marker in required:
                 self.assertIn(marker, prompt, f"{path.name}: {marker}")
 
+    def test_scaffold_only_output_is_forbidden_in_every_contract(self) -> None:
+        required = (
+            "`ID-PLACEHOLDER`",
+            "`확인값`",
+            "전부 빈 최종 JSON은 금지한다",
+            "가짜 `SUCCESS` route를 만들지 않는다",
+        )
+        for path in SNAPSHOTS.glob("*.md"):
+            prompt = path.read_text(encoding="utf-8")
+            for marker in required:
+                self.assertIn(marker, prompt, f"{path.name}: {marker}")
+
     def test_subject_literal_and_public_replayability_guards_are_common(self) -> None:
         required = (
             "issuer_scoped=false`인 fact의 `subject`는 source 원문에 실제로 연속 등장",

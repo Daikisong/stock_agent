@@ -183,6 +183,7 @@ class ProResearchPromptCompilerV3:
             "- investment_recommendation_allowed: `false`",
             "",
             "첨부의 mandatory question을 하나도 생략하지 말고, protocol의 공개경로·검증·직렬화 gate를 약화하지 마라.",
+            "`ID-PLACEHOLDER`, `확인값`, 예시 URL·예시 ID를 실제 결과로 출력하지 마라. provider가 정상인데 source와 atomic fact가 모두 0인 빈 스캐폴드를 최종 제출하지 마라.",
             "최종 응답은 protocol대로 dossier JSON을 먼저 출력하고 score나 Stage를 계산·제안하지 마라.",
             "",
             f"최종 응답에 `[[E2R_PRO_RUN_ID:{packet.get('run_id')}]]`,",

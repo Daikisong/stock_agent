@@ -1125,6 +1125,74 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
             "BIND_INITIAL_CONVERSATION_ID_FROM_CAPTURE_RECEIPT",
         )
 
+    def test_initial_transport_aliases_bind_without_embedded_pass_row(self) -> None:
+        built = self._build()
+        payload = {
+            "schema_version": "e2r_pro_research_dossier_v3",
+            "conversation_id": "PENDING_NEW_CONVERSATION",
+            "research_pass_id": built.initial_pass_id,
+            "parent_pass_id": "NONE",
+            "research_passes": [],
+            "material_facts": [
+                {
+                    "dossier_fact_id": "PROFACT-1",
+                    "statement": "The source reported NONE as literal text.",
+                }
+            ],
+        }
+
+        bound = bind_dossier_transport_identity(
+            payload,
+            conversation_id="CONVERSATION-LIVE-1",
+            research_pass_id=built.initial_pass_id,
+            parent_pass_id=None,
+            allow_initial_conversation_placeholder=True,
+            pass_name="INITIAL_FULL_RESEARCH",
+            prompt_hash="c" * 64,
+            response_hash="d" * 64,
+        )
+
+        self.assertIsNone(bound.payload["parent_pass_id"])
+        self.assertEqual(bound.payload["conversation_id"], "CONVERSATION-LIVE-1")
+        self.assertEqual(
+            bound.payload["material_facts"], payload["material_facts"]
+        )
+        self.assertEqual(len(bound.payload["research_passes"]), 1)
+        self.assertEqual(
+            bound.payload["research_passes"][0]["pass_id"],
+            built.initial_pass_id,
+        )
+        self.assertIn("BIND_INITIAL_PARENT_PASS_NULL_ALIAS", bound.operations)
+        self.assertIn(
+            "BIND_INITIAL_CONVERSATION_ID_FROM_CAPTURE_RECEIPT",
+            bound.operations,
+        )
+
+    def test_initial_null_alias_is_rejected_outside_exact_initial_scope(self) -> None:
+        built = self._build()
+        payload = {
+            "schema_version": "e2r_pro_research_dossier_v3",
+            "conversation_id": "PENDING_NEW_CONVERSATION",
+            "research_pass_id": built.initial_pass_id,
+            "parent_pass_id": "NONE",
+            "research_passes": [],
+        }
+
+        with self.assertRaisesRegex(
+            DossierIdentityBindingError,
+            "parent pass id differs",
+        ):
+            bind_dossier_transport_identity(
+                payload,
+                conversation_id="CONVERSATION-LIVE-1",
+                research_pass_id=built.initial_pass_id,
+                parent_pass_id=None,
+                allow_initial_conversation_placeholder=True,
+                pass_name="VERIFIER_REPAIR",
+                prompt_hash="c" * 64,
+                response_hash="d" * 64,
+            )
+
     def test_identity_binding_rejects_arbitrary_or_nested_placeholder(self) -> None:
         built = self._build()
         base = {
