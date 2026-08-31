@@ -4991,3 +4991,40 @@ marker가 없으면 R16을 재전송하지 않고 실패 상태를 그대로 봉
 Threads·쇼핑 등 12개 기존 page도 이동시키지 않았다. 정규화 영수증은
 `p41_current_ci_and_r16_history_recovery_receipt.json`이다. master 완료 상태는 여전히 live full thesis
 1/3이며 C17·C28이 실제로 닫히기 전 운영 준비 판정과 PR draft 해제·main 병합은 금지한다.
+
+## P43 — R19/R20 빈 optimistic turn 진단과 trusted pointer 전송 수리
+
+R19은 기존 로그인 ChatGPT 탭 하나에서만 실행했다. History에서 같은 시각의 정상 후보
+`6a95407d-dc38-83e8-a284-9275094078cd`와 임시 `WEB:0a5f7c9e-...`를 찾았지만, 정상 후보에는 R19의 정확한
+job/run marker가 없었고 임시 후보는 durable conversation으로 열리지 않았다. R19 job은 submit 1,
+capture 0을 보존한 채 `NEW_CONVERSATION_REQUIRED`로 freeze했으며 재전송하지 않았다.
+
+R20도 같은 탭 안의 새 채팅으로 실행했지만 `WEB:d7b574ab-...` 임시 route만 생기고 정확한 job/run marker가
+서버에 남지 않았다. 따라서 새 fresh attempt를 반복하는 대신 전송 경계를 조사했다. 준비 단계는 두 run
+모두 1,585자 prompt와 두 marker를 editor에서 정확히 확인했지만, 실제 전송은 다음 synthetic DOM click을
+사용하고 있었다.
+
+```text
+기존: send.evaluate("element => element.click()")
+수리: send.click(force=True, timeout=30_000)
+```
+
+쉬운 예로 기존 방식은 화면 버튼의 JavaScript 함수를 직접 불러서 겉으로는 봉투가 사라졌지만, ChatGPT가
+실제 사용자 클릭으로 받지 않아 빈 송장만 남길 수 있었다. 새 방식은 Playwright가 실제 포인터 이벤트를
+한 번 보내고, 움직이는 버튼의 안정화 대기만 `force=True`로 생략한다. 승인 proof, DB submit claim,
+`_submit_attempted`, 정확한 job marker 검사는 모두 클릭보다 먼저 유지되며 불확실할 때 두 번째 클릭하는
+fallback은 추가하지 않았다.
+
+실제 Chromium 회귀에서 click event의 `isTrusted=true`, submit count 1을 확인했다. static audit도 trusted
+Playwright click과 synthetic DOM click을 모두 전송 경계로 세므로 API를 바꿔 감사가 0으로 빠질 수 없다.
+Linux 순수 static/submit guard 12개는 전부 PASS다. Windows 관련 77개 묶음에서는 승인·browser adapter·
+submit guard 55개가 failure/error 없이 끝난 뒤, UNC 경로의 Windows Git을 요구하는 기존 operational
+3개와 환경 전제 1개만 실패했다. 코드 판정은 같은 테스트의 Linux/CI 결과로 확정한다.
+
+`6eb21ca`의 Pro-first/V6 CI는 workflow floor를 7,862로 올리고도 operational acceptance 한 줄이 과거
+7,860을 기대해 실패했다. 그 기대값도 7,862로 맞췄다. 과거 7,860 영수증은 당시 사실이라 수정하지
+않는다. 정규화 영수증은 `p43_c17_r19_r20_trusted_pointer_dispatch_receipt.json`이다.
+
+브라우저 window/tab/target 신규 생성은 계속 0이다. master live full-thesis는 C06 1/3이고, 다음 단계는 이
+수리가 포함된 새 commit에서 동일 기존 탭의 R21 C17을 실행하는 것이다. C17과 blind C28이 실제로 닫히기
+전 운영 준비 판정, PR draft 해제, main 병합은 금지한다.

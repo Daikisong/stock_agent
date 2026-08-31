@@ -519,13 +519,15 @@ class PlaywrightChatGPTWebAdapter:
         self._submit_attempted = True
         try:
             # The exact enabled send control is already bound to a consumed
-            # durable proof above.  ChatGPT can continuously animate this
-            # button, causing Playwright's coordinate click to wait for
-            # "stable" until timeout before dispatch.  Native click avoids
-            # that pre-dispatch-only wait without adding a second send path.
-            await send.evaluate("element => element.click()")
+            # durable proof above.  ChatGPT's framework can ignore a synthetic
+            # ``element.click()`` after clearing the composer, leaving only an
+            # empty optimistic turn.  A forced Playwright click bypasses the
+            # animated-button stability wait while still dispatching one
+            # browser-trusted pointer event.  There is deliberately no second
+            # click fallback when its outcome is uncertain.
+            await send.click(force=True, timeout=30_000)
         except Exception:
-            # ChatGPT can start a same-page navigation after the DOM click and
+            # ChatGPT can start a same-page navigation after the pointer click and
             # keep Playwright waiting until its click timeout even though the
             # prompt is already visibly running.  Inspect once after that
             # single click; never click again.  If the visible state does not

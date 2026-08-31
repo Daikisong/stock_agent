@@ -129,6 +129,15 @@ class ProFirstApprovalSubmitTest(unittest.IsolatedAsyncioTestCase):
 
     async def test_send_exactly_once_after_approval(self) -> None:
         job, prompt_hash = await self._prepare_durable_job()
+        await self.page.locator("#composer-submit-button").evaluate(
+            """button => button.addEventListener(
+                'click',
+                event => sessionStorage.setItem(
+                    '__e2r_last_submit_was_trusted__', String(event.isTrusted)
+                ),
+                {capture: true, once: true}
+            )"""
+        )
         service = ProApprovalService(self.store, now=lambda: self.now)
         grant = service.issue(job.job_id, prompt_hash=prompt_hash)
         approved = service.approve(grant)
@@ -140,6 +149,12 @@ class ProFirstApprovalSubmitTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result.job.status, JobStatus.RESEARCH_RUNNING.value)
         self.assertEqual(result.job.submit_count, 1)
         self.assertEqual(await self.page.evaluate("window.__submitCount"), 1)
+        self.assertEqual(
+            await self.page.evaluate(
+                "sessionStorage.getItem('__e2r_last_submit_was_trusted__')"
+            ),
+            "true",
+        )
 
         with self.assertRaises(DuplicateSubmitBlocked):
             await ExactlyOnceSubmitCoordinator(self.store).submit(job.job_id, self.adapter)

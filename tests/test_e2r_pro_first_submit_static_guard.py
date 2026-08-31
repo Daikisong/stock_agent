@@ -22,7 +22,7 @@ class ProFirstSubmitStaticGuardTest(unittest.TestCase):
         submit_source = source[
             source.index("    async def submit_once") : source.index("    async def inspect_state")
         ]
-        dispatch = 'await send.evaluate("element => element.click()")'
+        dispatch = "await send.click(force=True, timeout=30_000)"
         click_offset = submit_source.index(dispatch)
         prefix = submit_source[:click_offset]
         self.assertIn("ledger_verified", prefix)

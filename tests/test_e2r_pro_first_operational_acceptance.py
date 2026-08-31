@@ -276,7 +276,7 @@ class ProFirstStaticAuditTest(unittest.TestCase):
             '"tests/research_saturation_fixture.py"',
         ):
             self.assertEqual(workflow.count(required_path), 2)
-        self.assertIn('E2R_FULL_UNIT_TEST_FLOOR: "7860"', workflow)
+        self.assertIn('E2R_FULL_UNIT_TEST_FLOOR: "7862"', workflow)
         self.assertIn("countTestCases()", workflow)
         self.assertIn(
             "discovered < E2R_FULL_UNIT_TEST_FLOOR",
@@ -295,16 +295,16 @@ class ProFirstStaticAuditTest(unittest.TestCase):
         )
         self.assertEqual([row.key for row in findings], ["submit_without_approval_count"])
 
-    def test_native_locator_click_is_counted_as_the_send_boundary(self) -> None:
+    def test_trusted_locator_click_is_counted_as_the_send_boundary(self) -> None:
         findings, send_dispatches = audit_python_source(
             "async def submit_once(send):\n"
-            '    await send.evaluate("element => element.click()")\n',
+            "    await send.click(force=True, timeout=30_000)\n",
             relative_path="src/e2r/pro_first/browser/chatgpt_adapter.py",
         )
         self.assertEqual(findings, ())
         self.assertEqual(send_dispatches, (2,))
 
-    def test_coordinate_and_native_send_paths_are_both_counted(self) -> None:
+    def test_trusted_and_synthetic_send_paths_are_both_counted(self) -> None:
         _findings, send_dispatches = audit_python_source(
             "async def submit_once(send):\n"
             "    await send.click()\n"

@@ -222,11 +222,10 @@ def audit_python_source(
 def _is_guarded_send_dispatch(node: ast.Call) -> bool:
     """Recognize the one physical DOM send action independent of click API.
 
-    Playwright's coordinate click and a locator-scoped native DOM click are
-    two implementations of the same dispatch boundary.  The latter is used
-    when an animated ChatGPT button never becomes coordinate-stable.  Both
-    must count, so changing APIs can never make the exactly-one audit report
-    a false zero.
+    Playwright's trusted pointer click and a locator-scoped synthetic DOM
+    click are two implementations of the same dispatch boundary.  Both must
+    count, so changing APIs can never make the exactly-one audit report a
+    false zero.
     """
 
     if not isinstance(node.func, ast.Attribute):
