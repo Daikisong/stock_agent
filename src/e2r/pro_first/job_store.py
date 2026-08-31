@@ -769,6 +769,9 @@ class ProFirstJobStore:
         reason: str,
         actor: str,
         idempotency_key: str,
+        error_class: str | None = None,
+        error_message: str | None = None,
+        conversation_id: str | None = None,
     ) -> ProResearchJob:
         """Seal a failed fresh canary so its successor must use a new chat.
 
@@ -781,6 +784,9 @@ class ProFirstJobStore:
         normalized_reason = reason.strip()
         if not normalized_reason:
             raise ValueError("fresh efficiency failure reason is required")
+        normalized_error_class = str(error_class or "").strip() or None
+        normalized_error_message = str(error_message or "").strip() or None
+        normalized_conversation_id = str(conversation_id or "").strip() or None
         payload = {
             "event": "FRESH_SESSION_EFFICIENCY_VALIDATION_FAILED_AND_FROZEN",
             "reason": normalized_reason,
@@ -793,21 +799,44 @@ class ProFirstJobStore:
             "score_authority": False,
             "stage_authority": False,
             "publication_withheld": True,
+            "error_class": normalized_error_class,
+            "error_message": normalized_error_message,
+            "conversation_id": normalized_conversation_id,
         }
         with self._transaction() as connection:
             row = self._require_job_row(connection, job_id)
             if row["old_job_frozen_at"] is not None:
                 return self._job_from_row(row)
             self._require_version(row, expected_version)
+            existing_conversation_id = str(row["conversation_id"] or "").strip()
+            if (
+                normalized_conversation_id
+                and existing_conversation_id
+                and normalized_conversation_id != existing_conversation_id
+            ):
+                raise ValueError(
+                    "fresh efficiency failure cannot change a canonical conversation id"
+                )
             frozen_at = self._now_text()
             cursor = connection.execute(
                 """
                 UPDATE pro_research_jobs
                 SET old_job_frozen_at=?, state_version=state_version+1,
-                    updated_at=?
+                    updated_at=?,
+                    last_error_class=COALESCE(?, last_error_class),
+                    last_error_message=COALESCE(?, last_error_message),
+                    conversation_id=COALESCE(?, conversation_id)
                 WHERE job_id=? AND state_version=? AND old_job_frozen_at IS NULL
                 """,
-                (frozen_at, frozen_at, job_id, expected_version),
+                (
+                    frozen_at,
+                    frozen_at,
+                    normalized_error_class,
+                    normalized_error_message,
+                    normalized_conversation_id,
+                    job_id,
+                    expected_version,
+                ),
             )
             if cursor.rowcount != 1:
                 raise VersionConflict(f"fresh-run freeze raced: {job_id}")

@@ -5140,3 +5140,48 @@ GitHub Actions는 Pro-first `33387475878`, V6 `33387475863` 모두 SUCCESS이고
 커밋·푸시하고 새 head CI SUCCESS를 확인한 뒤 같은 C17 conversation에서 distinct replacement 한 번만
 보내는 것이다. master live full-thesis는 여전히 C06 1/3이며 C17·C28이 닫히기 전 PR draft 해제와 main
 병합은 금지한다.
+
+## P47 — C17 R22 후반 검문과 R23 네트워크 실패의 무재시도 봉인
+
+`85e58808` head의 Pro-first GitHub Actions 재실행은 네 job 모두 SUCCESS였다. 최초 core-unit 실행은
+테스트 assertion이 아니라 runner process가 45분 제한에 걸려 CANCELLED됐지만, failed job만 같은 head에서
+재실행하자 core-unit 4분 46초, browser-mock 4분 46초, full-regression 21분 49초, static-security 49초로
+모두 통과했다. 따라서 current head CI를 green으로 확인한 뒤에만 R22 후속을 진행했다.
+
+R22의 미영속 `PUBLIC_GAP_CLOSURE`를 다시 누르지 않고 서로 다른 replacement
+`PROPASS-fbbf22d3c9f1fa7e63b8c15a`를 기존 ChatGPT target 하나에서 전송했다. 약 36분 뒤
+`DOWNLOAD_JSON`으로 새 fact 21개와 route 52개를 캡처했고, 이어진 bounded `VERIFIER_REPAIR`
+`PROPASS-b3d8c4f58d1bcebf1d383371`도 같은 대화에서 완료했다. 검문 결과 accepted fact는 40,
+source linkage incomplete는 0까지 줄었지만 mandatory nonterminal 1, provider/parser core pending 1,
+public material gap 2가 남았다. 허용된 public-gap과 verifier pass를 모두 썼으므로 같은 대화의 추가 전송을
+막고 R22를 `OPERATIONAL_EFFICIENCY_GATE_FAILED / NEW_CONVERSATION_REQUIRED`로 봉인했다. score와 Stage는
+생성하지 않았다.
+
+R23은 새 브라우저 창이나 탭을 만들지 않았다. 기존 target
+`F6DC0979950E8B311DC6F6207BF6197E`를 ChatGPT 새 채팅 route로 이동해 새 job/run/pass와 대화
+`6a95a0e5-20a4-83e9-9276-eb537f593f6b`을 만들었다. 최초 server persistence가 늦었지만 사이드바의
+정확한 대화로 같은 탭만 이동한 뒤 job/run marker를 확인했고, `browser_submit_delta=0`으로 읽기 전용
+회수를 붙였다.
+
+약 20분 뒤 화면은 완성 dossier 대신 명시적인 `A network error occurred`와 `다시 시도`를 냈다.
+버튼을 누르면 동일 pass 재실행이므로 클릭하지 않았다. 이때 최신 assistant turn의 실패와 stale stop control이
+동시에 남아 있었는데 기존 adapter는 stop을 무조건 우선해 `RESEARCH_RUNNING`으로 오판했다. 또한 늦은
+persistence 회수기는 terminal 전환 순간의 미완성 결과를 한 번 보고 즉시 일반 검증 오류로 끝냈으며,
+capture 전 provider failure는 successor deny manifest를 만들 dossier나 READY capture가 없었다.
+
+generic 수리는 세 경계를 추가한다. 최신 assistant turn 자체에 network failure와 retry control이 함께 있을
+때만 stale stop보다 `RETRYABLE_ERROR`를 우선한다. 전역의 오래된 toast나 연구 본문에 나온 network-error
+문구는 stop보다 약하게 유지한다. terminal result가 아직 구조화되지 않은 첫 화면은 stable observation 수만큼
+재확인해 렌더링 경합을 흡수한다. 실제 provider failure는 retry 버튼을 누르지 않고 conversation과 error를
+DB에 결박해 job을 freeze하고 hash-bound failure receipt를 쓴다. 그 receipt는 submit 1, capture 0,
+score/Stage 권한 없음, 새 conversation 필요가 모두 일치할 때만 최초 pass ID를 deny-only manifest로 넘긴다.
+fact나 답안을 successor에 재사용하지 않는다.
+
+R23은 `CHATGPT_RETRYABLE_PROVIDER_ERROR`, submit/capture 1/0, automatic resubmit false로 봉인됐다. 이후
+두 fresh server view에서도 exact turn이 사라졌으므로 같은 회수를 반복하지 않았다. focused 3/3,
+fresh orchestration·old-freeze·state-machine 82/82, Windows Chromium browser adapter 45/45, compileall,
+diff check가 PASS다. Pro-first, V2, V2.1 fresh-efficiency, V6 production 정적 감사도 모두 PASS이며
+critical count는 0이다.
+정규화 영수증은 `p47_c17_r22_full_thesis_and_r23_provider_failure_receipt.json`이다. 아직 C17 live full-thesis
+PASS가 아니며 master는 C06 1/3이다. 관련 전체 회귀·정적 감사·새 head CI green 뒤에만, 같은 브라우저 탭의
+새 conversation에서 R23의 provider-failure receipt를 deny-only predecessor로 삼는 successor를 시작한다.

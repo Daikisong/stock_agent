@@ -906,13 +906,17 @@ class PlaywrightChatGPTWebAdapter:
             for token in ("usage limit", "quota", "사용 한도", "한도에 도달")
         ):
             state = BrowserUIState.QUOTA_PENDING
+        elif latest_failure_visible:
+            # A failure and its retry control inside the newest assistant turn
+            # are stronger than a stale stop control left mounted by ChatGPT.
+            # Global toast text alone remains weaker than the stop control.
+            state = BrowserUIState.RETRYABLE_ERROR
         elif stop is not None:
             # A stale upload/network toast can remain visible after the one
-            # authorized send has already started.  The visible stop control
-            # is stronger current-state evidence that research is running.
+            # authorized send has already started.  Without an exact failure
+            # in the newest assistant turn, the visible stop control is
+            # stronger current-state evidence that research is running.
             state = BrowserUIState.RESEARCH_RUNNING
-        elif latest_failure_visible:
-            state = BrowserUIState.RETRYABLE_ERROR
         elif mock_state == "ERROR" or any(
             token in operational_notice_text
             for token in ("something went wrong", "network error", "오류가 발생", "다시 시도하세요")
@@ -1094,6 +1098,25 @@ class PlaywrightChatGPTWebAdapter:
                 "조사 실패",
                 "research failed",
             )
+        )
+        retry_control_visible = any(
+            token in controls
+            for token in (
+                "다시 시도",
+                "retry",
+                "try again",
+            )
+        )
+        provider_error_visible = any(
+            token in text
+            for token in (
+                "a network error occurred",
+                "something went wrong",
+                "네트워크 오류",
+            )
+        )
+        visible_failure = visible_failure or (
+            retry_control_visible and provider_error_visible
         )
         return (
             "e2r_research_dossier_json_end" in text,

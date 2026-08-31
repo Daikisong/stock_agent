@@ -830,6 +830,7 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         recovered = await runner._reverify_user_attention_result(
             job_id=self.fresh_job.job_id,
             run_id=str(self.built.packet_payload["run_id"]),
+            initial_pass_id=self.built.initial_pass_id,
             adapter=adapter,
         )
 
@@ -865,6 +866,7 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         repeated = await runner._reverify_user_attention_result(
             job_id=self.fresh_job.job_id,
             run_id=str(self.built.packet_payload["run_id"]),
+            initial_pass_id=self.built.initial_pass_id,
             adapter=adapter,
         )
 
@@ -883,6 +885,151 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         ]
         self.assertEqual(len(reverified_keys), 2)
         self.assertEqual(len(set(reverified_keys)), 2)
+
+    async def test_late_persisted_network_error_is_sealed_without_retry(
+        self,
+    ) -> None:
+        conversation_id = "fresh-conversation-late-network-error"
+        submitted_adapter = await self._prepare_and_approve(conversation_id)
+        await self.orchestrator.submit_initial_once(submitted_adapter)
+        running = self.store.get_job(self.fresh_job.job_id)
+        self.store.transition(
+            running.job_id,
+            expected_version=running.state_version,
+            to_status=JobStatus.USER_ATTENTION_REQUIRED,
+            actor="test-late-network-persistence-timeout",
+            idempotency_key="test-late-network-persistence-timeout",
+            updates={
+                "last_error_class": "RuntimeError",
+                "last_error_message": "fresh public render arrived after poll bound",
+            },
+        )
+
+        invalid = BrowserResultSnapshot(
+            conversation_id=conversation_id,
+            assistant_turn_id="assistant-late-network-error",
+            report_text="",
+            report_hash="8" * 64,
+            has_citations=False,
+            has_dossier_marker=False,
+            job_marker_matches=False,
+            run_marker_matches=False,
+            new_attachment_keys=(),
+        )
+
+        class LateNetworkErrorAdapter(_FreshAdapter):
+            def __init__(self) -> None:
+                super().__init__(submitted_conversation_id=conversation_id)
+                self.current_conversation_id = conversation_id
+                self.submit_count = 1
+                self.inspection_count = 0
+
+            def conversation_id(self) -> str:
+                return str(self.current_conversation_id)
+
+            async def inspect_state(self) -> BrowserInspection:
+                self.inspection_count += 1
+                if self.inspection_count == 1:
+                    return self._inspection(BrowserUIState.RESEARCH_COMPLETE)
+                return BrowserInspection(
+                    state=BrowserUIState.RETRYABLE_ERROR,
+                    conversation_id=conversation_id,
+                    editor_ready=True,
+                    deep_research_ready=True,
+                    packet_uploaded=True,
+                    prompt_ready=False,
+                    send_ready=True,
+                    stop_visible=False,
+                    detail="A network error occurred. Please check your connection.",
+                )
+
+            async def inspect_result(self, **_kwargs) -> BrowserResultSnapshot:
+                return invalid
+
+        adapter = LateNetworkErrorAdapter()
+        base = load_pro_first_local_config(
+            Path(__file__).parents[1]
+            / "configs/e2r_pro_first_local.example.yaml"
+        )
+        runner = FreshV3InitialLiveCanaryRunner(
+            replace(
+                base,
+                runtime_root=self.boundary.fresh_runtime_root,
+                browser=replace(
+                    base.browser,
+                    poll_interval_seconds=0.001,
+                    required_stable_observations=2,
+                ),
+            ),
+            old_runtime_root=self.boundary.old_runtime_root,
+            fresh_runtime_root=self.boundary.fresh_runtime_root,
+            repo_root=self.root,
+            store=self.store,
+            source_verifier=object(),
+            report_structurer=object(),
+            max_completion_polls=4,
+        )
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "provider failure was sealed without retry",
+        ):
+            await runner._reverify_user_attention_result(
+                job_id=self.fresh_job.job_id,
+                run_id=str(self.built.packet_payload["run_id"]),
+                initial_pass_id=self.built.initial_pass_id,
+                adapter=adapter,
+            )
+
+        frozen = self.store.get_job(self.fresh_job.job_id)
+        self.assertIsNotNone(frozen.old_job_frozen_at)
+        self.assertEqual(frozen.conversation_id, conversation_id)
+        self.assertEqual(
+            frozen.last_error_class,
+            "CHATGPT_RETRYABLE_PROVIDER_ERROR",
+        )
+        self.assertEqual(frozen.submit_count, 1)
+        self.assertEqual(frozen.capture_count, 0)
+        self.assertEqual(adapter.submit_count, 1)
+        self.assertEqual(adapter.persistence_count, 1)
+
+        receipt_path = (
+            self.boundary.fresh_job_root
+            / "fresh_session/fresh_efficiency_failure_receipt.json"
+        )
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        self.assertEqual(
+            receipt["disposition"],
+            "PROVIDER_ERROR_NEW_CONVERSATION_REQUIRED",
+        )
+        receipt_hash = receipt.pop("receipt_hash")
+        self.assertEqual(receipt_hash, canonical_hash(receipt))
+
+        manifest = build_old_answer_leakage_manifest(
+            self.store,
+            old_job_id=frozen.job_id,
+            old_run_id=str(self.built.packet_payload["run_id"]),
+            old_conversation_id=conversation_id,
+            old_job_root=self.boundary.fresh_job_root,
+        )
+        self.assertIn(self.built.initial_pass_id, manifest.old_research_pass_ids)
+        self.assertEqual(manifest.old_fact_ids, ())
+        self.assertEqual(manifest.old_route_receipt_ids, ())
+
+        tampered = json.loads(receipt_path.read_text(encoding="utf-8"))
+        tampered["conversation_id"] = "tampered-conversation"
+        receipt_path.write_text(
+            json.dumps(tampered, ensure_ascii=False),
+            encoding="utf-8",
+        )
+        with self.assertRaisesRegex(ValueError, "identity or hash mismatch"):
+            build_old_answer_leakage_manifest(
+                self.store,
+                old_job_id=frozen.job_id,
+                old_run_id=str(self.built.packet_payload["run_id"]),
+                old_conversation_id=conversation_id,
+                old_job_root=self.boundary.fresh_job_root,
+            )
 
     async def test_submitted_recovery_loads_receipt_without_prompt_recompile(self) -> None:
         adapter = await self._prepare_and_approve("fresh-conversation-receipt-load")

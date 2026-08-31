@@ -418,6 +418,44 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         self.assertIn("최종 dossier", result.report_text)
         self.assertFalse(result.structurally_complete)
 
+    async def test_latest_network_failure_beats_stale_stop_control(self) -> None:
+        await self.page.set_content(
+            "<html><body><form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button type="button">Pro</button>'
+            '<button type="button" aria-label="중지">중지</button>'
+            "</form>"
+            '<section data-turn="assistant" data-turn-id="network-failed-turn">'
+            "<p>A network error occurred. Please check your connection.</p>"
+            "<button>다시 시도</button>"
+            "</section></body></html>"
+        )
+
+        inspection = await self.adapter.inspect_state()
+
+        self.assertEqual(inspection.state, BrowserUIState.RETRYABLE_ERROR)
+        self.assertIn("network error", (inspection.detail or "").lower())
+
+    async def test_network_words_without_latest_retry_control_keep_running(
+        self,
+    ) -> None:
+        await self.page.set_content(
+            "<html><body><form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button type="button">Pro</button>'
+            '<button type="button" aria-label="중지">중지</button>'
+            "</form>"
+            '<section data-turn="assistant" data-turn-id="research-turn">'
+            "<p>The filing describes a historical network error.</p>"
+            "</section></body></html>"
+        )
+
+        inspection = await self.adapter.inspect_state()
+
+        self.assertEqual(inspection.state, BrowserUIState.RESEARCH_RUNNING)
+
     async def test_latest_completed_assistant_section_wins_in_document_order(
         self,
     ) -> None:

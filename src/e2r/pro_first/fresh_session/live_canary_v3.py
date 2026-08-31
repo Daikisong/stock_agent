@@ -424,6 +424,7 @@ class FreshV3InitialLiveCanaryRunner:
                     detected = await self._reverify_user_attention_result(
                         job_id=job.job_id,
                         run_id=str(built.packet_payload["run_id"]),
+                        initial_pass_id=built.initial_pass_id,
                         adapter=runtime.adapter,
                     )
                 else:
@@ -599,6 +600,7 @@ class FreshV3InitialLiveCanaryRunner:
         *,
         job_id: str,
         run_id: str,
+        initial_pass_id: str,
         adapter: Any,
     ) -> FreshDetectedInitialResult:
         """Recover one already submitted turn without another DOM send.
@@ -648,6 +650,7 @@ class FreshV3InitialLiveCanaryRunner:
         )
         last_hash: str | None = None
         stable = 0
+        invalid_terminal_observations = 0
         result: BrowserResultSnapshot | None = None
         for poll in range(1, self.max_completion_polls + 1):
             inspection = await adapter.inspect_state()
@@ -669,17 +672,38 @@ class FreshV3InitialLiveCanaryRunner:
                 BrowserUIState.LOGIN_REQUIRED,
                 BrowserUIState.AWAITING_CLARIFICATION,
                 BrowserUIState.QUOTA_PENDING,
-                BrowserUIState.RETRYABLE_ERROR,
                 BrowserUIState.UI_INCOMPATIBLE,
             }:
                 raise ValueError(
                     "user-attention recovery does not expose a terminal readable result"
                 )
+            if inspection.state is BrowserUIState.RETRYABLE_ERROR:
+                failure_detail = str(
+                    inspection.detail or "visible ChatGPT retryable provider error"
+                ).strip()
+                self._seal_late_persisted_provider_failure(
+                    job_id=job_id,
+                    run_id=run_id,
+                    initial_pass_id=initial_pass_id,
+                    conversation_id=conversation_id,
+                    failure_detail=failure_detail,
+                )
+                raise ValueError(
+                    "late-persisted initial provider failure was sealed without retry"
+                )
             result = await adapter.inspect_result(job_id=job_id, run_id=run_id)
             if not (result.structurally_complete or _readable_terminal_report(result)):
+                invalid_terminal_observations += 1
+                if invalid_terminal_observations < (
+                    self.config.browser.required_stable_observations
+                ):
+                    await asyncio.sleep(self.config.browser.poll_interval_seconds)
+                    continue
                 raise ValueError(
-                    "user-attention recovery result failed exact job/run/report validation"
+                    "user-attention recovery result failed exact job/run/report "
+                    "validation after stable terminal observations"
                 )
+            invalid_terminal_observations = 0
             stable = stable + 1 if result.report_hash == last_hash else 1
             last_hash = result.report_hash
             if stable >= self.config.browser.required_stable_observations:
@@ -723,6 +747,70 @@ class FreshV3InitialLiveCanaryRunner:
             result,
             not result.structurally_complete,
         )
+
+    def _seal_late_persisted_provider_failure(
+        self,
+        *,
+        job_id: str,
+        run_id: str,
+        initial_pass_id: str,
+        conversation_id: str,
+        failure_detail: str,
+    ) -> ProResearchJob:
+        """Freeze one visible provider failure without pressing its retry button."""
+
+        current = self.store.get_job(job_id)
+        bounded_detail = str(failure_detail or "").strip()[:1_200]
+        failure_class = "CHATGPT_RETRYABLE_PROVIDER_ERROR"
+        reason = f"{failure_class}:{bounded_detail}"
+        frozen = self.store.seal_fresh_efficiency_failure(
+            job_id,
+            expected_version=current.state_version,
+            reason=reason,
+            actor="v2.1-fresh-late-provider-failure",
+            idempotency_key=f"fresh-late-provider-failure:{job_id}:{run_id}",
+            error_class=failure_class,
+            error_message=bounded_detail,
+            conversation_id=conversation_id,
+        )
+        unsigned = {
+            "schema_version": "e2r_pro_fresh_provider_failure_receipt_v1",
+            "status": "FRESH_SESSION_DIAGNOSTIC_ONLY",
+            "disposition": "PROVIDER_ERROR_NEW_CONVERSATION_REQUIRED",
+            "job_id": frozen.job_id,
+            "run_id": run_id,
+            "conversation_id": frozen.conversation_id,
+            "initial_pass_id": initial_pass_id,
+            "failure_class": failure_class,
+            "failure_detail": bounded_detail,
+            "submit_count": frozen.submit_count,
+            "capture_count": frozen.capture_count,
+            "old_job_frozen_at": frozen.old_job_frozen_at,
+            "new_conversation_required": True,
+            "automatic_resubmit_allowed": False,
+            "score_authority": False,
+            "stage_authority": False,
+            "publication_withheld": True,
+        }
+        receipt = {**unsigned, "receipt_hash": canonical_hash(unsigned)}
+        write_runtime_json_once(
+            self.fresh_runtime_root
+            / "jobs"
+            / job_id
+            / "fresh_session/fresh_efficiency_failure_receipt.json",
+            receipt,
+        )
+        self._emit(
+            "FRESH_LATE_PROVIDER_FAILURE_SEALED_NO_RETRY",
+            job_id=job_id,
+            run_id=run_id,
+            conversation_id=frozen.conversation_id,
+            failure_class=failure_class,
+            submit_count=frozen.submit_count,
+            browser_submit_delta=0,
+            new_conversation_required=True,
+        )
+        return frozen
 
     def _rebind_completed_conversation(
         self,
@@ -926,6 +1014,7 @@ class FreshV3InitialLiveCanaryRunner:
             detected = await self._reverify_user_attention_result(
                 job_id=built.job.job_id,
                 run_id=run_id,
+                initial_pass_id=built.initial_pass_id,
                 adapter=adapter,
             )
             return await ProCaptureCoordinator(self.store).capture(
@@ -1424,6 +1513,56 @@ def _load_old_dossier_for_deny_manifest(
     ready_path = root / "capture/incoming/READY.json"
     receipt_path = root / "capture/incoming/browser_capture_receipt.json"
     if not ready_path.is_file() or not receipt_path.is_file():
+        provider_failure_path = (
+            root / "fresh_session/fresh_efficiency_failure_receipt.json"
+        )
+        if provider_failure_path.is_file():
+            provider_failure = json.loads(
+                provider_failure_path.read_text(encoding="utf-8")
+            )
+            receipt_hash = str(provider_failure.get("receipt_hash") or "")
+            unsigned = {
+                key: value
+                for key, value in provider_failure.items()
+                if key != "receipt_hash"
+            }
+            required = {
+                "schema_version": "e2r_pro_fresh_provider_failure_receipt_v1",
+                "status": "FRESH_SESSION_DIAGNOSTIC_ONLY",
+                "disposition": "PROVIDER_ERROR_NEW_CONVERSATION_REQUIRED",
+                "job_id": old_job_id,
+                "run_id": old_run_id,
+                "conversation_id": old_conversation_id,
+                "failure_class": "CHATGPT_RETRYABLE_PROVIDER_ERROR",
+                "submit_count": 1,
+                "capture_count": 0,
+                "new_conversation_required": True,
+                "automatic_resubmit_allowed": False,
+                "score_authority": False,
+                "stage_authority": False,
+                "publication_withheld": True,
+            }
+            if (
+                any(provider_failure.get(key) != value for key, value in required.items())
+                or not str(provider_failure.get("initial_pass_id") or "").startswith(
+                    "PROPASS-"
+                )
+                or not str(provider_failure.get("old_job_frozen_at") or "").strip()
+                or receipt_hash != canonical_hash(unsigned)
+            ):
+                raise ValueError(
+                    "old provider-failure receipt identity or hash mismatch"
+                )
+            return {
+                "research_pass_id": provider_failure["initial_pass_id"],
+                "material_facts": [],
+                "counterfacts": [],
+                "resolution_facts": [],
+                "source_documents": [],
+                "search_route_receipts": [],
+                "source_lineages": [],
+                "question_family_results": [],
+            }
         raise FileNotFoundError(
             "old answer manifest requires an effective dossier or a READY-certified capture"
         )
