@@ -5101,3 +5101,42 @@ ChatGPT page가 정확히 하나만 있으며 새 window/tab/target은 0이다. 
 Linux Playwright `chrome-headless-shell`이 system `libnspr4.so`를 찾지 못해 browser test `asyncSetUp` 전에
 종료된 환경 오류다. 동일 변경영역의 browser-independent 회귀와 정적 감사 3종은 모두 PASS이며, 전체
 독립 Linux 재실행은 push 후 GitHub Actions의 Playwright dependency 설치 환경에서 판정한다.
+
+## P46 — C17 R22 유효 초기 결과와 미영속 follow-up replacement 예산 수리
+
+R22는 새 브라우저 창·탭·target을 만들지 않고 기존 로그인 ChatGPT target
+`F6DC0979950E8B311DC6F6207BF6197E` 하나에서만 실행했다. 최초 2분 server-persistence 확인이 늦어
+`USER_ATTENTION_REQUIRED`로 멈췄지만, 같은 제출을 다시 보내지 않고 정확한 conversation
+`6a9566ad-f940-83e8-a29c-21c8f4b707ab`을 읽기 전용으로 이어받았다. 약 94분 뒤 terminal 안정성 3회와
+`DOWNLOAD_JSON` 캡처를 완료했고 recovery의 browser submit delta는 0이다.
+
+이번 JSON은 R21의 빈 스캐폴드가 아니다. source document 13개, serialized material fact 10개,
+현재 material candidate 9개 중 8개 수용, mandatory question 26/26 결박으로 초기 효율 검문
+`PRO_FIRST_V2_1_INITIAL_EFFICIENCY_PASS`를 통과했다. query/search는 0/0이고 score·Stage 권한은 아직 없다.
+즉 자료를 정상 수집한 초기 패스이지 full-thesis FINAL은 아니다.
+
+후반 첫 `PUBLIC_GAP_CLOSURE`는 같은 conversation에서 로컬 submit claim 1회를 소비했지만 exact
+pass/parent marker가 서버에 나타나지 않았다. 15분 대기 뒤 `--recover-submitted-only`로 두 번째 독립
+fresh-view 감사를 수행했고 두 화면 모두 user turn 부재를 확인했다. 원래 pass
+`PROPASS-73c5ac905893e2b2cbd862d0`은 response hash 없이
+`CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED`로 봉인했으며 같은 pass의 두 번째 클릭은 계속 금지한다.
+
+여기서 generic 정책 모순이 드러났다. ledger와 fresh orchestrator는 두 번의 독립 부재 증명이 있는
+sealed-unpersisted pass에 한해 서로 다른 pass ID의 replacement를 정확히 한 번 허용한다. 반면 운영 효율
+예산 helper는 서버에 실제 user turn이 없는 이 클릭도 사용된 Pro turn으로 세어 replacement 전에 막았다.
+쉬운 예로 주문이 서버에 없다고 두 번 확인해 폐기했는데도 사용 한도는 이미 썼다고 계산한 셈이다.
+
+수리는 exact sealed-unpersisted 판정만 운영 예산에서 제외한다. 실제로 보이는 provider failure, 일반
+submitted pass, 새 replacement는 계속 1회를 소비한다. replacement까지 서버 미영속이면 orchestrator의
+동일 context 2회 실패 guard가 세 번째 시도를 막는다. 집중 회귀 3/3은 모두 PASS다. Linux 연관 131개는
+128 PASS와 코드 본문 전 `libnspr4.so` 부재 환경 오류 3개였고, 그 브라우저 3개는 Windows headless
+Playwright에서 모두 PASS했다. Windows의 추가 12개 오류는 Windows Git이 WSL UNC worktree에서
+`git rev-parse`를 할 수 없는 환경 차이다.
+
+정적 감사 4종은 모두 PASS/critical 0, compileall과 diff check도 PASS다. source commit `e23149ab`의
+GitHub Actions는 Pro-first `33387475878`, V6 `33387475863` 모두 SUCCESS이고 중복 Pro-first run
+`33387469744`는 취소했다. 정규화 영수증은
+`p46_c17_r22_initial_and_unpersisted_replacement_budget_receipt.json`이다. 다음 단계는 이 수리를 한글
+커밋·푸시하고 새 head CI SUCCESS를 확인한 뒤 같은 C17 conversation에서 distinct replacement 한 번만
+보내는 것이다. master live full-thesis는 여전히 C06 1/3이며 C17·C28이 닫히기 전 PR draft 해제와 main
+병합은 금지한다.

@@ -34,6 +34,7 @@ from ..canary.live_v2 import (
     ProV2LiveCanaryRunner,
     _accepted_dossier_fact_ids,
     _followup_execution_mode,
+    _is_sealed_unpersisted_dispatch,
     _outcome_summary,
     _question_states_for_ids,
     _redact_saturation,
@@ -2483,8 +2484,12 @@ def _require_operational_followup_budget(
     The broader research state machine may continue investigating without a
     fixed semantic cap.  A V2.1 *operational efficiency canary* has a narrower
     proof contract: one gap/counter delta, one repair, and one saturation
-    audit.  Every submitted attempt consumes that proof budget, including a
-    visible provider failure, because the user still paid the browser turn.
+    audit.  Every server-visible submitted attempt consumes that proof budget,
+    including a visible provider failure, because the user still paid the
+    browser turn.  A click sealed only after two independent fresh public
+    views prove that no exact user turn ever persisted is transport evidence,
+    not a consumed Pro research turn.  The fresh orchestrator may replace that
+    exact sealed lineage once; the replacement itself consumes the budget.
     """
 
     if limit < 1 or not pass_names or not label.strip():
@@ -2492,7 +2497,11 @@ def _require_operational_followup_budget(
     submitted = tuple(
         row
         for row in ledger.list_passes(job_id)
-        if row.pass_name in pass_names and int(row.submit_count) > 0
+        if (
+            row.pass_name in pass_names
+            and int(row.submit_count) > 0
+            and not _is_sealed_unpersisted_dispatch(row)
+        )
     )
     if len(submitted) < limit:
         return

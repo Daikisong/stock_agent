@@ -2858,14 +2858,23 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             SimpleNamespace(
                 pass_name="INITIAL_FULL_RESEARCH",
                 submit_count=1,
+                status="COMPLETE",
+                response_hash="a" * 64,
+                detail={},
             ),
             SimpleNamespace(
                 pass_name="PUBLIC_GAP_CLOSURE",
                 submit_count=1,
+                status="RESEARCH_RUNNING",
+                response_hash=None,
+                detail={},
             ),
             SimpleNamespace(
                 pass_name="COUNTER_SUPERSESSION_CLOSURE",
                 submit_count=0,
+                status="PREPARED",
+                response_hash=None,
+                detail={},
             ),
         )
         ledger = SimpleNamespace(list_passes=lambda _job_id: rows)
@@ -2895,6 +2904,9 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 SimpleNamespace(
                     pass_name="PUBLIC_GAP_CLOSURE",
                     submit_count=0,
+                    status="PREPARED",
+                    response_hash=None,
+                    detail={},
                 ),
             )
         )
@@ -2905,6 +2917,58 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             pass_names=frozenset({"PUBLIC_GAP_CLOSURE"}),
             limit=1,
             label="public-gap/counter",
+        )
+
+    def test_operational_gap_budget_allows_one_exact_unpersisted_replacement(self) -> None:
+        sealed = SimpleNamespace(
+            pass_name="PUBLIC_GAP_CLOSURE",
+            submit_count=1,
+            status="FAILED_HARD",
+            response_hash=None,
+            detail={
+                "failure_domain": "TRANSPORT",
+                "failure_class": (
+                    "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED"
+                ),
+                "server_persistence_confirmed": False,
+                "server_persistence_absence_confirmation_count": 2,
+                "server_persistence_failure_evidence_hash": "a" * 64,
+                "transport_failure_root_input_hash": "b" * 64,
+                "replacement_pass_allowed": True,
+            },
+        )
+        replacement = SimpleNamespace(
+            pass_name="PUBLIC_GAP_CLOSURE",
+            submit_count=1,
+            status="RESEARCH_RUNNING",
+            response_hash=None,
+            detail={
+                "supersedes_unpersisted_pass_id": "PROPASS-SEALED",
+            },
+        )
+
+        _require_operational_followup_budget(
+            SimpleNamespace(list_passes=lambda _job_id: (sealed,)),
+            job_id="PROJOB-EFFICIENCY",
+            pass_names=frozenset({"PUBLIC_GAP_CLOSURE"}),
+            limit=1,
+            label="public-gap/counter",
+        )
+
+        with self.assertRaises(LiveCanaryPending) as captured:
+            _require_operational_followup_budget(
+                SimpleNamespace(
+                    list_passes=lambda _job_id: (sealed, replacement)
+                ),
+                job_id="PROJOB-EFFICIENCY",
+                pass_names=frozenset({"PUBLIC_GAP_CLOSURE"}),
+                limit=1,
+                label="public-gap/counter",
+            )
+
+        self.assertEqual(
+            captured.exception.status,
+            "OPERATIONAL_EFFICIENCY_GATE_FAILED",
         )
 
     def test_repairable_linked_fact_is_repaired_before_question_research(self) -> None:
