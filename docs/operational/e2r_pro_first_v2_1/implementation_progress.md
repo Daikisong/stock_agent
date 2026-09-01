@@ -5344,3 +5344,53 @@ R1은 패치 후 숫자가 좋아졌더라도 이미 실패한 live receipt를 �
 완전히 새 ChatGPT conversation에서 C15 R2를 다시 실행한다. master live full-thesis는 여전히 C06 1/3이며,
 C15 R2와 C24/C28이 실제 full-thesis까지 닫히기 전 PR #7 draft 해제와 main 병합은 금지한다. 정규화
 영수증은 `p50_c15_r1_efficiency_failure_and_generic_verifier_replay_receipt.json`이다.
+
+## P51 — C15 R2 초기 효율 통과와 미영속 검문 pass의 distinct replacement 수리
+
+C15 R2는 R1 답안을 재사용하지 않는 fresh job으로 기존 로그인 ChatGPT target
+`F6DC0979950E8B311DC6F6207BF6197E` 하나에서 시작했다. job은
+`PROJOB-384a8e0aad776a6d99391a6f`, run은 `PRORUN-bd4afaa744691b23974c76e7`, initial pass는
+`PROPASS-7cd93710b713a1906c83f2a4`, conversation은
+`6a963688-2f48-83ee-b6c6-cca06a7c6b0b`이다. 새 창·새 탭·새 target은 만들지 않았다.
+
+초기 Pro 조사는 약 90분 뒤 완료됐다. 산출물 재표시를 요청한 `ARTIFACT_REEXPORT`는 새 연구가 아닌
+transport-only pass로 분리했고, 최종 dossier는 `DOWNLOAD_JSON`으로 회수했다. source document 12개,
+serialized material fact 23개, mandatory question 27/27이며 현재 material 22개 중 19개가 검문을
+통과했다. acceptance ratio는 `0.863636`, genuine semantic repair 후보는 3개로 한도 5 이하,
+initial prompt defect는 0이다. 따라서 R2 initial efficiency는 PASS다. 이 시점에도 score와 Stage는
+만들지 않았고 publication을 계속 막았다.
+
+같은 conversation의 bounded `PUBLIC_GAP_CLOSURE`는 새 fact 4개와 route 4개를 추가해 accepted fact를
+30개로 늘렸다. 이어진 `VERIFIER_REPAIR` pass `PROPASS-d493d80aefc3f9ee6cb930f3`는 UI click 1회 뒤
+두 개의 독립 fresh public view 모두에서 exact pass marker가 없었다. 같은 pass를 다시 누르지 않고
+`CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED`로 봉인했다. submit count는 1, response hash는 null,
+replacement 허용은 true이며 automatic resubmit은 false다.
+
+이후 full-thesis 재개가 즉시 멈춘 원인은 ChatGPT 연구나 검문 내용이 아니라 local orchestration 누락이었다.
+일반 gap follow-up에는 이미 다음 규칙이 있었지만 `plan_compact_repair()`에만 없었다.
+
+```text
+서버에 영속되지 않은 pass를 독립 view 두 번으로 확정
+→ 그 pass는 영구 봉인
+→ 같은 candidate scope를 새 pass ID로 단 한 번 교체
+→ replacement가 원 pass ID와 root input hash를 명시적으로 참조
+→ replacement까지 미영속이면 세 번째 자동 반복 차단
+```
+
+쉬운 예로 분실된 택배를 같은 송장번호로 다시 보내지 않고 새 송장번호를 발급하되, 새 송장에 폐기된 원
+송장번호를 적는 방식이다. 특정 종목·C15·질문 ID 조건은 추가하지 않았다. 새 회귀 테스트는 첫 pass 봉인,
+서로 다른 replacement ID, 같은 candidate roster, 반복 planning의 idempotency, replacement까지 사라진 뒤
+세 번째 시도 차단을 한 번에 검증한다.
+
+집중 검증은 fresh orchestration 69/69, compact repair 23/23, multi-pass 30/30, live runtime 39/39,
+V2 static unit 2/2가 PASS했다. 저장소 표준 오프라인 CI는 readiness 284/284, offline E2E 4/4,
+browser mock E2E 89/89, compileall, diff check를 모두 통과했다. 전체 회귀는
+`7,886/7,886 PASS / failure·error 0 / 기존 skip 38`이며 독립 Reviewer A–H도 8/8, leaf test 합계
+340개가 PASS했다. Pro-first V1·V2·fresh-efficiency·V6 production 정적 감사도 모두 PASS/critical 0이다.
+
+현재 deterministic saturation은 accepted fact 30, public gap 12, verifier repair pending 10,
+provider/parser core pending 2, mandatory nonterminal 2, source linkage incomplete 2이므로 아직 full-thesis가
+아니다. 이 patch를 한글 커밋·푸시하고 exact-head GitHub Actions green을 확인한 뒤에만 같은 기존 탭·같은
+C15 conversation에서 distinct replacement를 한 번 전송한다. master live full-thesis는 아직 C06 1/3이고,
+C15와 C24/C28이 닫히기 전 PR #7은 draft/open, main은 unmerged를 유지한다. 정규화 영수증은
+`p51_c15_r2_initial_pass_and_compact_transport_replacement_receipt.json`이다.

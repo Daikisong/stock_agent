@@ -1869,6 +1869,153 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 pass_inputs=inputs,
             )
 
+    async def test_unpersisted_compact_repair_gets_distinct_replacement_then_blocks(
+        self,
+    ) -> None:
+        conversation_id = "fresh-conversation-compact-transport"
+        adapter = await self._prepare_and_approve(conversation_id)
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="a" * 64,
+        )
+        dossier, classifications, verifications, job_root = self._repair_inputs()
+
+        def absence(pass_id: str, parent_pass_id: str, ordinal: int):
+            return BrowserSubmittedTurnPersistence(
+                observation_id=f"PROSERVERVIEW-COMPACT-{pass_id}-{ordinal}",
+                observed_at=f"2026-08-25T01:03:0{ordinal}Z",
+                conversation_id=conversation_id,
+                job_id=self.fresh_job.job_id,
+                run_id=str(self.built.packet_payload["run_id"]),
+                pass_id=pass_id,
+                parent_pass_id=parent_pass_id,
+                persistence_confirmed=False,
+                user_turn_id=None,
+                required_markers=(
+                    f"[[E2R_PRO_JOB_ID:{self.fresh_job.job_id}]]",
+                    f"[[E2R_PRO_PASS_ID:{pass_id}]]",
+                    f"[[E2R_PRO_PARENT_PASS_ID:{parent_pass_id}]]",
+                ),
+                missing_markers=(f"[[E2R_PRO_PASS_ID:{pass_id}]]",),
+                observed_user_turn_count=2,
+                fresh_page_url=f"https://chatgpt.com/c/{conversation_id}",
+                fresh_page_loaded=True,
+            )
+
+        first, first_compiled = self.orchestrator.plan_compact_repair(
+            self.built,
+            dossier=dossier,
+            rejection_classifications=classifications,
+            verification_rows=verifications,
+            job_root=job_root,
+        )
+        self.orchestrator.ledger.mark_prepared(first.research_pass.pass_id)
+        first_claimed = self.orchestrator.ledger.claim_submit(
+            first.research_pass.pass_id
+        )
+        for ordinal in (1, 2):
+            self.orchestrator.ledger.record_server_persistence_observation(
+                first_claimed.pass_id,
+                observation=absence(
+                    first_claimed.pass_id,
+                    str(first_claimed.parent_pass_id),
+                    ordinal,
+                ),
+            )
+        first_failed = self.orchestrator.ledger.seal_unpersisted_dispatch(
+            first_claimed.pass_id
+        )
+
+        replacement, replacement_compiled = (
+            self.orchestrator.plan_compact_repair(
+                self.built,
+                dossier=dossier,
+                rejection_classifications=classifications,
+                verification_rows=verifications,
+                job_root=job_root,
+            )
+        )
+
+        self.assertNotEqual(
+            replacement.research_pass.pass_id,
+            first_failed.pass_id,
+        )
+        self.assertEqual(
+            replacement.research_pass.detail[
+                "supersedes_unpersisted_pass_id"
+            ],
+            first_failed.pass_id,
+        )
+        self.assertEqual(
+            replacement.research_pass.detail[
+                "transport_replacement_root_input_hash"
+            ],
+            first_failed.pass_input_hash,
+        )
+        self.assertEqual(
+            replacement.research_pass.detail[
+                "transport_persistence_feedback"
+            ]["replacement_ordinal"],
+            1,
+        )
+        self.assertEqual(
+            replacement_compiled.candidate_ids,
+            first_compiled.candidate_ids,
+        )
+        self.assertEqual(replacement_compiled.repair_pass_ordinal, 2)
+        self.assertIn(
+            replacement.research_pass.pass_id,
+            replacement_compiled.prompt_text,
+        )
+        self.assertNotIn(first_failed.pass_id, replacement_compiled.prompt_text)
+        self.assertEqual(first_failed.submit_count, 1)
+
+        repeated, repeated_compiled = self.orchestrator.plan_compact_repair(
+            self.built,
+            dossier=dossier,
+            rejection_classifications=classifications,
+            verification_rows=verifications,
+            job_root=job_root,
+        )
+        self.assertEqual(
+            repeated.research_pass.pass_id,
+            replacement.research_pass.pass_id,
+        )
+        self.assertEqual(
+            repeated_compiled.prompt_hash,
+            replacement_compiled.prompt_hash,
+        )
+
+        self.orchestrator.ledger.mark_prepared(replacement.research_pass.pass_id)
+        second_claimed = self.orchestrator.ledger.claim_submit(
+            replacement.research_pass.pass_id
+        )
+        for ordinal in (1, 2):
+            self.orchestrator.ledger.record_server_persistence_observation(
+                second_claimed.pass_id,
+                observation=absence(
+                    second_claimed.pass_id,
+                    str(second_claimed.parent_pass_id),
+                    ordinal,
+                ),
+            )
+        self.orchestrator.ledger.seal_unpersisted_dispatch(
+            second_claimed.pass_id
+        )
+
+        with self.assertRaisesRegex(
+            FreshSessionBoundaryError,
+            "same compact repair context failed server persistence twice",
+        ):
+            self.orchestrator.plan_compact_repair(
+                self.built,
+                dossier=dossier,
+                rejection_classifications=classifications,
+                verification_rows=verifications,
+                job_root=job_root,
+            )
+
     async def test_distinct_gap_and_reaudit_passes_remain_in_same_conversation(self) -> None:
         adapter = await self._prepare_and_approve("fresh-conversation-multipass")
         await self.orchestrator.submit_initial_once(adapter)

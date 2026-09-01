@@ -930,13 +930,73 @@ class FreshSessionOrchestratorV3:
         job_root: str | Path,
     ) -> tuple[FollowupPassPlan, CompiledCompactRepairPromptV3]:
         scope, parent = self._scope_and_completed_parent(built, "VERIFIER_REPAIR")
-        logical_input_hash = canonical_hash(
+        transport_replacement_root_input_hash = canonical_hash(
             {
                 "pass_name": "VERIFIER_REPAIR",
                 "dossier_hash": canonical_hash(dossier),
                 "rejection_classifications": list(rejection_classifications),
                 "verification_rows": list(verification_rows),
             }
+        )
+        repairs = tuple(
+            row
+            for row in self.ledger.list_passes(built.job.job_id)
+            if row.pass_name == "VERIFIER_REPAIR"
+        )
+        unpersisted_same_context = tuple(
+            row
+            for row in repairs
+            if row.status == ResearchPassStatus.FAILED_HARD.value
+            and str(row.detail.get("failure_domain") or "") == "TRANSPORT"
+            and (
+                row.pass_input_hash == transport_replacement_root_input_hash
+                or str(
+                    row.detail.get("transport_failure_root_input_hash") or ""
+                )
+                == transport_replacement_root_input_hash
+            )
+        )
+        if len(unpersisted_same_context) >= 2:
+            raise FreshSessionBoundaryError(
+                "same compact repair context failed server persistence twice; "
+                "automatic repetition is blocked"
+            )
+        transport_persistence_feedback: Mapping[str, Any] | None = None
+        if unpersisted_same_context:
+            failed_transport = unpersisted_same_context[-1]
+            transport_persistence_feedback = {
+                "supersedes_unpersisted_pass_id": failed_transport.pass_id,
+                "failure_class": str(
+                    failed_transport.detail.get("failure_class")
+                    or "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED"
+                ),
+                "server_persistence_failure_evidence_hash": str(
+                    failed_transport.detail.get(
+                        "server_persistence_failure_evidence_hash"
+                    )
+                    or ""
+                ),
+                "replacement_ordinal": 1,
+                "instruction": (
+                    "This is a new exactly-once compact repair pass replacing "
+                    "a prior turn that never persisted in the public "
+                    "conversation. Preserve the same verifier-repair scope."
+                ),
+            }
+        logical_input_hash = (
+            canonical_hash(
+                {
+                    "pass_name": "VERIFIER_REPAIR",
+                    "root_logical_input_hash": (
+                        transport_replacement_root_input_hash
+                    ),
+                    "transport_persistence_feedback": (
+                        transport_persistence_feedback
+                    ),
+                }
+            )
+            if transport_persistence_feedback is not None
+            else transport_replacement_root_input_hash
         )
         pass_id = stable_id(
             "PROPASS",
@@ -946,11 +1006,6 @@ class FreshSessionOrchestratorV3:
                 "pass_name": "VERIFIER_REPAIR",
                 "logical_input_hash": logical_input_hash,
             },
-        )
-        repairs = tuple(
-            row
-            for row in self.ledger.list_passes(built.job.job_id)
-            if row.pass_name == "VERIFIER_REPAIR"
         )
         existing = next((row for row in repairs if row.pass_id == pass_id), None)
         if existing is None:
@@ -1003,6 +1058,19 @@ class FreshSessionOrchestratorV3:
                     "full_dossier_reoutput_requested_count": 0,
                     "local_normalizable_sent_to_pro_count": 0,
                     "source_representation_sent_to_pro_count": 0,
+                    "transport_replacement_root_input_hash": (
+                        transport_replacement_root_input_hash
+                        if unpersisted_same_context
+                        else None
+                    ),
+                    "supersedes_unpersisted_pass_id": (
+                        unpersisted_same_context[-1].pass_id
+                        if unpersisted_same_context
+                        else None
+                    ),
+                    "transport_persistence_feedback": (
+                        transport_persistence_feedback
+                    ),
                 },
             )
         else:
