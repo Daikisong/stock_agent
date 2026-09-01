@@ -1,0 +1,135 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_artifact_capture_ci_repair_and_full_regression_receipt_v1",
+  "phase": "P39_ARTIFACT_CAPTURE_CI_REPAIR_AND_FULL_REGRESSION",
+  "status": "LOCAL_ALL_GREEN_GITHUB_CI_PENDING",
+  "audited_base_head": "aed9f813b474884cda94fe225def152bab7527c5",
+  "failed_github_runs_on_base_head": [
+    {
+      "workflow": "E2R Pro-first verification",
+      "run_id": 33307208961,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/33307208961",
+      "conclusion": "failure",
+      "failure_scope": [
+        "core-unit: 4 failures",
+        "browser-mock-e2e: 3 failures",
+        "full-regression: 3 failures"
+      ]
+    },
+    {
+      "workflow": "E2R v6 PR verification",
+      "run_id": 33307208960,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/33307208960",
+      "conclusion": "failure",
+      "failure_scope": [
+        "offline-contract full unittest: the same 3 artifact-capture failures"
+      ]
+    }
+  ],
+  "root_causes": {
+    "stale_preview_cross_file_binding": {
+      "symptom": "an optional PDF candidate reused the already-mounted MD preview download control",
+      "cause": "nearest ancestor lookup could escape the local artifact row and reach BODY, where one unrelated visible download control existed",
+      "observed_wrong_click_sequence": [
+        "expected MD",
+        "same MD again instead of sibling PDF"
+      ]
+    },
+    "premature_cdp_body_read": {
+      "symptom": "Network.getResponseBody returned No data found for resource with given identifier",
+      "cause": "CDP responseReceived can win the scheduler race before the exact response body is readable"
+    },
+    "schema_identity_diagnostic_collapse": {
+      "symptom": "a valid ResearchDossierV3 with the wrong job/run identity ended as a generic no-match error",
+      "cause": "schema match and exact identity mismatch were not retained across candidate inspection"
+    }
+  },
+  "repairs": {
+    "direct_download_scope": "reject page-wide and whole-turn ancestor bindings, require one local filename roster, and require any download attribute to equal the exact visible candidate filename",
+    "transport_race": "prefer the already-armed exact Playwright download/response observer, use CDP only after a bounded grace period, and fall back to those same observers without another click when CDP body access is premature",
+    "identity_error": "retain a schema-valid identity-mismatch observation and raise the exact job/run mismatch after all candidates are checked",
+    "second_click_added": false,
+    "new_submit_path_added": false,
+    "url_or_filename_validation_weakened": false
+  },
+  "verification": {
+    "original_full_suite_on_base_head": {
+      "tests_run": 7858,
+      "failure_count": 4,
+      "error_count": 0,
+      "elapsed_seconds": 871.421
+    },
+    "failure_reproduction": {
+      "tests_run": 4,
+      "failure_count": 4,
+      "error_count": 0
+    },
+    "targeted_after_repair": {
+      "tests_run": 4,
+      "failure_count": 0,
+      "error_count": 0,
+      "elapsed_seconds": 19.045
+    },
+    "browser_adapter_and_capture_modules": {
+      "tests_run": 70,
+      "failure_count": 0,
+      "error_count": 0,
+      "elapsed_seconds": 169.512
+    },
+    "static_and_submit_guards": {
+      "tests_run": 14,
+      "failure_count": 0,
+      "error_count": 0,
+      "elapsed_seconds": 1.572
+    },
+    "master_key_offline_bundle": {
+      "module_count": 23,
+      "tests_run": 430,
+      "failure_count": 0,
+      "error_count": 0,
+      "elapsed_seconds": 112.982,
+      "single_linux_environment_pass": true
+    },
+    "full_unittest_discovery": {
+      "tests_run": 7858,
+      "failure_count": 0,
+      "error_count": 0,
+      "existing_skip_count": 38,
+      "elapsed_seconds": 901.685,
+      "status": "PASS"
+    },
+    "production_static_audit": {
+      "status": "E2R_PRO_FIRST_STATIC_AUDIT_PASS",
+      "critical_count": 0,
+      "guarded_dom_submit_path_count": 1
+    },
+    "requirement_level_v2_static_audit": {
+      "status": "PASS",
+      "critical_count": 0,
+      "audit_hash": "50eb28c47a8ecf5cd6c7fe85d8f1bef829c19f0692132fa8150236f8b83d67b4"
+    },
+    "python_compile": "PASS",
+    "git_diff_check": "PASS",
+    "github_actions_on_repair_commit": "PENDING_COMMIT_AND_PUSH"
+  },
+  "browser_external_boundary": {
+    "existing_e2r_chrome_pid": 18964,
+    "cdp_endpoint": "http://127.0.0.1:9222",
+    "current_page_count": 14,
+    "current_chatgpt_page_count": 0,
+    "automatic_new_window_allowed": false,
+    "automatic_new_tab_allowed": false,
+    "unrelated_existing_tab_navigation_allowed": false,
+    "browser_navigation_performed_in_this_phase": false,
+    "r16_resubmitted": false
+  },
+  "master_goal_state": {
+    "live_full_thesis_canary_count": 1,
+    "required_live_full_thesis_canary_count": 3,
+    "c17_status": "PENDING_EXISTING_CHATGPT_PAGE_AND_R16_NO_RESEND_RECOVERY",
+    "c28_status": "PENDING_NEW_BLIND_FULL_THESIS_RUN",
+    "operational_research_readiness": "WITHHELD"
+  },
+  "score_authority": false,
+  "stage_authority": false,
+  "runtime_artifacts_tracked": false
+}

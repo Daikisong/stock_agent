@@ -1,0 +1,1585 @@
+"""Compile verified Pro facts through the existing impact validation stack."""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, replace
+import json
+import os
+from pathlib import Path
+from typing import Any, Mapping, Protocol, Sequence
+from urllib.parse import urlparse
+
+from e2r.research_brain.compiler.evidence_impact_rubric_compiler import (
+    compile_evidence_impact_rubrics,
+)
+from e2r.research_brain.runtime.scoring_contracts import (
+    audit_scoring_schema_totality,
+)
+from e2r.research_brain.scoring import (
+    CreditValidatedImpact,
+    FullScoreValidityEvidenceV2,
+    ImpactValidator,
+)
+from e2r.research_brain.scoring.business_mechanism_scope import (
+    MechanismScopeValidator,
+    infer_business_mechanism_scope,
+    load_mechanism_scope_contracts,
+)
+from e2r.research_brain.scoring.claim_impact_ledger import (
+    ClaimImpactProposal,
+    ClaimImpactLedgerBuilder,
+)
+from e2r.research_brain.scoring.evidence_impact_adjudicator import (
+    EvidenceImpactAdjudicator,
+    EvidenceImpactProvider,
+    compile_question_component_subcriteria,
+)
+from e2r.research_brain.scoring.question_impact_contract import (
+    load_question_impact_contracts,
+)
+from e2r.research_brain.researcher_mode.schemas import CANONICAL_COMPONENT_ORDER
+
+from ..atomic_io import fsync_directory
+from ..ids import canonical_hash, canonical_json, stable_id
+from ..models import ProResearchJob
+from ..gaps.supplemental_service import (
+    load_effective_dossier_facts,
+    load_effective_verified_evidence,
+)
+from .component_bridge import evidence_fact_from_mapping
+
+
+_DIRECTION_BY_FACT = {
+    "POSITIVE": "SUPPORT",
+    "COUNTER": "COUNTER",
+    "NEGATIVE": "COUNTER",
+    "RESOLUTION": "RESOLUTION",
+    "NEUTRAL": "NEUTRAL",
+}
+
+_WHOLE_DOSSIER_IMPACT_SEMANTICS = "e2r_pro_whole_dossier_impact_v2_compact_edges"
+
+_FORBIDDEN_PROVIDER_KEYS = frozenset(
+    {
+        "score",
+        "total_score",
+        "full_e2r_score",
+        "stage",
+        "canonical_stage",
+        "expected_stage",
+        "mfe",
+        "mae",
+        "future_outcome",
+    }
+)
+
+
+class DossierImpactProvider(Protocol):
+    provider_name: str
+
+    def complete_dossier(
+        self, *, payload: Mapping[str, Any]
+    ) -> Mapping[str, Any]: ...
+
+
+@dataclass(frozen=True)
+class ProImpactCompilationResult:
+    status: str
+    impacts: tuple[CreditValidatedImpact, ...]
+    terminal_evidence: Mapping[str, Mapping[str, Any]]
+    validity_evidence: FullScoreValidityEvidenceV2
+    pending_reasons: tuple[str, ...]
+    receipt: Mapping[str, Any]
+    provider_call_count: int
+    reused: bool = False
+
+    @property
+    def ready_for_judging(self) -> bool:
+        return self.status == "PRO_VALIDATED_IMPACT_COMPILATION_COMPLETE"
+
+
+class ProValidatedImpactCompiler:
+    """Use Codex for semantic proposals and deterministic E2R validators for credit.
+
+    The provider may select bounded rubric edges, but it cannot create a source,
+    fact, mapping capability, component edge, credit cap, score, or Stage.  Every
+    accepted impact is revalidated by ``ClaimImpactLedgerBuilder`` and
+    ``ImpactValidator`` before it reaches the existing scorer.
+    """
+
+    def __init__(
+        self,
+        provider: EvidenceImpactProvider | DossierImpactProvider,
+        *,
+        repo_root: str | Path = ".",
+    ) -> None:
+        self.provider = provider
+        self.repo_root = Path(repo_root).expanduser().resolve()
+
+    def compile(
+        self,
+        *,
+        job: ProResearchJob,
+        dossier: Mapping[str, Any],
+        job_root: str | Path,
+        selected_archetype_id: str,
+    ) -> ProImpactCompilationResult:
+        root = Path(job_root).resolve()
+        verification_root = root / "verification"
+        scoring_root = root / "scoring"
+        fact_rows, links, verifications = load_effective_verified_evidence(root)
+        scope_mapping_path = verification_root / "mechanism_scope_mappings.jsonl"
+        scope_mapping_rows = (
+            _read_jsonl(scope_mapping_path) if scope_mapping_path.is_file() else ()
+        )
+        scope_mapping_by_dossier_fact = {
+            str(row.get("dossier_fact_id") or ""): {
+                key: value
+                for key, value in row.items()
+                if key != "dossier_fact_id"
+            }
+            for row in scope_mapping_rows
+            if str(row.get("dossier_fact_id") or "")
+        }
+        facts = tuple(
+            evidence_fact_from_mapping(row) for row in fact_rows
+        )
+        gap_decisions = _read_jsonl(root / "gaps/gap_decisions.jsonl")
+        pro_report_markdown = _read_optional_text(
+            root / "capture/incoming/pro_report.md"
+        )
+        if selected_archetype_id not in set(job.archetype_ids):
+            raise ValueError("impact compiler archetype is outside the durable job")
+        input_hash = canonical_hash(
+            {
+                "job_id": job.job_id,
+                "dossier_hash": canonical_hash(dossier),
+                "selected_archetype_id": selected_archetype_id,
+                "facts": [row.to_dict() for row in facts],
+                "links": links,
+                "verifications": verifications,
+                "mechanism_scope_mappings": scope_mapping_rows,
+                "gap_decisions": gap_decisions,
+                "pro_report_markdown_hash": canonical_hash(
+                    pro_report_markdown
+                ),
+                "impact_compilation_semantics": (
+                    _WHOLE_DOSSIER_IMPACT_SEMANTICS
+                ),
+            }
+        )
+        reused = self._reuse_complete(
+            scoring_root=scoring_root,
+            expected_input_hash=input_hash,
+            expected_job_id=job.job_id,
+            expected_archetype_id=selected_archetype_id,
+        )
+        if reused is not None:
+            return reused
+
+        fact_by_id = {row.fact_id: row for row in facts}
+        verification_by_claim = {
+            str(row.get("compiled_claim_id") or ""): row
+            for row in verifications
+            if str(row.get("compiled_claim_id") or "")
+        }
+        dossier_fact_by_id = {
+            str(row.get("dossier_fact_id") or ""): row
+            for row in load_effective_dossier_facts(dossier, root)
+        }
+        primary_links = tuple(
+            row
+            for row in links
+            if str(row.get("link_role") or "PRIMARY_FACT_CLAIM")
+            == "PRIMARY_FACT_CLAIM"
+        )
+        claim_rows: list[Mapping[str, Any]] = []
+        provenance_rows: list[Mapping[str, Any]] = []
+        eligibility_rows: list[Mapping[str, Any]] = []
+        compilation_rows: list[Mapping[str, Any]] = []
+        prepared_by_claim: dict[str, Mapping[str, Any]] = {}
+        question_catalog = {
+            key: value
+            for key, value in load_question_impact_contracts().items()
+            if value.archetype_id == selected_archetype_id
+        }
+        rubrics = compile_evidence_impact_rubrics(selected_archetype_id)
+        rubric_by_primitive = rubrics.by_primitive()
+        all_known_claim_ids = {
+            str(row.get("claim_id") or "") for row in primary_links
+        }
+
+        for link in primary_links:
+            claim_id = str(link.get("claim_id") or "")
+            fact = fact_by_id.get(str(link.get("fact_id") or ""))
+            verification = verification_by_claim.get(claim_id)
+            if fact is None or verification is None:
+                raise ValueError("impact compiler found detached verified claim lineage")
+            dossier_fact = dossier_fact_by_id.get(
+                str(verification.get("dossier_fact_id") or "")
+            )
+            if dossier_fact is None:
+                raise ValueError("impact compiler cannot resolve the dossier fact")
+            allowed_components = tuple(fact.allowed_component_ids)
+            primitive_ids = tuple(
+                sorted(
+                    {
+                        primitive_id
+                        for contract in question_catalog.values()
+                        if set(contract.allowed_component_ids).intersection(
+                            allowed_components
+                        )
+                        for primitive_id in contract.allowed_primitive_ids
+                        if primitive_id in rubric_by_primitive
+                        and set(
+                            rubric_by_primitive[primitive_id].allowed_component_ids
+                        ).intersection(allowed_components)
+                    }
+                )
+            )
+            mapping_by_primitive = {
+                primitive_id: stable_id(
+                    "PROMAPCAND",
+                    {
+                        "job_id": job.job_id,
+                        "claim_id": claim_id,
+                        "archetype_id": selected_archetype_id,
+                        "primitive_id": primitive_id,
+                    },
+                )
+                for primitive_id in primitive_ids
+            }
+            direction = _DIRECTION_BY_FACT.get(fact.direction)
+            if direction is None:
+                raise ValueError("verified fact direction cannot enter impact compilation")
+            source_family = _source_family(dossier_fact, job=job)
+            evidence_family_id = stable_id(
+                "PROEVIDENCEFAMILY",
+                {
+                    "economic_fact_key": link.get("economic_fact_key"),
+                    "source_independence_group": fact.source_independence_group,
+                },
+            )
+            claim = {
+                "claim_id": claim_id,
+                "accepted": True,
+                "accepted_by_evidence_os": True,
+                "evidence_origin": "ORGANIC_LIVE",
+                "target_id": job.symbol,
+                "subject": fact.subject,
+                "business_segment": fact.business_segment,
+                "product_family": fact.product_family,
+                "economic_mechanism": fact.economic_mechanism,
+                "predicate": fact.predicate,
+                "exact_quote": str(dossier_fact.get("supporting_excerpt") or ""),
+                "event_date": dossier_fact.get("event_date"),
+                "effective_start": fact.period,
+                "effective_end": fact.period,
+                "reporting_period": fact.period,
+                "polarity": direction,
+                "mapping_ids": list(mapping_by_primitive.values()),
+                "mapping_candidates": [
+                    {"mapping_id": mapping_id, "primitive_id": primitive_id}
+                    for primitive_id, mapping_id in mapping_by_primitive.items()
+                ],
+                "raw_assertion": {
+                    "subject": fact.subject,
+                    "predicate": fact.predicate,
+                    "object_text": str(dossier_fact.get("statement") or ""),
+                    "exact_quote": str(
+                        dossier_fact.get("supporting_excerpt") or ""
+                    ),
+                },
+                "economic_fact_key": str(link.get("economic_fact_key") or ""),
+            }
+            explicit_scope = scope_mapping_by_dossier_fact.get(
+                str(verification.get("dossier_fact_id") or "")
+            )
+            if explicit_scope is not None:
+                claim.update(explicit_scope)
+            source_path = root / str(verification.get("document_path") or "")
+            provenance = {
+                "claim_id": claim_id,
+                "mapping_ids": list(mapping_by_primitive.values()),
+                "source_proxy_only": False,
+                "test_only": False,
+                "fetched": True,
+                "anchor_verified": True,
+                "directness": "DIRECT",
+                "temporal_status": "CURRENT",
+                "mapping_status": "ACCEPTED",
+                "source_url": str(verification.get("source_url") or ""),
+                "document_id": str(verification.get("source_id") or ""),
+                "content_hash": verification.get("content_hash"),
+                "exact_quote": str(dossier_fact.get("supporting_excerpt") or ""),
+                "effective_period": fact.period,
+                "source_independence_group": fact.source_independence_group,
+            }
+            eligibility_id = stable_id(
+                "PROELIGIBILITY",
+                {
+                    "job_id": job.job_id,
+                    "claim_id": claim_id,
+                    "archetype_id": selected_archetype_id,
+                    "verification_hash": verification.get("content_hash"),
+                },
+            )
+            eligibility = {
+                "eligibility_decision_id": eligibility_id,
+                "claim_id": claim_id,
+                "archetype_id": selected_archetype_id,
+                "ledger_acceptance": True,
+                "source_task_satisfaction": "PRO_DOSSIER_SOURCE_VERIFIED",
+                "component_scoring_eligibility": bool(allowed_components),
+                "risk_scoring_eligibility": direction == "COUNTER",
+                "stage_event_eligibility": False,
+                "full_thesis_eligibility": bool(allowed_components),
+                "eligibility_status": (
+                    "ELIGIBLE" if allowed_components else "INELIGIBLE_WRONG_MECHANISM"
+                ),
+                "eligibility_reasons": (
+                    [] if allowed_components else ["NO_ALLOWED_COMPONENT_EDGE"]
+                ),
+            }
+            claim_rows.append(claim)
+            provenance_rows.append(provenance)
+            eligibility_rows.append(eligibility)
+            prepared_by_claim[claim_id] = {
+                "claim": claim,
+                "provenance": provenance,
+                "eligibility": eligibility,
+                "fact": fact,
+                "dossier_fact": dossier_fact,
+                "mapping_by_primitive": mapping_by_primitive,
+                "direction": direction,
+                "source_family": source_family,
+                "evidence_family_id": evidence_family_id,
+                "document_context_excerpt": _document_context(source_path),
+            }
+
+        if callable(getattr(self.provider, "complete_dossier", None)):
+            (
+                proposals,
+                pending,
+                provider_call_count,
+                batch_rows,
+            ) = self._compile_dossier_batch(
+                provider=self.provider,
+                job=job,
+                scoring_root=scoring_root,
+                dossier=dossier,
+                pro_report_markdown=pro_report_markdown,
+                selected_archetype_id=selected_archetype_id,
+                prepared_by_claim=prepared_by_claim,
+                claim_rows=claim_rows,
+                gap_decisions=gap_decisions,
+                question_catalog=question_catalog,
+                rubric_by_primitive=rubric_by_primitive,
+                all_known_claim_ids=all_known_claim_ids,
+            )
+            compilation_rows.extend(batch_rows)
+        else:
+            (
+                proposals,
+                pending,
+                provider_call_count,
+                legacy_rows,
+            ) = self._compile_per_claim_proposals(
+                provider=self.provider,
+                job=job,
+                selected_archetype_id=selected_archetype_id,
+                prepared_by_claim=prepared_by_claim,
+                claim_rows=claim_rows,
+                question_catalog=question_catalog,
+                rubrics=rubrics.rubrics,
+                all_known_claim_ids=all_known_claim_ids,
+            )
+            compilation_rows.extend(legacy_rows)
+
+        if pending:
+            return self._pending_result(
+                scoring_root=scoring_root,
+                input_hash=input_hash,
+                pending_reasons=tuple(dict.fromkeys(pending)),
+                compilation_rows=compilation_rows,
+                provider_call_count=provider_call_count,
+                job_id=job.job_id,
+                target_id=job.symbol,
+                selected_archetype_id=selected_archetype_id,
+            )
+        ledger = ClaimImpactLedgerBuilder().build(
+            proposals=proposals,
+            accepted_current_claims=claim_rows,
+            claim_provenance=provenance_rows,
+            source_task_satisfaction=(),
+            claim_eligibility_decisions=eligibility_rows,
+        )
+        validation = ImpactValidator().validate(
+            impacts=ledger.validated_impacts,
+            claim_provenance=provenance_rows,
+            claim_eligibility_decisions=eligibility_rows,
+            accepted_current_claims=claim_rows,
+        )
+        validation_pending = []
+        if ledger.status != "MANY_TO_MANY_CLAIM_IMPACT_PASS":
+            validation_pending.append("CLAIM_IMPACT_LEDGER_PENDING")
+        if int(validation.audit.get("critical_count_sum") or 0) > 0:
+            validation_pending.append("IMPACT_VALIDATION_CRITICAL")
+        if validation.rejected:
+            validation_pending.append("IMPACT_VALIDATION_REJECTED")
+        covered_components = {
+            row.component_id
+            for row in validation.impacts
+            if max(
+                row.support_credit_fraction,
+                row.counter_effect_fraction,
+                row.resolution_effect,
+            )
+            > 0
+        }
+        contract_components = set(CANONICAL_COMPONENT_ORDER)
+        missing_components = tuple(
+            sorted(contract_components - covered_components)
+        )
+        terminal_evidence = {
+            component_id: {
+                "status": "PROVIDER_PENDING",
+                "reason": "no credit-validated impact closed this component",
+                "missing_questions": ["CREDIT_VALIDATED_IMPACT_REQUIRED"],
+            }
+            for component_id in missing_components
+        }
+        if missing_components:
+            validation_pending.append(
+                "COMPONENT_IMPACT_COVERAGE_PENDING:" + ",".join(missing_components)
+            )
+        schema_audit = audit_scoring_schema_totality(repo_root=self.repo_root)
+        impact_counts = validation.audit.get("critical_counts") or {}
+        validity = FullScoreValidityEvidenceV2(
+            schema_totality_status=str(schema_audit.get("status") or ""),
+            scoring_schema_critical_count=int(
+                schema_audit.get("critical_count_sum") or 0
+            ),
+            silent_zero_default_count=int(
+                (schema_audit.get("critical_counts") or {}).get(
+                    "silent_zero_default_count"
+                )
+                or 0
+            ),
+            positive_impact_zeroed_by_missing_cap_count=int(
+                impact_counts.get("positive_impact_zeroed_by_missing_cap_count")
+                or 0
+            ),
+            counter_impact_zeroed_by_missing_cap_count=int(
+                impact_counts.get("counter_impact_zeroed_by_missing_cap_count")
+                or 0
+            ),
+            mechanism_scope_failure_count=int(
+                impact_counts.get("cross_mechanism_impact_count") or 0
+            ),
+            question_component_reconciliation_critical_count=0,
+            unresolved_contradiction_count=0,
+            pending_state_count=len(missing_components),
+            absence_without_adequacy_count=0,
+            gold_critical_fact_miss_count=0,
+            cross_business_question_closure_count=0,
+            same_fact_duplicate_credit_count=int(
+                impact_counts.get("same_fact_duplicate_credit_count") or 0
+            ),
+            same_document_duplicate_credit_count=int(
+                impact_counts.get("same_document_duplicate_credit_count") or 0
+            ),
+            source_audit_ids=(
+                input_hash,
+                str(schema_audit.get("policy_config_hash") or ""),
+            ),
+        )
+        status = (
+            "PRO_VALIDATED_IMPACT_COMPILATION_COMPLETE"
+            if not validation_pending
+            else "PRO_VALIDATED_IMPACT_COMPILATION_PENDING"
+        )
+        receipt = {
+            "schema_version": "e2r_pro_validated_impact_compilation_v1",
+            "status": status,
+            "job_id": job.job_id,
+            "target_id": job.symbol,
+            "input_hash": input_hash,
+            "selected_archetype_id": selected_archetype_id,
+            "verified_fact_count": len(facts),
+            "primary_claim_count": len(primary_links),
+            "impact_proposal_count": len(proposals),
+            "validated_impact_count": len(validation.impacts),
+            "covered_component_ids": sorted(covered_components),
+            "missing_component_ids": list(missing_components),
+            "pending_reasons": validation_pending,
+            "provider_name": str(
+                getattr(self.provider, "provider_name", "UNKNOWN")
+            ),
+            "provider_call_count": provider_call_count,
+            "validated_impacts_hash": canonical_hash(
+                [row.to_dict() for row in validation.impacts]
+            ),
+            "terminal_evidence_hash": canonical_hash(terminal_evidence),
+            "validity_evidence_hash": canonical_hash(validity.to_dict()),
+            "compilation_rows_hash": canonical_hash(compilation_rows),
+            "ledger_audit_hash": canonical_hash(ledger.audit),
+            "impact_validation_audit_hash": canonical_hash(validation.audit),
+            "scoring_schema_audit_hash": canonical_hash(schema_audit),
+            "pro_score_authority": False,
+            "pro_stage_authority": False,
+            "production_score_authority": False,
+            "production_stage_authority": False,
+        }
+        self._write_artifacts(
+            scoring_root=scoring_root,
+            impacts=validation.impacts,
+            terminal_evidence=terminal_evidence,
+            validity_evidence=validity,
+            compilation_rows=compilation_rows,
+            receipt=receipt,
+        )
+        return ProImpactCompilationResult(
+            status=status,
+            impacts=tuple(validation.impacts),
+            terminal_evidence=terminal_evidence,
+            validity_evidence=validity,
+            pending_reasons=tuple(validation_pending),
+            receipt=receipt,
+            provider_call_count=provider_call_count,
+        )
+
+    def _compile_dossier_batch(
+        self,
+        *,
+        provider: DossierImpactProvider,
+        job: ProResearchJob,
+        scoring_root: Path,
+        dossier: Mapping[str, Any],
+        pro_report_markdown: str,
+        selected_archetype_id: str,
+        prepared_by_claim: Mapping[str, Mapping[str, Any]],
+        claim_rows: Sequence[Mapping[str, Any]],
+        gap_decisions: Sequence[Mapping[str, Any]],
+        question_catalog: Mapping[str, Any],
+        rubric_by_primitive: Mapping[str, Any],
+        all_known_claim_ids: set[str],
+    ) -> tuple[
+        list[ClaimImpactProposal],
+        list[str],
+        int,
+        list[Mapping[str, Any]],
+    ]:
+        """Compile all verified claims in one whole-context semantic pass."""
+
+        mechanism_contract = load_mechanism_scope_contracts().get(
+            selected_archetype_id
+        )
+        if mechanism_contract is None:
+            raise ValueError("whole-dossier impact mechanism contract is missing")
+        claim_catalog: list[Mapping[str, Any]] = []
+        compilation_rows: list[Mapping[str, Any]] = []
+        allowed_edges_by_claim: dict[str, tuple[Mapping[str, Any], ...]] = {}
+        relevant_primitive_ids: set[str] = set()
+        for claim_id, prepared in prepared_by_claim.items():
+            mapping_by_primitive = prepared["mapping_by_primitive"]
+            fact = prepared["fact"]
+            allowed_components = tuple(fact.allowed_component_ids)
+            contracts = tuple(
+                contract
+                for contract in question_catalog.values()
+                if set(contract.allowed_primitive_ids).intersection(
+                    mapping_by_primitive
+                )
+                and set(contract.allowed_component_ids).intersection(
+                    allowed_components
+                )
+            )
+            subcriteria = compile_question_component_subcriteria(
+                contracts,
+                allowed_component_ids=allowed_components,
+            )
+            edges: list[Mapping[str, Any]] = []
+            edge_keys: set[tuple[str, ...]] = set()
+            for contract in contracts:
+                for primitive_id in contract.allowed_primitive_ids:
+                    mapping_id = mapping_by_primitive.get(primitive_id)
+                    rubric = rubric_by_primitive.get(primitive_id)
+                    if mapping_id is None or rubric is None:
+                        continue
+                    scope = infer_business_mechanism_scope(
+                        prepared["claim"],
+                        primitive_id=primitive_id,
+                        archetype_id=selected_archetype_id,
+                    )
+                    for component_id in contract.allowed_component_ids:
+                        if (
+                            component_id not in allowed_components
+                            or component_id not in rubric.allowed_component_ids
+                        ):
+                            continue
+                        scope_validation = MechanismScopeValidator().validate(
+                            scope=scope,
+                            contract=mechanism_contract,
+                            component_id=component_id,
+                        )
+                        if not scope_validation.scope_match:
+                            continue
+                        for subcriterion in subcriteria.get(component_id, ()):
+                            if (
+                                str(
+                                    subcriterion.get("question_family_id") or ""
+                                )
+                                != contract.question_family_id
+                            ):
+                                continue
+                            subcriterion_primitives = tuple(
+                                subcriterion.get("allowed_primitive_ids") or ()
+                            )
+                            if (
+                                subcriterion_primitives
+                                and primitive_id not in subcriterion_primitives
+                            ):
+                                continue
+                            edge = {
+                                "mapping_id": mapping_id,
+                                "primitive_id": primitive_id,
+                                "question_family_id": contract.question_family_id,
+                                "question_contract_hash": contract.contract_hash,
+                                "component_id": component_id,
+                                "component_subcriterion_id": str(
+                                    subcriterion.get("subcriterion_id") or ""
+                                ),
+                            }
+                            edge_key = _batch_edge_key(edge)
+                            if not edge["component_subcriterion_id"] or edge_key in edge_keys:
+                                continue
+                            edge_keys.add(edge_key)
+                            edge["allowed_edge_id"] = stable_id(
+                                "PROIMPACTEDGE",
+                                {
+                                    "job_id": job.job_id,
+                                    "claim_id": claim_id,
+                                    "edge": edge,
+                                },
+                            )
+                            edges.append(edge)
+                            relevant_primitive_ids.add(primitive_id)
+            allowed_edges_by_claim[claim_id] = tuple(edges)
+            if not edges:
+                compilation_rows.append(
+                    {
+                        "claim_id": claim_id,
+                        "status": "NO_APPLICABLE_SCORING_CONTRACT",
+                        "provider_call_count": 0,
+                    }
+                )
+                continue
+            claim_catalog.append(
+                {
+                    "claim_id": claim_id,
+                    "fact_id": fact.fact_id,
+                    "statement": str(
+                        prepared["dossier_fact"].get("statement") or ""
+                    ),
+                    "exact_quote": str(prepared["claim"].get("exact_quote") or ""),
+                    "document_context_excerpt": prepared[
+                        "document_context_excerpt"
+                    ],
+                    "source_url": prepared["provenance"]["source_url"],
+                    "published_date": prepared["dossier_fact"].get(
+                        "published_at"
+                    ),
+                    "period": fact.period,
+                    "direction": prepared["direction"],
+                    "verified_confidence_cap": fact.confidence,
+                    "allowed_component_ids": list(allowed_components),
+                    "allowed_impact_edges": [
+                        {
+                            "allowed_edge_id": edge["allowed_edge_id"],
+                            "primitive_id": edge["primitive_id"],
+                            "component_id": edge["component_id"],
+                        }
+                        for edge in edges
+                    ],
+                }
+            )
+        if not claim_catalog:
+            return (
+                [],
+                ["WHOLE_DOSSIER_NO_APPLICABLE_SCORING_CONTRACT"],
+                0,
+                compilation_rows,
+            )
+        payload = {
+            "schema_version": "e2r_pro_whole_dossier_impact_request_v1",
+            "provider_semantics": _WHOLE_DOSSIER_IMPACT_SEMANTICS,
+            "mode": "EVIDENCE_ONLY_NO_SEARCH",
+            "target_identity": {
+                "target_id": job.symbol,
+                "company_name": job.company_name,
+            },
+            "as_of_date": job.as_of_date,
+            "archetype_id": selected_archetype_id,
+            "pro_report_context": {
+                "content_hash": canonical_hash(pro_report_markdown),
+                "raw_report_included": False,
+                "reason": (
+                    "raw Pro prose is untrusted and duplicated by normalized "
+                    "component research plus the source-verified claim catalog"
+                ),
+            },
+            "normalized_component_research": dossier.get("component_research")
+            or (),
+            "verified_claim_catalog": claim_catalog,
+            "verified_counter_claim_ids": sorted(
+                str(row.get("claim_id") or "")
+                for row in claim_rows
+                if row.get("polarity") == "COUNTER"
+            ),
+            "deterministic_gap_dispositions": [
+                _compact_gap_disposition(row) for row in gap_decisions
+            ],
+            "applicable_impact_rubrics": [
+                rubric_by_primitive[primitive_id].to_dict()
+                for primitive_id in sorted(relevant_primitive_ids)
+            ],
+            "authority_boundary": {
+                "pro_report_score_authority": False,
+                "pro_report_stage_authority": False,
+                "provider_score_authority": False,
+                "provider_stage_authority": False,
+                "source_lineage_is_deterministic": True,
+                "final_score_and_stage_are_deterministic": True,
+            },
+        }
+        prompt_hash = canonical_hash(payload)
+        response_cache_path = scoring_root / "whole_dossier_impact_response.json"
+        response = None
+        response_reused = False
+        if response_cache_path.is_file():
+            cached = _read_json(response_cache_path)
+            cached_response = cached.get("response")
+            if (
+                cached.get("prompt_hash") == prompt_hash
+                and isinstance(cached_response, Mapping)
+                and cached.get("response_hash")
+                == canonical_hash(cached_response)
+            ):
+                response = dict(cached_response)
+                response_reused = True
+        provider_call_count = 0
+        if response is None:
+            try:
+                response = provider.complete_dossier(payload=payload)
+            except Exception as error:
+                compilation_rows.append(
+                    {
+                        "status": "WHOLE_DOSSIER_PROVIDER_ERROR",
+                        "error_class": type(error).__name__,
+                        "error_detail": _provider_error_detail(error),
+                        "prompt_hash": prompt_hash,
+                        "provider_call_count": 0,
+                    }
+                )
+                return (
+                    [],
+                    [f"WHOLE_DOSSIER_IMPACT_PROVIDER_ERROR:{type(error).__name__}"],
+                    0,
+                    compilation_rows,
+                )
+            provider_call_count = 1
+            response_hash = canonical_hash(response)
+            _write_atomic(
+                response_cache_path,
+                canonical_json(
+                    {
+                        "schema_version": (
+                            "e2r_pro_whole_dossier_impact_response_cache_v1"
+                        ),
+                        "job_id": job.job_id,
+                        "prompt_hash": prompt_hash,
+                        "response_hash": response_hash,
+                        "response": response,
+                        "provider_name": provider.provider_name,
+                        "provider_original_call_count": 1,
+                        "query_count": 0,
+                        "fetch_count": 0,
+                    }
+                )
+                + "\n",
+            )
+        primary_response_hash = canonical_hash(response)
+        repair_response_hash = ""
+        repair_response_reused = False
+        repair_provider_call_count = 0
+        repair_error: Mapping[str, Any] | None = None
+        raw_covered_components: set[str] = set()
+        for row in response.get("impacts") or ():
+            if not isinstance(row, Mapping):
+                continue
+            claim_id = str(row.get("claim_id") or "")
+            edge = _allowed_edge_for_response(
+                allowed_edges_by_claim.get(claim_id, ()),
+                row,
+            )
+            if edge is not None:
+                raw_covered_components.add(str(edge["component_id"]))
+        repair_component_ids = tuple(
+            sorted(set(CANONICAL_COMPONENT_ORDER) - raw_covered_components)
+        )
+        repair_claim_catalog: list[Mapping[str, Any]] = []
+        if repair_component_ids:
+            repair_component_set = set(repair_component_ids)
+            for claim in claim_catalog:
+                full_edges = allowed_edges_by_claim.get(
+                    str(claim.get("claim_id") or ""),
+                    (),
+                )
+                repair_edges = [
+                    {
+                        "allowed_edge_id": edge["allowed_edge_id"],
+                        "primitive_id": edge["primitive_id"],
+                        "component_id": edge["component_id"],
+                    }
+                    for edge in full_edges
+                    if str(edge.get("component_id") or "")
+                    in repair_component_set
+                ]
+                if repair_edges:
+                    repair_claim_catalog.append(
+                        {
+                            **dict(claim),
+                            "allowed_impact_edges": repair_edges,
+                            "allowed_component_ids": sorted(
+                                {
+                                    str(edge["component_id"])
+                                    for edge in repair_edges
+                                }
+                            ),
+                        }
+                    )
+        if repair_claim_catalog:
+            repair_payload = {
+                **payload,
+                "provider_semantics": (
+                    _WHOLE_DOSSIER_IMPACT_SEMANTICS
+                    + ":missing_component_repair_v1"
+                ),
+                "verified_claim_catalog": repair_claim_catalog,
+                "repair_context": {
+                    "required_missing_component_ids": list(
+                        repair_component_ids
+                    ),
+                    "instruction": (
+                        "Select only directly supported allowed edges for the "
+                        "missing components. Do not repeat other components."
+                    ),
+                    "primary_response_hash": primary_response_hash,
+                },
+            }
+            repair_prompt_hash = canonical_hash(repair_payload)
+            repair_cache_path = (
+                scoring_root / "whole_dossier_impact_repair_response.json"
+            )
+            repair_response = None
+            if repair_cache_path.is_file():
+                cached_repair = _read_json(repair_cache_path)
+                cached_repair_response = cached_repair.get("response")
+                if (
+                    cached_repair.get("prompt_hash") == repair_prompt_hash
+                    and isinstance(cached_repair_response, Mapping)
+                    and cached_repair.get("response_hash")
+                    == canonical_hash(cached_repair_response)
+                ):
+                    repair_response = dict(cached_repair_response)
+                    repair_response_reused = True
+            if repair_response is None:
+                try:
+                    repair_response = provider.complete_dossier(
+                        payload=repair_payload
+                    )
+                except Exception as error:
+                    repair_error = {
+                        "error_class": type(error).__name__,
+                        "error_detail": _provider_error_detail(error),
+                    }
+                else:
+                    repair_provider_call_count = 1
+                    repair_response_hash = canonical_hash(repair_response)
+                    _write_atomic(
+                        repair_cache_path,
+                        canonical_json(
+                            {
+                                "schema_version": (
+                                    "e2r_pro_whole_dossier_impact_response_cache_v1"
+                                ),
+                                "job_id": job.job_id,
+                                "prompt_hash": repair_prompt_hash,
+                                "response_hash": repair_response_hash,
+                                "response": repair_response,
+                                "provider_name": provider.provider_name,
+                                "provider_original_call_count": 1,
+                                "query_count": 0,
+                                "fetch_count": 0,
+                            }
+                        )
+                        + "\n",
+                    )
+            if repair_response is not None:
+                repair_response_hash = canonical_hash(repair_response)
+                response = {
+                    **dict(response),
+                    "impacts": [
+                        *(response.get("impacts") or ()),
+                        *(repair_response.get("impacts") or ()),
+                    ],
+                    "unsupported_aspects": [
+                        *(response.get("unsupported_aspects") or ()),
+                        *(repair_response.get("unsupported_aspects") or ()),
+                    ],
+                }
+        provider_call_count += repair_provider_call_count
+        response_hash = canonical_hash(response)
+        proposals: list[ClaimImpactProposal] = []
+        invalid_count = 0
+        invalid_reasons: list[Mapping[str, Any]] = []
+        duplicate_dropped_count = 0
+        seen_impact_ids: set[str] = set()
+        for row in response.get("impacts") or ():
+            try:
+                if not isinstance(row, Mapping):
+                    raise ValueError("impact row is not an object")
+                claim_id = str(row.get("claim_id") or "")
+                prepared = prepared_by_claim.get(claim_id)
+                if prepared is None:
+                    raise ValueError("impact claim is outside verified catalog")
+                edge = _allowed_edge_for_response(
+                    allowed_edges_by_claim.get(claim_id, ()),
+                    row,
+                )
+                if edge is None:
+                    raise ValueError("impact edge is outside deterministic catalog")
+                counter_claim_ids = tuple(
+                    str(value) for value in row.get("counter_claim_ids") or ()
+                )
+                if not set(counter_claim_ids).issubset(all_known_claim_ids):
+                    raise ValueError("impact counter claim is outside verified catalog")
+                unsupported = tuple(
+                    str(value).strip()
+                    for value in row.get("unsupported_aspects") or ()
+                    if str(value).strip()
+                )
+                confidence = float(row.get("confidence"))
+                impact_id = stable_id(
+                    "PROIMPACT",
+                    {
+                        "job_id": job.job_id,
+                        "claim_id": claim_id,
+                        "edge": edge,
+                        "direction": prepared["direction"],
+                    },
+                )
+                if impact_id in seen_impact_ids:
+                    duplicate_dropped_count += 1
+                    continue
+                proposal = ClaimImpactProposal(
+                    impact_id=impact_id,
+                    claim_id=claim_id,
+                    mapping_id=str(edge["mapping_id"]),
+                    target_id=job.symbol,
+                    archetype_id=selected_archetype_id,
+                    primitive_id=str(edge["primitive_id"]),
+                    component_id=str(edge["component_id"]),
+                    direction=str(prepared["direction"]),
+                    support_type=str(row.get("support_type") or ""),
+                    strength_band=str(row.get("strength_band") or ""),
+                    completeness_band=str(
+                        row.get("completeness_band") or ""
+                    ),
+                    causal_distance=str(row.get("causal_distance") or ""),
+                    temporal_scope="CURRENT",
+                    source_family=str(prepared["source_family"]),
+                    evidence_family_id=str(prepared["evidence_family_id"]),
+                    confidence=min(confidence, prepared["fact"].confidence),
+                    rationale=str(row.get("rationale") or ""),
+                    unsupported_aspects=unsupported,
+                    counter_claim_ids=counter_claim_ids,
+                    lineage_mapping_ids=(),
+                    question_family_id=str(edge["question_family_id"]),
+                    question_contract_hash=str(
+                        edge["question_contract_hash"]
+                    ),
+                    component_subcriterion_id=str(
+                        edge["component_subcriterion_id"]
+                    ),
+                    mechanism_scope_match=True,
+                )
+                proposals.append(proposal)
+                seen_impact_ids.add(impact_id)
+            except (KeyError, TypeError, ValueError) as error:
+                invalid_count += 1
+                invalid_reasons.append(
+                    {
+                        "reason": _provider_error_detail(error),
+                        "claim_id": (
+                            str(row.get("claim_id") or "")
+                            if isinstance(row, Mapping)
+                            else ""
+                        ),
+                        "proposed_edge": (
+                            {
+                                "allowed_edge_id": str(
+                                    row.get("allowed_edge_id") or ""
+                                )
+                            }
+                            if isinstance(row, Mapping)
+                            else {}
+                        ),
+                    }
+                )
+        forbidden_count = _forbidden_provider_key_count(response)
+        global_unsupported = tuple(
+            str(value).strip()
+            for value in response.get("unsupported_aspects") or ()
+            if str(value).strip()
+        )
+        pending: list[str] = []
+        if invalid_count and not proposals:
+            pending.append(
+                f"WHOLE_DOSSIER_IMPACT_INVALID_ROWS:{invalid_count}"
+            )
+        if forbidden_count:
+            pending.append(
+                f"WHOLE_DOSSIER_FORBIDDEN_AUTHORITY_KEYS:{forbidden_count}"
+            )
+        if not global_unsupported:
+            pending.append("WHOLE_DOSSIER_UNSUPPORTED_ASPECTS_MISSING")
+        if not proposals:
+            pending.append("WHOLE_DOSSIER_NO_VALID_IMPACTS")
+        compilation_rows.append(
+            {
+                "status": (
+                    (
+                        "WHOLE_DOSSIER_IMPACT_PASS_WITH_REJECTED_PROPOSALS"
+                        if invalid_count
+                        else "WHOLE_DOSSIER_IMPACT_PASS"
+                    )
+                    if not pending
+                    else "WHOLE_DOSSIER_IMPACT_PENDING"
+                ),
+                "verified_claim_count": len(claim_catalog),
+                "allowed_edge_count": sum(
+                    len(row["allowed_impact_edges"]) for row in claim_catalog
+                ),
+                "valid_proposal_count": len(proposals),
+                "invalid_proposal_count": invalid_count,
+                "invalid_reasons": invalid_reasons,
+                "duplicate_dropped_count": duplicate_dropped_count,
+                "forbidden_authority_key_count": forbidden_count,
+                "prompt_hash": prompt_hash,
+                "response_hash": response_hash,
+                "primary_response_hash": primary_response_hash,
+                "repair_required_component_ids": list(repair_component_ids),
+                "repair_response_hash": repair_response_hash,
+                "repair_provider_call_count": repair_provider_call_count,
+                "repair_response_reused": repair_response_reused,
+                "repair_error": repair_error,
+                "provider_call_count": provider_call_count,
+                "provider_response_reused": response_reused,
+                "provider_original_call_count": (
+                    1 + int(bool(repair_claim_catalog))
+                ),
+                "query_count": 0,
+                "fetch_count": 0,
+                "web_search_allowed": False,
+            }
+        )
+        return proposals, pending, provider_call_count, compilation_rows
+
+    def _compile_per_claim_proposals(
+        self,
+        *,
+        provider: EvidenceImpactProvider,
+        job: ProResearchJob,
+        selected_archetype_id: str,
+        prepared_by_claim: Mapping[str, Mapping[str, Any]],
+        claim_rows: Sequence[Mapping[str, Any]],
+        question_catalog: Mapping[str, Any],
+        rubrics: Sequence[Any],
+        all_known_claim_ids: set[str],
+    ) -> tuple[
+        list[ClaimImpactProposal],
+        list[str],
+        int,
+        list[Mapping[str, Any]],
+    ]:
+        """Compatibility path for injected unit providers; production uses batch."""
+
+        proposals: list[ClaimImpactProposal] = []
+        pending: list[str] = []
+        provider_call_count = 0
+        compilation_rows: list[Mapping[str, Any]] = []
+        for claim_id, prepared in prepared_by_claim.items():
+            mapping_by_primitive = prepared["mapping_by_primitive"]
+            fact = prepared["fact"]
+            allowed_components = tuple(fact.allowed_component_ids)
+            contracts = tuple(
+                contract
+                for contract in question_catalog.values()
+                if set(contract.allowed_primitive_ids).intersection(
+                    mapping_by_primitive
+                )
+                and set(contract.allowed_component_ids).intersection(
+                    allowed_components
+                )
+            )
+            if not contracts or not mapping_by_primitive:
+                compilation_rows.append(
+                    {
+                        "claim_id": claim_id,
+                        "status": "NO_APPLICABLE_SCORING_CONTRACT",
+                        "provider_call_count": 0,
+                    }
+                )
+                continue
+            scope_primitive = next(iter(mapping_by_primitive))
+            try:
+                result = EvidenceImpactAdjudicator(provider).adjudicate(
+                    target_identity={
+                        "target_id": job.symbol,
+                        "company_name": job.company_name,
+                    },
+                    as_of_date=job.as_of_date,
+                    archetype_id=selected_archetype_id,
+                    accepted_claim=prepared["claim"],
+                    exact_quote=str(prepared["claim"]["exact_quote"]),
+                    document_metadata={
+                        "document_id": prepared["provenance"]["document_id"],
+                        "source_url": prepared["provenance"]["source_url"],
+                        "published_date": prepared["dossier_fact"].get(
+                            "published_at"
+                        ),
+                        "source_family": prepared["source_family"],
+                        "evidence_origin": "ORGANIC_LIVE",
+                        "document_context_excerpt": prepared[
+                            "document_context_excerpt"
+                        ],
+                    },
+                    current_claim_ledger=tuple(claim_rows),
+                    counter_claims=tuple(
+                        row
+                        for row in claim_rows
+                        if row.get("polarity") == "COUNTER"
+                        and row.get("claim_id") != claim_id
+                    ),
+                    rubrics=rubrics,
+                    allowed_component_ids=allowed_components,
+                    business_mechanism_scope=infer_business_mechanism_scope(
+                        prepared["claim"],
+                        primitive_id=scope_primitive,
+                        archetype_id=selected_archetype_id,
+                    ),
+                    question_impact_contracts=contracts,
+                    claim_eligibility_decision=prepared["eligibility"],
+                    component_subcriteria=compile_question_component_subcriteria(
+                        contracts,
+                        allowed_component_ids=allowed_components,
+                    ),
+                )
+            except Exception as error:
+                pending.append(
+                    f"IMPACT_PROVIDER_ERROR:{claim_id}:{type(error).__name__}"
+                )
+                compilation_rows.append(
+                    {
+                        "claim_id": claim_id,
+                        "status": "PROVIDER_ERROR",
+                        "error_class": type(error).__name__,
+                        "provider_call_count": 0,
+                    }
+                )
+                break
+            provider_call_count += len(result.response_hashes)
+            valid: list[ClaimImpactProposal] = []
+            invalid_count = 0
+            for proposal in result.proposals:
+                expected_mapping = mapping_by_primitive.get(proposal.primitive_id)
+                if (
+                    expected_mapping is None
+                    or proposal.mapping_id != expected_mapping
+                    or proposal.direction != prepared["direction"]
+                    or proposal.source_family != prepared["source_family"]
+                    or proposal.temporal_scope != "CURRENT"
+                    or not set(proposal.counter_claim_ids).issubset(
+                        all_known_claim_ids
+                    )
+                ):
+                    invalid_count += 1
+                    continue
+                valid.append(
+                    replace(
+                        proposal,
+                        evidence_family_id=prepared["evidence_family_id"],
+                        confidence=min(proposal.confidence, fact.confidence),
+                        lineage_mapping_ids=(),
+                    )
+                )
+            if result.status != "IMPACT_ADJUDICATION_PASS" or invalid_count:
+                pending.append(f"IMPACT_ADJUDICATION_PENDING:{claim_id}")
+            proposals.extend(valid)
+            compilation_rows.append(
+                {
+                    "claim_id": claim_id,
+                    "status": result.status,
+                    "valid_proposal_count": len(valid),
+                    "invalid_proposal_count": invalid_count,
+                    "prompt_hashes": list(result.prompt_hashes),
+                    "response_hashes": list(result.response_hashes),
+                    "provider_call_count": len(result.response_hashes),
+                    "critical_count_sum": int(
+                        result.audit.get("critical_count_sum") or 0
+                    ),
+                }
+            )
+        return proposals, pending, provider_call_count, compilation_rows
+
+    def _pending_result(
+        self,
+        *,
+        scoring_root: Path,
+        input_hash: str,
+        pending_reasons: tuple[str, ...],
+        compilation_rows: Sequence[Mapping[str, Any]],
+        provider_call_count: int,
+        job_id: str,
+        target_id: str,
+        selected_archetype_id: str,
+    ) -> ProImpactCompilationResult:
+        validity = _pending_validity(len(pending_reasons), input_hash)
+        receipt = {
+            "schema_version": "e2r_pro_validated_impact_compilation_v1",
+            "status": "PRO_VALIDATED_IMPACT_COMPILATION_PENDING",
+            "job_id": job_id,
+            "target_id": target_id,
+            "selected_archetype_id": selected_archetype_id,
+            "input_hash": input_hash,
+            "validated_impact_count": 0,
+            "pending_reasons": list(pending_reasons),
+            "provider_name": str(
+                getattr(self.provider, "provider_name", "UNKNOWN")
+            ),
+            "provider_call_count": provider_call_count,
+            "validated_impacts_hash": canonical_hash([]),
+            "terminal_evidence_hash": canonical_hash({}),
+            "validity_evidence_hash": canonical_hash(validity.to_dict()),
+            "compilation_rows_hash": canonical_hash(compilation_rows),
+            "pro_score_authority": False,
+            "pro_stage_authority": False,
+            "production_score_authority": False,
+            "production_stage_authority": False,
+        }
+        self._write_artifacts(
+            scoring_root=scoring_root,
+            impacts=(),
+            terminal_evidence={},
+            validity_evidence=validity,
+            compilation_rows=compilation_rows,
+            receipt=receipt,
+        )
+        return ProImpactCompilationResult(
+            status="PRO_VALIDATED_IMPACT_COMPILATION_PENDING",
+            impacts=(),
+            terminal_evidence={},
+            validity_evidence=validity,
+            pending_reasons=pending_reasons,
+            receipt=receipt,
+            provider_call_count=provider_call_count,
+        )
+
+    def _reuse_complete(
+        self,
+        *,
+        scoring_root: Path,
+        expected_input_hash: str,
+        expected_job_id: str,
+        expected_archetype_id: str,
+    ) -> ProImpactCompilationResult | None:
+        receipt_path = scoring_root / "impact_compilation_receipt.json"
+        impacts_path = scoring_root / "validated_impacts.jsonl"
+        terminal_path = scoring_root / "impact_terminal_evidence.json"
+        validity_path = scoring_root / "impact_validity_evidence.json"
+        compilation_path = scoring_root / "impact_adjudications.jsonl"
+        if not all(
+            path.is_file()
+            for path in (
+                receipt_path,
+                impacts_path,
+                terminal_path,
+                validity_path,
+                compilation_path,
+            )
+        ):
+            return None
+        receipt = _read_json(receipt_path)
+        if (
+            receipt.get("status")
+            != "PRO_VALIDATED_IMPACT_COMPILATION_COMPLETE"
+            or receipt.get("input_hash") != expected_input_hash
+        ):
+            return None
+        impacts = tuple(_impact_from_mapping(row) for row in _read_jsonl(impacts_path))
+        terminal = _read_json(terminal_path)
+        validity = FullScoreValidityEvidenceV2(**_read_json(validity_path))
+        compilation_rows = _read_jsonl(compilation_path)
+        covered_components = {
+            row.component_id
+            for row in impacts
+            if max(
+                row.support_credit_fraction,
+                row.counter_effect_fraction,
+                row.resolution_effect,
+            )
+            > 0
+        }
+        validity_critical = sum(
+            int(getattr(validity, field_name))
+            for field_name in (
+                "scoring_schema_critical_count",
+                "silent_zero_default_count",
+                "positive_impact_zeroed_by_missing_cap_count",
+                "counter_impact_zeroed_by_missing_cap_count",
+                "mechanism_scope_failure_count",
+                "question_component_reconciliation_critical_count",
+                "unresolved_contradiction_count",
+                "pending_state_count",
+                "absence_without_adequacy_count",
+                "gold_critical_fact_miss_count",
+                "cross_business_question_closure_count",
+                "same_fact_duplicate_credit_count",
+                "same_document_duplicate_credit_count",
+            )
+        )
+        if (
+            receipt.get("job_id") != expected_job_id
+            or receipt.get("selected_archetype_id") != expected_archetype_id
+            or any(row.target_id != self._expected_target_id(receipt) for row in impacts)
+            or any(row.archetype_id != expected_archetype_id for row in impacts)
+            or int(receipt.get("validated_impact_count") or 0) != len(impacts)
+            or set(receipt.get("covered_component_ids") or ())
+            != set(CANONICAL_COMPONENT_ORDER)
+            or tuple(receipt.get("missing_component_ids") or ())
+            or tuple(receipt.get("pending_reasons") or ())
+            or covered_components != set(CANONICAL_COMPONENT_ORDER)
+            or terminal
+            or validity.schema_totality_status != "SCORING_SCHEMA_TOTALITY_PASS"
+            or validity_critical
+            or receipt.get("validated_impacts_hash")
+            != canonical_hash([row.to_dict() for row in impacts])
+            or receipt.get("terminal_evidence_hash") != canonical_hash(terminal)
+            or receipt.get("validity_evidence_hash")
+            != canonical_hash(validity.to_dict())
+            or receipt.get("compilation_rows_hash")
+            != canonical_hash(compilation_rows)
+        ):
+            raise ValueError("reused impact artifacts are not a complete validated roster")
+        return ProImpactCompilationResult(
+            status=str(receipt["status"]),
+            impacts=impacts,
+            terminal_evidence=terminal,
+            validity_evidence=validity,
+            pending_reasons=(),
+            receipt=receipt,
+            provider_call_count=0,
+            reused=True,
+        )
+
+    @staticmethod
+    def _expected_target_id(receipt: Mapping[str, Any]) -> str:
+        return str(receipt.get("target_id") or "")
+
+    def _write_artifacts(
+        self,
+        *,
+        scoring_root: Path,
+        impacts: Sequence[CreditValidatedImpact],
+        terminal_evidence: Mapping[str, Mapping[str, Any]],
+        validity_evidence: FullScoreValidityEvidenceV2,
+        compilation_rows: Sequence[Mapping[str, Any]],
+        receipt: Mapping[str, Any],
+    ) -> None:
+        _write_atomic(
+            scoring_root / "impact_adjudications.jsonl",
+            "".join(canonical_json(row) + "\n" for row in compilation_rows),
+        )
+        _write_atomic(
+            scoring_root / "validated_impacts.jsonl",
+            "".join(canonical_json(row.to_dict()) + "\n" for row in impacts),
+        )
+        _write_atomic(
+            scoring_root / "impact_terminal_evidence.json",
+            canonical_json(terminal_evidence) + "\n",
+        )
+        _write_atomic(
+            scoring_root / "impact_validity_evidence.json",
+            canonical_json(validity_evidence.to_dict()) + "\n",
+        )
+        _write_atomic(
+            scoring_root / "impact_compilation_receipt.json",
+            canonical_json(receipt) + "\n",
+        )
+
+
+def _pending_validity(count: int, source_id: str) -> FullScoreValidityEvidenceV2:
+    return FullScoreValidityEvidenceV2(
+        schema_totality_status="SCORING_SCHEMA_TOTALITY_PENDING",
+        scoring_schema_critical_count=1,
+        silent_zero_default_count=0,
+        positive_impact_zeroed_by_missing_cap_count=0,
+        counter_impact_zeroed_by_missing_cap_count=0,
+        mechanism_scope_failure_count=0,
+        question_component_reconciliation_critical_count=0,
+        unresolved_contradiction_count=0,
+        pending_state_count=max(count, 1),
+        absence_without_adequacy_count=0,
+        gold_critical_fact_miss_count=0,
+        cross_business_question_closure_count=0,
+        same_fact_duplicate_credit_count=0,
+        same_document_duplicate_credit_count=0,
+        source_audit_ids=(source_id,),
+    )
+
+
+def _source_family(fact: Mapping[str, Any], *, job: ProResearchJob) -> str:
+    host = (urlparse(str(fact.get("source_url") or "")).hostname or "").casefold()
+    publisher = str(fact.get("source_publisher") or "").casefold()
+    issuer = job.company_name.casefold()
+    if host.endswith("dart.fss.or.kr") or host.endswith("kind.krx.co.kr"):
+        return "OFFICIAL_FILING"
+    if issuer and issuer in publisher:
+        return "ISSUER_OFFICIAL"
+    return "TRUSTED_INDEPENDENT"
+
+
+def _document_context(path: Path, *, maximum_chars: int = 1500) -> str:
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError:
+        return ""
+    return text[:maximum_chars]
+
+
+def _batch_edge_key(row: Mapping[str, Any]) -> tuple[str, ...]:
+    return tuple(
+        str(row.get(key) or "")
+        for key in (
+            "mapping_id",
+            "primitive_id",
+            "question_family_id",
+            "question_contract_hash",
+            "component_id",
+            "component_subcriterion_id",
+        )
+    )
+
+
+def _allowed_edge_for_response(
+    candidates: Sequence[Mapping[str, Any]],
+    row: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    """Resolve one provider-selected opaque edge through deterministic state."""
+
+    allowed_edge_id = str(row.get("allowed_edge_id") or "")
+    matches = tuple(
+        candidate
+        for candidate in candidates
+        if str(candidate.get("allowed_edge_id") or "") == allowed_edge_id
+    )
+    return matches[0] if len(matches) == 1 else None
+
+
+def _compact_gap_disposition(row: Mapping[str, Any]) -> Mapping[str, Any]:
+    """Project only fields the semantic impact analyst can legitimately use."""
+
+    assessment = row.get("assessment") or {}
+    materiality = row.get("materiality") or {}
+    return {
+        "dossier_gap_id": row.get("dossier_gap_id"),
+        "evidence_gap_key": row.get("evidence_gap_key"),
+        "planner_label": row.get("planner_label"),
+        "supplemental_allowed": row.get("supplemental_allowed") is True,
+        "affected_component_ids": list(
+            assessment.get("affected_component_ids") or ()
+        ),
+        "missing_source_role": assessment.get("missing_source_role"),
+        "component_range_bounded": (
+            assessment.get("component_range_bounded") is True
+        ),
+        "could_change_score_valid": (
+            materiality.get("could_change_score_valid") is True
+        ),
+        "could_cross_stage_boundary": (
+            materiality.get("could_cross_stage_boundary") is True
+        ),
+        "could_change_hard_break": (
+            materiality.get("could_change_hard_break") is True
+        ),
+    }
+
+
+def _forbidden_provider_key_count(value: Any) -> int:
+    if isinstance(value, Mapping):
+        return sum(
+            str(key).casefold() in _FORBIDDEN_PROVIDER_KEYS for key in value
+        ) + sum(_forbidden_provider_key_count(item) for item in value.values())
+    if isinstance(value, (list, tuple)):
+        return sum(_forbidden_provider_key_count(item) for item in value)
+    return 0
+
+
+def _read_optional_text(path: Path) -> str:
+    try:
+        return path.read_text(encoding="utf-8")
+    except OSError:
+        return ""
+
+
+def _provider_error_detail(error: Exception, *, maximum_chars: int = 1200) -> str:
+    detail = " ".join(str(error).split())
+    return detail[-maximum_chars:] or type(error).__name__
+
+
+def _impact_from_mapping(row: Mapping[str, Any]) -> CreditValidatedImpact:
+    payload = dict(row)
+    for key in ("counter_claim_ids", "lineage_mapping_ids"):
+        payload[key] = tuple(payload.get(key) or ())
+    return CreditValidatedImpact(**payload)
+
+
+def _read_json(path: Path) -> Mapping[str, Any]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, Mapping):
+        raise ValueError(f"expected JSON object: {path}")
+    return value
+
+
+def _read_jsonl(path: Path) -> tuple[Mapping[str, Any], ...]:
+    return tuple(
+        json.loads(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    )
+
+
+def _write_atomic(path: Path, payload: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    part = path.with_suffix(path.suffix + ".part")
+    with part.open("w", encoding="utf-8") as stream:
+        stream.write(payload)
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.replace(part, path)
+    fsync_directory(path.parent)
+
+
+__all__ = ["ProImpactCompilationResult", "ProValidatedImpactCompiler"]

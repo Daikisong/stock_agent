@@ -1,0 +1,17 @@
+{
+  "bundle_id": "C06_PRO_FIRST_GOLDEN_V1",
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "accepted_fact_count": 3,
+  "accepted_counter_count": 0,
+  "gap_labels": ["CORROBORATION_CAP"],
+  "nonzero_components": ["eps_fcf_explosion", "earnings_visibility", "bottleneck_pricing"],
+  "supplemental_task_count": 0,
+  "full_restart_count": 0,
+  "decision_must_be_final": true,
+  "score_must_be_valid": true,
+  "source_documents": {
+    "https://issuer.example/c06-q2-results": "issuer_results.txt",
+    "https://issuer.example/c06-capacity-update": "capacity_update.txt",
+    "https://issuer.example/c06-pricing-update": "pricing_update.txt"
+  }
+}

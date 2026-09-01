@@ -1,0 +1,25 @@
+{
+  "audited_package": "src/e2r/pro_first",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "cookie_export_count": 0,
+    "corroboration_supplement_count": 0,
+    "credential_persistence_count": 0,
+    "deterministic_query_template_count": 0,
+    "duplicate_submit_path_count": 0,
+    "full_research_restart_after_dossier_count": 0,
+    "hidden_chatgpt_api_count": 0,
+    "login_automation_count": 0,
+    "monitoring_supplement_count": 0,
+    "pro_score_authority_count": 0,
+    "pro_stage_authority_count": 0,
+    "raw_output_tracked_count": 0,
+    "submit_without_approval_count": 0,
+    "tampermonkey_runtime_dependency_count": 0
+  },
+  "findings": [],
+  "guarded_dom_submit_path_count": 1,
+  "recorded_at": "2026-08-22T16:28:43.934820Z",
+  "schema_version": "e2r_pro_first_static_audit_v1",
+  "status": "E2R_PRO_FIRST_STATIC_AUDIT_PASS"
+}

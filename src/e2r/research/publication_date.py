@@ -226,20 +226,19 @@ def _labelled_publication_dates(
 
 def _publication_label_strength(line: str) -> str | None:
     normalized = re.sub(r"\s+", " ", line.strip()).lower()
-    prefix = normalized[:32]
-    if any(
-        label in prefix
-        for label in (
+    if _starts_with_korean_publication_label(
+        normalized,
+        (
+            "기사 입력",
+            "기사입력",
+            "기사 등록",
+            "기사등록",
+            "최종 수정",
+            "최종수정",
             "입력",
             "송고",
-            "최종수정",
-            "최종 수정",
             "수정",
-            "기사입력",
-            "기사 입력",
-            "기사등록",
-            "기사 등록",
-        )
+        ),
     ):
         return "STRONG"
     if re.search(
@@ -247,19 +246,32 @@ def _publication_label_strength(line: str) -> str | None:
         normalized,
     ):
         return "STRONG"
-    if any(
-        label in prefix
-        for label in (
-            "등록",
-            "승인",
-            "발행",
-            "게시",
-            "보도",
-            "작성",
-        )
+    if _starts_with_korean_publication_label(
+        normalized,
+        ("등록", "승인", "발행", "게시", "보도", "작성"),
     ):
         return "FALLBACK"
     return None
+
+
+def _starts_with_korean_publication_label(
+    normalized: str,
+    labels: tuple[str, ...],
+) -> bool:
+    label_pattern = "|".join(
+        re.escape(value) for value in sorted(labels, key=len, reverse=True)
+    )
+    # Require an actual metadata label at the start of the line and either an
+    # immediately following date or a label-only line. Substrings such as
+    # ``재무제표 작성기준`` and table headers such as ``발행일 만기일`` are
+    # body content, not publication metadata.
+    return bool(
+        re.match(
+            rf"^(?:{label_pattern})(?:일자|일시|일|날짜|시간)?\s*"
+            rf"(?:[:：-]\s*)?(?:$|(?:20)?\d{{2}}[./_-])",
+            normalized,
+        )
+    )
 
 
 def _leading_release_publication_dates(

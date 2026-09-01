@@ -1,0 +1,44 @@
+{
+  "schema_version": "e2r_pro_first_progress_checkpoint_v1",
+  "recorded_at": "2026-08-28T04:35:00+09:00",
+  "phase": "P16_C06_FULL_TAIL_PROMPT_COMPACTION",
+  "status": "READY_FOR_SAME_CHAT_RETRY",
+  "completion_claimed": false,
+  "job_id": "PROJOB-821fd91d8204a7c366ec86f0",
+  "run_id": "PRORUN-f34eb764254e9fd6c7e21cb4",
+  "conversation_id": "6a90786a-8234-83e8-b7b4-c03f18b4e725",
+  "failed_safe_attempt": {
+    "failure_class": "FreshSessionBoundaryError",
+    "failure_reason": "FOLLOWUP_PROMPT_EXCEEDED_100000_CHARS",
+    "initial_resubmit_count": 0,
+    "followup_submit_count": 0,
+    "browser_submit_delta": 0,
+    "automatic_initial_resubmit_allowed": false
+  },
+  "root_cause": {
+    "public_question_count": 25,
+    "pretty_printed_context_char_count": 96167,
+    "canonical_context_char_count": 73242,
+    "information_removed": false,
+    "question_removed_count": 0,
+    "evidence_id_removed_count": 0,
+    "route_outcome_removed_count": 0
+  },
+  "repair": {
+    "policy": "LOSSLESS_CANONICAL_JSON_CONTEXT",
+    "prompt_hard_limit_chars": 100000,
+    "symbol_or_archetype_hardcoding_added": false,
+    "deterministic_query_template_added": false,
+    "score_authority": false,
+    "stage_authority": false
+  },
+  "verification": {
+    "lossless_roundtrip_regression": "PASS",
+    "focused_tests_run": 112,
+    "failure_count": 0,
+    "error_count": 0,
+    "git_diff_check": "PASS"
+  },
+  "next_action": "RUN_C06_BOUNDED_FULL_THESIS_TAIL_IN_SAME_CONVERSATION",
+  "receipt_hash": "f654c7c47f7df0e53afb66ea3aae989a8b97b3c3c8d8a46998b7578a2dde94e0"
+}

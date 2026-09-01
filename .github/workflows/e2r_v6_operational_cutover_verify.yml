@@ -8,6 +8,7 @@ name: E2R v6 operational cutover verification
       - "configs/**"
       - "docs/operational/e2r_v6_operational_cutover/**"
       - "requirements/e2r_v6_clean_clone_py310_linux_x86_64.lock"
+      - "requirements/e2r_pro_first_py310_linux_x86_64.lock"
       - "scripts/run_e2r_v6_clean_clone_reproduction.py"
       - "src/**"
       - "tests/**"
@@ -17,6 +18,7 @@ name: E2R v6 operational cutover verification
       - "configs/**"
       - "docs/operational/e2r_v6_operational_cutover/**"
       - "requirements/e2r_v6_clean_clone_py310_linux_x86_64.lock"
+      - "requirements/e2r_pro_first_py310_linux_x86_64.lock"
       - "scripts/run_e2r_v6_clean_clone_reproduction.py"
       - "src/**"
       - "tests/**"
@@ -85,7 +87,11 @@ jobs:
           python -m pip install \
             --disable-pip-version-check \
             --require-hashes \
-            -r requirements/e2r_v6_clean_clone_py310_linux_x86_64.lock
+            -r requirements/e2r_pro_first_py310_linux_x86_64.lock
+
+      - name: Install Playwright Chromium and system libraries
+        shell: bash
+        run: python -m playwright install --with-deps chromium
 
       - name: Verify Gate 1 tracked-receipt consistency offline
         shell: bash

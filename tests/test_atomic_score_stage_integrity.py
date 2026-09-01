@@ -184,6 +184,60 @@ class AtomicScoreStageIntegrityTest(unittest.TestCase):
         self.assertTrue(historical_boundary.historical_replay)
         self.assertFalse(historical_boundary.score_eligible)
 
+    def test_superseded_risk_removed_from_current_penalty(self) -> None:
+        phase9_tests.ContractBlindClaimCompilerTest.setUpClass()
+        phase9 = phase9_tests.ContractBlindClaimCompilerTest(
+            "test_contract_blind_input_and_direct_task_satisfaction"
+        )
+        acquisition = phase9._acquisition(candidate_id="SUPERSEDED-RISK")
+        compilation = phase9._compile(acquisition=acquisition)
+        event = next(item for item in compilation.ledger_events if item.score_eligible)
+        superseded_event = replace(
+            event,
+            claim_id="CLAIM-SUPERSEDED-RISK",
+            raw_assertion_id="RAW-SUPERSEDED-RISK",
+            subject_entity_id=self.target_id,
+            target_entity_id=self.target_id,
+            original_primitive_id="contract_cancelled",
+            mapped_primitive_id="contract_cancelled",
+            polarity="NEGATIVE",
+            support_direction="COUNTER",
+            score_eligible=False,
+            production_score_eligible=False,
+            superseded_by_claim_ids=("CLAIM-RESOLUTION",),
+            contradiction_resolved=False,
+            closes_original_gap=False,
+        )
+        risk_claim = adapt_claim_ledger_event_to_atomic_claim(
+            superseded_event,
+            source_content_hash=acquisition.documents[0].content_hash,
+            material=True,
+            test_mode=True,
+        )
+        self.assertFalse(risk_claim.current_open)
+        self.assertFalse(risk_claim.score_eligible)
+        signal = AtomicHardBreakSignal(
+            signal_id="HARD-BREAK-SUPERSEDED",
+            claim_id=risk_claim.claim_id,
+            condition_id="contract_cancelled",
+            unresolved=True,
+        )
+
+        decision = decide_atomic_score_stage(
+            self._input(
+                claims=(*self.claims, risk_claim),
+                hard_break_signals=(signal,),
+                has_prior_live_thesis=True,
+            )
+        )
+
+        self.assertFalse(decision.hard_break_claim_ids)
+        self.assertEqual(
+            decision.rejected_hard_break_signal_ids,
+            (signal.signal_id,),
+        )
+        self.assertEqual(decision.canonical_stage, CanonicalStage.STAGE_3_GREEN.value)
+
     def test_claimless_full_request_becomes_no_score(self) -> None:
         decision = decide_atomic_score_stage(self._input(claims=()))
         self.assertEqual(decision.score_type, AtomicScoreType.NO_SCORE.value)

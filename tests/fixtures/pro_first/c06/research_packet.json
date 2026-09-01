@@ -1,0 +1,37 @@
+{
+  "schema_version": "e2r_pro_research_packet_v1",
+  "job_id": "PROJOB-060606060606060606060606",
+  "run_id": "PRORUN-060606060606060606060606",
+  "target": {
+    "symbol": "111111",
+    "company_name": "메모리테크",
+    "aliases": ["Memory Tech"]
+  },
+  "as_of_date": "2026-06-30",
+  "latest_trading_snapshot_date": "2026-06-30",
+  "research_mode": "FULL_RESEARCH",
+  "trigger_summary": [
+    {
+      "trigger_id": "TRIGGER-C06-GOLDEN",
+      "reason": "HBM 실적 전환과 공급 가시성 검증 필요"
+    }
+  ],
+  "candidate_archetypes": ["C06_HBM_MEMORY_CUSTOMER_CAPACITY"],
+  "business_snapshot": {"segments": ["MEMORY"], "products": ["HBM"]},
+  "structured_financial_snapshot": {"period": "2026Q2", "source_status": "issuer_actual_available"},
+  "revision_valuation_snapshot": {"snapshot_date": "2026-06-30"},
+  "existing_thesis_digest": null,
+  "historical_anchor_digest": [],
+  "known_positive_facts": [],
+  "known_counterfacts": [],
+  "research_objectives": [
+    "HBM 매출 전환을 원문으로 확인한다.",
+    "고객 배정과 공급 가시성의 한계를 분리한다."
+  ],
+  "source_preferences": ["ISSUER_EARNINGS_RELEASE", "ISSUER_PRESENTATION", "CUSTOMER_OFFICIAL"],
+  "forbidden_inferences": ["미확인 고객사 corroboration을 직접 계약 사실로 승격하지 않는다."],
+  "delta_context": null,
+  "output_contract": "e2r_pro_research_dossier_v1",
+  "score_authority": false,
+  "stage_authority": false
+}
