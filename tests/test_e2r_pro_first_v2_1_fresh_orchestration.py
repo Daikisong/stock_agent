@@ -2016,6 +2016,102 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 job_root=job_root,
             )
 
+    async def test_compact_repair_visible_output_failure_is_durably_sealed(
+        self,
+    ) -> None:
+        conversation_id = "fresh-conversation-compact-visible-failure"
+        adapter = await self._prepare_and_approve(conversation_id)
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="a" * 64,
+        )
+        dossier, classifications, verifications, job_root = self._repair_inputs()
+        visible_failure = BrowserResultSnapshot(
+            conversation_id=conversation_id,
+            assistant_turn_id="assistant-json-output-failure",
+            report_text=(
+                "확인 가능한 후보만 교체하고 나머지는 철회하겠습니다.\n\n"
+                "Cannot comply with requested JSON-output task"
+            ),
+            report_hash="f" * 64,
+            has_citations=False,
+            has_dossier_marker=False,
+            job_marker_matches=False,
+            run_marker_matches=False,
+            new_attachment_keys=(),
+        )
+
+        async def inspect_result(**_kwargs) -> BrowserResultSnapshot:
+            return visible_failure
+
+        adapter.inspect_result = inspect_result  # type: ignore[attr-defined]
+        runner = object.__new__(FreshV3FullThesisLiveRunner)
+
+        async def fail_wait(**_kwargs):
+            raise LiveCanaryPending(
+                "Cannot comply with requested JSON-output task",
+                status=BrowserUIState.RETRYABLE_ERROR.value,
+            )
+
+        runner._wait_for_followup_result = fail_wait  # type: ignore[method-assign]
+        runner._emit_fresh = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+
+        with self.assertRaises(LiveCanaryPending) as captured:
+            await runner._execute_compact_repair(
+                prepared=SimpleNamespace(
+                    job=self.fresh_job,
+                    packet_payload=self.built.packet_payload,
+                    session=SimpleNamespace(adapter=adapter),
+                ),
+                orchestrator=self.orchestrator,
+                built=self.built,
+                dossier_store=SimpleNamespace(),
+                dossier=dossier,
+                job_root=job_root,
+                verification_state=SimpleNamespace(
+                    rejection_classifications=classifications,
+                    verification_rows=verifications,
+                ),
+            )
+
+        self.assertEqual(
+            captured.exception.status,
+            BrowserUIState.RETRYABLE_ERROR.value,
+        )
+        repair = next(
+            row
+            for row in self.orchestrator.ledger.list_passes(
+                self.fresh_job.job_id
+            )
+            if row.pass_name == "VERIFIER_REPAIR"
+        )
+        self.assertEqual(repair.status, "FAILED_HARD")
+        self.assertEqual(repair.submit_count, 1)
+        self.assertEqual(
+            repair.detail["failure_class"],
+            "CHATGPT_VISIBLE_RESPONSE_FAILURE",
+        )
+        self.assertEqual(repair.response_hash, visible_failure.report_hash)
+        failure_root = (
+            job_root
+            / "research_passes"
+            / f"{repair.pass_ordinal:02d}_{repair.pass_id}"
+            / "failure"
+        )
+        receipt = json.loads(
+            (failure_root / "visible_failure_receipt.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(receipt["pass_id"], repair.pass_id)
+        self.assertEqual(
+            receipt["failure_class"],
+            "CHATGPT_VISIBLE_RESPONSE_FAILURE",
+        )
+        self.assertFalse(receipt["fact_import_allowed"])
+        self.assertFalse(receipt["automatic_resubmit_allowed"])
+
     async def test_distinct_gap_and_reaudit_passes_remain_in_same_conversation(self) -> None:
         adapter = await self._prepare_and_approve("fresh-conversation-multipass")
         await self.orchestrator.submit_initial_once(adapter)

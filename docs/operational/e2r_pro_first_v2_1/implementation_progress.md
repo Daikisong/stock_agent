@@ -5394,3 +5394,48 @@ provider/parser core pending 2, mandatory nonterminal 2, source linkage incomple
 C15 conversation에서 distinct replacement를 한 번 전송한다. master live full-thesis는 아직 C06 1/3이고,
 C15와 C24/C28이 닫히기 전 PR #7은 draft/open, main은 unmerged를 유지한다. 정규화 영수증은
 `p51_c15_r2_initial_pass_and_compact_transport_replacement_receipt.json`이다.
+
+## P52 — C15 R2 미영속 교체 pass의 늦은 무전송 회수와 효율 실패 봉인
+
+P51의 exact head `bb735b502baa249e9e71a5f646b653c6aca772c5`는 Pro-first run
+`33471308864`와 V6 run `33471308621`에서 모두 SUCCESS였다. 그 뒤 기존 로그인 Chrome의 ChatGPT target
+`F6DC0979950E8B311DC6F6207BF6197E` 하나와 기존 C15 R2 conversation
+`6a963688-2f48-83ee-b6c6-cca06a7c6b0b`만 사용해 compact-repair 교체 pass를 실행했다. 새 창·새 탭·새
+target은 만들지 않았고 실제 모드는 legacy Deep research가 아닌 Chat+Pro였다.
+
+새 pass `PROPASS-b8a44d9cd95faae977860bbd`는 봉인된 미영속 pass
+`PROPASS-d493d80aefc3f9ee6cb930f3`와 다른 ID이며, 원 root input hash
+`218684f33f157eea613d8d0730581e4dfea73a66ab0f63f52302e42da85c63be`와 같은 4개 후보를 명시적으로
+이어받았다. submit count는 1이고 user turn `e3bcd614-48f5-40bf-9874-ade3ed2fda6c`가 fresh public view에서
+서버 영속된 것을 확인했다. 처음 84회 poll 동안 exact result가 없었고 화면에는
+`Cannot comply with requested JSON-output task` 카드가 보여 실행을 중단했다. 이 제품 오류가 최신 assistant
+turn에 있을 때 2시간을 무의미하게 기다리지 않도록, 최신 assistant turn 범위에서만 generic failure로
+분류하고 fresh compact-repair도 실패 turn을 hash·파일·lineage와 함께 `FAILED_HARD`로 봉인하는 수리를
+추가했다. 전체 대화에서 `error`라는 단어를 찾는 위험한 방식이나 종목·C15 조건은 넣지 않았다.
+
+다만 recovery-only를 실행할 때 같은 assistant turn
+`a14626f5-0b92-4971-8785-d79dc871873f`이 실제 완성 RepairDeltaV3로 늦게 hydration되어 있었다. 변경된
+response hash를 3회 안정 관찰하고 **browser submit 0회**로 캡처·schema·lineage 검증한 뒤 기존 pass를
+COMPLETE로 회수했다. response hash는
+`102ef56e47a85dd50bf9be983787f28ac96945e64f6886d80c8b439a1194327b`다. 4개 후보에 4개 action을 적용했고,
+재검문 실패 replacement 1개는 accepted fact로 강등하지 않고 철회했다. compact-repair receipt는
+`operational_ready_allowed=true`, query/search `0/0`, receipt hash
+`c3d0a7f14d0f893354a92fb5eb97ea7a2d399aa9ea6fa35102b4c0d91c5e3f4b`다.
+
+교체 뒤 기존 verification receipt는 dossier hash가 달라졌으므로 그대로 쓰지 않았다. 브라우저 전송 없이
+현재 dossier를 다시 검문해 accepted fact 33개, repairable candidate 0개를 확인했다. 하지만 mandatory
+27개 중 C15 Q04·Q05 두 개가 nonterminal이고, public material gap 6개, provider/parser core 1개,
+source-linkage incomplete 1개가 남아 `research_saturation_valid=false`였다. 이 대화는 이미 허용된
+public-gap/counter pass 1회와 verifier-repair pass 1회를 소비했다. 따라서 추가 Pro 요청으로 canary 크기를
+부풀리지 않고 `OPERATIONAL_EFFICIENCY_GATE_FAILED`, `FRESH_SESSION_DIAGNOSTIC_ONLY`,
+`new_conversation_required=true`로 봉인했다. 이 봉인 과정의 browser submit도 0이며 score·Stage는 계속 null,
+publication은 withheld다.
+
+집중 회귀는 새 세 사례 3/3, fresh orchestration 70/70, 브라우저 adapter·completion capture 78/78이
+PASS했다. 표준 전체 오프라인 CI도 readiness 286/286, offline E2E 4/4, browser mock E2E 91/91,
+compileall, diff check를 모두 통과했다. 전체 회귀는 `7,889/7,889 PASS / failure·error 0 / 기존 skip 38`,
+독립 Reviewer A–H는 8/8, leaf test 합계 342개가 PASS했다. Pro-first V1·V2, fresh-efficiency,
+V6 production 정적 감사도 모두 PASS/critical 0이다. 새 head GitHub Actions는 한글 커밋·푸시 후
+exact head에서 확인한다. C15 R2는 실제 repair 성공을 포함하지만 full-thesis PASS로 세지 않는다. 다음은
+같은 기존 브라우저 탭 안의 새 ChatGPT conversation에서 C15 R3를 시작하는 것이며, C15와 C24/C28이
+각각 full-thesis까지 닫히기 전 PR #7은 draft/open, main은 미병합 상태를 유지한다.

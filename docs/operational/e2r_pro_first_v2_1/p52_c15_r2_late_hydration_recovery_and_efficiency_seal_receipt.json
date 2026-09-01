@@ -1,0 +1,190 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_c15_r2_late_hydration_recovery_and_efficiency_seal_receipt_v1",
+  "status": "C15_R2_LATE_RESULT_RECOVERED_THEN_DIAGNOSTIC_ONLY",
+  "recorded_at": "2026-09-01T05:38:09Z",
+  "source_parent_sha": "bb735b502baa249e9e71a5f646b653c6aca772c5",
+  "r2": {
+    "fresh_session_id": "FRESH-V2-1-C15-R2-20260901T021958Z",
+    "job_id": "PROJOB-384a8e0aad776a6d99391a6f",
+    "run_id": "PRORUN-bd4afaa744691b23974c76e7",
+    "conversation_id": "6a963688-2f48-83ee-b6c6-cca06a7c6b0b",
+    "target_id": "010950",
+    "company_name": "S-Oil",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "runtime_root": "C:\\Users\\eorb9\\AppData\\Local\\E2R\\ProFirstRuntime\\fresh_v2_1\\20260901T021958Z"
+  },
+  "single_tab_transport": {
+    "browser_page_count": 3,
+    "chatgpt_page_count": 1,
+    "browser_target_id": "F6DC0979950E8B311DC6F6207BF6197E",
+    "conversation_url": "https://chatgpt.com/c/6a963688-2f48-83ee-b6c6-cca06a7c6b0b",
+    "new_browser_window_count": 0,
+    "new_browser_tab_count": 0,
+    "new_browser_target_count": 0,
+    "hidden_chatgpt_api_used": false,
+    "local_llm_used": false,
+    "actual_mode": "CHAT_PLUS_PRO",
+    "legacy_deep_research_used": false
+  },
+  "replacement_repair": {
+    "sealed_unpersisted_pass_id": "PROPASS-d493d80aefc3f9ee6cb930f3",
+    "replacement_pass_id": "PROPASS-b8a44d9cd95faae977860bbd",
+    "parent_pass_id": "PROPASS-63a3c49098196286804cf648",
+    "repair_pass_ordinal": 2,
+    "replacement_root_input_hash": "218684f33f157eea613d8d0730581e4dfea73a66ab0f63f52302e42da85c63be",
+    "submit_count": 1,
+    "same_pass_resubmit_count": 0,
+    "server_persistence_confirmed": true,
+    "server_persistence_user_turn_id": "e3bcd614-48f5-40bf-9874-ade3ed2fda6c",
+    "initial_ready_without_exact_result_poll_count": 84,
+    "initial_visible_state": "READY_WITHOUT_EXACT_RESULT",
+    "later_same_turn_hydrated": true,
+    "recovery_browser_submit_delta": 0,
+    "stable_result_observations": 3,
+    "assistant_turn_id": "a14626f5-0b92-4971-8785-d79dc871873f",
+    "status": "COMPLETE",
+    "response_hash": "102ef56e47a85dd50bf9be983787f28ac96945e64f6886d80c8b439a1194327b",
+    "capture_source": "DIRECT_REPORT_DOM",
+    "capture_receipt_file_sha256": "0e05575c5153a9d414ff4a28c77601e27e084fa54c3ac9e221753d31c3f18009",
+    "candidate_count": 4,
+    "repair_action_count": 4,
+    "query_count": 0,
+    "search_count": 0,
+    "failed_replacement_withdrawn_count": 1,
+    "operational_ready_allowed": true,
+    "compact_repair_receipt_hash": "c3d0a7f14d0f893354a92fb5eb97ea7a2d399aa9ea6fa35102b4c0d91c5e3f4b",
+    "compact_repair_receipt_file_sha256": "4ba437936eb3baf9f199ba5130913744774376d20d0198019669073652b6ffa9",
+    "fact_import_allowed_only_after_reverification": true,
+    "score_authority": false,
+    "stage_authority": false
+  },
+  "post_repair_verification": {
+    "inspection_mode": "VERIFY_CURRENT_DOSSIER_NO_BROWSER",
+    "browser_submit_count_delta": 0,
+    "accepted_fact_count": 33,
+    "expected_mandatory_question_count": 27,
+    "missing_mandatory_question_count": 0,
+    "mandatory_question_nonterminal_count": 2,
+    "nonterminal_question_ids": [
+      "C15_MATERIAL_SPREAD_SUPERCYCLE_Q04",
+      "C15_MATERIAL_SPREAD_SUPERCYCLE_Q05"
+    ],
+    "public_material_gap_count": 6,
+    "verifier_repair_pending_count": 4,
+    "repairable_candidate_count": 0,
+    "provider_parser_core_pending_count": 1,
+    "source_linkage_incomplete_count": 1,
+    "lifecycle_hard_break_pending_count": 0,
+    "research_saturation_valid": false,
+    "component_entry_allowed": false,
+    "effective_dossier_hash": "c113a54fd59164ef3221e8421e448e940ab13a59df81b847086edf3d082f730a",
+    "source_verification_hash": "6fc86576403f72aa4ec38ed8474669509cb0ecf845934eae66a02208772e3cd0a",
+    "saturation_receipt_hash": "fcf8287015467449812c9ac29d45e8bc2a21b185c12acf95d7a41077d7859b11",
+    "saturation_receipt_file_sha256": "bdaeae0bf06092f050055fa9bd5c3232dc041fa9c494595a81e9dc30944bfb23",
+    "score": null,
+    "stage": null,
+    "score_authority": false,
+    "stage_authority": false
+  },
+  "efficiency_seal": {
+    "status": "OPERATIONAL_EFFICIENCY_GATE_FAILED",
+    "reason": "public-gap/counter submitted pass budget exceeded: allowed=1, already_submitted=1; seal this diagnostic run and start a new conversation",
+    "diagnostic_status": "FRESH_SESSION_DIAGNOSTIC_ONLY",
+    "new_conversation_required": true,
+    "additional_browser_submit_count": 0,
+    "full_thesis_receipt_hash": "1cfb9b6420c24bb46d18e55a14a122b0370401dc8c13b28d632c64a74bec032d",
+    "full_thesis_receipt_file_sha256": "ee5009c6641ad3729ddedbe4c39ec718adeceea08e86da0b7b096b12fb62b3bc",
+    "efficiency_failure_receipt_hash": "47c6c092fd48b5c0aea8e7cbce509325530b74b5849b5d31341a30fd6b4defa5",
+    "efficiency_failure_receipt_file_sha256": "6e5fd0223baa781c9affb7d0fa1cdc6624d7177afd8b34f1cdc3e0c6956f785e",
+    "score_authority": false,
+    "stage_authority": false,
+    "publication_withheld": true
+  },
+  "generic_patch": {
+    "observed_ui_failure_text": "Cannot comply with requested JSON-output task",
+    "latest_assistant_turn_scoped_detection": true,
+    "conversation_body_global_error_search_added": false,
+    "compact_repair_visible_failure_durable_seal_added": true,
+    "same_pass_resubmit_allowed": false,
+    "fact_import_from_failure_allowed": false,
+    "target_or_archetype_specific_branch_added": false,
+    "score_or_stage_authority_added": false,
+    "late_same_turn_success_recovery_preserved": true,
+    "source_hashes": {
+      "chatgpt_adapter.py": "9c76d93c0256d753db6ef1ff3780a28e83fd96f341add8016513095e0197eda3",
+      "live_v2.py": "4718af7180008a0bb948a5ffe662464d7c5fd8cdbc1f8c126fa29ed71183ce00",
+      "full_thesis_live_v3.py": "df6d4439e209b8d3a2cd099c3849875e8554d127a7ba67868218fc595e696699"
+    },
+    "test_hashes": {
+      "test_e2r_pro_first_browser_adapter.py": "8d10c8f9d110a6b80910b07f5aab225fc7f3be7310f724b9d6fa5a408ac77ab2",
+      "test_e2r_pro_first_v2_1_fresh_orchestration.py": "c6702f3045c88e83d86d5bd44b33be890e4c7d11e046ffeb35199ab47adb491d"
+    }
+  },
+  "verification": {
+    "focused_regressions": "3/3 PASS",
+    "fresh_orchestration": "70/70 PASS",
+    "browser_adapter_and_completion_capture": "78/78 PASS",
+    "readiness": "286/286 PASS",
+    "offline_e2e": "4/4 PASS",
+    "browser_mock_e2e": "91/91 PASS",
+    "full_unittest_discovery": "7889_PASS_FAILURE_ERROR_0_EXISTING_SKIP_38",
+    "full_unittest_elapsed_seconds": 822.086579,
+    "offline_ci_receipt_sha256": "72117a09351673535a554e8a6bc86846a63e9fcea189fabcf2788a71955a2147",
+    "compileall": "PASS",
+    "git_diff_check": "PASS",
+    "full_offline_ci": "PRO_FIRST_OFFLINE_CI_PASS",
+    "static_audits": "PRO_FIRST_V1_V2_FRESH_EFFICIENCY_V6_PASS_CRITICAL_0",
+    "static_audit_results": {
+      "pro_first_v1": {
+        "status": "E2R_PRO_FIRST_STATIC_AUDIT_PASS",
+        "critical_count_sum": 0,
+        "file_sha256": "f8e5dd9f1befd41ea86d92974ed5dcd1d0bbdcd47dd68b0d4a69c7f6071d96d7"
+      },
+      "pro_first_v2": {
+        "status": "PASS",
+        "critical_count": 0,
+        "audit_hash": "a2834be9020345d3580a907b8af3b0d80fb477ac00df93b30f61e4fbda47e8bb",
+        "file_sha256": "58518c010ef3fceb0000e25aa8d659b743a14b76e2787bbf87250fc94e141095"
+      },
+      "fresh_efficiency": {
+        "status": "PASS",
+        "critical_count": 0,
+        "audit_hash": "47d96d1f3b602ef0b963ce3772ffc70cbacdb655fb399aefdcf0a61fb9b87b6a",
+        "file_sha256": "211597e57d5650bceae698cf125b2cbbbe297a93ad58705c1bcfc3ed8742f25a"
+      },
+      "v6_production": {
+        "status": "E2R_V6_PRODUCTION_STATIC_AUDIT_PASS",
+        "critical_count_sum": 0,
+        "audit_hash": "079862edfe898eea5c23c49d2031e99cffd75e338a37d071ff28a27bd8f8d4f1",
+        "file_sha256": "a0753124f0547c7efe08253f1fe1cf1a088a1fc264c21c1e8b7beffea31adc06"
+      }
+    },
+    "independent_reviewers_a_to_h": {
+      "status": "PASS",
+      "reviewer_count": 8,
+      "leaf_test_count": 342,
+      "receipt_hash": "4f80f5866d349e8a1fc19270b04b3232f40a2f0c17241a643e2d768fb4425ef2",
+      "receipt_sha256": "b2561655093327e225fc4517bd4b316681955da7eea9224907a38fd37162dc70"
+    },
+    "github_actions_current_patch": "PENDING"
+  },
+  "prior_exact_head_ci": {
+    "head_sha": "bb735b502baa249e9e71a5f646b653c6aca772c5",
+    "pro_first_run_id": 33471308864,
+    "pro_first_conclusion": "SUCCESS",
+    "v6_run_id": 33471308621,
+    "v6_conclusion": "SUCCESS"
+  },
+  "master_goal_state": {
+    "live_full_thesis_pass_count": "1/3",
+    "c06": "PASS",
+    "c17": "R25_PROVIDER_FAILED_NOT_A_FULL_THESIS_PASS",
+    "c15": "R2_DIAGNOSTIC_ONLY_R3_REQUIRED",
+    "third_mechanism_pending": "C24_OR_C28",
+    "operational_research_ready": false,
+    "pr_7_must_remain_draft_open": true,
+    "main_merge_allowed": false
+  },
+  "receipt_hash": "09b90b998b6f787b4bf04974449315b3e1c4148f5d5342acdce13a8a0ebfadac"
+}

@@ -437,6 +437,51 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(inspection.state, BrowserUIState.RETRYABLE_ERROR)
         self.assertIn("network error", (inspection.detail or "").lower())
 
+    async def test_latest_json_output_task_failure_is_retryable_ui_error(self) -> None:
+        await self.page.set_content(
+            "<html><body><form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button type="button">Pro</button></form>'
+            '<section data-turn="assistant" data-turn-id="json-output-failed">'
+            "<p>확인 가능한 후보만 교체하고 나머지는 철회하겠습니다.</p>"
+            "<div data-streaming-response-status>"
+            '<span class="select-none">'
+            "Cannot comply with requested JSON-output task</span>"
+            "</div></section></body></html>"
+        )
+
+        inspection = await self.adapter.inspect_state()
+
+        self.assertEqual(inspection.state, BrowserUIState.RETRYABLE_ERROR)
+        self.assertIn(
+            "cannot comply with requested json-output task",
+            (inspection.detail or "").lower(),
+        )
+
+    async def test_json_output_failure_words_in_report_prose_are_not_ui_error(
+        self,
+    ) -> None:
+        await self.page.set_content(
+            "<html><body><form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button type="button">Pro</button></form>'
+            '<section data-turn="assistant" data-turn-id="valid-report">'
+            "<p>The prior attempt displayed: Cannot comply with requested "
+            "JSON-output task. This historical transport note is not a "
+            "current UI failure.</p>"
+            "<p>E2R_RESEARCH_DOSSIER_JSON_END</p>"
+            "</section></body></html>"
+        )
+
+        inspection = await self.adapter.inspect_state()
+
+        self.assertEqual(
+            inspection.state,
+            BrowserUIState.DEEP_RESEARCH_MODE_READY,
+        )
+
     async def test_network_words_without_latest_retry_control_keep_running(
         self,
     ) -> None:

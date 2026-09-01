@@ -24,6 +24,7 @@ from ..atomic_io import fsync_directory
 from ..browser.protocol import (
     BrowserCaptureRequest,
     BrowserUIIncompatible,
+    BrowserUIState,
     ChatGPTWebAdapter,
     RawBrowserCapture,
 )
@@ -37,6 +38,7 @@ from ..canary.live_v2 import (
     _is_sealed_unpersisted_dispatch,
     _load_visible_failure_receipt_for_late_result,
     _outcome_summary,
+    _persist_failed_visible_followup,
     _question_states_for_ids,
     _redact_saturation,
     _submitted_unsnapshotted_followup_plan,
@@ -1066,10 +1068,44 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                         f"conversation; {disposition}",
                         status="TRANSPORT_PENDING",
                     )
-            result = await self._wait_for_followup_result(
-                prepared=prepared,
-                plan=plan,
-            )
+            try:
+                result = await self._wait_for_followup_result(
+                    prepared=prepared,
+                    plan=plan,
+                )
+            except LiveCanaryPending as error:
+                if error.status == BrowserUIState.RETRYABLE_ERROR.value:
+                    durable_failure_pass = orchestrator.ledger.get_pass(pass_id)
+                    failure_result = await prepared.session.adapter.inspect_result(
+                        job_id=plan.scope.job_id,
+                        run_id=str(prepared.packet_payload["run_id"]),
+                    )
+                    failure_receipt = _persist_failed_visible_followup(
+                        pass_root=pass_root,
+                        plan=plan,
+                        result=failure_result,
+                        reason=error.reason,
+                        submit_count=durable_failure_pass.submit_count,
+                        failure_class="CHATGPT_VISIBLE_RESPONSE_FAILURE",
+                    )
+                    failed = orchestrator.ledger.mark_failed_hard(
+                        pass_id,
+                        response_hash=failure_result.report_hash,
+                        failure_class="CHATGPT_VISIBLE_RESPONSE_FAILURE",
+                        reason=error.reason,
+                    )
+                    self._emit_fresh(
+                        "FRESH_FULL_THESIS_COMPACT_REPAIR_PROVIDER_FAILURE_RECORDED",
+                        job_id=plan.scope.job_id,
+                        pass_id=failed.pass_id,
+                        pass_name=failed.pass_name,
+                        submit_count=failed.submit_count,
+                        failure_receipt_hash=failure_receipt["receipt_hash"],
+                        automatic_resubmit_allowed=False,
+                        score_authority=False,
+                        stage_authority=False,
+                    )
+                raise
             raw = await prepared.session.adapter.capture_result(
                 BrowserCaptureRequest(
                     job_id=plan.scope.job_id,

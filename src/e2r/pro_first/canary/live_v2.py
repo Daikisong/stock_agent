@@ -1383,6 +1383,7 @@ class ProV2LiveCanaryRunner:
                         result=failure_result,
                         reason=error.reason,
                         submit_count=durable_failure_pass.submit_count,
+                        failure_class="CHATGPT_VISIBLE_THINKING_FAILED",
                     )
                     failed = orchestrator.ledger.mark_failed_hard(
                         plan.research_pass.pass_id,
@@ -2933,6 +2934,7 @@ def _persist_failed_visible_followup(
     result: BrowserResultSnapshot,
     reason: str,
     submit_count: int,
+    failure_class: str = "CHATGPT_VISIBLE_RESPONSE_FAILURE",
 ) -> Mapping[str, Any]:
     """Persist a visible provider failure without promoting its prose."""
 
@@ -2945,6 +2947,8 @@ def _persist_failed_visible_followup(
         raise RuntimeError(
             "visible follow-up failure lacks exact turn or submit identity"
         )
+    if not failure_class.strip():
+        raise ValueError("visible follow-up failure class is required")
     failure_root = pass_root / "failure"
     report_path = failure_root / "visible_assistant_failure.md"
     _write_text_atomic(report_path, result.report_text + "\n")
@@ -2961,7 +2965,7 @@ def _persist_failed_visible_followup(
         "browser_report_hash": result.report_hash,
         "failure_report_file_hash": file_sha256(report_path),
         "failure_report_relative_path": report_path.relative_to(pass_root).as_posix(),
-        "failure_class": "CHATGPT_VISIBLE_THINKING_FAILED",
+        "failure_class": failure_class.strip(),
         "failure_reason": reason,
         "automatic_resubmit_allowed": False,
         "fact_import_allowed": False,

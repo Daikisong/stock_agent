@@ -1115,9 +1115,21 @@ class PlaywrightChatGPTWebAdapter:
                 "네트워크 오류",
             )
         )
+        operational_status_texts = {
+            str(value).strip().lower()
+            for value in snapshot.get("operational_status_texts") or ()
+        }
+        output_task_failure_visible = any(
+            token in operational_status_texts
+            for token in (
+                "cannot comply with requested json-output task",
+                "unable to comply with requested json-output task",
+                "요청한 json 출력 작업을 수행할 수 없습니다",
+            )
+        )
         visible_failure = visible_failure or (
             retry_control_visible and provider_error_visible
-        )
+        ) or output_task_failure_visible
         return (
             "e2r_research_dossier_json_end" in text,
             clarification,
@@ -2351,6 +2363,12 @@ class PlaywrightChatGPTWebAdapter:
                         const buttonTexts = Array.from(
                             element.querySelectorAll('button')
                         ).map(node => (node.innerText || '').trim());
+                        const operationalStatusTexts = Array.from(
+                            element.querySelectorAll(
+                                '[data-streaming-response-status] .select-none'
+                            )
+                        ).map(node => (node.innerText || '').trim())
+                            .filter(Boolean);
                         const labelledCitation = Boolean(
                             element.querySelector(
                                 '[data-testid*="citation"], '
@@ -2367,6 +2385,7 @@ class PlaywrightChatGPTWebAdapter:
                                     || identified.getAttribute('data-turn-id'))
                                 : null,
                             button_texts: buttonTexts,
+                            operational_status_texts: operationalStatusTexts,
                             citation_registry: anchors,
                             has_citations: anchors.length > 0 || labelledCitation
                         };
