@@ -25,6 +25,10 @@
 5. 공식 공시, filing, issuer IR/earnings, 고객/파트너/정부/규제기관 공식자료를 우선한다.
 6. 공식자료가 mechanism을 확인한 뒤 필요한 독립자료, revision, valuation을 조사한다.
 7. 과거 risk는 최신 후속자료를 조사해 OPEN/RESOLVED/SUPERSEDED/HISTORICAL_ONLY를 판정한다.
+   현재 source role이나 hard-break 질문을 닫을 때 `HISTORICAL_ONLY` 또는 `SUPERSEDED`
+   fact는 과거 맥락으로만 보존하며 현재 role 충족 근거로 세지 않는다. 과거 경고·위험만
+   발견했으면 as_of_date까지의 후속 해제·유지·대체 상태를 조사해 CURRENT/OPEN/RESOLVED
+   fact로 결박하거나, 찾지 못한 공개 route를 gap으로 남긴다.
 8. 같은 사실의 전재·재배포는 source lineage 하나로 묶는다.
 9. 공개적으로 더 조사 가능한 material gap을 UNKNOWN으로 남기고 COMPLETE라고 선언하지 않는다.
 10. 비공개 가능성이 높은 정보는 공개 경계와 attempted routes를 근거로 LIKELY_NONPUBLIC로 제안한다.
@@ -78,6 +82,10 @@
 20. supporting_excerpt는 verifier가 내려받을 source representation에 실제로 연속 등장하는 원문이어야 한다. 표의 서로 떨어진 cell을 `A | B | C`처럼 새 문장으로 합성하지 말고, PDF/HTML text에서 연속으로 복사되는 행·문장만 사용한다.
 21. publication_date와 availability_date에는 문서의 게시·공시일만 기록한다. 본문의 회사채 만기일, 계약 종료일, 전망기간, 목표연도 같은 미래 날짜를 source publication date로 사용하지 않는다.
 22. 같은 predicate의 더 최신 관측치가 있으면 이전 관측치를 CURRENT material candidate로 중복 제출하지 않는다. 과거 맥락은 HISTORICAL_ONLY 경계를 명시하고, 최신 관측치와 섞어 현재 사실처럼 서술하지 않는다.
+22-a. question이나 unresolved gap의 `required_source_roles_missing`을 해소했다고 쓸 때는
+     그 role을 가진 source와 verifier-eligible CURRENT/OPEN/RESOLVED fact가 직접 연결돼야
+     한다. 오래된 일시 경고·과거 사건 하나만으로 `required_source_roles_satisfied`,
+     `current_status=RESOLVED`, `blocks_full_thesis=false`를 선언하지 않는다.
 23. `issuer_scoped=false`인 fact의 `subject`는 source 원문에 실제로 연속 등장하는 가장 짧은 주체 표현을 그대로 복사한다. 원문의 여러 위치에서 회사·시설·거래 이름을 모아 합성 subject를 만들지 않는다. exact excerpt 자체가 target을 직접 언급하지 않으면 source 본문에서 그 subject와 target의 관계가 각각 문자 그대로 확인돼야 하며, 그렇지 않으면 fact가 아니라 unresolved gap으로 남긴다.
 24. material/counter/resolution fact의 canonical source는 후속 verifier가 로그인·개인 cookie·JavaScript challenge 없이 다시 받을 수 있는 공개 HTML/PDF/data representation이어야 한다. 현재 연구 도구에서만 열리고 일반 공개 fetch가 401/403, 로그인 화면, anti-bot challenge로 끝나는 페이지는 그대로 제출하지 말고 official 원문·filing·issuer data·공개 mirror 중 재수집 가능한 representation을 찾아 source_document에 연결한다. 찾지 못하면 fact를 만들지 말고 attempted route와 source gap을 기록한다.
 25. supporting_excerpt는 source의 원래 언어와 글자를 유지한 채 verifier가 내려받는 representation에서 그대로 복사한다. 번역, 의역, 문법 교정, 단위 환산, 숫자 표기 변경은 statement나 derived_metrics에서만 할 수 있고 supporting_excerpt에서는 금지한다.

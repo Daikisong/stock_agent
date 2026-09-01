@@ -1370,42 +1370,50 @@ class ProV2LiveCanaryRunner:
                     error.status == BrowserUIState.RETRYABLE_ERROR.value
                     and not late_failure_recovery
                 ):
-                    durable_failure_pass = orchestrator.ledger.get_pass(
-                        plan.research_pass.pass_id
-                    )
                     failure_result = await prepared.session.adapter.inspect_result(
                         job_id=plan.scope.job_id,
                         run_id=str(prepared.packet_payload["run_id"]),
                     )
-                    failure_receipt = _persist_failed_visible_followup(
+                    failed, failure_receipt = _record_retryable_followup_disposition(
+                        orchestrator=orchestrator,
                         pass_root=pass_root,
                         plan=plan,
                         result=failure_result,
                         reason=error.reason,
-                        submit_count=durable_failure_pass.submit_count,
                         failure_class="CHATGPT_VISIBLE_THINKING_FAILED",
                     )
-                    failed = orchestrator.ledger.mark_failed_hard(
-                        plan.research_pass.pass_id,
-                        response_hash=failure_result.report_hash,
-                        failure_class="CHATGPT_VISIBLE_THINKING_FAILED",
-                        reason=error.reason,
+                    unbound = (
+                        failure_receipt["status"]
+                        == "UNBOUND_UI_FAILURE_TRANSPORT_PENDING"
                     )
                     self._emit(
                         self.store.get_job(plan.scope.job_id),
-                        "FOLLOWUP_VISIBLE_PROVIDER_FAILURE_RECORDED",
+                        (
+                            "FOLLOWUP_UNBOUND_UI_FAILURE_TRANSPORT_PENDING"
+                            if unbound
+                            else "FOLLOWUP_VISIBLE_PROVIDER_FAILURE_RECORDED"
+                        ),
                         {
                             "pass_id": failed.pass_id,
                             "pass_name": failed.pass_name,
+                            "research_status": failed.status,
                             "submit_count": failed.submit_count,
                             "failure_receipt_hash": failure_receipt[
                                 "receipt_hash"
                             ],
+                            "failure_binding_status": failure_receipt.get(
+                                "failure_binding_status", "EXACT_ASSISTANT_TURN"
+                            ),
                             "automatic_resubmit_allowed": False,
                             "score_authority": False,
                             "stage_authority": False,
                         },
                     )
+                    if unbound:
+                        raise LiveCanaryPending(
+                            error.reason,
+                            status="TRANSPORT_PENDING",
+                        ) from error
                 raise
             report_text = result.report_text
             raw = await prepared.session.adapter.capture_result(
@@ -2935,21 +2943,74 @@ def _persist_failed_visible_followup(
     reason: str,
     submit_count: int,
     failure_class: str = "CHATGPT_VISIBLE_RESPONSE_FAILURE",
+    server_persistence_confirmed: bool | None = None,
 ) -> Mapping[str, Any]:
-    """Persist a visible provider failure without promoting its prose."""
+    """Persist a retryable follow-up failure without promoting its prose.
 
-    if (
-        result.conversation_id != plan.scope.conversation_id
-        or not result.assistant_turn_id
-        or not result.report_text.strip()
-        or submit_count != 1
-    ):
+    A provider failure rendered inside an exact assistant turn can be sealed as
+    ``FAILED_HARD`` by the caller. A global ChatGPT error has no assistant-turn
+    identity, so it is only transport evidence: preserve it append-only and
+    leave the submitted pass recoverable without another browser send.
+    """
+
+    if result.conversation_id != plan.scope.conversation_id or submit_count != 1:
         raise RuntimeError(
-            "visible follow-up failure lacks exact turn or submit identity"
+            "visible follow-up failure lacks exact conversation or submit identity"
         )
     if not failure_class.strip():
         raise ValueError("visible follow-up failure class is required")
     failure_root = pass_root / "failure"
+    if not result.assistant_turn_id or not result.report_text.strip():
+        missing_identity = []
+        if not result.assistant_turn_id:
+            missing_identity.append("ASSISTANT_TURN_ID")
+        if not result.report_text.strip():
+            missing_identity.append("VISIBLE_ASSISTANT_REPORT")
+        payload = {
+            "schema_version": "e2r_pro_unbound_followup_transport_failure_v1",
+            "status": "UNBOUND_UI_FAILURE_TRANSPORT_PENDING",
+            "job_id": plan.scope.job_id,
+            "conversation_id": plan.scope.conversation_id,
+            "pass_id": plan.research_pass.pass_id,
+            "parent_pass_id": plan.research_pass.parent_pass_id,
+            "pass_name": plan.research_pass.pass_name,
+            "submit_count": submit_count,
+            "failure_binding_status": "UNBOUND_TO_ASSISTANT_TURN",
+            "missing_identity_fields": missing_identity,
+            "observed_assistant_turn_id": result.assistant_turn_id,
+            "observed_browser_report_hash": result.report_hash,
+            "visible_report_present": bool(result.report_text.strip()),
+            "server_persistence_confirmed": server_persistence_confirmed,
+            "failure_class": failure_class.strip(),
+            "failure_reason": reason,
+            "recovery_action": "RECOVER_EXACT_SUBMITTED_PASS_WITHOUT_RESUBMIT",
+            "automatic_resubmit_allowed": False,
+            "fact_import_allowed": False,
+            "score_valid": False,
+            "publication_withheld": True,
+            "score_authority": False,
+            "stage_authority": False,
+        }
+        receipt = {**payload, "receipt_hash": canonical_hash(payload)}
+        history_path = (
+            failure_root
+            / "unbound_transport_pending_receipts"
+            / f"{receipt['receipt_hash']}.json"
+        )
+        if history_path.is_file():
+            existing = json.loads(history_path.read_text(encoding="utf-8"))
+            if existing != receipt:
+                raise RuntimeError(
+                    "unbound follow-up transport receipt changed identity"
+                )
+        else:
+            _write_json_atomic(history_path, receipt)
+        _write_json_atomic(
+            failure_root / "unbound_transport_pending_latest.json",
+            receipt,
+        )
+        return receipt
+
     report_path = failure_root / "visible_assistant_failure.md"
     _write_text_atomic(report_path, result.report_text + "\n")
     payload = {
@@ -2975,6 +3036,62 @@ def _persist_failed_visible_followup(
     receipt = {**payload, "receipt_hash": canonical_hash(payload)}
     _write_json_atomic(failure_root / "visible_failure_receipt.json", receipt)
     return receipt
+
+
+def _record_retryable_followup_disposition(
+    *,
+    orchestrator: Any,
+    pass_root: Path,
+    plan: FollowupPassPlan,
+    result: BrowserResultSnapshot,
+    reason: str,
+    failure_class: str,
+) -> tuple[Any, Mapping[str, Any]]:
+    """Seal an exact provider turn or park an unbound UI error safely.
+
+    A global retry banner proves neither that the submitted assistant turn
+    failed nor that it completed. Such a pass remains ``TRANSPORT_PENDING``
+    and can only be recovered by observing the already-submitted turn; this
+    helper never creates a resend path.
+    """
+
+    durable = orchestrator.ledger.get_pass(plan.research_pass.pass_id)
+    receipt = _persist_failed_visible_followup(
+        pass_root=pass_root,
+        plan=plan,
+        result=result,
+        reason=reason,
+        submit_count=durable.submit_count,
+        failure_class=failure_class,
+        server_persistence_confirmed=(
+            True
+            if durable.detail.get("server_persistence_confirmed") is True
+            else False
+            if durable.detail.get("server_persistence_confirmed") is False
+            else None
+        ),
+    )
+    if receipt["status"] == "UNBOUND_UI_FAILURE_TRANSPORT_PENDING":
+        pending_reason = (
+            f"{reason}; exact assistant turn unavailable; "
+            f"unbound_transport_receipt={receipt['receipt_hash']}"
+        )
+        return (
+            orchestrator.ledger.mark_transport_pending(
+                durable.pass_id,
+                reason=pending_reason,
+            ),
+            receipt,
+        )
+    return (
+        orchestrator.ledger.mark_failed_hard(
+            durable.pass_id,
+            response_hash=result.report_hash,
+            failure_class=failure_class,
+            reason=reason,
+        ),
+        receipt,
+    )
 
 
 def _load_visible_failure_receipt_for_late_result(

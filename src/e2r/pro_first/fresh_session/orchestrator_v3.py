@@ -1520,7 +1520,14 @@ def _compile_fresh_followup_v3(
     elif pass_name == "PUBLIC_GAP_CLOSURE":
         objective = (
             "아래에 열거된 material public gap만 official-first로 조사하고, 실제로 "
-            "연 source와 exact excerpt를 새 atomic fact/route receipt로 연결하라."
+            "연 source와 exact excerpt를 새 atomic fact/route receipt로 연결하라. "
+            "unresolved_question_state의 missing_core_source_roles는 deterministic "
+            "검문 결과다. 그 role은 verifier-eligible CURRENT/OPEN/RESOLVED fact로만 "
+            "닫힌다. HISTORICAL_ONLY 또는 SUPERSEDED fact는 과거 맥락일 뿐 현재 "
+            "source role을 충족하지 않는다. 과거 경고·위험만 찾았으면 as_of_date까지의 "
+            "후속 유지·해제·대체 상태를 더 조사하고, 현재 근거를 못 찾으면 attempted "
+            "route와 gap을 남겨라. 오래된 fact 하나로 required role satisfied, gap "
+            "RESOLVED, blocks_full_thesis=false를 선언하지 마라."
         )
         output_instruction = ""
     else:

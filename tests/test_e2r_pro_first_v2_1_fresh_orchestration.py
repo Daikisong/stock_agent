@@ -1380,6 +1380,58 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertIn("VERIFIER_REPAIR", scope.allowed_followup_pass_names)
         self.assertIn("SATURATION_AUDIT", scope.allowed_followup_pass_names)
 
+    async def test_initial_and_gap_prompts_do_not_use_historical_fact_for_current_role(
+        self,
+    ) -> None:
+        initial_prompt = self.built.packet_payload[
+            "initial_research_protocol"
+        ]["instructions_markdown"]
+        self.assertIn(
+            "HISTORICAL_ONLY` 또는 `SUPERSEDED`",
+            initial_prompt,
+        )
+        self.assertIn(
+            "CURRENT/OPEN/RESOLVED fact",
+            initial_prompt,
+        )
+        adapter = await self._prepare_and_approve(
+            "fresh-conversation-current-role-boundary"
+        )
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="d" * 64,
+        )
+        _plan, compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest={"dossier_hash": "e" * 64},
+            unresolved_question_state=(
+                {
+                    "question_family_id": (
+                        self.built.prompt.mandatory_question_ids[0]
+                    ),
+                    "deterministic_status": "SOURCE_PENDING",
+                    "missing_core_source_roles": ["REGULATOR_OFFICIAL"],
+                    "historical_or_superseded_fact_can_close_missing_role": False,
+                },
+            ),
+            pass_inputs={"research_gap_context_hash": "f" * 64},
+        )
+
+        self.assertIn(
+            "verifier-eligible CURRENT/OPEN/RESOLVED fact",
+            compiled.prompt_text,
+        )
+        self.assertIn(
+            "HISTORICAL_ONLY 또는 SUPERSEDED fact는 과거 맥락일 뿐",
+            compiled.prompt_text,
+        )
+        self.assertIn(
+            '"historical_or_superseded_fact_can_close_missing_role":false',
+            compiled.prompt_text,
+        )
+
     async def test_wrong_or_old_conversation_requires_another_fresh_session(self) -> None:
         adapter = await self._prepare_and_approve(OLD_CONVERSATION)
         with self.assertRaisesRegex(
@@ -2199,6 +2251,108 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(receipt["fact_import_allowed"])
         self.assertFalse(receipt["automatic_resubmit_allowed"])
 
+    async def test_unbound_global_error_parks_submitted_gap_pass_without_resubmit(
+        self,
+    ) -> None:
+        conversation_id = "fresh-conversation-unbound-global-error"
+        adapter = await self._prepare_and_approve(conversation_id)
+        await self.orchestrator.submit_initial_once(adapter)
+        self.orchestrator.establish_followup_scope(
+            self.built,
+            initial_response_hash="a" * 64,
+        )
+        plan, _compiled = self.orchestrator.plan_v3_followup(
+            self.built,
+            pass_name="PUBLIC_GAP_CLOSURE",
+            latest_dossier_digest={"dossier_hash": "b" * 64},
+            unresolved_question_state=(
+                {
+                    "question_family_id": (
+                        self.built.prompt.mandatory_question_ids[0]
+                    ),
+                    "deterministic_status": "PUBLIC_SEARCHABLE",
+                },
+            ),
+            pass_inputs={"research_gap_context_hash": "c" * 64},
+        )
+        unbound_failure = BrowserResultSnapshot(
+            conversation_id=conversation_id,
+            assistant_turn_id=None,
+            report_text="",
+            report_hash="d" * 64,
+            has_citations=False,
+            has_dossier_marker=False,
+            job_marker_matches=False,
+            run_marker_matches=False,
+            new_attachment_keys=(),
+        )
+
+        async def inspect_result(**_kwargs) -> BrowserResultSnapshot:
+            return unbound_failure
+
+        adapter.inspect_result = inspect_result  # type: ignore[attr-defined]
+        runner = object.__new__(FreshV3FullThesisLiveRunner)
+        runner.store = self.store
+        runner._emit = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+
+        async def fail_wait(**_kwargs):
+            raise LiveCanaryPending(
+                "global ChatGPT retry banner without an assistant turn",
+                status=BrowserUIState.RETRYABLE_ERROR.value,
+            )
+
+        runner._wait_for_followup_result = fail_wait  # type: ignore[method-assign]
+
+        with self.assertRaises(LiveCanaryPending) as captured:
+            await runner._execute_followup(
+                prepared=SimpleNamespace(
+                    job=self.store.get_job(self.fresh_job.job_id),
+                    packet_payload=self.built.packet_payload,
+                    session=SimpleNamespace(adapter=adapter),
+                ),
+                orchestrator=self.orchestrator,
+                dossier_store=SimpleNamespace(),
+                plan=plan,
+                original_dossier={},
+                job_root=self.boundary.fresh_job_root,
+                persist_effective=True,
+            )
+
+        self.assertEqual(captured.exception.status, "TRANSPORT_PENDING")
+        pending = self.orchestrator.ledger.get_pass(plan.research_pass.pass_id)
+        self.assertEqual(pending.status, "TRANSPORT_PENDING")
+        self.assertEqual(pending.submit_count, 1)
+        self.assertIsNone(pending.response_hash)
+        self.assertFalse(pending.score_valid)
+        self.assertTrue(pending.publication_withheld)
+        self.assertFalse(pending.detail["automatic_resubmit_allowed"])
+        self.assertIn(
+            "exact assistant turn unavailable",
+            pending.detail["transport_pending_reason"],
+        )
+        receipt_path = (
+            self.boundary.fresh_job_root
+            / "research_passes"
+            / f"{pending.pass_ordinal:02d}_{pending.pass_id}"
+            / "failure/unbound_transport_pending_latest.json"
+        )
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        self.assertEqual(
+            receipt["status"],
+            "UNBOUND_UI_FAILURE_TRANSPORT_PENDING",
+        )
+        self.assertEqual(
+            receipt["missing_identity_fields"],
+            ["ASSISTANT_TURN_ID", "VISIBLE_ASSISTANT_REPORT"],
+        )
+        self.assertEqual(
+            receipt["recovery_action"],
+            "RECOVER_EXACT_SUBMITTED_PASS_WITHOUT_RESUBMIT",
+        )
+        self.assertFalse(receipt["fact_import_allowed"])
+        self.assertFalse(receipt["automatic_resubmit_allowed"])
+        self.assertEqual(adapter.submit_count, 2)
+
     async def test_distinct_gap_and_reaudit_passes_remain_in_same_conversation(self) -> None:
         adapter = await self._prepare_and_approve("fresh-conversation-multipass")
         await self.orchestrator.submit_initial_once(adapter)
@@ -2618,6 +2772,35 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                     "saturation_blocker_identity_hash"
                 ],
             )
+        )
+
+    def test_followup_context_marks_historical_fact_ineligible_for_missing_role(
+        self,
+    ) -> None:
+        question_id = self.built.prompt.mandatory_question_ids[0]
+        context = _followup_context(
+            dossier=self._tail_dossier(question_id),
+            saturation=self._tail_saturation(
+                (
+                    self._question_decision(
+                        question_id,
+                        linked_fact_id="FACT-HISTORICAL",
+                    ),
+                ),
+                fact_hash="9" * 64,
+            ),
+            accepted_fact_ids=(),
+            question_ids=(question_id,),
+            pass_name="PUBLIC_GAP_CLOSURE",
+        )
+
+        row = context["unresolved_question_state"][0]
+        self.assertEqual(
+            row["missing_core_source_role_evidence_requirement"],
+            {"ISSUER_OFFICIAL": "VERIFIED_CURRENT_OPEN_OR_RESOLVED_FACT"},
+        )
+        self.assertFalse(
+            row["historical_or_superseded_fact_can_close_missing_role"]
         )
 
     def test_same_question_set_is_not_reopened_a_third_time(self) -> None:

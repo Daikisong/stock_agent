@@ -38,7 +38,7 @@ from ..canary.live_v2 import (
     _is_sealed_unpersisted_dispatch,
     _load_visible_failure_receipt_for_late_result,
     _outcome_summary,
-    _persist_failed_visible_followup,
+    _record_retryable_followup_disposition,
     _question_states_for_ids,
     _redact_saturation,
     _submitted_unsnapshotted_followup_plan,
@@ -1075,36 +1075,46 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                 )
             except LiveCanaryPending as error:
                 if error.status == BrowserUIState.RETRYABLE_ERROR.value:
-                    durable_failure_pass = orchestrator.ledger.get_pass(pass_id)
                     failure_result = await prepared.session.adapter.inspect_result(
                         job_id=plan.scope.job_id,
                         run_id=str(prepared.packet_payload["run_id"]),
                     )
-                    failure_receipt = _persist_failed_visible_followup(
+                    failed, failure_receipt = _record_retryable_followup_disposition(
+                        orchestrator=orchestrator,
                         pass_root=pass_root,
                         plan=plan,
                         result=failure_result,
                         reason=error.reason,
-                        submit_count=durable_failure_pass.submit_count,
                         failure_class="CHATGPT_VISIBLE_RESPONSE_FAILURE",
                     )
-                    failed = orchestrator.ledger.mark_failed_hard(
-                        pass_id,
-                        response_hash=failure_result.report_hash,
-                        failure_class="CHATGPT_VISIBLE_RESPONSE_FAILURE",
-                        reason=error.reason,
+                    unbound = (
+                        failure_receipt["status"]
+                        == "UNBOUND_UI_FAILURE_TRANSPORT_PENDING"
                     )
                     self._emit_fresh(
-                        "FRESH_FULL_THESIS_COMPACT_REPAIR_PROVIDER_FAILURE_RECORDED",
+                        (
+                            "FRESH_FULL_THESIS_COMPACT_REPAIR_UNBOUND_UI_FAILURE_TRANSPORT_PENDING"
+                            if unbound
+                            else "FRESH_FULL_THESIS_COMPACT_REPAIR_PROVIDER_FAILURE_RECORDED"
+                        ),
                         job_id=plan.scope.job_id,
                         pass_id=failed.pass_id,
                         pass_name=failed.pass_name,
+                        research_status=failed.status,
                         submit_count=failed.submit_count,
                         failure_receipt_hash=failure_receipt["receipt_hash"],
+                        failure_binding_status=failure_receipt.get(
+                            "failure_binding_status", "EXACT_ASSISTANT_TURN"
+                        ),
                         automatic_resubmit_allowed=False,
                         score_authority=False,
                         stage_authority=False,
                     )
+                    if unbound:
+                        raise LiveCanaryPending(
+                            error.reason,
+                            status="TRANSPORT_PENDING",
+                        ) from error
                 raise
             raw = await prepared.session.adapter.capture_result(
                 BrowserCaptureRequest(
@@ -1624,6 +1634,11 @@ def _followup_context(
                 "missing_core_source_roles": list(
                     decision.get("missing_core_source_roles") or ()
                 ),
+                "missing_core_source_role_evidence_requirement": {
+                    str(role): "VERIFIED_CURRENT_OPEN_OR_RESOLVED_FACT"
+                    for role in decision.get("missing_core_source_roles") or ()
+                },
+                "historical_or_superseded_fact_can_close_missing_role": False,
                 "missing_corroboration_source_roles": list(
                     decision.get("missing_corroboration_source_roles") or ()
                 ),

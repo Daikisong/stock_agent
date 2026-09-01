@@ -5470,3 +5470,58 @@ Pro-first V1/V2, fresh-efficiency, V6 production 정적 감사도 모두 PASS/cr
 `p53_c15_r3_r4_late_sidebar_persistence_recovery_receipt.json`에 보존했다. 이제 한글 커밋·푸시 뒤
 exact-head GitHub Actions green을 확인한다. master live full-thesis는 아직 C06 1/3이고 C15 R4와
 C24/C28이 닫히기 전 PR #7 draft 해제와 main 병합은 금지한다.
+
+## P54 — C15 R4 늦은 gap 결과 무전송 회수와 현재 source-role 시간 경계
+
+C15 R4 public-gap pass `PROPASS-35812a5a5bbaf5d63d94c77e`는 같은 conversation
+`6a96733b-c1d8-83ee-9879-b75986806399`에서 user turn
+`eccb147b-a9e8-444b-9039-117eed2f2df5`로 정확히 한 번 서버 영속됐다. 약 3시간·1,440회 poll 뒤
+ChatGPT 화면에는 assistant turn에 결박되지 않은 전역 재시도 오류가 보였고, 기존 코드는 exact turn이나
+report가 없다는 이유로 `visible follow-up failure lacks exact turn or submit identity`를 던졌다. pass를
+재전송하지 않고 기존 target `F6DC0979950E8B311DC6F6207BF6197E` 하나를 다시 확인하자 늦게 완성된 실제
+결과가 hydration돼 있었다.
+
+`--recover-submitted-only`로 browser submit 0회 회수했고 capture source는 `DOWNLOAD_JSON`, response
+hash는 `0c5f9ae77b9e75a8d76fd1dcecc23722f074462e6965f638e65d642b381a56ab`다. 새 fact 6개,
+source lineage 3개, route receipt 8개, 갱신 질문 8개가 append-only로 합쳐졌고 effective dossier hash는
+`829ac78d7acdd9a01ffc71fbe7810502489c45e0b1a571fe6b16d9481f943f5e`가 됐다. 다시 검문한 결과
+accepted fact는 35개, mandatory nonterminal·provider/parser core·verifier repair·source linkage·lifecycle
+hard break는 모두 0개다. 다만 public material gap 하나가 남았다.
+
+남은 질문은 `R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW_Q02`다. Pro는 2026-07-08 KRX 투자주의
+페이지를 찾아 `REGULATOR_OFFICIAL` role이 충족됐다고 제안했지만, 해당 fact의 deterministic 상태는
+`HISTORICAL_ONLY`였다. `as_of_date=2026-08-23`의 현재 경고 상태를 닫으려면 이후 유지·해제·대체 자료가
+필요하다. 쉬운 예로 7월 8일의 경고장을 찾았다는 사실은 8월 23일에도 그 경고가 유효하다는 증명이 아니다.
+그래서 verifier는 `PRO_CLAIMED_SOURCE_ROLE_UNVERIFIED`로 gap을 정확히 열어 뒀다.
+
+R4는 허용된 public-gap/counter pass 1회를 이미 사용했기 때문에 두 번째 gap 요청을 보내지 않았다.
+브라우저 submit 0회로 `OPERATIONAL_EFFICIENCY_GATE_FAILED`, score·Stage null, publication withheld,
+새 conversation 필요 상태로 봉인했다. recovery receipt hash는
+`c8957c7de334ef34aad1ff67ab7e4abc959f3e9fb77a51595cc0772305087ca0`, saturation receipt hash는
+`1a59ad1f23b7d5303a570f1a1ad94dbb1bf34a186419a45e126aa46445d24515`, 최종 full-thesis receipt
+hash는 `3111bd8202761cd5d07aa9cd23773869d76b8c59d24a8c4629fc93c10454bdf8`다. R4는 C15 PASS로
+세지 않는다.
+
+일반 수리는 두 경계를 추가했다. 첫째, exact assistant turn에 결박된 실패만 `FAILED_HARD`로 봉인한다.
+assistant turn이 없는 전역 UI 오류는 append-only unbound receipt를 남기고 `TRANSPORT_PENDING`으로 두며,
+이미 전송한 turn의 무전송 회수만 허용한다. 둘째, initial과 public-gap prompt/context에 deterministic
+missing core role은 verifier-eligible `CURRENT/OPEN/RESOLVED` fact로만 닫힌다고 명시했다.
+`HISTORICAL_ONLY`나 `SUPERSEDED` fact는 과거 맥락으로 보존하되 현재 role 충족 근거로 재라벨하지 않는다.
+종목명·아키타입·질문 ID 조건, deterministic query template, score·Stage 권한은 추가하지 않았다.
+
+집중 회귀는 신규·관련 4/4, fresh orchestration 74/74, prompt compiler·initial V3·generalization 35/35,
+Windows Playwright의 browser adapter·completion capture·multi-pass 109/109, WSL Git 환경의 live runtime
+39/39, V6 operational acceptance 37/37이 PASS했다. Windows Python에서 live-runtime 일부가 처음 오류 난
+것은 `\\wsl.localhost` UNC를 Windows Git이 저장소로 인식하지 못한 환경 문제였고, 같은 39개를 저장소의
+정상 WSL Git 환경에서 모두 통과시켜 코드 실패와 분리했다. Pro-first V1·V2·fresh-efficiency 정적 감사도
+모두 PASS/critical 0이고 V6 production 정적 감사도 387개 파일, critical 0으로 PASS했다. 전체 offline
+CI는 readiness 287/287, offline E2E 4/4, browser mock E2E 92/92, compileall, diff check를 모두
+통과했다. 전체 회귀는 `7,894/7,894 PASS / failure·error 0 / 기존 skip 38`이며 독립 Reviewer A–H도
+8/8, 각 reviewer의 직접 leaf test 합계 343개가 PASS했다. exact-head GitHub Actions는 한글 커밋·푸시
+뒤 확인한다.
+
+정규화 영수증은
+`p54_c15_r4_late_gap_recovery_and_current_role_boundary_receipt.json`이다. 다음 단계는 이 일반 수리를
+커밋·푸시하고 exact-head CI green을 확인한 뒤, 같은 기존 브라우저 탭 안의 **새 ChatGPT conversation**에서
+C15 R5를 시작하는 것이다. master live full-thesis는 여전히 C06 1/3이며 C15와 C24/C28이 실제
+full-thesis까지 닫히기 전 PR #7은 draft/open, main은 미병합 상태를 유지한다.
