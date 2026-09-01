@@ -401,7 +401,11 @@ class FreshV3InitialLiveCanaryRunner:
         if _requires_browser_result_recovery(job):
             runtime = await ProBrowserWorker(self.config.browser).open(job_id=job.job_id)
             try:
-                current_conversation = runtime.adapter.conversation_id()
+                current_conversation = await self._recover_late_conversation_if_missing(
+                    job=job,
+                    run_id=str(built.packet_payload["run_id"]),
+                    adapter=runtime.adapter,
+                )
                 if (
                     job.conversation_id
                     and not job.conversation_id.startswith("WEB:")
@@ -545,6 +549,37 @@ class FreshV3InitialLiveCanaryRunner:
                 self.store.get_job(fresh_job.job_id).submitted_at
             ),
         )
+
+    async def _recover_late_conversation_if_missing(
+        self,
+        *,
+        job: ProResearchJob,
+        run_id: str,
+        adapter: Any,
+    ) -> str | None:
+        """Route a late submitted turn from visible history without resubmit."""
+
+        current = str(adapter.conversation_id() or "").strip() or None
+        if current or job.status != JobStatus.USER_ATTENTION_REQUIRED.value:
+            return current
+        persistence = (
+            await adapter.recover_submitted_turn_from_history_without_submit(
+                job_id=job.job_id,
+                run_id=run_id,
+                search_terms=(job.company_name, job.symbol),
+            )
+        )
+        self._emit(
+            "FRESH_LATE_CONVERSATION_RECOVERED_FROM_HISTORY_NO_SUBMIT",
+            job_id=job.job_id,
+            run_id=run_id,
+            conversation_id=persistence.conversation_id,
+            observation_id=persistence.observation_id,
+            user_turn_id=persistence.user_turn_id,
+            submit_count=job.submit_count,
+            browser_submit_delta=0,
+        )
+        return persistence.conversation_id
 
     def _build_leakage_manifest(
         self,

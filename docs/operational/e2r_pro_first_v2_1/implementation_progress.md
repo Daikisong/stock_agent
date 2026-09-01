@@ -5439,3 +5439,34 @@ V6 production 정적 감사도 모두 PASS/critical 0이다. 새 head GitHub Act
 exact head에서 확인한다. C15 R2는 실제 repair 성공을 포함하지만 full-thesis PASS로 세지 않는다. 다음은
 같은 기존 브라우저 탭 안의 새 ChatGPT conversation에서 C15 R3를 시작하는 것이며, C15와 C24/C28이
 각각 full-thesis까지 닫히기 전 PR #7은 draft/open, main은 미병합 상태를 유지한다.
+
+## P53 — C15 R3/R4 늦은 사이드바 영속과 exact-marker 무전송 복구
+
+C15 R3와 R4의 최초 Chat+Pro 요청은 각각 정확히 한 번 전송됐지만, submit-time 검문이 끝날 때 현재 탭이
+`https://chatgpt.com/`로 돌아와 있어 canonical conversation URL과 exact marker를 보지 못했다. 두 job은
+안전하게 `USER_ATTENTION_REQUIRED`로 멈췄고 같은 pass 자동 재전송은 0회였다. 이후 기존 로그인 탭의 공개
+사이드바에는 R3 conversation `6a9671b3-87ec-83ee-8231-29fa918f16d7`과 R4 conversation
+`6a96733b-c1d8-83ee-9879-b75986806399`가 실제로 나타났다. 즉 요청이 사라진 것이 아니라 서버 영속이
+submit-time 관찰 한도보다 늦은 경우였다.
+
+R4는 exact job `PROJOB-5d03d97d6a6decdec9de4fbd`, run
+`PRORUN-8e217e6bd4318ff7620a0911` marker를 가진 user turn
+`e24a4be3-ff35-446c-9547-4007cce8e205`를 같은 탭에서 확인했다. 읽기 전용
+`--resume-submitted-job-id` 경로는 browser submit 0으로 conversation을 다시 결박했고 현재 initial Pro
+조사의 terminal 결과를 기다리고 있다. R3/R4 어느 쪽도 아직 C15 full-thesis PASS로 세지 않으며 score와
+Stage는 만들지 않았다.
+
+일반 수리는 현재 탭에 conversation ID가 없고 이미 submit된 job이 사용자 주의 상태일 때만 공개 ChatGPT
+history search를 사용한다. 검색 결과 제목은 routing hint일 뿐이며, 열린 conversation의 **한 user turn에
+exact job marker와 exact run marker가 모두 있을 때만** 회수한다. composer fill, packet upload, send, 새
+page/tab/window 생성, private API 호출은 모두 0이다. 쉬운 예로 배송 목록에서 이름이 비슷한 상자를 고르는
+것이 아니라, 상자를 연 뒤 송장번호 두 개가 모두 정확히 같은지 확인한 경우만 기존 주문으로 인정한다.
+
+새 집중 테스트 2/2, browser adapter·fresh orchestration 121/121, completion capture·multi-pass 59/59,
+approval/static/operational 관련 36/36, compileall, diff check가 통과했다. 전체 offline CI도 readiness
+287/287, offline E2E 4/4, browser mock E2E 92/92, 전체 회귀 7,891/7,891(failure/error 0, 기존
+skip 38)로 PASS했다. 독립 Reviewer A–H도 8/8, 각 reviewer의 직접 leaf test 합계 343개가 PASS했다.
+Pro-first V1/V2, fresh-efficiency, V6 production 정적 감사도 모두 PASS/critical 0이다. 확정 수치는
+`p53_c15_r3_r4_late_sidebar_persistence_recovery_receipt.json`에 보존했다. 이제 한글 커밋·푸시 뒤
+exact-head GitHub Actions green을 확인한다. master live full-thesis는 아직 C06 1/3이고 C15 R4와
+C24/C28이 닫히기 전 PR #7 draft 해제와 main 병합은 금지한다.

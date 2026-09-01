@@ -717,6 +717,186 @@ class PlaywrightChatGPTWebAdapter:
             submit_count=0,
         )
 
+    async def recover_submitted_turn_from_history_without_submit(
+        self,
+        *,
+        job_id: str,
+        run_id: str,
+        search_terms: tuple[str, ...] = (),
+    ) -> BrowserSubmittedTurnPersistence:
+        """Recover one late-persisted running turn from visible chat history.
+
+        A new-chat send can create a durable sidebar conversation only after
+        the submit-time persistence bound expires, while the attached tab has
+        already returned to ``/``. This path searches the public history UI,
+        opens a result in the same tab, and accepts it only when one visible
+        user turn contains the exact durable job/run markers. It never fills
+        the composer, uploads a file, opens a new page, or invokes send.
+        """
+
+        if not job_id.strip() or not run_id.strip():
+            raise ValueError("late submitted-turn recovery requires job/run identity")
+        await self.ensure_logged_in()
+        required_markers = (
+            f"[[E2R_PRO_JOB_ID:{job_id}]]",
+            f"[[E2R_PRO_RUN_ID:{run_id}]]",
+        )
+        current_conversation = str(self.conversation_id() or "").strip()
+        if current_conversation:
+            current = await self._current_history_turn_persistence(
+                conversation_id=current_conversation,
+                job_id=job_id,
+                run_id=run_id,
+                required_markers=required_markers,
+                detail=(
+                    "exact submitted turn recovered from the current public "
+                    "conversation"
+                ),
+            )
+            if current.persistence_confirmed:
+                return current
+
+        queries = tuple(
+            dict.fromkeys(
+                value.strip()
+                for value in (job_id, run_id, *search_terms)
+                if value and value.strip()
+            )
+        )
+        for query in queries:
+            search_input = await first_visible(
+                self.page, CHAT_HISTORY_SEARCH_INPUT_SELECTORS
+            )
+            if search_input is None:
+                control = await first_visible(
+                    self.page, CHAT_HISTORY_SEARCH_CONTROL_SELECTORS
+                )
+                if control is None or not await control.is_enabled():
+                    raise BrowserUIIncompatible(
+                        "visible ChatGPT history search control was not found"
+                    )
+                await control.click()
+                await self.page.wait_for_timeout(300)
+                search_input = await first_visible(
+                    self.page, CHAT_HISTORY_SEARCH_INPUT_SELECTORS
+                )
+            if search_input is None:
+                raise BrowserUIIncompatible(
+                    "visible ChatGPT history search input was not found"
+                )
+            await search_input.fill(query)
+            dialog = search_input.locator(
+                'xpath=ancestor::*[@role="dialog"][1]'
+            )
+            search_root = dialog if await dialog.count() else self.page
+
+            match = None
+            fallback = None
+            for attempt in range(120):
+                for selector in CHAT_HISTORY_RESULT_LINK_SELECTORS:
+                    links = search_root.locator(selector)
+                    for index in range(await links.count()):
+                        link = links.nth(index)
+                        if not await link.is_visible():
+                            continue
+                        href = str(await link.get_attribute("href") or "")
+                        if "/c/" not in href:
+                            continue
+                        snippet = str(await link.inner_text() or "").strip()
+                        if fallback is None:
+                            fallback = link
+                        if job_id in snippet or run_id in snippet:
+                            match = link
+                            break
+                    if match is not None:
+                        break
+                if match is not None or fallback is not None:
+                    break
+                if attempt < 119:
+                    await self.page.wait_for_timeout(100)
+            match = match or fallback
+            if match is None:
+                continue
+
+            await match.click()
+            conversation_id = None
+            for attempt in range(120):
+                conversation_id = str(self.conversation_id() or "").strip() or None
+                if conversation_id:
+                    break
+                if attempt < 119:
+                    await self.page.wait_for_timeout(100)
+            if conversation_id is None:
+                continue
+            recovered = await self._current_history_turn_persistence(
+                conversation_id=conversation_id,
+                job_id=job_id,
+                run_id=run_id,
+                required_markers=required_markers,
+                detail=(
+                    "exact submitted turn recovered from visible ChatGPT history "
+                    f"search query {query}"
+                ),
+            )
+            if recovered.persistence_confirmed:
+                return recovered
+        raise BrowserUIIncompatible(
+            "submitted ChatGPT user turn was not found in visible history search"
+        )
+
+    async def _current_history_turn_persistence(
+        self,
+        *,
+        conversation_id: str,
+        job_id: str,
+        run_id: str,
+        required_markers: tuple[str, ...],
+        detail: str,
+    ) -> BrowserSubmittedTurnPersistence:
+        """Observe exact markers on a history-loaded public page without send."""
+
+        selector = ", ".join(USER_TURN_SELECTORS)
+        snapshot: Mapping[str, Any] = {}
+        poll_limit = min(self._server_persistence_max_polls, 300)
+        for attempt in range(poll_limit):
+            snapshot = await self._user_turn_marker_snapshot(
+                selector=selector,
+                required_markers=required_markers,
+            )
+            if snapshot.get("markerMatched") is True:
+                break
+            if attempt + 1 < poll_limit:
+                await self.page.wait_for_timeout(
+                    self._server_persistence_poll_interval_ms
+                )
+        matched = snapshot.get("markerMatched") is True
+        missing = tuple(snapshot.get("missingMarkers") or required_markers)
+        user_turn_id = str(snapshot.get("userTurnId") or "").strip() or None
+        observed_url = str(self.page.url or "")
+        return BrowserSubmittedTurnPersistence(
+            observation_id=f"PROSERVERVIEW-{secrets.token_hex(12)}",
+            observed_at=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            conversation_id=conversation_id,
+            job_id=job_id,
+            run_id=run_id,
+            pass_id=None,
+            parent_pass_id=None,
+            persistence_confirmed=matched,
+            user_turn_id=user_turn_id if matched else None,
+            required_markers=required_markers,
+            missing_markers=() if matched else missing,
+            observed_user_turn_count=int(
+                snapshot.get("observedUserTurnCount") or 0
+            ),
+            fresh_page_url=observed_url,
+            fresh_page_loaded=(
+                urlsplit(observed_url).path.rstrip("/")
+                == f"/c/{conversation_id}".rstrip("/")
+            ),
+            detail=detail,
+            submit_count=0,
+        )
+
     async def open_exact_conversation_without_submit(
         self,
         *,

@@ -299,6 +299,14 @@ class ChatGPTWebAdapter(Protocol):
         parent_pass_id: str | None = None,
     ) -> BrowserSubmittedTurnPersistence: ...
 
+    async def recover_submitted_turn_from_history_without_submit(
+        self,
+        *,
+        job_id: str,
+        run_id: str,
+        search_terms: tuple[str, ...] = (),
+    ) -> BrowserSubmittedTurnPersistence: ...
+
     async def open_exact_conversation_without_submit(
         self,
         *,

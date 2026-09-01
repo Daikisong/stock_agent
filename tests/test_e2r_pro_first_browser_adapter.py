@@ -1034,6 +1034,56 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(recovered.submit_count, 0)
         self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
 
+    async def test_history_recovers_late_running_user_turn_without_submit(
+        self,
+    ) -> None:
+        job_id = "PROJOB-latelatelatelatelatelate"
+        run_id = "PRORUN-runningrunningrunningrun"
+        await self.page.set_content(
+            "<html><body>"
+            '<form><div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div><button type="button">Pro</button></form>'
+            '<input placeholder="채팅 검색" />'
+            '<a id="late-running" href="/c/late-running-conversation">'
+            "제목에는 durable marker가 없음</a>"
+            '<section id="conversation-results"></section>'
+            '<script>window.__submitCount=0; history.replaceState({}, "", "/");</script>'
+            "</body></html>"
+        )
+        await self.page.locator("#late-running").evaluate(
+            """(link, identity) => link.addEventListener('click', event => {
+                event.preventDefault();
+                history.pushState({}, '', link.getAttribute('href'));
+                const turn = document.createElement('section');
+                turn.dataset.turn = 'user';
+                turn.dataset.turnId = 'late-running-user-turn';
+                turn.textContent = identity;
+                document.querySelector('#conversation-results').appendChild(turn);
+                const stop = document.createElement('button');
+                stop.dataset.testid = 'stop-button';
+                stop.textContent = 'Stop';
+                document.body.appendChild(stop);
+            })""",
+            f"[[E2R_PRO_JOB_ID:{job_id}]]\n[[E2R_PRO_RUN_ID:{run_id}]]",
+        )
+
+        recovered = (
+            await self.adapter.recover_submitted_turn_from_history_without_submit(
+                job_id=job_id,
+                run_id=run_id,
+                search_terms=("검증기업",),
+            )
+        )
+
+        self.assertTrue(recovered.persistence_confirmed)
+        self.assertEqual(
+            recovered.conversation_id,
+            "late-running-conversation",
+        )
+        self.assertEqual(recovered.user_turn_id, "late-running-user-turn")
+        self.assertEqual(recovered.submit_count, 0)
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
+
     async def test_history_recovery_rejects_wrong_run_marker(self) -> None:
         job_id = "PROJOB-aaaaaaaaaaaaaaaaaaaaaaaa"
         run_id = "PRORUN-bbbbbbbbbbbbbbbbbbbbbbbb"

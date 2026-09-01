@@ -748,6 +748,93 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertIsNotNone(recovered.old_job_frozen_at)
         self.assertEqual(adapter.submit_count, 1)
 
+    async def test_missing_current_url_routes_late_turn_from_history_without_submit(
+        self,
+    ) -> None:
+        conversation_id = "fresh-history-recovered-running"
+        submitted_adapter = await self._prepare_and_approve(conversation_id)
+        await self.orchestrator.submit_initial_once(submitted_adapter)
+        running = self.store.get_job(self.fresh_job.job_id)
+        attention = self.store.transition(
+            running.job_id,
+            expected_version=running.state_version,
+            to_status=JobStatus.USER_ATTENTION_REQUIRED,
+            actor="test-late-history-route",
+            idempotency_key="test-late-history-route",
+            payload={
+                "submit_count": 1,
+                "automatic_resubmit_allowed": False,
+            },
+        )
+        run_id = str(self.built.packet_payload["run_id"])
+        emitted = []
+
+        class HistoryAdapter:
+            submit_count = 1
+            current_conversation_id = None
+            recovery_count = 0
+
+            def conversation_id(self):
+                return self.current_conversation_id
+
+            async def recover_submitted_turn_from_history_without_submit(
+                self,
+                **kwargs,
+            ):
+                self.recovery_count += 1
+                if kwargs["job_id"] != attention.job_id:
+                    raise AssertionError("wrong job routed through history")
+                if kwargs["run_id"] != run_id:
+                    raise AssertionError("wrong run routed through history")
+                self.current_conversation_id = conversation_id
+                return BrowserSubmittedTurnPersistence(
+                    observation_id="PROSERVERVIEW-history-recovered",
+                    observed_at=(
+                        datetime.now(timezone.utc)
+                        .isoformat()
+                        .replace("+00:00", "Z")
+                    ),
+                    conversation_id=conversation_id,
+                    job_id=attention.job_id,
+                    run_id=run_id,
+                    pass_id=None,
+                    parent_pass_id=None,
+                    persistence_confirmed=True,
+                    user_turn_id="late-history-user-turn",
+                    required_markers=(
+                        f"[[E2R_PRO_JOB_ID:{attention.job_id}]]",
+                        f"[[E2R_PRO_RUN_ID:{run_id}]]",
+                    ),
+                    missing_markers=(),
+                    observed_user_turn_count=1,
+                    fresh_page_url=(
+                        "https://chatgpt.com/c/" + conversation_id
+                    ),
+                    fresh_page_loaded=True,
+                    submit_count=0,
+                )
+
+        adapter = HistoryAdapter()
+        runner = object.__new__(FreshV3InitialLiveCanaryRunner)
+        runner.progress = emitted.append
+
+        recovered_conversation = (
+            await runner._recover_late_conversation_if_missing(
+                job=attention,
+                run_id=run_id,
+                adapter=adapter,
+            )
+        )
+
+        self.assertEqual(recovered_conversation, conversation_id)
+        self.assertEqual(adapter.recovery_count, 1)
+        self.assertEqual(adapter.submit_count, 1)
+        self.assertEqual(
+            emitted[-1]["phase"],
+            "FRESH_LATE_CONVERSATION_RECOVERED_FROM_HISTORY_NO_SUBMIT",
+        )
+        self.assertEqual(emitted[-1]["browser_submit_delta"], 0)
+
     async def test_late_server_persistence_waits_for_terminal_without_resubmit(
         self,
     ) -> None:
