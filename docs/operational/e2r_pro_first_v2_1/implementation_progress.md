@@ -5284,3 +5284,63 @@ PASS/critical 0이다. C17을 성공으로 꾸미거나 같은 공백을 무한 
 `C06 + (C17 또는 C15) + (C24 또는 C28)`에 따라 C17 진단은 봉인하고, 다음 실전 두 번째 mechanism은
 기존 브라우저 탭 안의 새 ChatGPT 대화에서 C15로 진행한다. 현재 live full-thesis는 여전히 C06 1/3이며,
 PR #7은 draft/open, main unmerged를 유지한다.
+
+커밋 `02fcd315` 생성 뒤 전체 로컬 discovery도 7,881/7,881 PASS, failure/error 0, 기존 skip 38로
+끝났다. 원격에는 같은 한글 커밋을 push했고 PR #7 head가 정확히 `02fcd315...`임을 확인했다. 중복으로
+시작된 동일 head의 push-event Pro-first workflow 한 개만 취소하고, PR-event Pro-first와 V6 workflow는
+그대로 끝까지 검증했다. Pro-first run `33452575446`과 V6 run `33452575398`은 모두 SUCCESS다.
+
+## P50 — C15 R1 초기 효율 실패와 세 가지 generic verifier 오판 수리
+
+C17 provider 실패를 성공으로 꾸미거나 같은 pass를 다시 보내지 않고, master가 허용한 두 번째 mechanism
+대체 경로인 `010950 S-Oil / C15_MATERIAL_SPREAD_SUPERCYCLE / as_of_date=2026-08-23`를 기존 로그인
+ChatGPT target 하나에서 새 conversation으로 시작했다. 새 browser window/tab/target은 만들지 않았다.
+job은 `PROJOB-af3dbc0abc4082ab7560f0a1`, run은 `PRORUN-8a0ccc493749e17fadf96b17`, initial pass는
+`PROPASS-064adf8ca5c29b889aa84f7d`, conversation은
+`6a96143d-9838-83e8-90f7-ba8c4cf2019b`다.
+
+최초 click 뒤 2분 안에 exact marker가 보이지 않았지만 같은 pass를 재전송하지 않았다. 약 12분 뒤 같은
+conversation의 exact user turn이 서버에 영속된 것을 확인해 `browser_submit_delta=0` 읽기 전용 recovery를
+붙였다. 약 76분 뒤 terminal 안정성 3회, `DOWNLOAD_JSON`, import를 완료했다. 전체 과정의 submit count는
+1이며 source document 13개, material candidate 34개, mandatory question 27/27을 보존했다.
+
+원래 검문은 34개 중 23개만 받아 acceptance ratio `0.676471`, genuine semantic repair 10개,
+initial output defect 1개로 FAIL했다. 따라서 이 conversation에서 repair나 full-thesis를 보내지 않고
+`OPERATIONAL_EFFICIENCY_GATE_FAILED / DIAGNOSTIC_ONLY / NEW_CONVERSATION_REQUIRED`로 봉인했다. score와
+Stage 권한은 모두 false다.
+
+탈락 사실을 실제 내려받은 원문과 대조하자 Pro 자료 전체가 부실한 것이 아니라 verifier의 세 가지 generic
+오판이 확인됐다.
+
+- Aramco 2022/2023 기사 아래의 `Latest news / August 24, 2026` 카드 metadata를 현재 기사 게시일로
+  잘못 읽어 과거 공식 사실을 미래 누수로 거절했다.
+- S-OIL 한국어 IR PDF가 `아시아 / 정제마진 / 은`처럼 glyph 사이에 줄바꿈을 넣어 추출됐고, Pro가 같은
+  글자를 `아시아정제마진은`으로 보존했는데도 공백 차이를 의미 결함으로 분류했다.
+- 공식 `s-oil.com` 연결현금흐름표의 literal legal subject `에쓰-오일 주식회사와 그 종속기업`을 target의
+  영문 표기와 다르다는 이유로 wrong-subject 처리했다.
+
+수리는 종목·아키타입·질문 ID를 조건으로 넣지 않았다. HTML publication metadata는 문서 head 또는 선택된
+primary article 내부 것만 받고 related/latest-news body card의 날짜를 제외한다. 이 변경으로 metadata
+semantics를 `e2r_page_fetch_publication_metadata_v2`로 올려 오래된 cache도 재검증한다. exact quote는 glyph와
+punctuation 순서를 그대로 둔 채 Unicode whitespace만 제거한 비교를 추가했다. 공식 issuer/filing role,
+publisher-hostname affinity, literal document subject가 모두 맞을 때만 bilingual legal subject를 target alias로
+허용한다. source verification semantics는 `e2r_pro_source_verification_v12`다.
+`OFFICIAL_FILING`이라는 역할만으로 legal subject를 믿지는 않는다. publisher identity가 target 회사명 또는
+별칭과 같고 publisher-hostname affinity도 확인돼야 한다. 따라서 여러 회사가 함께 쓰는 DART 같은 공용
+공시 host의 다른 회사 legal subject는 target alias가 될 수 없다.
+
+R1 원본과 영수증을 건드리지 않은 임시 replay에서 수정 전 `23/34 (0.676471)`가 수정 후
+`32/34 (0.941176)`로 바뀌었다. 남은 material rejection 2개 `PROFACT-SOIL-M33/M34`는 Koscom 표의 떨어진
+셀을 `|`로 재조립한 실제 quote mismatch라 계속 거절했다. 쉬운 예로 줄바꿈만 다른 같은 문장은 살렸지만,
+표를 새 문장처럼 조립한 인용은 살리지 않았다. focused 5/5, source-verification·preflight·page-fetch 관련
+137/137, source-graph metadata 2/2가 PASS다. 저장소 전체 회귀도 Playwright 공유 라이브러리 경로를 명시한
+정상 환경에서 `7,885 PASS / failure·error 0 / 기존 skip 38`로 끝났다. 경로를 빠뜨린 앞선 실행은 브라우저
+의존성 로딩 실패로 시작된 환경 무효 시도라 결과에 포함하지 않았다. Pro-first v1·v2, fresh-efficiency,
+V6 production 정적 감사도 모두 PASS이며 critical count는 0이다. 동일 Playwright 공유 라이브러리 경로로
+독립 Reviewer A–H도 8/8 PASS했고, 각 reviewer가 직접 실행한 leaf test 합계는 340개다.
+
+R1은 패치 후 숫자가 좋아졌더라도 이미 실패한 live receipt를 소급해 PASS로 바꾸지 않는다. master 규칙대로
+현재 대화를 diagnostic-only로 보존하고, 전체 회귀·정적 감사·새 head CI green 뒤 기존 브라우저 탭 안의
+완전히 새 ChatGPT conversation에서 C15 R2를 다시 실행한다. master live full-thesis는 여전히 C06 1/3이며,
+C15 R2와 C24/C28이 실제 full-thesis까지 닫히기 전 PR #7 draft 해제와 main 병합은 금지한다. 정규화
+영수증은 `p50_c15_r1_efficiency_failure_and_generic_verifier_replay_receipt.json`이다.

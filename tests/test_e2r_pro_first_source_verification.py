@@ -227,6 +227,86 @@ class ProFirstSourceVerificationTest(unittest.TestCase):
         ).verify(dossier=dossier, job=self.job, job_root=self.root)
         self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
 
+    def test_official_domain_binds_literal_bilingual_legal_subject(self) -> None:
+        candidate = self.store.create_candidate(
+            symbol="654321",
+            company_name="S-Oil",
+            as_of_date=self.as_of_date,
+            scan_window=ScanWindow.MORNING,
+            trigger_fingerprint="bilingual-official-domain",
+            research_mode=ResearchMode.FULL_RESEARCH,
+            selection_receipt={"production_candidate": True},
+        )
+        job = self.store.create_job(
+            candidate.candidate_id,
+            archetype_ids=("C06_HBM_MEMORY_CUSTOMER_CAPACITY",),
+        )
+        url = "https://www.s-oil.com/filing/cash-flow.pdf"
+        excerpt = "영업활동 현금흐름 3,942,304 1,467,583"
+        legal_subject = "에쓰-오일 주식회사와 그 종속기업"
+        fact = self._fact(
+            subject=legal_subject,
+            source_url=url,
+            source_publisher="S-OIL",
+            source_role_ids=["OFFICIAL_FILING"],
+            supporting_excerpt=excerpt,
+        )
+        dossier = self._dossier(fact)
+        dossier["job_id"] = job.job_id
+        dossier["target"] = {
+            "target_id": "654321",
+            "company_name": "S-Oil",
+            "aliases": ["S-OIL"],
+        }
+        document = " ".join(
+            (
+                "2026년 8월 1일 연결 현금흐름표",
+                legal_subject,
+                "MEMORY HBM 연결 재무정보",
+                excerpt,
+                "전체 공식 재무제표 본문과 주석을 포함한다. " * 12,
+            )
+        )
+        result = ProSourceVerifier(
+            page_fetcher=PageFetcher(
+                fixture_text_by_url={url: document},
+                live_enabled=False,
+                max_text_chars=None,
+            )
+        ).verify(dossier=dossier, job=job, job_root=self.root)
+        self.assertEqual(result.verifications[0].status, "ACCEPTED_CURRENT")
+
+    def test_shared_filing_host_cannot_bind_unrelated_legal_subject(self) -> None:
+        url = "https://dart.fss.or.kr/report/current"
+        excerpt = "MEMORY HBM 영업활동 현금흐름 3,942,304"
+        fact = self._fact(
+            subject="다른기업 주식회사와 그 종속기업",
+            source_url=url,
+            source_publisher="DART",
+            source_role_ids=["OFFICIAL_FILING"],
+            supporting_excerpt=excerpt,
+        )
+        dossier = self._dossier(fact)
+        document = " ".join(
+            (
+                "2026년 8월 1일 연결 현금흐름표",
+                "다른기업 주식회사와 그 종속기업",
+                excerpt,
+                "전체 공시 재무제표 본문과 주석을 포함한다. " * 12,
+            )
+        )
+        result = ProSourceVerifier(
+            page_fetcher=PageFetcher(
+                fixture_text_by_url={url: document},
+                live_enabled=False,
+                max_text_chars=None,
+            )
+        ).verify(dossier=dossier, job=self.job, job_root=self.root)
+        self.assertEqual(
+            result.verifications[0].status,
+            "REJECTED_WRONG_SUBJECT",
+        )
+
     def test_future_http_last_modified_does_not_override_past_publication(self) -> None:
         document = self._document()
         result = self._verify(

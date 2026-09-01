@@ -143,6 +143,17 @@ class ProFirstV21LocalPreflightTest(unittest.TestCase):
             ).matched
         )
 
+    def test_exact_quote_accepts_pdf_tokenized_korean_whitespace_only(self) -> None:
+        result = ExactQuoteVerifier().verify(
+            "• 아시아정제마진은원유대비타이트한정유제품공급상황이심화",
+            (
+                "2분기 시황\n•\n아시아\n정제마진\n은\n원유\n대비\n"
+                "타이트한\n정유제품\n공급\n상황이\n심화\n후속 설명"
+            ),
+        )
+        self.assertTrue(result.matched)
+        self.assertEqual(result.match_mode, "UNICODE_WHITESPACE_INSENSITIVE")
+
     def test_body_maturity_table_is_not_inferred_as_publication_date(self) -> None:
         result = AsOfDateVerifier().verify(
             claimed_published_at="2026-08-13",

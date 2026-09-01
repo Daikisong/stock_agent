@@ -22,6 +22,20 @@ class ExactQuoteVerifier:
         exact_text = _normalize_whitespace(unicodedata.normalize("NFC", text))
         if len(exact_quote) >= 8 and exact_quote in exact_text:
             return QuoteVerification(True, "EXACT_NORMALIZED", exact_quote)
+        # PDF extractors may preserve every glyph and punctuation mark while
+        # emitting each Korean word or table token on a separate line.  The
+        # initial Pro report can see the same continuous source text without
+        # those layout spaces.  Removing Unicode whitespace only (not
+        # punctuation or characters) is still a literal comparison and does
+        # not license paraphrases or reordered table cells.
+        compact_quote = _normalize_unicode_whitespace(quote)
+        compact_text = _normalize_unicode_whitespace(text)
+        if len(compact_quote) >= 8 and compact_quote in compact_text:
+            return QuoteVerification(
+                True,
+                "UNICODE_WHITESPACE_INSENSITIVE",
+                compact_quote,
+            )
         punctuation_quote = _normalize_punctuation(quote)
         punctuation_text = _normalize_punctuation(text)
         if len(punctuation_quote) >= 8 and punctuation_quote in punctuation_text:
@@ -59,6 +73,18 @@ class ExactQuoteVerifier:
 
 def _normalize_whitespace(value: str) -> str:
     return " ".join(value.split())
+
+
+def _normalize_unicode_whitespace(value: str) -> str:
+    normalized = unicodedata.normalize("NFKC", value).casefold()
+    return "".join(
+        character
+        for character in normalized
+        if not (
+            character.isspace()
+            or unicodedata.category(character).startswith("Z")
+        )
+    )
 
 
 def _normalize_punctuation(value: str) -> str:

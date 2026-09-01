@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path
 import re
+import unicodedata
 from typing import TYPE_CHECKING, Any, Mapping, Sequence
 from urllib.parse import urlparse
 
@@ -36,7 +37,7 @@ if TYPE_CHECKING:
     from ..preflight import EvidencePreflightResult
 
 
-SOURCE_VERIFICATION_SEMANTICS_VERSION = "e2r_pro_source_verification_v11"
+SOURCE_VERIFICATION_SEMANTICS_VERSION = "e2r_pro_source_verification_v12"
 
 
 TERMINAL_SOURCE_STATUSES = frozenset(
@@ -572,12 +573,22 @@ class ProSourceVerifier:
                 document=fetched,
                 published=date_result.effective_published_at,
             ), None
+        fact_target_aliases = tuple(target_aliases)
+        issuer_subject_alias = _issuer_domain_bound_subject_alias(
+            fact,
+            company_name=job.company_name,
+            target_aliases=target_aliases,
+        )
+        if issuer_subject_alias:
+            fact_target_aliases = tuple(
+                dict.fromkeys((*fact_target_aliases, issuer_subject_alias))
+            )
         scope = self.scope_verifier.verify(
             fact=fact,
             document_text=fetched.text,
             target_id=job.symbol,
             company_name=job.company_name,
-            target_aliases=target_aliases,
+            target_aliases=fact_target_aliases,
             semantic_scope=explicit_scope,
         )
         if not scope.accepted:
@@ -782,6 +793,9 @@ class ProSourceVerifier:
 _ISSUER_ALIAS_SOURCE_ROLES = frozenset(
     {"ISSUER_OFFICIAL", "ISSUER_EARNINGS"}
 )
+_ISSUER_DOMAIN_SUBJECT_SOURCE_ROLES = frozenset(
+    {*_ISSUER_ALIAS_SOURCE_ROLES, "OFFICIAL_FILING"}
+)
 _PUBLISHER_ORGANIZATION_WORDS = frozenset(
     {
         "company",
@@ -818,20 +832,86 @@ def _issuer_publisher_aliases(
         }
         if not roles.intersection(_ISSUER_ALIAS_SOURCE_ROLES):
             continue
-        hostname = (urlparse(str(fact.get("source_url") or "")).hostname or "")
-        normalized_host = re.sub(r"[^a-z0-9]+", "", hostname.casefold())
+        source_url = str(fact.get("source_url") or "")
         publisher = str(fact.get("source_publisher") or "")
         for fragment in re.split(r"\s*(?:/|\||;)\s*", publisher):
             candidate = fragment.strip()
-            tokens = tuple(
-                value
-                for value in re.findall(r"[a-z0-9]+", candidate.casefold())
-                if len(value) >= 4
-                and value not in _PUBLISHER_ORGANIZATION_WORDS
-            )
-            if candidate and any(value in normalized_host for value in tokens):
+            if candidate and _publisher_matches_source_hostname(
+                candidate, source_url
+            ):
                 aliases.append(candidate)
     return tuple(dict.fromkeys(aliases))
+
+
+def _issuer_domain_bound_subject_alias(
+    fact: Mapping[str, Any],
+    *,
+    company_name: str,
+    target_aliases: Sequence[str],
+) -> str | None:
+    """Bind a literal bilingual legal name to a verified issuer domain.
+
+    An official filing can call the issuer ``에쓰-오일 주식회사`` while the
+    target roster and hostname use ``S-OIL``.  The legal subject is usable as
+    a target alias only when the fact is issuer-scoped, carries an issuer
+    source role, and the declared publisher has token affinity with the
+    fetched hostname.  The downstream subject verifier still requires that
+    legal name to occur literally in the downloaded document.
+    """
+
+    if fact.get("issuer_scoped") is not True:
+        return None
+    roles = {
+        str(value).strip().upper()
+        for value in fact.get("source_role_ids") or ()
+    }
+    if not roles.intersection(_ISSUER_DOMAIN_SUBJECT_SOURCE_ROLES):
+        return None
+    publisher = str(fact.get("source_publisher") or "").strip()
+    url = str(fact.get("source_url") or "").strip()
+    subject = str(fact.get("subject") or "").strip()
+    publisher_identity = _organization_identity(publisher)
+    target_identities = {
+        _organization_identity(value)
+        for value in (company_name, *target_aliases)
+        if _organization_identity(value)
+    }
+    if (
+        not subject
+        or not publisher_identity
+        or publisher_identity not in target_identities
+        or not _publisher_matches_source_hostname(publisher, url)
+    ):
+        return None
+    return subject
+
+
+def _organization_identity(value: object) -> str:
+    normalized = unicodedata.normalize("NFKC", str(value or "")).casefold()
+    tokens = tuple(
+        token
+        for token in re.findall(r"[^\W_]+", normalized, flags=re.UNICODE)
+        if token not in _PUBLISHER_ORGANIZATION_WORDS
+    )
+    return "".join(tokens)
+
+
+def _publisher_matches_source_hostname(publisher: str, url: str) -> bool:
+    hostname = (urlparse(url).hostname or "").casefold()
+    normalized_host = re.sub(r"[^a-z0-9]+", "", hostname)
+    compact_publisher = re.sub(r"[^a-z0-9]+", "", publisher.casefold())
+    tokens = tuple(
+        value
+        for value in re.findall(r"[a-z0-9]+", publisher.casefold())
+        if len(value) >= 4
+        and value not in _PUBLISHER_ORGANIZATION_WORDS
+    )
+    compact_match = bool(
+        len(compact_publisher) >= 4
+        and compact_publisher not in _PUBLISHER_ORGANIZATION_WORDS
+        and compact_publisher in normalized_host
+    )
+    return compact_match or any(value in normalized_host for value in tokens)
 
 
 def _source_independence_group(url: str, publisher: str) -> str:

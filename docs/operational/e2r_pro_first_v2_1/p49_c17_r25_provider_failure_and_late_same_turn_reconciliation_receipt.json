@@ -82,9 +82,17 @@
     "related_regression": "137/137 PASS",
     "compileall": "PASS",
     "git_diff_check": "PASS",
-    "full_unittest_discovery": "PENDING_CURRENT_PATCH",
+    "full_unittest_discovery": "7881_PASS_FAILURE_ERROR_0_EXISTING_SKIP_38",
     "static_audits": "PRO_FIRST_V1_V2_CONTRACTS_PROMPT36_V6_PASS_CRITICAL_0",
-    "github_actions_current_patch": "PENDING_PUSH"
+    "github_actions_current_patch": {
+      "head_sha": "02fcd315d317be2d1b14828feae25a9a9a181f3a",
+      "pro_first_run_id": 33452575446,
+      "pro_first_conclusion": "SUCCESS",
+      "v6_run_id": 33452575398,
+      "v6_conclusion": "SUCCESS",
+      "duplicate_push_pro_first_run_id": 33452571827,
+      "duplicate_push_pro_first_conclusion": "CANCELLED_AS_DUPLICATE"
+    }
   },
   "master_goal_state": {
     "live_full_thesis_pass_count": "1/3",
