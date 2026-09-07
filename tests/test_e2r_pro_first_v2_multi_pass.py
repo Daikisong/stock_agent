@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import replace
 from datetime import datetime, timezone
+import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -48,9 +49,11 @@ class _FakeSameConversationAdapter:
         conversation_id: str,
         *,
         persistence_results: tuple[bool, ...] = (True,),
+        fresh_page_results: tuple[bool, ...] = (True,),
     ) -> None:
         self.conversation_id = conversation_id
         self.persistence_results = persistence_results
+        self.fresh_page_results = fresh_page_results
         self.prepared: PreparedFollowupPass | None = None
         self.submit_count = 0
         self.persistence_count = 0
@@ -128,7 +131,9 @@ class _FakeSameConversationAdapter:
             missing_markers=(() if confirmed else tuple(required)),
             observed_user_turn_count=(1 if confirmed else 0),
             fresh_page_url=f"https://chatgpt.com/c/{conversation_id}",
-            fresh_page_loaded=True,
+            fresh_page_loaded=self.fresh_page_results[
+                min(self.persistence_count - 1, len(self.fresh_page_results) - 1)
+            ],
         )
 
     async def inspect_state(self) -> BrowserInspection:
@@ -620,6 +625,127 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
                 plan,
                 adapter,
             )
+        self.assertEqual(adapter.submit_count, 1)
+
+    async def test_nonfresh_absences_cannot_authorize_replacement(self) -> None:
+        for freshness in ((False, False), (True, False), (False, True)):
+            with self.subTest(freshness=freshness):
+                # Each case owns a separate ledger and actual submission.
+                case = ProFirstV2MultiPassTest()
+                case.setUp()
+                self.addCleanup(case.doCleanups)
+                plan = case._public_plan()
+                adapter = _FakeSameConversationAdapter(
+                    case.scope.conversation_id,
+                    persistence_results=(False,),
+                    fresh_page_results=(*freshness, True, True),
+                )
+                await case.orchestrator.prepare_followup(plan, adapter)
+                with self.assertRaises(FollowupSubmitBlocked):
+                    await case.orchestrator.submit_followup(plan, adapter)
+                audited = await case.orchestrator.audit_submitted_followup_persistence(
+                    plan, adapter
+                )
+                self.assertFalse(audited.sealed_unpersisted)
+                self.assertEqual(
+                    audited.research_pass.status,
+                    ResearchPassStatus.TRANSPORT_PENDING.value,
+                )
+                self.assertEqual(
+                    audited.research_pass.detail[
+                        "server_persistence_absence_confirmation_count"
+                    ],
+                    sum(freshness),
+                )
+                self.assertEqual(
+                    len(audited.research_pass.detail["server_persistence_observations"]),
+                    2,
+                )
+                with self.assertRaisesRegex(FollowupSubmitBlocked, "two fresh-view"):
+                    case.orchestrator.ledger.seal_unpersisted_dispatch(
+                        plan.research_pass.pass_id
+                    )
+                recovered_plan = case._public_plan()
+                self.assertEqual(
+                    recovered_plan.research_pass.pass_id, plan.research_pass.pass_id
+                )
+                self.assertEqual(
+                    len(case.orchestrator.ledger.list_passes(case.job.job_id)), 2
+                )
+
+                # Real fresh observations can still reach the existing two-view gate.
+                for _ in range(2 - sum(freshness)):
+                    audited = await case.orchestrator.audit_submitted_followup_persistence(
+                        plan, adapter
+                    )
+                self.assertTrue(audited.sealed_unpersisted)
+                self.assertEqual(adapter.submit_count, 1)
+
+    async def test_repeated_fresh_observation_is_not_independent_absence(self) -> None:
+        plan = self._public_plan()
+        adapter = _FakeSameConversationAdapter(
+            self.scope.conversation_id, persistence_results=(False,)
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        with self.assertRaises(FollowupSubmitBlocked):
+            await self.orchestrator.submit_followup(plan, adapter)
+        # Replay the same observation identity, rather than load another view.
+        adapter.persistence_count = 0
+        audited = await self.orchestrator.audit_submitted_followup_persistence(
+            plan, adapter
+        )
+        self.assertFalse(audited.sealed_unpersisted)
+        self.assertEqual(
+            audited.research_pass.detail["server_persistence_absence_confirmation_count"],
+            1,
+        )
+        with self.assertRaisesRegex(FollowupSubmitBlocked, "two fresh-view"):
+            self.orchestrator.ledger.seal_unpersisted_dispatch(plan.research_pass.pass_id)
+        self.assertEqual(adapter.submit_count, 1)
+
+    async def test_legacy_seal_cannot_create_or_submit_unproven_replacement(self) -> None:
+        plan = self._public_plan()
+        adapter = _FakeSameConversationAdapter(
+            self.scope.conversation_id, persistence_results=(False,)
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        with self.assertRaises(FollowupSubmitBlocked):
+            await self.orchestrator.submit_followup(plan, adapter)
+        audited = await self.orchestrator.audit_submitted_followup_persistence(
+            plan, adapter
+        )
+        self.assertTrue(audited.sealed_unpersisted)
+        ledger = self.orchestrator.ledger
+        replacement_args = {
+            "scope": self.scope,
+            "pass_name": plan.research_pass.pass_name,
+            "parent_pass_id": self.scope.initial_pass_id,
+            "prompt_hash": "d" * 64,
+            "pass_input_hash": "e" * 64,
+            "detail": {"supersedes_unpersisted_pass_id": plan.research_pass.pass_id},
+        }
+        existing = ledger.create_followup_pass(
+            pass_id="PROPASS-LEGACY-PLANNED", **replacement_args
+        )
+        ledger.mark_prepared(existing.pass_id)
+
+        # Recreate an older seal whose cached count/permission overstated its evidence.
+        legacy_detail = dict(audited.research_pass.detail)
+        legacy_detail["server_persistence_observations"][1]["fresh_page_loaded"] = False
+        with ledger._transaction() as connection:
+            connection.execute(
+                "UPDATE pro_research_passes SET detail_json=? WHERE pass_id=?",
+                (json.dumps(legacy_detail), plan.research_pass.pass_id),
+            )
+        with self.assertRaisesRegex(FollowupSubmitBlocked, "two fresh-view"):
+            ledger.create_followup_pass(
+                pass_id="PROPASS-LEGACY-NEW", **replacement_args
+            )
+        with self.assertRaisesRegex(FollowupSubmitBlocked, "two fresh-view"):
+            ledger.claim_submit(existing.pass_id)
+        self.assertEqual(ledger.get_pass(existing.pass_id).submit_count, 0)
+        self.assertEqual(ledger.get_pass(plan.research_pass.pass_id).detail, legacy_detail)
+        self.assertEqual(len(ledger.list_passes(self.job.job_id)), 3)
         self.assertEqual(adapter.submit_count, 1)
 
     def test_claimed_transport_timeout_is_recovery_only_and_can_complete(self) -> None:

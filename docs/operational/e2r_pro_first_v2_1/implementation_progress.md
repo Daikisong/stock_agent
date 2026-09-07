@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-08-29 세 기존 canary fail-closed 봉인 / 독립 새 C06 ChatGPT Pro 실행 중`
+기준 시각: `2026-09-08 KST / P55: C15 R5 초기 검문 PASS, 후속 회수 보류, fresh-view 부재 판정 수리`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -43,12 +43,18 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             IN_PROGRESS (기존 3개 terminal pending 봉인, 새 C06 blind chat 실행 중)
-P10 final CI/audit                        IN_PROGRESS (Reviewer A~H PASS, 새 live 결과 뒤 최종 회귀·CI 대기)
+P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS, C15 R5 후속 회수 보류, C28 새 실행 필요)
+P10 final CI/audit                        IN_PROGRESS (P55 로컬 회귀 PASS, 원격 CI 확인 예정, live 3/3 미충족)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
 `PRO_FIRST_V2_1_OPERATIONAL_RESEARCH_READY`를 선언하지 않는다.
+
+현재 확인된 live full-thesis 통과는 C06 한 건이다. C15 R5는 초기 material 24개 중 23개가 수용돼
+초기 효율 검문을 통과했지만 후속 결과가 회수되지 않아 full-thesis PASS가 아니다. 9월 1일 실행의
+감시 프로세스는 이미 종료됐으며, DB의 `RESEARCH_RUNNING` 값만으로 현재 서버가 계산 중이라고
+주장하지 않는다. 연결 가능한 Chrome에는 9월 8일 재점검 시 ChatGPT page가 없었다.
+아래 P0~P54는 당시의 이력이며, 최신 상태와 정정은 문서 끝 P55를 따른다.
 
 ## P14 — 화면상 전송과 서버 저장 분리, C06 대화 폐기
 
@@ -5525,3 +5531,82 @@ CI는 readiness 287/287, offline E2E 4/4, browser mock E2E 92/92, compileall, di
 커밋·푸시하고 exact-head CI green을 확인한 뒤, 같은 기존 브라우저 탭 안의 **새 ChatGPT conversation**에서
 C15 R5를 시작하는 것이다. master live full-thesis는 여전히 C06 1/3이며 C15와 C24/C28이 실제
 full-thesis까지 닫히기 전 PR #7은 draft/open, main은 미병합 상태를 유지한다.
+
+## P55 — C15 R5 초기 PASS, 감시 종료 확인과 부재 판정 정정
+
+9월 8일 재개 시 이전 프로세스 handle은 존재하지 않았다. 원본 runtime receipt는 감시가
+`2026-09-01T17:14:29Z`(한국 시각 9월 2일 02:14)에 `follow-up completion poll bound reached`로
+종료됐다고 기록한다. latest full-thesis receipt hash는
+`ef34f721bfc079ef19e4916ebd61da5d738b7934c3b044d57d38d2aada2b7412`다.
+DB pass의 `RESEARCH_RUNNING`은 마지막 저장 상태이며 현재 서버 계산의 증거가 아니다.
+과거 commentary에서 polling 값이 갱신된 것만으로 "정상 연구 중"이라고 반복한 설명은 이 점에서
+과도했다. `DEEP_RESEARCH_MODE_READY` 역시 이 adapter의 상태 enum 이름이지 새 Deep research를
+선택했다거나 응답 산출물이 완성됐다는 증명이 아니다.
+
+R5 최초 응답 자체는 정상 회수됐다. job `PROJOB-7c02db014fefb06b1258ffe9`, run
+`PRORUN-b66fab297a8016c613f2d46a`, conversation `6a96c840-4440-83ee-abe8-c8742eb17741`에서
+submit 1회 뒤 `DOWNLOAD_JSON`으로 받은 초기 dossier의 response hash는
+`9c0c64dacccac5cb351f0e6248cb5487e5cf81f394c41778bf06a7afb716311f`다. source 11개, serialized
+material 25개 중 현재 material 24개, 그중 accepted 23개(95.8333%), mandatory question 27/27,
+semantic repair candidate 1개로 초기 효율 검문은 PASS다. 원본 검문 receipt hash는
+`7912558d2ee7c3eeb371365781863f412b31c0ed1740d142d7ebba837a74cf06`다.
+
+후반 첫 public-gap pass `PROPASS-2ced92878a16c36601168af7`는 구 코드가 "독립 부재 두 번"으로
+봉인했다. 그러나 DB의 실제 두 observation을 다시 읽으면 첫 번째만 `fresh_page_loaded=true`이고,
+두 번째 `PROSERVERVIEW-8ddd1e026effe61476d5cd13`은 `fresh_page_loaded=false`였다. 즉 실제 독립
+새 화면의 부재 증거는 1회다. 당시 이를 2회라고 보고하고 replacement를 허용한 것은 결함이다.
+이 이력을 새 PASS로 덮어쓰거나 runtime ledger를 소급 수정하지 않는다.
+
+원인은 `record_server_persistence_observation()`과 `seal_unpersisted_dispatch()`가
+`persistence_confirmed=false`만 검사하고 새 화면을 읽었는지 확인하지 않은 데 있다. 두 경계 모두
+`fresh_page_loaded is True`인 부재만 세도록 수정했다. 새로고침을 생략한 관찰은 감사 history에는
+남지만 봉인·replacement의 근거가 되지 않는다. 쉬운 예로 갱신 안 된 배송 목록을 두 번 봤다고
+"주문이 서버에 없다"고 확정해 새 주문을 넣을 수는 없다.
+
+구 코드가 이미 잘못 봉인한 기록도 재전송 근거로 사용할 수 없도록, replacement 생성과 submit claim
+직전에 원 pass의 실제 fresh observation을 다시 검사한다. 구 기록의 cached count와
+`replacement_pass_allowed=true`만으로 통과할 수 없다. 이미 준비된 미전송 replacement도 같은
+검사를 받으며, 이미 전송된 요청은 재전송하지 않고 회수 대상으로 보존한다.
+
+이미 전송된 replacement `PROPASS-20c07c841f9c4ba5a16e727f`는 실제 fresh view에서 user turn
+`6f8a234f-7e48-4269-b681-a7a722822078`과 exact job/run/pass/parent marker를 확인했다. 그러나
+최종 응답 hash와 capture는 없으며 감시가 종료됐다. 이 replacement의 제출은 1회이고 이번 재점검의
+추가 submit은 0이다. 늦은 결과 존재 여부는 현재 로그인 화면에서 확인해야 한다.
+
+현재 검증 corpus는 accepted fact 37개다. mandatory nonterminal 5, public material gap 4,
+provider/parser core pending 5, source linkage incomplete 5가 남아 saturation은 false이고
+score·Stage는 null이다. 초기 PASS를 full-thesis PASS로 세지 않는다.
+
+BrowserUse 사전점검은 exit 0이지만 현재 세션의 Chrome plugin 호출은
+`TypeError: tools.mcp__node_repl__js is not a function`으로 실패했다. 이후 이미 실행 중인 Chrome의
+9222와 9234 endpoint를 읽기 전용으로 점검했으며 양쪽 모두 ChatGPT page가 없었다. 이전 target
+`F6DC0979950E8B311DC6F6207BF6197E`도 목록에 없다. 새 탭·새 창을 만들거나 다른 작업 탭을 이동하지
+않았다. 동일 대화를 로그인한 Chrome 탭에 열 수 있어야 `recover-submitted-only`로 결과를 확인할 수
+있다. 목표 완료 여부와 별개로 이 외부 접근 조건은 현재 미충족이다.
+
+같은 날 05:13 KST 재점검에서도 ChatGPT page는 없었다. 다른 작업의 탭은 건드리지 않았다.
+Downloads의 JSON·MD·TXT 파일에서 exact job 또는 replacement pass ID를 검색한 결과도 0건이었다
+(`rg` exit 1). 따라서 다른 요청의 예전 자료를 현재 후속 응답으로 대신 수입하지 않았다.
+
+새 회귀는 부재 관찰의 새로고침 조합 `(false,false)`, `(true,false)`, `(false,true)`에서 봉인과
+replacement가 모두 금지됨을 검사한다. 중복 observation ID를 다시 읽어도 부재 수가 증가하지 않고,
+이후 실제 독립 fresh 부재가 두 번 모이면 기존 봉인 동작이 유지되는 것도 검사했다.
+집중 4/4는 PASS다. 구 코드의 잘못된 봉인을 재현한 fixture에서 새 replacement 생성과 이미 준비된
+replacement의 submit claim을 모두 차단하며, 원 기록을 변경하지 않는 것도 검증했다.
+multi-pass·fresh orchestration은 legacy 회귀 추가 후 최종 107/107 PASS다.
+Reviewer A–H로 구성된 직접 leaf-test 검증은 8개 그룹/346개 테스트가 PASS했다. 이는 자동화된
+leaf 실행 증거이며 새 외부 독립 검토자가 검수했다는 뜻으로 세지 않는다.
+전체 offline CI는 `2026-09-07T20:14:35Z`에 PASS로 종료됐다. readiness 287/287,
+offline E2E 4/4, browser mock 92/92, compileall, diff check가 모두 통과했다.
+전체 unittest는 7,897개를 실행해 failure/error 0, 기존 skip 38개였다(실행 통과 7,859개).
+기존 7,894개 대비 회귀 3개가 추가됐고 새 skip은 없다. V2 정적 감사도 PASS/critical 0이다.
+원본 offline CI 파일의 SHA-256은
+`892ae38e35ff98ae8b35f3abaf7288935221648e34027cc4848622006f09fac5`다.
+정확한 명령·테스트 수·leaf input/output hash는
+`p55_c15_r5_initial_and_fresh_absence_revalidation_receipt.json`에 확정했다.
+커밋 자체의 원격 CI는 커밋·푸시 이후 PR #7의 exact-head checks에서 확인한다.
+
+P54의 원격 head `80dd8ee80b92a0f51cd61c7631ba4bd30c2a0e48`는 재조회에서도 Pro-first
+`33506964136`, V6 `33506964028` 모두 SUCCESS였다. 이는 P54의 결과이며 P55의 CI 증명과 구분한다.
+현재 master live full-thesis는 C06 1/3, C15 후속 회수 보류, C28 새 blind run 필요다.
+PR #7은 계속 draft/open이며 main 병합과 운영 준비 완료 선언은 하지 않는다.

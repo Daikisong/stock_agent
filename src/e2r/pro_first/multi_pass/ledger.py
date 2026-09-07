@@ -259,6 +259,12 @@ class ProMultiPassLedger:
             ).fetchone()
             if parent is None or parent["status"] != ResearchPassStatus.COMPLETE.value:
                 raise FollowupSubmitBlocked("follow-up parent must be a completed pass in this job")
+            self._require_fresh_replacement_evidence(
+                connection,
+                detail=detail,
+                job_id=scope.job_id,
+                conversation_id=scope.conversation_id,
+            )
             ordinal = int(
                 connection.execute(
                     "SELECT COALESCE(MAX(pass_ordinal), 0) + 1 FROM pro_research_passes WHERE job_id=?",
@@ -303,6 +309,45 @@ class ProMultiPassLedger:
             timestamp_column="prepared_at",
         )
 
+    def _require_fresh_replacement_evidence(
+        self,
+        connection: Any,
+        *,
+        detail: Mapping[str, Any],
+        job_id: str,
+        conversation_id: str,
+    ) -> None:
+        source_id = str(detail.get("supersedes_unpersisted_pass_id") or "")
+        if not source_id:
+            return
+        source = self._require_pass(connection, source_id)
+        source_detail = json.loads(source["detail_json"])
+        observations = tuple(
+            item
+            for item in source_detail.get("server_persistence_observations") or ()
+            if isinstance(item, Mapping)
+        )
+        absence_ids = {
+            str(item.get("observation_id") or "")
+            for item in observations
+            if item.get("persistence_confirmed") is False
+            and item.get("fresh_page_loaded") is True
+            and str(item.get("observation_id") or "")
+        }
+        if (
+            source["job_id"] != job_id
+            or source["conversation_id"] != conversation_id
+            or source["status"] != ResearchPassStatus.FAILED_HARD.value
+            or int(source["submit_count"]) != 1
+            or source["response_hash"] is not None
+            or source_detail.get("replacement_pass_allowed") is not True
+            or any(item.get("persistence_confirmed") is True for item in observations)
+            or len(absence_ids) < 2
+        ):
+            raise FollowupSubmitBlocked(
+                "replacement requires two fresh-view absences in its durable source"
+            )
+
     def claim_submit(self, pass_id: str) -> ResearchPassRecord:
         now = self.store._now_text()
         with self._transaction() as connection:
@@ -322,6 +367,12 @@ class ProMultiPassLedger:
                 or int(row["submit_count"]) != 0
             ):
                 raise FollowupSubmitBlocked("follow-up pass was already claimed or is not prepared")
+            self._require_fresh_replacement_evidence(
+                connection,
+                detail=json.loads(row["detail_json"]),
+                job_id=row["job_id"],
+                conversation_id=row["conversation_id"],
+            )
             cursor = connection.execute(
                 """
                 UPDATE pro_research_passes
@@ -436,11 +487,14 @@ class ProMultiPassLedger:
                 target = ResearchPassStatus.RESEARCH_RUNNING.value
                 completed_at = None
             else:
+                # A refresh may be skipped while a submission is in flight.
+                # Preserve that observation, but it cannot prove server absence.
                 absence_rows = tuple(
                     item
                     for item in observations
                     if isinstance(item, Mapping)
                     and item.get("persistence_confirmed") is False
+                    and item.get("fresh_page_loaded") is True
                 )
                 reason = (
                     "SERVER_PERSISTENCE_UNCONFIRMED: fresh public conversation "
@@ -505,6 +559,7 @@ class ProMultiPassLedger:
                 str(item.get("observation_id") or "")
                 for item in observations
                 if item.get("persistence_confirmed") is False
+                and item.get("fresh_page_loaded") is True
                 and str(item.get("observation_id") or "")
             }
             if any(
