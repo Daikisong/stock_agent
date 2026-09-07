@@ -1045,6 +1045,18 @@ class Gate1WorkflowRegressionTest(unittest.TestCase):
             "tests.test_e2r_evidence_gap_fixpoint.Frozen000660Gate1AcceptanceTest",
             workflow,
         )
+        self.assertIn(
+            "-r requirements/e2r_pro_first_py310_linux_x86_64.lock",
+            workflow,
+        )
+        self.assertNotIn(
+            "-r requirements/e2r_v6_clean_clone_py310_linux_x86_64.lock",
+            workflow,
+        )
+        self.assertIn(
+            "python -m playwright install --with-deps chromium",
+            workflow,
+        )
         self.assertIn('E2R_RUN_LIVE_TESTS: "0"', workflow)
 
 

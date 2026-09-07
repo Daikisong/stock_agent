@@ -1,0 +1,206 @@
+{
+  "as_of_date": "2026-08-22",
+  "component_entry_allowed": false,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "component_entry_allowed_count": 0,
+    "full_thesis_score_valid_count": 0,
+    "gap_candidate_unclassified_count": 0,
+    "legacy_complete_not_diverged_count": 0,
+    "legacy_count_contract_mismatch_count": 0,
+    "new_query_or_fetch_count": 0,
+    "partial_corpus_marked_saturated_count": 0,
+    "partial_saturation_audit_unexpectedly_clean_count": 0,
+    "pro_score_stage_authority_count": 0,
+    "public_material_gap_missing_count": 0,
+    "question_fact_linkage_inferred_count": 0,
+    "semantic_candidate_class_missing_count": 0,
+    "stage_final_publication_count": 0,
+    "v2_question_plan_count_mismatch_count": 0
+  },
+  "dossier_payload_hash": "aa16665b8ffbe01830748ea336f8613158564f5c07d03a27474630731a54747e",
+  "expected_mandatory_question_count": 28,
+  "first_pass_diagnostic_score": 23.202275,
+  "first_pass_diagnostic_stage": "0",
+  "fixture_only": true,
+  "full_thesis_score": null,
+  "full_thesis_score_valid": false,
+  "full_thesis_stage": null,
+  "gap_candidate_class_counts": {
+    "FUTURE_EVENT_ONLY_CANDIDATE": 2,
+    "LIKELY_NONPUBLIC_CANDIDATE": 7,
+    "PUBLIC_SEARCHABLE": 4
+  },
+  "gap_candidate_decisions": [
+    {
+      "availability_candidate": "LIKELY_NONPUBLIC_CANDIDATE",
+      "dossier_gap_id": "GAP-000660-001",
+      "proposed_missing_source_role": "DIRECT_CONTRACT_TERMS",
+      "required_source_families": [
+        "ISSUER_CONTRACT_FILING",
+        "CUSTOMER_OFFICIAL",
+        "ISSUER_EARNINGS_TRANSCRIPT"
+      ]
+    },
+    {
+      "availability_candidate": "LIKELY_NONPUBLIC_CANDIDATE",
+      "dossier_gap_id": "GAP-000660-002",
+      "proposed_missing_source_role": "CUSTOMER_ATTRIBUTION",
+      "required_source_families": [
+        "CUSTOMER_OFFICIAL",
+        "ISSUER_CUSTOMER_DISCLOSURE",
+        "REGULATORY_CUSTOMER_CONCENTRATION_NOTE"
+      ]
+    },
+    {
+      "availability_candidate": "LIKELY_NONPUBLIC_CANDIDATE",
+      "dossier_gap_id": "GAP-000660-003",
+      "proposed_missing_source_role": "DIRECT_QUALIFICATION_EVIDENCE",
+      "required_source_families": [
+        "CUSTOMER_OFFICIAL_QUALIFICATION",
+        "ISSUER_PRODUCT_QUALIFICATION_UPDATE",
+        "PARTNER_TECHNICAL_DOCUMENT"
+      ]
+    },
+    {
+      "availability_candidate": "LIKELY_NONPUBLIC_CANDIDATE",
+      "dossier_gap_id": "GAP-000660-004",
+      "proposed_missing_source_role": "PRODUCT_UNIT_ECONOMICS",
+      "required_source_families": [
+        "ISSUER_SEGMENT_KPI",
+        "ISSUER_EARNINGS_TRANSCRIPT",
+        "AUDITED_PRODUCT_REVENUE_NOTE"
+      ]
+    },
+    {
+      "availability_candidate": "LIKELY_NONPUBLIC_CANDIDATE",
+      "dossier_gap_id": "GAP-000660-005",
+      "proposed_missing_source_role": "DIRECT_CAPACITY_AND_YIELD",
+      "required_source_families": [
+        "ISSUER_CAPACITY_KPI",
+        "ISSUER_YIELD_DISCLOSURE",
+        "EQUIPMENT_SUPPLIER_OFFICIAL",
+        "PACKAGING_PARTNER_OFFICIAL"
+      ]
+    },
+    {
+      "availability_candidate": "PUBLIC_SEARCHABLE",
+      "dossier_gap_id": "GAP-000660-006",
+      "proposed_missing_source_role": "PROJECT_EXECUTION_AND_ROIC",
+      "required_source_families": [
+        "ISSUER_CAPEX_SCHEDULE",
+        "REGULATORY_PROJECT_UPDATE",
+        "AUDITED_CASH_FLOW",
+        "ISSUER_ROIC_DISCLOSURE"
+      ]
+    },
+    {
+      "availability_candidate": "PUBLIC_SEARCHABLE",
+      "dossier_gap_id": "GAP-000660-007",
+      "proposed_missing_source_role": "NORMALIZATION_RECONCILIATION",
+      "required_source_families": [
+        "AUDITED_FINANCIAL_NOTES",
+        "ISSUER_NON_GAAP_RECONCILIATION",
+        "CONSENSUS_MODEL_DEFINITION"
+      ]
+    },
+    {
+      "availability_candidate": "PUBLIC_SEARCHABLE",
+      "dossier_gap_id": "GAP-000660-008",
+      "proposed_missing_source_role": "INDUSTRY_SUPPLY_DEMAND",
+      "required_source_families": [
+        "PEER_CAPACITY_GUIDANCE",
+        "EQUIPMENT_SUPPLIER_BACKLOG",
+        "INDUSTRY_BIT_SUPPLY_DATA",
+        "CUSTOMER_CAPEX_GUIDANCE"
+      ]
+    },
+    {
+      "availability_candidate": "FUTURE_EVENT_ONLY_CANDIDATE",
+      "dossier_gap_id": "GAP-000660-009",
+      "proposed_missing_source_role": "CAPITAL_RETURN_EXECUTION",
+      "required_source_families": [
+        "REGULATORY_BUYBACK_PROGRESS",
+        "REGULATORY_CANCELLATION_COMPLETION",
+        "ISSUER_TREASURY_SHARE_REPORT"
+      ]
+    },
+    {
+      "availability_candidate": "FUTURE_EVENT_ONLY_CANDIDATE",
+      "dossier_gap_id": "GAP-000660-010",
+      "proposed_missing_source_role": "PRIMARY_DECISION_DISCLOSURE",
+      "required_source_families": [
+        "REGULATORY_FACILITY_DECISION",
+        "ISSUER_BOARD_APPROVAL",
+        "GOVERNMENT_INCENTIVE_OFFICIAL"
+      ]
+    },
+    {
+      "availability_candidate": "LIKELY_NONPUBLIC_CANDIDATE",
+      "dossier_gap_id": "GAP-000660-011",
+      "proposed_missing_source_role": "COMPETITIVE_ALLOCATION",
+      "required_source_families": [
+        "CUSTOMER_SUPPLIER_ALLOCATION_OFFICIAL",
+        "PEER_HBM_CAPACITY_GUIDANCE",
+        "PLATFORM_VENDOR_OFFICIAL"
+      ]
+    },
+    {
+      "availability_candidate": "LIKELY_NONPUBLIC_CANDIDATE",
+      "dossier_gap_id": "GAP-000660-012",
+      "proposed_missing_source_role": "CUSTOMER_CONCENTRATION_DETAIL",
+      "required_source_families": [
+        "AUDITED_CUSTOMER_NOTE",
+        "ISSUER_RISK_UPDATE",
+        "CUSTOMER_OFFICIAL_CAPEX_AND_PRODUCT_ROADMAP"
+      ]
+    },
+    {
+      "availability_candidate": "PUBLIC_SEARCHABLE",
+      "dossier_gap_id": "GAP-000660-013",
+      "proposed_missing_source_role": "NORMALIZED_VALUATION_INPUTS",
+      "required_source_families": [
+        "NORMALIZED_CONSENSUS_EPS",
+        "CONSENSUS_FCF",
+        "PEER_VALUATION_DATA",
+        "MARKET_DATA_SNAPSHOT"
+      ]
+    }
+  ],
+  "job_id": "PROJOB-70e6a50ae757bd874e602a85",
+  "legacy_complete_diverged": true,
+  "new_fetch_count": 0,
+  "new_query_count": 0,
+  "nonterminal_mandatory_question_count": 28,
+  "observed_first_pass": {
+    "counterfact_count": 15,
+    "legacy_research_status": "COMPLETE",
+    "lineage_group_count": 15,
+    "material_fact_count": 20,
+    "unresolved_gap_count": 13,
+    "verified_fact_count": 26
+  },
+  "phase": "P9_FROZEN_MD_REPLAY",
+  "primary_archetype_ids": [
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
+  ],
+  "pro_score_authority": false,
+  "pro_stage_authority": false,
+  "production_runtime_ready": false,
+  "projection_hash": "2da1fe46c3a389a146331ca708ec96454b2c58fd99a46805e94293e029d488d7",
+  "public_searchable_material_gap_count": 28,
+  "publication_status": "WITHHELD_PENDING_RESEARCH_SATURATION",
+  "raw_report_tracked": false,
+  "replay_hash": "2dbb32caa48f0a3e8577f4e8793687554914a4ab4d39737450cccac2ebf1e439",
+  "research_saturation_valid": false,
+  "run_id": "PRORUN-643c723370681970b5bcc582",
+  "saturation_receipt_hash": "c19c04504013965bfe36afc5bf3e954440c52f95101c02e1c3160803a1196b27",
+  "schema_version": "e2r_pro_first_v2_frozen_partial_replay_v1",
+  "score_authority": "ResearchCalibratedComponentScorer",
+  "source_report_byte_count": 127517,
+  "source_report_sha256": "92394591d8d56dc52321f5a2df60a72a658c7347353f99ae96f3584fda211f9b",
+  "stage_authority": "AtomicStageCourtV2",
+  "status": "PRO_FIRST_V2_PARTIAL_CORPUS_GUARD_PASS",
+  "target_id": "000660",
+  "v2_deterministic_research_status": "NEEDS_PUBLIC_GAP_CLOSURE"
+}

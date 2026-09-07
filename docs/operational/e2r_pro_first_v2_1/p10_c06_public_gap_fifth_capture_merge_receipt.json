@@ -1,0 +1,118 @@
+{
+  "schema_version": "e2r_pro_p10_c06_public_gap_fifth_capture_merge_receipt_v1",
+  "verdict": "PASS_OFFLINE_EXACT_CAPTURE_MERGE_AFTER_CANONICAL_DEDUP",
+  "final_full_thesis_allowed": false,
+  "job_id": "PROJOB-ab48ce7e94097cf9b6846602",
+  "run_id": "PRORUN-683f5a5423a6e367f443c6de",
+  "target_id": "000660",
+  "as_of_date": "2026-08-23",
+  "conversation_id": "6a8db0ad-8ed0-83e8-888e-dce26c950343",
+  "pass_id": "PROPASS-330252bb6db7ee3267fab916",
+  "parent_pass_id": "PROPASS-26c03ab89ff306eec50c9e3c",
+  "pass_name": "PUBLIC_GAP_CLOSURE",
+  "submit_count": 1,
+  "automatic_resubmit_count": 0,
+  "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+  "assistant_turn_id": "request-6a8db0ad-8ed0-83e8-888e-dce26c950343-4",
+  "captured_at": "2026-08-26T20:17:08.839229Z",
+  "prompt_hash": "71bd8763eda7bb2b93bbab2f777164570ca0ee6cb58663825ebe2c638046f04d",
+  "raw_report_md_hash": "6eb13d9c8a80096a48d40ad3218c45a37d711e6057398465217eb8bc07cad2c1",
+  "report_md_hash": "8c8a483dd74d20f6424bcf6ccb02ecdacafeac45ad1020b6364e4b1cc2f748dc",
+  "dossier_json_hash": "4a033c7741892968c20c894b43bdb2cefd0ee8120fb8f223f1eedcd3b65bc479",
+  "report_pdf_hash": null,
+  "optional_pdf_error": null,
+  "parser_operations": [
+    "REMOVE_RAW_CONTROL_CHARACTERS_FROM_JSON_KEYS:11",
+    "ESCAPE_RAW_CONTROL_CHARACTERS_IN_JSON_STRING_VALUES:18"
+  ],
+  "captured_delta": {
+    "new_source_document_count": 1,
+    "pro_reported_fact_count": 15,
+    "new_material_fact_row_count": 10,
+    "new_counterfact_row_count": 1,
+    "new_resolution_fact_row_count": 4,
+    "new_source_lineage_row_count": 6,
+    "new_route_receipt_count": 28,
+    "pro_reported_updated_question_count": 19,
+    "pro_reported_research_status": "NEEDS_PUBLIC_GAP_CLOSURE"
+  },
+  "prior_atomic_duplicate_projections": [
+    ["PROFACT-P6-C06-HBM4-CERTIFICATION-START", "PROFACT-P4-C06-HBM4-CUSTOMER-CERTIFICATION-PROCESS"],
+    ["PROFACT-P6-C06-Q2-REVENUE-FILING", "PROFACT-P5-C06-Q2-REVENUE-FILING"],
+    ["PROFACT-P6-C06-Q2-OPERATING-PROFIT-FILING", "PROFACT-P5-C06-Q2-OPERATING-PROFIT-FILING"],
+    ["PROFACT-P6-C06-HBM-PRICING-CONSENSUS-BEAT", "PROFACT-P5-C06-HBM-PRICING-BEAT"],
+    ["PROFACT-P6-C06-Q3-HBM-REVENUE-REVISION", "PROFACT-P5-C06-Q3-HBM-REVENUE-REVISION"],
+    ["PROFACT-P6-C06-HBM-SHIPMENT-CONSENSUS-SHORTFALL", "PROFACT-P5-C06-HBM-SHIPMENT-SHORTFALL"],
+    ["PROFACT-P6-R13-GOING-CONCERN-NOT-APPLICABLE", "PROFACT-P5-R13-GOING-CONCERN-NOT-APPLICABLE"],
+    ["PROFACT-P6-R13-NONOPINION-GOING-CONCERN-NOT-RECORDED", "PROFACT-P5-R13-NONOPINION-GOING-CONCERN-NOT-RECORDED"],
+    ["PROFACT-P6-R13-CONSOLIDATED-EMBEZZLEMENT-NO", "PROFACT-P5-R13-CONSOLIDATED-EMBEZZLEMENT-NO"]
+  ],
+  "projection_policy": {
+    "identity_fields": [
+      "source_document_id",
+      "predicate_id",
+      "normalized_subject",
+      "normalized_supporting_excerpt"
+    ],
+    "prior_canonical_fact_mutation_allowed": false,
+    "incoming_duplicate_content_adopted": false,
+    "same_pass_duplicate_coalescing_allowed": false,
+    "cross_fact_kind_coalescing_allowed": false,
+    "target_or_archetype_specific_rule_used": false
+  },
+  "exact_capture_offline_merge": {
+    "status": "PASS",
+    "pre_schema_operation_count": 37,
+    "actual_new_fact_count": 6,
+    "actual_new_fact_ids": [
+      "PROFACT-P6-C06-HBM-SUPPLY-DISCUSSIONS-COMPLETED",
+      "PROFACT-P6-C06-HBM4-MEETS-CUSTOMER-REQUIREMENTS",
+      "PROFACT-P6-C06-NVIDIA-STABLE-AI-MEMORY-SUPPLY",
+      "PROFACT-P6-C06-HBM4-SAMPLES-MAJOR-CUSTOMERS",
+      "PROFACT-P6-C06-HBM-REVENUE-2Q26",
+      "PROFACT-P6-R13-INTERNAL-CONTROL-NOT-ADVERSE"
+    ],
+    "prior_atomic_duplicate_count": 9,
+    "effective_fact_count": 75,
+    "effective_source_document_count": 29,
+    "effective_source_lineage_count": 27,
+    "effective_route_receipt_count": 170,
+    "effective_question_count": 28,
+    "effective_research_status": "PROVIDER_PENDING",
+    "effective_dossier_hash": "4845fd28d2911dd9f06864ad8216f744f2b1ac96eeda6c058c7b4eb03fe6e0e6"
+  },
+  "focused_regression": {
+    "test_count": 145,
+    "failure_count": 0,
+    "error_count": 0
+  },
+  "actual_capture_reuse": {
+    "status": "PASS",
+    "browser_submit_delta": 0,
+    "capture_reused": true,
+    "actual_new_fact_count": 6,
+    "actual_new_route_count": 28,
+    "semantic_progress": true,
+    "persisted_effective_dossier_file_hash": "0b6c41c9fa33239fdbe44a142d658f8b0a23d2a087843dc11c7ad9171a3d697a",
+    "accepted_fact_count_after_reverification": 39,
+    "nonterminal_mandatory_question_count": 4,
+    "provider_parser_core_pending_count": 1,
+    "public_material_gap_count": 18,
+    "source_linkage_incomplete_count": 3
+  },
+  "next_pass_recovery": {
+    "pass_id": "PROPASS-73881856ab23461cd67a18c1",
+    "pass_name": "PUBLIC_GAP_CLOSURE",
+    "pass_ordinal": 7,
+    "state_before_browser_recovery": "PLANNED",
+    "submit_count_before_browser_recovery": 0,
+    "transient_error": "PLAYWRIGHT_DIALOG_RACE_NO_DIALOG_SHOWING",
+    "duplicate_submit_observed": false,
+    "submit_count_after_recovery": 1,
+    "current_status": "RESEARCH_RUNNING"
+  },
+  "raw_capture_tracked_in_git": false,
+  "score_authority": false,
+  "stage_authority": false,
+  "next_action": "WAIT_FOR_PASS_07_CAPTURE_THEN_CONTINUE_DETERMINISTIC_SATURATION"
+}

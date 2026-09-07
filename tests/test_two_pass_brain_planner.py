@@ -644,6 +644,7 @@ class TwoPassBrainPlannerTest(unittest.TestCase):
             )
             self.assertIn("--output-schema", command)
             self.assertIn("--output-last-message", command)
+            self.assertIn("--skip-git-repo-check", command)
             self.assertEqual(command[-1], "-")
 
     def test_default_real_provider_ignores_command_and_config_overrides(self) -> None:

@@ -1,0 +1,329 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p55_c15_r5_revalidation_receipt_v1",
+  "status": "C15_R5_INITIAL_PASS_FULL_THESIS_TRANSPORT_PENDING",
+  "recorded_at": "2026-09-07T20:14:54Z",
+  "source_parent_sha": "80dd8ee80b92a0f51cd61c7631ba4bd30c2a0e48",
+  "identity": {
+    "target_id": "010950",
+    "company_name": "S-Oil",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "fresh_session_id": "FRESH-V2-1-C15-R5-20260901T124218Z",
+    "job_id": "PROJOB-7c02db014fefb06b1258ffe9",
+    "run_id": "PRORUN-b66fab297a8016c613f2d46a",
+    "conversation_id": "6a96c840-4440-83ee-abe8-c8742eb17741",
+    "runtime_root": "C:/Users/eorb9/AppData/Local/E2R/ProFirstRuntime/fresh_v2_1/20260901T124218Z"
+  },
+  "initial": {
+    "pass_id": "PROPASS-8c317a143f1ec6f17bdca388",
+    "status": "COMPLETE",
+    "submit_count": 1,
+    "capture_source": "DOWNLOAD_JSON",
+    "response_hash": "9c0c64dacccac5cb351f0e6248cb5487e5cf81f394c41778bf06a7afb716311f",
+    "efficiency_receipt_hash": "7912558d2ee7c3eeb371365781863f412b31c0ed1740d142d7ebba837a74cf06",
+    "efficiency_status": "PASS",
+    "source_document_count": 11,
+    "serialized_material_fact_count": 25,
+    "excluded_noncurrent_material_fact_count": 1,
+    "current_material_candidate_count": 24,
+    "accepted_current_material_count": 23,
+    "acceptance_ratio": 0.958333,
+    "mandatory_question_coverage": "27/27",
+    "genuine_semantic_repair_candidate_count": 1,
+    "initial_prompt_output_defect_count": 0,
+    "research_elapsed_seconds": 7414.518539
+  },
+  "original_gap_dispatch": {
+    "pass_id": "PROPASS-2ced92878a16c36601168af7",
+    "status_as_recorded_by_old_code": "FAILED_HARD",
+    "submit_count": 1,
+    "response_hash": null,
+    "reported_absence_count": 2,
+    "independent_fresh_absence_count_on_reinspection": 1,
+    "observations": [
+      {
+        "observation_id": "PROSERVERVIEW-784bfdc0ae7acfb084dd6e0a",
+        "observed_at": "2026-09-01T14:51:15.572182Z",
+        "persistence_confirmed": false,
+        "fresh_page_loaded": true
+      },
+      {
+        "observation_id": "PROSERVERVIEW-8ddd1e026effe61476d5cd13",
+        "observed_at": "2026-09-01T14:52:54.613031Z",
+        "persistence_confirmed": false,
+        "fresh_page_loaded": false
+      }
+    ],
+    "audit_verdict": "INSUFFICIENT_FRESH_ABSENCE_EVIDENCE_FOR_REPLACEMENT",
+    "original_ledger_rewritten": false
+  },
+  "replacement_gap_dispatch": {
+    "pass_id": "PROPASS-20c07c841f9c4ba5a16e727f",
+    "supersedes_unpersisted_pass_id": "PROPASS-2ced92878a16c36601168af7",
+    "submit_count": 1,
+    "server_persistence_confirmed_at": "2026-09-01T14:53:35.965678Z",
+    "server_user_turn_id": "6f8a234f-7e48-4269-b681-a7a722822078",
+    "response_hash": null,
+    "database_status_at_reinspection": "RESEARCH_RUNNING",
+    "current_server_execution_confirmed": false,
+    "observer_process_present_at_reinspection": false,
+    "observer_terminal_status": "TRANSPORT_PENDING",
+    "observer_finished_at": "2026-09-01T17:14:29.764620Z",
+    "observer_reason": "follow-up completion poll bound reached",
+    "observer_elapsed_seconds": 8474.887563,
+    "full_thesis_receipt_hash": "ef34f721bfc079ef19e4916ebd61da5d738b7934c3b044d57d38d2aada2b7412",
+    "further_submit_authorized_by_this_receipt": false
+  },
+  "verified_corpus": {
+    "effective_dossier_hash": "8172da0fc54eae4b527db05fb9c1ee6f011ce7a9a180045c8adf741ec7ab89b1",
+    "source_verification_hash": "6eb64010a1d722e4c084d92efbf918cbb0465279b55244dd32c9c047f0ddf508",
+    "accepted_fact_count": 37,
+    "terminal_fact_count": 40,
+    "nonterminal_mandatory_question_count": 5,
+    "public_material_gap_count": 4,
+    "provider_parser_core_pending_count": 5,
+    "source_linkage_incomplete_count": 5,
+    "verifier_repair_pending_count": 0,
+    "read_only_cli_revalidated_at": "2026-09-07T20:01:27Z",
+    "read_only_cli_exit_code": 0,
+    "read_only_cli_browser_submit_delta": 0,
+    "research_saturation_valid": false,
+    "score": null,
+    "stage": null,
+    "publication_withheld": true
+  },
+  "resume_environment": {
+    "revalidated_at": "2026-09-07T20:13:33Z",
+    "chrome_browser_use_preflight_exit_code": 0,
+    "chrome_browser_use_call_error": "TypeError: tools.mcp__node_repl__js is not a function",
+    "existing_browser_cdp_ports_inspected": [9222, 9234],
+    "chatgpt_page_count_on_inspected_endpoints": 0,
+    "prior_chatgpt_target_present": false,
+    "downloaded_result_search": {
+      "root": "C:/Users/eorb9/Downloads",
+      "extensions": ["json", "md", "txt"],
+      "exact_identity_markers": [
+        "PROPASS-20c07c841f9c4ba5a16e727f",
+        "PROJOB-7c02db014fefb06b1258ffe9"
+      ],
+      "matching_file_count": 0,
+      "rg_exit_code": 1
+    },
+    "new_browser_tab_count": 0,
+    "new_browser_window_count": 0,
+    "research_submit_count": 0,
+    "source_query_count": 0,
+    "source_fetch_count": 0
+  },
+  "generic_fix": {
+    "problem": "Unrefreshed optimistic absence was counted as an independent fresh-view absence.",
+    "change": "Require fresh_page_loaded=true when counting/sealing absences and revalidate durable source observations before creating or claiming a replacement, including older persisted seals.",
+    "legacy_invalid_seal_can_authorize_new_submit": false,
+    "observation_history_preserved": true,
+    "duplicate_observation_id_counted_once": true,
+    "historical_runtime_relabelled": false,
+    "score_authority": false,
+    "stage_authority": false
+  },
+  "verification": {
+    "focused_regression": "4/4 PASS",
+    "related_regression": "107/107 PASS",
+    "leaf_review": "8/8 PASS",
+    "leaf_review_evidence_type": "DIRECT_LEAF_TEST_EXECUTION_NOT_NEW_EXTERNAL_REVIEW",
+    "leaf_review_test_count": 346,
+    "leaf_review_receipt_hash": "da6c74da5bf250f8b1e2369eeb97a1e51a2139b274d4649deba41d7d1899177d",
+    "v2_static_audit": "PASS",
+    "v2_static_critical_count": 0,
+    "v2_static_audit_hash": "62539f2a08b5d46cb1ff492a57e98d1bb8344ee5d4c2ba442a752666329132f8",
+    "leaf_review_evidence": [
+      {
+        "reviewer_id": "A",
+        "scope": "36 contract totality / primitive coverage",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_v2_contract_totality",
+        "test_count": 8,
+        "exit_code": 0,
+        "input_hash": "52964316eb7633c53bb8c90a3c8cf86afc243f75be70af37957788cae597ecab",
+        "output_hash": "b3610d1864717b3de56f51069f9a223930b91f02c74f89f026f210d644553fc5",
+        "finding": "8 leaf-level tests passed for 36 contract totality / primitive coverage."
+      },
+      {
+        "reviewer_id": "B",
+        "scope": "prompt compiler / archetype specificity / no gold leakage",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_v2_prompt_compiler",
+        "test_count": 13,
+        "exit_code": 0,
+        "input_hash": "88f294cc76e96ef2f2730859e0c6b0d9bf652be0070c484e2bb5202550ac0568",
+        "output_hash": "7485f868e1f5543d5ed0ba0daa58ef8dcf1841f328c7a15cfaaa3147b797ba60",
+        "finding": "13 leaf-level tests passed for prompt compiler / archetype specificity / no gold leakage."
+      },
+      {
+        "reviewer_id": "C",
+        "scope": "multi-pass browser state / exactly-once follow-up",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_browser_adapter tests.test_e2r_pro_first_v2_multi_pass",
+        "test_count": 83,
+        "exit_code": 0,
+        "input_hash": "8d6aa04d607297eed3b9613424a67cb7eaca33b371d4607b54cf886cdf677a10",
+        "output_hash": "60ea37df100f93fe1c9f33b1bb930856c9e3260d761a0d9f4e966ad466c4e432",
+        "finding": "83 leaf-level tests passed for multi-pass browser state / exactly-once follow-up."
+      },
+      {
+        "reviewer_id": "D",
+        "scope": "gap availability / adequate search / fixpoint",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_evidence_contract_utf8 tests.test_e2r_pro_first_gap_adjudication tests.test_e2r_pro_first_v2_saturation",
+        "test_count": 63,
+        "exit_code": 0,
+        "input_hash": "c10c7c556aea55b84b5a6d2bba0b9388242ef8a3603f85bab332569d593a2c00",
+        "output_hash": "8f7f24bec44775d8543802db336b5774f56051e2db03e3128d15715bb63873bb",
+        "finding": "63 leaf-level tests passed for gap availability / adequate search / fixpoint."
+      },
+      {
+        "reviewer_id": "E",
+        "scope": "source verifier / repair / lifecycle",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_source_verification tests.test_e2r_pro_first_v2_verifier_repair",
+        "test_count": 52,
+        "exit_code": 0,
+        "input_hash": "28b9feb411a4fa98e0f77c2977382caad4b3f916c77c847676a97f4213b9ccb3",
+        "output_hash": "111b01564883a21eecb73d68c0aa3990e9b5be82cf31a12f69b4c1992e659c18",
+        "finding": "52 leaf-level tests passed for source verifier / repair / lifecycle."
+      },
+      {
+        "reviewer_id": "F",
+        "scope": "component/Judge/scoring/Stage publication gate",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_scoring_bridge tests.test_e2r_pro_first_v2_dossier_status tests.test_e2r_pro_first_v2_readiness_view",
+        "test_count": 62,
+        "exit_code": 0,
+        "input_hash": "4ca6fca508781921b54fe891af1522c92bdc965d5bcf373353ae6a66dd51ec5d",
+        "output_hash": "48b4282fcbe55ab730f8df636caae5088267e688d24867dff131707942c334a7",
+        "finding": "62 leaf-level tests passed for component/Judge/scoring/Stage publication gate."
+      },
+      {
+        "reviewer_id": "G",
+        "scope": "cross-archetype generalization / known-bad",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_v2_generalization tests.test_e2r_pro_first_v2_frozen_replay",
+        "test_count": 15,
+        "exit_code": 0,
+        "input_hash": "519436485a06532cf71adfeab60d1dd55b3d4dd1938593d861796ac50df2b3ee",
+        "output_hash": "bc4c3439065fff6c6b15f14ce8476cf6766092f2073c4ec90fa727ea7767e108",
+        "finding": "15 leaf-level tests passed for cross-archetype generalization / known-bad."
+      },
+      {
+        "reviewer_id": "H",
+        "scope": "CI/security/performance/idempotency",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_v2_static_audit tests.test_e2r_pro_first_v2_1_fresh_efficiency_audit tests.test_e2r_pro_first_v2_live_runtime tests.test_e2r_pro_first_v2_independent_review",
+        "test_count": 50,
+        "exit_code": 0,
+        "input_hash": "42341ce8f16f1965fa4efdc7e4048ee3e13629e21684a245ff56591e0dc17782",
+        "output_hash": "567948759fc73b035603e65e4a53b5cb9606ead8b9d6626cb5d185426d384af5",
+        "finding": "50 leaf-level tests passed for CI/security/performance/idempotency."
+      }
+    ],
+    "full_offline_ci": "PASS",
+    "full_offline_ci_completed_at": "2026-09-07T20:14:35.474268Z",
+    "full_offline_ci_file_sha256": "892ae38e35ff98ae8b35f3abaf7288935221648e34027cc4848622006f09fac5",
+    "full_offline_ci_commands": [
+      {
+        "command": [
+          "/home/eorb915/.local/bin/python",
+          "-m",
+          "e2r.cli.verify_e2r_pro_first_readiness",
+          "--repo-root",
+          "/home/eorb915/projects/stock_agent/.worktrees/e2r-pro-first-browser-platform-20260822"
+        ],
+        "status": "PASS",
+        "returncode": 0,
+        "tests_run": 287,
+        "elapsed_seconds": 206.051955
+      },
+      {
+        "command": [
+          "/home/eorb915/.local/bin/python",
+          "-m",
+          "e2r.cli.run_e2r_pro_first_offline_e2e"
+        ],
+        "status": "PASS",
+        "returncode": 0,
+        "tests_run": 4,
+        "elapsed_seconds": 19.347543
+      },
+      {
+        "command": [
+          "/home/eorb915/.local/bin/python",
+          "-m",
+          "e2r.cli.run_e2r_pro_first_browser_mock_e2e"
+        ],
+        "status": "PASS",
+        "returncode": 0,
+        "tests_run": 92,
+        "elapsed_seconds": 204.647713
+      },
+      {
+        "command": [
+          "/home/eorb915/.local/bin/python",
+          "-m",
+          "compileall",
+          "-q",
+          "src",
+          "tests"
+        ],
+        "status": "PASS",
+        "returncode": 0,
+        "tests_run": null,
+        "elapsed_seconds": 0.443778
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "status": "PASS",
+        "returncode": 0,
+        "tests_run": null,
+        "elapsed_seconds": 0.010885
+      },
+      {
+        "command": [
+          "/home/eorb915/.local/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-v"
+        ],
+        "status": "PASS",
+        "returncode": 0,
+        "tests_run": 7897,
+        "elapsed_seconds": 809.134327
+      }
+    ],
+    "full_unittest": {
+      "tests_run": 7897,
+      "passed": 7859,
+      "failures": 0,
+      "errors": 0,
+      "existing_skips": 38,
+      "new_skips": 0,
+      "prior_test_count": 7894,
+      "added_test_count": 3
+    },
+    "patch_github_ci": "NOT_RUN_AT_RECEIPT_CREATION_SEE_PR_EXACT_HEAD_CHECKS"
+  },
+  "master_goal": {
+    "live_full_thesis_pass_count": 1,
+    "required_live_full_thesis_pass_count": 3,
+    "c15_r5_full_thesis_pass": false,
+    "c28_new_blind_run_required": true,
+    "operational_research_ready": false,
+    "pr_7_must_remain_draft_open": true,
+    "main_merge_allowed": false
+  }
+}

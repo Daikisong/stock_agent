@@ -1,0 +1,565 @@
+{
+  "contract_count": 36,
+  "contracts": [
+    {
+      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "수주잔고가 실제 납품·매출·마진·현금으로 전환되는 산업재/인프라형 메커니즘",
+      "false_positive_guard": "계약 제목이나 총잔고만으로 마진·현금·납품을 자동 추론하지 않는다.",
+      "questions": [
+        "현재 유효한 수주잔고의 금액·기간·제품·고객·취소 가능성과 기존 매출 대비 규모는 무엇인가",
+        "신규 수주와 기존 잔고 중 실제 매출로 전환되는 일정·마일스톤·납품률은 무엇인가",
+        "고객의 신용·정부/민간 성격·지역·집중도와 대금 회수 조건은 무엇인가",
+        "계약 mix와 원가·가격조정 조항이 OPM 개선 또는 훼손으로 어떻게 이어지는가",
+        "선수금·운전자본·CAPEX를 반영한 FCF 전환은 실제로 확인되는가",
+        "취소·지연·원가초과·저마진 수주·잔고 중복 같은 counter와 supersession은 무엇인가",
+        "현재 revision과 valuation은 backlog-to-cash bridge를 어느 정도 반영했는가"
+      ],
+      "recommended_source_roles": "공시 계약서·사업보고서·수주잔고 표·issuer IR·고객/정부 발주처·실적/현금흐름·합법적 revision 자료"
+    },
+    {
+      "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "전력망·데이터센터 CAPEX가 고객 주문, 긴 lead time, 공급제약, 가격결정력과 매출로 전환되는 메커니즘",
+      "false_positive_guard": "데이터센터 산업 성장이나 전력수요 전망만으로 대상 회사 수주를 만들지 않는다.",
+      "questions": [
+        "데이터센터·전력망·유틸리티 고객이 대상 회사의 직접 고객으로 확인되는가",
+        "backlog·book-to-bill·lead time·납품 일정과 현재 증설 전 saleable capacity는 무엇인가",
+        "공급제약이 단순 업계 shortage인지 대상 회사의 제품·공장·고객 주문에 직접 귀속되는가",
+        "실현 ASP·가격 인상·제품 mix·마진 전환이 확인되는가",
+        "증설 CAPEX의 가동시점·수율·고객 qualification·현금회수 경로는 무엇인가",
+        "고객 CAPEX 둔화·경쟁 증설·원재료·프로젝트 지연·정책 변화 counter는 무엇인가",
+        "revision·FCF·valuation이 현재 backlog와 공급제약을 선반영했는가"
+      ],
+      "recommended_source_roles": "공식 수주/IR·유틸리티/클라우드 고객 공식자료·공장/lead-time 공시·실적·산업 설비 공급자료·revision"
+    },
+    {
+      "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "정부 간 방산 프레임워크가 구속력 있는 계약·납품·수금·마진으로 전환되는 메커니즘",
+      "false_positive_guard": "정상회담·협상·우선협상·프레임워크를 확정 수주로 승격하지 않는다.",
+      "questions": [
+        "MOU·framework·LOI와 구속력 있는 본계약을 분리했는가",
+        "정부 고객·예산·수출승인·금융지원·계약 당사자가 확인되는가",
+        "수량·단가·납품 일정·현지화·offset·유지보수 범위가 무엇인가",
+        "잔고에서 매출·마진·선수금·수금·FCF로 이어지는 bridge가 있는가",
+        "환율·원가·지체상금·현지생산·정치/승인 지연 counter가 있는가",
+        "계약 변경·취소·납품 완료·후속 tranche로 lifecycle이 어떻게 변했는가",
+        "revision과 valuation이 이미 수출 기대를 어느 정도 반영했는가"
+      ],
+      "recommended_source_roles": "대상 회사 공시/IR·발주국 정부/조달기관·수출승인 기관·계약 금융기관·실적/현금흐름·revision"
+    },
+    {
+      "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "정책·규제·프로젝트 award가 허가·소송·공정·원가를 통과해 대상 회사 현금으로 이어지는 메커니즘",
+      "false_positive_guard": "정책 수혜·원전 테마·협력 발표를 대상 회사의 award/현금으로 자동 연결하지 않는다.",
+      "questions": [
+        "정책 발표·법안·규제 승인·실제 프로젝트 award를 분리했는가",
+        "대상 회사의 consortium 지분·공급 범위·계약 당사자·직접 cash route는 무엇인가",
+        "permit·환경심사·법원·행정소송·지역 승인 상태와 다음 milestone은 무엇인가",
+        "공정·납품·수금 일정과 cost overrun·지연·보증 부담은 무엇인가",
+        "정부/프로젝트 금융·선수금·CAPEX·운전자본·FCF 경로는 무엇인가",
+        "취소·정책 reversal·사업자 변경·원가 초과·소송 장기화 counter는 무엇인가",
+        "revision·valuation이 정책 headline과 실제 cash route를 구분하는가"
+      ],
+      "recommended_source_roles": "법령/규제기관·법원/허가기관·발주처·issuer 공시/IR·consortium partner·프로젝트 금융·실적/FCF"
+    },
+    {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "대형 EPC 계약의 규모와 기간이 공정률·원가·지체상금·운전자본을 거쳐 이익과 현금으로 전환되는 메커니즘",
+      "false_positive_guard": "계약금액만으로 이익·현금·Stage를 올리지 않는다.",
+      "questions": [
+        "계약금액·기간·대상·고객·기존 매출 대비 규모와 회사 귀속분은 무엇인가",
+        "설계·조달·시공 범위와 공정률·매출 인식·대금 지급 milestone은 무엇인가",
+        "가격 조정·원자재/인건비 pass-through·보증·지체상금 조건은 무엇인가",
+        "프로젝트 mix가 gross margin·OPM·FCF에 미치는 영향이 실제로 확인되는가",
+        "선수금·미청구공사·매출채권·운전자본과 현금 회수 상태는 무엇인가",
+        "cost overrun·재공사·분쟁·납기 지연·고객 신용 counter는 무엇인가",
+        "revision과 valuation은 headline contract와 margin gap을 구분하는가"
+      ],
+      "recommended_source_roles": "단일판매공급계약/사업보고서·발주처·프로젝트 update·실적 note·현금흐름·분쟁/법원·revision"
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "HBM/메모리의 고객 qualification·allocation·qualified capacity·ASP/mix가 이익과 FCF로 전환되는 메커니즘",
+      "false_positive_guard": "HBM 단어·제품 스펙·업계 수요·고객사 CAPA를 issuer allocation/매출로 확대하지 않는다.",
+      "questions": [
+        "고객 allocation·booking·commitment·LTA가 구속력 있는 물량/기간/가격으로 확인되는가",
+        "capacity sold-out·pre-sold·수요 초과가 issuer 제품과 기간에 직접 귀속되는가",
+        "고객별 qualification pass·진행·지연·실패·reopen 상태는 무엇인가",
+        "HBM 세대별 양산·상업 출하·shipment mix·revenue mix가 확인되는가",
+        "DRAM/HBM 실현 ASP·가격·제품 mix와 매출·영업이익 전환이 무엇인가",
+        "margin·FCF·cash conversion과 CAPEX·yield·advanced packaging throughput은 무엇인가",
+        "중기 revision·consensus·normalized valuation·expectation gap은 무엇인가",
+        "범용 DRAM/NAND drag·경쟁사 capacity·oversupply·고객집중 counter는 무엇인가"
+      ],
+      "recommended_source_roles": "issuer earnings/filing/IR·고객/플랫폼 공식자료·경쟁사 공식자료·장비/패키징 파트너·revision·시장데이터"
+    },
+    {
+      "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "HBM/첨단패키징 장비의 직접 고객 주문과 backlog가 납품·매출·마진으로 전환되는 메커니즘",
+      "false_positive_guard": "고객의 HBM 투자나 업계 장비 수요를 대상 회사 주문으로 자동 귀속하지 않는다.",
+      "questions": [
+        "named HBM/packaging customer·qualification·직접 장비 주문이 확인되는가",
+        "equipment backlog·수주잔고·lead time·납기와 반복 주문이 무엇인가",
+        "고객 CAPEX와 대상 회사 order-to-revenue timing이 일치하는가",
+        "advanced packaging bottleneck이 대상 장비의 실제 utilization·ASP·마진으로 이어지는가",
+        "고객 집중·단일 장비 cycle·중고장비/경쟁 장비·수율/qualification counter는 무엇인가",
+        "CAPEX cycle·재고·매출채권·선수금·FCF 전환은 무엇인가",
+        "relative strength나 가격은 비점수 보조 신호로만 분리됐는가",
+        "revision·valuation이 주문 bridge를 선반영했는가"
+      ],
+      "recommended_source_roles": "공시 수주·issuer IR/실적·고객 CAPEX/공장 자료·장비 qualification·backlog·revision"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "테스트소켓/프로브 제품 노출이 고객 qualification·직접 주문·반복 출하·매출/마진으로 전환되는 메커니즘",
+      "false_positive_guard": "socket/HBM 제품 소개나 품질상만으로 Actionable/Green을 만들지 않는다.",
+      "questions": [
+        "제품 roadmap/profile과 실제 named customer qualification을 분리했는가",
+        "고객 concentration·VIP customer·qualification status·공급 수량이 확인되는가",
+        "초도 공급과 repeat order·renewal·shipment·backlog를 분리했는가",
+        "socket/probe 수요가 issuer 매출·ASP·gross margin·OPM으로 전환됐는가",
+        "고객 제품세대 교체·qualification loss·order cancellation·대체재 counter는 무엇인가",
+        "고객/제품 concentration·R&D·CAPEX·FCF·working capital은 무엇인가",
+        "revision·valuation은 customer quality와 operating conversion을 구분하는가"
+      ],
+      "recommended_source_roles": "issuer IR/공시·고객/파트너 공식자료·공급계약·실적/제품별 매출·margin·revision"
+    },
+    {
+      "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "첨단장비의 주문·매출 bridge와 현재 valuation/price blowoff를 대조하는 과열·4B 메커니즘",
+      "false_positive_guard": "주가·테마·목표가만으로 mispricing 또는 thesis break를 만들지 않는다.",
+      "questions": [
+        "실제 고객 주문·backlog·납품·매출 bridge가 있는가",
+        "고객 quality·capacity cycle·제품 경쟁력이 무엇인가",
+        "현재/forward normalized EPS·FCF와 valuation multiple은 무엇인가",
+        "가격 상승이 비가격 evidence보다 앞섰는가, price-only blowoff인가",
+        "고객 CAPEX·경쟁 증설·order pushout·inventory·share issuance counter는 무엇인가",
+        "revision breadth와 cash conversion이 valuation을 지지하는가",
+        "4B/4C 후보가 현재 OPEN non-price claim으로 확인되는가"
+      ],
+      "recommended_source_roles": "issuer order/실적·고객 CAPEX·revision/consensus·시장 valuation·공시 자금조달·경쟁사 자료"
+    },
+    {
+      "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "메모리 가격·재고·공급규율 회복이 장비 주문과 issuer 매출·FCF로 전환되는 cycle 메커니즘",
+      "false_positive_guard": "메모리 가격 반등 기사만으로 장비 회사 매출 회복을 확정하지 않는다.",
+      "questions": [
+        "DRAM/NAND 가격·재고·utilization·공급 discipline의 현재 상태는 무엇인가",
+        "end-market 수요와 고객 CAPEX·장비 order recovery가 확인되는가",
+        "advanced packaging/공정 전환 병목이 대상 장비 주문으로 직접 연결되는가",
+        "order-to-revenue·매출·margin·FCF conversion이 확인되는가",
+        "재고 조정·공급 증설·가격 반락·고객 CAPEX 지연 counter는 무엇인가",
+        "회복 초기/중기/후기 phase와 revision breadth는 무엇인가",
+        "normalized valuation과 cycle midpoint cash flow는 무엇인가"
+      ],
+      "recommended_source_roles": "메모리 issuer/고객·장비 issuer 주문/IR·산업 가격/재고 공식자료·실적/FCF·revision"
+    },
+    {
+      "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "배터리 orderbook이 고객 call-off·ramp·ex-credit margin·FCF로 전환되는 메커니즘",
+      "false_positive_guard": "수주총액·LOI·장기 협력만으로 고정 volume과 ex-credit 수익성을 가정하지 않는다.",
+      "questions": [
+        "orderbook/수주잔고의 고객·제품·기간·구속력·취소/콜오프 조건은 무엇인가",
+        "고객 공장·차종·platform ramp와 volume schedule이 확인되는가",
+        "ASP·원재료 pass-through·AMPC 제외 margin·mix가 무엇인가",
+        "CAPEX·utilization·yield·working capital·FCF 전환은 무엇인가",
+        "고객 capex 축소·call-off·계약 지연/취소·재고·price cut counter는 무엇인가",
+        "revision·consensus·valuation이 orderbook headline을 어느 정도 반영했는가"
+      ],
+      "recommended_source_roles": "issuer 계약/IR·OEM/JV 고객 공식자료·공장 ramp·실적/AMPC note·FCF·revision"
+    },
+    {
+      "archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "배터리 고객 계약의 실제 call-off·volume·고객 CAPEX 변화와 취소/지연 위험을 판정하는 메커니즘",
+      "false_positive_guard": "고객 EV 둔화 일반론을 대상 계약 취소로 확대하지 않는다.",
+      "questions": [
+        "현재 유효한 고객 계약과 call-off 권리·최소물량·가격·기간이 무엇인가",
+        "고객 EV 판매·공장 CAPEX·platform 일정과 issuer volume visibility가 일치하는가",
+        "계약 축소·pushout·취소·가동률 하락·재고 증가가 현재 OPEN인가",
+        "가격 인하·원재료·고정비 흡수·margin·cash impact가 무엇인가",
+        "과거 지연이 최신 공시에서 해소·재개·악화됐는가",
+        "Stage hard break와 단순 watch를 구분할 직접 source가 있는가"
+      ],
+      "recommended_source_roles": "issuer/고객 계약·OEM CAPEX/판매·JV 자료·실적/가동률·공시 정정/취소·현금흐름"
+    },
+    {
+      "archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "JV 가동률·AMPC/IRA 보조금이 ex-credit economics와 현금으로 전환되는 메커니즘",
+      "false_positive_guard": "gross AMPC 금액을 영구적인 영업마진·현금으로 그대로 세지 않는다.",
+      "questions": [
+        "JV 소유구조·생산능력·실제 utilization·yield·고객 계약은 무엇인가",
+        "AMPC/보조금 인식액·현금 수취·회계 분류와 ex-credit margin은 무엇인가",
+        "고객 ramp·volume·ASP·제품 mix가 무엇인가",
+        "CAPEX·파트너 출자·부채·현금소진·FCF는 무엇인가",
+        "정책 eligibility·domestic content·법률/정권 reversal risk는 무엇인가",
+        "보조금 제외 사업성이 개선되는지 revision과 valuation으로 확인되는가"
+      ],
+      "recommended_source_roles": "JV/issuer/customer 공식자료·IRA/정부 규정·실적 note·현금흐름·CAPEX·revision"
+    },
+    {
+      "archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "EV 수요 둔화·재고·가격인하·고객 CAPEX 축소가 계약·가동률·현금의 thesis break로 이어지는지 판정하는 메커니즘",
+      "false_positive_guard": "산업 판매 둔화나 주가 하락만으로 hard 4C를 만들지 않는다.",
+      "questions": [
+        "EV 판매·배터리 출하·재고·가격·가동률 둔화가 issuer에 직접 귀속되는가",
+        "고객 CAPEX·공장 ramp·call-off·계약 변경이 무엇인가",
+        "margin·working capital·cash burn·impairment 영향은 무엇인가",
+        "일시적 재고조정과 구조적 고객/제품 상실을 구분했는가",
+        "과거 slowdown이 현재 해소·재개·악화됐는가",
+        "4B watch와 hard 4C를 가르는 취소·permanent loss·신뢰 이슈가 있는가"
+      ],
+      "recommended_source_roles": "OEM/배터리 issuer·계약 정정/취소·재고/가동률·실적/impairment·정부/산업 수요자료"
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "원재료/제품 가격 변화가 pass-through·재고 lag·utilization을 거쳐 실현 margin·cash로 전환되는 supercycle 메커니즘",
+      "false_positive_guard": "원자재 가격 상승·테마 기사·기록적 과거 실적만으로 현재 spread를 확정하지 않는다.",
+      "questions": [
+        "commodity headline과 issuer 제품 ASP/pass-through를 분리했는가",
+        "feedstock·제품 가격·spread·재고평가·계약 가격 lag가 무엇인가",
+        "수요·고객·shipment·utilization과 공급증설/감산이 무엇인가",
+        "실현 gross margin·OPM·EPS·FCF 전환이 확인되는가",
+        "inventory/working capital·CAPEX·cash conversion은 무엇인가",
+        "cycle phase·신규 공급·가격 반락·late result counter는 무엇인가",
+        "revision·normalized valuation이 completed cycle을 선반영했는가"
+      ],
+      "recommended_source_roles": "issuer 제품가격/실적·공식 commodity/industry data·고객/수요·재고/가동률·FCF·revision"
+    },
+    {
+      "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "전략자원 shortage·정책지원·offtake·permit가 실제 생산·판매·현금으로 이어지는 메커니즘",
+      "false_positive_guard": "자원량·정책 headline·MOU를 생산량·매출·현금으로 자동 변환하지 않는다.",
+      "questions": [
+        "offtake 계약의 고객·최소물량·가격·기간·조건은 무엇인가",
+        "매장량/자원량과 실제 permit·건설·commissioning·production 상태를 분리했는가",
+        "정책/보조금·정부 승인·인프라·환경/지역사회 조건은 무엇인가",
+        "생산원가·CAPEX·funding·dilution·cash runway와 직접 cash route는 무엇인가",
+        "대체 공급·가격 하락·permit 지연·기술/수율·정치 risk counter는 무엇인가",
+        "revision·valuation이 pre-production optionality를 어느 정도 반영했는가"
+      ],
+      "recommended_source_roles": "issuer filing/technical report·정부 permit/정책·offtake 고객·프로젝트 금융·생산/원가·시장 supply data"
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "화학 제품 ASP와 feedstock 원가의 실현 spread가 inventory timing·가동률을 거쳐 margin/FCF로 전환되는 메커니즘",
+      "false_positive_guard": "원재료/제품 spot 가격 차이만으로 issuer realized margin을 만들지 않는다.",
+      "questions": [
+        "제품별 ASP·feedstock cost·realized spread가 무엇인가",
+        "spot spread와 issuer 계약가격·재고 원가 lag를 분리했는가",
+        "가동률·정기보수·수요·고객 mix·shipment는 무엇인가",
+        "gross margin·OPM·EPS·FCF 전환이 실제로 확인되는가",
+        "원재료 급등·재고손실·공급증설·수요둔화 counter는 무엇인가",
+        "cycle phase·revision·normalized valuation은 무엇인가"
+      ],
+      "recommended_source_roles": "issuer 실적/제품별 ASP·원재료 공식가격·가동률/정비·고객수요·재고/FCF·revision"
+    },
+    {
+      "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "수출·채널 sell-through가 distributor inventory와 reorder를 통과해 반복 매출·마진으로 이어지는 메커니즘",
+      "false_positive_guard": "수출액·입점·초도물량만으로 소비자 sell-through와 repeat order를 확정하지 않는다.",
+      "questions": [
+        "지역·채널·제품별 export growth와 sell-in/sell-through를 분리했는가",
+        "distributor/retailer inventory·반품·재고일수·reorder가 확인되는가",
+        "repeat order·channel expansion·customer concentration이 무엇인가",
+        "ASP·mix·promotion·물류·FX가 gross margin/OPM에 미치는 영향은 무엇인가",
+        "매출채권·재고·marketing spend·FCF 전환은 무엇인가",
+        "일회성 stocking·채널 밀어내기·반품·규제/관세 counter는 무엇인가",
+        "revision·valuation이 실제 reorder를 반영했는가"
+      ],
+      "recommended_source_roles": "issuer 지역/채널 실적·세관/수출자료·유통사/플랫폼 공식자료·재고/반품·FCF·revision"
+    },
+    {
+      "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "브랜드 수요·sell-through·재고·가격결정력이 할인/원가를 거쳐 margin과 cash로 전환되는 메커니즘",
+      "false_positive_guard": "매장수·검색량·브랜드 언급만으로 sell-through와 pricing power를 만들지 않는다.",
+      "questions": [
+        "매장/온라인 sell-through·same-store·제품/지역 mix가 무엇인가",
+        "회사·유통채널 inventory·재고일수·markdown·반품 상태는 무엇인가",
+        "가격 인상·promotion·원가/물류·gross margin bridge가 무엇인가",
+        "reorder·채널 확장·브랜드 customer diversification이 확인되는가",
+        "working capital·marketing·매장 CAPEX·FCF 전환은 무엇인가",
+        "fad·재고 spike·가격저항·원가 상승·채널 의존 counter는 무엇인가"
+      ],
+      "recommended_source_roles": "issuer retail/채널 KPI·유통사/플랫폼·재고/markdown·실적/margin/FCF·revision"
+    },
+    {
+      "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "뷰티/식품의 해외 유통 scale·고객 다변화·repeat order·고마진 mix가 cash로 전환되는 메커니즘",
+      "false_positive_guard": "해외 입점·viral headline을 반복 매출과 고마진 mix로 자동 확장하지 않는다.",
+      "questions": [
+        "국가·플랫폼·distributor·SKU별 수출/매출 growth가 무엇인가",
+        "초도 입점과 반복 주문·retention·sell-through를 분리했는가",
+        "고객/지역/브랜드 concentration과 diversification이 무엇인가",
+        "제품 mix·ASP·OEM/ODM·marketing·물류가 margin에 미치는 영향은 무엇인가",
+        "규제 승인·통관·재고·반품·현지 파트너 risk는 무엇인가",
+        "운전자본·CAPEX·FCF·revision·valuation은 무엇인가"
+      ],
+      "recommended_source_roles": "issuer 지역/SKU/채널 실적·유통 플랫폼/파트너·통관/규제·재고/FCF·revision"
+    },
+    {
+      "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "금융사의 normalized ROE·자본적정성·신용비용과 실제 자본환원이 PBR rerating으로 이어지는 메커니즘",
+      "false_positive_guard": "낮은 PBR이나 선언형 밸류업만으로 자본환원 실행·ROE quality를 가정하지 않는다.",
+      "questions": [
+        "ROE의 구성(NIM/수수료/보험/비이자/일회성)과 지속성이 무엇인가",
+        "credit cost·NPL·연체·충당금·부동산/PF/해외자산 quality는 무엇인가",
+        "CET1/BIS/자본여력과 규제·stress 조건은 무엇인가",
+        "배당·자사주 매입·소각·payout 목표가 실제 실행됐는가",
+        "현재 PBR·normalized earnings·cost of equity·peer basis는 무엇인가",
+        "자본환원 지연·규제 제한·신용비용 상승·희석 counter는 무엇인가",
+        "revision과 shareholder return이 rerating을 지지하는가"
+      ],
+      "recommended_source_roles": "금융감독/issuer 실적·자본/자산건전성 공시·이사회 자본환원·시장/peer valuation·revision"
+    },
+    {
+      "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "CSM·신계약가치·loss ratio·reserve quality·K-ICS가 자본환원과 valuation으로 이어지는 보험 메커니즘",
+      "false_positive_guard": "CSM 총액이나 금리 방향만으로 earnings quality와 배당여력을 확정하지 않는다.",
+      "questions": [
+        "CSM growth·신계약 CSM·상각·NBM의 질과 일회성 조정은 무엇인가",
+        "손해율·사업비율·reserve adequacy·가정변경·재보험 상태는 무엇인가",
+        "K-ICS·가용자본·금리/투자손익 sensitivity는 무엇인가",
+        "배당·자사주·capital return 실행과 규제 여력은 무엇인가",
+        "회계/계리 변경·reserve 강화·대형 손해·금리 reversal counter는 무엇인가",
+        "normalized earnings·PBR/EV·revision은 무엇인가"
+      ],
+      "recommended_source_roles": "보험사 실적/공시·K-ICS/감독자료·계리/CSM note·자본환원·시장/peer valuation·revision"
+    },
+    {
+      "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "규제 승인·label·reimbursement·partner economics가 실제 launch·royalty·매출로 전환되는 메커니즘",
+      "false_positive_guard": "신청·심사·우선심사·회의·논문을 승인과 매출로 승격하지 않는다.",
+      "questions": [
+        "승인 기관·국가·indication·label·조건부/정식 승인 상태는 무엇인가",
+        "launch timeline·제조/공급·market access·reimbursement가 확인되는가",
+        "partner 계약·upfront/milestone/royalty·territory·cost share가 무엇인가",
+        "환자/처방/수술 volume·초기 sales·repeat/consumable route는 무엇인가",
+        "특허·경쟁약·safety·label restriction·post-marketing obligation counter는 무엇인가",
+        "cash runway·상업화 비용·FCF/희석·revision·valuation은 무엇인가"
+      ],
+      "recommended_source_roles": "FDA/EMA/MFDS 등 규제기관·payer/reimbursement·issuer/partner 계약·제조/launch·실적/royalty·특허"
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "임상 데이터의 endpoint quality·안전성·규제경로·partner·runway가 binary event 위험을 넘어 상업화 옵션으로 이어지는 메커니즘",
+      "false_positive_guard": "headline response·poster·price spike를 endpoint quality·approval·commercialization으로 확대하지 않는다.",
+      "questions": [
+        "trial design·population·endpoint·control·통계계획·sample size가 무엇인가",
+        "효능 magnitude·p-value/CI·data maturity·subgroup·durability가 무엇인가",
+        "safety·중단·사망·adverse event와 benefit-risk가 무엇인가",
+        "규제기관 피드백·다음 단계·approval path·일정이 무엇인가",
+        "partner/platform validation·경제조건·manufacturing/commercial route가 있는가",
+        "cash runway·추가 임상비·희석·funding risk는 무엇인가",
+        "binary event unresolved·실패·CRL·endpoint miss가 현재 OPEN/RESOLVED인지 무엇인가",
+        "price reaction은 비점수이며 non-price bridge가 충분한가"
+      ],
+      "recommended_source_roles": "clinical trial registry·학회/논문·규제기관·issuer filing/IR·partner 공식자료·funding/cash·safety update"
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "의료기기 승인·reimbursement·installed base·procedure·consumable repeat가 수출·마진·FCF로 이어지는 메커니즘",
+      "false_positive_guard": "허가·수출 인증·설치 한 건을 reimbursement·procedure growth·repeat consumable 매출로 자동 연결하지 않는다.",
+      "questions": [
+        "국가별 규제 승인·reimbursement code·coverage·가격이 무엇인가",
+        "installed base·procedure volume·utilization·consumable attach가 무엇인가",
+        "수출·distributor·hospital/customer concentration과 reorder가 무엇인가",
+        "device ASP·consumable mix·gross margin·service revenue가 무엇인가",
+        "제조 capacity·quality/safety recall·규제 유지·교육/채택 risk는 무엇인가",
+        "working capital·CAPEX·FCF·revision·valuation은 무엇인가"
+      ],
+      "recommended_source_roles": "규제/보험기관·병원/고객·issuer installed-base/procedure KPI·distributor·실적/margin/FCF"
+    },
+    {
+      "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "사용자 engagement·ARPU·광고수요·take rate가 비용 구조를 넘어 operating leverage와 cash로 이어지는 플랫폼 메커니즘",
+      "false_positive_guard": "다운로드·MAU·AI/광고 테마만으로 ARPU·take rate·margin을 만들지 않는다.",
+      "questions": [
+        "MAU/DAU·time spent·retention·traffic source의 질은 무엇인가",
+        "ARPU·ad load·CPM/CPC·광고주 수요·take rate가 무엇인가",
+        "광고/거래 매출 성장과 segment margin·operating leverage가 확인되는가",
+        "콘텐츠/traffic acquisition·sales/marketing·AI/infra 비용은 무엇인가",
+        "privacy·규제·platform dependency·advertiser concentration·경기 둔화 counter는 무엇인가",
+        "FCF·SBC·CAPEX·revision·valuation은 무엇인가"
+      ],
+      "recommended_source_roles": "issuer KPI/실적·광고주/플랫폼 공식자료·규제기관·트래픽 보조자료·FCF/SBC·revision"
+    },
+    {
+      "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "콘텐츠/IP ownership·global launch·retention·라이선스/반복매출이 hit risk와 비용을 넘어 cash로 이어지는 메커니즘",
+      "false_positive_guard": "공개/출시/조회수·유명 IP·코인/테마를 반복 monetization으로 자동 승격하지 않는다.",
+      "questions": [
+        "IP ownership·권리지역·수익배분·partner/platform 조건은 무엇인가",
+        "global launch·사용자/시청/판매·retention·repeat engagement가 무엇인가",
+        "광고·구독·IAP·license·royalty·merchandise monetization이 확인되는가",
+        "content amortization·개발/마케팅 비용·margin·FCF가 무엇인가",
+        "hit concentration·platform dependency·release delay·IP dispute·token/theme hype counter는 무엇인가",
+        "pipeline·sequel·catalog durability·revision·valuation은 무엇인가"
+      ],
+      "recommended_source_roles": "issuer/플랫폼/배급사·권리/계약·사용자/매출 KPI·실적/비용/FCF·IP 법적자료·revision"
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "소프트웨어·보안 계약의 ARR/RPO·renewal·NRR/churn·margin leverage가 cash로 이어지는 메커니즘",
+      "false_positive_guard": "소프트웨어/보안 단어·수주 한 건·프로젝트 매출을 ARR/NRR/retention으로 자동 해석하지 않는다.",
+      "questions": [
+        "ARR·recurring revenue·RPO/backlog 정의와 기간·conversion은 무엇인가",
+        "GRR/NRR·renewal·churn·logo/customer retention이 확인되는가",
+        "신규/upsell·contract duration·customer concentration·public/enterprise mix가 무엇인가",
+        "gross margin·sales efficiency·CAC/payback·operating leverage·FCF가 무엇인가",
+        "서비스/라이선스/일회성 구축 매출과 반복매출을 분리했는가",
+        "보안/AI/공공계약 headline만 있고 retention bridge가 없는 false positive는 무엇인가",
+        "경쟁·가격·breach·customer loss·SBC/dilution·revision·valuation counter는 무엇인가"
+      ],
+      "recommended_source_roles": "issuer recurring KPI/계약/실적·고객 공식자료·RPO/renewal disclosures·breach/regulatory·FCF/SBC·revision"
+    },
+    {
+      "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "모빌리티 unit volume·mix·가격·utilization이 고정비 흡수와 FCF로 이어지는 메커니즘",
+      "false_positive_guard": "산업 판매량·출시 뉴스만으로 대상 회사 volume/margin을 만들지 않는다.",
+      "questions": [
+        "차종/제품/지역별 unit volume·shipment·backlog/customer schedule은 무엇인가",
+        "ASP·mix·incentive·pricing power와 warranty/quality 비용은 무엇인가",
+        "공장 utilization·yield·fixed-cost absorption·OPM bridge가 무엇인가",
+        "고객 계약·platform lifecycle·concentration·supplier terms는 무엇인가",
+        "원재료·환율·CAPEX·working capital·FCF는 무엇인가",
+        "수요둔화·price cut·recall·고객 loss·capacity oversupply counter는 무엇인가",
+        "revision·normalized valuation은 무엇인가"
+      ],
+      "recommended_source_roles": "issuer/OEM unit·공장·계약·실적/quality·원재료/FCF·revision"
+    },
+    {
+      "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "PF 보증·미분양·자금조달 비용이 분양/회수·자산매각·부채축소를 거쳐 balance-sheet repair 또는 break로 이어지는 메커니즘",
+      "false_positive_guard": "PF 언급이나 건설업 일반 위험을 대상 회사의 현재 default로 자동 확대하지 않는다.",
+      "questions": [
+        "PF exposure·우발채무·보증·maturity·상환순위·사업장별 위험은 무엇인가",
+        "분양률·입주율·미분양·공정률·cash collection이 무엇인가",
+        "refinancing·금리·담보·credit rating·유동성 runway는 무엇인가",
+        "자산매각·유상증자·채무조정·보증 해소가 실제 repair인가",
+        "프로젝트 margin·충당금·impairment·미청구/매출채권·FCF는 무엇인가",
+        "default·워크아웃·법정관리·소송·추가 지원의무 counter는 무엇인가",
+        "과거 PF risk가 최신 자료에서 OPEN/RESOLVED/SUPERSEDED인지 무엇인가"
+      ],
+      "recommended_source_roles": "사업보고서/PF note·신용평가·대주단/법원·분양/사업장 자료·유동성/현금흐름·정정공시"
+    },
+    {
+      "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "정책·법률·보조금이 시행규칙·eligibility·예산을 통과해 대상 회사 현금/수요로 이어지는 메커니즘",
+      "false_positive_guard": "정책 발표·테마를 대상 회사의 확정 보조금/매출로 만들지 않는다.",
+      "questions": [
+        "법안 제안·통과·공포·시행규칙·예산 배정을 분리했는가",
+        "대상 회사/제품의 eligibility·지역/원산지·compliance 조건은 무엇인가",
+        "보조금 금액·수취시점·직접 cash route·고객 가격/수요 영향은 무엇인가",
+        "implementation timeline·기관·신청/승인 상태는 무엇인가",
+        "정권/법원/예산/무역·관세 reversal risk는 무엇인가",
+        "정책 headline-only와 실제 issuer economics를 분리했는가",
+        "revision·valuation이 정책 기대를 선반영했는가"
+      ],
+      "recommended_source_roles": "법률/정부/규제기관·예산/가이드라인·issuer eligibility/수취·고객/산업·실적/FCF"
+    },
+    {
+      "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "contract_role": "PRIMARY",
+      "economic_mechanism": "지배권 거래·tender offer의 확정 조건·minority cash path·승인·event spread를 판정하는 메커니즘",
+      "false_positive_guard": "경영권 분쟁·MOU·대주주 변경 가능성을 확정 현금 floor로 보지 않는다.",
+      "questions": [
+        "binding tender/매매계약·가격·수량·대상 주주·조건이 무엇인가",
+        "minority shareholder가 실제 현금화할 수 있는 경로와 강제/선택 조건은 무엇인가",
+        "financing·regulatory/antitrust·주총·법원 승인과 timeline은 무엇인가",
+        "control premium floor·잔여지분·상장유지/폐지·희석 영향을 무엇인가",
+        "withdrawal·조건 미충족·가격조정·소송·event spread risk는 무엇인가",
+        "rumor·기사·경영권 분쟁과 확정 공시를 분리했는가"
+      ],
+      "recommended_source_roles": "tender/공개매수/주요사항 공시·거래 당사자·규제기관·법원·financing·시장 spread"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "contract_role": "CROSS_GUARD",
+      "economic_mechanism": "모든 아키타입의 Stage2 false positive를 price/theme/source-proxy와 실제 economic bridge로 분리하는 공통 red-team",
+      "false_positive_guard": "이 계약은 primary archetype을 대체하지 않고 모든 job에 overlay로 적용한다.",
+      "questions": [
+        "positive evidence가 대상 회사의 직접 cash/revenue/margin/customer bridge인가",
+        "price-only·theme headline·정책 headline·product profile·source proxy인가",
+        "wrong subject/segment/product·old fact·snippet·중복 lineage가 섞였는가",
+        "필수 두 번째 bridge와 counter search가 완료됐는가",
+        "Stage2를 지지하는 non-price fact가 현재 OPEN/유효한가"
+      ],
+      "recommended_source_roles": "각 primary contract의 source route와 verifier receipt"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "contract_role": "CROSS_GUARD",
+      "economic_mechanism": "일시적 execution watch와 현재 thesis-death hard break를 lifecycle 기반으로 구분하는 공통 red-team",
+      "false_positive_guard": "현재 OPEN claim 없이 hard 4C를 만들지 않는다.",
+      "questions": [
+        "계약 취소·고객 영구상실·qualification 실패·회계/신뢰 break가 현재 확정됐는가",
+        "지연·최적화·재협상·재개 가능성과 영구적 break를 분리했는가",
+        "후속 공시가 과거 부정 claim을 해소·supersede했는가",
+        "4B/4C 판단에 issuer-scoped current OPEN source가 있는가",
+        "valuation overheat나 가격하락을 hard break로 오인하지 않았는가"
+      ],
+      "recommended_source_roles": "issuer/고객/규제/법원/감사 등 직접 current source"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "contract_role": "CROSS_GUARD",
+      "economic_mechanism": "감사·회계·공시 신뢰와 share-count/가격 데이터를 현재성·주체·정상/해소 문맥으로 검증하는 공통 red-team",
+      "false_positive_guard": "타사 감사문서·정상 의견·과거 해소 risk를 대상 회사 current hard break로 만들지 않는다.",
+      "questions": [
+        "감사의견·강조사항·계속기업·restatement·auditor resignation의 정확한 주체와 현재 상태는 무엇인가",
+        "적정/정상 문구를 risk로 오인했는가",
+        "과거 문제는 최신 감사/공시에서 해소·재발·미해결인가",
+        "share issuance·희석·분할·소각·시장 데이터의 denominator가 일치하는가",
+        "가격/시총/valuation snapshot이 as_of_date와 맞고 score proxy로 오용되지 않았는가"
+      ],
+      "recommended_source_roles": "감사보고서·거래소/감독 공시·issuer 자본변동·시장 snapshot"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "contract_role": "CROSS_GUARD",
+      "economic_mechanism": "과거 high-MAE 학습을 현재 가격 outcome 누수 없이 execution·liquidity·valuation·positioning fragility 질문으로 변환하는 공통 guard",
+      "false_positive_guard": "미래 가격 outcome·과거 MAE를 current score evidence로 사용하지 않는다.",
+      "questions": [
+        "현재 valuation·liquidity·share issuance·positioning·execution risk가 무엇인가",
+        "비가격 thesis bridge가 약한데 가격만 확장됐는가",
+        "과거 calibration anchor는 질문 설계에만 쓰이고 현재 점수에 직접 들어가지 않았는가",
+        "as_of_date 이후 MFE/MAE·가격 결과가 production prompt와 fact에 노출되지 않았는가",
+        "현재 non-price break가 없다면 high-MAE history만으로 4B/4C를 만들지 않았는가"
+      ],
+      "recommended_source_roles": "현재 공시/유동성/자본/valuation과 blind-safe historical contract metadata"
+    }
+  ],
+  "master_goal_sha256": "cccc68bfa73c911ac969d25a56c83c0867c087d709cc336f4096fc356635d428",
+  "question_family_count": 233,
+  "schema_version": "e2r_archetype_research_blueprints_v2"
+}

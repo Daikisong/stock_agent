@@ -1,0 +1,123 @@
+{
+  "schema_version": "e2r_pro_v2_mechanism_golden_cases_v1",
+  "cases": [
+    {
+      "case_id": "GOLDEN-C01-BACKLOG",
+      "mechanism_family": "C01_BACKLOG_MARGIN",
+      "primary_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "as_of_date": "2026-08-22",
+      "critical_question_terms": ["수주잔고", "매출로 전환", "FCF 전환"],
+      "positive_statement": "공식 잔고표의 납품 일정과 선수금 수취가 매출·현금 전환과 연결됐다.",
+      "counter_statement": "일부 프로젝트 지연과 원가초과 가능성이 최신 공시에서 OPEN으로 남았다."
+    },
+    {
+      "case_id": "GOLDEN-C03-DEFENSE",
+      "mechanism_family": "C03_FRAMEWORK_VS_CONTRACT",
+      "primary_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "as_of_date": "2026-08-22",
+      "critical_question_terms": ["MOU·framework·LOI", "구속력 있는 본계약", "수출승인"],
+      "positive_statement": "정부 고객과 수출승인이 명시된 구속력 있는 본계약 및 납품 일정이 확인됐다.",
+      "counter_statement": "현지화와 승인 지연 조건이 실제 납품·현금화의 OPEN counter로 남았다."
+    },
+    {
+      "case_id": "GOLDEN-C06-HBM",
+      "mechanism_family": "C06_HBM_CUSTOMER_CAPACITY",
+      "primary_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "as_of_date": "2026-08-22",
+      "critical_question_terms": ["allocation·booking·commitment·LTA", "capacity sold-out", "qualification"],
+      "positive_statement": "issuer 원문에서 제품·기간이 특정된 고객 commitment와 pre-sold capacity가 확인됐다.",
+      "counter_statement": "qualification 지연과 경쟁사 증설이 고객 집중도의 OPEN counter로 확인됐다."
+    },
+    {
+      "case_id": "GOLDEN-C08-SOCKET",
+      "mechanism_family": "C08_PROFILE_VS_ORDER_CONVERSION",
+      "primary_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "as_of_date": "2026-08-22",
+      "critical_question_terms": ["roadmap/profile", "named customer qualification", "repeat order"],
+      "positive_statement": "제품 소개가 아니라 named customer qualification과 repeat shipment가 원문으로 연결됐다.",
+      "counter_statement": "고객 세대교체와 대체재 채택 위험은 order conversion의 OPEN counter다."
+    },
+    {
+      "case_id": "GOLDEN-C12-BATTERY",
+      "mechanism_family": "C12_BATTERY_CALL_OFF_RISK",
+      "primary_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "as_of_date": "2026-08-22",
+      "critical_question_terms": ["call-off 권리", "최소물량", "pushout"],
+      "positive_statement": "현재 유효 계약의 최소물량·가격·기간과 고객 platform 일정이 직접 확인됐다.",
+      "counter_statement": "고객 call-off pushout과 가동률 하락이 최신 자료에서 OPEN으로 확인됐다."
+    },
+    {
+      "case_id": "GOLDEN-C15-MATERIAL",
+      "mechanism_family": "C15_PASS_THROUGH_INVENTORY_PHASE",
+      "primary_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "as_of_date": "2026-08-22",
+      "critical_question_terms": ["commodity headline", "ASP/pass-through", "inventory/working capital"],
+      "positive_statement": "issuer 제품 ASP의 pass-through와 재고 원가 lag 및 실현 margin이 함께 확인됐다.",
+      "counter_statement": "신규 공급과 가격 반락이 late-cycle 재고손실 counter로 남았다."
+    },
+    {
+      "case_id": "GOLDEN-C17-CHEMICAL",
+      "mechanism_family": "C17_REALIZED_CHEMICAL_SPREAD",
+      "primary_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "as_of_date": "2026-08-22",
+      "critical_question_terms": ["realized spread", "재고 원가 lag", "gross margin·OPM·EPS·FCF"],
+      "positive_statement": "제품 ASP와 feedstock 원가의 realized spread가 실제 OPM·FCF 전환으로 확인됐다.",
+      "counter_statement": "원재료 급등과 공급증설이 realized spread를 훼손할 OPEN counter로 확인됐다."
+    },
+    {
+      "case_id": "GOLDEN-C21-FINANCIAL",
+      "mechanism_family": "C21_ROE_PBR_CAPITAL_RETURN",
+      "primary_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "as_of_date": "2026-08-22",
+      "critical_question_terms": ["ROE의 구성", "CET1/BIS", "실제 실행"],
+      "positive_statement": "지속 가능한 ROE 구성과 CET1 여력 아래 자사주 소각의 실제 실행이 확인됐다.",
+      "counter_statement": "신용비용 상승과 규제상 자본환원 제한이 OPEN counter로 확인됐다."
+    },
+    {
+      "case_id": "GOLDEN-C24-BIO",
+      "mechanism_family": "C24_BIO_DATA_BINARY_RISK",
+      "primary_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "as_of_date": "2026-08-22",
+      "critical_question_terms": ["trial design", "p-value/CI", "cash runway"],
+      "positive_statement": "endpoint·통계계획과 p-value/CI 및 data maturity가 원문 데이터로 확인됐다.",
+      "counter_statement": "안전성 event와 추가 임상비·희석 위험이 binary-risk counter로 남았다."
+    },
+    {
+      "case_id": "GOLDEN-C28-SOFTWARE",
+      "mechanism_family": "C28_SOFTWARE_RETENTION",
+      "primary_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "as_of_date": "2026-08-22",
+      "critical_question_terms": ["ARR·recurring revenue·RPO", "GRR/NRR", "headline만 있고 retention bridge"],
+      "positive_statement": "정의가 일치하는 ARR·RPO와 NRR·renewal이 반복매출 전환으로 확인됐다.",
+      "counter_statement": "customer loss와 높은 SBC 희석이 retention economics의 OPEN counter로 확인됐다."
+    },
+    {
+      "case_id": "GOLDEN-C30-PF",
+      "mechanism_family": "C30_CONSTRUCTION_PF_LIFECYCLE",
+      "primary_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "as_of_date": "2026-08-22",
+      "critical_question_terms": ["PF exposure", "refinancing", "OPEN/RESOLVED/SUPERSEDED"],
+      "positive_statement": "사업장별 PF exposure와 refinancing 및 보증 해소의 실제 cash effect가 확인됐다.",
+      "counter_statement": "추가 지원의무와 impairment 가능성이 최신 자료에서 OPEN으로 확인됐다."
+    },
+    {
+      "case_id": "GOLDEN-C31-POLICY",
+      "mechanism_family": "C31_POLICY_HEADLINE_DIRECT_CASH",
+      "primary_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "as_of_date": "2026-08-22",
+      "critical_question_terms": ["제안·통과·공포·시행규칙", "직접 cash route", "headline-only"],
+      "positive_statement": "법 시행·예산 배정·회사 eligibility와 보조금 직접 cash 수취 경로가 확인됐다.",
+      "counter_statement": "예산 축소와 시행규칙 변경 가능성이 정책 cash bridge의 OPEN counter다."
+    },
+    {
+      "case_id": "GOLDEN-R13-ACCOUNTING",
+      "mechanism_family": "R13_ACCOUNTING_WRONG_SUBJECT_OLD_RISK",
+      "primary_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "focus_contract_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "as_of_date": "2026-08-22",
+      "critical_question_terms": ["정확한 주체", "적정/정상 문구", "해소·재발·미해결"],
+      "positive_statement": "최신 감사 원문에서 정확한 issuer 주체와 적정 의견 및 현재 상태가 확인됐다.",
+      "counter_statement": "과거 문제가 최신 공시에서도 미해결인지 issuer-scoped 원문으로 재검증됐다."
+    }
+  ]
+}

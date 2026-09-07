@@ -1,0 +1,109 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p8_initial_failure_receipt_v1",
+  "status": "FRESH_SESSION_DIAGNOSTIC_ONLY",
+  "recorded_at": "2026-08-26T07:28:36+09:00",
+  "target": {
+    "target_id": "011170",
+    "company_name": "롯데케미칼",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+  },
+  "job_id": "PROJOB-8d0471204d7de2826e879f2e",
+  "run_id": "PRORUN-69358af2127fa7984988fb83",
+  "research_pass_id": "PROPASS-cc762a119f46a3f109bf08e6",
+  "conversation_id": "6a8e0320-0f28-83ee-9a1e-5c0bc2d148c7",
+  "submit_count": 1,
+  "capture_count": 1,
+  "automatic_resubmit_count": 0,
+  "durable_status": "GAP_ADJUDICATION",
+  "frozen_at": "2026-08-25T22:25:59.465848Z",
+  "initial_gate": {
+    "status": "FAIL",
+    "verdict": "OPERATIONAL_EFFICIENCY_GATE_FAILED",
+    "serialized_material_fact_count": 0,
+    "material_candidate_count": 0,
+    "accepted_material_count": 0,
+    "acceptance_ratio": 0.0,
+    "mandatory_question_count": 26,
+    "mandatory_question_covered_count": 26,
+    "genuine_semantic_repair_candidate_count": 0,
+    "genuine_semantic_repair_candidate_limit": 5,
+    "initial_prompt_output_defect_count": 0,
+    "failure_reasons": [
+      "NO_INITIAL_MATERIAL_CANDIDATES",
+      "INITIAL_ACCEPTANCE_RATIO_BELOW_80_PERCENT"
+    ]
+  },
+  "pro_self_reported_output": {
+    "source_document_count": 11,
+    "question_result_count": 26,
+    "search_route_receipt_count": 0,
+    "material_fact_count": 0,
+    "counterfact_count": 0,
+    "resolution_fact_count": 0,
+    "candidate_fact_count_withheld": 50,
+    "terminal_question_count": 0,
+    "nonterminal_question_count": 26,
+    "complete_claimed": false,
+    "withholding_reason": "fact-question 양방향 binding과 전체 schema 검증을 완료하지 못해 후보 전부를 배열에서 제거"
+  },
+  "verification": {
+    "dossier_source_document_count": 11,
+    "full_document_fetch_count": 11,
+    "candidate_fact_count": 0,
+    "terminal_fact_count": 0,
+    "query_count": 0,
+    "search_count": 0,
+    "local_normalizable_sent_to_pro_count": 0,
+    "source_representation_sent_to_pro_count": 0
+  },
+  "performance": {
+    "initial_prompt_char_count": 58327,
+    "initial_response_char_count": 59779,
+    "initial_research_elapsed_seconds": 4946.447733
+  },
+  "transport_recovery": {
+    "initial_failure_class": "DossierIdentityBindingError",
+    "initial_failure_reason": "PENDING_NEW_CONVERSATION with canonical null parent was not normalized",
+    "generic_fix": "accept exact initial placeholder alias with explicit JSON null or NONE parent",
+    "same_capture_reused": true,
+    "browser_reopened": false,
+    "browser_submit_delta": 0,
+    "strict_v3_validation_after_fix": "PASS"
+  },
+  "canonical_hashes": {
+    "report_md_sha256": "8891d29aba3eb0c6c6f8e0a3aeca595c93932aad3d0cb550fba5c0aaea4368e5",
+    "raw_dossier_sha256": "5b5751eb039bf7c13ff554eca1b7727c9eed766579a52ffebf78b6456488dc58",
+    "capture_receipt_sha256": "7ac614ef5cc4ad7e709ae3e905faa2382206ee249d05163420f21176be53cb97",
+    "initial_import_failure_sha256": "fe3d043ce8dcbcafbdb0da1c75eeb04491c924d47d91c08dd8b05b94dcf218c7",
+    "normalized_dossier_sha256": "19ec8cc2d933ba422e29e00c7d943db40e9239a1deeae106511eaaa5699b32e5",
+    "import_receipt_sha256": "8a6f23cf9b70889bde3627d9e6ad7e3e41310a6cc6d6f5724b2038f6d3c3f139",
+    "source_verification_receipt_sha256": "c56a9230c84a2d11d062586182ef93c760fc9666b8946e8e849200307a9e3b84",
+    "source_verifications_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "initial_efficiency_receipt_sha256": "ed66e3ba70d188ad8a1bd5ee388a0b4e6e6cf551c6c00c9349a3cc776fd95a1a",
+    "initial_efficiency_receipt_hash": "72c7a788a28fad388bca887f01e2a876d217ed29f99922db573200532f76d937",
+    "failure_receipt_sha256": "22e5e6f254121f773216cbfc450436ba2ddedbba6b1cb993c4a03450b1f4ae4f",
+    "failure_receipt_hash": "d210885e50f9b5fe896d5906fdceb12b44bd061c319f44510fb0761ac64e3382"
+  },
+  "postmortem": {
+    "retroactive_gate_change_allowed": false,
+    "same_conversation_repair_allowed": false,
+    "new_conversation_required": true,
+    "confirmed_generic_prompt_defect": "FINAL_BULK_SERIALIZATION_DISCARDED_ALL_VERIFIED_SUBSET",
+    "new_gate_projection": {
+      "self_reported_withheld_candidate_count": 50,
+      "initial_prompt_output_defect_count": 1,
+      "failure_reasons": [
+        "INITIAL_PROMPT_OUTPUT_DEFECT",
+        "NO_INITIAL_MATERIAL_CANDIDATES",
+        "INITIAL_ACCEPTANCE_RATIO_BELOW_80_PERCENT"
+      ],
+      "receipt_hash": "2c762a28cdb6a32eed4c5934cbbda2f401093c5fa819cc919807b306d3a9d67a",
+      "operational_gate_authority": false
+    },
+    "score_authority": false,
+    "stage_authority": false,
+    "publication_withheld": true,
+    "p8_verdict": "NOT_YET_DECLARED"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": "e2r_pro_p10_c06_public_gap_third_capture_merge_receipt_v1",
+  "verdict": "PASS_OFFLINE_EXACT_CAPTURE_MERGE",
+  "final_full_thesis_allowed": false,
+  "job_id": "PROJOB-ab48ce7e94097cf9b6846602",
+  "run_id": "PRORUN-683f5a5423a6e367f443c6de",
+  "target_id": "000660",
+  "as_of_date": "2026-08-23",
+  "conversation_id": "6a8db0ad-8ed0-83e8-888e-dce26c950343",
+  "pass_id": "PROPASS-b2a41069565bc54d9c941209",
+  "parent_pass_id": "PROPASS-5e45eef5db23629f4e757e04",
+  "pass_name": "PUBLIC_GAP_CLOSURE",
+  "submit_count": 1,
+  "automatic_resubmit_count": 0,
+  "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+  "assistant_turn_id": "request-6a8db0ad-8ed0-83e8-888e-dce26c950343-2",
+  "captured_at": "2026-08-26T18:11:42.827872Z",
+  "prompt_hash": "57db2da444a4a826b15128f12620711264146fa6c7134c7dbb00b0a3e296af98",
+  "raw_report_md_hash": "926a1b81e05bdea335a1920922c7d24a0b3965c9f7277d15652e66601114fa4c",
+  "report_md_hash": "25666253b3fc0a52a248dfef50642b8a2e684d9d9c659052d607cc321c8fd796",
+  "dossier_json_hash": "980fc98d71817c5afaa3d2027cf5b8c0aa63bd00e1248f6d8d4f041cd5224161",
+  "report_pdf_hash": null,
+  "optional_pdf_error": null,
+  "transport_normalization_operations": [
+    "APPEND_VISIBLE_CITATION_HREF_REGISTRY"
+  ],
+  "captured_delta": {
+    "new_source_document_count": 3,
+    "new_material_fact_count": 6,
+    "new_counterfact_count": 1,
+    "new_resolution_fact_count": 3,
+    "new_fact_count": 10,
+    "new_source_lineage_row_count": 4,
+    "new_route_receipt_count": 25,
+    "pro_reported_updated_question_count": 19,
+    "pro_reported_research_status": "NEEDS_PUBLIC_GAP_CLOSURE"
+  },
+  "exact_capture_offline_merge": {
+    "status": "PASS",
+    "new_fact_count": 10,
+    "effective_fact_count": 52,
+    "new_source_document_count": 3,
+    "effective_source_document_count": 26,
+    "new_effective_source_lineage_count": 3,
+    "effective_source_lineage_count": 24,
+    "new_route_receipt_count": 25,
+    "effective_route_receipt_count": 115,
+    "effective_question_count": 28,
+    "effective_research_status": "PROVIDER_PENDING",
+    "effective_dossier_hash": "56cf6611641710880d15cdb8e6c3dc5bb1d2f85297f7fdd2f89a9639799c2a22"
+  },
+  "question_fact_reference_projections": [
+    {
+      "graph_scope": "CURRENT_PASS_PRE_SCHEMA",
+      "question_family_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW_Q03",
+      "reference_field": "resolution_fact_ids",
+      "dropped_fact_id": "PROFACT-P4-R13-CONSOLIDATED-GOING-CONCERN-NOT-APPLICABLE",
+      "reason": "MISSING_FACT_BACKLINK"
+    },
+    {
+      "graph_scope": "CUMULATIVE_EFFECTIVE_DOSSIER",
+      "question_family_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q01",
+      "reference_field": "resolution_fact_ids",
+      "dropped_fact_id": "PROFACT-C06-HBM4-MASS-SHIPMENT",
+      "reason": "MISSING_FACT_BACKLINK"
+    }
+  ],
+  "projection_policy": {
+    "fact_content_mutation_allowed": false,
+    "fact_question_roster_expansion_allowed": false,
+    "unknown_fact_reference_preserved_for_strict_rejection": true,
+    "target_or_archetype_specific_rule_used": false
+  },
+  "focused_regression": {
+    "test_count": 144,
+    "failure_count": 0,
+    "error_count": 0
+  },
+  "actual_capture_reuse": {
+    "status": "PASS",
+    "browser_submit_delta": 0,
+    "capture_reused": true,
+    "persisted_effective_dossier_file_hash": "e60b7a109e4ea00e7003590b578891a764914c93d1dd603ad992c64ca939f125",
+    "accepted_fact_count_after_reverification": 33,
+    "nonterminal_mandatory_question_count": 7,
+    "provider_parser_core_pending_count": 4,
+    "public_material_gap_count": 15,
+    "source_linkage_incomplete_count": 6,
+    "next_pass_id": "PROPASS-26c03ab89ff306eec50c9e3c",
+    "next_pass_name": "PUBLIC_GAP_CLOSURE",
+    "next_pass_submit_count": 1
+  },
+  "raw_capture_tracked_in_git": false,
+  "score_authority": false,
+  "stage_authority": false,
+  "next_action": "WAIT_FOR_PASS_05_CAPTURE_THEN_CONTINUE_DETERMINISTIC_SATURATION"
+}

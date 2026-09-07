@@ -4,9 +4,20 @@ version = "0.1.0"
 description = "E2R 2.0 rerating detection and monitoring agent"
 requires-python = ">=3.10"
 dependencies = [
+    "certifi>=2026.7.22,<2027",
     "jsonschema>=4.23.0,<5",
     "pdfplumber>=0.11.0,<0.12",
     "pypdf>=4.0.0",
+    "requests>=2.34.2,<3",
+]
+
+[project.optional-dependencies]
+pro-first = [
+    "fastapi>=0.141.1,<1",
+    "httpx2>=2.12.0,<3",
+    "uvicorn>=0.52.1,<1",
+    "playwright>=1.62.0,<2",
+    "websockets>=15,<17",
 ]
 
 [tool.pyright]

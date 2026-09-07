@@ -1,0 +1,18 @@
+{
+  "bundle_id": "C28_PRO_FIRST_GOLDEN_V1",
+  "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+  "accepted_fact_count": 3,
+  "accepted_counter_count": 0,
+  "gap_labels": [],
+  "nonzero_components": ["earnings_visibility"],
+  "wrong_promotion_guard_fact_ids": ["PROFACT-C28-PROFILE-GUARD"],
+  "supplemental_task_count": 0,
+  "full_restart_count": 0,
+  "decision_must_be_final": true,
+  "score_must_be_valid": true,
+  "source_documents": {
+    "https://issuer.example/c28-arr": "arr_growth.txt",
+    "https://issuer.example/c28-renewal": "customer_renewal.txt",
+    "https://issuer.example/c28-product-profile": "product_profile.txt"
+  }
+}

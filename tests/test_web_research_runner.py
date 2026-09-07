@@ -966,6 +966,38 @@ OPM 개선폭 6%
         )
         self.assertIsNotNone(result.publication_metadata_semantics_version)
 
+    def test_page_fetcher_ignores_latest_news_card_publication_meta(self):
+        html = """
+        <html>
+          <head>
+            <meta itemprop="datePublished" content="2023-03-09T11:12:00Z">
+          </head>
+          <body>
+            <main><p>현재 공식 기사의 전체 본문</p></main>
+            <aside class="latest-news">
+              <article>
+                <meta itemprop="datePublished" content="2026-08-24">
+                <a href="/news/related">미래 시점의 관련 기사</a>
+              </article>
+            </aside>
+          </body>
+        </html>
+        """
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=_FakeHTTPResponse(html),
+        ):
+            result = PageFetcher(live_enabled=True).fetch(
+                "https://issuer.example.com/news/current-article",
+                as_of_date=date(2026, 8, 23),
+            )
+
+        self.assertTrue(result.ok)
+        self.assertEqual(
+            result.publication_metadata_parts,
+            ("HTML_META_datepublished:2023-03-09T11:12:00Z",),
+        )
+
     def test_page_fetcher_does_not_treat_archive_listing_dates_as_page_date(self):
         html = """
         <html>

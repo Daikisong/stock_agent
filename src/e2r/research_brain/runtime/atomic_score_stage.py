@@ -856,6 +856,7 @@ def adapt_claim_ledger_event_to_atomic_claim(
         and event.directness == "DIRECT"
         and event.temporal_status == "CURRENT"
         and event.support_direction == "SUPPORT"
+        and not event.superseded_by_claim_ids
         and not event.source_proxy_only
         and event.contradiction_resolved
         and not historical_replay

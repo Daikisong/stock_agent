@@ -643,8 +643,10 @@ class ComponentJudgeDecision:
             (self.nearest_anchor_ids, "nearest_anchor_ids"),
         ):
             _require_unique_texts(values, label, allow_empty=True)
-        if not self.anchor_comparisons or not self.nearest_anchor_ids:
-            raise ValueError("every judge memo requires a nearest-anchor comparison")
+        if bool(self.anchor_comparisons) != bool(self.nearest_anchor_ids):
+            raise ValueError(
+                "judge anchor comparisons and nearest anchor IDs must be present together"
+            )
         if proposed > 0 and not self.support_fact_ids:
             raise ValueError("positive proposed points require support facts")
         if self.production_total_score_authority or self.production_stage_authority:

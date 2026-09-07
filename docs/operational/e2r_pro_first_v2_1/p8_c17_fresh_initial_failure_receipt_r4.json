@@ -1,0 +1,136 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p8_initial_failure_receipt_v1",
+  "status": "FRESH_SESSION_DIAGNOSTIC_ONLY",
+  "recorded_at": "2026-08-26T09:19:18+09:00",
+  "target": {
+    "target_id": "011170",
+    "company_name": "롯데케미칼",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+  },
+  "job_id": "PROJOB-2ceb6e7eccad3ab6e4a8446b",
+  "run_id": "PRORUN-609870c1cb8f7e5c4de98c97",
+  "research_pass_id": "PROPASS-db2ed0ab0d2b0d93bb84b5ee",
+  "conversation_id": "6a8e17a3-44a8-83ee-92a9-e941133c33a3",
+  "submit_count": 1,
+  "capture_count": 1,
+  "automatic_resubmit_count": 0,
+  "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+  "durable_status": "GAP_ADJUDICATION",
+  "frozen_at": "2026-08-26T00:11:51.511402Z",
+  "initial_gate": {
+    "status": "FAIL",
+    "verdict": "OPERATIONAL_EFFICIENCY_GATE_FAILED",
+    "serialized_material_fact_count": 10,
+    "excluded_noncurrent_material_fact_count": 4,
+    "material_candidate_count": 6,
+    "accepted_material_count": 4,
+    "acceptance_ratio": 0.666667,
+    "mandatory_question_count": 26,
+    "mandatory_question_covered_count": 26,
+    "genuine_semantic_repair_candidate_count": 2,
+    "genuine_semantic_repair_candidate_limit": 5,
+    "initial_prompt_output_defect_count": 0,
+    "failure_reasons": [
+      "INITIAL_ACCEPTANCE_RATIO_BELOW_80_PERCENT"
+    ]
+  },
+  "pro_output": {
+    "source_document_count": 7,
+    "material_fact_count": 10,
+    "counterfact_count": 9,
+    "resolution_fact_count": 7,
+    "derived_metric_count": 1,
+    "question_result_count": 26,
+    "search_route_receipt_count": 26,
+    "terminal_question_count": 23,
+    "nonterminal_question_count": 3,
+    "research_status": "NEEDS_PUBLIC_GAP_CLOSURE",
+    "self_reported_withheld_candidate_count": 0
+  },
+  "verification": {
+    "source_verification_semantics": "e2r_pro_source_verification_v10",
+    "candidate_fact_count": 26,
+    "full_document_fetch_count": 7,
+    "query_count": 0,
+    "search_count": 0,
+    "local_normalizable_sent_to_pro_count": 0,
+    "source_representation_sent_to_pro_count": 0,
+    "rejected_current_material_fact_ids": [
+      "FACT-IMSEC-20260810-TARGET-PBR-METHOD",
+      "FACT-KBSEC-20260807-2026-EPS-UP"
+    ],
+    "rejected_auxiliary_counter_fact_ids": [
+      "FACT-KBSEC-20260807-TARGET-PRICE-CUT"
+    ],
+    "rejection_status": "REJECTED_WRONG_SUBJECT"
+  },
+  "performance": {
+    "initial_prompt_char_count": 59254,
+    "initial_response_char_count": 122693,
+    "initial_research_elapsed_seconds": 5997.813202,
+    "total_elapsed_seconds": 6069.486548
+  },
+  "canonical_hashes": {
+    "report_md_sha256": "c36b18248c1a7db2229aca6f97d2e5ecb8f1d5649a9d453f6db3f836f253f9ea",
+    "raw_dossier_sha256": "dfb3d0921ad396ef303fcd5c69ad2d9e82c6fe45f1671067ed56ee8ff6a2607a",
+    "capture_receipt_sha256": "33d584120607a6e056e4ad5ba0831c1bdff7ced2000ed10db71e6dde130b75bf",
+    "normalized_dossier_sha256": "becb21ac537a8fa969c0f9758c095c821248665bf2a3e4759f41a510b2c20b60",
+    "import_receipt_sha256": "6e918e3df13e3116a6355dcfaab9906e0f921d03cc391fe5cf71792a97338ae2",
+    "source_verification_receipt_sha256": "0c2b3213dd01717f14c14deaaf2c7b412ce179a1a0bc841e994fc02cbe92b9d0",
+    "source_verifications_sha256": "a330fcb0c441c355da5309190b693544544217dec1a2b967cc310c2d30be512c",
+    "initial_efficiency_receipt_sha256": "60c800db21b94e0c6afa196a90fb7b5ca3d468dfc772c2480ce64b0e331e9843",
+    "initial_efficiency_receipt_hash": "8a554b77aee964405af8f8b927e18e6ef7f709e19d91588697e48691eb105f03",
+    "failure_receipt_sha256": "f1e32d119bc511581cddbab90da7d7d7f0fd2e1d1ff31730c607537270bc49bd",
+    "failure_receipt_hash": "0782ea6df4ae293449b3ed587c133398dba1fe06ec5e47099424c872592ebb00"
+  },
+  "postmortem": {
+    "retroactive_gate_change_allowed": false,
+    "same_conversation_repair_allowed": false,
+    "new_conversation_required": true,
+    "root_cause_class": "LOCAL_NORMALIZATION_OR_VERIFIER_DEFECT",
+    "root_cause": "NONISSUER_TARGET_ANALYST_COMPOUND_SUBJECT_REJECTED_AS_NONLITERAL",
+    "generic_fix": "structured subject와 quote 주변 bounded context가 같은 target alias를 공유하면 target 분석 fact로 인정",
+    "wrong_subject_guard_preserved": "target mention이 quote에서 2000자보다 멀거나 structured subject가 target alias를 포함하지 않으면 계속 거절",
+    "new_source_verification_semantics": "e2r_pro_source_verification_v11",
+    "immutable_capture_projection": {
+      "candidate_fact_count": 26,
+      "accepted_fact_count": 20,
+      "current_material_candidate_count": 6,
+      "accepted_current_material_count": 6,
+      "acceptance_ratio": 1.0,
+      "genuine_semantic_repair_candidate_count": 0,
+      "query_count": 0,
+      "search_count": 0,
+      "gate_status": "PASS",
+      "gate_verdict": "PRO_FIRST_V2_1_INITIAL_EFFICIENCY_PASS",
+      "failure_reasons": [],
+      "receipt_hash": "b1524db518f1d5d50d71acdd2a3339c84c22684ab73b922cff9c92d761aaba7b",
+      "operational_gate_authority": false
+    },
+    "score_authority": false,
+    "stage_authority": false,
+    "publication_withheld": true,
+    "p8_verdict": "NOT_YET_DECLARED"
+  },
+  "local_verification": {
+    "focused_test_count": 72,
+    "focused_failure_count": 0,
+    "browser_test_count": 79,
+    "browser_failure_count": 0,
+    "full_test_count": 7698,
+    "full_test_failure_count": 0,
+    "full_test_error_count": 0,
+    "full_test_skipped_count": 38,
+    "pro_first_static_audit_critical_count": 0,
+    "pro_first_v2_static_audit_critical_count": 0,
+    "production_static_audit_critical_count": 0,
+    "compileall": "PASS",
+    "git_diff_check": "PASS",
+    "first_full_run_environment_error_count": 60,
+    "first_full_run_environment_cause": "WSL Playwright Chromium shared libraries were absent",
+    "environment_recovery": "public Ubuntu packages extracted under /tmp and supplied only through LD_LIBRARY_PATH",
+    "windows_chatgpt_profile_mutated": false,
+    "sealed_conversation_mutated": false
+  }
+}

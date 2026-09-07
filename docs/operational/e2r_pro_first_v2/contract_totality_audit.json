@@ -1,0 +1,29 @@
+{
+  "counters": {
+    "canonical_contract_count": 36,
+    "contract_without_adequate_search_count": 0,
+    "contract_without_counter_hard_break_count": 0,
+    "cross_guard_count": 4,
+    "extra_unknown_contract_count": 0,
+    "generic_filler_contract_count": 0,
+    "green_gate_primitive_unmapped_count": 0,
+    "guard_primitive_unmapped_count": 0,
+    "missing_contract_count": 0,
+    "question_without_scope_count": 0,
+    "question_without_source_role_count": 0,
+    "required_primitive_unmapped_count": 0,
+    "research_contract_count": 36
+  },
+  "critical_count": 0,
+  "cross_guard_ids": [
+    "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+    "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+    "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+    "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+  ],
+  "extra_contract_ids": [],
+  "missing_contract_ids": [],
+  "schema_version": "e2r_pro_first_v2_contract_totality_audit_v1",
+  "status": "PASS",
+  "validation_error": null
+}

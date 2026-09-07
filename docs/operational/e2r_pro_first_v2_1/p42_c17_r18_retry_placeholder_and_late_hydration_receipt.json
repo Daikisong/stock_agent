@@ -1,0 +1,111 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_c17_r18_retry_placeholder_and_late_hydration_receipt_v1",
+  "status": "R18_DIAGNOSTIC_ONLY_AND_GENERIC_TRANSPORT_REPAIR_PASS",
+  "recorded_at": "2026-08-31T08:44:00Z",
+  "git_head_before_fix": "9c98cdeefccdadd06e5182342635d4624fe980b1",
+  "target": {
+    "symbol": "011170",
+    "company_name": "롯데케미칼",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+  },
+  "runtime_identity": {
+    "fresh_session_id": "FRESH-V2-1-C17-R18-20260831T055127Z",
+    "job_id": "PROJOB-ec3420568135af9ef5c20558",
+    "run_id": "PRORUN-5a39b44adbbf19f4c46057e7",
+    "initial_pass_id": "PROPASS-9835d7da2ae99ba62536b963",
+    "conversation_id": "6a951687-82a4-83ee-965c-9a651d4a3488",
+    "initial_response_hash": "677c1eab9a31a752cbe5e7cb22ecb4ffbd4640884461aa700a8c9c7502cc4eaf",
+    "initial_submit_count": 1,
+    "initial_capture_count": 0
+  },
+  "initial_result": {
+    "visible_processing_duration": "94m 7s",
+    "visible_attachment_filename": "lotte_chemical_research_dossier_v3.json",
+    "bounded_same_attachment_download_attempts": 60,
+    "every_download_byte_count": 18,
+    "every_download_payload": {
+      "status": "retry"
+    },
+    "accepted_as_dossier": false,
+    "score_authority": false,
+    "stage_authority": false
+  },
+  "artifact_reexport_race": {
+    "first_pass": {
+      "pass_id": "PROPASS-77079482a7cfb1e93197cc22",
+      "submit_count": 1,
+      "server_persistence_confirmed": true,
+      "initial_visible_result": "생각 중지됨",
+      "initial_visible_result_hash": "6d91d8a042d3dfedb18ab931fdc1b2310a32faccfd8c898a44d3c7180df4dd5a",
+      "durable_status_after_early_failure_disposition": "FAILED_HARD",
+      "late_hydration_duration": "23m 25s",
+      "late_visible_response_hash": "6bb272bf8e472da07c26002a96f3fb1a10d164196f339b94e5fe18e6a1b58294",
+      "late_visible_attachment_filename": "E2R_ResearchDossierV3_011170_2026-08-23.json",
+      "late_visible_claimed_byte_count": 218640,
+      "late_visible_claimed_sha256": "de7a7e1e3a25313001017a32d9567b3c2e7db8f87897ea2a06582d7e7436c80d",
+      "late_real_download_result": "REJECTED_UNBOUND_MANIFEST",
+      "late_result_used_for_import": false
+    },
+    "provider_retry_pass": {
+      "pass_id": "PROPASS-3372e4326ff36d806c2d203d",
+      "submit_count": 1,
+      "server_persistence_confirmed": true,
+      "exact_assistant_result_available": false,
+      "durable_status": "TRANSPORT_PENDING"
+    },
+    "root_cause": [
+      "ChatGPT exposed a generated JSON filename before its backing artifact was ready and returned the exact retry placeholder",
+      "the completion monitor escalated six ready-state observations after about thirty seconds even though the first re-export hydrated successfully more than twenty minutes later",
+      "a retry user turn therefore persisted before the prior response appeared, making the transport lineage overlap"
+    ],
+    "operational_disposition": "R18_DIAGNOSTIC_ONLY_NEW_CONVERSATION_REQUIRED",
+    "job_frozen_at": "2026-08-31T08:43:56.842597Z"
+  },
+  "generic_code_repairs": {
+    "retry_placeholder": "status=retry now raises BrowserArtifactUnavailable and enters the existing bounded ARTIFACT_REEXPORT path",
+    "late_hydration": "the default exact-pass mismatch grace increased from 6 to 1440 polls, matching the live two-hour completion ceiling at the production five-second interval",
+    "stale_result_authority": "an older pass still never completes or captures the expected current pass",
+    "new_tests": [
+      "test_authenticated_fetch_retry_placeholder_is_transport_error",
+      "test_default_followup_grace_does_not_fail_after_six_ready_polls"
+    ],
+    "full_discovery_floor": 7862
+  },
+  "verification": {
+    "windows_browser_and_capture_tests": {
+      "count": 72,
+      "failure": 0,
+      "error": 0,
+      "status": "PASS"
+    },
+    "linux_browser_attempt": {
+      "status": "ENVIRONMENT_ERROR_BEFORE_TEST_BODY",
+      "missing_library": "libnspr4.so",
+      "used_as_code_failure": false
+    },
+    "compileall": "PASS",
+    "git_diff_check": "PASS",
+    "pro_first_static_audit": "PASS / critical 0 / guarded submit 1",
+    "production_static_audit": "PASS / critical 0",
+    "full_unittest_and_reviewer_a_to_h": "PENDING_GITHUB_ACTIONS_AFTER_COMMIT"
+  },
+  "browser_safety": {
+    "existing_logged_in_chatgpt_tab_reused": true,
+    "new_window_count": 0,
+    "new_tab_count": 0,
+    "new_target_count": 0,
+    "automatic_initial_resubmit_count": 0,
+    "artifact_reexport_scope": "same conversation; transport only; no new research, fact, score, or Stage authority"
+  },
+  "master_goal_state": {
+    "live_full_thesis_pass_count": 1,
+    "live_full_thesis_required_count": 3,
+    "c06": "PASS",
+    "c17": "PENDING_NEW_R19_AFTER_GENERIC_FIX",
+    "c28": "PENDING",
+    "operational_research_ready_allowed": false,
+    "pr_draft_release_allowed": false,
+    "main_merge_allowed": false
+  }
+}

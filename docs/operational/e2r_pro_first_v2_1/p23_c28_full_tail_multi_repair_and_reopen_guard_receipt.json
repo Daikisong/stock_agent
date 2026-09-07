@@ -1,0 +1,128 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p23_c28_full_tail_receipt_v1",
+  "status": "C28_RESEARCH_GAP_REOPEN_LIMIT_PENDING",
+  "recorded_at": "2026-08-29T04:46:00+09:00",
+  "target_id": "053800",
+  "company_name": "안랩",
+  "as_of_date": "2026-08-23",
+  "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+  "job_id": "PROJOB-e3d57e985cd3a1617b717ccd",
+  "run_id": "PRORUN-d0f7e7834ed81f0c9bb324a1",
+  "conversation_id": "6a8eaee3-d670-83ee-9c01-6f7d438db2f0",
+  "tail_passes": [
+    {
+      "pass_ordinal": 12,
+      "pass_id": "PROPASS-6356b4f1d941c920205fe57a",
+      "pass_name": "PUBLIC_GAP_CLOSURE",
+      "submit_count": 1,
+      "new_fact_count": 2,
+      "new_route_count": 8,
+      "response_hash": "e3ec1fddc2c22d066c08d3ca45a1ec94370601286a384de7eea3c0e93cd5ef8a"
+    },
+    {
+      "pass_ordinal": 13,
+      "pass_id": "PROPASS-a452995d67d0f319b0ae4500",
+      "pass_name": "PUBLIC_GAP_CLOSURE",
+      "submit_count": 1,
+      "new_fact_count": 0,
+      "new_route_count": 2,
+      "response_hash": "b89cfc308d4ef9ba68fa8057d8a3bdff7811d1d13b7bfc3eba2f60b6fd750682"
+    },
+    {
+      "pass_ordinal": 14,
+      "pass_id": "PROPASS-21913aaccf85396ea4d2bcde",
+      "pass_name": "PUBLIC_GAP_CLOSURE",
+      "submit_count": 1,
+      "new_fact_count": 0,
+      "new_route_count": 3,
+      "response_hash": "9fbdd477030cf08bd70e62ed2cbdfd4362ffca2ff5a292282878fd385a0216a0"
+    },
+    {
+      "pass_ordinal": 15,
+      "pass_id": "PROPASS-3130cedeb6aee4c22b3c8fc7",
+      "pass_name": "VERIFIER_REPAIR",
+      "submit_count": 1,
+      "candidate_count": 2,
+      "repair_action_count": 2,
+      "response_hash": "a2b56a3116707e871f1f650ae6ca77ba29304477413cf4ca2de7fada5074befa"
+    },
+    {
+      "pass_ordinal": 16,
+      "pass_id": "PROPASS-b88c55a3bd13ed600d251c40",
+      "pass_name": "SATURATION_AUDIT",
+      "submit_count": 1,
+      "new_fact_count": 0,
+      "new_route_count": 0,
+      "semantic_progress": false,
+      "response_hash": "b4c08ecae22f22d7e11f0b63b85b1ad6d52a83283a800fc5516127f94cb1e92b"
+    }
+  ],
+  "source_verification": {
+    "verification_hash": "ca590b9af93d57f000e5e1293baab1c513ac7aaa848e7f59176a1ab49c7ee12d",
+    "candidate_fact_count": 51,
+    "accepted_fact_count": 41,
+    "query_count": 0,
+    "search_count": 0,
+    "document_cache_reuse_count": 51
+  },
+  "deterministic_saturation": {
+    "receipt_hash": "2199565bb208b4785c14badbc82629a3f8ff41b706d8102d27adee7cc93bbd4b",
+    "expected_mandatory_question_count": 27,
+    "nonterminal_mandatory_question_count": 4,
+    "provider_parser_core_pending_count": 1,
+    "public_material_gap_count": 4,
+    "source_linkage_incomplete_count": 4,
+    "verifier_repair_pending_count": 1,
+    "lifecycle_hard_break_pending_count": 0,
+    "repairable_candidate_count": 0,
+    "research_saturation_valid": false,
+    "component_entry_allowed": false
+  },
+  "terminal_reproduction": {
+    "effective_dossier_hash": "d1c163fedcf93a107aae76c5befe785ef3048a48c23f92e23574da89bc92b654",
+    "normal_status": "RESEARCH_GAP_REOPEN_LIMIT_PENDING",
+    "normal_receipt_hash": "93a4a3c3f2aa68f499e685be9f9e63cc599d9100a76c034becb34461e2c9c3f4",
+    "normal_research_pass_count": 0,
+    "normal_browser_submit_delta": 0,
+    "verify_and_inspect_match": true,
+    "inspect_only_match": true
+  },
+  "generic_pipeline_changes": {
+    "question_scoped_stable_gap_reopen_budget": true,
+    "changed_batch_cannot_reset_same_question_budget": true,
+    "exhausted_public_gap_cannot_starve_independent_repair": true,
+    "multiple_positive_repair_ordinals_allowed": true,
+    "repair_artifact_roots_append_only_and_distinct": true,
+    "exact_completed_repair_context_fixpoint": true,
+    "file_preview_closed_before_composer_use": true,
+    "same_exact_conversation_url_reloaded_after_preview": true,
+    "new_chat_used_for_recovery": false,
+    "symbol_or_archetype_hardcoding_added": false,
+    "pro_score_or_stage_authority_added": false
+  },
+  "terminal_authority": {
+    "score": null,
+    "stage": null,
+    "score_authority": false,
+    "stage_authority": false,
+    "publication": "WITHHELD"
+  },
+  "current_head_final_verification": {
+    "focused_fresh_orchestration_test_count": 50,
+    "focused_compact_repair_test_count": 23,
+    "focused_browser_adapter_test_count": 31,
+    "focused_total_test_count": 104,
+    "focused_failure_error_count": 0,
+    "full_unittest_count": 7791,
+    "full_unittest_skipped_count": 38,
+    "full_unittest_failure_error_count": 0,
+    "compileall_pass": true,
+    "git_diff_check_pass": true,
+    "fresh_efficiency_audit_status": "PASS",
+    "fresh_efficiency_audit_critical_count": 0,
+    "fresh_efficiency_audit_hash": "47d96d1f3b602ef0b963ce3772ffc70cbacdb655fb399aefdcf0a61fb9b87b6a",
+    "production_static_audit_status": "E2R_V6_PRODUCTION_STATIC_AUDIT_PASS",
+    "production_static_audit_critical_count": 0,
+    "production_static_audit_hash": "ff981d5bed53ebaec938dbcc3049c4e31a854766cd6517ac306376609c94a27a"
+  }
+}

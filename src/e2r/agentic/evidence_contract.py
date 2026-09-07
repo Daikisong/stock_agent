@@ -105,7 +105,7 @@ def load_evidence_contracts(*, path: str | Path | None = None) -> Mapping[str, E
 
 
 def _load_contracts_from_path(path: Path) -> Mapping[str, EvidenceContract]:
-    payload = json.loads(path.read_text())
+    payload = json.loads(path.read_text(encoding="utf-8"))
     if payload.get("schema_version") != "e2r_archetype_evidence_contracts_v1":
         raise ValueError("unsupported evidence contract schema_version")
     rows = payload.get("contracts")
