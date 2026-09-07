@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-08 KST / P56: 과거 부재 증거의 집계·최종 자격 우회 차단, C15 R5 운영 증명 제외`
+기준 시각: `2026-09-08 KST / P57: 기존 로그인 탭 확인, C15 R5 재전송 봉인·R6 입력만 준비(미전송)`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -43,8 +43,8 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS, C15 R5 진단 보존·새 fresh 실행 필요, C28 새 실행 필요)
-P10 final CI/audit                        IN_PROGRESS (P56 집중·관련·leaf PASS, exact-head CI는 PR checks 참조, live 3/3 미충족)
+P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS, C15 R5 봉인·R6 PACKET_READY/전송 0, C28 새 실행 필요)
+P10 final CI/audit                        IN_PROGRESS (P56 전체 CI SUCCESS, P57은 문서·운영 준비 기록, live 3/3 미충족)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -53,10 +53,14 @@ P10 final CI/audit                        IN_PROGRESS (P56 집중·관련·leaf 
 현재 확인된 live full-thesis 통과는 C06 한 건이다. C15 R5는 초기 material 24개 중 23개가 수용돼
 초기 효율 검문을 통과했지만 후속 결과가 회수되지 않아 full-thesis PASS가 아니다. 9월 1일 실행의
 감시 프로세스는 이미 종료됐으며, DB의 `RESEARCH_RUNNING` 값만으로 현재 서버가 계산 중이라고
-주장하지 않는다. 연결 가능한 Chrome에는 9월 8일 재점검 시 ChatGPT page가 없었다.
+주장하지 않는다. 9월 8일 처음 확인한 디버깅 연결(9222/9234)에는 ChatGPT page가 없었지만,
+사용자 지적 뒤 일반 Chrome의 기존 로그인 ChatGPT 탭을 실제 화면에서 찾았다. 따라서
+"열린 ChatGPT 탭이 없다"는 결론은 잘못된 연결 대상 확인이었다. 기존 탭 존재·로그인은 확인됐으나
+현재 세션의 Chrome BrowserUse 도구 연결과 안정적인 E2R 전용 탭 제어는 아직 별도 미충족이다.
 R5는 후속 결과를 회수하더라도 잘못된 과거 전송 이력 때문에 운영 합격으로 세지 않는다. 초기 자료와
 후속 capture는 진단 이력으로 보존하고 C15 운영 증명은 수정된 코드의 새 fresh 실행에서 받아야 한다.
-아래 P0~P55는 당시의 이력이며, 최신 상태와 정정은 문서 끝 P56을 따른다.
+R5는 이제 durable freeze와 R6 successor 결박까지 기록됐으며, R6는 입력 파일만 준비한 상태다.
+아래 P0~P56은 당시의 이력이며, 최신 상태와 정정은 문서 끝 P57을 따른다.
 
 ## P14 — 화면상 전송과 서버 저장 분리, C06 대화 폐기
 
@@ -5650,3 +5654,79 @@ PR 본문의 최종 검증 절에서 확인한다. 로컬·원격 전체 검증�
 
 실전 검증은 C06 1/3이다. 새 자료 수집·query/fetch·점수 변경은 수행하지 않았으며, PR #7은
 Draft/open, main 미병합을 유지한다.
+
+## P57 — 기존 Chrome 확인 정정과 C15 R6 미전송 준비
+
+### 실제 브라우저 확인
+
+사용자가 열어 둔 ChatGPT는 9222/9234 연결이 아니라 일반 Chrome 창에 있었다.
+Windows UI Automation으로 기존 ChatGPT 탭을 선택했고, 실제 `chatgpt.com` 주소와 로그인된
+Pro 구독 프로필을 확인했다. 새 창·새 탭·재로그인은 만들지 않았다. Pro **구독** 표시는
+이번 요청의 Pro **모드**가 선택됐다는 증거가 아니다. 실제 composer 모드는 처음
+`GPT-5.6 Sol 높음`, 이후 `Instant`로 관찰됐으므로 Pro 연구 준비 완료로 기록하지 않는다.
+
+BrowserUse 사전점검 exit 0과 별개로 직접 Chrome 도구 호출은 여전히
+`TypeError: tools.mcp__node_repl__js is not a function`으로 실패했다. 이를 보고한 뒤 기존 창의
+화면 제어 경로만 사용했다. 확인 사이 활성 사이트·GPT 화면이 달라져, 다른 작업과 제어가 겹치는지
+사용자에게 비동기 확인을 요청했다. 원인이 사용자 수동 작업인지 다른 자동화인지 단정하지 않는다.
+입력창에서 읽힌 15글자는 `ChatGPT에게 물어보세요` 안내문이었다. 이를 사용자 미전송 초안으로
+잘못 간주한 해석도 정정한다. 어떤 연구 prompt도 입력·전송하지 않았다.
+
+쉬운 예로, 로그인된 브라우저를 찾는 일과 그 안의 정확한 작업 탭에만 안전하게 입력하는 일은
+별개다. 기존 탭을 찾았다고 불안정한 화면에 전송 버튼을 누르지는 않는다.
+
+### 기존 자료 보존과 새 입력 준비
+
+P56에서 확인한 실제 R5 전송 이력을 production guard로 다시 검사했다. 여전히
+`OPERATIONAL_EFFICIENCY_GATE_FAILED`였으므로 기존 경계 API로 R5를 진단 전용 봉인했다.
+`old_job_frozen_at=2026-09-07T21:21:14.392960Z`이며, 기존 pass row의 상태·응답·관찰 이력을
+고쳐 쓰지 않았다. 기존 산출물 47개의 SHA-256과 pass row hash가 보존됨을 확인했다.
+
+동일 target/as-of/contract의 R6를 기존 `FreshSessionBoundaryService`와
+`FreshSessionOrchestratorV3.build_initial_packet()`으로만 준비했다. 브라우저 worker, approval,
+submit, source verifier 실행은 호출하지 않았다. 이전 fact·URL·답변은 유입 금지 검사에만 사용하고
+새 packet/prompt의 답안으로 재사용하지 않았다.
+
+```text
+fresh session  FRESH-V2-1-C15-R6-20260907T212025Z
+job            PROJOB-df15a37c58ae7583924e58c0
+run            PRORUN-ff542ef979f09bcaf7cf2545
+planned pass   PROPASS-a7654d1d80c9c041afb5777f
+target/as-of   010950 / 2026-08-23
+state          PACKET_READY (browser preparation 전)
+prompt chars   1,963
+answer leakage packet 0 / prompt 0
+browser        session 없음 / conversation 없음
+submit         0
+source         query 0 / fetch 0
+score/Stage    권한 없음 / publication withheld
+```
+
+최초 운영 helper의 사후 검사에서 존재하지 않는 `leakage_count` 키를 읽어 `KeyError`가 났다.
+production 코드는 변경하지 않았다. 실제 prompt audit의 `old_answer_token_count`와
+`forbidden_answer_field_token_count`를 검사하도록 helper를 고친 뒤 **같은 R6 job/파일**을 재개했다.
+새 job·pass·conversation을 반복 생성하거나 전송하지 않았다. 완료 후 별도 SQLite `mode=ro`
+재검사로 R5→R6 결박, R6 전송 0, packet/audit/receipt hash를 확인했다.
+
+운영 보조 코드와 기계 판독 기록은 각각 `p57_prepare_c15_r6_offline.py`,
+`p57_existing_tab_and_c15_r6_preparation_receipt.json`이다. 보조 코드는 이 PC의 경로·명시적 canary
+identity를 기록한 실행 이력이지 production scoring 분기나 일반 설치용 CLI가 아니다.
+runtime은 `C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260907T212025Z`다.
+다음 재개는 이 R6를 사용하며, 준비만 돼 있다는 이유로 다른 successor를 만들지 않는다.
+
+### 검증과 남은 일
+
+P56 코드 SHA `792bb27fd1c47f43231f266fc8c1322f93ae4cce`의
+[GitHub CI SUCCESS](https://github.com/Daikisong/stock_agent/actions/runs/34159497351)를 재확인했다.
+전체 7,899개 실행, failure/error 0, 기존 skip 38과 나머지 원격 검증은
+[P56 확정 영수증](https://github.com/Daikisong/stock_agent/pull/7#issuecomment-5575603545)에 있다.
+P57은 production 코드 변경이 없고 운영 상태·문서만 추가한다. P57 커밋 자신의 원격 검증은
+PR exact-head checks와 구분한다.
+R5 봉인·새 입력 준비와 관련된 `test_e2r_pro_first_v2_1_fresh_orchestration`은
+75/75 PASS(21.355초, failure/error 0)였다. 문서에 넣은 runtime receipt hash, helper SHA-256,
+Python 구문과 `git diff --check`도 확인했다. 이것을 전체 테스트나 실제 Pro 실행 PASS로 확대하지 않는다.
+
+실제 live full-thesis는 여전히 C06 **1/3**이며 R6 준비를 추가 PASS로 세지 않는다.
+남은 일은 안전하게 특정된 기존 Chat+Pro 탭에서 R6 초기 실행과 bounded tail을 완료하고,
+C28 fresh full-thesis를 완료한 뒤 master goal의 최종 검증을 받는 것이다.
+PR #7 Draft/open, main 미병합, 자동 재전송 금지를 유지한다.
