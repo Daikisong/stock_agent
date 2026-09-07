@@ -3751,6 +3751,10 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 "server_persistence_failure_evidence_hash": "a" * 64,
                 "transport_failure_root_input_hash": "b" * 64,
                 "replacement_pass_allowed": True,
+                "server_persistence_observations": [
+                    {"observation_id": f"VIEW-{index}", "persistence_confirmed": False, "fresh_page_loaded": True}
+                    for index in range(2)
+                ],
             },
         )
         replacement = SimpleNamespace(
@@ -3786,6 +3790,45 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             captured.exception.status,
             "OPERATIONAL_EFFICIENCY_GATE_FAILED",
         )
+
+    def test_operational_gap_budget_counts_unproven_legacy_seal(self) -> None:
+        fresh_absence = {
+            "observation_id": "VIEW-1",
+            "persistence_confirmed": False,
+            "fresh_page_loaded": True,
+        }
+        for observations in (
+            (),
+            (fresh_absence, fresh_absence),
+            (fresh_absence, {**fresh_absence, "observation_id": "VIEW-2", "fresh_page_loaded": False}),
+            (fresh_absence, {**fresh_absence, "observation_id": "VIEW-2", "persistence_confirmed": True}),
+        ):
+            with self.subTest(observations=observations):
+                sealed = SimpleNamespace(
+                    pass_name="PUBLIC_GAP_CLOSURE",
+                    submit_count=1,
+                    status="FAILED_HARD",
+                    response_hash=None,
+                    detail={
+                        "failure_domain": "TRANSPORT",
+                        "failure_class": "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED",
+                        "server_persistence_confirmed": False,
+                        "server_persistence_absence_confirmation_count": 2,
+                        "server_persistence_failure_evidence_hash": "a" * 64,
+                        "transport_failure_root_input_hash": "b" * 64,
+                        "replacement_pass_allowed": True,
+                        "server_persistence_observations": observations,
+                    },
+                )
+                with self.assertRaises(LiveCanaryPending) as captured:
+                    _require_operational_followup_budget(
+                        SimpleNamespace(list_passes=lambda _job_id: (sealed,)),
+                        job_id="PROJOB-EFFICIENCY",
+                        pass_names=frozenset({"PUBLIC_GAP_CLOSURE"}),
+                        limit=1,
+                        label="public-gap/counter",
+                    )
+                self.assertEqual(captured.exception.status, "OPERATIONAL_EFFICIENCY_GATE_FAILED")
 
     def test_repairable_linked_fact_is_repaired_before_question_research(self) -> None:
         dossier = {

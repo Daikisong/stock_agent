@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-08 KST / P55: C15 R5 초기 검문 PASS, 후속 회수 보류, fresh-view 부재 판정 수리`
+기준 시각: `2026-09-08 KST / P56: 과거 부재 증거의 집계·최종 자격 우회 차단, C15 R5 운영 증명 제외`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -43,8 +43,8 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS, C15 R5 후속 회수 보류, C28 새 실행 필요)
-P10 final CI/audit                        IN_PROGRESS (P55 로컬 회귀 PASS, 원격 CI 확인 예정, live 3/3 미충족)
+P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS, C15 R5 진단 보존·새 fresh 실행 필요, C28 새 실행 필요)
+P10 final CI/audit                        IN_PROGRESS (P56 집중·관련·leaf PASS, exact-head CI는 PR checks 참조, live 3/3 미충족)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -54,7 +54,9 @@ P10 final CI/audit                        IN_PROGRESS (P55 로컬 회귀 PASS, �
 초기 효율 검문을 통과했지만 후속 결과가 회수되지 않아 full-thesis PASS가 아니다. 9월 1일 실행의
 감시 프로세스는 이미 종료됐으며, DB의 `RESEARCH_RUNNING` 값만으로 현재 서버가 계산 중이라고
 주장하지 않는다. 연결 가능한 Chrome에는 9월 8일 재점검 시 ChatGPT page가 없었다.
-아래 P0~P54는 당시의 이력이며, 최신 상태와 정정은 문서 끝 P55를 따른다.
+R5는 후속 결과를 회수하더라도 잘못된 과거 전송 이력 때문에 운영 합격으로 세지 않는다. 초기 자료와
+후속 capture는 진단 이력으로 보존하고 C15 운영 증명은 수정된 코드의 새 fresh 실행에서 받아야 한다.
+아래 P0~P55는 당시의 이력이며, 최신 상태와 정정은 문서 끝 P56을 따른다.
 
 ## P14 — 화면상 전송과 서버 저장 분리, C06 대화 폐기
 
@@ -5610,3 +5612,41 @@ P54의 원격 head `80dd8ee80b92a0f51cd61c7631ba4bd30c2a0e48`는 재조회에서
 `33506964136`, V6 `33506964028` 모두 SUCCESS였다. 이는 P54의 결과이며 P55의 CI 증명과 구분한다.
 현재 master live full-thesis는 C06 1/3, C15 후속 회수 보류, C28 새 blind run 필요다.
 PR #7은 계속 draft/open이며 main 병합과 운영 준비 완료 선언은 하지 않는다.
+
+## P56 — 과거 부재 증거의 dossier·효율 집계·최종 자격 우회 차단
+
+P55의 재전송 차단을 확인한 뒤, 같은 봉인을 소비하는 나머지 경로를 추적했다.
+`canary/live_v2.py::_is_sealed_unpersisted_dispatch()`는 실제 observation 없이 cached count와
+hash 길이만 확인했다. 이 판정은 `_durable_pass_rows()`의 과거 pass 생략과 운영 follow-up 횟수
+계산에 함께 쓰였다. 따라서 새 제출이 막혀도 과거 구 코드가 만든 잘못된 봉인을 정상 이력으로
+받아들일 수 있었다.
+
+수정 전 회귀 1개에서 4개 subtest가 모두 실패했다. 관찰 없음, 같은 관찰 ID 두 번,
+fresh 부재 1개와 갱신 안 된 부재 1개, 부재와 실제 저장 확인이 섞인 경우 모두 캐시 숫자 2만으로
+통과했다. 이제 서로 다른 ID의 실제 fresh 부재 2개와 positive 저장 확인 없음이 필요하다.
+기존 정상 fixture의 기대값은 유지하고, 생략돼 있던 두 fresh observation을 명시해 증거를 강화했다.
+
+추가로 full-thesis runner는 기존 응답 회수 전용 경로 뒤, 새 조사나 점수 진입 전에 전체 전송 이력을
+검사한다. 잘못된 봉인이나 다른 job/conversation의 교체 원본은
+`OPERATIONAL_EFFICIENCY_GATE_FAILED`로 차단한다. 이미 저장된 원본·capture hash는 수정하지 않는다.
+쉬운 예로 잘못 취소 처리한 주문을 주문 횟수에서 빼거나, 그 이력을 지우고 정상 주문 한 번이었다고
+보고할 수 없게 한 것이다. Pro 자료 내용의 오류가 아니라 로컬 전송 이력 판정의 오류다.
+
+실제 C15 R5 SQLite를 `mode=ro`로 읽어 새 판정에 넣자 원 pass
+`PROPASS-2ced92878a16c36601168af7`에서 운영 자격이 차단됐다. 이 재검사는 DB를 바꾸거나
+브라우저를 전송하지 않았다. 저장된 감시 결과는 여전히 `TRANSPORT_PENDING`이고, replacement의
+`RESEARCH_RUNNING`은 현재 서버 실행을 증명하지 않는다. R5는 진단 자료로 보존하며, 응답 회수만으로
+운영 PASS가 되지 않는다. C15에는 새 fresh 운영 실행이 필요하다.
+
+집중 회귀 3/3은 PASS다. 실제 SQLite ledger를 사용하는 회귀에서 정상 봉인은 통과하고, 이미 교체
+응답까지 COMPLETE인 과거 이력도 fresh 증거가 부족하면 dossier 투영과 운영 계속 진행이 차단됨을
+검사했다. 기존 capture hash와 원본 이력이 보존되고 추가 submit이 없는 것도 확인했다.
+V2 정적 감사는 PASS/critical 0이다. 관련 회귀는 148/148, A–H 직접 leaf 검증은
+8개 그룹/347개 테스트가 PASS했다. 전체 discovery는 7,899개이며 이 숫자만으로 전체 PASS를
+주장하지 않는다. 이 시점 영수증은 `p56_legacy_dispatch_proof_acceptance_guard_receipt.json`이다.
+전체 회귀는 phase commit의 [PR #7 exact-head checks](https://github.com/Daikisong/stock_agent/pull/7/checks)와
+PR 본문의 최종 검증 절에서 확인한다. 로컬·원격 전체 검증을 병행하며 green 이전에는 수리 완료를
+선언하지 않는다. 이 영수증은 커밋 생성 시점의 기록으로 보존한다.
+
+실전 검증은 C06 1/3이다. 새 자료 수집·query/fetch·점수 변경은 수행하지 않았으며, PR #7은
+Draft/open, main 미병합을 유지한다.

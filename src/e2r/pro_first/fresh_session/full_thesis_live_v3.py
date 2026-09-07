@@ -357,6 +357,10 @@ class FreshV3FullThesisLiveRunner(ProV2LiveCanaryRunner):
                     enabled=self.recover_submitted_only,
                     recovered=False,
                 )
+                _require_operational_dispatch_history(
+                    orchestrator.ledger,
+                    job_id=job_id,
+                )
 
                 verification_state = self._load_current_verification(
                     job_id=job_id,
@@ -2615,6 +2619,46 @@ def _late_hydrated_failed_fresh_plan(
     ):
         return None
     return plan
+
+
+def _require_operational_dispatch_history(
+    ledger: ProMultiPassLedger,
+    *,
+    job_id: str,
+) -> None:
+    """Preserve late captures but never promote an unproven old dispatch chain.
+
+    This gate runs after submitted-only recovery and before new research or
+    scoring. Historical rows are inspected, not rewritten into fresh proof.
+    """
+
+    passes = ledger.list_passes(job_id)
+    by_id = {row.pass_id: row for row in passes}
+    for row in passes:
+        if int(row.submit_count) == 0:
+            continue
+        detail = row.detail or {}
+        invalid_seal = (
+            detail.get("failure_class")
+            == "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED"
+            and not _is_sealed_unpersisted_dispatch(row)
+        )
+        source_id = str(detail.get("supersedes_unpersisted_pass_id") or "")
+        source = by_id.get(source_id)
+        invalid_replacement = bool(source_id) and (
+            source is None
+            or source.job_id != job_id
+            or row.job_id != job_id
+            or source.conversation_id != row.conversation_id
+            or not _is_sealed_unpersisted_dispatch(source)
+        )
+        if invalid_seal or invalid_replacement:
+            raise LiveCanaryPending(
+                f"submitted dispatch {row.pass_id} lacks durable independent "
+                "fresh-view absence evidence; preserve captures as diagnostic "
+                "and withhold fresh operational scoring",
+                status="OPERATIONAL_EFFICIENCY_GATE_FAILED",
+            )
 
 
 def _require_operational_followup_budget(

@@ -16,6 +16,10 @@ from e2r.pro_first.browser.protocol import (
 )
 from e2r.pro_first.browser.chatgpt_adapter import PlaywrightChatGPTWebAdapter
 from e2r.pro_first.browser.mock_chatgpt_app import MockChatGPTServer
+from e2r.pro_first.canary.live_v2 import LiveCanaryPending, _durable_pass_rows
+from e2r.pro_first.fresh_session.full_thesis_live_v3 import (
+    _require_operational_dispatch_history,
+)
 from e2r.pro_first.ids import canonical_hash
 from e2r.pro_first.job_store import ProFirstJobStore
 from e2r.pro_first.models import JobStatus, ResearchMode, ScanWindow
@@ -746,6 +750,68 @@ class ProFirstV2MultiPassTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(ledger.get_pass(existing.pass_id).submit_count, 0)
         self.assertEqual(ledger.get_pass(plan.research_pass.pass_id).detail, legacy_detail)
         self.assertEqual(len(ledger.list_passes(self.job.job_id)), 3)
+        self.assertEqual(adapter.submit_count, 1)
+
+    async def test_completed_replacement_cannot_hide_unproven_legacy_seal(self) -> None:
+        plan = self._public_plan()
+        adapter = _FakeSameConversationAdapter(
+            self.scope.conversation_id, persistence_results=(False,)
+        )
+        await self.orchestrator.prepare_followup(plan, adapter)
+        with self.assertRaises(FollowupSubmitBlocked):
+            await self.orchestrator.submit_followup(plan, adapter)
+        audited = await self.orchestrator.audit_submitted_followup_persistence(
+            plan, adapter
+        )
+        self.assertTrue(audited.sealed_unpersisted)
+        ledger = self.orchestrator.ledger
+        replacement = ledger.create_followup_pass(
+            scope=self.scope,
+            pass_id="PROPASS-LEGACY-CAPTURED",
+            pass_name=plan.research_pass.pass_name,
+            parent_pass_id=self.scope.initial_pass_id,
+            prompt_hash="d" * 64,
+            pass_input_hash="e" * 64,
+            detail={
+                "supersedes_unpersisted_pass_id": plan.research_pass.pass_id,
+                "transport_replacement_root_input_hash": plan.research_pass.pass_input_hash,
+            },
+        )
+        ledger.mark_prepared(replacement.pass_id)
+        ledger.claim_submit(replacement.pass_id)
+        ledger.mark_running(replacement.pass_id)
+        ledger.complete_pass(replacement.pass_id, response_hash="f" * 64)
+
+        _require_operational_dispatch_history(ledger, job_id=self.job.job_id)
+        projected = _durable_pass_rows(
+            ledger,
+            self.job.job_id,
+            current_pass_id=replacement.pass_id,
+            current_response_hash="f" * 64,
+        )
+        self.assertEqual(len(projected), 2)
+
+        # Recreate the older bug after a replacement result was already captured.
+        legacy_detail = dict(audited.research_pass.detail)
+        legacy_detail["server_persistence_observations"][1]["fresh_page_loaded"] = False
+        with ledger._transaction() as connection:
+            connection.execute(
+                "UPDATE pro_research_passes SET detail_json=? WHERE pass_id=?",
+                (json.dumps(legacy_detail), plan.research_pass.pass_id),
+            )
+        with self.assertRaises(LiveCanaryPending) as captured:
+            _require_operational_dispatch_history(ledger, job_id=self.job.job_id)
+        self.assertEqual(captured.exception.status, "OPERATIONAL_EFFICIENCY_GATE_FAILED")
+        with self.assertRaisesRegex(ValueError, "differs from replacement lineage"):
+            _durable_pass_rows(
+                ledger,
+                self.job.job_id,
+                current_pass_id=replacement.pass_id,
+                current_response_hash="f" * 64,
+            )
+        self.assertEqual(ledger.get_pass(plan.research_pass.pass_id).detail, legacy_detail)
+        self.assertEqual(ledger.get_pass(replacement.pass_id).response_hash, "f" * 64)
+        self.assertEqual(ledger.get_pass(replacement.pass_id).submit_count, 1)
         self.assertEqual(adapter.submit_count, 1)
 
     def test_claimed_transport_timeout_is_recovery_only_and_can_complete(self) -> None:

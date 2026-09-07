@@ -2324,6 +2324,18 @@ def _durable_pass_rows(
 
 def _is_sealed_unpersisted_dispatch(record: Any) -> bool:
     detail = getattr(record, "detail", None) or {}
+    observations = tuple(
+        item
+        for item in detail.get("server_persistence_observations") or ()
+        if isinstance(item, Mapping)
+    )
+    fresh_absence_ids = {
+        str(item.get("observation_id") or "")
+        for item in observations
+        if item.get("persistence_confirmed") is False
+        and item.get("fresh_page_loaded") is True
+        and str(item.get("observation_id") or "")
+    }
     evidence_hash = str(
         detail.get("server_persistence_failure_evidence_hash") or ""
     )
@@ -2338,6 +2350,8 @@ def _is_sealed_unpersisted_dispatch(record: Any) -> bool:
         and str(detail.get("failure_class") or "")
         == "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED"
         and detail.get("server_persistence_confirmed") is False
+        and len(fresh_absence_ids) >= 2
+        and not any(item.get("persistence_confirmed") is True for item in observations)
         and int(
             detail.get("server_persistence_absence_confirmation_count") or 0
         )

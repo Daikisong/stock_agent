@@ -627,6 +627,10 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
                     "server_persistence_failure_evidence_hash": "7" * 64,
                     "transport_failure_root_input_hash": "9" * 64,
                     "replacement_pass_allowed": True,
+                    "server_persistence_observations": [
+                        {"observation_id": f"VIEW-{index}", "persistence_confirmed": False, "fresh_page_loaded": True}
+                        for index in range(2)
+                    ],
                 },
             ),
             SimpleNamespace(
@@ -719,6 +723,10 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
                 "server_persistence_failure_evidence_hash": "c" * 64,
                 "transport_failure_root_input_hash": "b" * 64,
                 "replacement_pass_allowed": True,
+                "server_persistence_observations": [
+                    {"observation_id": f"VIEW-{index}", "persistence_confirmed": False, "fresh_page_loaded": True}
+                    for index in range(2)
+                ],
             },
         )
         current = SimpleNamespace(
@@ -913,6 +921,10 @@ class ProFirstV2LiveRuntimeTest(unittest.TestCase):
                 "server_persistence_failure_evidence_hash": "3" * 64,
                 "transport_failure_root_input_hash": "b" * 64,
                 "replacement_pass_allowed": True,
+                "server_persistence_observations": [
+                    {"observation_id": f"VIEW-{index}", "persistence_confirmed": False, "fresh_page_loaded": True}
+                    for index in range(2)
+                ],
             },
         )
         replacement = SimpleNamespace(
