@@ -1,18 +1,20 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 04:36 KST (P64).
+최종 갱신: 2026-09-24 04:57 KST (P65).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
-## 한 줄 실행 규칙 (P64)
+## 한 줄 실행 규칙 (P65)
 
 로그인된 서비스 작업은 **사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 탭에서만** 한다.
-새 창·새 프로필·별도 CDP 브라우저를 만들거나, 세션 연결이 안 된다는 이유로 재로그인·재전송하지 않는다.
-탭을 확인할 수 없거나 정확한 기존 탭을 제어할 수 없으면 오류와 마지막 확인 상태를 기록하고 멈춘다.
+새 창·새 프로필·별도 CDP 브라우저로 바꾸지 않고, 세션 연결이 안 된다는 이유로 재로그인·재전송하지 않는다.
+파일 다운로드·응답 회수도 예외가 아니다. 기존 결과가 있으면 같은 탭에서 회수하고, 정확한 기존 탭을
+제어할 수 없으면 실제 오류와 마지막 확인 상태를 기록한 뒤 그 단계에서 멈춘다.
 
 ```text
 기존 사용자 탭 열거 → 정확한 탭 claim → 그 탭에서 현재 대화/첨부 확인
-→ 필요하면 같은 탭에서만 다운로드·새 대화 → 같은 탭에서 대상/모드/초안 재확인
+→ 있던 결과는 같은 탭에서 다운로드 / 새 대화는 같은 탭 안에서만 시작
+→ 같은 탭에서 대상/실제 모드/초안 재확인
 → 요청된 입력·전송 → 그 대화의 결과만 회수
 ```
 
@@ -227,3 +229,27 @@ push run의 core-unit, browser-mock-e2e, static-security job은 성공했고 ful
 - 마지막 외부 탭/일반 Chat/Pro UI 관찰과 P62 PR/CI/R6 snapshot은 [P62 영수증](p62_browseruse_existing_session_revalidation_receipt.json)에 기록한다. P60의 이전 snapshot은 [P60 영수증](p60_existing_browseruse_session_handoff_receipt.json)에 보존한다.
 - BrowserUse 로그인 세션 결박 절대 게이트와 진행 이력은 [진행 장부](implementation_progress.md)의 P61/P62에 기록했다. P62 문서화만으로 pipeline bridge 또는 live canary가 완료된 것은 아니다.
 - 이 지침은 문서 변경이다. 브라우저 연결 복구나 운영 코드의 자동 강제가 구현·검증됐다는 주장이 아니다.
+
+## P65 — 최신 탭 결과와 활성 R6 준비물 구분
+
+- 사용자는 로그인된 BrowserUse 작업은 이미 로그인된 세션과 그 기존 탭에서 하라고 재강조했다. 새 창·새
+  프로필·별도 CDP 브라우저에서 대신 로그인하거나 작업을 이어가지 않는다. 기존 응답/파일이 있으면 같은
+  탭에서 회수한다. 정확한 기존 탭을 제어할 수 없으면 실제 오류와 확인 범위를 남기고 멈춘다.
+- 마지막 실제 BrowserUse 확인(P64)은 Library 화면의 읽기 전용 확인이었다. 화면의 모델 표시는
+  `GPT-6 Sol Light`였으며 실제 Pro 모드가 아니므로, Pro 구독을 실제 Pro 모델 선택 증거로 세지 않는다.
+  이어진 `cdp` 요청은 `Capability is not available: cdp`였고 다른 브라우저로 전환하지 않았다.
+- Library에서 활성 C15 R6 ID는 발견되지 않았다. 화면에 확인된 기존 C15 파일은 과거 job
+  `PROJOB-7c02db014fefb06b1258ffe9`(frozen, `NEEDS_PUBLIC_GAP_CLOSURE`) 또는 별도 partial job
+  `PROJOB-384a8e0aad776a6d99391a6f`에 속했다. 두 파일 모두 C15 R6 결과가 아니며 R6 증거로 재사용하지 않는다.
+- 유지 중인 R6는 `010950 / S-Oil`, `2026-08-23`, `C15_MATERIAL_SPREAD_SUPERCYCLE`이다. job
+  `PROJOB-df15a37c58ae7583924e58c0`, run `PRORUN-ff542ef979f09bcaf7cf2545`, initial pass
+  `PROPASS-a7654d1d80c9c041afb5777f`다. SQLite read-only 상태는 `PACKET_READY`, version 2, submit/capture
+  `0/0`, browser/conversation 미결박이다.
+- 오프라인 prompt 재컴파일은 기존 immutable receipt와 27개 필수 질문, transport/contract prompt hash가
+  일치했다. 이것은 packet 준비 일관성일 뿐, 브라우저 업로드·전송 또는 live canary 성공이 아니다.
+- 이번 문서화에서 BrowserUse/Chrome 조작, 다운로드, prompt 입력, 업로드, submit, source query/fetch,
+  점수 변경은 0회다. 다음 작업은 exact claimed BrowserUse 탭에 대한 generic bridge와 non-submit
+  identity 검증이다. 그 연결 전에는 Python CDP worker를 통해서도 Pro 전송하지 않는다.
+
+마지막 확인 시각은 2026-09-24 04:57 KST다. 이 시각 이후 상태를 보장하지 않는다. 재개 시 기존 `extension`
+세션의 사용자 탭을 다시 열거·claim한 후 작업 대화와 실제 선택 모델을 재확인한다. 인증값과 tab ID는 저장하지 않는다.

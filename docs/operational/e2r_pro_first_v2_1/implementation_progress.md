@@ -6084,3 +6084,51 @@ E2R adapter/worker가 CDP 대체 창이 아니라 `browser.user.claimTab()`으�
 인수인계 본문은 [BrowserUse 로그인 세션 지침](browseruse_existing_session_handoff.md) 상단에 같은 실행 규칙을
 추가해 최신화했다. 마지막으로 확인된 BrowserUse UI는 Library 검색 화면이며, 후속 작업 전에도 기존 탭을
 다시 열거·claim하고 현재 화면을 읽기 전용으로 재확인해야 한다. 기록에는 인증 정보나 탭 식별자를 남기지 않는다.
+
+## P65 — 기존 로그인 탭 원칙 및 C15 R6 현재 증거 경계 (2026-09-24 04:57 KST)
+
+사용자가 다시 분명히 요청했다. 로그인 세션이 필요한 BrowserUse 작업은 이미 로그인해 둔 **그 세션의 기존
+탭에서** 해야 한다. 새 브라우저 창·프로필·CDP endpoint를 대체 세션으로 열지 않고, 재로그인이나 재전송으로
+우회하지 않는다. 이미 응답이나 파일이 있으면 동일 탭에서 회수한다. 정확한 탭을 claim·제어하지 못하면
+확인한 범위와 실제 오류를 기록하고 멈춘다. 이 절차는 [BrowserUse 인수인계](browseruse_existing_session_handoff.md)
+상단의 단일 실행 규칙으로 보강했다.
+
+### BrowserUse 마지막 관찰 — 기존 Library 탭, 읽기 전용
+
+- P64에서 BrowserUse `extension`의 사용자 외부 탭을 열거하고 ChatGPT 후보를 claim한 뒤, 반환된 제어 객체로
+  같은 탭의 Library 화면을 읽었다. 새 창·탭·프로필은 만들지 않았다.
+- 화면의 composer 모델 표시는 `GPT-6 Sol Light`였다. 이것은 실제 Pro 모드가 아니다. Pro 구독 badge나 과거
+  화면의 Pro 표시를 현재 선택 모델로 간주하지 말고, 실제 전송 직전에 같은 탭에서 모델을 다시 확인해야 한다.
+- Library 검색에서 활성 R6 job ID는 찾지 못했다. 검색 결과 부재는 현재 화면의 범위에만 해당하며 계정 전체나
+  원 대화 어디에도 파일이 없다는 뜻은 아니다. 보인 기존 C15 결과는 과거 frozen job
+  `PROJOB-7c02db014fefb06b1258ffe9`(`NEEDS_PUBLIC_GAP_CLOSURE`) 및 다른 partial job
+  `PROJOB-384a8e0aad776a6d99391a6f`였다. 이들은 현재 R6가 아니므로 R6 입력·증거·canary로 사용하지 않는다.
+- 동일 claimed tab의 `cdp` 요청은 정확히 `Capability is not available: cdp`로 실패했다. 이 capability 오류를
+  보완하려고 다른 Chrome/CDP 탭으로 옮기지 않았다.
+
+### 활성 대상 및 오프라인 검증 범위
+
+- 기존 C15 R6만 유지한다: `010950 / S-Oil`, as-of `2026-08-23`, archetype
+  `C15_MATERIAL_SPREAD_SUPERCYCLE`; job `PROJOB-df15a37c58ae7583924e58c0`; run
+  `PRORUN-ff542ef979f09bcaf7cf2545`; initial pass `PROPASS-a7654d1d80c9c041afb5777f`.
+- 중앙 SQLite를 read-only로 확인했을 때 job은 `PACKET_READY`, state version 2, submit/capture `0/0`,
+  `browser_session_id`와 `conversation_id`는 null이었다. packet hash
+  `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`는 manifest와 일치했다.
+- 현재 branch 코드로 prompt를 순수 재컴파일한 결과, 27개 필수 질문과 transport prompt hash
+  `f23e55d6db273cefa0fa5585cb09c877c31ca436181b12681f1c95783c6b7323`, contract prompt hash
+  `e8d1eb9c00e13732e0c2501c8b2f1e6ab91f084d3c06203a21932ba31dae2b71`가 각각 immutable receipt와 일치했다.
+  이는 오프라인 준비물의 일관성일 뿐, 기존 탭 업로드·전송, 새로운 Pro 응답, canary PASS의 증명은 아니다.
+- 이번 P65 문서 작업에서는 브라우저를 다시 열지 않았다. prompt 입력, 파일 다운로드/업로드, submit, 새 source
+  query/fetch, 점수·Stage 변경은 모두 0회다. 기존 전체 목표의 live full-thesis PASS는 문서상 C06 1/3이며
+  P65로 증가하지 않았다.
+
+### 다음 단 하나의 작업
+
+Python `ProBrowserWorker`의 별도 CDP 연결을 다른 창에서 쓰지 않는다. pipeline이 BrowserUse가 claim한 정확한
+기존 탭을 식별·제어할 수 있는 generic bridge를 먼저 만들고, 같은 tab identity 확인과 non-submit 회귀 테스트를
+통과시킨다. 그 뒤에만 사용자가 승인한 동일 C15 R6 job/pass로 기존 대화·첨부·실제 Pro 모드를 재확인한다.
+기존 결과가 이미 있으면 재전송하지 않고 그 탭에서 회수한다. 이 bridge와 확인 전에는 live prompt 전송을
+보류한다.
+
+이번 장부 갱신의 기준 시각은 2026-09-24 04:57 KST다. 재개 시 현재 BrowserUse 로그인·탭 상태를 보장하지
+않으므로, 사용자 외부 탭 열거와 exact `claimTab()`부터 다시 한다. tab ID, 계정 식별자, 쿠키·토큰은 저장하지 않는다.
