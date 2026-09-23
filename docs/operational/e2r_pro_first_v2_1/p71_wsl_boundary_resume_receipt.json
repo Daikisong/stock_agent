@@ -1,0 +1,104 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p71_wsl_boundary_resume_v1",
+  "observed_at": "2026-09-24T07:45:00+09:00",
+  "status": "LOCAL_BOUNDARY_FIX_AND_READ_ONLY_LIVE_RESUME_PASS_EXACT_HEAD_CI_PENDING",
+  "goal_complete": false,
+  "repository": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "current_pr_head_before_p71": "43524413c24ab5e4ff32eca7ee0aaaa64bd49477",
+    "pull_request": 7,
+    "state": "OPEN",
+    "draft": true,
+    "mergeable": true,
+    "merged": false,
+    "p71_commit_created": false,
+    "p71_push_complete": false,
+    "p71_exact_head_ci": "PENDING"
+  },
+  "code_change": {
+    "file": "src/e2r/pro_first/fresh_session/boundary.py",
+    "helper": "_resolve_runtime_root",
+    "used_by": ["start", "start_independent", "load_existing"],
+    "posix_mapping": "Absolute single-letter Windows drive paths map to an existing /mnt/<lowercase-drive> mount.",
+    "receipt_hash_checked_before_path_normalization": true,
+    "receipt_values_rewritten": false,
+    "fail_closed_conditions": [
+      "unmounted drive",
+      "relative Windows drive path",
+      "UNC path",
+      "parent traversal via ..",
+      "symlink resolution outside mounted drive"
+    ],
+    "new_job_created": false
+  },
+  "tests": {
+    "command": "PYTHONPATH=src LD_LIBRARY_PATH=/home/eorb915/.cache/e2r-playwright-libs/usr/lib/x86_64-linux-gnu python -m unittest tests.test_e2r_pro_first_v2_1_fresh_orchestration -v",
+    "suite": "tests.test_e2r_pro_first_v2_1_fresh_orchestration",
+    "passed": 80,
+    "failed": 0,
+    "errors": 0,
+    "new_regressions": [
+      "Windows receipt roots resume through the corresponding WSL mount without rewriting the receipt hash",
+      "tampered original receipt hash remains rejected",
+      "unmounted Windows drive fails closed",
+      "parent traversal outside the WSL drive mount fails closed",
+      "symlink resolution outside the WSL drive mount fails closed"
+    ]
+  },
+  "static_audits": {
+    "production": {"status": "PASS", "critical_count": 0},
+    "v2_contract_and_generalization": {"status": "PASS", "critical_count": 0},
+    "v2_1_fresh_efficiency": {"status": "PASS", "critical_count": 0, "issues": 0}
+  },
+  "actual_c15_read_only_resume": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "symbol": "010950",
+    "archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "stored_leakage_manifest_hash_verified": true,
+    "windows_boundary_receipt_path_identity_resolved": true,
+    "sqlite_uri_mode": "mode=ro",
+    "sqlite_query_only": true,
+    "store_schema_initialization_used": false,
+    "resume_result": "PASS",
+    "state": "PACKET_READY",
+    "state_version": 2,
+    "submit_count": 0,
+    "capture_count": 0,
+    "browser_session_bound": false,
+    "conversation_bound": false,
+    "database_or_receipt_written": false
+  },
+  "browseruse": {
+    "p71_browser_actions": 0,
+    "last_verified_by_p70": {
+      "backend": "Chrome BrowserUse extension",
+      "same_existing_user_session": true,
+      "same_existing_claimed_tab": true,
+      "chat_mode_selected": true,
+      "selected_model_label": "6 Pro",
+      "work_selected": false,
+      "deep_research_selected": false,
+      "composer_blank": true
+    },
+    "prompt_input_count": 0,
+    "packet_upload_count": 0,
+    "submit_count": 0,
+    "capture_count": 0
+  },
+  "other_zero_counts": {
+    "new_source_queries": 0,
+    "new_source_fetches": 0,
+    "score_changes": 0,
+    "stage_changes": 0
+  },
+  "previous_parent_head_ci": {
+    "head_sha": "43524413c24ab5e4ff32eca7ee0aaaa64bd49477",
+    "all_runs_success": true,
+    "full_unittest_count": 7911,
+    "skipped_count": 38,
+    "failure_count": 0,
+    "error_count": 0,
+    "note": "These runs predate the P71 diff and do not verify it."
+  },
+  "next_step": "Review diff, run git diff --check, create a Korean commit, push to the existing PR #7 feature branch, then wait for new exact-head Pro-first and V6 GitHub Actions success before any live browser input. Reuse the same existing logged-in BrowserUse extension session and claimed task tab; do not launch a replacement browser/session."
+}

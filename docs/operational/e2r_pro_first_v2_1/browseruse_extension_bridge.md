@@ -1,7 +1,7 @@
 # 기존 BrowserUse 탭과 Pro-first pipeline 연결
 
-최종 갱신: 2026-09-24 06:47 KST (P69 문서·검증 상태 동기화).
-상태: **동일 로그인 탭에서 read-only 통합 smoke PASS. 실제 Pro 선택, packet upload, submit, 응답 capture는 미검증.**
+최종 갱신: 2026-09-24 07:45 KST (P71).
+상태: **기존 로그인 BrowserUse 탭의 실제 `6 Pro` 확인과 P70 exact-head CI는 완료. Windows↔WSL runtime-root 경계는 로컬 수리 및 실제 job read-only resume 확인까지 통과했으며, P71 diff exact-head CI와 C15 R6 upload/submit/capture는 아직 pending이다.**
 
 ## 왜 이 연결이 필요한가
 
@@ -117,9 +117,40 @@ upload, send, capture 또는 live canary 결과는 증명하지 않는다. 활�
 - 실제 BrowserUse exact-tab read-only integration smoke: PASS.
 - 상세 machine receipt: [`p68_browseruse_extension_bridge_smoke_receipt.json`](p68_browseruse_extension_bridge_smoke_receipt.json).
 
-P69에서 bridge 6/6, browser adapter 55/55, fresh-session orchestration 76/76을 다시 확인했고, 세 정적 감사도 모두
-PASS / critical 0이었다. 이것은 변경분의 targeted 검증이며 **전체 저장소 unittest 및 P68 변경을 포함한 새 exact-head
-GitHub Actions는 아직 미완료**다. 다음 순서는 한글 커밋으로 현재 변경을 PR #7 브랜치에 push하고 새 head CI가 끝날 때까지
-확인하는 것이다. 새 head CI green 전에는 live 입력을 하지 않는다. 그 뒤에도 로그인 필요 작업은 반드시 기존 BrowserUse
-extension 세션의 같은 작업 탭에서 actual Pro model을 직접 확인해야 한다. 보이지 않거나 Pro가 아니면 멈춘다. 새 창·CDP·다른
-프로필로 바꾸지 않는다. 모든 조건이 충족돼도 기존 C15 R6의 승인 경계만 이어간다.
+P70에서 PR #7 head `43524413c24ab5e4ff32eca7ee0aaaa64bd49477`의 Pro-first push/PR 및 V6 PR Actions
+[35925176718](https://github.com/Daikisong/stock_agent/actions/runs/35925176718),
+[35925180418](https://github.com/Daikisong/stock_agent/actions/runs/35925180418),
+[35925180440](https://github.com/Daikisong/stock_agent/actions/runs/35925180440)이 모두 SUCCESS임을 확인했다.
+전체 저장소 suite는 7,911 tests / skipped 38 / failure·error 0, Gate 1 receipt는 4/4, Phase100은 15/15,
+production static audit은 critical 0이다. PR은 계속 Draft/open/mergeable이고 병합하지 않았다.
+
+같은 P70 작업에서 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 사용자 탭 하나를 exact claim했다.
+그 동일 탭 안에서만 새 Chat 화면을 열어 Chat 선택, `6 Pro`, Work 미선택, Deep Research 미선택, 빈 composer를 확인했다.
+다른 브라우저·창·탭·프로필은 만들지 않았고, 과거 Library artifact도 사용하지 않았다. 이것은 Pro UI 상태 확인일 뿐
+C15 R6 대화 결박이나 응답 증거가 아니다. prompt 입력/upload/submit/capture/query/fetch/score/Stage 변경은 0회다.
+
+resume preflight에서 `FreshSessionBoundaryService.load_existing()`가 Windows absolute receipt path와 WSL `/mnt/c/...`
+caller path를 같은 canonical path로 비교하지 않아 `FreshSessionBoundaryError: fresh boundary receipt failed hash/path validation`
+을 냈다. SQLite/receipt를 읽기 전용으로 확인했고 이 오류 후에도 C15 R6는 `PACKET_READY`, submit/capture `0/0`이며
+기존 artifact·승인·receipt를 수정하지 않았다. 이는 BrowserUse 로그인 오류가 아니다.
+
+P70 시점의 다음 단계는 Windows/WSL runtime-root 정규화였다. 이는 P71에서 구현·검증했으며, 현재 남은 다음 단계는 아래
+P71 절의 새 exact-head CI다. P70 상세 이력은 [implementation progress](implementation_progress.md)와
+[BrowserUse handoff](browseruse_existing_session_handoff.md)에 보존했다.
+
+## P71 — 실제 boundary resume와 미완료 범위
+
+P71에서 `_resolve_runtime_root()`를 추가해 WSL의 absolute Windows drive path를 기존 `/mnt/<letter>` mount에만 대응시킨다.
+receipt의 original path values는 건드리지 않고 hash를 먼저 검증한다. relative/UNC 경로, 없는 drive mount, `..`,
+symlink resolution으로 mount 바깥을 가리키는 경로는 거부한다. `start`, `start_independent`, `load_existing` 모두 같은
+resolver를 사용한다.
+
+실제 C15 R6에 대해 persisted leakage-manifest hash를 확인하고, SQLite `mode=ro` + `query_only=ON`의 제한된 job-store
+adapter로 `load_existing()`을 실행했다. 동일 job/state `PACKET_READY`/version 2, submit/capture `0/0`이 반환됐으며,
+DB·boundary receipt·packet에 write하지 않았다. focused orchestration은 80/80 PASS이고 세 static audits도 PASS/critical 0이다.
+이건 boundary resume만 입증하며 BrowserUse response, packet upload, submit, capture 또는 live canary PASS는 아니다.
+
+P71 source/docs diff의 full unittest 및 exact-head CI는 아직 pending이다. CI가 green이 되기 전까지 live UI 입력을 하지 않는다.
+그 후에도 로그인 필요 작업은 사용자의 **같은 BrowserUse `extension` 로그인 세션과 그 안의 기존 claimed tab**에서만 한다.
+다른 창·CDP·프로필·재로그인으로 옮기지 않는다. 최신 handoff는
+[`implementation_progress.md` P71](implementation_progress.md)와 [`browseruse_existing_session_handoff.md`](browseruse_existing_session_handoff.md)다.

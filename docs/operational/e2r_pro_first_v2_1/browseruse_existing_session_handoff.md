@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 06:47 KST (P69).
+최종 갱신: 2026-09-24 07:45 KST (P71).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
@@ -44,25 +44,47 @@ BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭�
 쉬운 예: 기존 ChatGPT 응답이나 Library에 JSON이 보이면 그 화면의 다운로드 동작을 같은 탭에서 수행하고,
 받은 파일을 준비된 E2R job에 연결한다. “새 세션에서 다시 생성”은 기본 복구 방법이 아니다.
 
-## 현재 상태 인수인계 (P69)
+## 최신 상태 인수인계 (P71)
 
-- 로그인 필요 작업의 필수 대상은 사용자가 이미 로그인한 BrowserUse `extension` 세션과 **그 세션 안의 기존 작업 탭**이다.
-  먼저 `browser.user.openTabs()`로 기존 사용자 탭을 찾고, 정확한 descriptor를 `browser.user.claimTab()`에 넘긴 다음,
-  반환된 Tab 객체 하나만 사용한다. 다른 창, Codex/CDP Chrome, 별도 profile, 재로그인, 새 탭에서의 대체 작업은 금지다.
-- 마지막 실제 브라우저 확인은 **2026-09-24 06:43 KST**, 위 절차로 claim한 기존 탭의 Library 화면에 대한 read-only bridge smoke다.
-  화면은 `https://chatgpt.com/library?search=ResearchDossierV3` / `ChatGPT - 라이브러리`였다. 이 화면에는 실제 선택 모델이
-  표시되지 않아 Pro 모델은 미검증이다. 이 URL/title은 마지막 관찰일 뿐 현재 탭 상태를 보증하지 않는다.
-- 이번 P69 문서·검증 확인에서는 BrowserUse를 다시 열거나 탭을 조작하지 않았다. 새 창/탭/프로필, prompt 입력, 업로드,
-  submit, capture, query/fetch, 점수·Stage 변경은 모두 0회다. 사용자의 탭·로그인·초안은 그대로 보존됐다.
-- P68 구현의 targeted 검증은 bridge 6/6, 기존 browser adapter 55/55, fresh-session orchestration 76/76 PASS다.
-  Production static, V2/generalization, V2.1 efficiency audit도 모두 PASS이며 각 critical count는 0이다. **전체 저장소 테스트와
-  변경분을 포함한 새 exact-head GitHub Actions는 아직 완료되지 않았다.** P68 base-head CI 성공은 현재 diff의 CI가 아니다.
-- 활성 C15 R6는 마지막 SQLite read-only 조회 기준 `PROJOB-df15a37c58ae7583924e58c0` / `010950` / `PACKET_READY`,
-  state version 2, submit/capture `0/0`, browser/conversation 미결박이다. 실제 Pro 확인·packet upload·전송·응답 capture는
-  이뤄지지 않았다. master goal은 미완료이며 live full-thesis PASS는 C06 1/3이다.
-- **다음 한 단계:** P68 변경과 문서를 한글 커밋으로 PR #7 feature branch에 push하고, 새 head의 전체 테스트와 GitHub Actions를
-  끝까지 확인한다. CI green 뒤에도 기존 BrowserUse 세션의 같은 탭에서 실제 Pro 모델과 정확한 job/conversation을 다시 확인해야
-  한다. 그 전에는 R6에 입력·업로드·전송하지 않는다.
+- 로그인 필요 작업은 사용자의 BrowserUse Chrome plugin `extension`이 연결한 **이미 로그인된 세션과 기존 작업 탭**에서만 한다.
+  `browser.user.openTabs()`로 탭을 열거하고, 정확한 descriptor를 `browser.user.claimTab()`에 넘긴 뒤 반환된 Tab 객체 하나를 유지한다.
+  새 Codex/CDP 창·프로필·대체 탭·재로그인은 사용하지 않는다. 연결이 안 되면 실제 오류를 기록하고 멈춘다.
+- 마지막 BrowserUse UI 관찰은 P70이다. 그때 기존 탭 안의 Chat 화면에서 `6 Pro`, Chat 선택, Work/Deep Research 미선택,
+  빈 composer를 확인했다. P71에는 브라우저를 조작하지 않았다. 재개 시 같은 로그인 세션을 다시 열거·claim하고, 입력 직전에
+  탭·job·대화·실제 Pro model·사용자 초안을 재확인한다.
+- 코드상 Windows/WSL path blocker를 수리했다. 기존 C15 R6 leakage manifest hash와 Windows path boundary receipt를 확인하고,
+  중앙 SQLite를 `mode=ro` + `query_only=ON`으로 열어 `FreshSessionBoundaryService.load_existing()`가 같은 job을 재개하는 데 성공했다.
+  현재 job은 `PROJOB-df15a37c58ae7583924e58c0` / `010950` / `PACKET_READY`, version 2, submit/capture `0/0`,
+  browser/conversation 미결박이다.
+- Regression은 fresh orchestration 80/80 PASS. Production static audit critical 0, V2 contract/generalization/static audit PASS,
+  V2.1 efficiency audit PASS/critical 0이다. 다만 이 P71 diff의 exact-head GitHub Actions와 full repository unittest는 **pending**이다.
+  P70의 head `43524413...` CI success는 P71 diff의 CI로 세지 않는다.
+- 이 업데이트 전까지 prompt 입력, packet upload, submit, capture, 새 query/fetch, score/Stage 변경은 0회다.
+  PR #7은 기존 Draft/open 상태이고 main에 병합하지 않는다. CI green 뒤에도 같은 BrowserUse 로그인 세션의 같은 작업 탭만 사용한다.
+- 세부 변경·검증·다음 순서는 [implementation progress P71](implementation_progress.md)와
+  [P71 machine receipt](p71_wsl_boundary_resume_receipt.json)에 기록한다. token/cookie/account/tab ID는 기록하지 않는다.
+
+## 이전 상태 인수인계 (P70, superseded)
+
+- 로그인 필요 작업은 사용자의 BrowserUse Chrome plugin `extension`이 연결한 **이미 로그인된 세션과 그 세션 안의 기존 작업 탭**에서만 한다.
+  `browser.user.openTabs()`로 탭을 열거하고, 정확한 descriptor를 `browser.user.claimTab()`에 넘긴 뒤 반환된 Tab 객체 하나를 유지한다.
+  CDP/Codex 새 창·프로필·대체 탭·재로그인은 사용하지 않는다. 연결이 안 되면 실제 오류를 기록하고 멈춘다.
+- P70에서 그 기존 BrowserUse 세션의 기존 탭을 claim해 같은 탭 안에서 새 Chat 화면으로 이동했다. 새 브라우저·창·탭·프로필은 만들지 않았다.
+  확인한 화면은 Chat 선택, 실제 model label `6 Pro`, Work 미선택, Deep Research 미선택, 빈 composer였다. 이 확인은 로그인 세션 및
+  현재 모드 확인이지 C15 응답·대화 결박 확인은 아니다. 기존 Library의 오래된 다른 job 결과는 사용하지 않았다.
+- 실제 입력/작업 상태: prompt `0`, packet upload `0`, submit `0`, capture `0`, 새 query/fetch `0`, score/Stage 변경 `0`.
+  활성 C15 R6 `PROJOB-df15a37c58ae7583924e58c0` / `010950`은 SQLite read-only 확인상 `PACKET_READY`, state version 2,
+  submit/capture `0/0`, browser/conversation 미결박이다.
+- PR #7은 head `43524413c24ab5e4ff32eca7ee0aaaa64bd49477`, `OPEN / DRAFT / MERGEABLE`이다. 동일 head의 Pro-first push/PR 및 V6 PR
+  Actions run 35925176718, 35925180418, 35925180440은 모두 SUCCESS다. 전체 suite 7,911 (skipped 38, failure/error 0),
+  Gate 1 receipt 4/4, Phase100 15/15, production static audit critical 0이다.
+- 현재 blocker는 BrowserUse 로그인/탭 문제가 아니다. Python `FreshSessionBoundaryService.load_existing()`의 WSL 재개 검증이
+  persisted Windows path와 `/mnt/c/...` caller path의 표현 차이로 `FreshSessionBoundaryError: fresh boundary receipt failed hash/path validation`
+  을 던졌다. DB와 receipt를 바꾸지 않은 read-only 실패다. 다음 단계는 일반적인 WSL/Windows runtime-root normalization과 fail-closed 테스트다.
+- 그 수리가 끝나고 새 exact-head CI green인 뒤에도 packet upload/전송은 이 기존 BrowserUse 세션의 same claimed tab에서만 한다.
+  입력 직전에는 탭·job·대화·실제 Pro 모델·기존 초안/첨부를 다시 확인한다. 탭 제어가 실패하면 새 창에서 보내지 않는다.
+- 세부 진행·run 링크·남은 작업은 [implementation progress P70](implementation_progress.md#p70--exact-head-ci-완료-기존-browseruse-pro-확인-wsl-경계-재개-오류-2026-09-24-kst)와
+  [P70 machine receipt](p70_current_status_receipt.json)을 본다. token/cookie/account/tab ID는 기록하지 않는다.
 
 ## 현재 인수인계 요약 (P63)
 

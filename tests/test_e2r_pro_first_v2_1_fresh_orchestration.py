@@ -4,10 +4,12 @@ from dataclasses import replace
 from datetime import datetime, timezone
 import hashlib
 import json
+import os
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 from e2r.pro_first.approval import ProApprovalService
 from e2r.pro_first.browser.protocol import (
@@ -31,6 +33,7 @@ from e2r.pro_first.fresh_session import (
     OldAnswerLeakageManifest,
     audit_fresh_blind_payload,
 )
+from e2r.pro_first.fresh_session import boundary as fresh_session_boundary
 from e2r.pro_first.fresh_session.live_canary_v3 import (
     _requires_browser_result_recovery,
     build_old_answer_leakage_manifest,
@@ -4276,6 +4279,131 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(loaded.fresh_job_id, self.boundary.fresh_job_id)
         self.assertEqual(job.job_id, self.fresh_job.job_id)
         self.assertEqual(jobs_after, jobs_before)
+
+    @unittest.skipIf(
+        os.name == "nt",
+        "WSL-mounted Windows path mapping is POSIX-specific",
+    )
+    def test_windows_receipt_roots_resume_from_matching_wsl_mount_without_rewriting_hash(
+        self,
+    ) -> None:
+        mount_root = self.root / "test-mnt"
+        drive_root = mount_root / "c"
+        mapped_parent = drive_root / "Users" / "fixture"
+        mapped_parent.mkdir(parents=True)
+        mapped_fresh = mapped_parent / "fresh-runtime-one"
+        mapped_old = mapped_parent / "old-runtime"
+        mapped_fresh.mkdir()
+        mapped_old.mkdir()
+
+        receipt = json.loads(
+            self.boundary.boundary_receipt_path.read_text(encoding="utf-8")
+        )
+        receipt["fresh_runtime_root"] = r"C:\Users\fixture\fresh-runtime-one"
+        receipt["old_runtime_root"] = r"C:\Users\fixture\old-runtime"
+        unsigned = {key: value for key, value in receipt.items() if key != "receipt_hash"}
+        receipt["receipt_hash"] = canonical_hash(unsigned)
+        receipt_path = mapped_fresh / "fresh_session_boundary_receipt.json"
+        receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+
+        jobs_before = tuple(row.job_id for row in self.store.list_jobs(limit=100))
+        with patch.object(
+            fresh_session_boundary,
+            "_WSL_DRIVE_MOUNT_ROOT",
+            mount_root,
+        ):
+            loaded, job = FreshSessionBoundaryService(self.store).load_existing(
+                fresh_runtime_root=mapped_fresh,
+                leakage_manifest=self.manifest,
+            )
+
+        self.assertEqual(
+            loaded.fresh_runtime_root,
+            mapped_fresh.resolve(),
+        )
+        self.assertEqual(
+            loaded.old_runtime_root,
+            mapped_old.resolve(),
+        )
+        self.assertEqual(job.job_id, self.fresh_job.job_id)
+        self.assertEqual(
+            tuple(row.job_id for row in self.store.list_jobs(limit=100)),
+            jobs_before,
+        )
+
+        # Path normalization must never weaken the original receipt hash gate.
+        receipt["old_runtime_root"] = r"C:\Users\fixture\tampered"
+        receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+        with patch.object(
+            fresh_session_boundary,
+            "_WSL_DRIVE_MOUNT_ROOT",
+            mount_root,
+        ):
+            with self.assertRaisesRegex(
+                FreshSessionBoundaryError,
+                "hash/path validation",
+                ):
+                FreshSessionBoundaryService(self.store).load_existing(
+                    fresh_runtime_root=mapped_fresh,
+                    leakage_manifest=self.manifest,
+                )
+
+    def test_windows_runtime_root_without_wsl_drive_mount_fails_closed(self) -> None:
+        with patch.object(
+            fresh_session_boundary,
+            "_WSL_DRIVE_MOUNT_ROOT",
+            self.root / "no-mounted-drives",
+        ):
+            with self.assertRaisesRegex(
+                FreshSessionBoundaryError,
+                "has no WSL mount",
+            ):
+                fresh_session_boundary._resolve_runtime_root(
+                    r"Z:\runtime\fresh"
+                )
+
+    def test_windows_runtime_root_cannot_escape_its_wsl_drive_mount(self) -> None:
+        mount_root = self.root / "test-mnt"
+        (mount_root / "c").mkdir(parents=True)
+        with patch.object(
+            fresh_session_boundary,
+            "_WSL_DRIVE_MOUNT_ROOT",
+            mount_root,
+        ):
+            with self.assertRaisesRegex(
+                FreshSessionBoundaryError,
+                "cannot escape its WSL drive mount",
+            ):
+                fresh_session_boundary._resolve_runtime_root(r"C:\..\outside")
+
+    @unittest.skipIf(
+        os.name == "nt",
+        "WSL-mounted Windows path mapping is POSIX-specific",
+    )
+    def test_windows_runtime_root_symlink_outside_drive_mount_fails_closed(
+        self,
+    ) -> None:
+        mount_root = self.root / "test-mnt"
+        drive_root = mount_root / "c"
+        drive_root.mkdir(parents=True)
+        outside_root = self.root / "outside-drive"
+        outside_root.mkdir()
+        (drive_root / "redirect").symlink_to(
+            outside_root,
+            target_is_directory=True,
+        )
+        with patch.object(
+            fresh_session_boundary,
+            "_WSL_DRIVE_MOUNT_ROOT",
+            mount_root,
+        ):
+            with self.assertRaisesRegex(
+                FreshSessionBoundaryError,
+                "resolves outside its WSL drive mount",
+            ):
+                fresh_session_boundary._resolve_runtime_root(
+                    r"C:\redirect\runtime"
+                )
 
     @staticmethod
     def _question_decision(

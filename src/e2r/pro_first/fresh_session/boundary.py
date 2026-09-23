@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from typing import Any, Mapping, Sequence
 
 from ..atomic_io import fsync_directory
@@ -24,6 +24,7 @@ class FreshSessionRerunRequired(FreshSessionBoundaryError):
 
 FROZEN_PREDECESSOR_BOUNDARY = "FROZEN_PREDECESSOR"
 INDEPENDENT_CANARY_BOUNDARY = "INDEPENDENT_CROSS_ARCHETYPE_CANARY"
+_WSL_DRIVE_MOUNT_ROOT = Path("/mnt")
 
 
 @dataclass(frozen=True)
@@ -196,8 +197,8 @@ class FreshSessionBoundaryService:
                 "leakage manifest is bound to a different old run"
             )
 
-        old_root = Path(old_runtime_root).expanduser().resolve()
-        fresh_root = Path(fresh_runtime_root).expanduser().resolve()
+        old_root = _resolve_runtime_root(old_runtime_root)
+        fresh_root = _resolve_runtime_root(fresh_runtime_root)
         _assert_disjoint_runtime_roots(old_root, fresh_root)
         boundary_path = fresh_root / "fresh_session_boundary_receipt.json"
         _prepare_new_runtime_root(
@@ -349,8 +350,8 @@ class FreshSessionBoundaryService:
                 "independent canary leakage manifest differs from its target identity"
             )
 
-        reference_root = Path(reference_runtime_root).expanduser().resolve()
-        fresh_root = Path(fresh_runtime_root).expanduser().resolve()
+        reference_root = _resolve_runtime_root(reference_runtime_root)
+        fresh_root = _resolve_runtime_root(fresh_runtime_root)
         _assert_disjoint_runtime_roots(reference_root, fresh_root)
         boundary_path = fresh_root / "fresh_session_boundary_receipt.json"
         _prepare_new_runtime_root(
@@ -468,7 +469,7 @@ class FreshSessionBoundaryService:
         blocks every follow-up submit path.
         """
 
-        fresh_root = Path(fresh_runtime_root).expanduser().resolve()
+        fresh_root = _resolve_runtime_root(fresh_runtime_root)
         boundary_path = fresh_root / "fresh_session_boundary_receipt.json"
         if not boundary_path.is_file():
             raise FreshSessionBoundaryError("fresh boundary receipt is missing")
@@ -478,9 +479,17 @@ class FreshSessionBoundaryService:
             receipt.get("schema_version")
             != "e2r_pro_fresh_session_boundary_receipt_v1"
             or receipt.get("receipt_hash") != canonical_hash(unsigned)
-            or receipt.get("fresh_runtime_root") != str(fresh_root)
         ):
-            raise FreshSessionBoundaryError("fresh boundary receipt failed hash/path validation")
+            raise FreshSessionBoundaryError(
+                "fresh boundary receipt failed hash/path validation"
+            )
+        stored_fresh_root = _resolve_runtime_root(
+            str(receipt.get("fresh_runtime_root") or "")
+        )
+        if stored_fresh_root != fresh_root:
+            raise FreshSessionBoundaryError(
+                "fresh boundary receipt failed hash/path validation"
+            )
         for field in ("old_job_id", "old_run_id", "old_conversation_id"):
             if receipt.get(field) != getattr(leakage_manifest, field):
                 raise FreshSessionBoundaryError(
@@ -526,7 +535,9 @@ class FreshSessionBoundaryService:
                 raise FreshSessionBoundaryError(
                     "independent fresh boundary target/state is not recoverable"
                 )
-        old_root = Path(str(receipt.get("old_runtime_root") or "")).resolve()
+        old_root = _resolve_runtime_root(
+            str(receipt.get("old_runtime_root") or "")
+        )
         _assert_disjoint_runtime_roots(old_root, fresh_root)
         return (
             FreshSessionBoundary(
@@ -743,6 +754,53 @@ def assert_fresh_prompt_has_no_old_answers(
             "fresh Initial Prompt V3 contains old answer-bearing content"
         )
     return receipt
+
+
+def _resolve_runtime_root(value: str | Path) -> Path:
+    """Resolve a runtime-root path without losing Windows/WSL identity.
+
+    Windows receipts may be resumed from WSL, where the same drive path is
+    mounted at ``/mnt/<drive-letter>``. Only absolute, single-letter Windows
+    drive paths are translated, and only when that drive mount exists. All
+    other paths keep native ``Path`` behavior; unsupported/unmounted Windows
+    roots fail closed instead of becoming misleading relative POSIX paths.
+    """
+
+    raw = os.fspath(value)
+    if os.name == "nt":
+        return Path(raw).expanduser().resolve()
+
+    windows_path = PureWindowsPath(raw)
+    if windows_path.drive:
+        drive = windows_path.drive
+        if (
+            not windows_path.is_absolute()
+            or len(drive) != 2
+            or drive[1] != ":"
+            or not drive[0].isalpha()
+        ):
+            raise FreshSessionBoundaryError(
+                "Windows runtime root must use an absolute drive-letter path"
+            )
+        mount = _WSL_DRIVE_MOUNT_ROOT / drive[0].lower()
+        if not mount.is_dir():
+            raise FreshSessionBoundaryError(
+                f"Windows runtime root drive {drive[0].upper()}: has no WSL mount"
+            )
+        parts = windows_path.parts[1:]
+        if ".." in parts:
+            raise FreshSessionBoundaryError(
+                "Windows runtime root cannot escape its WSL drive mount"
+            )
+        resolved_mount = mount.resolve()
+        resolved_path = mount.joinpath(*parts).expanduser().resolve()
+        if not _is_relative_to(resolved_path, resolved_mount):
+            raise FreshSessionBoundaryError(
+                "Windows runtime root resolves outside its WSL drive mount"
+            )
+        return resolved_path
+
+    return Path(raw).expanduser().resolve()
 
 
 def _assert_disjoint_runtime_roots(old_root: Path, fresh_root: Path) -> None:

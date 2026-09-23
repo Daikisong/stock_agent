@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-24 06:47 KST / P69: BrowserUse 기존 로그인 세션 규칙 및 P68 검증 기록 최신화`
+기준 시각: `2026-09-24 07:45 KST / P71: WSL boundary 경로 수리, 실 job read-only 재개 확인, 신규 diff CI 대기`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -52,12 +52,13 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS, C15 R6 PACKET_READY; 기존 BrowserUse 탭 Python read-only smoke PASS, Pro/upload/send 미검증; C28 새 실행 필요)
-P10 final CI/audit                        IN_PROGRESS (P68 targeted regression/static audits PASS; 전체 테스트/exact-head CI 대기; live 3/3 미충족)
+P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS; C15 R6 PACKET_READY boundary read-only resume PASS; upload/send/capture 미실행; C28 새 실행 필요)
+P10 final CI/audit                        IN_PROGRESS (P70 head 43524413 CI SUCCESS; P71 new diff focused orchestration 80/80 + 3 static audits PASS; P71 exact-head CI pending; live 3/3 미충족)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
-`PRO_FIRST_V2_1_OPERATIONAL_RESEARCH_READY`를 선언하지 않는다.
+`PRO_FIRST_V2_1_OPERATIONAL_RESEARCH_READY`를 선언하지 않는다. P70에서 exact-head GitHub CI는 green이 됐지만,
+이는 live full-thesis canary 세 건의 완료를 대신하지 않는다.
 
 현재 확인된 live full-thesis 통과는 C06 한 건이다. C15 R5는 초기 material 24개 중 23개가 수용돼
 초기 효율 검문을 통과했지만 후속 결과가 회수되지 않아 full-thesis PASS가 아니다. 9월 1일 실행의
@@ -66,7 +67,8 @@ P10 final CI/audit                        IN_PROGRESS (P68 targeted regression/s
 사용자 지적 뒤 기존 로그인 ChatGPT 탭을 실제 화면에서 찾았다. 따라서 "열린 ChatGPT 탭이 없다"는
 과거 결론은 잘못된 연결 대상 확인이었다. P62에서는 BrowserUse extension으로 그 기존 사용자 탭을 직접
 재열거·claim하고 읽기 전용 접근했다. P68에서는 Python worker와 exact claimed tab 사이의 read-only bridge smoke를
-통과했다. actual Pro 선택, upload, submit, artifact capture는 아직 확인하지 않았다.
+통과했다. P70에서는 같은 기존 BrowserUse 로그인 탭 안의 새 Chat 화면에서 Chat 선택, `6 Pro` 모델 표시,
+Work/Deep Research 미선택, 빈 composer를 다시 확인했다. packet upload, prompt submit, artifact capture는 아직 없다.
 R5는 후속 결과를 회수하더라도 잘못된 과거 전송 이력 때문에 운영 합격으로 세지 않는다. 초기 자료와
 후속 capture는 진단 이력으로 보존하고 C15 운영 증명은 수정된 코드의 새 fresh 실행에서 받아야 한다.
 R5는 이제 durable freeze와 R6 successor 결박까지 기록됐으며, R6는 입력 파일만 준비한 상태다.
@@ -6235,3 +6237,80 @@ worker에 read-only로 연결하는 vertical slice를 구현·검증했다.
 ### 다음 한 단계
 
 P68 코드와 문서를 한글 커밋으로 feature branch에 push하고, 새 head에서 전체 테스트와 GitHub Actions를 확인한다. 성공한 뒤에만 기존 BrowserUse 세션의 동일 탭으로 돌아가 actual Pro model과 C15 R6 대화/첨부 상태를 읽기 전용 확인한다. 그 확인 전에는 R6 prompt/upload/submit을 하지 않는다. 자세한 마지막 상태는 [BrowserUse 인수인계](browseruse_existing_session_handoff.md)와 [P68 bridge receipt](p68_browseruse_extension_bridge_smoke_receipt.json)에 있다.
+
+## P70 — exact-head CI 완료, 기존 BrowserUse Pro 확인, WSL 경계 재개 오류 (2026-09-24 KST)
+
+### 현재 상태와 증거
+
+- P68 구현 및 문서를 한글 커밋 `43524413c24ab5e4ff32eca7ee0aaaa64bd49477`로 PR #7 feature branch에 push했다.
+  확인 시 PR #7은 `OPEN / DRAFT / MERGEABLE`, head는 이 SHA였으며 main 병합·draft 해제·auto-merge는 하지 않았다.
+- 동일 head를 대상으로 한 세 GitHub Actions가 모두 `SUCCESS`다: Pro-first push run
+  [35925176718](https://github.com/Daikisong/stock_agent/actions/runs/35925176718), Pro-first PR run
+  [35925180418](https://github.com/Daikisong/stock_agent/actions/runs/35925180418), V6 PR run
+  [35925180440](https://github.com/Daikisong/stock_agent/actions/runs/35925180440). 전체 저장소 회귀는
+  7,911 tests, skipped 38, failure/error 0이며 independent Reviewer A–H 8/8 PASS다. Gate 1 receipt 4/4 PASS,
+  Phase100 15/15 PASS, production static audit `critical_count_sum=0`을 확인했다.
+- 로그인 세션이 필요한 실제 화면은 BrowserUse Chrome plugin `extension`이 열거한 기존 사용자 탭 하나를 exact claim한
+  바로 그 세션에서 확인했다. 사용자의 기존 탭 안에서 새 Chat 화면을 열었으며 새 브라우저·창·탭·프로필은 만들지 않았다.
+  Chat mode가 선택됐고 실제 model control은 `6 Pro`; Work와 Deep Research는 선택되지 않았으며 composer는 비어 있었다.
+  이전 Library 결과는 다른 job의 것이어서 사용하지 않았다.
+- 전송 직전 파이프라인 resume preflight는 **읽기 전용**으로 멈췄다. 중앙 SQLite의 C15 R6
+  `PROJOB-df15a37c58ae7583924e58c0` / `010950` / `PACKET_READY` 상태는 그대로며 state version 2,
+  submit/capture `0/0`, browser/conversation 미결박이다. prompt 입력, JSON upload, submit, capture,
+  추가 source query/fetch, score/Stage 변경은 모두 0회다.
+
+### 남은 정확한 blocker와 다음 한 단계
+
+`FreshSessionBoundaryService.load_existing()`이 저장된 receipt의 Windows absolute runtime root
+(`C:\\Users\\...`)와 WSL caller의 `/mnt/c/...` 경로를 문자열/일반 `Path.resolve()`로 비교한다.
+기존 persisted receipt의 hash 검증은 통과하더라도 두 경로 표현이 일치하지 않아 다음 오류로 재개가 중단된다.
+
+```text
+FreshSessionBoundaryError: fresh boundary receipt failed hash/path validation
+```
+
+이를 새 job 생성, 기존 receipt 재작성, 경로 검증 우회로 해결하지 않는다. 다음 구현은 drive-letter 경로를 실제
+`/mnt/<drive>` mount에 대응시키는 **일반 경로 정규화 helper**를 추가하고, hash validation 및 unmapped path fail-closed를
+유지하는 회귀 테스트를 넣는 것이다. 그 focused tests와 static audit가 통과하면 Korean commit으로 같은 PR #7 branch에
+push하고 새 exact-head CI를 확인한다. CI green 뒤에도 실제 upload/submit은 사용자의 기존 BrowserUse 로그인 세션과 같은
+claimed tab에서만 한다.
+
+진행 장부 밖에서도 바로 찾을 수 있도록 [BrowserUse 인수인계](browseruse_existing_session_handoff.md),
+[bridge 기술 경계](browseruse_extension_bridge.md), [P70 machine receipt](p70_current_status_receipt.json)을 함께 갱신했다.
+P70은 문서·CI 상태를 정리한 단계이지 canary PASS 또는 master goal 완료 선언이 아니다.
+
+## P71 — Windows/WSL boundary 경로 정규화 및 C15 R6 read-only resume 통과 (2026-09-24 07:45 KST)
+
+### 코드 변경
+
+- `FreshSessionBoundaryService.start`, `start_independent`, `load_existing`의 runtime root 해석을 공통
+  `_resolve_runtime_root()`로 모았다. POSIX/WSL에서만 absolute single-letter Windows drive path를
+  실제 `/mnt/<drive-letter>` mount에 대응시킨다.
+- 저장된 receipt의 기존 필드와 원문값은 바꾸지 않는다. `receipt_hash`는 저장된 원문 path string을 포함한
+  unsigned receipt로 먼저 검증하고, 이후 old/fresh root만 정규화해 현재 caller root와 비교한다.
+- drive mount가 없거나 Windows path가 relative/UNC이거나 `..` 또는 symlink를 통해 mount 밖으로 벗어나면
+  `FreshSessionBoundaryError`로 fail-closed한다. 임의 mount 생성·receipt rewrite·새 successor job 생성은 없다.
+- 회귀 테스트는 Windows receipt → 임시 WSL mount 매핑과 동일 job 재개, 원문 hash 변조 거부, 미장착 drive,
+  mount 탈출 경로를 확인한다.
+
+### 검증 결과
+
+- `tests.test_e2r_pro_first_v2_1_fresh_orchestration`: **80/80 PASS**; 기존 POSIX receipt 정상 재개도 포함한다.
+- Production static audit: PASS, critical 0. V2 contract/generalization/static audit: PASS, critical 0.
+  V2.1 fresh-efficiency audit: PASS, critical 0, issues 0.
+- 실제 C15 R6 persisted `old_answer_leakage_manifest.runtime.json` hash를 검증한 뒤, Windows path가 담긴 기존
+  boundary receipt와 중앙 SQLite를 `mode=ro` / `query_only=ON`으로 열어 `FreshSessionBoundaryService.load_existing()`를
+  재실행했다. 같은 `PROJOB-df15a37c58ae7583924e58c0` / `PACKET_READY` / state version 2가 반환됐다.
+  submit/capture는 `0/0`, browser/conversation은 미결박이다. store/schema initialization 없이 SELECT만 했고 DB/receipt를
+  쓰지 않았다. 이는 resume 준비 PASS이지 BrowserUse submit 또는 canary PASS가 아니다.
+- BrowserUse는 P70의 existing-tab Chat/`6 Pro` 확인 이후 이번 단계에서 조작하지 않았다. 사용자 세션을 다른 창이나
+  프로필로 바꾸지 않았다. prompt/upload/submit/capture/query/fetch/score/Stage 변경은 계속 0이다.
+- **정확한 변경 diff의 full unittest와 GitHub Actions는 아직 실행 전이다.** P70 CI는 parent head
+  `43524413...`에서 성공한 것으로만 기록한다. 현재 PR은 계속 Draft/open이며 merge하지 않는다.
+
+### 다음 한 단계
+
+수정과 P71 receipt/docs를 같은 PR #7 feature branch에 Korean commit으로 push하고 exact-head Pro-first/V6 Actions를 기다린다.
+새 head CI가 green이어야만, 기존 BrowserUse `extension`의 동일 로그인 세션·claimed tab을 다시 읽기 전용 확인한 뒤
+승인된 C15 R6 작업을 이어간다. 기존 tab으로 연결하지 못하면 새 브라우저를 열지 말고 오류와 마지막 상태를 남긴다.
+P71 machine receipt: [p71_wsl_boundary_resume_receipt.json](p71_wsl_boundary_resume_receipt.json).
