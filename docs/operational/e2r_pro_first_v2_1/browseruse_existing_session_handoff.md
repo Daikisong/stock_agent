@@ -1,15 +1,19 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 04:57 KST (P65).
+최종 갱신: 2026-09-24 05:27 KST (P67).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
-## 한 줄 실행 규칙 (P65)
+## 최우선 실행 규칙 (P67)
 
-로그인된 서비스 작업은 **사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 탭에서만** 한다.
-새 창·새 프로필·별도 CDP 브라우저로 바꾸지 않고, 세션 연결이 안 된다는 이유로 재로그인·재전송하지 않는다.
-파일 다운로드·응답 회수도 예외가 아니다. 기존 결과가 있으면 같은 탭에서 회수하고, 정확한 기존 탭을
-제어할 수 없으면 실제 오류와 마지막 확인 상태를 기록한 뒤 그 단계에서 멈춘다.
+사용자가 이미 로그인해 둔 세션이 필요한 작업은 **그 기존 BrowserUse `extension` 세션의 탭에서만** 한다.
+새 Codex Chrome/CDP 창이나 별도 프로필은 같은 서비스·계정처럼 보여도 대체 세션이 아니다. 기존 세션에
+연결하거나 정확한 작업 탭을 제어할 수 없으면 다른 창으로 옮기지 말고, 실제 오류와 확인 범위를 기록한 뒤
+그 브라우저 단계에서 멈춘다. 재로그인·새 창·대체 세션 전송은 하지 않는다.
+
+BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭을 찾고, 정확한 descriptor를
+`browser.user.claimTab()`에 전달한다. 이후 claim이 반환한 제어 객체 하나를 유지해 로그인 확인, 기존 대화·첨부
+확인, 필요할 때만 같은 탭 안에서 새 대화 시작, 파일 회수, 승인된 전송까지 수행한다.
 
 ```text
 기존 사용자 탭 열거 → 정확한 탭 claim → 그 탭에서 현재 대화/첨부 확인
@@ -19,7 +23,7 @@
 ```
 
 새 대화는 새 브라우저가 아니다. 이미 응답이나 JSON이 있으면 새 요청을 보내지 말고 그 결과를 같은 탭에서
-회수한다. Library 검색 한 번에서 결과가 없다는 사실만으로 파일이 계정 전체에 없다고 단정하지 않는다.
+회수한다. Library 검색 한 번에서 결과가 없다는 사실만으로 계정 전체에 파일이 없다고 단정하지 않는다.
 영수증에는 확인 범위와 정확한 도구 오류만 남기고 tab ID, 계정 식별자, 쿠키·인증값은 남기지 않는다.
 
 ## 먼저 읽을 규칙 — 현재 로그인 탭에서 그대로 이어가기
@@ -251,5 +255,54 @@ push run의 core-unit, browser-mock-e2e, static-security job은 성공했고 ful
   점수 변경은 0회다. 다음 작업은 exact claimed BrowserUse 탭에 대한 generic bridge와 non-submit
   identity 검증이다. 그 연결 전에는 Python CDP worker를 통해서도 Pro 전송하지 않는다.
 
-마지막 확인 시각은 2026-09-24 04:57 KST다. 이 시각 이후 상태를 보장하지 않는다. 재개 시 기존 `extension`
+P65 문서 갱신 시각은 2026-09-24 04:57 KST다. 이 기록은 그 시점 이후 상태를 보장하지 않는다. 재개 시 기존 `extension`
 세션의 사용자 탭을 다시 열거·claim한 후 작업 대화와 실제 선택 모델을 재확인한다. 인증값과 tab ID는 저장하지 않는다.
+
+## P66 — 기존 Library C15 artifact 회수와 import 경계
+
+- 2026-09-24 05:14 KST에 BrowserUse `extension`이 열거한 사용자 ChatGPT 탭 1개를 정확히 claim한 뒤,
+  같은 탭의 Library에서 `S-OIL_010950_E2R_ResearchDossierV3_PROJOB-04140b7ffd8accef505deeda.json`을
+  열고 visible Download 메뉴로 내려받았다. 새 창·탭·프로필은 만들지 않았다. 다운로드는
+  `suggestedFilename()` 형식 불일치(`globalThis.e2rDownload.suggestedFilename is not a function`)로 후처리
+  단계에서 오류가 났지만, BrowserUse download event는 이미 완료됐고 기본 Downloads 파일이 존재함을
+  확인했다. 재다운로드하지 않았다. 파일 SHA-256은
+  `332c4be02d598f143567ec9366904e5e4bf4eb9c524ba9a2fa6baf20003a78e5`, 크기는 180,794 bytes다.
+- 파일은 활성 R6가 아닌 이전 C15 job `PROJOB-04140b7ffd8accef505deeda`, run
+  `PRORUN-87c15cd5bef1e1723bf19129`, initial pass `PROPASS-64ef728f2ff790e7fce6ae95`에 결박되어 있다.
+  target `010950 / S-Oil`, as-of `2026-08-23`, `C15_MATERIAL_SPREAD_SUPERCYCLE`; raw status는
+  `NEEDS_PUBLIC_GAP_CLOSURE`다. 따라서 C15 R6 결과나 full-thesis PASS로 세지 않는다.
+- 기존 `ResearchDossierParser`는 `DOWNLOADED_JSON`으로 이 파일을 읽었고 입력/출력 JSON hash는 동일했다.
+  material/counter/resolution fact는 각각 `16/3/3` (총 22), question family 27, source documents 8,
+  lineages 8, search routes 62, unresolved gaps 10이다. 이어진 dialect/pre-schema/identity 처리와 JSON
+  schema validator는 **placeholder conversation ID를 유지한 구조 검증**으로 통과했다. 이 검증은 source
+  verification, capture-bound import, 서버 대화 결박 또는 canary PASS가 아니다.
+- 로컬 DB의 동일 job은 `USER_ATTENTION_REQUIRED`, submit/capture `1/0`, `conversation_id=null`이다.
+  terminal event는 exact initial user turn에 job/run marker가 없다는 server-persistence 오류를 기록한다.
+  `browser_capture_receipt.json`, normalized import 파일 및 dossier import 행은 없다. 따라서 기존
+  `ProDossierImporter`의 capture-bound 경로로는 아직 적재할 수 없다. 실제 대화 ID·assistant turn을
+  복구하거나 정식 Library-artifact recovery 경계를 구현해야 하며, 둘 중 어느 것도 임의로 꾸며내지 않았다.
+- 활성 R6 `PROJOB-df15a37c58ae7583924e58c0`는 기존 packet 그대로 `PACKET_READY`, submit/capture `0/0`다.
+  다운로드한 이전 artifact를 R6에 섞거나 DB를 변경하지 않았다. 마지막 화면 캡처에는 `GPT-6 Sol Light`와
+  빈 입력창이 보였으므로 현재 Pro 모드의 증거도 아니며, 이 단계에서 prompt 입력·업로드·전송은 없었다.
+- 상세 machine-readable 기록은 [P66 회수 영수증](p66_c15_library_artifact_recovery_receipt.json)이다.
+  기존 Library 파일과 새로 받은 사본은 repo에 추가하지 않았다. artifact 자체는 사용자 Downloads에 남아 있다.
+
+## P67 — 로그인된 BrowserUse 세션만 사용한다는 우선 규칙 재확인
+
+- 사용자는 로그인된 세션이 필요한 BrowserUse 작업을 **이미 로그인해 둔 그 세션에서** 하라고 재강조했다.
+  이에 따라 이 문서 맨 앞에 기존 `extension` 세션과 정확한 기존 작업 탭만 사용한다는 규칙을 단일 우선 지침으로
+  명시했다. 새 Codex Chrome/CDP 창, 별도 프로필, 재로그인은 대체 수단이 아니다.
+- 절차는 기존 사용자 탭 열거 → 정확한 탭 claim → 반환된 실제 제어 객체 유지 → 현재 대화·초안·첨부 확인이다.
+  기존 결과가 있으면 같은 탭에서 회수하고, 실제 새 대화가 승인된 경우에도 같은 로그인 탭 안에서만 시작한다.
+  입력·첨부·전송 직전에 URL, 대상, 실제 모드, 초안과 기존 응답을 같은 탭에서 재확인한다.
+- 탭 연결이나 제어가 실패하면 확인 범위와 실제 오류를 남기고 그 단계에서 멈춘다. 다른 창에서 계속하거나
+  재로그인·재전송하지 않는다. 사용자 초안, 진행 중 응답, 기존 탭과 로그인 상태를 보존한다.
+- P67은 문서 변경만 수행했다. BrowserUse 연결·탭 재확인, 입력, 업로드, 다운로드, 전송, 새 query/fetch,
+  점수/Stage 변경은 0회다. 마지막 실제 브라우저 관찰은 P66의 같은 사용자 탭 Library 작업이며, 당시 화면의
+  모델 표시는 `GPT-6 Sol Light`였다. 이를 현재 세션이나 실제 Pro 모드의 확인으로 취급하지 않는다.
+- P66 artifact/import 경계와 수치는 [P66 회수 영수증](p66_c15_library_artifact_recovery_receipt.json)을,
+  전체 작업 순서는 [진행 장부](implementation_progress.md)의 P66/P67을 참조한다.
+
+이번 문서 갱신은 2026-09-24 05:27 KST다. 이는 브라우저 상태 재확인이 아니다. 다음 로그인 필요 작업 전에 기존
+`extension` 세션의 사용자 탭을 다시 열거하고 exact `claimTab()` 객체에서 대상 대화와 실제 모드를 확인한다.
+tab ID, 계정 식별자, 쿠키·토큰은 보관하지 않는다.

@@ -6132,3 +6132,32 @@ Python `ProBrowserWorker`의 별도 CDP 연결을 다른 창에서 쓰지 않는
 
 이번 장부 갱신의 기준 시각은 2026-09-24 04:57 KST다. 재개 시 현재 BrowserUse 로그인·탭 상태를 보장하지
 않으므로, 사용자 외부 탭 열거와 exact `claimTab()`부터 다시 한다. tab ID, 계정 식별자, 쿠키·토큰은 저장하지 않는다.
+
+## P66 — 기존 사용자 Library 탭에서 C15 artifact 회수, import는 보류 (2026-09-24 05:22 KST)
+
+- BrowserUse `extension`의 사용자 탭을 열거하고 정확한 ChatGPT 탭을 claim한 뒤 **그 기존 탭에서만** Library
+  JSON을 내려받았다. 새 창·탭·프로필은 만들지 않았다. 다운로드 후처리의 실제 오류는
+  `globalThis.e2rDownload.suggestedFilename is not a function`이었지만 download event와 Downloads 파일이 이미
+  확인되어 재다운로드하지 않았다. 파일명·SHA-256·크기는 [P66 영수증](p66_c15_library_artifact_recovery_receipt.json)에 있다.
+- 이 파일은 활성 R6가 아니라 과거 `PROJOB-04140b7ffd8accef505deeda` / `PRORUN-87c15cd5bef1e1723bf19129`의
+  `NEEDS_PUBLIC_GAP_CLOSURE` 결과다. 기존 parser/정규화는 22 fact object(16 material + 3 counter + 3 resolution),
+  27 question family, 8 source document/lineage, 62 search route, 10 unresolved gap을 읽었다. 구조 검증은
+  placeholder conversation ID 상태에서만 통과했다. source 검증·capture-bound import·실제 대화 결박·canary PASS는 아니다.
+- 원 job은 `USER_ATTENTION_REQUIRED`, submit/capture `1/0`, conversation ID 없음이다. capture receipt·normalized
+  import·import row가 없으므로 임의 identity를 만들지 않았고, 기존 `ProDossierImporter`로 적재하지 않았다.
+  활성 C15 R6 `PROJOB-df15a37c58ae7583924e58c0`는 그대로 `PACKET_READY`, submit/capture `0/0`이며 수정하지 않았다.
+- P66 당시 화면에는 `GPT-6 Sol Light`와 빈 composer가 보였다. 새 prompt 입력·업로드·submit·query/fetch·점수 변경은
+  0회다. 상세 사실 및 hash는 위 machine-readable 영수증과 [BrowserUse 인수인계](browseruse_existing_session_handoff.md)의 P66을 참조한다.
+
+## P67 — 로그인 필요 작업은 사용자 BrowserUse 기존 세션에서만 (2026-09-24 05:27 KST)
+
+- 사용자가 다시 명확히 요청한 운영 원칙은 “로그인된 세션이 필요하면 이미 로그인되어 있는 그쪽 세션에서
+  하라”는 것이다. 인수인계 문서 상단을 단일한 최우선 규칙으로 고쳤다. BrowserUse Chrome plugin의
+  `extension`으로 기존 사용자 탭을 열거하고, exact descriptor를 claim한 뒤 반환된 제어 객체만 사용한다.
+- 같은 계정처럼 보이는 새 Codex Chrome, CDP endpoint, 새 프로필, 재로그인 창은 기존 BrowserUse 세션이 아니다.
+  연결 또는 탭 제어 실패 시 실제 오류·확인 범위를 기록하고 그 단계에서 멈춘다. 새 세션에서 대신 전송하거나
+  이미 보낸 요청을 재전송하지 않는다. 새 대화도 기존 로그인 탭 안에서만 시작한다.
+- 이번 P67은 문서화만 수행했다. BrowserUse 연결/탭 확인, prompt 입력, upload/download, submit, source query/fetch,
+  점수·Stage 변경은 0회다. P66의 마지막 화면 관찰을 현재 상태나 Pro 모드로 오인하지 않는다.
+- 이 기록은 [BrowserUse 인수인계](browseruse_existing_session_handoff.md)와 함께 읽는다. 인증 토큰·쿠키·계정
+  식별자·tab ID를 문서에 남기지 않는다.
