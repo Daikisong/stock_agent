@@ -1,10 +1,28 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 03:48 KST (P62).
+최종 갱신: 2026-09-24 04:03 KST (P63).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
-## 현재 인수인계 요약 (P62)
+## 먼저 읽을 규칙 — 현재 로그인 탭에서 그대로 이어가기
+
+로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 **그 BrowserUse 세션과 기존 작업 탭**에서만
+한다. 새 브라우저 창·프로필·CDP 세션은 같은 계정처럼 보여도 대체물이 아니다.
+
+1. BrowserUse 스킬의 절차로 기존 사용자 탭을 열거하고, 정확히 일치하는 탭 descriptor를
+   `browser.user.claimTab()`에 전달한다. descriptor가 아니라 claim이 반환한 실제 tab 객체를 보관해 사용한다.
+2. 새 입력을 만들기 전에 그 탭의 현재 대화와 완료 응답·첨부 상태를 확인한다. 필요한 JSON/파일이 이미
+   응답이나 Library에 있으면 **같은 로그인 탭에서 그 기존 결과물을 다운로드해 현재 파이프라인에 전달**한다.
+   같은 결과를 얻으려고 새 창을 열거나, 이미 보낸 요청을 다시 전송하지 않는다.
+3. 진짜 새 대화가 필요한 경우에도 기존 로그인 탭 안에서만 연다. 새 대화는 새 브라우저 세션이 아니다.
+   사용자의 초안·진행 중 응답은 유지하고, 입력·첨부·전송 직전에 같은 tab ID를 재확인한다.
+4. 정확한 탭을 제어할 수 없거나 해당 탭에서 파일 회수가 실패하면, 확인된 오류와 마지막 상태를 기록하고
+   멈춘다. CDP/새 창/재로그인으로 우회하지 않는다.
+
+쉬운 예: 기존 ChatGPT 응답이나 Library에 JSON이 보이면 그 화면의 다운로드 동작을 같은 탭에서 수행하고,
+받은 파일을 준비된 E2R job에 연결한다. “새 세션에서 다시 생성”은 기본 복구 방법이 아니다.
+
+## 현재 인수인계 요약 (P63)
 
 - 로그인된 사용자 브라우저가 필요한 작업은 기존 BrowserUse `extension` 세션에서 한다. 이 규칙은 아래의
   과거 CDP 진단과 별개이며, CDP의 `C:\\ChromeDebug` 탭을 대체 세션으로 사용하지 않는다.
@@ -22,11 +40,13 @@
   파이프라인이 정확한 BrowserUse 탭을 제어하지 못하면 수동 별도 세션으로 전송하지 말고 해당 live 단계를 보류한다.
 - P62 중앙 SQLite read-only 조회에서 C15 R6는 `PACKET_READY`, state version 2, submit/capture 0/0,
   browser/conversation 미결박 상태다. 기존 job을 유지하며 새 successor를 만들지 않는다.
-- PR #7 head `f26b6f654b8f577790630afe7ee2900a0c0f1b2d`는 Draft/open/mergeable이다. 이 문서 전용
-  head의 Pro-first run `35902761257`, V6 run `35902761194`, push run `35902757082`는 모두 SUCCESS다.
-  이 checks는 뒤이어 수정된 adapter/test 로컬 diff를 포함하지 않으므로 해당 코드의 CI 통과로 세지 않는다.
+- 04:03 KST 상태 snapshot에서 PR #7 head `84e085b4922cde7abefe8fd47555ea0a0a325dcf`는 Draft/open/mergeable이었다.
+  당시 확인에서
+  해당 head의 Pro-first push/PR run과 V6 PR run은 진행 중이었다. Pro-first의 core-unit, browser-mock-e2e,
+  static-security는 성공했고 full-regression은 실행 중이었다. 완료 전에는 이 head의 전체 CI 성공으로
+  표현하지 않는다. 이전 f26 문서 전용 head의 성공 run은 아래 이력에만 해당한다.
 - master goal은 현재 active이며 완료가 아니다. live full-thesis PASS는 C06 1/3이다.
-  P62는 기존 세션 읽기 전용 확인과 인수인계 문서화를 수행했으며 live canary 전송은 하지 않았다.
+  P63은 사용자가 강조한 기존 로그인 탭 사용 규칙을 문서화했으며 브라우저 조작·live canary 전송은 하지 않았다.
 
 ## 절대 게이트 — 로그인된 BrowserUse 세션에 결박
 
@@ -160,6 +180,24 @@ CDP helper가 확인한 `C:\\ChromeDebug`의 페이지 목록에는 해당 ChatG
 기계 판독형 상세 기록은 [P62 영수증](p62_browseruse_existing_session_revalidation_receipt.json)이다.
 위 표면 상태는 그 시점의 관찰로만 유효하다. 이후 재개 때마다 현재 BrowserUse 탭을 다시 열거하고
 정확한 `claimTab()` 반환 객체에서 재확인한다.
+
+## P63 — 기존 로그인 탭에서 결과물 회수 후 파이프라인에 연결
+
+사용자는 로그인 세션이 필요한 BrowserUse 작업은 새 창을 열지 말고 이미 로그인된 기존 세션에서 하라고
+재강조했다. 이 단계의 순서는 **기존 탭 claim → 현재 응답/첨부 확인 → 기존 결과물 회수 → 준비된 job에
+연결**이다. JSON이나 응답이 이미 보이는 경우 새 세션에서 재생성하거나 같은 요청을 다시 보낼 이유가 없다.
+새 conversation이 실제로 필요할 때만 기존 로그인 탭 안에서 시작한다.
+
+이 규칙을 이번에 문서로 명확히 했을 뿐, P63에서는 BrowserUse/Chrome을 열거나 조작하지 않았다. 따라서
+P62의 UI 관찰(2026-09-24 03:48 KST)이 마지막 실제 관찰이며, 지금 로그인·탭 상태를 재확인한 것처럼
+취급하지 않는다. 입력·파일 다운로드·업로드·전송·source query/fetch는 이번 문서 작업에서 모두 0회다.
+
+04:03 KST GitHub 확인에서 PR #7은 head `84e085b4922cde7abefe8fd47555ea0a0a325dcf`, Draft/open/mergeable였다.
+Pro-first push run [35905532661](https://github.com/Daikisong/stock_agent/actions/runs/35905532661)과 PR run
+[35905539789](https://github.com/Daikisong/stock_agent/actions/runs/35905539789), V6 PR run
+[35905539730](https://github.com/Daikisong/stock_agent/actions/runs/35905539730)은 조회 시 진행 중이었다.
+push run의 core-unit, browser-mock-e2e, static-security job은 성공했고 full-regression은 진행 중이었다.
+나머지 run이 끝나기 전에는 현재 head의 전체 CI 성공으로 보고하지 않는다.
 
 ## 중단된 연구 인수인계
 

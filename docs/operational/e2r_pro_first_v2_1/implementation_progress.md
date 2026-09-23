@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-24 03:51 KST / P62: 기존 BrowserUse 탭 재검증, claim API 진단, 문서 head CI 확인`
+기준 시각: `2026-09-24 04:03 KST / P63: 기존 로그인 탭 우선 사용·기존 결과물 회수 절차 문서화`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -53,7 +53,7 @@ P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
 P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS, C15 R5 봉인·R6 PACKET_READY/전송 0, C28 새 실행 필요)
-P10 final CI/audit                        IN_PROGRESS (f26b6f6 PR/Pro-first/V6/push CI 모두 SUCCESS; P62 코드 diff 미검증; live 3/3 미충족)
+P10 final CI/audit                        IN_PROGRESS (84e085b push/PR Pro-first와 PR V6 실행 중; 일부 job PASS, full regression 미완료; live 3/3 미충족)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -69,7 +69,7 @@ P10 final CI/audit                        IN_PROGRESS (f26b6f6 PR/Pro-first/V6/p
 R5는 후속 결과를 회수하더라도 잘못된 과거 전송 이력 때문에 운영 합격으로 세지 않는다. 초기 자료와
 후속 capture는 진단 이력으로 보존하고 C15 운영 증명은 수정된 코드의 새 fresh 실행에서 받아야 한다.
 R5는 이제 durable freeze와 R6 successor 결박까지 기록됐으며, R6는 입력 파일만 준비한 상태다.
-아래 P0~P56은 당시의 이력이며, 최신 상태와 정정은 문서 끝 P57~P62 기록을 따른다.
+아래 P0~P56은 당시의 이력이며, 최신 상태와 정정은 문서 끝 P57~P63 기록을 따른다.
 
 ## P14 — 화면상 전송과 서버 저장 분리, C06 대화 폐기
 
@@ -5986,6 +5986,25 @@ P62 기준 PR #7 head `f26b6f654b8f577790630afe7ee2900a0c0f1b2d`는 Draft/open/m
 중계하는 bridge를 설계·검증한다. 먼저 read-only `url/title/locator/evaluate`와 tab identity handshake의
 수직 통합을 시험하고, 이어 filechooser/download event를 붙인다. Python worker가 exact claim tab에 붙기 전에는
 R6 packet 입력·첨부·submit을 하지 않는다. live PASS는 계속 C06 1/3이며 master goal은 `active`다.
+
+## P63 — 기존 로그인 탭에서 결과물 회수 후 파이프라인에 연결
+
+사용자는 로그인 세션이 필요한 BrowserUse 작업은 새 창을 열지 말고 이미 로그인된 기존 세션에서 하라고
+재강조했다. 이 단계의 운영 순서는 **기존 탭 claim → 현재 응답/첨부 확인 → 기존 결과물 회수 → 준비된 job에
+연결**이다. 응답이나 JSON이 이미 보이면 같은 탭에서 해당 결과물을 다운로드하고, 동일 요청을 새 창이나
+새 세션에서 다시 생성하지 않는다. 새 conversation이 실제로 필요한 경우도 기존 로그인 탭 안에서만 연다.
+초안과 생성 중 응답은 건드리지 않으며, download/input 직전에 정확한 탭을 재확인한다.
+
+P63은 문서 보강과 GitHub 상태의 read-only 재확인만 수행했다. 이번 단계에서 BrowserUse/Chrome을 열거나
+조작하지 않았으므로 마지막 실제 UI 관찰은 P62 (2026-09-24 03:48 KST)다. prompt 입력·파일 다운로드·업로드·
+전송·source query/fetch·점수 변경은 모두 0이며, C15 R6는 계속 `PACKET_READY`/submit 0 상태로 보존한다.
+
+04:03 KST 확인 시 PR #7은 `84e085b4922cde7abefe8fd47555ea0a0a325dcf`, Draft/open/mergeable이었다.
+Pro-first push run [35905532661](https://github.com/Daikisong/stock_agent/actions/runs/35905532661), PR run
+[35905539789](https://github.com/Daikisong/stock_agent/actions/runs/35905539789), V6 PR run
+[35905539730](https://github.com/Daikisong/stock_agent/actions/runs/35905539730)은 조회 시 진행 중이었다.
+push run의 core-unit, browser-mock-e2e, static-security는 성공했고 full-regression은 진행 중이었다.
+CI 종료 전에는 현재 head 전체가 성공했다고 쓰지 않는다. live full-thesis PASS는 여전히 C06 1/3이다.
 
 ## P61 — 로그인된 BrowserUse 세션 결박을 강제 게이트로 명문화
 
