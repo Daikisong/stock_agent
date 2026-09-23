@@ -6056,3 +6056,31 @@ E2R adapter/worker가 CDP 대체 창이 아니라 `browser.user.claimTab()`으�
 명시적으로 받아 준비·capture 경계에 연결하고, 전송 없이 이를 검증하는 통합 테스트를 추가한다. 이 연결이
 확인되기 전에는 packet-ready C15 R6도 새 successor 없이 보존하고, 실제 Pro prompt 입력·업로드·전송을
 하지 않는다. 이 기록은 문서화이며 브라우저 연결 복구나 live canary 성공이 아니다.
+
+## P64 — 기존 로그인 BrowserUse 탭 우선 원칙과 최신 인수인계
+
+사용자가 다시 명시한 운영 원칙은 로그인된 세션이 필요할 때 이미 열려 있는 **그 BrowserUse 세션·탭**을
+사용하라는 것이다. 별도 브라우저/프로필/CDP 창을 새로 열거나, 기존 탭을 확인하지 않고 다른 곳에서
+재로그인·재전송하는 것은 허용하지 않는다. 정확한 기존 탭을 확인·claim하지 못하면 도구의 실제 오류와
+마지막 확인 상태를 기록하고 그 단계에서 멈춘다. 새 conversation도 새 창이 아니라 같은 로그인 탭 안에서만
+연다. 이미 생성된 답이나 첨부가 있으면 재요청하지 않고 그 탭에서 회수한다.
+
+### 최신 실제 확인 범위
+
+- P64 문서 작업 전에 BrowserUse `extension` 연결과 사용자 외부 탭 열거를 수행했다. ChatGPT 외부 탭 하나를
+  찾고, `browser.user.claimTab()`이 돌려준 정확한 제어 객체를 사용했다. 다른 창·탭·프로필은 만들지 않았다.
+- 같은 탭에서 Library를 열고 `ResearchDossierV3_SKHynix_000660_asof_2026-08-23.json`, 이어서
+  `ResearchDossierV3`를 검색했지만 현재 Library 화면에는 일치 항목이 보이지 않았다. 이것은 그 화면의
+  검색 결과만 설명하며, 파일이 계정 전체·원 대화에 존재하지 않는다는 증명은 아니다. 파일 다운로드,
+  업로드, 새 prompt 입력, submit은 하지 않았다.
+- 같은 claimed 탭의 `cdp` capability 조회는 실제 오류 `Capability is not available: cdp`로 끝났다.
+  이는 그 capability가 이 탭에 제공되지 않았다는 기술적 결과다. 다른 Chrome/CDP 창으로 전환하지 않았다.
+- 화면에 보인 예전 C06 JSON은 현재 목표인 C15 R6 입력으로 재사용하지 않는다. 별도 보존 파일의 현재
+  파서 통과도 historical `PROVIDER_PENDING` 자료의 호환성 확인일 뿐, fresh canary나 완성된 분석이 아니다.
+- C15 R6는 마지막 중앙 상태 확인에서 기존 job `PACKET_READY`, submit/capture 0/0이었다. 이 문서화 단계에서
+  상태를 바꾸거나 새 query/fetch, 점수 변경을 하지 않았다. PR #7의 Draft/open 상태와 main 미병합 경계도
+  유지한다.
+
+인수인계 본문은 [BrowserUse 로그인 세션 지침](browseruse_existing_session_handoff.md) 상단에 같은 실행 규칙을
+추가해 최신화했다. 마지막으로 확인된 BrowserUse UI는 Library 검색 화면이며, 후속 작업 전에도 기존 탭을
+다시 열거·claim하고 현재 화면을 읽기 전용으로 재확인해야 한다. 기록에는 인증 정보나 탭 식별자를 남기지 않는다.
