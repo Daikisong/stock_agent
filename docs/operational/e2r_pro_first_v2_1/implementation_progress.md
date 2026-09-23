@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-24 02:51 KST / P60: 기존 BrowserUse 탭 재확인, 로그인 세션 원칙과 최신 상태 문서화`
+기준 시각: `2026-09-24 03:24 KST / P61: 로그인 BrowserUse 세션 결박 게이트 명시 및 진행 상태 갱신`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -51,7 +51,7 @@ P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
 P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS, C15 R5 봉인·R6 PACKET_READY/전송 0, C28 새 실행 필요)
-P10 final CI/audit                        IN_PROGRESS (P58 head PR/push/V6 CI 3개 SUCCESS; live 3/3 미충족; P60 문서 diff CI 미실행)
+P10 final CI/audit                        IN_PROGRESS (f9d2bb6 PR/push/V6 CI SUCCESS; P61 문서·로컬 코드 변경은 아직 원격 검증 전; live 3/3 미충족)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -67,7 +67,7 @@ P10 final CI/audit                        IN_PROGRESS (P58 head PR/push/V6 CI 3�
 R5는 후속 결과를 회수하더라도 잘못된 과거 전송 이력 때문에 운영 합격으로 세지 않는다. 초기 자료와
 후속 capture는 진단 이력으로 보존하고 C15 운영 증명은 수정된 코드의 새 fresh 실행에서 받아야 한다.
 R5는 이제 durable freeze와 R6 successor 결박까지 기록됐으며, R6는 입력 파일만 준비한 상태다.
-아래 P0~P56은 당시의 이력이며, 최신 상태와 정정은 문서 끝 P57~P60 기록을 따른다.
+아래 P0~P56은 당시의 이력이며, 최신 상태와 정정은 문서 끝 P57~P61 기록을 따른다.
 
 ## P14 — 화면상 전송과 서버 저장 분리, C06 대화 폐기
 
@@ -5937,3 +5937,54 @@ P58 코드 head `6db110ef546fd5918873b290f77632afc45053f7`의 PR Pro-first run
 
 이번 P60은 문서화와 읽기 전용 상태 확인만 완료했다. 연구 canary 완료, live PASS 추가, 전체 goal 완료,
 PR draft 해제 또는 병합으로 간주하지 않는다.
+
+## P61 — 로그인된 BrowserUse 세션 결박을 강제 게이트로 명문화
+
+사용자가 다시 강조한 기준은 명확하다. 로그인 세션을 써야 하는 작업이면 사용자가 이미 로그인한 그
+BrowserUse 세션에서 해야 한다. 새 Chrome/CDP 창을 띄우거나 다른 로그인 세션으로 전송하는 것은 대체
+경로가 아니다. 이를 [BrowserUse 인수인계 문서](browseruse_existing_session_handoff.md) 상단에 표 형식의
+강제 게이트로 정리했다. 핵심은 아래 네 단계다.
+
+```text
+BrowserUse extension 연결
+→ browser.user.openTabs()에서 기존 사용자 탭 찾기
+→ 반환된 정확한 탭 객체를 browser.user.claimTab(tab)으로 결박
+→ 같은 tab에서만 확인·입력·첨부·회수
+```
+
+탭을 찾지 못하거나 파이프라인의 별도 CDP worker가 같은 claim 탭을 제어하는지 증명할 수 없으면,
+오류와 확인 범위를 기록하고 중단한다. 새 창·재로그인·수동 대체 전송으로 우회하지 않는다. 새 대화가
+필요한 경우도 확인한 같은 로그인 탭 안에서만 시작하며, 사용자 초안과 진행 중 응답을 보존한다.
+
+### 이번 턴에서 실제로 한 일 / 하지 않은 일
+
+- 문서 수정과 읽기 전용 GitHub 상태 확인만 했다. BrowserUse/Chrome을 열거나 탭을 조작하지 않았다.
+- 마지막 실제 BrowserUse 관찰은 P60이며, 당시 `https://chatgpt.com/`, Chat 선택, Work 미선택, 모델 표시
+  `6 Pro`, 빈 composer였다. 이를 현재 브라우저의 재확인 결과로 표현하지 않는다.
+- prompt 입력 0, 파일 업로드 0, submit 0, 새 source query/fetch 0, 점수 변경 0이다.
+- PR #7은 head `f9d2bb63c78ffdb104492f9b09c23f0c897d2141`에서 Draft/open/mergeable이다. 읽기 전용
+  GitHub 확인에서 Pro-first run [35898919362](https://github.com/Daikisong/stock_agent/actions/runs/35898919362),
+  V6 run [35898919287](https://github.com/Daikisong/stock_agent/actions/runs/35898919287), push run
+  [35898912505](https://github.com/Daikisong/stock_agent/actions/runs/35898912505)은 모두 SUCCESS였다.
+  단, 현재 로컬 코드 diff와 P61 문서 수정은 이 head/checks에 포함되지 않는다.
+
+### 현재 로컬 코드 diff와 검증 한계
+
+기존 미커밋 코드 diff는 두 파일이다.
+
+- `chatgpt_adapter.py`: 선택 모델 UI의 `6 Pro` 같은 버전 포함 Pro 표기를 허용하되 `Upgrade to Pro`는
+  거부한다. 또 서로 다른 비어 있지 않은 composer 초안을 새 packet으로 덮어쓰지 않게 하고, 파일 다운로드
+  조작은 BrowserUse가 허용하는 사용자 노출 locator click을 사용한다.
+- `test_e2r_pro_first_browser_adapter.py`: 버전형 Pro 모델 라벨/업셀 문구와 사용자 초안 보존 회귀 테스트를 추가했다.
+
+순수 모델 라벨 테스트 2/2, `compileall`, `git diff --check`는 통과했다. 다만 전체 browser adapter
+테스트 모듈은 로컬 Playwright Chrome 시작 전에 `libnspr4.so`가 없어 중단됐다. 이는 통합 테스트 전체가
+실패했다고 확인한 것이 아니라 실행환경에서 browser launch가 안 된 것이다. f9d2bb6 CI는 이 로컬 diff를
+포함하지 않으므로 새 코드의 검증으로 세지 않는다.
+
+### 다음 단 하나의 기술 작업
+
+E2R adapter/worker가 CDP 대체 창이 아니라 `browser.user.claimTab()`으로 결박한 바로 그 BrowserUse 탭을
+명시적으로 받아 준비·capture 경계에 연결하고, 전송 없이 이를 검증하는 통합 테스트를 추가한다. 이 연결이
+확인되기 전에는 packet-ready C15 R6도 새 successor 없이 보존하고, 실제 Pro prompt 입력·업로드·전송을
+하지 않는다. 이 기록은 문서화이며 브라우저 연결 복구나 live canary 성공이 아니다.
