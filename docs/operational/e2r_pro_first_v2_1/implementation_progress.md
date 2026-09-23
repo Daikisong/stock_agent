@@ -6314,3 +6314,53 @@ P70은 문서·CI 상태를 정리한 단계이지 canary PASS 또는 master goa
 새 head CI가 green이어야만, 기존 BrowserUse `extension`의 동일 로그인 세션·claimed tab을 다시 읽기 전용 확인한 뒤
 승인된 C15 R6 작업을 이어간다. 기존 tab으로 연결하지 못하면 새 브라우저를 열지 말고 오류와 마지막 상태를 남긴다.
 P71 machine receipt: [p71_wsl_boundary_resume_receipt.json](p71_wsl_boundary_resume_receipt.json).
+
+## P72 — 기존 BrowserUse 탭 RPC 계약 결함과 미전송 C15 재개 게이트 (2026-09-24 08:40 KST)
+
+### 이번 단계의 경계
+
+- PR #7 branch의 P71 head `5f2b617e6d50c9ccb6d3c08e3574c7e9949f6546`에 연결된 Pro-first push/PR 및 V6 PR Actions
+  run `35930595172`, `35930598358`, `35930598323`을 다시 조회했고 모두 `SUCCESS`였다. 이는 P71 head 검증이다.
+- 사용자의 규칙대로 기존 BrowserUse `extension` 세션만 사용했다. 탭 열거 결과는 기존 ChatGPT 탭 하나였고, 그 객체를
+  동일하게 claim해 유지했다. 직전 읽기 전용 화면에서는 Chat 선택, 모델 label `6 Pro`, Work 미선택, 빈 composer를 확인했다.
+  새 브라우저/창/탭/프로필, 재로그인은 만들지 않았다.
+- 기존 `PROJOB-df15a37c58ae7583924e58c0`의 packet-ready DB 상태와 packet hash를 읽기 전용으로 확인한 뒤, 승인된 C15 R6
+  경로를 한 번 시작했다. `FRESH_PACKET_READY`까지만 진행되어 run `PRORUN-ff542ef979f09bcaf7cf2545`, pass
+  `PROPASS-a7654d1d80c9c041afb5777f`가 생성/재사용됐다. 오류는 ChatGPT UI preflight에서 발생해 packet upload 전에 멈췄다.
+- 실제 오류는 Python `BrowserUseLocator._id()`의
+  `TypeError: 'NoneType' object is not subscriptable`이다. Python `BrowserUseBridgeClient.call()`은 RPC 결과의 `value`를
+  반환하는데, JS bridge의 `locator.create`만 `{handle: ...}`를 top-level로 내보내고 있어 handle이 사라졌다.
+  수정은 JS 결과를 `{value: {handle: ...}}`로 통일하고 Python 쪽에서 누락 handle을 명시적 `BrowserUseBridgeError`로
+  fail-closed하는 것이다. 로그인/세션 인증 문제는 아니며 ChatGPT UI의 실제 Pro/Deep Research 선택을 바꾸지도 않았다.
+- `tab.dev.logs()`에서는 `2026-09-23T23:27:07Z`의 React hydration #418이 보였다. 같은 탭의 DOM을 읽기 전용으로 확인했을 때
+  composer는 비어 있고 packet 첨부는 없었다. BrowserUse에서 CDP capability는 `Capability is not available: cdp`였으므로,
+  다른 창을 열지 않고 page DOM 및 프로젝트 bridge traceback으로 원인을 확인했다.
+
+### 현재 durable 상태
+
+- 중앙 SQLite `mode=ro` 조회: 같은 job은 `USER_ATTENTION_REQUIRED`, state version 4이며 packet hash는 기존 값과 동일하다.
+  `browser_session_id=null`, `conversation_id=null`, `submit_count=0`, `capture_count=0`, approval 미발급/미소비다.
+- prompt 입력 0, packet upload 0, submit 0, capture 0, 새 query/fetch 0, score/Stage 변경 0. 기존 탭의 빈 composer/첨부 없음도
+  실패 직후 다시 읽기 전용으로 확인했다. 앞선 packet hash, runtime root, predecessor는 바꾸거나 새 successor를 만들지 않았다.
+- 재개 안전성을 위해 pre-submit 상태를 구별한다. 새 오류 이벤트는 오직 read-only browser preflight에서 실패한 경우에만
+  `safe_unprepared_resume=true`를 기록한다. 새 `--resume-unprepared-attention-job-id` 경로는 해당 이벤트, 동일 job/session/archetype,
+  submit/capture 0, browser/conversation/approval 미결박, prepare receipt 부재를 모두 요구한다. 역사적 현재 오류는 실제 traceback 및
+  post-failure empty UI로 확인된 구형 TypeError만 호환 허용한다. prepared draft는 별도 무변경 recovery로 유지한다.
+- full-thesis score/Stage 권한은 여전히 없다. 현재 오류는 canary 결과도 PASS도 아니다.
+
+### 수정 및 검증
+
+- BrowserUse JS/Python 응답 계약 회귀 테스트, 누락 handle fail-closed 테스트, 안전한 preflight-only job 재개/prepare receipt 거부
+  테스트를 추가했다.
+- `tests.test_e2r_pro_first_browseruse_extension_bridge` + `tests.test_e2r_pro_first_v2_1_fresh_orchestration`:
+  **90/90 PASS**. `compileall`, `node --check` 및 `git diff --check` PASS.
+- 이 수정 커밋의 full repository unittest 및 GitHub Actions는 아직 pending이다. P71의 위 SUCCESS 결과를 새 diff의 CI로
+  간주하지 않는다. PR #7은 Draft/open 상태로 유지하며 main에 병합하지 않는다.
+
+### 다음 한 단계
+
+수정·회귀 테스트·P72 인수인계를 같은 PR #7 branch에 한글 커밋으로 push하고, 새 exact-head full CI SUCCESS를 확인한다.
+그 뒤에도 같은 BrowserUse 로그인 세션의 같은 기존 탭만 사용하여, 현재 unsent job을 새 preflight-resume gate로 이어간다.
+새 창/재로그인/대체 탭을 열지 않고, 불확실한 submit 결과가 생기면 자동 재전송하지 않는다.
+상세 상태: [P72 receipt](p72_browseruse_rpc_preflight_recovery_receipt.json),
+[BrowserUse 인수인계 P72](browseruse_existing_session_handoff.md).

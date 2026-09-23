@@ -455,7 +455,7 @@ export async function startBrowserUseExtensionBridge({
   };
 
   const dispatch = async (operation, args) => {
-    if (operation === "locator.create") return { handle: makeLocator(args) };
+    if (operation === "locator.create") return { value: { handle: makeLocator(args) } };
     if (operation.startsWith("locator.")) {
       return { value: await callLocator({ ...args, method: operation.slice("locator.".length) }) };
     }

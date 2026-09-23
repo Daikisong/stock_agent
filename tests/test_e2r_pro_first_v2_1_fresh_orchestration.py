@@ -368,6 +368,136 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 job_id="PROJOB-WRONG-SUCCESSOR",
             )
 
+    def test_exact_unprepared_attention_job_can_resume_after_read_only_preflight_error(self) -> None:
+        current = self.store.get_job(self.fresh_job.job_id)
+        preparing = self.store.transition(
+            self.fresh_job.job_id,
+            expected_version=current.state_version,
+            to_status=JobStatus.BROWSER_PREPARING,
+            actor="v2.1-fresh-v3-browser-worker",
+            idempotency_key=f"test-browser-preparing:{self.fresh_job.job_id}",
+        )
+        attention = self.store.transition(
+            self.fresh_job.job_id,
+            expected_version=preparing.state_version,
+            to_status=JobStatus.USER_ATTENTION_REQUIRED,
+            actor="v2.1-fresh-v3-browser-worker",
+            idempotency_key=(
+                f"fresh-v3-browser-attention:{self.fresh_job.job_id}:"
+                f"{preparing.state_version}"
+            ),
+            payload={
+                "safe_unprepared_resume": True,
+                "preparation_failure_stage": "READ_ONLY_BROWSER_PREFLIGHT",
+                "submit_count": 0,
+            },
+            updates={
+                "last_error_class": "BrowserUseBridgeError",
+                "last_error_message": "read-only BrowserUse locator preflight failed",
+            },
+        )
+        self.assertEqual(attention.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+
+        base = load_pro_first_local_config(
+            Path(__file__).parents[1]
+            / "configs/e2r_pro_first_local.example.yaml"
+        )
+        runner = FreshV3InitialLiveCanaryRunner(
+            replace(base, runtime_root=self.boundary.fresh_runtime_root),
+            old_runtime_root=self.boundary.old_runtime_root,
+            fresh_runtime_root=self.boundary.fresh_runtime_root,
+            repo_root=self.root,
+            store=self.store,
+            source_verifier=object(),
+            report_structurer=object(),
+        )
+        spec = FreshInitialCanarySpec(
+            old_job_id=self.old_job.job_id,
+            old_run_id=OLD_RUN,
+            old_conversation_id=OLD_CONVERSATION,
+            fresh_session_id=self.boundary.fresh_session_id,
+            archetype_ids=(ARCHETYPE,),
+        )
+
+        boundary, resumed = runner._load_unprepared_attention_job(
+            FreshSessionBoundaryService(self.store),
+            spec=spec,
+            manifest=self.manifest,
+            job_id=self.fresh_job.job_id,
+        )
+        self.assertEqual(boundary.fresh_job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(resumed.submit_count, 0)
+        self.assertEqual(resumed.capture_count, 0)
+        self.assertIsNone(resumed.browser_session_id)
+        self.assertIsNone(resumed.conversation_id)
+        self.assertIsNone(resumed.approval_consumed_at)
+
+    def test_unprepared_attention_resume_rejects_jobs_with_prepared_receipt(self) -> None:
+        current = self.store.get_job(self.fresh_job.job_id)
+        preparing = self.store.transition(
+            self.fresh_job.job_id,
+            expected_version=current.state_version,
+            to_status=JobStatus.BROWSER_PREPARING,
+            actor="v2.1-fresh-v3-browser-worker",
+            idempotency_key=f"test-browser-preparing:{self.fresh_job.job_id}",
+        )
+        self.store.transition(
+            self.fresh_job.job_id,
+            expected_version=preparing.state_version,
+            to_status=JobStatus.USER_ATTENTION_REQUIRED,
+            actor="v2.1-fresh-v3-browser-worker",
+            idempotency_key=(
+                f"fresh-v3-browser-attention:{self.fresh_job.job_id}:"
+                f"{preparing.state_version}"
+            ),
+            payload={
+                "safe_unprepared_resume": True,
+                "preparation_failure_stage": "READ_ONLY_BROWSER_PREFLIGHT",
+                "submit_count": 0,
+            },
+            updates={
+                "last_error_class": "BrowserUseBridgeError",
+                "last_error_message": "preflight failed",
+            },
+        )
+        receipt_path = (
+            self.boundary.fresh_job_root
+            / "fresh_session/fresh_v3_prepare_receipt.json"
+        )
+        receipt_path.parent.mkdir(parents=True, exist_ok=True)
+        receipt_path.write_text("{}", encoding="utf-8")
+
+        base = load_pro_first_local_config(
+            Path(__file__).parents[1]
+            / "configs/e2r_pro_first_local.example.yaml"
+        )
+        runner = FreshV3InitialLiveCanaryRunner(
+            replace(base, runtime_root=self.boundary.fresh_runtime_root),
+            old_runtime_root=self.boundary.old_runtime_root,
+            fresh_runtime_root=self.boundary.fresh_runtime_root,
+            repo_root=self.root,
+            store=self.store,
+            source_verifier=object(),
+            report_structurer=object(),
+        )
+        spec = FreshInitialCanarySpec(
+            old_job_id=self.old_job.job_id,
+            old_run_id=OLD_RUN,
+            old_conversation_id=OLD_CONVERSATION,
+            fresh_session_id=self.boundary.fresh_session_id,
+            archetype_ids=(ARCHETYPE,),
+        )
+
+        with self.assertRaisesRegex(ValueError, "read-only preflight failure"):
+            runner._load_unprepared_attention_job(
+                FreshSessionBoundaryService(self.store),
+                spec=spec,
+                manifest=self.manifest,
+                job_id=self.fresh_job.job_id,
+            )
+
     def test_live_initial_transport_envelope_uses_complete_packet_contract(self) -> None:
         packet = self.built.packet_payload
         protocol = packet["initial_research_protocol"]

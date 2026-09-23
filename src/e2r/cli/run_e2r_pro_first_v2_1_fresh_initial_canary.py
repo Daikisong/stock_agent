@@ -67,6 +67,7 @@ async def _run(args: argparse.Namespace) -> Mapping[str, Any]:
         commit_sha=args.commit_sha,
         resume_prepared_job_id=args.resume_prepared_job_id,
         resume_packet_ready_job_id=args.resume_packet_ready_job_id,
+        resume_unprepared_attention_job_id=args.resume_unprepared_attention_job_id,
     )
 
 
@@ -119,6 +120,13 @@ def main(argv: list[str] | None = None) -> int:
         help=(
             "adopt one exact intact new-chat draft after preparation timed out; "
             "never uploads or fills the composer again"
+        ),
+    )
+    recovery.add_argument(
+        "--resume-unprepared-attention-job-id",
+        help=(
+            "resume one exact unsent USER_ATTENTION_REQUIRED job only when its "
+            "durable event proves the failure occurred during read-only browser preflight"
         ),
     )
     recovery.add_argument(

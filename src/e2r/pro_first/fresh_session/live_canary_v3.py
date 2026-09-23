@@ -219,10 +219,20 @@ class FreshV3InitialLiveCanaryRunner:
         commit_sha: str,
         resume_prepared_job_id: str | None = None,
         resume_packet_ready_job_id: str | None = None,
+        resume_unprepared_attention_job_id: str | None = None,
     ) -> Mapping[str, Any]:
         started = time.monotonic()
-        if resume_prepared_job_id and resume_packet_ready_job_id:
-            raise ValueError("choose only one prepared-job recovery mode")
+        recovery_modes = tuple(
+            value
+            for value in (
+                resume_prepared_job_id,
+                resume_packet_ready_job_id,
+                resume_unprepared_attention_job_id,
+            )
+            if value
+        )
+        if len(recovery_modes) > 1:
+            raise ValueError("choose only one fresh-job recovery mode")
         manifest = self._build_leakage_manifest(spec)
         boundary_service = FreshSessionBoundaryService(self.store)
         if resume_packet_ready_job_id is not None:
@@ -231,6 +241,13 @@ class FreshV3InitialLiveCanaryRunner:
                 spec=spec,
                 manifest=manifest,
                 job_id=resume_packet_ready_job_id,
+            )
+        elif resume_unprepared_attention_job_id is not None:
+            boundary, fresh_job = self._load_unprepared_attention_job(
+                boundary_service,
+                spec=spec,
+                manifest=manifest,
+                job_id=resume_unprepared_attention_job_id,
             )
         elif resume_prepared_job_id is None:
             boundary, fresh_job = self._start_boundary(
@@ -267,6 +284,14 @@ class FreshV3InitialLiveCanaryRunner:
             prompt_char_count=len(built.prompt.prompt_text),
             leakage_count=built.packet_leakage_audit.leakage_count,
         )
+        if resume_unprepared_attention_job_id is not None:
+            self._emit(
+                "FRESH_UNPREPARED_ATTENTION_RESUME",
+                job_id=fresh_job.job_id,
+                previous_error_class=fresh_job.last_error_class,
+                exact_existing_job_reused=True,
+                automatic_resubmit_allowed=False,
+            )
 
         runtime = (
             await orchestrator.recover_prepared_initial_in_logged_in_browser(
@@ -286,6 +311,9 @@ class FreshV3InitialLiveCanaryRunner:
                 submit_count=0,
                 upload_count=0 if resume_prepared_job_id else 1,
                 prepared_draft_recovered=resume_prepared_job_id is not None,
+                unprepared_attention_resumed=(
+                    resume_unprepared_attention_job_id is not None
+                ),
                 pro_mode_ready=runtime.prepared.prepared.deep_research_ready,
             )
             approval = ProApprovalService(self.store)
@@ -400,6 +428,91 @@ class FreshV3InitialLiveCanaryRunner:
         ):
             raise ValueError(
                 "packet-ready resume identity/state differs from the exact durable unsent job"
+            )
+        return boundary, job
+
+    def _load_unprepared_attention_job(
+        self,
+        boundary_service: FreshSessionBoundaryService,
+        *,
+        spec: FreshInitialCanarySpec,
+        manifest: OldAnswerLeakageManifest,
+        job_id: str,
+    ) -> tuple[Any, Any]:
+        """Resume only an exact no-send job whose preflight failure is safe.
+
+        The durable attention event must prove the failure happened in the
+        read-only browser preflight. A compatibility check admits the single
+        older TypeError shape from the pre-marker BrowserUse RPC envelope; all
+        prepared, approved, submitted, or captured states fail closed.
+        """
+
+        boundary, job = boundary_service.load_existing(
+            fresh_runtime_root=self.fresh_runtime_root,
+            leakage_manifest=manifest,
+        )
+        events = self.store.list_events(job_id)
+        attention_event_key = (
+            f"fresh-v3-browser-attention:{job_id}:{job.state_version - 1}"
+        )
+        attention_event = next(
+            (
+                event
+                for event in events
+                if event.idempotency_key == attention_event_key
+            ),
+            None,
+        )
+        safe_preflight_event = bool(
+            attention_event is not None
+            and attention_event.from_status == JobStatus.BROWSER_PREPARING.value
+            and attention_event.to_status == JobStatus.USER_ATTENTION_REQUIRED.value
+            and attention_event.actor == "v2.1-fresh-v3-browser-worker"
+            and attention_event.payload.get("safe_unprepared_resume") is True
+            and attention_event.payload.get("preparation_failure_stage")
+            == "READ_ONLY_BROWSER_PREFLIGHT"
+            and attention_event.payload.get("submit_count") == 0
+        )
+        legacy_preflight_error = bool(
+            job.last_error_class == "TypeError"
+            and job.last_error_message == "'NoneType' object is not subscriptable"
+        )
+        prepared_receipt = (
+            boundary.fresh_job_root
+            / "fresh_session/fresh_v3_prepare_receipt.json"
+        )
+        if (
+            job.job_id != job_id
+            or boundary.fresh_session_id != spec.fresh_session_id
+            or job.archetype_ids != spec.archetype_ids
+            or job.status != JobStatus.USER_ATTENTION_REQUIRED.value
+            or job.submit_count != 0
+            or job.capture_count != 0
+            or job.browser_session_id is not None
+            or job.conversation_id is not None
+            or not job.packet_hash
+            or any(
+                value is not None
+                for value in (
+                    job.approval_nonce_hash,
+                    job.approval_packet_hash,
+                    job.approval_prompt_hash,
+                    job.approval_browser_session_id,
+                    job.approval_expires_at,
+                    job.approval_consumed_at,
+                    job.approved_at,
+                )
+            )
+            or prepared_receipt.exists()
+            or not (safe_preflight_event or legacy_preflight_error)
+            or attention_event is None
+            or attention_event.from_status != JobStatus.BROWSER_PREPARING.value
+            or attention_event.to_status != JobStatus.USER_ATTENTION_REQUIRED.value
+            or attention_event.actor != "v2.1-fresh-v3-browser-worker"
+            or attention_event.payload.get("submit_count") != 0
+        ):
+            raise ValueError(
+                "unprepared attention resume requires the exact unsent job and a read-only preflight failure"
             )
         return boundary, job
 

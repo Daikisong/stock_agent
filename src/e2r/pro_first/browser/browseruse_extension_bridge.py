@@ -386,6 +386,10 @@ class BrowserUseLocator:
                     raise BrowserUseBridgeError("locator parent is not bound to BrowserUse")
                 create["parent_handle"] = await parent._id()
             result = await self._client.call("locator.create", **create)
+            if not isinstance(result, Mapping) or not str(result.get("handle") or ""):
+                raise BrowserUseBridgeError(
+                    "BrowserUse locator.create response did not include an opaque handle"
+                )
             self._handle = str(result["handle"])
         return self._handle
 

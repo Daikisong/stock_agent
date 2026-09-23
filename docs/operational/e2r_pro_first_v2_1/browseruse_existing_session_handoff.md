@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 07:45 KST (P71).
+최종 갱신: 2026-09-24 08:40 KST (P72).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
@@ -44,7 +44,26 @@ BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭�
 쉬운 예: 기존 ChatGPT 응답이나 Library에 JSON이 보이면 그 화면의 다운로드 동작을 같은 탭에서 수행하고,
 받은 파일을 준비된 E2R job에 연결한다. “새 세션에서 다시 생성”은 기본 복구 방법이 아니다.
 
-## 최신 상태 인수인계 (P71)
+## 최신 상태 인수인계 (P72)
+
+- 로그인 필요 작업은 사용자의 BrowserUse Chrome plugin `extension`이 연결한 **이미 로그인된 기존 세션과 정확히 claim한 기존 탭**에서만 한다.
+  이번 확인에서도 사용자 탭은 ChatGPT 하나였고, 기존 tab 객체를 유지했다. 탭 ID·계정·쿠키·인증값은 기록하지 않았다.
+  새 브라우저/창/탭/프로필/재로그인은 없었다.
+- P72 직전 읽기 전용 검사에서 일반 Chat 선택, 모델 label `6 Pro`, Work 미선택, 빈 composer를 확인했다. pipeline은 같은 탭의
+  ChatGPT origin에서 read-only login preflight에 도달했으나 bridge locator 응답 계약 오류로 멈췄다. 실제 prompt input/upload/submit/capture는
+  각각 0회이며, 실패 뒤 composer blank와 packet attachment 없음도 확인했다.
+- 정확한 blocker: JS `locator.create`는 top-level `{handle: ...}`를 반환했으나 Python `BrowserUseBridgeClient.call()`은 `value`만 반환했다.
+  이에 반환을 `{value: {handle: ...}}`로 통일하고, missing handle이면 명시적 bridge error로 멈추도록 수정했다. 이 문제는 로그인 인증이나
+  Pro/Deep Research 모드 선택 오류가 아니다. ChatGPT React hydration #418도 별도로 관찰됐으나, 현재 traceback상 locator RPC envelope가 직접 원인이다.
+- active C15 R6 `PROJOB-df15a37c58ae7583924e58c0`은 현재 `USER_ATTENTION_REQUIRED` / version 4이며 기존 packet hash를 유지한다.
+  중앙 DB read-only 확인상 browser/conversation 미결박, approval 미발급/미소비, submit/capture `0/0`이다. 기존 job이며 successor는 없다.
+- read-only preflight에서 실패한 attention job만 같은 job으로 재개하는 명시 게이트와 테스트를 추가했다. prepare receipt 존재, 승인/브라우저 결박,
+  submit/capture가 있으면 이 경로는 거부된다. P72 회귀 세트 90/90 PASS, Python compileall, Node syntax check, diff check PASS.
+  P72 code diff의 full repository unittest / Actions는 아직 pending이며, P71 head의 green CI는 새 diff를 증명하지 않는다.
+- 세부 사건 시각, exact error, 바뀐 파일, CI 상태, 다음 한 단계는 [P72 implementation progress](implementation_progress.md)와
+  [P72 receipt](p72_browseruse_rpc_preflight_recovery_receipt.json)에 있다. 이번 시도는 research answer/canary PASS가 아니며 score/Stage 권한을 만들지 않았다.
+
+## 이전 상태 인수인계 (P71, superseded)
 
 - 로그인 필요 작업은 사용자의 BrowserUse Chrome plugin `extension`이 연결한 **이미 로그인된 세션과 기존 작업 탭**에서만 한다.
   `browser.user.openTabs()`로 탭을 열거하고, 정확한 descriptor를 `browser.user.claimTab()`에 넘긴 뒤 반환된 Tab 객체 하나를 유지한다.

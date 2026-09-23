@@ -594,12 +594,15 @@ class FreshSessionOrchestratorV3:
                 "fresh initial preparation requires BROWSER_PREPARING, "
                 f"got {job.status}"
             )
+        safe_unprepared_resume = True
         try:
             inspection = await adapter.ensure_logged_in()
             if inspection.conversation_id is not None:
+                safe_unprepared_resume = False
                 raise FreshSessionBoundaryError(
                     "fresh initial preparation must start on the new-chat route"
                 )
+            safe_unprepared_resume = False
             prepared = await adapter.prepare_without_submit(
                 browser_session_id=browser_session_id,
                 packet_path=built.packet_bundle.research_packet_json,
@@ -612,7 +615,11 @@ class FreshSessionOrchestratorV3:
                     "fresh packet was prepared inside an existing conversation"
                 )
         except Exception as error:
-            self._record_browser_attention(built.job.job_id, error)
+            self._record_browser_attention(
+                built.job.job_id,
+                error,
+                safe_unprepared_resume=safe_unprepared_resume,
+            )
             raise
         job = self.store.record_browser_prepared(
             job.job_id,
@@ -1446,7 +1453,13 @@ class FreshSessionOrchestratorV3:
             )
         return job
 
-    def _record_browser_attention(self, job_id: str, error: Exception) -> None:
+    def _record_browser_attention(
+        self,
+        job_id: str,
+        error: Exception,
+        *,
+        safe_unprepared_resume: bool = False,
+    ) -> None:
         current = self.store.get_job(job_id)
         if current.status != JobStatus.BROWSER_PREPARING.value:
             return
@@ -1462,6 +1475,12 @@ class FreshSessionOrchestratorV3:
                 "automatic_login_allowed": False,
                 "automatic_resubmit_allowed": False,
                 "new_chat_route_required": True,
+                "safe_unprepared_resume": bool(safe_unprepared_resume),
+                "preparation_failure_stage": (
+                    "READ_ONLY_BROWSER_PREFLIGHT"
+                    if safe_unprepared_resume
+                    else "DRAFT_PREPARATION_OR_UNKNOWN"
+                ),
                 "submit_count": current.submit_count,
             },
             updates={

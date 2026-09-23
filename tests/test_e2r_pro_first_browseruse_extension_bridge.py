@@ -88,6 +88,48 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(calls[2][1]["parent_handle"], "handle-2")
         self.assertEqual(calls[3][1]["handle"], "handle-3")
 
+    async def test_locator_create_consumes_the_rpc_value_envelope(self) -> None:
+        client = BrowserUseBridgeClient(
+            endpoint="http://127.0.0.1:12345",
+            token="x" * 48,
+        )
+        client.session_id = "BROWSERUSE-test-session"
+        with patch.object(
+            client,
+            "_request",
+            new=AsyncMock(
+                return_value={
+                    "value": {"handle": "opaque-locator-handle"},
+                    "page_url": "https://chatgpt.com/",
+                }
+            ),
+        ):
+            locator = BrowserUsePage(client).locator('textarea[placeholder="ChatGPT"]')
+            self.assertEqual(await locator._id(), "opaque-locator-handle")
+
+        bridge_source = (
+            Path(__file__).parents[1]
+            / "src/e2r/pro_first/browser/browseruse_extension_bridge.mjs"
+        ).read_text(encoding="utf-8")
+        self.assertIn(
+            'if (operation === "locator.create") return { value: { handle: makeLocator(args) } };',
+            bridge_source,
+        )
+
+    async def test_locator_create_missing_handle_fails_with_bridge_error(self) -> None:
+        client = BrowserUseBridgeClient(
+            endpoint="http://127.0.0.1:12345",
+            token="x" * 48,
+        )
+        client.session_id = "BROWSERUSE-test-session"
+        client.call = AsyncMock(return_value=None)  # type: ignore[method-assign]
+
+        with self.assertRaisesRegex(
+            BrowserUseBridgeError,
+            "locator.create response did not include an opaque handle",
+        ):
+            await BrowserUsePage(client).locator("textarea").count()
+
 
 class BrowserUseWorkerIntegrationTest(unittest.IsolatedAsyncioTestCase):
     async def test_worker_uses_only_handed_off_exact_browseruse_session(self) -> None:
