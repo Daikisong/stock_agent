@@ -177,6 +177,16 @@ class PlaywrightChatGPTWebAdapter:
         editor = await first_visible(self.page, EDITOR_SELECTORS)
         if editor is None:
             raise BrowserUIIncompatible("ChatGPT prompt editor was not found")
+        existing_prompt = await editor_text(editor)
+        if existing_prompt.strip():
+            # A matching draft can be adopted without rewriting it; every
+            # other non-empty composer may belong to the user or another job.
+            # Never let a new packet silently replace that text.
+            if existing_prompt.rstrip() != prompt.rstrip():
+                raise BrowserUIIncompatible(
+                    "refusing to replace a non-empty ChatGPT composer"
+                )
+            return
         # Directly replacing ProseMirror children can make the public DOM look
         # correct while leaving ChatGPT's framework-owned editor state empty.
         # The send button then clears the composer without a durable user turn.
@@ -263,6 +273,14 @@ class PlaywrightChatGPTWebAdapter:
             raise BrowserUIIncompatible("prepared prompt hash differs from rendered prompt")
         await self.ensure_logged_in()
         await self.ensure_deep_research_mode()
+        editor = await first_visible(self.page, EDITOR_SELECTORS)
+        if editor is None:
+            raise BrowserUIIncompatible("ChatGPT prompt editor was not found")
+        existing_prompt = await editor_text(editor)
+        if existing_prompt.strip() and existing_prompt.rstrip() != prompt.rstrip():
+            raise BrowserUIIncompatible(
+                "refusing to prepare over a non-empty ChatGPT composer"
+            )
         uploaded_filename = await self._reuse_matching_uploaded_packet(
             path, packet_hash
         )
@@ -2201,11 +2219,10 @@ class PlaywrightChatGPTWebAdapter:
         if cdp_task is not None:
             tasks.add(cdp_task)
         try:
-            # ChatGPT renders this control inside a hover-only wrapper.  A
-            # coordinate click can make React replace the hovered node between
-            # hit-testing and dispatch, producing no request and no error.
-            # Dispatch the native click on the already exact, enabled control.
-            await control.evaluate("element => element.click()")
+            # Use the public locator click on the already exact, enabled
+            # user-visible control.  This is compatible with BrowserUse's
+            # read-only evaluate boundary and avoids a synthetic DOM mutation.
+            await control.click()
             done, _pending = await asyncio.wait(
                 tasks,
                 return_when=asyncio.FIRST_COMPLETED,
@@ -2640,9 +2657,20 @@ class PlaywrightChatGPTWebAdapter:
             # production readiness gate.  ``chat_active`` may be absent in the
             # current compact composer; when it exists, the Work exclusion
             # above makes the old two-tab UI equally strict.
-            if " ".join((await pro_active.inner_text()).split()) == "Pro":
+            if self._is_pro_model_label(await pro_active.inner_text()):
                 return True
         return False
+
+    @staticmethod
+    def _is_pro_model_label(value: str) -> bool:
+        """Accept the selected Pro model label, not an upsell mentioning Pro."""
+
+        label = " ".join(str(value or "").split())
+        return re.fullmatch(
+            r"(?:(?:gpt[- ]?)?\d+(?:\.\d+)?\s+)?pro",
+            label,
+            flags=re.IGNORECASE,
+        ) is not None
 
     async def _wait_for_send_ready(self) -> Any | None:
         # ChatGPT can show the uploaded filename before its attachment scan is

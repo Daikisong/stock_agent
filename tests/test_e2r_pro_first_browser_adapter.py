@@ -26,6 +26,22 @@ from e2r.pro_first.browser.worker import ProBrowserWorker
 from e2r.pro_first.ids import canonical_hash
 
 
+class ProReasoningModelLabelTest(unittest.TestCase):
+    def test_selected_versioned_pro_labels_are_accepted(self) -> None:
+        for label in ("Pro", "6 Pro", "GPT-6 Pro", "GPT 5.6 Pro"):
+            with self.subTest(label=label):
+                self.assertTrue(
+                    PlaywrightChatGPTWebAdapter._is_pro_model_label(label)
+                )
+
+    def test_pro_upsell_is_not_a_selected_model(self) -> None:
+        for label in ("Upgrade to Pro", "Try Pro", "Light", "Instant"):
+            with self.subTest(label=label):
+                self.assertFalse(
+                    PlaywrightChatGPTWebAdapter._is_pro_model_label(label)
+                )
+
+
 class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
     def setUp(self) -> None:
         self.temporary_directory = TemporaryDirectory()
@@ -79,6 +95,29 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         self.assertIn(
             "old_result.md",
             {row.button_text for row in prepared.preexisting_attachment_keys},
+        )
+
+    async def test_prepare_refuses_to_replace_an_existing_user_draft(self) -> None:
+        editor = self.page.locator('[contenteditable="true"]')
+        await editor.fill("사용자가 작성 중인 초안")
+
+        with self.assertRaisesRegex(
+            BrowserUIIncompatible, "refusing to prepare over a non-empty"
+        ):
+            await self.adapter.prepare_without_submit(
+                browser_session_id="BROWSER-session",
+                packet_path=self.packet_path,
+                packet_hash=self.packet_hash,
+                prompt=self.prompt,
+                prompt_hash=canonical_hash({"prompt": self.prompt}),
+            )
+
+        self.assertEqual(await editor.inner_text(), "사용자가 작성 중인 초안")
+        self.assertEqual(
+            await self.page.locator(
+                '#attachments button:has-text("research_packet.json")'
+            ).count(),
+            0,
         )
 
     async def test_prepare_waits_for_attachment_processing_without_submitting(self) -> None:
@@ -288,6 +327,37 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(inspection.deep_research_ready)
         self.assertEqual(await self.page.locator("#chat").get_attribute("data-state"), "on")
         self.assertEqual(await self.page.locator("#work").get_attribute("data-state"), "off")
+
+    async def test_versioned_pro_model_label_is_research_ready(self) -> None:
+        await self.page.set_content(
+            "<html><body>"
+            '<button id="chat" role="radio" data-state="on">Chat</button>'
+            '<button id="work" role="radio" data-state="off">Work</button>'
+            "<form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button id="reasoning" type="button" data-state="closed">6 Pro</button>'
+            '<button id="composer-submit-button" type="submit">Send</button>'
+            "</form></body></html>"
+        )
+
+        inspection = await self.adapter.ensure_deep_research_mode()
+
+        self.assertTrue(inspection.deep_research_ready)
+
+    async def test_pro_upsell_label_does_not_pass_as_selected_model(self) -> None:
+        await self.page.set_content(
+            "<html><body>"
+            '<button id="chat" role="radio" data-state="on">Chat</button>'
+            "<form>"
+            '<div id="prompt-textarea" class="ProseMirror" '
+            'contenteditable="true"></div>'
+            '<button id="reasoning" type="button">Upgrade to Pro</button>'
+            "</form></body></html>"
+        )
+
+        with self.assertRaisesRegex(BrowserUIIncompatible, "Pro mode is not active"):
+            await self.adapter.ensure_deep_research_mode()
 
     async def test_compact_composer_plus_pro_is_research_ready_without_old_tabs(self) -> None:
         await self.page.set_content(

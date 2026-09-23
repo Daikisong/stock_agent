@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-24 03:24 KST / P61: 로그인 BrowserUse 세션 결박 게이트 명시 및 진행 상태 갱신`
+기준 시각: `2026-09-24 03:51 KST / P62: 기존 BrowserUse 탭 재검증, claim API 진단, 문서 head CI 확인`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -37,6 +37,8 @@ PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지
 말고 연결 문제로 멈춰 확인한다. goal은 9월 8일 연결 문제로 `BLOCKED`였으나 9월 24일 사용자가 재개했다.
 사용자 외부 Chrome 탭은 `browser.user.openTabs()`로 찾는다. `browser.tabs.list()`는 agent 탭 목록이며
 비어 있을 수 있다. 정확한 외부 탭은 반환된 객체를 `browser.user.claimTab(tab)`에 넘겨 결박한다.
+`openTabs()`의 항목은 metadata descriptor일 수 있으므로 `.playwright` API를 직접 읽지 않는다.
+반드시 `claimed = await browser.user.claimTab(exactListedTab)`의 반환 객체를 저장해 그 객체를 쓴다.
 
 ## 현재 판정
 
@@ -51,7 +53,7 @@ P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
 P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS, C15 R5 봉인·R6 PACKET_READY/전송 0, C28 새 실행 필요)
-P10 final CI/audit                        IN_PROGRESS (f9d2bb6 PR/push/V6 CI SUCCESS; P61 문서·로컬 코드 변경은 아직 원격 검증 전; live 3/3 미충족)
+P10 final CI/audit                        IN_PROGRESS (f26b6f6 PR/Pro-first/V6/push CI 모두 SUCCESS; P62 코드 diff 미검증; live 3/3 미충족)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -61,13 +63,13 @@ P10 final CI/audit                        IN_PROGRESS (f9d2bb6 PR/push/V6 CI SUC
 초기 효율 검문을 통과했지만 후속 결과가 회수되지 않아 full-thesis PASS가 아니다. 9월 1일 실행의
 감시 프로세스는 이미 종료됐으며, DB의 `RESEARCH_RUNNING` 값만으로 현재 서버가 계산 중이라고
 주장하지 않는다. 9월 8일 처음 확인한 디버깅 연결(9222/9234)에는 ChatGPT page가 없었지만,
-사용자 지적 뒤 일반 Chrome의 기존 로그인 ChatGPT 탭을 실제 화면에서 찾았다. 따라서
-"열린 ChatGPT 탭이 없다"는 결론은 잘못된 연결 대상 확인이었다. 기존 탭 존재·로그인은 확인됐으나
-현재 세션의 Chrome BrowserUse 도구 연결과 안정적인 E2R 전용 탭 제어는 아직 별도 미충족이다.
+사용자 지적 뒤 기존 로그인 ChatGPT 탭을 실제 화면에서 찾았다. 따라서 "열린 ChatGPT 탭이 없다"는
+과거 결론은 잘못된 연결 대상 확인이었다. P62에서는 BrowserUse extension으로 그 기존 사용자 탭을 직접
+재열거·claim하고 읽기 전용 접근했다. 다만 안정적인 E2R Python pipeline의 exact-tab 제어는 아직 미구현이다.
 R5는 후속 결과를 회수하더라도 잘못된 과거 전송 이력 때문에 운영 합격으로 세지 않는다. 초기 자료와
 후속 capture는 진단 이력으로 보존하고 C15 운영 증명은 수정된 코드의 새 fresh 실행에서 받아야 한다.
 R5는 이제 durable freeze와 R6 successor 결박까지 기록됐으며, R6는 입력 파일만 준비한 상태다.
-아래 P0~P56은 당시의 이력이며, 최신 상태와 정정은 문서 끝 P57~P61 기록을 따른다.
+아래 P0~P56은 당시의 이력이며, 최신 상태와 정정은 문서 끝 P57~P62 기록을 따른다.
 
 ## P14 — 화면상 전송과 서버 저장 분리, C06 대화 폐기
 
@@ -5937,6 +5939,53 @@ P58 코드 head `6db110ef546fd5918873b290f77632afc45053f7`의 PR Pro-first run
 
 이번 P60은 문서화와 읽기 전용 상태 확인만 완료했다. 연구 canary 완료, live PASS 추가, 전체 goal 완료,
 PR draft 해제 또는 병합으로 간주하지 않는다.
+
+## P62 — 실제 BrowserUse claim 반환 객체 확인, Python worker 경계는 미해결
+
+### 실제 기존 로그인 세션에서 확인한 사실
+
+BrowserUse preflight exit 0, 실제 `mcp__node_repl__js` 도구 노출, `extension` runtime 초기화 후
+`browser.user.openTabs()`는 외부 사용자 탭 1개와 ChatGPT 후보 1개를 반환했다. 반환 descriptor를
+`browser.user.claimTab(exactListedTab)`에 넘기고, **그 반환값**을 page control로 사용했다.
+
+첫 읽기 코드는 claim 결과를 저장하지 않은 채 descriptor의 `.playwright.evaluate()`를 부르면서
+`Cannot read properties of undefined (reading 'evaluate')`를 받았다. 이건 로그인 세션이 끊겼거나
+Chrome 연결이 실패한 것이 아니라, BrowserUse API가 metadata descriptor와 제어 가능한 claim 반환 객체를
+분리한다는 점을 놓친 코드 사용 오류였다. 같은 exact tab ID의 claim 반환 객체를 사용하자 읽기 전용 확인이
+성공했다. 새 창/탭/프로필을 만들거나 CDP로 바꾸지 않았다.
+
+현재 시점 UI는 `https://chatgpt.com/`, 일반 Chat 선택, Work 미선택, model control `6 Pro`, composer 1개·빈
+입력, 응답 생성 중 아님이다. 계정명이나 composer 원문, 대화 본문은 수집하지 않았다. 이번 확인에서 prompt
+입력·파일 업로드·전송·source query/fetch·점수 변경은 모두 0이다. 상세 영수증은
+[`p62_browseruse_existing_session_revalidation_receipt.json`](p62_browseruse_existing_session_revalidation_receipt.json)이다.
+
+### C15 R6와 코드/CI 상태
+
+Windows 중앙 SQLite `mode=ro`에서 C15 R6 job `PROJOB-df15a37c58ae7583924e58c0` / symbol `010950`를 다시
+읽었다. 상태는 `PACKET_READY`, state version 2, submit/capture 0/0, browser/conversation 미결박이다.
+R6는 그대로 보존하며 successor나 재전송을 만들지 않았다.
+
+다만 Python `ProBrowserWorker`는 아직 별도 `CDP_ATTACH` endpoint에 연결되고, 같은 BrowserUse claim tab에
+결박되는 bridge가 없다. 따라서 실제 login tab과 `6 Pro`가 확인돼도 Python pipeline으로 보낼 수 있다는
+뜻은 아니다. 코드에서 확인 가능한 동일 tab binding과 non-submit 통합 검증이 생길 때까지 live send는 금지한다.
+
+현재 로컬 diff는 adapter와 회귀 테스트 두 파일이다. `6 Pro` 등 버전형 Pro label은 허용하고 upsell 문구를
+제외하며, 이미 다른 내용이 있는 composer를 packet prompt로 덮어쓰지 않는다. 다운로드 버튼은 synthetic
+DOM click 대신 visible locator click을 사용한다. 추가된 순수 라벨 테스트 2/2, compileall, whitespace check는
+통과했다. 전체 Playwright adapter 모듈은 이 WSL에서 Chrome이 `libnspr4.so` 부재로 시작하지 못해 테스트가
+시작되지 않았다. 현재 `f26b6f6` PR CI는 이 로컬 코드 diff를 포함하지 않는다.
+
+P62 기준 PR #7 head `f26b6f654b8f577790630afe7ee2900a0c0f1b2d`는 Draft/open/mergeable이다. Pro-first run
+`35902761257`, V6 `35902761194`, push run `35902757082`는 모두 `completed/success`로 재확인했다. 이는 P61
+문서 전용 commit의 검증이다. P62 로컬 adapter/test diff가 포함된 새 head는 아직 없으므로 그 코드의 CI로
+간주하지 않는다.
+
+### 다음 기술 단계
+
+정확히 claim한 BrowserUse page에서 Python `PlaywrightChatGPTWebAdapter`가 필요한 작업만 허용 목록으로
+중계하는 bridge를 설계·검증한다. 먼저 read-only `url/title/locator/evaluate`와 tab identity handshake의
+수직 통합을 시험하고, 이어 filechooser/download event를 붙인다. Python worker가 exact claim tab에 붙기 전에는
+R6 packet 입력·첨부·submit을 하지 않는다. live PASS는 계속 C06 1/3이며 master goal은 `active`다.
 
 ## P61 — 로그인된 BrowserUse 세션 결박을 강제 게이트로 명문화
 
