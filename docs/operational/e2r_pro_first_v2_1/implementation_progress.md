@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-24 KST / P58: R6 packet-ready 복구 경로 구현·검증, 기존 ChatGPT 탭 변동으로 전송 보류`
+기준 시각: `2026-09-24 02:51 KST / P60: 기존 BrowserUse 탭 재확인, 로그인 세션 원칙과 최신 상태 문서화`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -35,6 +35,8 @@ PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지
 사용자가 필요한 것은 BrowserUse가 연결된 로그인 세션과 그 기존 작업 탭이다. CDP로 연 새 Chrome이나
 다른 프로필은 같은 계정이어도 대체 세션으로 쓰지 않는다. BrowserUse가 탭을 보여주지 않으면 새 창을 열지
 말고 연결 문제로 멈춰 확인한다. goal은 9월 8일 연결 문제로 `BLOCKED`였으나 9월 24일 사용자가 재개했다.
+사용자 외부 Chrome 탭은 `browser.user.openTabs()`로 찾는다. `browser.tabs.list()`는 agent 탭 목록이며
+비어 있을 수 있다. 정확한 외부 탭은 반환된 객체를 `browser.user.claimTab(tab)`에 넘겨 결박한다.
 
 ## 현재 판정
 
@@ -49,7 +51,7 @@ P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
 P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS, C15 R5 봉인·R6 PACKET_READY/전송 0, C28 새 실행 필요)
-P10 final CI/audit                        IN_PROGRESS (P57 CI 3개 SUCCESS; P58 신규 CLI/복구 코드 원격 CI 대기, live 3/3 미충족)
+P10 final CI/audit                        IN_PROGRESS (P58 head PR/push/V6 CI 3개 SUCCESS; live 3/3 미충족; P60 문서 diff CI 미실행)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -65,7 +67,7 @@ P10 final CI/audit                        IN_PROGRESS (P57 CI 3개 SUCCESS; P58 
 R5는 후속 결과를 회수하더라도 잘못된 과거 전송 이력 때문에 운영 합격으로 세지 않는다. 초기 자료와
 후속 capture는 진단 이력으로 보존하고 C15 운영 증명은 수정된 코드의 새 fresh 실행에서 받아야 한다.
 R5는 이제 durable freeze와 R6 successor 결박까지 기록됐으며, R6는 입력 파일만 준비한 상태다.
-아래 P0~P56은 당시의 이력이며, 최신 상태와 정정은 문서 끝 P57/P58 기록을 따른다.
+아래 P0~P56은 당시의 이력이며, 최신 상태와 정정은 문서 끝 P57~P60 기록을 따른다.
 
 ## P14 — 화면상 전송과 서버 저장 분리, C06 대화 폐기
 
@@ -5807,7 +5809,8 @@ browser_session_id == null, conversation_id == null
 ### 기존 로그인 세션 확인 및 중단 경계
 
 이번 Codex 세션에는 `mcp__node_repl__js`가 실제 도구로 노출됐다. Windows BrowserUse 사전점검은
-exit 0, canonical extension runtime 초기화는 성공했지만 `browser.tabs.list()` 결과는 빈 목록이었다.
+exit 0, canonical extension runtime 초기화는 성공했다. `browser.tabs.list()` 및 `tabs.selected()`는
+비어 있었지만 이 API는 agent tab만 다룬다. 사용자 외부 탭은 `browser.user.openTabs()`로 확인해야 한다.
 사용자가 지정한 CDP helper는 이미 실행 중인 `C:\ChromeDebug` / `127.0.0.1:9222`를 확인한 뒤 그쪽에
 ChatGPT 작업 탭을 열었다. 새 프로세스나 창은 시작하지 않았지만, 이 CDP 탭이 사용자가 요청한
 BrowserUse extension 세션의 같은 Chrome instance/tab임은 입증하지 못했다. 따라서 이 경로 전환은
@@ -5832,3 +5835,105 @@ PR #7은 Draft/open이고 main 미병합이다.
 이 P58 기록을 작성한 시점에는 코드/문서 변경이 작업 브랜치 로컬 diff였고, 한글 commit·push와 새 head
 CI 검증은 아직 끝나지 않았다. 이후 결과는 이 기록을 덮어쓰지 않고 별도 후속 기록으로 남긴다.
 어느 경우에도 이 packet-ready 복구나 CI 통과를 live canary 진행률로 세지 않는다.
+
+## P59 — BrowserUse 외부 탭 회수와 E2R CDP worker 대상 불일치
+
+### 기존 로그인 탭 회수
+
+기준 시각 `2026-09-24 02:37 KST`에 BrowserUse `extension` 연결을 재검증했다. agent에는 Chrome
+extension 연결 2개가 보였고 현재 선택된 BrowserUse binding은 profile name `대규`인 ID 3이었다.
+BrowserUse 문서에서 현재 선택 binding을 확인한 뒤 그 binding을 그대로 유지했다. agent의
+`browser.tabs.list()`와 `browser.tabs.selected()`는 비어 있었지만, 사용자의 실제 외부 탭은
+`browser.user.openTabs()`가 2개 반환했고 그중 `chatgpt.com` 대화 탭 1개를 찾았다. 정확한 반환 tab
+객체를 `browser.user.claimTab()`으로 결박했다. 채팅 본문은 읽지 않았다.
+
+읽기 전용 UI 상태는 composer 존재·초안 없음·생성 중 제어 없음·현재 모델 선택 `Instant`였다. 이는
+기존 로그인 ChatGPT 탭이 열려 있음을 보였지만, E2R target 대화나 실제 Pro mode가 활성이라는 증거는
+아니다. 다른 ChatGPT conversation을 덮지 않도록 새 chat 전환도 아직 하지 않았다. 이번 확인에서
+prompt 입력 0, 파일 업로드 0, submit 0, source query/fetch 0이다.
+
+### CDP 대상 비교 및 worker 제약
+
+`bash ~/.codex/bin/codex-chrome -CheckOnly -Json`은 기존 Windows Chrome PID 26036,
+`C:\ChromeDebug`, `127.0.0.1:9222`, `Started=false`를 확인했다. WSL에서 같은 loopback을 직접
+조회한 시도는 `ConnectionRefusedError`였으며, Windows PowerShell에서 읽기 전용으로 조회한 결과는
+page 1개, ChatGPT target 0개, BrowserUse에서 반환된 ChatGPT title/URL exact match 0개였다.
+따라서 9222 응답이나 profile label만으로 BrowserUse tab과 같은 browser target이라고 간주할 수 없다.
+
+현 `ProBrowserWorker`는 이 CDP endpoint에 Playwright로 attach하고 `chatgpt.com` page를 찾는다.
+현재 endpoint에는 ChatGPT page가 없어 R6 `PACKET_READY` job을 이 worker로 실행하면 동일 사용자 탭에
+붙지 못한다. persistent/다른 profile을 열어 우회하지 않는다. BrowserUse 외부 탭을 같은 세션으로
+보존하면서 worker가 직접 제어할 수 있는 연결을 확보하거나, generic BrowserUse adapter 경로를 만들어야
+live 연구를 안전하게 시작할 수 있다.
+
+### 보존된 live/CI 상태
+
+R6는 중앙 SQLite read-only 재확인에서 여전히 `PACKET_READY`, `submit_count=0`, `capture_count=0`,
+`browser_session_id=null`, `conversation_id=null`이다. 전체 live full-thesis PASS 수는 계속 C06 1건이다.
+P58 head `6db110ef546fd5918873b290f77632afc45053f7`의 Pro-first run
+[35894796475](https://github.com/Daikisong/stock_agent/actions/runs/35894796475), push run
+[35894788859](https://github.com/Daikisong/stock_agent/actions/runs/35894788859), V6 run
+[35894796536](https://github.com/Daikisong/stock_agent/actions/runs/35894796536)은 이 기록 시점에
+모두 `in_progress`였다. Pro-first의 browser mock/core/static-security jobs는 PASS였고 두 full-regression
+jobs와 V6 offline-contract 전체 테스트는 계속 실행 중이었다.
+
+현재 BrowserUse/worker 제약은 P59 영수증
+[`p59_browseruse_external_tab_and_cdp_mismatch_receipt.json`](p59_browseruse_external_tab_and_cdp_mismatch_receipt.json)에
+있다. PR #7은 Draft/open, main 미병합이며 P59에서 live canary를 전송하지 않았다.
+
+<a id="p60"></a>
+
+## P60 — 기존 BrowserUse 세션 확인과 문서 인수인계
+
+### 이번에 확인한 범위
+
+사용자가 요청한 원칙을 작업 지침과 재개 문서에 더 직접적으로 적었다. 로그인 세션이 필요한 작업은
+사용자의 기존 BrowserUse `extension` 세션과 그 안에서 claim한 정확한 탭에서 해야 한다. agent 탭 목록이
+비었다는 이유로 사용자 탭이 없다고 결론 내리지 않는다. `browser.user.openTabs()`에서 반환된 탭 객체를
+`browser.user.claimTab(tab)`으로 고정하고, 같은 객체를 작업 끝까지 유지한다. 같은 계정/구독만으로
+CDP·다른 프로필이 같은 세션이라고 추정하지 않는다.
+
+실제 브라우저는 P59에 claim한 기존 BrowserUse tab 객체만 사용해 읽기 전용으로 다시 확인했다.
+새 브라우저·창·탭·프로필을 열지 않았고, 대화 본문도 읽지 않았다.
+
+```text
+tab URL/title             https://chatgpt.com/ / ChatGPT (기존 탭 안의 새 대화 화면)
+Chat / Work               Chat 선택 / Work 미선택
+composer                  1개 보임, 빈 입력
+model label               6 Pro
+generation-in-progress    false
+prompt / upload / submit  0 / 0 / 0
+```
+
+P60 확인은 사용자의 인증정보·쿠키·대화 본문을 읽거나 저장하지 않았다. 정확한 P60 탭/UI 확인 범위와
+전송 횟수는 [P60 기계 판독 영수증](p60_existing_browseruse_session_handoff_receipt.json)에 있다.
+
+### 파이프라인·R6·원격 검증 상태
+
+E2R `ProBrowserWorker`는 `C:\\ChromeDebug`의 별도 CDP endpoint에 붙는 구현이다. P59 비교에서 해당
+endpoint는 BrowserUse claim 탭과 동일하지 않았고 ChatGPT target도 없었다. P60에는 이 endpoint를 다시
+열거나 사용하지 않았다. 파이프라인이 정확한 BrowserUse page를 제어하지 못하면 다른 세션에서 수동으로
+보내지 말고 멈춘다. 다음 안전한 구현 단위는 기존 BrowserUse claim 탭을 명시적으로 받아 ledger의 동일
+job·한 번의 전송·capture 경계에 연결하는 adapter와 그 회귀 테스트다.
+
+중앙 SQLite `mode=ro`로 C15 R6를 재확인했다.
+
+```text
+job          PROJOB-df15a37c58ae7583924e58c0
+status       PACKET_READY / state_version 2
+submit/capture 0 / 0
+browser/conversation null / null
+```
+
+기존 R6는 그대로 보존한다. 새 successor·prompt·upload·submit·source query/fetch·점수 변경은 이번 작업에서
+없다. live full-thesis 통과는 C06 1/3이며 master goal은 현재 `active`, 미완료다.
+
+P58 코드 head `6db110ef546fd5918873b290f77632afc45053f7`의 PR Pro-first run
+[35894796475](https://github.com/Daikisong/stock_agent/actions/runs/35894796475), push run
+[35894788859](https://github.com/Daikisong/stock_agent/actions/runs/35894788859), V6 run
+[35894796536](https://github.com/Daikisong/stock_agent/actions/runs/35894796536)은 P60 재확인 시 모두
+`completed/success`였다. PR #7은 동일 SHA에서 Draft/open/mergeable이다. 이 세 성공 run은 P60 문서 diff
+포함 이전 head에 대한 결과이므로, 문서 commit·push 후에는 새 head의 checks를 다시 확인해야 한다.
+
+이번 P60은 문서화와 읽기 전용 상태 확인만 완료했다. 연구 canary 완료, live PASS 추가, 전체 goal 완료,
+PR draft 해제 또는 병합으로 간주하지 않는다.

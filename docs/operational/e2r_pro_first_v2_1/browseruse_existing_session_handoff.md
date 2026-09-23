@@ -1,8 +1,25 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 KST (P58).
+최종 갱신: 2026-09-24 02:51 KST (P60).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
+
+## 현재 인수인계 요약 (P60)
+
+- 로그인된 사용자 브라우저가 필요한 작업은 기존 BrowserUse `extension` 세션에서 한다. 이 규칙은 아래의
+  과거 CDP 진단과 별개이며, CDP의 `C:\\ChromeDebug` 탭을 대체 세션으로 사용하지 않는다.
+- P59에서 `browser.user.openTabs()`로 찾고 정확한 반환 객체를 `browser.user.claimTab()`한 ChatGPT 외부 탭의
+  동일 참조를 유지했다. P60의 읽기 전용 재확인에서 URL `https://chatgpt.com/`, 제목 `ChatGPT`, 일반 Chat
+  토글 `Chat=선택 / Work=미선택`, 모델 표시 `6 Pro`, composer 1개·빈 입력, 생성 중 제어 없음이 확인됐다.
+  채팅 본문은 읽지 않았다. 이번 P60 확인에서 prompt 입력·업로드·전송은 각각 0회다.
+- 별도 `ProBrowserWorker`가 붙는 CDP endpoint와 claim한 BrowserUse 탭이 같은 Chrome page라는 증거는 없다.
+  파이프라인이 정확한 BrowserUse 탭을 제어하지 못하면 수동 별도 세션으로 전송하지 말고 해당 live 단계를 보류한다.
+- C15 R6는 중앙 SQLite read-only 조회에서 `PACKET_READY`, state version 2, submit/capture 0/0,
+  browser/conversation 미결박 상태다. 기존 job을 유지하며 새 successor를 만들지 않는다.
+- PR #7은 `6db110ef546fd5918873b290f77632afc45053f7`에서 Draft/open/mergeable이다. 이 head의 PR,
+  push, V6 workflow run은 모두 SUCCESS다. P60 문서 diff는 아직 해당 CI에 포함되지 않았다.
+- master goal은 현재 active이며 완료가 아니다. live full-thesis PASS는 C06 1/3이다.
+  P60은 문서화·읽기 전용 확인만 수행했다.
 
 ## 최우선 원칙
 
@@ -16,7 +33,8 @@ fresh 연구가 승인돼 있으면 같은 로그인 세션의 기존 작업 탭
 
 ## Backend 선택 — BrowserUse 세션을 그대로 사용
 
-- 로그인된 기존 Chrome 세션이 필요한 요청이거나 사용자가 BrowserUse를 지정했으면 Chrome plugin의 `extension` 연결을 사용한다. 기존 탭 목록에서 대상 서비스·대화·로그인을 확인한 뒤 그 정확한 tab ID에서 작업한다.
+- 로그인된 기존 Chrome 세션이 필요한 요청이거나 사용자가 BrowserUse를 지정했으면 Chrome plugin의 `extension` 연결을 사용한다. 사용자 외부 탭은 `browser.user.openTabs()`에서 찾고, 정확히 일치하는 반환 객체를 `browser.user.claimTab(tab)`에 넘겨 결박한다.
+- `browser.tabs.list()`는 agent가 만든 탭을 열거한다. 이 목록이나 `tabs.selected()`가 비어 있어도 사용자의 Chrome 탭이 없다는 뜻이 아니므로, 외부 탭 확인에는 반드시 `browser.user.openTabs()`를 사용한다.
 - Codex가 새로 띄운 CDP Chrome, `C:\ChromeDebug`, 다른 디버깅 포트는 별도의 브라우저 backend다. 동일 계정이나 Pro 구독 표시가 보여도 사용자가 지정한 BrowserUse 로그인 세션과 같다는 증거가 되지 않는다.
 - BrowserUse 연결이 성공했는데 탭 목록이 비었거나 대상 탭이 보이지 않으면 “사용자가 로그아웃됨”으로 단정하지 않는다. 기존 세션을 보존한 채 연결 범위·오류만 진단하고, 새 창·새 탭·새 프로필·CDP 대체 화면을 열지 않는다.
 - 다른 backend는 동일 Chrome instance, 기존 세션, 대상 tab ID를 보존한다는 것을 실제로 확인할 수 있을 때만 허용한다. 그 확인이 안 되면 브라우저 작업을 보류하고 정확한 기술적 제한을 기록한다.
@@ -65,8 +83,8 @@ fresh 연구가 승인돼 있으면 같은 로그인 세션의 기존 작업 탭
 - 화면이 확인 사이에 다른 사이트/GPT로 바뀐 이유는 미확인이다. 사용자나 다른 자동화의 탓으로
   단정하지 않는다. 불안정한 대상에 연구 prompt를 입력하거나 전송하지 않았다.
 - P58에서 BrowserUse preflight와 extension runtime 초기화는 성공했으나 기존 탭 목록은 비어 있었다.
-  이는 BrowserUse가 현재 에이전트 세션에서 사용자의 로그인 탭을 노출하지 못했다는 뜻일 뿐, 로그인 세션이
-  없다는 뜻은 아니다.
+  이는 `browser.tabs.list()`/`tabs.selected()`의 agent-tab 결과만 확인한 것이며 사용자 외부 탭 목록을
+  조회한 것은 아니다. 이 결과만으로 BrowserUse 연결의 외부 사용자 탭 범위를 판단하면 안 된다.
 - 그 뒤 CDP의 `C:\ChromeDebug` 화면에 ChatGPT 탭을 열어 확인했으나, 그것이 BrowserUse가 지정한
   기존 로그인 탭과 같은 Chrome instance/session인지는 입증하지 못했다. 계정의 Pro 구독은 보였지만
   실제 Pro 모델 모드도 확인되지 않았다. 그러므로 이 CDP 탭은 다음 live 작업 대상으로 재사용하지 않는다.
@@ -77,13 +95,21 @@ fresh 연구가 승인돼 있으면 같은 로그인 세션의 기존 작업 탭
 다시 읽기 전용으로 확인해야 한다. BrowserUse 목록이 여전히 비면 대체 CDP 창으로 진행하지 않는다.
 과거 process ID, window handle, tab ID를 현재 대상이라고 가정하거나 하드코딩하지 않는다.
 
+P59에서 바로잡은 실제 외부 탭 확인과 CDP 대상 불일치는
+[P59 영수증](p59_browseruse_external_tab_and_cdp_mismatch_receipt.json) 및 진행 장부에 기록했다.
+P59 시점에는 기존 BrowserUse ChatGPT 탭을 찾고 결박했지만 E2R 대화가 아니었으며 모델 표시는 `Instant`였다.
+CDP helper가 확인한 `C:\\ChromeDebug`의 페이지 목록에는 해당 ChatGPT 탭이 없어 같은 세션으로
+간주할 수 없었다. 그 뒤 P60에서 같은 BrowserUse 탭 안에 새 대화 화면을 열고 `6 Pro` 모델 표시를
+확인했으며, 현재 상태와 전송 횟수는 위 P60 요약 및 새 P60 영수증을 따른다.
+
 ## 중단된 연구 인수인계
 
-- 전체 goal은 완료가 아니라 연결 문제로 `BLOCKED` 처리됐으며, 사용자가 나중에 진행하겠다고 했다.
-  이 문서 작성이나 CI 성공을 연구 재개 승인으로 해석하지 않는다.
+- 전체 goal은 9월 8일 연결 문제로 `BLOCKED` 처리됐으나 9월 24일 사용자가 재개했고 현재 상태는 `active`다.
+  아직 완료가 아니다. 이 문서 작성이나 CI 성공을 live 연구 완료로 해석하지 않는다.
 - 마지막 검증 기준 C15 R6는 `PACKET_READY`, 제출 0회다. 다음에 재개하면 준비된 같은 R6를 확인한다.
   job: `PROJOB-df15a37c58ae7583924e58c0`, run: `PRORUN-ff542ef979f09bcaf7cf2545`.
 - C15 R5의 과거 원본·전송 이력은 진단용으로 보존하며 재전송하지 않는다.
 - 상세 준비 이력과 검증 범위는 [진행 장부](implementation_progress.md)의 P57 및 9월 8일 보완 기록을 따른다.
-- 최신 P58의 packet-ready 복구와 BrowserUse/CDP 경계는 [P58 영수증](p58_packet_ready_resume_and_browser_boundary_receipt.json) 및 진행 장부 끝부분을 따른다.
+- P58 packet-ready 복구와 P59 BrowserUse 외부 탭/CDP 경계는 각 [P58 영수증](p58_packet_ready_resume_and_browser_boundary_receipt.json), [P59 영수증](p59_browseruse_external_tab_and_cdp_mismatch_receipt.json) 및 진행 장부 끝부분을 따른다.
+- 최신 외부 탭·일반 Chat/Pro 표시·PR/CI·R6 상태는 [P60 영수증](p60_existing_browseruse_session_handoff_receipt.json) 및 [P60 진행 장부](implementation_progress.md#p60)에 기록한다.
 - 이 지침은 문서 변경이다. 브라우저 연결 복구나 운영 코드의 자동 강제가 구현·검증됐다는 주장이 아니다.

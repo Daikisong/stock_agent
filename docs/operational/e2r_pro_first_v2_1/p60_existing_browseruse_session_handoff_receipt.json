@@ -1,0 +1,84 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p60_existing_browseruse_session_handoff_v1",
+  "recorded_at": "2026-09-24T02:51:20+09:00",
+  "scope": "documentation_and_read_only_state_check",
+  "browseruse": {
+    "backend": "Chrome plugin extension through persistent node_repl",
+    "existing_claimed_tab_reused": true,
+    "claim_origin": "The exact external-tab object returned by browser.user.openTabs() and claimed with browser.user.claimTab() in P59 remained in globalThis.taskTab.",
+    "url": "https://chatgpt.com/",
+    "title": "ChatGPT",
+    "chat_selected": true,
+    "work_selected": false,
+    "visible_model_label": "6 Pro",
+    "visible_composer_count": 1,
+    "composer_has_draft": false,
+    "generation_in_progress": false,
+    "chat_body_read": false,
+    "account_identifier_read": false,
+    "new_browser_window_tab_or_profile_created": false,
+    "prompt_input_count": 0,
+    "upload_count": 0,
+    "submit_count": 0
+  },
+  "pipeline_boundary": {
+    "pro_browser_worker_uses_separate_cdp_endpoint": true,
+    "last_verified_endpoint": "http://127.0.0.1:9222",
+    "last_verified_same_browseruse_target": false,
+    "last_verified_evidence_receipt": "p59_browseruse_external_tab_and_cdp_mismatch_receipt.json",
+    "cdp_endpoint_reopened_or_used_in_p60": false,
+    "manual_send_on_other_session": false
+  },
+  "c15_r6": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "status": "PACKET_READY",
+    "state_version": 2,
+    "submit_count": 0,
+    "capture_count": 0,
+    "browser_session_id": null,
+    "conversation_id": null,
+    "updated_at": "2026-09-07T21:21:14.716162Z",
+    "read_mode": "sqlite mode=ro"
+  },
+  "pull_request": {
+    "number": 7,
+    "url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "head_sha": "6db110ef546fd5918873b290f77632afc45053f7",
+    "state": "OPEN",
+    "draft": true,
+    "mergeable": true
+  },
+  "ci": [
+    {
+      "workflow": "PR Pro-first",
+      "run_id": "35894796475",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35894796475",
+      "head_sha": "6db110ef546fd5918873b290f77632afc45053f7",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "workflow": "push Pro-first",
+      "run_id": "35894788859",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35894788859",
+      "head_sha": "6db110ef546fd5918873b290f77632afc45053f7",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "workflow": "V6",
+      "run_id": "35894796536",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35894796536",
+      "head_sha": "6db110ef546fd5918873b290f77632afc45053f7",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "master_goal": {
+    "status": "active",
+    "live_full_thesis_pass_count": 1,
+    "required_live_full_thesis_pass_count": 3,
+    "complete": false
+  },
+  "next_step": "Implement and test a BrowserUse adapter that operates on the exact claimed extension tab while preserving the existing R6 job and single-submit/capture ledger boundary. Do not send from a different browser session."
+}
