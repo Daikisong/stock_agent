@@ -66,6 +66,7 @@ async def _run(args: argparse.Namespace) -> Mapping[str, Any]:
         spec,
         commit_sha=args.commit_sha,
         resume_prepared_job_id=args.resume_prepared_job_id,
+        resume_packet_ready_job_id=args.resume_packet_ready_job_id,
     )
 
 
@@ -106,6 +107,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--old-stage", action="append", default=[])
     parser.add_argument("--commit-sha", required=True)
     recovery = parser.add_mutually_exclusive_group()
+    recovery.add_argument(
+        "--resume-packet-ready-job-id",
+        help=(
+            "resume one exact existing PACKET_READY job with no browser session, "
+            "conversation, or submit; do not create another successor"
+        ),
+    )
     recovery.add_argument(
         "--resume-prepared-job-id",
         help=(

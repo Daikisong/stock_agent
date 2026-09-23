@@ -22,6 +22,7 @@ from e2r.pro_first.browser.protocol import (
 from e2r.pro_first.config import load_pro_first_local_config
 from e2r.pro_first.capture.receipt import CaptureReceipt, file_sha256
 from e2r.pro_first.fresh_session import (
+    FreshInitialCanarySpec,
     FreshV3InitialLiveCanaryRunner,
     FreshSessionBoundaryError,
     FreshSessionBoundaryService,
@@ -303,6 +304,66 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             self.store.get_job(self.old_job.job_id).superseded_by_fresh_job_id,
             self.fresh_job.job_id,
         )
+
+    def test_exact_packet_ready_job_can_resume_without_new_successor(self) -> None:
+        base = load_pro_first_local_config(
+            Path(__file__).parents[1]
+            / "configs/e2r_pro_first_local.example.yaml"
+        )
+        runner = FreshV3InitialLiveCanaryRunner(
+            replace(base, runtime_root=self.boundary.fresh_runtime_root),
+            old_runtime_root=self.boundary.old_runtime_root,
+            fresh_runtime_root=self.boundary.fresh_runtime_root,
+            repo_root=self.root,
+            store=self.store,
+            source_verifier=object(),
+            report_structurer=object(),
+        )
+        spec = FreshInitialCanarySpec(
+            old_job_id=self.old_job.job_id,
+            old_run_id=OLD_RUN,
+            old_conversation_id=OLD_CONVERSATION,
+            fresh_session_id=self.boundary.fresh_session_id,
+            archetype_ids=(ARCHETYPE,),
+        )
+
+        boundary, resumed = runner._load_packet_ready_job(
+            FreshSessionBoundaryService(self.store),
+            spec=spec,
+            manifest=self.manifest,
+            job_id=self.fresh_job.job_id,
+        )
+
+        self.assertEqual(boundary.fresh_job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.status, JobStatus.PACKET_READY.value)
+        self.assertEqual(resumed.submit_count, 0)
+        self.assertIsNone(resumed.browser_session_id)
+        self.assertIsNone(resumed.conversation_id)
+        rebuilt = FreshSessionOrchestratorV3(
+            self.store,
+            boundary,
+        ).build_initial_packet(
+            commit_sha="a" * 40,
+            config_hash="b" * 64,
+        )
+        self.assertEqual(
+            rebuilt.packet_bundle.packet_hash,
+            self.built.packet_bundle.packet_hash,
+        )
+        self.assertEqual(rebuilt.prompt.prompt_hash, self.built.prompt.prompt_hash)
+        self.assertEqual(rebuilt.initial_pass_id, self.built.initial_pass_id)
+        self.assertEqual(
+            self.store.get_job(self.old_job.job_id).superseded_by_fresh_job_id,
+            self.fresh_job.job_id,
+        )
+
+        with self.assertRaisesRegex(ValueError, "exact durable unsent job"):
+            runner._load_packet_ready_job(
+                FreshSessionBoundaryService(self.store),
+                spec=spec,
+                manifest=self.manifest,
+                job_id="PROJOB-WRONG-SUCCESSOR",
+            )
 
     def test_live_initial_transport_envelope_uses_complete_packet_contract(self) -> None:
         packet = self.built.packet_payload

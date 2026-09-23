@@ -218,11 +218,21 @@ class FreshV3InitialLiveCanaryRunner:
         *,
         commit_sha: str,
         resume_prepared_job_id: str | None = None,
+        resume_packet_ready_job_id: str | None = None,
     ) -> Mapping[str, Any]:
         started = time.monotonic()
+        if resume_prepared_job_id and resume_packet_ready_job_id:
+            raise ValueError("choose only one prepared-job recovery mode")
         manifest = self._build_leakage_manifest(spec)
         boundary_service = FreshSessionBoundaryService(self.store)
-        if resume_prepared_job_id is None:
+        if resume_packet_ready_job_id is not None:
+            boundary, fresh_job = self._load_packet_ready_job(
+                boundary_service,
+                spec=spec,
+                manifest=manifest,
+                job_id=resume_packet_ready_job_id,
+            )
+        elif resume_prepared_job_id is None:
             boundary, fresh_job = self._start_boundary(
                 boundary_service,
                 spec,
@@ -259,12 +269,12 @@ class FreshV3InitialLiveCanaryRunner:
         )
 
         runtime = (
-            await orchestrator.prepare_initial_in_logged_in_browser(
+            await orchestrator.recover_prepared_initial_in_logged_in_browser(
                 built,
                 config=self.config,
             )
-            if resume_prepared_job_id is None
-            else await orchestrator.recover_prepared_initial_in_logged_in_browser(
+            if resume_prepared_job_id is not None
+            else await orchestrator.prepare_initial_in_logged_in_browser(
                 built,
                 config=self.config,
             )
@@ -356,6 +366,42 @@ class FreshV3InitialLiveCanaryRunner:
             started=started,
             initial_research_seconds=initial_research_seconds,
         )
+
+    def _load_packet_ready_job(
+        self,
+        boundary_service: FreshSessionBoundaryService,
+        *,
+        spec: FreshCanarySpec,
+        manifest: OldAnswerLeakageManifest,
+        job_id: str,
+    ) -> tuple[Any, Any]:
+        """Resume one existing, unsent packet without creating a successor.
+
+        This recovery point is deliberately earlier than browser preparation:
+        only PACKET_READY with no browser session, conversation, or submission
+        can enter the normal initial preparation path. An uncertain browser
+        draft must use the separate no-mutation prepared-draft recovery path.
+        """
+
+        boundary, job = boundary_service.load_existing(
+            fresh_runtime_root=self.fresh_runtime_root,
+            leakage_manifest=manifest,
+        )
+        if (
+            job.job_id != job_id
+            or boundary.fresh_session_id != spec.fresh_session_id
+            or job.archetype_ids != spec.archetype_ids
+            or job.status != JobStatus.PACKET_READY.value
+            or job.submit_count != 0
+            or job.capture_count != 0
+            or job.browser_session_id is not None
+            or job.conversation_id is not None
+            or job.packet_hash is None
+        ):
+            raise ValueError(
+                "packet-ready resume identity/state differs from the exact durable unsent job"
+            )
+        return boundary, job
 
     async def resume_submitted(
         self,

@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-08 KST / P57: 기존 로그인 탭 확인, C15 R5 재전송 봉인·R6 입력만 준비(미전송)`
+기준 시각: `2026-09-24 KST / P58: R6 packet-ready 복구 경로 구현·검증, 기존 ChatGPT 탭 변동으로 전송 보류`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -31,6 +31,11 @@ P10 1eaa4260 C06 12차 검문 통과와 13차 근거를 기록
 
 PR #7은 계속 Draft/open이며 main 병합, draft 해제, auto-merge를 하지 않는다.
 
+브라우저 재개 전 필독: [로그인된 기존 세션 사용·인수인계 지침](browseruse_existing_session_handoff.md).
+사용자가 필요한 것은 BrowserUse가 연결된 로그인 세션과 그 기존 작업 탭이다. CDP로 연 새 Chrome이나
+다른 프로필은 같은 계정이어도 대체 세션으로 쓰지 않는다. BrowserUse가 탭을 보여주지 않으면 새 창을 열지
+말고 연결 문제로 멈춰 확인한다. goal은 9월 8일 연결 문제로 `BLOCKED`였으나 9월 24일 사용자가 재개했다.
+
 ## 현재 판정
 
 ```text
@@ -44,7 +49,7 @@ P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
 P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS, C15 R5 봉인·R6 PACKET_READY/전송 0, C28 새 실행 필요)
-P10 final CI/audit                        IN_PROGRESS (P56 전체 CI SUCCESS, P57은 문서·운영 준비 기록, live 3/3 미충족)
+P10 final CI/audit                        IN_PROGRESS (P57 CI 3개 SUCCESS; P58 신규 CLI/복구 코드 원격 CI 대기, live 3/3 미충족)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -60,7 +65,7 @@ P10 final CI/audit                        IN_PROGRESS (P56 전체 CI SUCCESS, P5
 R5는 후속 결과를 회수하더라도 잘못된 과거 전송 이력 때문에 운영 합격으로 세지 않는다. 초기 자료와
 후속 capture는 진단 이력으로 보존하고 C15 운영 증명은 수정된 코드의 새 fresh 실행에서 받아야 한다.
 R5는 이제 durable freeze와 R6 successor 결박까지 기록됐으며, R6는 입력 파일만 준비한 상태다.
-아래 P0~P56은 당시의 이력이며, 최신 상태와 정정은 문서 끝 P57을 따른다.
+아래 P0~P56은 당시의 이력이며, 최신 상태와 정정은 문서 끝 P57/P58 기록을 따른다.
 
 ## P14 — 화면상 전송과 서버 저장 분리, C06 대화 폐기
 
@@ -5730,3 +5735,100 @@ Python 구문과 `git diff --check`도 확인했다. 이것을 전체 테스트�
 남은 일은 안전하게 특정된 기존 Chat+Pro 탭에서 R6 초기 실행과 bounded tail을 완료하고,
 C28 fresh full-thesis를 완료한 뒤 master goal의 최종 검증을 받는 것이다.
 PR #7 Draft/open, main 미병합, 자동 재전송 금지를 유지한다.
+
+### 2026-09-08 보완 — 확정 CI와 기존 로그인 세션 사용 원칙
+
+P57 head `2b66103af8e14c50ccc322d5a858df303f4c8a4e`의 아래 원격 검증은 모두 SUCCESS로 종료됐다.
+이는 해당 커밋에 대한 확인 결과이며, 이후 문서 수정이나 실제 브라우저 연결 성공의 증명이 아니다.
+
+- [PR Pro-first run 34163095541](https://github.com/Daikisong/stock_agent/actions/runs/34163095541)
+- [push Pro-first run 34163093356](https://github.com/Daikisong/stock_agent/actions/runs/34163093356)
+- [V6 run 34163095613](https://github.com/Daikisong/stock_agent/actions/runs/34163095613)
+
+전체 unittest는 각 run에서 7,899개 실행, failure/error 0, 기존 skip 38이다. 실행 통과는 7,861개다.
+readiness 287/287, browser mock 92/92, A–H 자동 leaf 검증 8개 그룹/347개 PASS,
+production/V2/fresh static audit critical 0을 확인했다. V6 Gate 1 receipt 4/4 PASS는
+추적된 영수증의 일관성 검증이며 원시 사실의 전체 재계산이나 새 Pro 연구를 뜻하지 않는다.
+확정 결과는 [PR #7 최종 검증 댓글](https://github.com/Daikisong/stock_agent/pull/7#issuecomment-5575949382)에도 남겼다.
+
+이후 동일 도구 연결 실패가 세 번의 goal turn에 이어져 goal은 `BLOCKED`로 표시했고 자동 반복을
+멈췄다. 사용자는 나중에 진행하겠다고 했으며, 이번에는 기존 로그인 세션 사용 규칙의 문서화만 요청했다.
+실제 연구 완료는 마지막 확인 기준 C06 1/3이고 C15 R6는 미전송이다. CI 성공을 연구 완료로 세지 않는다.
+
+루트와 실제 작업 워크트리의 `AGENTS.md`에 기존 로그인 세션·탭 사용 규칙을 동일하게 추가했다.
+구체적인 확인 순서, 금지 우회, 확정 사실과 추정의 구분, R6 재개 대상은
+[BrowserUse 인수인계 지침](browseruse_existing_session_handoff.md)에 기록했다.
+BrowserUse 스킬의 Chrome plugin 우선 연결과 실제 연결 검증 원칙을 반영했으며,
+이번에는 브라우저 연결·입력·전송, 새 연구, 설정 변경을 하지 않았다. 문서화는 연결 복구가 아니다.
+
+## P58 — packet-ready C15 R6 재개 경로와 현재 브라우저 관찰
+
+### R6 상태 재검증
+
+기준 시각 `2026-09-24 02:10 KST`에 Windows 중앙 SQLite를 read-only로 다시 읽었다.
+
+```text
+job       PROJOB-df15a37c58ae7583924e58c0
+run       PRORUN-ff542ef979f09bcaf7cf2545
+session   FRESH-V2-1-C15-R6-20260907T212025Z
+status    PACKET_READY / state_version 2
+packet    fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df
+browser   null / conversation null
+submit    0 / capture 0 / initial pass rows 0
+```
+
+기존 successor의 패킷은 이미 준비됐지만, 초기 canary CLI에는 두 재개점만 있었다. 하나는
+새 successor 생성, 다른 하나는 브라우저에 이미 입력된 초안의 무변경 복구였다. `PACKET_READY`에서
+같은 job을 브라우저 준비 단계로 넘기는 경로는 없었다. 이 상태에서 일반 실행을 다시 부르면
+기존 R6 대신 새 successor를 만들 위험이 있어 실행하지 않았다.
+
+### 구현과 테스트
+
+`FreshV3InitialLiveCanaryRunner`와 초기 canary CLI에
+`--resume-packet-ready-job-id` 경로를 추가했다. 이 경로는 기존 boundary를 불러오고 아래 조건을
+모두 검사한다.
+
+```text
+정확한 fresh job/session/archetype 일치
+status == PACKET_READY
+submit_count == 0, capture_count == 0
+browser_session_id == null, conversation_id == null
+해시로 검증되는 저장 패킷 존재
+```
+
+그 뒤 저장된 패킷과 prompt를 다시 계산해 같은 hash·pass identity가 나오는지 확인하고, 신규 job을
+만들지 않고 정상 브라우저 준비 흐름으로 들어간다. 입력된 draft가 있는 경우는 이 경로에서 받지 않고
+기존의 `--resume-prepared-job-id` 무변경 복구만 사용한다.
+
+회귀 `test_exact_packet_ready_job_can_resume_without_new_successor`는 유효한 boundary와 저장 패킷을
+같은 hash로 재사용하고, wrong job ID를 거절하며 old→fresh successor 결박을 보존하는 것을 검사한다.
+새 테스트 단독 1/1 PASS, 전체 fresh orchestration 파일 76/76 PASS(18.239초)다.
+
+### 기존 로그인 세션 확인 및 중단 경계
+
+이번 Codex 세션에는 `mcp__node_repl__js`가 실제 도구로 노출됐다. Windows BrowserUse 사전점검은
+exit 0, canonical extension runtime 초기화는 성공했지만 `browser.tabs.list()` 결과는 빈 목록이었다.
+사용자가 지정한 CDP helper는 이미 실행 중인 `C:\ChromeDebug` / `127.0.0.1:9222`를 확인한 뒤 그쪽에
+ChatGPT 작업 탭을 열었다. 새 프로세스나 창은 시작하지 않았지만, 이 CDP 탭이 사용자가 요청한
+BrowserUse extension 세션의 같은 Chrome instance/tab임은 입증하지 못했다. 따라서 이 경로 전환은
+로그인된 BrowserUse 세션 사용으로 간주하지 않으며, 다음 live 작업에서 이 CDP 탭을 대체 대상으로
+재사용하지 않는다. 탭에서는 계정의 `대규 / Pro` 구독 표시와 일반 `Chat`을 봤지만 Pro **모델 모드**는
+확인하지 못했고 UI의 `매우 높음`도 Pro 모드의 증명이 아니다.
+
+이후 읽기 전용 확인 사이에 해당 작업 탭이 더 이상 ChatGPT 주소가 아니었고, 탭 목록에 무관한 금융
+주문 화면이 나타났다. 화면이 바뀐 원인은 확인하지 못했으며 사용자나 다른 자동화 탓으로 단정하지
+않는다. 그 화면은 건드리지 않고 모든 브라우저 입력을 중단했다. R6 prompt 입력 0, upload 0,
+submit 0이며 중앙 DB 재확인에서도 같은 PACKET_READY 상태다. 어떤 Pro 연구 응답도 받거나 전송하지
+않았다.
+
+기계 판독 상태와 현재 재개 지점은
+[`p58_packet_ready_resume_and_browser_boundary_receipt.json`](p58_packet_ready_resume_and_browser_boundary_receipt.json)에
+있다. 다음 live 단계는 BrowserUse `extension` 탭 목록에서 사용자의 기존 로그인 ChatGPT 작업 탭을
+실제로 찾고, 그 동일 tab ID에서 일반 Chat의 실제 `Pro` 모델 모드를 확인한 뒤에만 위 R6를 이어가는
+것이다. BrowserUse가 탭을 계속 보여주지 못하면 새 CDP 창·대체 ChatGPT 탭을 만들지 말고 연결 오류와
+확인 범위를 기록한 채 멈춘다. Pro 구독 글자나 `매우 높음`을 Pro 모드로 추정하지 않는다.
+PR #7은 Draft/open이고 main 미병합이다.
+
+이 P58 기록을 작성한 시점에는 코드/문서 변경이 작업 브랜치 로컬 diff였고, 한글 commit·push와 새 head
+CI 검증은 아직 끝나지 않았다. 이후 결과는 이 기록을 덮어쓰지 않고 별도 후속 기록으로 남긴다.
+어느 경우에도 이 packet-ready 복구나 CI 통과를 live canary 진행률로 세지 않는다.
