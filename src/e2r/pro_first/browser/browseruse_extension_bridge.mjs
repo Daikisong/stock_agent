@@ -1,0 +1,690 @@
+import crypto from "node:crypto";
+import fs from "node:fs";
+import http from "node:http";
+import net from "node:net";
+import os from "node:os";
+import path from "node:path";
+import { spawn } from "node:child_process";
+
+const MAX_REQUEST_BYTES = 64 * 1024 * 1024;
+const MAX_EVENT_ROWS = 2048;
+const CHATGPT_ORIGIN = "https://chatgpt.com";
+const PRIVATE_IPV4 = /^(10\.(?:\d{1,3}\.){2}\d{1,3}|172\.(?:1[6-9]|2\d|3[01])\.(?:\d{1,3}\.)\d{1,3}|192\.168\.(?:\d{1,3}\.)\d{1,3})$/;
+
+function assertPrivateBindHost(host) {
+  if (!net.isIP(host)) throw new Error("bridge bind host must be an IP address");
+  if (host === "127.0.0.1" || host === "::1") return;
+  if (net.isIPv4(host) && PRIVATE_IPV4.test(host) && host.split(".").every(part => Number(part) <= 255)) return;
+  throw new Error("bridge bind host must be loopback or RFC1918 private IPv4");
+}
+
+function safeOrigin(value) {
+  const parsed = new URL(String(value || ""));
+  if (parsed.origin !== CHATGPT_ORIGIN) {
+    throw new Error("claimed BrowserUse tab must remain on the official ChatGPT origin");
+  }
+  return parsed.origin;
+}
+
+async function tabUrl(tab) {
+  return String(typeof tab.url === "function" ? await tab.url() : tab.url || "");
+}
+
+async function tabTitle(tab) {
+  return String(typeof tab.title === "function" ? await tab.title() : tab.title || "");
+}
+
+function javascriptLiteral(value) {
+  if (value === undefined) return "undefined";
+  if (value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    return JSON.stringify(value);
+  }
+  if (value instanceof RegExp) {
+    return `new RegExp(${JSON.stringify(value.source)},${JSON.stringify(value.flags)})`;
+  }
+  if (Array.isArray(value)) return `[${value.map(javascriptLiteral).join(",")}]`;
+  if (typeof value === "object") {
+    return `{${Object.entries(value).map(([key, item]) => `${JSON.stringify(key)}:${javascriptLiteral(item)}`).join(",")}}`;
+  }
+  throw new Error("DOM inspection argument is not a plain JSON value");
+}
+
+function readonlyInvocation(expression, { receiver = null, argument = undefined } = {}) {
+  const source = String(expression || "").trim();
+  assertReadOnlyDomExpression(source);
+  const match = source.match(/^(?:async\s+)?(?:\(\s*[^)]*\)|([A-Za-z_$][\w$]*))\s*=>/);
+  if (!match) {
+    throw new Error("DOM bridge accepts only read-only arrow callbacks");
+  }
+  const parameters = source.slice(0, match[0].lastIndexOf("=>")).replace(/^async\s+/, "").trim();
+  const hasExplicitParameters = parameters !== "()";
+  const args = [];
+  if (receiver !== null) args.push(receiver);
+  if (argument !== undefined || hasExplicitParameters && receiver === null) args.push(javascriptLiteral(argument));
+  return `(${source})(${args.join(",")})`;
+}
+
+function jsonRegex(value) {
+  if (Array.isArray(value)) return value.map(jsonRegex);
+  if (!value || typeof value !== "object") return value;
+  if (typeof value.__e2r_regex__ === "string") {
+    return new RegExp(value.__e2r_regex__, String(value.flags || ""));
+  }
+  return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, jsonRegex(item)]));
+}
+
+function assertReadOnlyDomExpression(expression) {
+  const source = String(expression || "");
+  if (source.length > 100_000) throw new Error("DOM inspection expression exceeds the size bound");
+  const forbidden = /(?:\bfetch\s*\(|\bXMLHttpRequest\b|\bWebSocket\b|\bEventSource\b|\bWorker\b|\bindexedDB\b|\bcaches\b|\blocalStorage\b|\bsessionStorage\b|document\.cookie|\bchrome\.|window\.open\s*\(|location\.(?:assign|replace)\s*\(|history\.(?:pushState|replaceState)\s*\(|\.dispatchEvent\s*\(|\.setAttribute\s*\(|\.removeChild\s*\(|\.appendChild\s*\(|\.remove\s*\(|\.click\s*\(|\.submit\s*\(|requestSubmit\s*\(|\.focus\s*\(|\.blur\s*\(|\.innerHTML\s*=|\.textContent\s*=|\.value\s*=|\beval\s*\()/i;
+  if (forbidden.test(source)) {
+    throw new Error("DOM bridge permits read-only public-page inspection only");
+  }
+}
+
+function simplify(value) {
+  if (value === undefined) return null;
+  if (value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") return value;
+  if (Array.isArray(value)) return value.map(simplify);
+  if (typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, simplify(item)]));
+  }
+  return String(value);
+}
+
+function wslUncPath(value, distroName) {
+  const normalized = String(value || "");
+  if (/^[a-zA-Z]:\\/.test(normalized) || normalized.startsWith("\\\\")) return normalized;
+  if (!normalized.startsWith("/")) throw new Error("packet path must be an absolute WSL or Windows path");
+  if (os.platform() !== "win32") throw new Error("native file chooser bridge requires Windows BrowserUse runtime");
+  return `\\\\wsl.localhost\\${distroName}${normalized.replaceAll("/", "\\")}`;
+}
+
+function powerShellEncoded(script) {
+  return Buffer.from(script, "utf16le").toString("base64");
+}
+
+function runWsl(distroName, arguments_, input = "") {
+  return new Promise((resolve, reject) => {
+    const child = spawn("wsl.exe", ["-d", distroName, "--", ...arguments_], {
+      windowsHide: true,
+      stdio: ["pipe", "pipe", "pipe"],
+    });
+    let stdout = "";
+    let stderr = "";
+    child.stdout.setEncoding("utf8");
+    child.stderr.setEncoding("utf8");
+    child.stdout.on("data", data => { stdout = (stdout + data).slice(-3000); });
+    child.stderr.on("data", data => { stderr = (stderr + data).slice(-3000); });
+    child.once("error", reject);
+    child.once("close", code => {
+      if (code !== 0) {
+        reject(new Error(`WSL bridge handoff failed (exit=${code}; ${(stderr || stdout).replace(/[\r\n]+/g, " ").slice(0, 300)})`));
+      } else resolve(stdout.trim());
+    });
+    child.stdin.end(input);
+  });
+}
+
+async function persistPrivateHandoff({ distroName, linuxHome, jobId, sessionId, endpoint, token }) {
+  if (!/^[A-Za-z0-9_-]{1,96}$/.test(jobId)) throw new Error("unsafe BrowserUse bridge job identity");
+  if (!/^\/(?:home\/[A-Za-z0-9_.-]+|root)$/.test(linuxHome)) throw new Error("unsafe WSL handoff home path");
+  const directory = `${linuxHome}/.cache/e2r/browseruse`;
+  const file = `${directory}/${jobId}.json`;
+  const script = [
+    "set -eu",
+    "umask 077",
+    `mkdir -p '${directory}'`,
+    `chmod 700 '${directory}'`,
+    `test ! -e '${file}' || { echo "handoff already exists" >&2; exit 73; }`,
+    `cat > '${file}'`,
+    `chmod 600 '${file}'`,
+    `printf '%s' '${file}'`,
+  ].join("\n");
+  const handoff = JSON.stringify({ job_id: jobId, session_id: sessionId, endpoint, token });
+  return await runWsl(distroName, ["bash", "-lc", script], handoff);
+}
+
+async function removePrivateHandoff({ distroName, jobId, sessionId, linuxHome }) {
+  const file = `${linuxHome}/.cache/e2r/browseruse/${jobId}.json`;
+  const script = [
+    "set -eu",
+    `python3 -c 'import json,pathlib,sys; p=pathlib.Path(sys.argv[1]); d=json.loads(p.read_text()) if p.is_file() and not p.is_symlink() else {}; p.unlink() if d.get("session_id")==sys.argv[2] else None' '${file}' '${sessionId}'`,
+  ].join("\n");
+  await runWsl(distroName, ["bash", "-lc", script]);
+}
+
+async function resolveWslHome(distroName) {
+  const home = await runWsl(
+    distroName,
+    ["bash", "-lc", 'getent passwd "$(id -u)" | cut -d: -f6'],
+  );
+  if (!/^\/(?:home\/[A-Za-z0-9_.-]+|root)$/.test(home)) {
+    throw new Error("could not resolve a safe Linux user home for the BrowserUse handoff");
+  }
+  return home;
+}
+
+async function resolveWslGateway(distroName) {
+  const routes = await runWsl(distroName, ["bash", "-lc", "ip -o route show default"]);
+  const match = routes.match(/\bdefault\s+via\s+([0-9.]+)\b/);
+  if (!match) throw new Error("could not resolve the Windows private gateway from the active WSL route");
+  assertPrivateBindHost(match[1]);
+  return match[1];
+}
+
+function nativeFileDialogScript(targetPath) {
+  const targetB64 = Buffer.from(targetPath, "utf8").toString("base64");
+  return `
+$ErrorActionPreference = "Stop"
+Add-Type -AssemblyName UIAutomationClient
+Add-Type -AssemblyName UIAutomationTypes
+Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+public static class E2RWindowApi {
+  [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
+  [DllImport("user32.dll")] public static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
+  [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+}
+'@
+$targetPath = [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String("${targetB64}"))
+if (-not (Test-Path -LiteralPath $targetPath -PathType Leaf)) { throw "Selected packet is not visible to Windows" }
+$deadline = [DateTime]::UtcNow.AddSeconds(45)
+$matchedDialog = $false
+while ([DateTime]::UtcNow -lt $deadline) {
+  $handle = [E2RWindowApi]::GetForegroundWindow()
+  if ($handle -ne [IntPtr]::Zero) {
+    $dialog = [System.Windows.Automation.AutomationElement]::FromHandle($handle)
+    if ($null -ne $dialog) {
+      $title = [string]$dialog.Current.Name
+      if ($title -match "^(Open|Open File|열기|파일 열기)$") {
+        $owner = [E2RWindowApi]::GetWindow($handle, 4)
+        [uint32]$ownerPid = 0
+        [void][E2RWindowApi]::GetWindowThreadProcessId($owner, [ref]$ownerPid)
+        $ownerName = ""
+        if ($ownerPid -gt 0) { $ownerName = (Get-Process -Id $ownerPid -ErrorAction Stop).ProcessName }
+        if ($ownerName -ne "chrome") { throw "Foreground file chooser is not owned by the existing Chrome process" }
+        $matchedDialog = $true
+        $scope = [System.Windows.Automation.TreeScope]::Descendants
+        $editCondition = New-Object System.Windows.Automation.PropertyCondition(
+          [System.Windows.Automation.AutomationElement]::ControlTypeProperty,
+          [System.Windows.Automation.ControlType]::Edit
+        )
+        $edits = $dialog.FindAll($scope, $editCondition)
+        $fileEdit = $null
+        foreach ($edit in $edits) {
+          if ($edit.Current.AutomationId -eq "1001" -or $edit.Current.Name -match "File name|파일 이름") { $fileEdit = $edit; break }
+        }
+        if ($null -eq $fileEdit -and $edits.Count -eq 1) { $fileEdit = $edits.Item(0) }
+        $buttonCondition = New-Object System.Windows.Automation.PropertyCondition(
+          [System.Windows.Automation.AutomationElement]::ControlTypeProperty,
+          [System.Windows.Automation.ControlType]::Button
+        )
+        $buttons = $dialog.FindAll($scope, $buttonCondition)
+        $openButton = $null
+        $cancelButton = $null
+        foreach ($button in $buttons) {
+          if ($button.Current.Name -match "^(Open|열기)$") { $openButton = $button }
+          if ($button.Current.Name -match "^(Cancel|취소)$") { $cancelButton = $button }
+        }
+        if ($null -eq $fileEdit -or $null -eq $openButton) {
+          if ($null -ne $cancelButton) {
+            $cancelPattern = $cancelButton.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern)
+            $cancelPattern.Invoke()
+          }
+          throw "Chrome file chooser controls did not match the expected Open dialog"
+        }
+        $valuePattern = $fileEdit.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern)
+        $valuePattern.SetValue($targetPath)
+        $openPattern = $openButton.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern)
+        $openPattern.Invoke()
+        Write-Output "E2R_FILE_CHOOSER_SELECTED"
+        exit 0
+      }
+    }
+  }
+  Start-Sleep -Milliseconds 100
+}
+if ($matchedDialog) { throw "Chrome file chooser timed out before selecting the packet" }
+throw "No Chrome-owned Open dialog appeared; no global keystrokes were sent"
+`;
+}
+
+function validatePacketPathForWindowsChooser({ pathValue, distroName }) {
+  const targetPath = wslUncPath(pathValue, distroName);
+  let stat;
+  try {
+    stat = fs.statSync(targetPath);
+  } catch {
+    throw new Error("packet file is not readable from the Windows file chooser");
+  }
+  if (!stat.isFile() || stat.size < 1 || stat.size > 32 * 1024 * 1024) {
+    throw new Error("packet file must be a nonempty regular JSON file under 32 MiB");
+  }
+  if (path.extname(targetPath).toLowerCase() !== ".json") {
+    throw new Error("BrowserUse packet attachment must be a JSON file");
+  }
+  return targetPath;
+}
+
+async function selectThroughVisibleWindowsDialog({ targetPath, distroName }) {
+  const encoded = powerShellEncoded(nativeFileDialogScript(targetPath));
+  const child = spawn(
+    "powershell.exe",
+    ["-NoLogo", "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-EncodedCommand", encoded],
+    { windowsHide: true, stdio: ["ignore", "pipe", "pipe"] },
+  );
+  let stdout = "";
+  let stderr = "";
+  child.stdout.setEncoding("utf8");
+  child.stderr.setEncoding("utf8");
+  child.stdout.on("data", data => { stdout = (stdout + data).slice(-2000); });
+  child.stderr.on("data", data => { stderr = (stderr + data).slice(-2000); });
+  const exitCode = new Promise((resolve, reject) => {
+    child.once("error", reject);
+    child.once("close", code => resolve(code));
+  });
+  return {
+    targetPath,
+    child,
+    completion: exitCode.then(code => {
+      if (code !== 0 || !stdout.includes("E2R_FILE_CHOOSER_SELECTED")) {
+        const detail = (stderr || stdout).replace(/[\r\n]+/g, " ").slice(0, 350);
+        throw new Error(`existing Chrome file chooser did not select the packet (exit=${code}; ${detail})`);
+      }
+      return true;
+    }),
+  };
+}
+
+export async function startBrowserUseExtensionBridge({
+  tab,
+  jobId,
+  host = "",
+  port = 0,
+  distroName = "Ubuntu-22.04",
+}) {
+  if (!tab || !tab.playwright || !tab.id) throw new Error("an exact claimed BrowserUse tab is required");
+  if (!String(jobId || "").trim()) throw new Error("bridge job identity is required");
+  const bindHost = String(host || await resolveWslGateway(distroName));
+  assertPrivateBindHost(bindHost);
+  safeOrigin(await tabUrl(tab));
+  if (!Number.isInteger(port) || port < 0 || port > 65_535) throw new Error("invalid BrowserUse bridge port");
+
+  const token = crypto.randomBytes(32).toString("base64url");
+  const sessionId = "BROWSERUSE-" + crypto.createHash("sha256")
+    .update(`${token}\n${jobId}\n${tab.id}`)
+    .digest("hex")
+    .slice(0, 32);
+  const linuxHome = await resolveWslHome(distroName);
+  const locators = new Map();
+  const downloads = new Map();
+  const events = new Map();
+  const requestQueue = [];
+  let queueWake = null;
+  let eventSequence = 0;
+  let closed = false;
+  let activeDownloadWaiter = null;
+
+  const enqueueRequest = request => new Promise(resolve => {
+    requestQueue.push({ request, resolve });
+    if (queueWake) {
+      const wake = queueWake;
+      queueWake = null;
+      wake();
+    }
+  });
+
+  const nextRequest = async () => {
+    if (requestQueue.length) return requestQueue.shift();
+    return await new Promise(resolve => {
+      queueWake = () => {
+        queueWake = null;
+        resolve(requestQueue.shift() || null);
+      };
+    });
+  };
+
+  const publishDownload = async download => {
+    const handle = crypto.randomUUID();
+    const filenameValue = download?.suggestedFilename;
+    const filename = typeof filenameValue === "function"
+      ? await filenameValue.call(download)
+      : filenameValue;
+    downloads.set(handle, download);
+    const row = {
+      sequence: ++eventSequence,
+      event_name: "download",
+      handle,
+      suggested_filename: String(filename || ""),
+    };
+    events.set(row.sequence, row);
+    while (events.size > MAX_EVENT_ROWS) {
+      const oldest = Math.min(...events.keys());
+      const expired = events.get(oldest);
+      if (expired) downloads.delete(expired.handle);
+      events.delete(oldest);
+    }
+    if (activeDownloadWaiter) {
+      activeDownloadWaiter.row = row;
+      activeDownloadWaiter.done = true;
+    }
+    return row;
+  };
+
+  const findHandle = (map, handle, kind) => {
+    const value = map.get(String(handle || ""));
+    if (!value) throw new Error(`${kind} handle is no longer available`);
+    return value;
+  };
+
+  const makeLocator = args => {
+    const { parent_handle: parentHandle, method, selector, value, options = {}, index } = args;
+    const base = parentHandle ? findHandle(locators, parentHandle, "locator") : null;
+    let locator;
+    if (!method) {
+      if (base) throw new Error("root locator cannot have a parent");
+      if (typeof selector !== "string" || selector.length > 4_000) throw new Error("invalid visible locator selector");
+      locator = tab.playwright.locator(selector);
+    } else if (method === "first") locator = base.first;
+    else if (method === "last") locator = base.last;
+    else if (method === "nth") locator = base.nth(Number(index));
+    else if (method === "locator") locator = base.locator(String(selector), jsonRegex(options));
+    else if (method === "get_by_role") locator = base.getByRole(String(value), jsonRegex(options));
+    else if (method === "get_by_label") locator = (base || tab.playwright).getByLabel(jsonRegex(value), jsonRegex(options));
+    else if (method === "get_by_text") locator = (base || tab.playwright).getByText(jsonRegex(value), jsonRegex(options));
+    else if (method === "filter") {
+      const converted = jsonRegex(options);
+      if (Object.hasOwn(converted, "has_text")) {
+        converted.hasText = converted.has_text;
+        delete converted.has_text;
+      }
+      locator = base.filter(converted);
+    } else throw new Error(`unsupported BrowserUse locator constructor: ${method}`);
+    const handle = crypto.randomUUID();
+    locators.set(handle, locator);
+    return handle;
+  };
+
+  const callLocator = async ({ handle, method, ...args }) => {
+    const locator = findHandle(locators, handle, "locator");
+    const options = jsonRegex(args.options || {});
+    if (method === "count") return await locator.count();
+    if (method === "is_visible") return await locator.isVisible(options);
+    if (method === "is_enabled") return await locator.isEnabled(options);
+    if (method === "inner_text") return await locator.innerText(options);
+    if (method === "text_content") return await locator.textContent(options);
+    if (method === "get_attribute") return await locator.getAttribute(String(args.name), options);
+    if (method === "input_value") return await locator.evaluate("element.value ?? ''", null);
+    if (method === "fill") return await locator.fill(String(args.value), options);
+    if (method === "click") return await locator.click(options);
+    if (method === "press") return await locator.press(String(args.key), options);
+    if (method === "wait_for") return await locator.waitFor({ state: String(args.state || "visible"), ...options });
+    if (method === "evaluate" || method === "evaluate_all") {
+      const expression = String(args.expression || "");
+      assertReadOnlyDomExpression(expression);
+      const receiver = method === "evaluate" ? "element" : "elements";
+      return simplify(await locator[method === "evaluate" ? "evaluate" : "evaluateAll"](
+        readonlyInvocation(expression, { receiver, argument: jsonRegex(args.argument) }),
+      ));
+    }
+    throw new Error(`unsupported BrowserUse locator method: ${method}`);
+  };
+
+  const attachPacket = async ({ filePath, attachSelectors }) => {
+    let attach = null;
+    for (const selector of attachSelectors || []) {
+      const candidate = tab.playwright.locator(String(selector)).first;
+      if (await candidate.count() && await candidate.isVisible() && await candidate.isEnabled()) {
+        attach = candidate;
+        break;
+      }
+    }
+    if (!attach) throw new Error("visible attachment button was not found in the claimed ChatGPT tab");
+    const targetPath = validatePacketPathForWindowsChooser({ pathValue: filePath, distroName });
+    await attach.click();
+    const dialog = await selectThroughVisibleWindowsDialog({ targetPath, distroName });
+    try {
+      await dialog.completion;
+      return { selected: true, filename: path.basename(dialog.targetPath) };
+    } catch (error) {
+      try { dialog.child.kill(); } catch {}
+      throw error;
+    }
+  };
+
+  const dispatch = async (operation, args) => {
+    if (operation === "locator.create") return { handle: makeLocator(args) };
+    if (operation.startsWith("locator.")) {
+      return { value: await callLocator({ ...args, method: operation.slice("locator.".length) }) };
+    }
+    if (operation === "page.goto") {
+      const requested = new URL(String(args.url || ""));
+      if (requested.origin !== CHATGPT_ORIGIN) throw new Error("navigation outside ChatGPT is forbidden");
+      await tab.goto(requested.href, args.options || {});
+      return { value: null };
+    }
+    if (operation === "page.reload") {
+      await tab.reload(args.options || {});
+      return { value: null };
+    }
+    if (operation === "page.wait_for_timeout") {
+      const ms = Math.max(0, Math.min(120_000, Number(args.milliseconds) || 0));
+      await tab.playwright.waitForTimeout(ms);
+      return { value: null };
+    }
+    if (operation === "page.wait_for_load_state") {
+      await tab.playwright.waitForLoadState(String(args.state || "load"), args.options || {});
+      return { value: null };
+    }
+    if (operation === "page.evaluate") {
+      const expression = String(args.expression || "");
+      assertReadOnlyDomExpression(expression);
+      return { value: simplify(await tab.playwright.evaluate(
+        readonlyInvocation(expression, { argument: jsonRegex(args.argument) }),
+      )) };
+    }
+    if (operation === "page.attach_packet") {
+      return { value: await attachPacket({ filePath: args.path, attachSelectors: args.attach_selectors }) };
+    }
+    if (operation === "event.start") {
+      const eventName = String(args.event_name || "");
+      if (eventName !== "download") {
+        throw Object.assign(
+          new Error("BrowserUse extension exposes download events only; response-body interception is unavailable"),
+          { code: "CAPABILITY_UNAVAILABLE" },
+        );
+      }
+      if (activeDownloadWaiter && !activeDownloadWaiter.done) {
+        throw Object.assign(new Error("a BrowserUse download waiter is already armed"), { code: "EVENT_WAITER_BUSY" });
+      }
+      const timeoutMs = Math.max(1, Math.min(120_000, Number(args.timeout_ms) || 30_000));
+      const waiter = { sequence: eventSequence, done: false, row: null, error: null };
+      // Arm inside the active Node REPL dispatch turn so this exact
+      // extension capability remains usable while the Python pipeline runs.
+      waiter.promise = tab.playwright.waitForEvent("download", { timeout: timeoutMs })
+        .then(download => publishDownload(download).then(row => { waiter.row = row; waiter.done = true; }))
+        .catch(error => { waiter.error = error; waiter.done = true; });
+      activeDownloadWaiter = waiter;
+      return { value: { sequence: waiter.sequence } };
+    }
+    if (operation === "event.wait") {
+      const eventName = String(args.event_name || "");
+      if (eventName !== "download") {
+        throw Object.assign(new Error("BrowserUse extension does not expose response events"), { code: "CAPABILITY_UNAVAILABLE" });
+      }
+      const afterSequence = Number(args.after_sequence) || 0;
+      const cached = [...events.values()].find(row => row.event_name === eventName && row.sequence > afterSequence);
+      if (cached) return { value: cached };
+      const waiter = activeDownloadWaiter;
+      if (!waiter || waiter.sequence !== afterSequence) {
+        throw Object.assign(new Error("no exact BrowserUse download waiter is armed"), { code: "EVENT_WAITER_MISSING" });
+      }
+      await waiter.promise;
+      if (waiter.error) {
+        const error = new Error(String(waiter.error?.message || waiter.error || "BrowserUse download wait failed"));
+        error.code = /timeout|timed out/i.test(error.message) ? "EVENT_TIMEOUT" : "BROWSERUSE_EVENT_FAILED";
+        throw error;
+      }
+      if (!waiter.row || waiter.row.sequence <= afterSequence) {
+        throw Object.assign(new Error("BrowserUse download event was not observed"), { code: "EVENT_TIMEOUT" });
+      }
+      return { value: waiter.row };
+    }
+    if (operation === "response.body") throw Object.assign(new Error("BrowserUse response-body capture is unavailable"), { code: "CAPABILITY_UNAVAILABLE" });
+    if (operation === "download.save_as") {
+      const download = findHandle(downloads, args.handle, "download");
+      const destination = wslUncPath(args.destination, distroName);
+      if (!path.isAbsolute(destination) && !/^\\\\/.test(destination)) throw new Error("download destination must be absolute");
+      if (typeof download.saveAs === "function") await download.saveAs(destination);
+      else if (typeof download.save_as === "function") await download.save_as(destination);
+      else if (typeof download.path === "function") {
+        const sourcePath = await download.path();
+        if (!sourcePath) throw new Error("BrowserUse download has no readable local path");
+        fs.copyFileSync(sourcePath, destination);
+      } else throw new Error("BrowserUse download object has no supported save operation");
+      return { value: true };
+    }
+    throw new Error(`unsupported BrowserUse bridge operation: ${operation}`);
+  };
+
+  const processRpcRequest = async ({ route, payload }) => {
+    let value;
+    if (route === "/handshake") {
+      if (String(payload.job_id || "") !== String(jobId)) throw Object.assign(new Error("job identity does not match this claimed BrowserUse bridge"), { code: "JOB_MISMATCH" });
+      const currentUrl = await tabUrl(tab);
+      safeOrigin(currentUrl);
+      value = { session_id: sessionId, url: currentUrl, title: await tabTitle(tab) };
+    } else {
+      if (String(payload.session_id || "") !== sessionId) throw Object.assign(new Error("session identity does not match the exact claimed tab"), { code: "SESSION_MISMATCH" });
+      safeOrigin(await tabUrl(tab));
+      const result = await dispatch(String(payload.operation || ""), payload.arguments || {});
+      const currentUrl = await tabUrl(tab);
+      safeOrigin(currentUrl);
+      value = { ...result, page_url: currentUrl, title: await tabTitle(tab) };
+    }
+    return { ok: true, result: value };
+  };
+
+  const server = http.createServer(async (request, response) => {
+    if (request.method !== "POST" || !["/handshake", "/rpc"].includes(request.url)) {
+      response.writeHead(404).end();
+      return;
+    }
+    const authorization = String(request.headers.authorization || "");
+    const suppliedToken = authorization.startsWith("Bearer ") ? authorization.slice(7) : "";
+    const supplied = Buffer.from(suppliedToken);
+    const expected = Buffer.from(token);
+    if (supplied.length !== expected.length || !crypto.timingSafeEqual(supplied, expected)) {
+      response.writeHead(401).end(JSON.stringify({ ok: false, code: "AUTH_FAILED", error: "bridge token mismatch" }));
+      return;
+    }
+    const chunks = [];
+    let bytes = 0;
+    try {
+      for await (const chunk of request) {
+        bytes += chunk.length;
+        if (bytes > MAX_REQUEST_BYTES) throw Object.assign(new Error("RPC request exceeds the size limit"), { code: "REQUEST_TOO_LARGE" });
+        chunks.push(chunk);
+      }
+      const payload = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+      const envelope = await enqueueRequest({ route: request.url, payload });
+      response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+      response.end(JSON.stringify(envelope));
+    } catch (error) {
+      const code = String(error?.code || "BRIDGE_OPERATION_FAILED");
+      const detail = String(error?.message || error || "unknown bridge error").replace(/[\r\n]+/g, " ").slice(0, 500);
+      response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+      response.end(JSON.stringify({ ok: false, code, error: detail }));
+    }
+  });
+  server.requestTimeout = 120_000;
+  server.headersTimeout = 30_000;
+  server.keepAliveTimeout = 5_000;
+  await new Promise((resolve, reject) => {
+    server.once("error", reject);
+    server.listen(port, bindHost, resolve);
+  });
+  const address = server.address();
+  if (!address || typeof address === "string") throw new Error("BrowserUse bridge did not bind a TCP endpoint");
+  const endpoint = `http://${bindHost}:${address.port}`;
+  let handoffPath;
+  try {
+    handoffPath = await persistPrivateHandoff({
+      distroName,
+      linuxHome,
+      jobId: String(jobId),
+      sessionId,
+      endpoint,
+      token,
+    });
+  } catch (error) {
+    closed = true;
+    await new Promise(resolve => server.close(resolve));
+    throw error;
+  }
+  let activeService = false;
+  let cleanupPromise = null;
+  const serviceRequests = async () => {
+    if (activeService) throw new Error("BrowserUse bridge request service is already active");
+    activeService = true;
+    try {
+      while (!closed) {
+        const item = await nextRequest();
+        if (!item) break;
+        try {
+          item.resolve(await processRpcRequest(item.request));
+        } catch (error) {
+          item.resolve({
+            ok: false,
+            code: String(error?.code || "BRIDGE_OPERATION_FAILED"),
+            error: String(error?.message || error || "unknown bridge error").replace(/[\r\n]+/g, " ").slice(0, 500),
+          });
+        }
+      }
+    } finally {
+      activeService = false;
+    }
+  };
+  const cleanup = async () => {
+    if (cleanupPromise) return await cleanupPromise;
+    cleanupPromise = (async () => {
+      closed = true;
+      if (queueWake) {
+        const wake = queueWake;
+        queueWake = null;
+        wake();
+      }
+      for (const pending of requestQueue.splice(0)) {
+        pending.resolve({ ok: false, code: "BRIDGE_CLOSED", error: "BrowserUse bridge is shutting down" });
+      }
+      await new Promise(resolve => server.close(resolve));
+      await removePrivateHandoff({ distroName, linuxHome, jobId: String(jobId), sessionId });
+    })();
+    return await cleanupPromise;
+  };
+  return {
+    endpoint,
+    handoffPath,
+    async runUntil(work) {
+      if (closed) throw new Error("BrowserUse bridge is closed");
+      const service = serviceRequests();
+      try {
+        return await (typeof work === "function" ? work() : work);
+      } finally {
+        closed = true;
+        if (queueWake) {
+          const wake = queueWake;
+          queueWake = null;
+          wake();
+        }
+        await service;
+        await cleanup();
+      }
+    },
+    async close() {
+      await cleanup();
+    },
+  };
+}

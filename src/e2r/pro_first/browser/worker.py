@@ -3,13 +3,17 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import json
+import os
 from pathlib import Path
 import re
+import stat
 from typing import Any
 from urllib.parse import urlparse
 
 from ..config import BrowserConnectionMode, ProBrowserConfig
 from ..ids import stable_id
+from .browseruse_extension_bridge import BrowserUseBridgeClient, BrowserUsePage
 from .cdp_existing_page_proxy import ExistingPageCDPProxy
 from .chatgpt_adapter import PlaywrightChatGPTWebAdapter
 
@@ -24,8 +28,12 @@ class BrowserWorkerSession:
     context: Any
     attached_over_cdp: bool
     cdp_proxy: ExistingPageCDPProxy | None = None
+    browseruse_client: BrowserUseBridgeClient | None = None
 
     async def close(self) -> None:
+        if self.browseruse_client is not None:
+            await self.browseruse_client.close()
+            return
         try:
             if not self.attached_over_cdp:
                 await self.context.close()
@@ -40,6 +48,8 @@ class ProBrowserWorker:
         self.config = config or ProBrowserConfig()
 
     async def open(self, *, job_id: str) -> BrowserWorkerSession:
+        if self.config.mode is BrowserConnectionMode.BROWSER_USE_EXTENSION:
+            return await self._open_browseruse_extension(job_id=job_id)
         try:
             from playwright.async_api import async_playwright
         except ImportError as error:
@@ -100,6 +110,63 @@ class ProBrowserWorker:
                 if cdp_proxy is not None:
                     await cdp_proxy.close()
             raise
+
+    async def _open_browseruse_extension(self, *, job_id: str) -> BrowserWorkerSession:
+        if re.fullmatch(r"[A-Za-z0-9_-]{1,96}", str(job_id)) is None:
+            raise RuntimeError("BrowserUse bridge job identity is not a safe file name")
+        handoff_path = Path.home() / ".cache" / "e2r" / "browseruse" / f"{job_id}.json"
+        try:
+            metadata = handoff_path.lstat()
+        except OSError as error:
+            raise RuntimeError(
+                "the exact claimed BrowserUse session bridge is not ready for this job"
+            ) from error
+        if not stat.S_ISREG(metadata.st_mode) or stat.S_ISLNK(metadata.st_mode):
+            raise RuntimeError("BrowserUse session handoff must be a regular non-symlink file")
+        if hasattr(os, "geteuid") and metadata.st_uid != os.geteuid():
+            raise RuntimeError("BrowserUse session handoff is not owned by the current user")
+        if stat.S_IMODE(metadata.st_mode) != 0o600:
+            raise RuntimeError("BrowserUse session handoff permissions must be exactly 0600")
+        try:
+            handoff = json.loads(handoff_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as error:
+            raise RuntimeError("BrowserUse session handoff is malformed or unreadable") from error
+        if not isinstance(handoff, dict) or str(handoff.get("job_id") or "") != str(job_id):
+            raise RuntimeError("BrowserUse session handoff belongs to a different job")
+        endpoint = str(handoff.get("endpoint") or "")
+        token = str(handoff.get("token") or "")
+        if not endpoint or len(token) < 32:
+            raise RuntimeError("BrowserUse session handoff is missing its private bridge capability")
+
+        client = await BrowserUseBridgeClient.connect(
+            endpoint=endpoint,
+            token=token,
+            job_id=job_id,
+            expected_origin=self._origin(self.config.chatgpt_url),
+        )
+        if str(handoff.get("session_id") or "") != client.session_id:
+            await client.close()
+            raise RuntimeError("BrowserUse handshake identity differs from the exact claimed tab handoff")
+        page = BrowserUsePage(client)
+        browser_session_id = stable_id(
+            "BROWSER",
+            {
+                "job_id": job_id,
+                "mode": self.config.mode.value,
+                "bridge_session_id": client.session_id,
+                "chatgpt_origin": self._origin(self.config.chatgpt_url),
+            },
+        )
+        return BrowserWorkerSession(
+            browser_session_id=browser_session_id,
+            page=page,
+            adapter=PlaywrightChatGPTWebAdapter(page),
+            playwright=None,
+            browser=None,
+            context=page.context,
+            attached_over_cdp=False,
+            browseruse_client=client,
+        )
 
     def _resolve_cdp_endpoint(self) -> str:
         """Resolve Chrome's ephemeral CDP capability without persisting it.

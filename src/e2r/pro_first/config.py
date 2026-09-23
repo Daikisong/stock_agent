@@ -21,6 +21,7 @@ from .ids import canonical_hash
 class BrowserConnectionMode(str, Enum):
     CDP_ATTACH = "CDP_ATTACH"
     PERSISTENT_PROFILE = "PERSISTENT_PROFILE"
+    BROWSER_USE_EXTENSION = "BROWSER_USE_EXTENSION"
 
 
 @dataclass(frozen=True)
@@ -66,7 +67,7 @@ class ProBrowserConfig:
                 "::1",
             }:
                 raise ValueError("CDP attach endpoint must be loopback-only")
-        elif self.persistent_profile_path is None:
+        elif self.mode is BrowserConnectionMode.PERSISTENT_PROFILE and self.persistent_profile_path is None:
             raise ValueError("PERSISTENT_PROFILE requires a dedicated profile path")
 
     def _validate_chatgpt_url(self) -> None:

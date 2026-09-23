@@ -152,6 +152,40 @@ class PlaywrightChatGPTWebAdapter:
         path = Path(packet_path).resolve()
         if not path.is_file():
             raise FileNotFoundError(path)
+        existing_session_upload = getattr(
+            self.page, "upload_file_via_existing_user_session", None
+        )
+        if callable(existing_session_upload):
+            # BrowserUse does not expose Playwright's file-chooser handle or
+            # synthetic set_input_files().  Select the JSON through the
+            # visible attach control in the exact claimed user tab, then bind
+            # the browser-selected File back to the durable packet hash.
+            await existing_session_upload(
+                str(path), attach_selectors=tuple(ATTACH_BUTTON_SELECTORS)
+            )
+            displayed_filename = await self._wait_for_uploaded_filename(path.name)
+            if displayed_filename is None:
+                raise BrowserUIIncompatible(
+                    f"uploaded packet filename was not confirmed in the DOM: {path.name}"
+                )
+            try:
+                expected_hash = canonical_hash(
+                    json.loads(path.read_text(encoding="utf-8"))
+                )
+            except (OSError, json.JSONDecodeError) as error:
+                raise BrowserUIIncompatible(
+                    "BrowserUse packet is not readable canonical JSON"
+                ) from error
+            selected_filename = await self._selected_packet_filename_if_hash_matches(
+                path, expected_hash
+            )
+            if selected_filename != path.name:
+                raise BrowserUIIncompatible(
+                    "the exact BrowserUse packet file/hash was not visible in the claimed tab"
+                )
+            self._uploaded_filename = displayed_filename
+            return displayed_filename
+
         file_input = await first_existing(self.page, FILE_INPUT_SELECTORS)
         if file_input is not None:
             await file_input.set_input_files(str(path))

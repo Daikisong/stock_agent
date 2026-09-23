@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-24 04:03 KST / P63: 기존 로그인 탭 우선 사용·기존 결과물 회수 절차 문서화`
+기준 시각: `2026-09-24 06:47 KST / P69: BrowserUse 기존 로그인 세션 규칙 및 P68 검증 기록 최신화`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -52,8 +52,8 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS, C15 R5 봉인·R6 PACKET_READY/전송 0, C28 새 실행 필요)
-P10 final CI/audit                        IN_PROGRESS (84e085b push/PR Pro-first와 PR V6 실행 중; 일부 job PASS, full regression 미완료; live 3/3 미충족)
+P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS, C15 R6 PACKET_READY; 기존 BrowserUse 탭 Python read-only smoke PASS, Pro/upload/send 미검증; C28 새 실행 필요)
+P10 final CI/audit                        IN_PROGRESS (P68 targeted regression/static audits PASS; 전체 테스트/exact-head CI 대기; live 3/3 미충족)
 ```
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
@@ -65,11 +65,12 @@ P10 final CI/audit                        IN_PROGRESS (84e085b push/PR Pro-first
 주장하지 않는다. 9월 8일 처음 확인한 디버깅 연결(9222/9234)에는 ChatGPT page가 없었지만,
 사용자 지적 뒤 기존 로그인 ChatGPT 탭을 실제 화면에서 찾았다. 따라서 "열린 ChatGPT 탭이 없다"는
 과거 결론은 잘못된 연결 대상 확인이었다. P62에서는 BrowserUse extension으로 그 기존 사용자 탭을 직접
-재열거·claim하고 읽기 전용 접근했다. 다만 안정적인 E2R Python pipeline의 exact-tab 제어는 아직 미구현이다.
+재열거·claim하고 읽기 전용 접근했다. P68에서는 Python worker와 exact claimed tab 사이의 read-only bridge smoke를
+통과했다. actual Pro 선택, upload, submit, artifact capture는 아직 확인하지 않았다.
 R5는 후속 결과를 회수하더라도 잘못된 과거 전송 이력 때문에 운영 합격으로 세지 않는다. 초기 자료와
 후속 capture는 진단 이력으로 보존하고 C15 운영 증명은 수정된 코드의 새 fresh 실행에서 받아야 한다.
 R5는 이제 durable freeze와 R6 successor 결박까지 기록됐으며, R6는 입력 파일만 준비한 상태다.
-아래 P0~P56은 당시의 이력이며, 최신 상태와 정정은 문서 끝 P57~P63 기록을 따른다.
+아래 P0~P56은 당시의 이력이며, 최신 상태와 정정은 문서 끝 P57~P68 기록을 따른다.
 
 ## P14 — 화면상 전송과 서버 저장 분리, C06 대화 폐기
 
@@ -6161,3 +6162,76 @@ Python `ProBrowserWorker`의 별도 CDP 연결을 다른 창에서 쓰지 않는
   점수·Stage 변경은 0회다. P66의 마지막 화면 관찰을 현재 상태나 Pro 모드로 오인하지 않는다.
 - 이 기록은 [BrowserUse 인수인계](browseruse_existing_session_handoff.md)와 함께 읽는다. 인증 토큰·쿠키·계정
   식별자·tab ID를 문서에 남기지 않는다.
+
+## P68 — exact claimed BrowserUse tab과 Python Pro worker read-only smoke
+
+사용자는 실제 로그인 세션을 써야 할 때 새 창이나 별도 CDP Chrome으로 옮기지 말고, 이미 로그인된 그 BrowserUse
+세션에서 하라고 요청했다. 이에 P68은 BrowserUse `extension`에 열려 있던 exact user tab을 claim해 Python pipeline
+worker에 read-only로 연결하는 vertical slice를 구현·검증했다.
+
+### 실제 브라우저 관찰
+
+- Windows BrowserUse preflight: exit 0. 현재 세션의 `mcp__node_repl__js` 도구와 `extension` browser가 실제 호출됐다.
+- `browser.user.openTabs()`의 기존 사용자 탭 1개에서 exact descriptor를 골라 `claimTab()` 반환 객체를 보존했다.
+  이 객체로만 bridge를 시작했다. 새 Browser process/window/tab/profile은 0개다.
+- 마지막 확인 화면은 Library: URL `https://chatgpt.com/library?search=ResearchDossierV3`, title
+  `ChatGPT - 라이브러리`, public DOM origin `https://chatgpt.com`. Python worker의 handshake와 동일한 공개 DOM
+  `title/origin` 읽기가 통과했다. conversation 본문은 읽지 않았다.
+- Library 페이지에는 선택 model control이 없어서 actual Pro model 선택은 **미검증**이다. 구독 badge를 Pro model
+  증거로 세지 않는다. prompt 입력·upload·submit·capture·source query/fetch·score/Stage 변경은 0회다.
+- job 전용 ephemeral bearer handoff는 WSL private cache에 `0600`으로 만들고, bridge run 끝에서 삭제했다. token,
+  tab ID, 계정 식별자는 코드·receipt에 보관하지 않는다. R6는 별도 SQLite read-only 재확인에서
+  `PACKET_READY`, version 2, submit/capture `0/0`, browser/conversation null로 유지됐다.
+
+### bridge와 runtime 경계
+
+- Python worker는 새 `BROWSER_USE_EXTENSION` mode로 정확한 handoff identity와 BrowserUse handshake identity가
+  같은지 확인한다. session 종료는 Python client만 닫고 사용자의 탭·Chrome·로그인은 유지한다.
+- BrowserUse methods의 실제 모양은 `tab.url()` / `tab.title()` async function이다. extension이 지원하는
+  `waitForEvent`는 download/filechooser뿐이라 response-body capture를 지원하지 않으며, response-only 경로는
+  fail-closed로 남겼다.
+- RPC HTTP handler는 browser action을 직접 실행하지 않는다. node repl API는 HTTP handler context에서
+  `node_repl exec context not found`를 주므로 handler는 요청을 queue하고, `runUntil(...)`의 dispatcher가 활성
+  `mcp__node_repl__js` 실행 안에서 exact claimed tab에 동작을 보낸다. Python CLI를 이 Node REPL 실행이 끝난 뒤
+  따로 띄우지 말아야 한다.
+- 첨부는 visible attachment control과 기존 Chrome이 소유한 Windows Open dialog로만 한다. synthetic
+  `set_input_files`는 사용하지 않고, 선택 뒤 browser-selected JSON content hash가 준비된 packet hash와 같아야 한다.
+  업로드 경로는 unit test만 통과했으며 실제 사용자 packet upload는 아직 수행하지 않았다.
+- 상세 설계, 제한, 실제 브라우저 UI 상태, 다음 순서는 [BrowserUse bridge 문서](browseruse_extension_bridge.md),
+  기계 판독형 결과는 [P68 영수증](p68_browseruse_extension_bridge_smoke_receipt.json) 참조.
+
+### 검증 / 다음 한 단계
+
+- bridge unit regression: 6/6 PASS.
+- 기존 Browser adapter regression: 55/55 PASS. `LD_LIBRARY_PATH=/home/eorb915/.cache/e2r-playwright-libs/usr/lib/x86_64-linux-gnu`를 지정했다.
+- BrowserUse extension Node module `node --check`: PASS.
+- PR #7 base head `96438f3fd9660a9f7ff71f3284c9063fa2dd8910`은 Draft/open/mergeable이고, 해당 head의 Pro-first run
+  35916401523, V6 run 35916401474, push run 35916395995는 SUCCESS. 이 CI들은 P68 diff 전이므로 새 코드의 CI로
+  간주하지 않는다.
+- P68 diff의 targeted regression과 static audits는 통과했다. 전체 repository regression과 새 exact-head GitHub Actions는
+  아직 pending이다. 완료 전에는 실제 Pro model 재확인/packet upload/prompt submit을 하지 않는다. Actions가 green인 뒤에도
+  기존 같은 BrowserUse 탭에서 actual Pro selection을 직접 확인해야 한다.
+- master goal은 `active` / **미완료**, live full-thesis PASS는 C06 1/3으로 변함없다. C15 R6는 준비물과 read-only
+  bridge smoke까지만 통과했으며 canary PASS가 아니다.
+
+## P69 — BrowserUse 기존 로그인 세션 규칙 재확인, 문서/검증 동기화 (2026-09-24 06:47 KST)
+
+### 사용자에게 약속한 실행 방식
+
+- 로그인이나 현재 계정 상태가 필요한 작업은 BrowserUse Chrome plugin `extension`이 연결한 **사용자 기존 로그인 세션의 기존 작업 탭**에서만 수행한다.
+- `browser.user.openTabs()`로 기존 사용자 탭을 열거하고, 정확한 descriptor를 `browser.user.claimTab()`에 넘긴 뒤 **반환된 Tab 객체 하나**를 유지한다.
+- 다른 Codex Chrome/CDP 창, 별도 profile, 시크릿/임시 브라우저, 재로그인, 대체 탭은 사용하지 않는다. exact tab 연결·제어가 실패하면 그 실제 오류와 확인 범위를 기록하고 브라우저 작업을 중단한다.
+- 새 대화가 필요해도 같은 로그인 탭 안에서만 연다. 입력·첨부·전송 직전에 탭/대화/job/실제 선택 model/초안을 다시 확인한다. 사용자의 초안과 진행 응답은 보존한다.
+- 마지막 실제 브라우저 관찰(06:43 KST)은 기존 claimed tab의 Library 화면 read-only smoke다. actual Pro model은 확인되지 않았고, P69는 브라우저를 열거나 조작하지 않았다.
+
+### 검증 및 남은 범위
+
+- P68 bridge unit: 6/6 PASS; 기존 browser adapter: 55/55 PASS; fresh-session orchestration: 76/76 PASS.
+- Production static audit, V2/generalization audit, V2.1 efficiency audit: 모두 PASS, 각 critical count 0.
+- `node --check` 및 `git diff --check`: PASS.
+- 위는 targeted regression/static verification이다. **전체 repository unittest 및 현재 diff를 포함한 exact-head GitHub Actions는 미완료**다. base head의 성공 CI는 P68 변경분을 검증하지 않는다.
+- 로그인 세션에서의 prompt 입력/upload/submit/capture, 새 source query/fetch, score/Stage 변경은 P69 모두 0회다. C15 R6는 `PACKET_READY`, submit/capture `0/0`; master goal은 미완료이며 live full-thesis는 C06 1/3이다.
+
+### 다음 한 단계
+
+P68 코드와 문서를 한글 커밋으로 feature branch에 push하고, 새 head에서 전체 테스트와 GitHub Actions를 확인한다. 성공한 뒤에만 기존 BrowserUse 세션의 동일 탭으로 돌아가 actual Pro model과 C15 R6 대화/첨부 상태를 읽기 전용 확인한다. 그 확인 전에는 R6 prompt/upload/submit을 하지 않는다. 자세한 마지막 상태는 [BrowserUse 인수인계](browseruse_existing_session_handoff.md)와 [P68 bridge receipt](p68_browseruse_extension_bridge_smoke_receipt.json)에 있다.

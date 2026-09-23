@@ -1,0 +1,135 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p68_browseruse_extension_bridge_smoke_v1",
+  "status": "BROWSERUSE_EXISTING_CLAIMED_TAB_READ_ONLY_SMOKE_PASS",
+  "recorded_at": "2026-09-24T06:43:00+09:00",
+  "verification_updated_at": "2026-09-24T06:47:00+09:00",
+  "scope": "generic worker-to-existing-browseruse-tab integration only; no research submission",
+  "git": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "base_head_before_p68_diff": "96438f3fd9660a9f7ff71f3284c9063fa2dd8910",
+    "pr_number": 7,
+    "pr_state_at_base_head": "OPEN_DRAFT_MERGEABLE",
+    "base_head_pro_first_ci": {
+      "run_id": 35916401523,
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35916401523"
+    },
+    "base_head_v6_ci": {
+      "run_id": 35916401474,
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35916401474"
+    },
+    "base_head_push_ci": {
+      "run_id": 35916395995,
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35916395995"
+    },
+    "ci_scope_note": "All listed CI runs are for the base head and do not include the P68 working diff."
+  },
+  "browseruse": {
+    "preflight_exit_code": 0,
+    "actual_node_repl_tool_available": true,
+    "browser_backend": "Chrome BrowserUse extension",
+    "external_user_tabs_listed": 1,
+    "exact_descriptor_claimed_and_returned_tab_retained": true,
+    "tab_id_recorded": false,
+    "account_identity_recorded": false,
+    "cookie_or_token_recorded": false,
+    "last_public_page_url": "https://chatgpt.com/library?search=ResearchDossierV3",
+    "last_public_page_title": "ChatGPT - 라이브러리",
+    "last_browser_observation_at": "2026-09-24T06:43:00+09:00",
+    "public_dom_origin": "https://chatgpt.com",
+    "public_dom_title": "ChatGPT - 라이브러리",
+    "conversation_body_read": false,
+    "actual_selected_pro_model_verified": false,
+    "new_browser_process_count": 0,
+    "new_window_count": 0,
+    "new_tab_count": 0,
+    "new_profile_count": 0
+  },
+  "bridge": {
+    "python_worker_mode": "BROWSER_USE_EXTENSION",
+    "tab_binding": "opaque handoff session identity matched by worker handshake; raw tab id not persisted",
+    "request_dispatch": "HTTP handlers queue only; BrowserUse API calls run from bridge.runUntil inside the active persistent Node REPL call",
+    "endpoint_binding": "WSL default route private gateway; RFC1918-only bind",
+    "credential_handoff": "job-scoped bearer token in WSL user cache; directory 0700/file 0600; verified then removed at run end",
+    "allowed_response_event": "download only",
+    "unsupported_response_body_capture": "fail-closed; BrowserUse waitForEvent supports download/filechooser only",
+    "same_tab_python_handshake": "PASS",
+    "same_tab_read_only_public_dom": "PASS",
+    "bridge_closed_after_smoke": true,
+    "handoff_removed_after_smoke": true
+  },
+  "c15_r6": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "symbol": "010950",
+    "status": "PACKET_READY",
+    "state_version": 2,
+    "submit_count": 0,
+    "capture_count": 0,
+    "browser_session_id": null,
+    "conversation_id": null,
+    "database_access": "SQLite mode=ro and query_only=ON"
+  },
+  "actions_this_turn": {
+    "prompt_input_count": 0,
+    "packet_upload_count": 0,
+    "submit_count": 0,
+    "artifact_capture_count": 0,
+    "source_query_count": 0,
+    "source_fetch_count": 0,
+    "score_change_count": 0,
+    "stage_change_count": 0
+  },
+  "verification": {
+    "javascript_syntax_check": "PASS",
+    "new_bridge_unit_tests": "6/6 PASS",
+    "existing_browser_adapter_tests": "55/55 PASS",
+    "existing_browser_adapter_test_command": "LD_LIBRARY_PATH=/home/eorb915/.cache/e2r-playwright-libs/usr/lib/x86_64-linux-gnu PYTHONPATH=src python -m unittest tests.test_e2r_pro_first_browser_adapter -v",
+    "new_bridge_test_command": "PYTHONPATH=src python -m unittest tests.test_e2r_pro_first_browseruse_extension_bridge -v",
+    "fresh_session_orchestration_tests": "76/76 PASS",
+    "fresh_session_orchestration_test_command": "LD_LIBRARY_PATH=/home/eorb915/.cache/e2r-playwright-libs/usr/lib/x86_64-linux-gnu PYTHONPATH=src:tests python -m unittest test_e2r_pro_first_v2_1_fresh_orchestration -q",
+    "production_static_audit": {
+      "status": "PASS",
+      "critical_count": 0,
+      "command": "PYTHONPATH=src python -m e2r.cli.audit_e2r_pro_first --repo-root . --output /tmp/p68_static_audit.json"
+    },
+    "v2_static_and_generalization_audit": {
+      "status": "PASS",
+      "critical_count": 0,
+      "command": "PYTHONPATH=src python -m e2r.cli.audit_e2r_pro_first_v2 --repo-root . --output /tmp/p68_v2_static_audit.json"
+    },
+    "v2_1_fresh_efficiency_audit": {
+      "status": "PASS",
+      "critical_count": 0,
+      "command": "PYTHONPATH=src python -m e2r.cli.audit_e2r_pro_first_v2_1_fresh_efficiency --repo-root . --output /tmp/p68_v21_efficiency_audit.json"
+    },
+    "full_suite_for_p68_diff": "PENDING",
+    "full_suite_note": "Targeted regressions passed; this is not the full repository unittest suite.",
+    "exact_head_github_ci_for_p68_diff": "PENDING"
+  },
+  "implementation_discoveries": [
+    {
+      "observed": "BrowserUse tab.url and tab.title are asynchronous functions, not string properties.",
+      "impact": "Initial stale-module attempt failed with Invalid URL before any tab interaction; bridge now calls the public methods."
+    },
+    {
+      "observed": "Calling BrowserUse methods from an HTTP callback outside the originating node_repl execution context returns node_repl exec context not found.",
+      "impact": "HTTP handlers now only enqueue; runUntil dispatches browser operations inside the active Node REPL call."
+    },
+    {
+      "observed": "The actual extension waitForEvent capability supports download and filechooser, not response.",
+      "impact": "Only download is bridged; response-only artifact paths fail closed without CDP or private API fallback."
+    },
+    {
+      "observed": "Node REPL disallows new Function code generation.",
+      "impact": "Read-only arrow callbacks are statically checked and invoked as public evaluate expressions; no dynamic Function construction is used."
+    }
+  ],
+  "master_goal": {
+    "live_full_thesis_passes": "C06 1/3 (unchanged)",
+    "c15_r6_live_submit": false,
+    "master_goal_complete": false,
+    "pr7_draft_and_unmerged": true
+  }
+}
