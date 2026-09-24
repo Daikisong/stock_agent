@@ -1,10 +1,23 @@
 # BrowserUse 기존 로그인 세션 인수인계 — 2026-09-24
 
 기록 시각: `2026-09-24 23:02 KST`
+최종 갱신: `2026-09-25 00:45 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`  
 PR: `#7` draft 유지; 이 작업에서 merge 또는 draft 해제 금지  
 수정 전 HEAD: `1bcd33033390fab8403db8b4efa7ac442bf30bee`
+
+## 최신 인수인계 요약 — 2026-09-25 00:45 KST
+
+**로그인된 기존 BrowserUse 세션만 사용한다.** 이 문서의 Chrome 작업은 기존 extension 세션에서 현재 탭을 열거하고, `https://chatgpt.com/`의 로그인된 작업 탭을 직접 확인한 뒤 그 탭 객체를 claim해 수행한다. 새 Chrome/창/프로필/CDP, 재로그인, 전역 키 입력은 대체 경로로 쓰지 않는다. 실패하면 기존 창을 보존하고 읽기 전용 점검 및 정확한 오류 기록만 한다.
+
+- 현재 작업은 `PROJOB-df15a37c58ae7583924e58c0` 하나다. 이전 job `PROJOB-7c02db014fefb06b1258ffe9`는 frozen/superseded이며 응답·계보를 재사용하지 않는다.
+- 현재 PR `#7`은 draft/open 상태로 둔다. 이 작업에서 draft 해제나 merge를 하지 않는다.
+- 코드 수정 commit `0d35d5e143327b0fc6788a61aa203074e5d62fee` (`chooser 오류 상세문구 복구검사 보완`)의 Pro push workflow `36016191427`은 마지막 확인 시 4/4 job SUCCESS다. PR Pro workflow `36016196506`은 마지막 확인 시 대기 중이었으므로, PR 전체 CI green이라고 단정하지 않는다.
+- 실전 canary 재개는 기존 탭의 읽기 전용 preflight를 다시 통과한 뒤에만 허용한다. 직전 실행은 첨부 파일 chooser에서 fail-closed 됐으며, ChatGPT에 packet·prompt를 넣거나 요청을 전송하지 않았다.
+- durable job 마지막 관찰: `USER_ATTENTION_REQUIRED`, `state_version=24`, `submit_count=0`, `capture_count=0`; browser session/conversation 및 approval 값 없음, `fresh_v3_prepare_receipt.json` 없음.
+
+이 요약은 아래 상세 타임라인에서 이전 상태를 덮어쓴다. 특히 과거의 “첨부 메뉴가 펼쳐져 있음”은 현재 UI 상태를 의미하지 않는다. 최신 관찰은 chooser 실패 뒤 composer가 비어 있고 선택 파일 0개였다는 것이다.
 
 ## 핵심 원칙
 
@@ -78,7 +91,7 @@ user turn          0
 
 이번 재확인에서도 항목을 클릭하지 않았다. 파일 첨부·prompt 입력·전송 모두 0건이며, 이전 job은 여전히 `USER_ATTENTION_REQUIRED / submit_count=0` 상태다. 현재 변경은 새 코드이므로 새 commit의 PR CI가 통과하기 전에는 live canary를 재개하지 않는다.
 
-## 다음 단계
+## 당시 다음 단계 (2026-09-24 23:02 기준; 아래 최신 기록으로 대체)
 
 1. 변경을 한글 커밋으로 현재 PR 브랜치에 푸시하고 해당 head의 필수 CI를 확인한다.
 2. 실제 시도를 재개할 때 BrowserUse의 기존 로그인 세션에서 현재 탭을 다시 열거·claim하고, composer가 비어 있고 응답/첨부가 없는지 확인한다. 이 확인 전에는 과거 tab ID만 믿고 조작하지 않는다.
@@ -106,7 +119,7 @@ Durable ledger는 **읽기 전용**으로 확인했다. `PROJOB-df15a37c58ae7583
 
 재개 시에는 `startBrowserUseExtensionBridge({tab: claimedExistingTab, jobId: exactJobId})`로 **이 claim된 BrowserUse 탭**에 bridge를 묶고, in-memory config에서만 `BrowserConnectionMode.BROWSER_USE_EXTENSION`을 지정한다. 이후 기존 `resume_unprepared_attention_job_id` 경로를 이용한다. 수동으로 UI를 따로 조작하거나 별도 세션에서 첨부/전송하지 않는다. 안전 검증 뒤에도 패킷 파일명과 SHA-256이 정확히 일치하는지 파이프라인이 확인하기 전에는 prompt를 채우지 않는다. 사용자의 앞선 명시적 승인은 이 단일 C15 initial canary 전송에만 적용하며, 추가 검색·다른 archetype·점수 변경 권한으로 확대 해석하지 않는다.
 
-### 현재 코드/CI 체크포인트
+### 당시 코드/CI 체크포인트 (2026-09-24 23:42 기록; 최신 head 상태는 상단 요약 참조)
 
 - PR `#7`은 `draft/open/mergeable`, head `30fd11a1440d48a22d07cf3b30f6f4459a455ad8`; merge 또는 draft 해제 금지.
 - 해당 SHA의 Pro push run `36010216991`과 V6 PR run `36010223818`은 `SUCCESS`다. Pro PR run `36010223810`은 마지막 확인 시 `in_progress`였으므로 이 문서 시점에 전체 PR CI green이라고 주장하지 않는다. NSLAB 선택 workflow 두 건은 `skipped`다.
@@ -121,3 +134,56 @@ Durable ledger는 **읽기 전용**으로 확인했다. `PROJOB-df15a37c58ae7583
 수정은 좁게 제한했다. `_STRUCTURED_NATIVE_FILE_CHOOSER_FAILURE`가 error id 안의 정확한 문구 `; no global keystrokes were sent`만 추가로 허용하도록 하고, 이 실제 오류문구로 동일 unsent job이 read-only 복구 gate에 들어가는 회귀시험을 추가했다. 유사하지만 exact match가 아닌 오류는 계속 차단한다. 관련 native chooser/resume 회귀시험 `5/5 PASS`, `git diff --check` PASS.
 
 차단 당시에도 기존 job은 `USER_ATTENTION_REQUIRED / state_version=22 / submit_count=0 / capture_count=0`이었다. 오류 gate가 browser worker보다 앞에서 실패했으므로 이 재시도에서는 BrowserUse page RPC, file upload, composer 입력, 전송이 하나도 일어나지 않았다. 시도용 bridge를 종료했고 기존 로그인 탭 `1437795006`은 보존했다. 이 코드 수정의 새 head CI가 확인되기 전에는 live resume를 다시 시작하지 않는다.
+
+## 2026-09-25 00:45 KST: 최신 head 확인 후 동일 세션 재개 결과
+
+### 코드와 workflow
+
+복구 regex 수정은 한글 commit `0d35d5e143327b0fc6788a61aa203074e5d62fee` (`chooser 오류 상세문구 복구검사 보완`)에 반영됐다. 해당 Pro push run `36016191427`은 마지막 확인 시 `SUCCESS`(4/4 jobs)였다. PR Pro run `36016196506`은 그 확인 시점에 대기 중이었으므로 “PR 필수 workflow 전체가 green”이라고 확대하지 않는다. CI 성공은 그 revision의 정적/테스트 검증이며 native chooser 실사용 성공을 뜻하지 않는다.
+
+### 실행 연결 실수와 정정
+
+첫 복구 연결은 `bridge.runUntil()`을 한 `mcp__node_repl__js` 호출에서 분리해 둔 채, worker를 다른 shell/호출에서 실행하여 `node_repl exec context not found`로 실패했다. 이는 로그인 세션/탭 문제나 ChatGPT 응답이 아니라, 같은 Node REPL 실행 문맥에 묶여야 하는 bridge와 worker를 다른 호출로 나눈 실행 실수였다. 이 실패에서는 BrowserUse UI 조작, 첨부, 입력, 전송이 일어나지 않았다.
+
+정정 후 bridge 준비와 WSL worker 실행을 **하나의 활성 `mcp__node_repl__js` 호출 안에서** 시작하고, 같은 호출에서 `await bridge.runUntil(workerClosePromise)`로 기다렸다. 이 방식으로 이전 context 오류는 사라졌고 같은 job은 read-only preflight를 지나 `USER_ATTENTION_REQUIRED v22 → BROWSER_PREPARING v23`으로 갔다.
+
+### 기존 탭에서 실제로 확인한 결과
+
+worker 직전 기존 BrowserUse `extension` 세션의 현재 탭 목록을 다시 열거하고, `https://chatgpt.com/`의 탭 ID `1437795006`을 직접 확인해 claim했다. 읽기 전용 preflight는 기존 로그인 계정 `대규 Pro`, 일반 `Chat`, 실제 모델 표시 `6 Pro`, 빈 composer 및 대화/첨부 없음이었다. 새 창·새 프로필·CDP·재로그인은 사용하지 않았다.
+
+실패 지점은 packet 첨부의 Chrome-native 파일 chooser 대기였다. 정확한 오류:
+
+```text
+BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet
+(phase=dialog_not_found; exit=1;
+error_id=No Chrome-owned Open dialog appeared;
+no global keystrokes were sent;
+category=OperationStopped;
+message=No Chrome-owned Open dialog appeared; no global keystrokes were sent)
+```
+
+즉 worker가 첨부 단계까지 도달했지만 Chrome 소유 `Open` 창이 나타나지 않아 path 선택/packet hash 검증을 하지 못했고 fail-closed로 종료됐다. 이 관찰만으로 클릭이 ChatGPT 메뉴를 열지 못했는지, native chooser 전이가 일어나지 않았는지까지 확정하지 않는다. 원인은 아직 해결되지 않은 기술 문제다. 전역 키 입력은 보내지 않았다.
+
+실패 직후 같은 탭을 읽기 전용으로 확인했다: ChatGPT composer 길이 `0`, user turn `0`, file input 5개 모두 선택 파일 `0`. Windows 창 목록 검사에서도 Open 창 및 Chrome 소유 chooser `0`이었다. 기존 탭을 닫거나 초기화하지 않았다. 별도 Google 검색 탭은 열거나 조작하지 않았다.
+
+### Durable 상태와 전송 여부
+
+실행 뒤 SQLite ledger를 `mode=ro` 및 `PRAGMA query_only=ON`으로 읽었다. `PROJOB-df15a37c58ae7583924e58c0`은 `USER_ATTENTION_REQUIRED`, `state_version=24`, `submit_count=0`, `capture_count=0`이다. Browser session/conversation 및 approval 값은 비어 있고, `fresh_v3_prepare_receipt.json`과 BrowserUse private handoff도 없다.
+
+```text
+packet 선택/첨부       미완료
+prompt 입력            없음
+ChatGPT 전송           없음 (submit_count=0)
+응답 capture           없음 (capture_count=0)
+점수/Stage 변경        없음
+```
+
+그러므로 이번 실행은 Pro 요청을 전송한 것이 아니다. 사용자의 기존 로그인 세션을 이용해 업로드 단계에 접근했지만, 파일 chooser가 열리지 않아 전송 전 중단한 것이다.
+
+### 다음 안전 단계
+
+1. 현재 탭과 ledger를 읽기 전용으로 다시 확인한 뒤, 같은 로그인 탭의 첨부 UI 상태 및 `attachPacket()` → visible upload row → native chooser 전이를 계측한다. 이전 tab ID만 믿거나 UI를 무조건 다시 클릭하지 않는다.
+2. 재시도는 현재 탭을 다시 열거·claim한 후 동일 job의 safe resume gate를 통과하고, bridge와 worker를 단일 활성 `mcp__node_repl__js` 실행 문맥 안에서 구동할 수 있을 때만 한다.
+3. Chrome-owned chooser가 실제 나타나고 선택 packet의 파일명·SHA-256을 검증하기 전에는 composer 입력이나 전송을 하지 않는다. chooser가 다시 없으면 정확한 오류와 `submit_count/capture_count`를 기록하고 즉시 중단한다.
+
+새 창, 새 브라우저 세션, CDP 대체, 재로그인, 전역 키 입력으로 이 문제를 우회하지 않는다. 인증된 브라우저 작업이 필요하면 오직 사용자의 **이미 로그인된 기존 BrowserUse 세션과 확인된 기존 탭**을 쓴다.
