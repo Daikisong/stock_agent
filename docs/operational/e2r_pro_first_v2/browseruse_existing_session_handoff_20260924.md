@@ -85,3 +85,31 @@ user turn          0
 3. 검증된 코드가 같은 claimed tab에서 파일 메뉴를 선택하고 native chooser를 띄운 뒤, filename과 exact packet hash를 모두 확인할 때까지 prompt 입력·전송하지 않는다. 실패하면 해당 오류와 실제 전송 여부를 다시 기록하고 그 탭을 보존한다.
 
 새 자료 수집, 추가 fetch, 다른 아키타입 실행, 점수 변경은 이 수리 범위에 포함되지 않는다.
+
+## 2026-09-24 23:42 KST: 동일 로그인 세션 재확인과 재개 기준
+
+사용자의 재요청에 따라 BrowserUse는 **사용자가 이미 로그인한 세션에서만** 사용한다. 같은 사이트의 다른 Chrome, 새 창, 새 프로필, 새 로그인, CDP 연결을 대체 경로로 만들지 않는다. 새 연구 대화가 필요하면 같은 로그인 탭 안에서만 만든다. 다음 실행자도 과거 tab ID를 권한처럼 재사용하지 말고, `browser.user.openTabs()`에서 현재 탭을 다시 찾은 뒤 그 반환 객체를 claim해야 한다.
+
+2026-09-24 23:42 KST에 현재 BrowserUse extension 세션에서 읽기 전용으로 재확인한 내용:
+
+| 확인 | 결과 |
+| --- | --- |
+| 기존 ChatGPT 탭 | tab ID `1437795006`, `https://chatgpt.com/`; 현재 목록에서 다시 찾아 정확한 탭 객체를 claim |
+| 로그인/모드 | 계정 표시 `대규 Pro`; `Chat` 선택, 화면상 모델 `6 Pro` |
+| 새 대화 상태 | 대화 route가 없는 홈 화면; composer 비어 있음, 보이는 user turn `0` |
+| 첨부 | file input 선택 파일 `0`; 이 확인 과정에서 업로드 메뉴 클릭이나 파일 선택은 하지 않음 |
+| 전송 | 이번 확인 중 입력·전송·새 탭 생성 없음 |
+| 다른 탭 | 별도 Google 검색 탭이 목록에 있었으나 열거나 조작하지 않음 |
+| BrowserUse 사전검사 | WSL preflight exit `0`; extension runtime과 기존 `node_repl` 세션 사용 가능 |
+
+Durable ledger는 **읽기 전용**으로 확인했다. `PROJOB-df15a37c58ae7583924e58c0`은 `USER_ATTENTION_REQUIRED`, `state_version=22`, `submit_count=0`, `capture_count=0`, browser session/conversation 없음이다. packet hash는 `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`다. 마지막 실패는 `dialog_not_found` native chooser 선택 실패이고, 해당 attention event에는 `safe_unprepared_resume=false`가 기록되어 있다. 현재 코드가 이 예외를 허용하는 것은 이 정확한 오류·동일 job만 대상으로 한 뒤 같은 로그인 탭에서 수행하는 별도 read-only 복구 검증이 성공해야만 다음 단계로 가도록 제한했기 때문이다. 그 검증에서 URL/새 대화 경로, 로그인, 실제 Pro 모드, 빈 composer, user turn 0, chooser 닫힘, packet hash 및 durable job 불변성을 모두 확인하지 못하면 즉시 멈춘다. 이전 predecessor job `PROJOB-7c02db014fefb06b1258ffe9`는 계속 frozen/superseded이며 재사용하지 않는다.
+
+재개 시에는 `startBrowserUseExtensionBridge({tab: claimedExistingTab, jobId: exactJobId})`로 **이 claim된 BrowserUse 탭**에 bridge를 묶고, in-memory config에서만 `BrowserConnectionMode.BROWSER_USE_EXTENSION`을 지정한다. 이후 기존 `resume_unprepared_attention_job_id` 경로를 이용한다. 수동으로 UI를 따로 조작하거나 별도 세션에서 첨부/전송하지 않는다. 안전 검증 뒤에도 패킷 파일명과 SHA-256이 정확히 일치하는지 파이프라인이 확인하기 전에는 prompt를 채우지 않는다. 사용자의 앞선 명시적 승인은 이 단일 C15 initial canary 전송에만 적용하며, 추가 검색·다른 archetype·점수 변경 권한으로 확대 해석하지 않는다.
+
+### 현재 코드/CI 체크포인트
+
+- PR `#7`은 `draft/open/mergeable`, head `30fd11a1440d48a22d07cf3b30f6f4459a455ad8`; merge 또는 draft 해제 금지.
+- 해당 SHA의 Pro push run `36010216991`과 V6 PR run `36010223818`은 `SUCCESS`다. Pro PR run `36010223810`은 마지막 확인 시 `in_progress`였으므로 이 문서 시점에 전체 PR CI green이라고 주장하지 않는다. NSLAB 선택 workflow 두 건은 `skipped`다.
+- 로컬 브랜치를 `origin/feature/e2r-pro-first-browser-platform-20260822`와 fetch로 동기화했으며, 이번 문서 보강 전 worktree는 clean이었다.
+
+다음 단계는 동일 탭에서 위 복구 preflight와 exact packet attach를 실행하고, 전송/수신 여부와 최종 durable 상태를 다시 기록하는 것이다. 새 창·새 프로필을 열어서 해결하려 하지 않는다.
