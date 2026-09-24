@@ -674,48 +674,159 @@ class FreshSessionOrchestratorV3:
         built: BuiltFreshV3JobPacket,
         *,
         config: ProFirstLocalConfig,
+        resume_unprepared_attention: bool = False,
     ) -> PreparedFreshV3BrowserRuntime:
         if len(built.prompt.prompt_text) > _MAX_LIVE_INITIAL_PROMPT_CHARS:
             raise FreshSessionBoundaryError(
                 "fresh initial prompt exceeds the 59,800 character "
                 "public-composer safety boundary"
             )
-        self._ensure_browser_preparing(built.job.job_id)
+        if resume_unprepared_attention:
+            if config.browser.mode is not BrowserConnectionMode.BROWSER_USE_EXTENSION:
+                raise FreshSessionBoundaryError(
+                    "ambiguous BrowserUse recovery must stay on the exact extension session"
+                )
+            job_before_preflight = self.store.get_job(built.job.job_id)
+            if (
+                job_before_preflight.status != JobStatus.USER_ATTENTION_REQUIRED.value
+                or job_before_preflight.submit_count != 0
+                or job_before_preflight.capture_count != 0
+                or job_before_preflight.packet_hash != built.packet_bundle.packet_hash
+                or job_before_preflight.browser_session_id is not None
+                or job_before_preflight.conversation_id is not None
+            ):
+                raise FreshSessionBoundaryError(
+                    "unprepared recovery no longer matches the exact unsent attention job"
+                )
+        else:
+            self._ensure_browser_preparing(built.job.job_id)
         try:
             session = await ProBrowserWorker(config.browser).open(
                 job_id=built.job.job_id
             )
         except Exception as error:
-            browseruse_open_failure = (
-                config.browser.mode is BrowserConnectionMode.BROWSER_USE_EXTENSION
-            )
-            self._record_browser_attention(
-                built.job.job_id,
-                error,
-                safe_unprepared_resume=browseruse_open_failure,
-                preparation_failure_stage=(
-                    "BROWSER_SESSION_OPEN" if browseruse_open_failure else None
-                ),
-            )
+            if not resume_unprepared_attention:
+                browseruse_open_failure = (
+                    config.browser.mode is BrowserConnectionMode.BROWSER_USE_EXTENSION
+                )
+                self._record_browser_attention(
+                    built.job.job_id,
+                    error,
+                    safe_unprepared_resume=browseruse_open_failure,
+                    preparation_failure_stage=(
+                        "BROWSER_SESSION_OPEN" if browseruse_open_failure else None
+                    ),
+                )
             raise
         try:
-            current_conversation = session.adapter.conversation_id()
-            if (
-                self.boundary.predecessor_required
-                and current_conversation
-                not in {None, self.boundary.old_conversation_id}
-            ):
-                raise FreshSessionBoundaryError(
-                    "matched ChatGPT tab is unrelated to the frozen E2R conversation"
+            if resume_unprepared_attention:
+                verifier = getattr(
+                    session.adapter,
+                    "verify_unprepared_recovery_state",
+                    None,
                 )
-            await session.page.goto(
-                config.browser.chatgpt_url,
-                wait_until="domcontentloaded",
-            )
-            if session.adapter.conversation_id() is not None:
-                raise FreshSessionBoundaryError(
-                    "browser did not reach a clean ChatGPT new-chat route"
+                if not callable(verifier):
+                    raise FreshSessionBoundaryError(
+                        "same-session read-only unprepared recovery inspection is unavailable"
+                    )
+                proof = await verifier(
+                    packet_path=built.packet_bundle.research_packet_json,
+                    packet_hash=built.packet_bundle.packet_hash,
                 )
+                if (
+                    not isinstance(proof, Mapping)
+                    or proof.get("status") != "PASS"
+                    or proof.get("new_chat_route_verified") is not True
+                    or proof.get("logged_in_editor_ready") is not True
+                    or proof.get("pro_mode_ready") is not True
+                    or proof.get("composer_empty") is not True
+                    or proof.get("visible_user_turn_count") != 0
+                    or proof.get("stop_visible") is not False
+                    or proof.get("native_file_chooser_open") is not False
+                    or proof.get("native_file_chooser_count") != 0
+                    or proof.get("native_file_chooser_unknown_owner_count") != 0
+                    or proof.get("packet_hash") != built.packet_bundle.packet_hash
+                    or proof.get("submit_count") != 0
+                    or proof.get("selected_file_state")
+                    not in {
+                        "NO_SELECTED_FILE_OR_VISIBLE_ATTACHMENT",
+                        "EXACT_PACKET_HASH_MATCH_VISIBLE",
+                    }
+                ):
+                    raise FreshSessionBoundaryError(
+                        "same-session read-only unprepared recovery proof is incomplete"
+                    )
+                current_job = self.store.get_job(built.job.job_id)
+                if (
+                    current_job.state_version != job_before_preflight.state_version
+                    or current_job.status != JobStatus.USER_ATTENTION_REQUIRED.value
+                    or current_job.submit_count != 0
+                    or current_job.capture_count != 0
+                    or current_job.packet_hash != built.packet_bundle.packet_hash
+                    or current_job.browser_session_id is not None
+                    or current_job.conversation_id is not None
+                    or any(
+                        value is not None
+                        for value in (
+                            current_job.approval_nonce_hash,
+                            current_job.approval_packet_hash,
+                            current_job.approval_prompt_hash,
+                            current_job.approval_browser_session_id,
+                            current_job.approval_expires_at,
+                            current_job.approval_consumed_at,
+                            current_job.approved_at,
+                        )
+                    )
+                ):
+                    raise FreshSessionBoundaryError(
+                        "durable job changed during unprepared recovery preflight"
+                    )
+                self.store.transition(
+                    current_job.job_id,
+                    expected_version=current_job.state_version,
+                    to_status=JobStatus.BROWSER_PREPARING,
+                    actor="v2.1-fresh-v3-browser-worker",
+                    idempotency_key=(
+                        f"fresh-v3-browser-recovery-preflight:{current_job.job_id}:"
+                        f"{current_job.state_version}"
+                    ),
+                    payload={
+                        "event": "FRESH_BROWSER_UNPREPARED_RECOVERY_PREFLIGHT_PASSED",
+                        "safe_unprepared_resume": True,
+                        "preparation_failure_stage": "READ_ONLY_BROWSER_RECOVERY_PREFLIGHT",
+                        "automatic_resubmit_allowed": False,
+                        "packet_hash": built.packet_bundle.packet_hash,
+                        "new_chat_route_verified": True,
+                        "logged_in_editor_ready": True,
+                        "pro_mode_ready": True,
+                        "composer_empty": True,
+                        "visible_user_turn_count": 0,
+                        "native_file_chooser_open": False,
+                        "native_file_chooser_count": 0,
+                        "native_file_chooser_unknown_owner_count": 0,
+                        "selected_file_state": proof["selected_file_state"],
+                        "submit_count": 0,
+                        "capture_count": 0,
+                    },
+                )
+            else:
+                current_conversation = session.adapter.conversation_id()
+                if (
+                    self.boundary.predecessor_required
+                    and current_conversation
+                    not in {None, self.boundary.old_conversation_id}
+                ):
+                    raise FreshSessionBoundaryError(
+                        "matched ChatGPT tab is unrelated to the frozen E2R conversation"
+                    )
+                await session.page.goto(
+                    config.browser.chatgpt_url,
+                    wait_until="domcontentloaded",
+                )
+                if session.adapter.conversation_id() is not None:
+                    raise FreshSessionBoundaryError(
+                        "browser did not reach a clean ChatGPT new-chat route"
+                    )
             prepared = await self.prepare_initial_with_adapter(
                 built,
                 session.adapter,
@@ -726,8 +837,16 @@ class FreshSessionOrchestratorV3:
                 prepared=prepared,
                 session=session,
             )
-        except Exception:
+        except Exception as error:
             await session.close()
+            if resume_unprepared_attention:
+                current_job = self.store.get_job(built.job.job_id)
+                if current_job.status == JobStatus.BROWSER_PREPARING.value:
+                    self._record_browser_attention(
+                        built.job.job_id,
+                        error,
+                        safe_unprepared_resume=False,
+                    )
             raise
 
     async def recover_prepared_initial_in_logged_in_browser(

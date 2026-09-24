@@ -1,28 +1,40 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 16:32 KST (P85 기존 로그인 탭에서 첨부 단계 timeout 발생; 안전 상태와 다음 조치 갱신).
+최종 갱신: 2026-09-24 17:10 KST (P86 same-session 읽기 전용 recovery gate와 재개 절차 갱신).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
-## 최신 상태 — P85 (2026-09-24 16:28 KST)
+## 최신 상태 — P86 (2026-09-24 17:10 KST)
 
-**로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 `extension` 세션의 기존 작업 탭에서만 한다.** 새 창·새 탭·새 프로필·별도 CDP 세션을 만들거나 재로그인하는 것은 대체 방법이 아니다. 기존 작업 탭을 찾거나 claim할 수 없으면 그 브라우저 단계에서 멈추고 정확한 오류와 확인 범위를 문서화한다.
+이 상단 P86이 현재 운영판정이다. 아래 P83/P84/P80/P81 등 예전 체크포인트의 실행 계획과 CI 상태는 당시 이력이며, 현재 다음 단계에는 적용하지 않는다.
 
-- 검증된 PR #7 head `07c60ca2a04a89867636ff064dd3efe63cc13fef`의 push/PR/V6 GitHub Actions는 모두 `SUCCESS` 확인 상태다. PR #7은 OPEN/DRAFT/MERGEABLE이며 main에는 미병합이다. 이 head의 검증은 첨부 RPC timeout 경계 이전 코드까지 포함한다.
-- 그 뒤 동일 C15 R6 job `PROJOB-df15a37c58ae7583924e58c0`만 대상으로, 기존 BrowserUse `extension` 세션에서 확인했던 사용자의 ChatGPT 탭을 재사용해 packet 첨부 단계를 한 번 시도했다. 새 browser/window/tab/profile/CDP session이나 새 job은 만들지 않았다. 로그인 prompt는 보이지 않았고 실제 `Pro` 모드와 빈 composer를 사전 확인했다.
-- 첨부 RPC가 다음 오류로 끝났다. 이 오류는 파일 선택/첨부 결과가 확정되었다는 뜻이 아니다.
+**로그인이 필요한 작업이면 사용자가 이미 로그인해 둔 BrowserUse Chrome `extension` 세션에서 기존 작업 탭을 찾아, 그 정확한 탭에서 진행한다.** 새 창·새 탭·새 프로필·별도 CDP 세션을 만들거나 다시 로그인하는 것은 대체 방법이 아니다. 기존 탭을 찾거나 claim할 수 없으면 브라우저 작업을 멈추고 실제 오류와 확인 범위를 문서화한다. “새 Chat”이 필요해도 같은 로그인 탭 안에서만 연다.
+
+- **P86에서 실제로 확인한 세션:** 이미 로그인된 BrowserUse `extension`에서 열거한 사용자의 기존 ChatGPT 탭 하나를 계속 사용했다. 새 browser/window/tab/profile/CDP session을 만들거나 재로그인하지 않았다. 해당 탭의 읽기 전용 관찰에서는 로그인 prompt 없음, 실제 `Pro`, 빈 composer, user turn 0, 빈 파일 input 5개, 화면상 packet 이름 없음이었다.
+- 같은 세션의 read-only Windows UI Automation 검사에서 top-level window 24개를 열거했고, Chrome 소유 `Open` dialog 후보 0개, 소유자를 판별하지 못한 후보 0개였다. 이는 **검사 시점**의 상태만 말하며, 앞선 attach 시도에서 어떤 결과가 났는지를 소급 증명하지 않는다. 창/탭은 닫거나 조작하지 않았다.
+- 해당 탭의 `tab.dev.logs()`에는 `2026-09-24T07:27:36.329Z`의 React `RecoverableError: Minified React error #418` 한 건이 있었다. 같은 시간대 관찰만으로 이번 attach timeout의 원인이라고 단정할 수 없다.
+- durable C15 R6 job `PROJOB-df15a37c58ae7583924e58c0`은 마지막 read-only SQLite 확인 시 `USER_ATTENTION_REQUIRED`, version 18, `submit_count=0`, `capture_count=0`, browser/conversation binding 없음, successor 없음이다. 최신 event는 `DRAFT_PREPARATION_OR_UNKNOWN`, `safe_unprepared_resume=false`, `automatic_resubmit_allowed=false`; packet hash는 `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`다. **이 durable 차단을 live 화면 관찰만으로 덮어쓰지 않는다.**
+- 마지막 첨부 RPC의 실제 오류는 다음과 같다. 이것은 파일이 첨부되지 않았거나 전송되지 않았다는 증거가 아니다.
 
 ```text
 BrowserUseBridgeError: BrowserUse bridge transport failed (TimeoutError: timed out)
 ```
 
-- 마지막 durable SQLite read는 `2026-09-24T07:28:13.906437Z` (16:28:13 KST)이며, mode=ro 및 `PRAGMA query_only=ON`으로 확인했다. 같은 job은 `USER_ATTENTION_REQUIRED`, state version 18, packet hash 불변이다. `submit_count=0`, `capture_count=0`, approval/browser/conversation binding 없음, successor 없음. 최신 event는 `DRAFT_PREPARATION_OR_UNKNOWN`, `safe_unprepared_resume=false`, `automatic_resubmit_allowed=false`다.
-- 오류 뒤 같은 기존 탭의 읽기 전용 DOM에서는 `chatgpt.com`, 로그인 prompt 없음, 빈 composer, user turn 0, 파일명 표시 없음이 관찰됐다. **Windows 네이티브 파일 선택기 상태는 확인되지 않았고, 파일 선택기가 열렸는지/선택됐는지 증거가 없다.** 따라서 “미첨부 확정”이나 “안전하게 재시도 가능”으로 바꿔 해석하지 않는다. 해당 파일 선택기를 닫거나 조작하지 않았고, 전송도 하지 않았다.
-- 코드에는 Python RPC timeout 기본 30초와 Windows 파일 선택기 polling 상한 45초가 함께 있다. 이 예산 불일치가 timeout 원인일 가능성은 있지만, 이번 발생의 인과관계는 아직 계측으로 입증되지 않았다. 장애를 로그인 만료나 제품 정책 거부라고 단정하지 않는다.
-- **재개 금지 조건:** 현재 `safe_unprepared_resume=false`이고 OS 파일 선택기/첨부 상태가 미확정이다. 새 runner 호출, 첨부 재시도, prompt 입력, 전송은 하지 않는다. 먼저 기존 사용자 세션·탭을 보존한 채 파일 선택기 상태를 읽기 전용으로 판별하고, bridge timeout/cancellation 경계를 테스트로 수리한 뒤, 동일 job의 durable 상태 및 실제 탭 상태가 모두 안전하다고 확인될 때만 이어간다. 상태를 증명할 수 없으면 여기서 멈춘다.
-- 이번 시도에서 새 job, source query/fetch, prompt 전송, response capture, 점수/Stage 변경은 모두 0이다. 문서 갱신만으로 브라우저를 열거나 사용자 탭을 조작하지 않는다.
+- 직전 오류 시점의 durable snapshot (`2026-09-24T07:28:13.906437Z`, mode=ro 및 `PRAGMA query_only=ON`)은 그대로 기록한다. 그 당시에는 native chooser를 확인하지 못했으므로 안전한 재개 여부를 알 수 없었다. P86의 후속 read-only UI Automation 결과는 현재 검사 시점의 열린 대화상자 유무를 보완할 뿐, durable job의 `safe_unprepared_resume=false`를 바꾸지 않는다.
+- 코드에서 확인한 timeout은 BrowserUse RPC 기본 30초, Windows file chooser polling 45초다. 불일치가 원인일 가능성은 있지만 이번 timeout의 근본 원인으로 입증되지는 않았다. P86 변경은 packet-attach RPC만 60초로 늘리고 다른 RPC의 기본 timeout은 유지한다.
+- **재개는 아래 코드·회귀 검증이 원격 exact-head CI까지 통과하기 전에는 하지 않는다.** CI 이후에도 exact same-job / same-session read-only gate가 통과해야 한다. gate는 packet hash, existing ChatGPT new-chat route, 로그인, 실제 Pro, 빈 composer, user turn 0, stop 없음, Chrome file chooser 닫힘/owner 불명 없음, 선택 파일이 없거나 exact packet hash의 visible file임을 검사한다. proof 전에는 navigation·upload·prompt 입력·submit을 하지 않고, durable job이 바뀌었으면 중단한다.
+- 이번 recovery 분석에서 새 job, source query/fetch, prompt 전송, response capture, 점수/Stage 변경은 0이다.
 
-다음 상세 기록: [implementation progress P85](implementation_progress.md#p85--기존-로그인-browseruse-탭-유지와-첨부-rpc-timeout의-미확정-안전상태-기록-2026-09-24-1628-kst).
+### P86 코드·검증·다음 한 단계
+
+- `BrowserUseBridgeClient`의 packet attach RPC만 60초 timeout을 받도록 바꾸고, native picker의 45초 wait를 공유 상수로 명시했다. 같은 `extension` page에 read-only native file chooser inspector를 추가했다. owner가 불명확하면 fail closed한다.
+- exact historical attach timeout은 live recovery 시도 후보로만 허용된다. 실제 재개 시 orchestrator는 BrowserUse extension에서 claim한 **기존 같은 탭**으로 read-only recovery proof를 수행하고 durable job version/count/hash/approval/binding을 재확인한다. 일치하면 append-only event를 남기고 그 다음에만 준비 단계를 진행한다. 자동 재전송은 허용하지 않는다.
+- 로컬 회귀 `browseruse_extension_bridge` + `UnpreparedRecoveryReadOnlyGateTest` + 전체 `fresh_orchestration` **106/106 PASS**; Node `--check` 및 `git diff --check` PASS; production static audit `PASS`, `critical_count=0`.
+- 이 검증 범위는 이번 diff가 추가한 focused/orchestration tests와 static audit다. PR #7의 원격 exact-head workflow가 아직 새 diff를 검증하지 않았으므로, 현재는 same-job 재개 금지 상태다.
+- PR #7은 OPEN/DRAFT/MERGEABLE, main 미병합이다. 현재 원격 head `e199b5271d17f1e0e9359de805dd2d91baae462c`다. 이 head의 Pro-first run [35970550958](https://github.com/Daikisong/stock_agent/actions/runs/35970550958)은 SUCCESS, V6 run [35970582856](https://github.com/Daikisong/stock_agent/actions/runs/35970582856)은 SUCCESS이며, 동일 head의 후속 Pro-first run [35970583010](https://github.com/Daikisong/stock_agent/actions/runs/35970583010)은 마지막 조회 시 `in_progress`였다. 이것들은 아직 수정 전 head의 run이다.
+- 다음 한 단계는 변경과 이 handoff를 기존 PR #7 branch에만 한글 commit/push한 뒤 새 exact-head Actions를 기다리는 것이다. 그 뒤에만 같은 durable job을 같은 로그인 BrowserUse `extension` 세션·기존 탭에서 재확인한다. **기존 로그인 탭을 사용할 수 없으면 새 창을 열지 않고 멈춘다.**
+
+다음 상세 기록: [implementation progress P86](implementation_progress.md#p86--기존-로그인-browseruse-세션과-same-tab-재개-gate-2026-09-24-1710-kst).
 
 ## 가장 중요한 규칙 — 로그인된 바로 그 세션과 탭
 
@@ -34,9 +46,9 @@ BrowserUseBridgeError: BrowserUse bridge transport failed (TimeoutError: timed o
 - BrowserUse 도구, 세션 또는 정확한 탭의 연결이 실패하면 확인한 범위·마지막 안전 상태·**실제 오류 문자열**을 기록하고 그 단계에서 멈춘다. 다른 세션으로 전송·다운로드를 반복하지 않는다. 기술 오류를 정책 거부로 바꿔 적지 않는다.
 - 기록에는 민감정보를 남기지 않는다. 사용자의 기존 창·탭·로그인은 종료하거나 초기화하지 않는다.
 
-## 최신 재개 상태 — P83
+## 이전 재개 이력 — P83 (P84/P85/P86에서 후속 갱신)
 
-### P84 현재 인수인계 요약 (2026-09-24 15:43 KST)
+### P84 당시 인수인계 요약 (2026-09-24 15:43 KST)
 
 - 로그인 필요한 작업은 사용자의 **기존 BrowserUse `extension` 세션에서 이미 로그인된 정확한 작업 탭**에서만 한다. 새 창·탭·프로필·별도 CDP 세션·재로그인은 대체 경로가 아니다. 새 Chat 대화가 필요해도 같은 로그인 탭 안에서만 시작한다.
 - 먼저 기존 탭을 열거하고 대상 대화를 확인해 정확한 탭 하나를 claim한다. 이후 그 tab 객체에서 URL/대화, 로그인, 실제 Pro 모드, 기존 응답·초안·첨부를 확인한다. 응답/파일이 이미 있으면 같은 탭에서 재사용·다운로드한다. 입력·첨부·전송 직전에도 같은 탭과 상태를 재확인한다.
@@ -113,7 +125,7 @@ BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭�
 쉬운 예: 기존 ChatGPT 응답이나 Library에 JSON이 보이면 그 화면의 다운로드 동작을 같은 탭에서 수행하고,
 받은 파일을 준비된 E2R job에 연결한다. “새 세션에서 다시 생성”은 기본 복구 방법이 아니다.
 
-## 최신 상태 인수인계 (P81, 2026-09-24 14:37 KST)
+## 이전 상태 인수인계 (P81, 2026-09-24 14:37 KST)
 
 - PR #7은 OPEN/DRAFT/MERGEABLE, main 미병합이다. 새 head `7830b9a5baccaa7119d52892480504c82014ea26`를 한글 commit `7830b9a5`로 push했다. 이 head의 Pro push [35960262909](https://github.com/Daikisong/stock_agent/actions/runs/35960262909), Pro PR [35960267593](https://github.com/Daikisong/stock_agent/actions/runs/35960267593), V6 PR [35960267632](https://github.com/Daikisong/stock_agent/actions/runs/35960267632)은 14:37 KST 확인 시 모두 `in_progress`다. 기존 SHA `281354cf`의 세 성공 run은 과거 코드 검증이며 P81 결과와 혼동하지 않는다.
 - 로그인 필요 화면 작업은 P80에서 연결한 BrowserUse `extension`의 **동일 사용자 ChatGPT 탭**으로만 한다. 그 탭의 login/Pro/composer read-only preflight는 PASS였지만, same-job initial runner가 `first_visible()`의 selector 조회에서 다시 3초 timeout을 냈다. 현재 화면은 여전히 ChatGPT home이고 login prompt 없음, composer 1개, `Pro` 선택 control, user turn 0, packet attachment 0이다. `tab.dev.logs()`는 0건이고 `tab.capabilities.get("cdp")`는 `Capability is not available: cdp`를 반환했다.
@@ -126,7 +138,7 @@ BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭�
 
 P81 상세 진행기록은 [implementation progress P81](implementation_progress.md#p81--browseruse-selector-read-path-timeout-보강과-same-job-실패-경계-기록-2026-09-24-1423-kst)을 참조한다.
 
-## 최신 상태 인수인계 (P80, 2026-09-24 14:08 KST)
+## 이전 상태 인수인계 (P80, 2026-09-24 14:08 KST)
 
 - PR #7은 OPEN/DRAFT/MERGEABLE이며 main에는 미병합이다. 현재 local/origin head는 `281354cfc6d8e88f21c2bd1b32db72fea6f2f155` (`BrowserUse 읽기 전용 평가 timeout 전달을 보정`)이다.
 - 이 정확한 head의 Pro push [35955888505](https://github.com/Daikisong/stock_agent/actions/runs/35955888505), Pro PR [35955892468](https://github.com/Daikisong/stock_agent/actions/runs/35955892468), V6 PR [35955892448](https://github.com/Daikisong/stock_agent/actions/runs/35955892448)은 모두 SUCCESS로 종료됐다. 각 실행의 head SHA는 `281354cfc6d8e88f21c2bd1b32db72fea6f2f155`다.

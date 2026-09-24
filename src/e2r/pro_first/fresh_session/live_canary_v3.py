@@ -302,6 +302,9 @@ class FreshV3InitialLiveCanaryRunner:
             else await orchestrator.prepare_initial_in_logged_in_browser(
                 built,
                 config=self.config,
+                resume_unprepared_attention=(
+                    resume_unprepared_attention_job_id is not None
+                ),
             )
         )
         try:
@@ -508,6 +511,16 @@ class FreshV3InitialLiveCanaryRunner:
             == "DRAFT_PREPARATION_OR_UNKNOWN"
             and attention_event.payload.get("submit_count") == 0
         )
+        exact_browseruse_attach_transport_timeout = bool(
+            job.last_error_class == "BrowserUseBridgeError"
+            and job.last_error_message
+            == "BRIDGE_OPERATION_FAILED: BrowserUse bridge transport failed (TimeoutError: timed out)"
+            and attention_event is not None
+            and attention_event.payload.get("safe_unprepared_resume") is False
+            and attention_event.payload.get("preparation_failure_stage")
+            == "DRAFT_PREPARATION_OR_UNKNOWN"
+            and attention_event.payload.get("submit_count") == 0
+        )
         prepared_receipt = (
             boundary.fresh_job_root
             / "fresh_session/fresh_v3_prepare_receipt.json"
@@ -541,6 +554,7 @@ class FreshV3InitialLiveCanaryRunner:
                 or legacy_preflight_error
                 or exact_legacy_bridge_handshake_error
                 or exact_windows_packet_path_preflight_error
+                or exact_browseruse_attach_transport_timeout
             )
             or attention_event is None
             or attention_event.from_status != JobStatus.BROWSER_PREPARING.value

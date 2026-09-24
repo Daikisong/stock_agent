@@ -9,6 +9,7 @@ from tempfile import TemporaryDirectory
 import json
 from types import SimpleNamespace
 import unittest
+from unittest.mock import AsyncMock
 from urllib.request import urlopen
 
 from e2r.pro_first.browser.chatgpt_adapter import PlaywrightChatGPTWebAdapter
@@ -16,6 +17,7 @@ from e2r.pro_first.browser.mock_chatgpt_app import MockChatGPTServer
 from e2r.pro_first.browser.protocol import (
     BrowserArtifactUnavailable,
     BrowserCaptureRequest,
+    BrowserInspection,
     BrowserUIIncompatible,
     BrowserUIState,
     ManualLoginRequired,
@@ -24,6 +26,7 @@ from e2r.pro_first.browser.protocol import (
 from e2r.pro_first.config import BrowserConnectionMode, ProBrowserConfig
 from e2r.pro_first.browser.worker import ProBrowserWorker
 from e2r.pro_first.ids import canonical_hash
+from e2r.pro_first.browser.selector_registry import EDITOR_SELECTORS, USER_TURN_SELECTORS
 
 
 class ProReasoningModelLabelTest(unittest.TestCase):
@@ -33,6 +36,159 @@ class ProReasoningModelLabelTest(unittest.TestCase):
                 self.assertTrue(
                     PlaywrightChatGPTWebAdapter._is_pro_model_label(label)
                 )
+
+
+class _RecoveryPreflightLocator:
+    def __init__(
+        self,
+        *,
+        present: bool = True,
+        value: str = "",
+        selected_file: dict[str, str] | None = None,
+        snapshot: dict[str, object] | None = None,
+    ) -> None:
+        self.present = present
+        self.value = value
+        self.selected_file = selected_file
+        self.snapshot = snapshot or {"visible_file_signals": []}
+        self.first = self
+
+    async def count(self) -> int:
+        return int(self.present)
+
+    async def is_visible(self) -> bool:
+        return self.present
+
+    async def evaluate(self, expression: str) -> object:
+        if "tagName.toLowerCase" in expression:
+            return "textarea"
+        if "E2R_UNPREPARED_RECOVERY_COMPOSER_SNAPSHOT" in expression:
+            return self.snapshot
+        if "input.files" in expression:
+            return self.selected_file
+        raise AssertionError(expression)
+
+    async def input_value(self) -> str:
+        return self.value
+
+    async def inner_text(self) -> str:
+        return self.value
+
+    async def get_attribute(self, _name: str) -> str | None:
+        return None
+
+    def nth(self, _index: int) -> "_RecoveryPreflightLocator":
+        return self
+
+
+class _RecoveryPreflightPage:
+    url = "https://chatgpt.com/"
+
+    def __init__(
+        self,
+        *,
+        chooser_open: bool = False,
+        composer_text: str = "",
+        user_turn_count: int = 0,
+        selected_file: dict[str, str] | None = None,
+        visible_file_signals: tuple[str, ...] = (),
+        chooser_unknown_owners: int = 0,
+    ) -> None:
+        self.inspect_native_file_chooser_state = AsyncMock(
+            return_value={
+                    "open": chooser_open,
+                    "chrome_owned_dialog_count": int(chooser_open),
+                    "unknown_owner_count": chooser_unknown_owners,
+                }
+            )
+        self.editor = _RecoveryPreflightLocator(value=composer_text)
+        self.file_inputs = _RecoveryPreflightLocator(
+            present=selected_file is not None,
+            selected_file=selected_file,
+        )
+        self.user_turn_count = user_turn_count
+        self.snapshot = {"visible_file_signals": list(visible_file_signals)}
+
+    def locator(self, selector: str) -> _RecoveryPreflightLocator:
+        if selector in EDITOR_SELECTORS:
+            return self.editor
+        if selector == 'input[type="file"]':
+            return self.file_inputs
+        if selector in USER_TURN_SELECTORS:
+            return _RecoveryPreflightLocator(present=self.user_turn_count > 0)
+        raise AssertionError(selector)
+
+    def get_by_label(self, _pattern: object) -> _RecoveryPreflightLocator:
+        return _RecoveryPreflightLocator(present=False)
+
+    def get_by_text(self, _pattern: object) -> _RecoveryPreflightLocator:
+        return _RecoveryPreflightLocator(present=False)
+
+
+class UnpreparedRecoveryReadOnlyGateTest(unittest.IsolatedAsyncioTestCase):
+    def setUp(self) -> None:
+        self.temporary_directory = TemporaryDirectory()
+        self.addCleanup(self.temporary_directory.cleanup)
+        self.packet_path = Path(self.temporary_directory.name) / "research_packet.json"
+        self.packet_payload = {"schema_version": "e2r_pro_research_packet_v1"}
+        self.packet_path.write_text(json.dumps(self.packet_payload), encoding="utf-8")
+        self.packet_hash = canonical_hash(self.packet_payload)
+
+    def _adapter(self, page: _RecoveryPreflightPage) -> PlaywrightChatGPTWebAdapter:
+        adapter = PlaywrightChatGPTWebAdapter(page)
+        adapter.ensure_logged_in = AsyncMock(
+            return_value=BrowserInspection(
+                state=BrowserUIState.DEEP_RESEARCH_MODE_READY,
+                conversation_id=None,
+                editor_ready=True,
+                deep_research_ready=True,
+                packet_uploaded=False,
+                prompt_ready=False,
+                send_ready=False,
+                stop_visible=False,
+            )
+        )
+        adapter._deep_research_ready = AsyncMock(return_value=True)
+        return adapter
+
+    async def test_clean_same_session_pro_mode_and_native_dialog_state_pass(self) -> None:
+        page = _RecoveryPreflightPage()
+        proof = await self._adapter(page).verify_unprepared_recovery_state(
+            packet_path=self.packet_path,
+            packet_hash=self.packet_hash,
+        )
+        self.assertEqual(proof["status"], "PASS")
+        self.assertEqual(proof["packet_hash"], self.packet_hash)
+        self.assertEqual(
+            proof["selected_file_state"],
+            "NO_SELECTED_FILE_OR_VISIBLE_ATTACHMENT",
+        )
+        self.assertFalse(proof["native_file_chooser_open"])
+        page.inspect_native_file_chooser_state.assert_awaited_once()
+
+    async def test_open_dialog_nonempty_composer_user_turn_and_mismatched_file_fail_closed(self) -> None:
+        cases = (
+            (_RecoveryPreflightPage(chooser_open=True), "file chooser state"),
+            (
+                _RecoveryPreflightPage(chooser_unknown_owners=1),
+                "file chooser state",
+            ),
+            (_RecoveryPreflightPage(composer_text="user draft"), "non-empty or missing composer"),
+            (_RecoveryPreflightPage(user_turn_count=1), "existing user turn"),
+            (
+                _RecoveryPreflightPage(
+                    selected_file={"name": "different.json", "text": "{}"},
+                ),
+                "different selected file",
+            ),
+        )
+        for page, message in cases:
+            with self.subTest(message=message):
+                with self.assertRaisesRegex(BrowserUIIncompatible, message):
+                    await self._adapter(page).verify_unprepared_recovery_state(
+                        packet_path=self.packet_path,
+                        packet_hash=self.packet_hash,
+                    )
 
     def test_pro_upsell_is_not_a_selected_model(self) -> None:
         for label in ("Upgrade to Pro", "Try Pro", "Light", "Instant"):
@@ -96,6 +252,74 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
             "old_result.md",
             {row.button_text for row in prepared.preexisting_attachment_keys},
         )
+
+    async def test_unprepared_recovery_requires_clean_same_session_browser_state(self) -> None:
+        await self.page.goto(self.server.base_url, wait_until="domcontentloaded")
+
+        class SameSessionPageProxy:
+            def __init__(self, page, *, chooser_open: bool = False, url: str = "https://chatgpt.com/"):
+                self._page = page
+                self.url = url
+                self.inspect_native_file_chooser_state = AsyncMock(
+                    return_value={
+                        "open": chooser_open,
+                        "chrome_owned_dialog_count": int(chooser_open),
+                    }
+                )
+
+            def __getattr__(self, name):
+                return getattr(self._page, name)
+
+        page = SameSessionPageProxy(self.page)
+        adapter = PlaywrightChatGPTWebAdapter(page)
+
+        proof = await adapter.verify_unprepared_recovery_state(
+            packet_path=self.packet_path,
+            packet_hash=self.packet_hash,
+        )
+
+        self.assertEqual(proof["status"], "PASS")
+        self.assertEqual(proof["selected_file_state"], "NO_SELECTED_FILE_OR_VISIBLE_ATTACHMENT")
+        self.assertEqual(proof["visible_user_turn_count"], 0)
+        self.assertFalse(proof["native_file_chooser_open"])
+        page.inspect_native_file_chooser_state.assert_awaited_once()
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
+
+    async def test_unprepared_recovery_fails_closed_for_open_dialog_or_user_draft(self) -> None:
+        await self.page.goto(self.server.base_url, wait_until="domcontentloaded")
+
+        class SameSessionPageProxy:
+            def __init__(self, page, *, chooser_open: bool = False, url: str = "https://chatgpt.com/"):
+                self._page = page
+                self.url = url
+                self.inspect_native_file_chooser_state = AsyncMock(
+                    return_value={
+                        "open": chooser_open,
+                        "chrome_owned_dialog_count": int(chooser_open),
+                    }
+                )
+
+            def __getattr__(self, name):
+                return getattr(self._page, name)
+
+        open_dialog_page = SameSessionPageProxy(self.page, chooser_open=True)
+        with self.assertRaisesRegex(BrowserUIIncompatible, "file chooser state"):
+            await PlaywrightChatGPTWebAdapter(
+                open_dialog_page
+            ).verify_unprepared_recovery_state(
+                packet_path=self.packet_path,
+                packet_hash=self.packet_hash,
+            )
+
+        await self.page.locator("#prompt-textarea").fill("사용자 초안")
+        draft_page = SameSessionPageProxy(self.page)
+        with self.assertRaisesRegex(BrowserUIIncompatible, "non-empty or missing composer"):
+            await PlaywrightChatGPTWebAdapter(draft_page).verify_unprepared_recovery_state(
+                packet_path=self.packet_path,
+                packet_hash=self.packet_hash,
+            )
+        self.assertEqual(await self.page.locator("#prompt-textarea").inner_text(), "사용자 초안")
+        self.assertEqual(await self.page.evaluate("window.__submitCount"), 0)
 
     async def test_prepare_refuses_to_replace_an_existing_user_draft(self) -> None:
         editor = self.page.locator('[contenteditable="true"]')

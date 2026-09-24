@@ -9,6 +9,7 @@ import { spawn } from "node:child_process";
 const MAX_REQUEST_BYTES = 64 * 1024 * 1024;
 const MAX_EVENT_ROWS = 2048;
 const DEFAULT_READ_ONLY_EVALUATE_TIMEOUT_MS = 10_000;
+export const BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS = 45_000;
 const CHATGPT_ORIGIN = "https://chatgpt.com";
 const PRIVATE_IPV4 = /^(10\.(?:\d{1,3}\.){2}\d{1,3}|172\.(?:1[6-9]|2\d|3[01])\.(?:\d{1,3}\.)\d{1,3}|192\.168\.(?:\d{1,3}\.)\d{1,3})$/;
 const READ_ONLY_LOCATOR_COUNT_EXPRESSION = "elements => elements.length";
@@ -95,6 +96,31 @@ export function readonlyCallback(expression) {
     {
       matches: value => value === READ_ONLY_LOCATOR_ENABLED_EXPRESSION,
       callback: element => !element.matches(":disabled") && !element.closest('[aria-disabled="true"]'),
+    },
+    {
+      matches: value => value.includes("E2R_UNPREPARED_RECOVERY_COMPOSER_SNAPSHOT"),
+      callback: element => {
+        let root = element.closest("form");
+        if (!root) {
+          root = element;
+          for (let depth = 0; root && depth < 3; depth += 1) root = root.parentElement;
+        }
+        if (!root) return { visible_file_signals: [] };
+        const visible = node => {
+          const rect = node.getBoundingClientRect();
+          const style = window.getComputedStyle(node);
+          return rect.width > 0 && rect.height > 0
+            && style.visibility !== "hidden" && style.display !== "none";
+        };
+        const candidates = [root.innerText || ""];
+        for (const node of root.querySelectorAll("button,[role=button],[aria-label],[title]")) {
+          if (!visible(node)) continue;
+          candidates.push(node.innerText || "", node.getAttribute("aria-label") || "", node.getAttribute("title") || "");
+        }
+        const filePattern = /[^\s\\/]+\.(?:pdf|docx?|xlsx?|csv|md|json|txt|png|jpe?g|zip)(?:\(\d+\))?$/i;
+        const signals = [...new Set(candidates.map(value => String(value || "").trim()).filter(value => filePattern.test(value)))];
+        return { visible_file_signals: signals };
+      },
     },
     {
       matches: value => /^element\s*=>\s*element\.tagName\.toLowerCase\(\)$/.test(value),
@@ -509,7 +535,7 @@ public static class E2RWindowApi {
 '@
 $targetPath = [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String("${targetB64}"))
 if (-not (Test-Path -LiteralPath $targetPath -PathType Leaf)) { throw "Selected packet is not visible to Windows" }
-$deadline = [DateTime]::UtcNow.AddSeconds(45)
+$deadline = [DateTime]::UtcNow.AddMilliseconds(${BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS})
 $matchedDialog = $false
 while ([DateTime]::UtcNow -lt $deadline) {
   $handle = [E2RWindowApi]::GetForegroundWindow()
@@ -568,6 +594,103 @@ while ([DateTime]::UtcNow -lt $deadline) {
 if ($matchedDialog) { throw "Chrome file chooser timed out before selecting the packet" }
 throw "No Chrome-owned Open dialog appeared; no global keystrokes were sent"
 `;
+}
+
+export function nativeFileChooserInspectionScript() {
+  return `
+$ErrorActionPreference = "Stop"
+Add-Type -AssemblyName UIAutomationClient
+Add-Type -AssemblyName UIAutomationTypes
+Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+public static class E2RReadOnlyWindowApi {
+  [DllImport("user32.dll")] public static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
+  [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+}
+'@
+$openTitles = @(
+  "Open",
+  "Open File",
+  ([string][char]0xC5F4 + [string][char]0xAE30),
+  ([string][char]0xD30C + [string][char]0xC77C + " " + [string][char]0xC5F4 + [string][char]0xAE30)
+)
+$root = [System.Windows.Automation.AutomationElement]::RootElement
+$windows = $root.FindAll(
+  [System.Windows.Automation.TreeScope]::Children,
+  [System.Windows.Automation.Condition]::TrueCondition
+)
+$matches = 0
+$unknownOwners = 0
+for ($index = 0; $index -lt $windows.Count; $index++) {
+  $window = $windows.Item($index)
+  if ($window.Current.IsOffscreen) { continue }
+  $title = [string]$window.Current.Name
+  if ($openTitles -notcontains $title.Trim()) { continue }
+  $handle = [IntPtr]$window.Current.NativeWindowHandle
+  if ($handle -eq [IntPtr]::Zero) { $unknownOwners += 1; continue }
+  $owner = [E2RReadOnlyWindowApi]::GetWindow($handle, 4)
+  if ($owner -eq [IntPtr]::Zero) { $unknownOwners += 1; continue }
+  [uint32]$ownerPid = 0
+  [void][E2RReadOnlyWindowApi]::GetWindowThreadProcessId($owner, [ref]$ownerPid)
+  if ($ownerPid -le 0) { $unknownOwners += 1; continue }
+  try {
+    if ((Get-Process -Id $ownerPid -ErrorAction Stop).ProcessName -eq "chrome") {
+      $matches += 1
+    } else {
+      $unknownOwners += 1
+    }
+  } catch { $unknownOwners += 1 }
+}
+[ordered]@{ open = ($matches -gt 0); chrome_owned_dialog_count = $matches; unknown_owner_count = $unknownOwners } | ConvertTo-Json -Compress
+`;
+}
+
+async function inspectNativeFileChooser() {
+  const encoded = powerShellEncoded(nativeFileChooserInspectionScript());
+  const child = spawn(
+    "powershell.exe",
+    ["-NoLogo", "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-EncodedCommand", encoded],
+    { windowsHide: true, stdio: ["ignore", "pipe", "pipe"] },
+  );
+  let stdout = "";
+  let stderr = "";
+  child.stdout.setEncoding("utf8");
+  child.stderr.setEncoding("utf8");
+  child.stdout.on("data", data => { stdout = (stdout + data).slice(-2000); });
+  child.stderr.on("data", data => { stderr = (stderr + data).slice(-1000); });
+  const result = await new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      try { child.kill(); } catch {}
+      reject(new Error("read-only native file chooser inspection timed out"));
+    }, 10_000);
+    child.once("error", error => {
+      clearTimeout(timer);
+      reject(error);
+    });
+    child.once("close", code => {
+      clearTimeout(timer);
+      if (code !== 0) {
+        const detail = (stderr || stdout).replace(/[\r\n]+/g, " ").slice(0, 300);
+        reject(new Error(`read-only native file chooser inspection failed (exit=${code}; ${detail})`));
+        return;
+      }
+      try {
+        const parsed = JSON.parse(stdout.trim());
+        if (
+          typeof parsed.open !== "boolean"
+          || !Number.isInteger(parsed.chrome_owned_dialog_count)
+          || !Number.isInteger(parsed.unknown_owner_count)
+        ) {
+          throw new Error("inspection result is malformed");
+        }
+        resolve(parsed);
+      } catch (error) {
+        reject(new Error(`read-only native file chooser inspection returned invalid JSON: ${String(error)}`));
+      }
+    });
+  });
+  return result;
 }
 
 function validatePacketPathForWindowsChooser({ pathValue, distroName }) {
@@ -785,6 +908,9 @@ export async function startBrowserUseExtensionBridge({
         jsonRegex(args.argument),
         readOnlyEvaluationOptions(args.options || {}),
       )) };
+    }
+    if (operation === "page.inspect_native_file_chooser") {
+      return { value: await inspectNativeFileChooser() };
     }
     if (operation === "page.attach_packet") {
       return { value: await attachPacket({ filePath: args.path, attachSelectors: args.attach_selectors }) };

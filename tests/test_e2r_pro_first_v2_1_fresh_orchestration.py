@@ -685,6 +685,208 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             ).exists()
         )
 
+    def test_exact_browseruse_attach_rpc_timeout_requires_live_same_tab_preflight(self) -> None:
+        runner, spec = self._make_draft_preparation_attention_resume(
+            "BRIDGE_OPERATION_FAILED: BrowserUse bridge transport failed (TimeoutError: timed out)"
+        )
+        boundary, resumed = runner._load_unprepared_attention_job(
+            FreshSessionBoundaryService(self.store),
+            spec=spec,
+            manifest=self.manifest,
+            job_id=self.fresh_job.job_id,
+        )
+
+        self.assertEqual(boundary.fresh_job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(resumed.submit_count, 0)
+        self.assertEqual(resumed.capture_count, 0)
+        self.assertIsNone(resumed.browser_session_id)
+        self.assertIsNone(resumed.conversation_id)
+        self.assertFalse(
+            (
+                self.boundary.fresh_job_root
+                / "fresh_session/fresh_v3_prepare_receipt.json"
+            ).exists()
+        )
+
+    def test_near_match_browseruse_attach_rpc_timeout_remains_blocked(self) -> None:
+        runner, spec = self._make_draft_preparation_attention_resume(
+            "BRIDGE_OPERATION_FAILED: BrowserUse bridge transport failed (TimeoutError: timed out); extra"
+        )
+        with self.assertRaisesRegex(ValueError, "known safe failure"):
+            runner._load_unprepared_attention_job(
+                FreshSessionBoundaryService(self.store),
+                spec=spec,
+                manifest=self.manifest,
+                job_id=self.fresh_job.job_id,
+            )
+
+    async def test_ambiguous_attention_resume_preflights_same_tab_before_prepare(self) -> None:
+        self._make_draft_preparation_attention_resume(
+            "BRIDGE_OPERATION_FAILED: BrowserUse bridge transport failed (TimeoutError: timed out)"
+        )
+        base = load_pro_first_local_config(
+            Path(__file__).parents[1]
+            / "configs/e2r_pro_first_local.example.yaml"
+        )
+        config = replace(
+            base,
+            runtime_root=self.boundary.fresh_runtime_root,
+            browser=replace(
+                base.browser,
+                mode=BrowserConnectionMode.BROWSER_USE_EXTENSION,
+            ),
+        )
+        proof = {
+            "status": "PASS",
+            "new_chat_route_verified": True,
+            "logged_in_editor_ready": True,
+            "pro_mode_ready": True,
+            "composer_empty": True,
+            "visible_user_turn_count": 0,
+            "stop_visible": False,
+            "native_file_chooser_open": False,
+            "native_file_chooser_count": 0,
+            "native_file_chooser_unknown_owner_count": 0,
+            "selected_file_state": "NO_SELECTED_FILE_OR_VISIBLE_ATTACHMENT",
+            "packet_hash": self.built.packet_bundle.packet_hash,
+            "submit_count": 0,
+        }
+        order: list[str] = []
+
+        async def inspect(**kwargs):
+            order.append("read_only_preflight")
+            self.assertEqual(
+                kwargs["packet_path"],
+                self.built.packet_bundle.research_packet_json,
+            )
+            self.assertEqual(kwargs["packet_hash"], self.built.packet_bundle.packet_hash)
+            return proof
+
+        adapter = SimpleNamespace(
+            verify_unprepared_recovery_state=AsyncMock(side_effect=inspect)
+        )
+        page = SimpleNamespace(goto=AsyncMock())
+        session = SimpleNamespace(
+            adapter=adapter,
+            page=page,
+            browser_session_id="BROWSER-same-claimed-tab",
+            close=AsyncMock(),
+        )
+
+        async def prepare(*_args, **_kwargs):
+            order.append("prepare_packet")
+            return object()
+
+        with (
+            patch(
+                "e2r.pro_first.fresh_session.orchestrator_v3.ProBrowserWorker.open",
+                new=AsyncMock(return_value=session),
+            ) as open_browser,
+            patch.object(
+                self.orchestrator,
+                "prepare_initial_with_adapter",
+                new=AsyncMock(side_effect=prepare),
+            ) as prepare_packet,
+        ):
+            runtime = await self.orchestrator.prepare_initial_in_logged_in_browser(
+                self.built,
+                config=config,
+                resume_unprepared_attention=True,
+            )
+
+        self.assertEqual(open_browser.await_args.kwargs["job_id"], self.fresh_job.job_id)
+        adapter.verify_unprepared_recovery_state.assert_awaited_once()
+        self.assertEqual(order, ["read_only_preflight", "prepare_packet"])
+        page.goto.assert_not_awaited()
+        prepare_packet.assert_awaited_once()
+        current = self.store.get_job(self.fresh_job.job_id)
+        self.assertEqual(current.status, JobStatus.BROWSER_PREPARING.value)
+        event = next(
+            row
+            for row in self.store.list_events(self.fresh_job.job_id)
+            if row.idempotency_key.startswith(
+                "fresh-v3-browser-recovery-preflight:"
+            )
+        )
+        self.assertEqual(
+            event.payload.get("event"),
+            "FRESH_BROWSER_UNPREPARED_RECOVERY_PREFLIGHT_PASSED",
+        )
+        self.assertTrue(event.payload.get("safe_unprepared_resume"))
+        self.assertFalse(event.payload.get("automatic_resubmit_allowed"))
+        await runtime.close()
+
+    async def test_failed_ambiguous_attention_preflight_does_not_transition_or_prepare(self) -> None:
+        self._make_draft_preparation_attention_resume(
+            "BRIDGE_OPERATION_FAILED: BrowserUse bridge transport failed (TimeoutError: timed out)"
+        )
+        base = load_pro_first_local_config(
+            Path(__file__).parents[1]
+            / "configs/e2r_pro_first_local.example.yaml"
+        )
+        config = replace(
+            base,
+            runtime_root=self.boundary.fresh_runtime_root,
+            browser=replace(
+                base.browser,
+                mode=BrowserConnectionMode.BROWSER_USE_EXTENSION,
+            ),
+        )
+        adapter = SimpleNamespace(
+            verify_unprepared_recovery_state=AsyncMock(
+                return_value={
+                    "status": "PASS",
+                    "new_chat_route_verified": True,
+                    "logged_in_editor_ready": True,
+                    "pro_mode_ready": True,
+                    "composer_empty": True,
+                    "visible_user_turn_count": 0,
+                    "stop_visible": False,
+                    "native_file_chooser_open": True,
+                    "native_file_chooser_count": 1,
+                    "native_file_chooser_unknown_owner_count": 0,
+                    "selected_file_state": "NO_SELECTED_FILE_OR_VISIBLE_ATTACHMENT",
+                    "packet_hash": self.built.packet_bundle.packet_hash,
+                    "submit_count": 0,
+                }
+            )
+        )
+        session = SimpleNamespace(
+            adapter=adapter,
+            page=SimpleNamespace(goto=AsyncMock()),
+            browser_session_id="BROWSER-same-claimed-tab",
+            close=AsyncMock(),
+        )
+        with (
+            patch(
+                "e2r.pro_first.fresh_session.orchestrator_v3.ProBrowserWorker.open",
+                new=AsyncMock(return_value=session),
+            ),
+            patch.object(
+                self.orchestrator,
+                "prepare_initial_with_adapter",
+                new=AsyncMock(),
+            ) as prepare_packet,
+        ):
+            with self.assertRaisesRegex(
+                FreshSessionBoundaryError,
+                "read-only unprepared recovery proof is incomplete",
+            ):
+                await self.orchestrator.prepare_initial_in_logged_in_browser(
+                    self.built,
+                    config=config,
+                    resume_unprepared_attention=True,
+                )
+
+        self.assertEqual(
+            self.store.get_job(self.fresh_job.job_id).status,
+            JobStatus.USER_ATTENTION_REQUIRED.value,
+        )
+        prepare_packet.assert_not_awaited()
+        session.close.assert_awaited_once()
+
     def test_near_match_windows_file_chooser_path_error_remains_blocked(self) -> None:
         runner, spec = self._make_draft_preparation_attention_resume(
             "BRIDGE_OPERATION_FAILED: packet file is not readable from the Windows file chooser; extra"

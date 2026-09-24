@@ -6919,4 +6919,55 @@ BrowserUseBridgeError: BrowserUse bridge transport failed (TimeoutError: timed o
 - 실제 `attach.click()` 이후 파일 선택기 감지/선택 경로의 오류이므로, P83의 “클릭 전 path validation 실패는 safe unprepared”와 같은 복구 사유로 취급하면 안 된다. 기존 job의 현재 event가 `safe_unprepared_resume=false`이므로 자동 재개·중복 첨부·전송 금지다.
 - 다음 순서는 (1) 기존 사용자 로그인 세션/창을 그대로 보존하며 OS 파일 선택기 유무를 읽기 전용으로 판별, (2) 결과가 불명확하면 입력 없이 중단, (3) 별도 코드 수정에서 RPC와 native chooser timeout/cancellation을 일치시키고 ambiguous outcome 회귀 테스트 추가 및 exact-head CI, (4) durable job과 동일 탭 상태가 모두 명확해진 뒤에만 같은 job을 다시 여는 것이다. 다른 세션/탭에서 재시도하거나 새 job을 만들지 않는다.
 
-이 P85 문서 갱신 동안 BrowserUse 호출/화면 조작은 하지 않았다. 새 창·탭·프로필, navigation, login, prompt input, attach/download/submit/capture, source query/fetch, score/Stage 변경은 0이다. Full research goal은 미완료이며 PR #7은 draft/open, main 미변경이다. 최신 운영 절차는 [BrowserUse existing-session handoff](browseruse_existing_session_handoff.md) 상단 P85를 본다.
+이 P85 문서 갱신 동안 BrowserUse 호출/화면 조작은 하지 않았다. 새 창·탭·프로필, navigation, login, prompt input, attach/download/submit/capture, source query/fetch, score/Stage 변경은 0이다. Full research goal은 미완료이며 PR #7은 draft/open, main 미변경이다. 이력은 [BrowserUse existing-session handoff](browseruse_existing_session_handoff.md) 상단 P86의 최신 판정에 따른다.
+
+## P86 — 기존 로그인 BrowserUse 세션과 same-tab 재개 gate (2026-09-24 17:10 KST)
+
+### 우선 운영 규칙: 사용자가 로그인해 둔 그 세션을 쓴다
+
+사용자가 다시 요청했다. 로그인된 서비스에서 해야 하는 BrowserUse 작업은 **사용자가 이미 로그인해 둔 Chrome BrowserUse `extension` 세션과 그 안의 기존 작업 탭**에서 수행한다. 새 창·새 탭·새 프로필·별도 CDP 세션 생성이나 재로그인은 대체 경로가 아니다. 정확한 기존 탭을 찾거나 claim할 수 없으면 그 단계에서 멈추고 실제 오류 및 확인 범위를 남긴다. 새 Chat이 필요해도 같은 로그인 탭 안에서만 시작한다. 이미 응답/JSON/파일이 있으면 같은 탭에서 먼저 회수하고 중복 요청하지 않는다.
+
+정확한 순서는 다음과 같다.
+
+```text
+canonical BrowserUse bootstrap
+→ 반환 Agent를 globalThis.agent에 보관
+→ agent.browsers.get("extension")
+→ browser.user.openTabs()로 기존 사용자 탭 확인
+→ 작업 대화와 맞는 descriptor 하나를 claimTab()
+→ claim이 반환한 동일 tab 객체 하나로 읽기/작업/결과 회수
+```
+
+실제 입력·파일 선택·전송 직전에는 **그 동일 tab**의 URL/대화, 로그인 상태, 실제 Pro 선택, 초안·첨부·기존 응답 상태를 다시 확인한다. 연결 실패, 탭 불일치, 모드 불명, 첨부·전송 결과 불명은 새 창으로 우회하지 않고 중단한다. 인증정보·쿠키·민감한 tab ID를 영수증에 남기지 않는다.
+
+### P85 첨부 timeout 이후 same-session read-only 확인
+
+- BrowserUse `extension`에서 이미 열려 있던 사용자의 ChatGPT 탭 하나를 대상으로만 확인했다. 새 window/tab/profile/CDP session이나 새 job, 재로그인은 없었다. 같은 탭의 read-only 관찰은 ChatGPT home, login prompt 없음, 실제 `Pro`, 빈 composer, user turn 0, 파일 input 5개 모두 비어 있음, 화면상 packet 파일명 없음이었다.
+- Windows UI Automation으로 최상위 창 24개를 읽기 전용 열거했다. 해당 검사 시점에 Chrome 소유 `Open` dialog 후보 0, owner 미확인 후보 0이었다. 창을 닫거나 조작하지 않았다. 이는 이전 timeout의 결과를 소급 입증하지 않고 **검사 시점의 현재 상태만** 말한다.
+- `tab.dev.logs()`에서 `2026-09-24T07:27:36.329Z` React `RecoverableError: Minified React error #418` 한 건을 확인했다. 시간대가 겹친다는 이유만으로 attach timeout과 인과관계가 있다고 보지 않는다.
+- durable SQLite는 직전 mode=ro + `PRAGMA query_only=ON` 검사 시점 `2026-09-24T07:28:13.906437Z`에 `USER_ATTENTION_REQUIRED` version 18, `submit_count=0`, `capture_count=0`, approval/browser/conversation binding 없음, successor 없음이었다. latest error는 `BrowserUseBridgeError: BrowserUse bridge transport failed (TimeoutError: timed out)`이며 latest event `DRAFT_PREPARATION_OR_UNKNOWN`, `safe_unprepared_resume=false`, `automatic_resubmit_allowed=false`다. Packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`와 same C15 R6 identity를 유지한다. 이후 live job을 변경하는 동작은 하지 않았다.
+
+### Timeout 경계와 수정
+
+확인한 코드에는 BrowserUse Python RPC 기본 제한 30초와 Windows native file chooser 감지 최대 45초가 있었다. 이 timeout 예산 불일치는 호출자와 chooser 경로 중 한쪽이 먼저 끊길 수 있음을 설명할 수 있지만, 당시 phase telemetry가 없어 **이번 실제 장애의 원인으로 확정하지 않는다.**
+
+현재 로컬 diff는 다음을 구현한다.
+
+- `page.attach_packet` RPC에만 60초 요청 timeout을 부여하고, 기존 다른 RPC 기본값 30초는 유지한다. JS의 native chooser 최대 대기 45초를 named constant로 분리한다.
+- BrowserUse worker에 same-extension-session read-only `inspect_native_file_chooser_state()`를 추가한다. Chrome owner가 불명확하거나 picker가 열려 있으면 safe recovery proof는 거부한다.
+- `verify_unprepared_recovery_state()`는 exact packet JSON hash, 기존 ChatGPT new-chat route, 로그인된 composer, 실제 Pro, 빈 composer, user turn 0, stop 없음, native picker 닫힘/owner 판별, 선택 파일의 부재 또는 exact packet hash와 화면 표시 일치를 검사한다. 다른 파일·미확인 첨부·불완전 상태는 fail closed다.
+- `FRESH_UNPREPARED_ATTENTION_RESUME`은 exact historical BrowserUse attach-timeout job만 후보로 열되, 실제 준비 전에 동일 기존 탭에서 위 read-only proof를 요구한다. durable state version/status/submit/capture/hash/approval/browser/conversation binding을 재확인한 뒤에만 append-only `BROWSER_PREPARING` transition을 기록한다. preflight는 navigation·upload·prompt 입력·submit을 하지 않는다. 이후에도 automatic resubmit은 금지다.
+
+### 검증 결과와 현재 경계
+
+- 로컬 회귀 실행: `tests.test_e2r_pro_first_browseruse_extension_bridge`, `UnpreparedRecoveryReadOnlyGateTest`, 전체 `tests.test_e2r_pro_first_v2_1_fresh_orchestration` **106 tests, failure/error 0**.
+- `node --check src/e2r/pro_first/browser/browseruse_extension_bridge.mjs`: PASS.
+- `git diff --check`: PASS.
+- `PYTHONPATH=src python3 -m e2r.cli.audit_e2r_pro_first_v2 --repo-root .`: `E2R_PRO_FIRST_STATIC_AUDIT_PASS`, `critical_count=0`.
+- 이 회차는 전체 `unittest discover` 및 PR exact-head CI 결과를 주장하지 않는다. 새 코드의 full remote verification은 아직 필요하다. 이전 로컬 Playwright 실행은 환경의 `libnspr4.so` 누락으로 브라우저 fixture 시작 전에 멈췄으며, 이는 BrowserUse 사용자의 로그인 세션 오류가 아니다.
+- 기준 remote는 PR #7 OPEN/DRAFT/MERGEABLE, `main` 미병합, head `e199b5271d17f1e0e9359de805dd2d91baae462c`다. 이 수정은 아직 로컬 diff에만 있다. 이전 head의 Pro-first run [35970550958](https://github.com/Daikisong/stock_agent/actions/runs/35970550958)과 V6 run [35970582856](https://github.com/Daikisong/stock_agent/actions/runs/35970582856)은 SUCCESS였고, 후속 Pro-first run [35970583010](https://github.com/Daikisong/stock_agent/actions/runs/35970583010)은 마지막 조회에 `in_progress`였다. 어느 것도 새 로컬 diff의 exact-head 검증이 아니다.
+- P86 patch/documentation 검증에서는 추가 query/fetch, score/Stage 변경, attach 재시도, prompt 입력, submit/capture가 모두 0이다. 앞선 P85 attach timeout 시도는 위 장애 이력 그대로 유지한다.
+
+### 다음 한 단계
+
+회귀·문서 변경을 한글 commit으로 기존 PR #7 branch에만 push하고, 수정된 **정확한 head**의 필수 GitHub Actions가 모두 SUCCESS인지 확인한다. 그 뒤에만 C15 R6 `PROJOB-df15a37c58ae7583924e58c0`을 재사용해, 사용자의 기존 BrowserUse `extension` 로그인 세션에서 같은 ChatGPT 탭을 다시 claim한다. read-only same-tab gate와 durable identity가 모두 일치할 때만 같은 job 준비를 이어간다. 탭 연결이 안 되거나 상태 불명/불일치면 새 브라우저를 열지 않고 입력 전에 정지한다. 최신 실행 절차는 [BrowserUse existing-session handoff P86](browseruse_existing_session_handoff.md) 첫머리를 따른다.

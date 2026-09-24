@@ -10,6 +10,7 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock, patch
 
 from e2r.pro_first.browser.browseruse_extension_bridge import (
+    BROWSERUSE_PACKET_ATTACH_RPC_TIMEOUT_SECONDS,
     BrowserUseBridgeClient,
     BrowserUseBridgeError,
     BrowserUsePage,
@@ -61,6 +62,81 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
                     token="x" * 48,
                     job_id="PROJOB-test",
                 )
+
+    async def test_packet_attach_rpc_budget_exceeds_native_file_chooser_wait(self) -> None:
+        client = BrowserUseBridgeClient(
+            endpoint="http://127.0.0.1:12345",
+            token="x" * 48,
+        )
+        client.session_id = "BROWSERUSE-test-session"
+        client._request = AsyncMock(  # type: ignore[method-assign]
+            return_value={
+                "value": {"selected": True, "filename": "research_packet.json"},
+                "page_url": "https://chatgpt.com/",
+            }
+        )
+
+        await BrowserUsePage(client).upload_file_via_existing_user_session(
+            "/tmp/research_packet.json",
+            attach_selectors=("button[aria-label='Attach files']",),
+        )
+
+        request = client._request.await_args
+        self.assertEqual(
+            request.kwargs["timeout_seconds"],
+            BROWSERUSE_PACKET_ATTACH_RPC_TIMEOUT_SECONDS,
+        )
+        self.assertNotIn(
+            "request_timeout_seconds",
+            request.args[1]["arguments"],
+        )
+
+        node = shutil.which("node")
+        self.assertIsNotNone(node)
+        bridge_path = (
+            Path(__file__).parents[1]
+            / "src/e2r/pro_first/browser/browseruse_extension_bridge.mjs"
+        ).resolve()
+        script = f"""
+import assert from "node:assert/strict";
+import {{ BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS }} from {json.dumps(bridge_path.as_uri())};
+assert.equal(BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS, 45000);
+assert.ok({BROWSERUSE_PACKET_ATTACH_RPC_TIMEOUT_SECONDS * 1000} > BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS);
+"""
+        completed = subprocess.run(
+            [str(node), "--input-type=module", "--eval", script],
+            cwd=Path(__file__).parents[1],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+
+    async def test_native_file_chooser_inspection_is_a_read_only_bridge_call(self) -> None:
+        client = BrowserUseBridgeClient(
+            endpoint="http://127.0.0.1:12345",
+            token="x" * 48,
+        )
+        client.session_id = "BROWSERUSE-test-session"
+        client.call = AsyncMock(  # type: ignore[method-assign]
+            return_value={
+                "open": False,
+                "chrome_owned_dialog_count": 0,
+                "unknown_owner_count": 0,
+            }
+        )
+
+        result = await BrowserUsePage(client).inspect_native_file_chooser_state()
+
+        self.assertEqual(
+            result,
+            {
+                "open": False,
+                "chrome_owned_dialog_count": 0,
+                "unknown_owner_count": 0,
+            },
+        )
+        client.call.assert_awaited_once_with("page.inspect_native_file_chooser")
 
     async def test_nested_locators_are_bound_by_opaque_parent_handle(self) -> None:
         client = BrowserUseBridgeClient(
@@ -204,7 +280,13 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
         ).resolve()
         script = f"""
 import assert from "node:assert/strict";
-const {{ resolveBrowserUseLocatorMember, resolveFirstVisibleEnabledLocator, readonlyCallback, evaluateReadOnlyLocator, countReadOnlyLocator, isVisibleReadOnlyLocator, isEnabledReadOnlyLocator, callReadOnlyLocatorMethod, browserUseOptions, wslUncPath }} = await import({json.dumps(bridge_path.as_uri())});
+const {{ resolveBrowserUseLocatorMember, resolveFirstVisibleEnabledLocator, readonlyCallback, evaluateReadOnlyLocator, countReadOnlyLocator, isVisibleReadOnlyLocator, isEnabledReadOnlyLocator, callReadOnlyLocatorMethod, browserUseOptions, wslUncPath, BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS, nativeFileChooserInspectionScript }} = await import({json.dumps(bridge_path.as_uri())});
+assert.equal(BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS, 45000);
+const nativeChooserInspection = nativeFileChooserInspectionScript();
+assert.match(nativeChooserInspection, /AutomationElement\]::RootElement/);
+assert.match(nativeChooserInspection, /GetWindowThreadProcessId/);
+assert.doesNotMatch(nativeChooserInspection, /SetValue|InvokePattern|SendKeys|SendWait/);
+assert.match(nativeChooserInspection, /else\s*\{{\s*\$unknownOwners\s*\+=\s*1\s*\}}/);
 assert.equal(wslUncPath("/mnt/c/Users/eorb9/file.json", "Ubuntu-22.04", "win32"), "C:\\\\Users\\\\eorb9\\\\file.json");
 assert.equal(wslUncPath("/mnt/z/folder/file.json", "Ubuntu-22.04", "win32"), "Z:\\\\folder\\\\file.json");
 assert.equal(wslUncPath("C:\\\\Users\\\\eorb9\\\\file.json", "Ubuntu-22.04", "win32"), "C:\\\\Users\\\\eorb9\\\\file.json");
@@ -303,6 +385,11 @@ assert.deepEqual(await callReadOnlyLocatorMethod(apiLocator, "click"), {{handled
 assert.ok(dispatchedReads.every(([,options]) => options.timeoutMs === 10000));
 const markerReader = readonlyCallback("(element, needle) => (element.innerText || '').toLowerCase().includes(needle)");
 assert.equal(markerReader({{ innerText: "Packet ready" }}, "packet"), true);
+const composerSnapshot = readonlyCallback("element => {{ /* E2R_UNPREPARED_RECOVERY_COMPOSER_SNAPSHOT */ return true; }}");
+const fileChip = {{innerText:"research_packet.json", getBoundingClientRect:() => ({{width:10,height:10}}), getAttribute:() => ""}};
+const composerRoot = {{innerText:"research_packet.json", querySelectorAll:() => [fileChip]}};
+const composerSnapshotRoot = {{closest:() => null,parentElement:{{parentElement:{{parentElement:composerRoot}}}}}};
+assert.deepEqual(composerSnapshot(composerSnapshotRoot), {{visible_file_signals:["research_packet.json"]}});
 assert.throws(() => readonlyCallback("element => element.click()"), /read-only/);
 assert.throws(() => readonlyCallback("element => element.id"), /no reviewed read-only callback/);
 const activeAdapterCallbacks = [
@@ -316,6 +403,7 @@ const activeAdapterCallbacks = [
   "selector => ({{operational_status_texts: [], citation_registry: []}})",
   "element => {{ const visit = node => node.nodeType === Node.TEXT_NODE ? node.nodeValue : ''; return Array.from(element.childNodes).map(visit).join(''); }}",
   "async input => {{ const file = input.files && input.files[0]; return file ? {{name: file.name, text: await file.text()}} : null; }}",
+  "element => {{ /* E2R_UNPREPARED_RECOVERY_COMPOSER_SNAPSHOT */ return true; }}",
 ];
 for (const expression of activeAdapterCallbacks) {{
   let callback;

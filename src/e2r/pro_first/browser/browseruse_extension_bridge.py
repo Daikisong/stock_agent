@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import math
 import re
 import time
 from dataclasses import dataclass
@@ -18,6 +19,7 @@ from urllib.request import Request, urlopen
 
 
 BROWSERUSE_DOM_EVALUATE_TIMEOUT_MS = 10_000
+BROWSERUSE_PACKET_ATTACH_RPC_TIMEOUT_SECONDS = 60.0
 
 
 class BrowserUseBridgeError(RuntimeError):
@@ -109,7 +111,13 @@ class BrowserUseBridgeClient:
         client.current_title = title
         return client
 
-    async def call(self, operation: str, **arguments: Any) -> Any:
+    async def call(
+        self,
+        operation: str,
+        *,
+        request_timeout_seconds: float | None = None,
+        **arguments: Any,
+    ) -> Any:
         if self._closed or not self.session_id:
             raise BrowserUseBridgeError("BrowserUse bridge session is not connected")
         result = await self._request(
@@ -119,6 +127,7 @@ class BrowserUseBridgeClient:
                 "operation": operation,
                 "arguments": _jsonable(arguments),
             },
+            timeout_seconds=request_timeout_seconds,
         )
         page_url = str(result.get("page_url") or "")
         if page_url:
@@ -144,9 +153,22 @@ class BrowserUseBridgeClient:
             raise BrowserUseBridgeError("BrowserUse event bridge returned a malformed event")
         return value
 
-    async def _request(self, path: str, payload: Mapping[str, Any]) -> Mapping[str, Any]:
+    async def _request(
+        self,
+        path: str,
+        payload: Mapping[str, Any],
+        *,
+        timeout_seconds: float | None = None,
+    ) -> Mapping[str, Any]:
         if self._closed:
             raise BrowserUseBridgeError("BrowserUse bridge connection is closed")
+        effective_timeout = (
+            self.timeout_seconds
+            if timeout_seconds is None
+            else float(timeout_seconds)
+        )
+        if not math.isfinite(effective_timeout) or effective_timeout <= 0:
+            raise ValueError("BrowserUse bridge request timeout must be positive and finite")
         url = self.endpoint + path
         body = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
         headers = {
@@ -156,7 +178,11 @@ class BrowserUseBridgeClient:
         }
         request = Request(url, data=body, headers=headers, method="POST")
         try:
-            response_body = await asyncio.to_thread(self._read_response, request)
+            response_body = await asyncio.to_thread(
+                self._read_response,
+                request,
+                effective_timeout,
+            )
         except BrowserUseBridgeError:
             raise
         except (HTTPError, URLError, TimeoutError, OSError) as error:
@@ -186,8 +212,8 @@ class BrowserUseBridgeClient:
             self.current_title = str(result["title"])
         return result
 
-    def _read_response(self, request: Request) -> bytes:
-        with urlopen(request, timeout=self.timeout_seconds) as response:
+    def _read_response(self, request: Request, timeout_seconds: float) -> bytes:
+        with urlopen(request, timeout=timeout_seconds) as response:
             payload = response.read(64 * 1024 * 1024 + 1)
         if len(payload) > 64 * 1024 * 1024:
             raise BrowserUseBridgeError("BrowserUse bridge response exceeded the 64 MiB limit")
@@ -234,6 +260,19 @@ class BrowserUsePage:
             options=_read_only_evaluate_options(options),
         )
 
+    async def inspect_native_file_chooser_state(self) -> Mapping[str, Any]:
+        result = await self.client.call("page.inspect_native_file_chooser")
+        if (
+            not isinstance(result, Mapping)
+            or not isinstance(result.get("open"), bool)
+            or not isinstance(result.get("chrome_owned_dialog_count"), int)
+            or not isinstance(result.get("unknown_owner_count"), int)
+        ):
+            raise BrowserUseBridgeError(
+                "read-only native file chooser inspection returned a malformed state"
+            )
+        return result
+
     def locator(self, selector: str) -> "BrowserUseLocator":
         return BrowserUseLocator(self.client, create={"selector": selector})
 
@@ -263,6 +302,7 @@ class BrowserUsePage:
     ) -> None:
         result = await self.client.call(
             "page.attach_packet",
+            request_timeout_seconds=BROWSERUSE_PACKET_ATTACH_RPC_TIMEOUT_SECONDS,
             path=str(path),
             attach_selectors=list(attach_selectors),
         )

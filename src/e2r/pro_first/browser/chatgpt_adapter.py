@@ -350,6 +350,205 @@ class PlaywrightChatGPTWebAdapter:
             submit_count=0,
         )
 
+    async def verify_unprepared_recovery_state(
+        self,
+        *,
+        packet_path: str | Path,
+        packet_hash: str,
+    ) -> Mapping[str, Any]:
+        """Prove that an ambiguous pre-submit failure left a safe blank draft.
+
+        This is a read-only gate for resuming an exact durable job. BrowserUse
+        must inspect the native chooser on the same claimed user session; a
+        page-only snapshot cannot prove that a Windows file dialog is closed.
+        """
+
+        path = Path(packet_path).resolve()
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as error:
+            raise BrowserUIIncompatible(
+                "recovery packet is not readable canonical JSON"
+            ) from error
+        if canonical_hash(payload) != packet_hash:
+            raise BrowserUIIncompatible(
+                "recovery packet hash differs from the exact durable job"
+            )
+
+        inspect_native_chooser = getattr(
+            self.page, "inspect_native_file_chooser_state", None
+        )
+        if not callable(inspect_native_chooser):
+            raise BrowserUIIncompatible(
+                "unprepared recovery requires same-session native file chooser inspection"
+            )
+        chooser = await inspect_native_chooser()
+        if (
+            not isinstance(chooser, Mapping)
+            or chooser.get("open") is not False
+            or int(chooser.get("chrome_owned_dialog_count", -1)) != 0
+            or int(chooser.get("unknown_owner_count", -1)) != 0
+        ):
+            raise BrowserUIIncompatible(
+                "native Chrome file chooser state is unknown or still open"
+            )
+
+        parsed_url = urlsplit(str(self.page.url or ""))
+        if (
+            parsed_url.scheme != "https"
+            or parsed_url.netloc != "chatgpt.com"
+            or parsed_url.path not in {"", "/"}
+            or parsed_url.query
+            or parsed_url.fragment
+            or self.conversation_id() is not None
+        ):
+            raise BrowserUIIncompatible(
+                "unprepared recovery requires the existing ChatGPT new-chat route"
+            )
+
+        inspection = await self.ensure_logged_in()
+        if (
+            not inspection.editor_ready
+            or not await self._deep_research_ready()
+            or inspection.stop_visible
+        ):
+            raise BrowserUIIncompatible(
+                "unprepared recovery requires the logged-in Pro composer with no running turn"
+            )
+        editor = await first_visible(self.page, EDITOR_SELECTORS)
+        if editor is None or (await editor_text(editor)).strip():
+            raise BrowserUIIncompatible(
+                "unprepared recovery refuses a non-empty or missing composer"
+            )
+
+        for selector in USER_TURN_SELECTORS:
+            if await self.page.locator(selector).count():
+                raise BrowserUIIncompatible(
+                    "unprepared recovery refuses an existing user turn"
+                )
+
+        composer_snapshot = await editor.evaluate(
+            r"""element => {
+                /* E2R_UNPREPARED_RECOVERY_COMPOSER_SNAPSHOT */
+                let root = element.closest('form');
+                if (!root) {
+                    root = element;
+                    for (let depth = 0; root && depth < 3; depth += 1) {
+                        root = root.parentElement;
+                    }
+                }
+                if (!root) return { visible_file_signals: [] };
+                const visible = node => {
+                    const rect = node.getBoundingClientRect();
+                    const style = window.getComputedStyle(node);
+                    return rect.width > 0 && rect.height > 0
+                        && style.visibility !== 'hidden'
+                        && style.display !== 'none';
+                };
+                const candidates = [root.innerText || ''];
+                for (const node of root.querySelectorAll(
+                    'button,[role=button],[aria-label],[title]'
+                )) {
+                    if (!visible(node)) continue;
+                    candidates.push(
+                        node.innerText || '',
+                        node.getAttribute('aria-label') || '',
+                        node.getAttribute('title') || ''
+                    );
+                }
+                const filePattern = /[^\s\\/]+\.(?:pdf|docx?|xlsx?|csv|md|json|txt|png|jpe?g|zip)(?:\(\d+\))?$/i;
+                const signals = [...new Set(
+                    candidates
+                        .map(value => String(value || '').trim())
+                        .filter(value => filePattern.test(value))
+                )];
+                return { visible_file_signals: signals };
+            }"""
+        )
+        if not isinstance(composer_snapshot, Mapping):
+            raise BrowserUIIncompatible(
+                "unprepared recovery composer attachment snapshot is malformed"
+            )
+        visible_file_signals = tuple(
+            str(value).strip()
+            for value in composer_snapshot.get("visible_file_signals") or ()
+            if str(value).strip()
+        )
+
+        file_inputs = self.page.locator('input[type="file"]')
+        selected_files: list[Mapping[str, Any]] = []
+        for index in range(await file_inputs.count()):
+            item = file_inputs.nth(index)
+            try:
+                selected = await item.evaluate(
+                    """async input => {
+                        const file = input.files && input.files[0];
+                        return file ? {name: file.name, text: await file.text()} : null;
+                    }"""
+                )
+            except Exception as error:
+                raise BrowserUIIncompatible(
+                    "unprepared recovery could not inspect selected browser files"
+                ) from error
+            if selected:
+                if not isinstance(selected, Mapping):
+                    raise BrowserUIIncompatible(
+                        "unprepared recovery selected-file evidence is malformed"
+                    )
+                selected_files.append(selected)
+
+        if len(selected_files) > 1:
+            raise BrowserUIIncompatible(
+                "unprepared recovery found multiple selected files"
+            )
+        if selected_files:
+            selected = selected_files[0]
+            try:
+                selected_payload = json.loads(str(selected.get("text") or ""))
+            except json.JSONDecodeError as error:
+                raise BrowserUIIncompatible(
+                    "unprepared recovery selected file is not valid JSON"
+                ) from error
+            if (
+                str(selected.get("name") or "") != path.name
+                or canonical_hash(selected_payload) != packet_hash
+            ):
+                raise BrowserUIIncompatible(
+                    "unprepared recovery found a different selected file"
+                )
+            displayed_filename = await self._visible_uploaded_filename(path.name)
+            if displayed_filename != path.name:
+                raise BrowserUIIncompatible(
+                    "exact packet file is selected but not visibly confirmed in the composer"
+                )
+            if any(path.name not in signal for signal in visible_file_signals):
+                raise BrowserUIIncompatible(
+                    "unprepared recovery found an unrelated visible composer attachment"
+                )
+            selected_file_state = "EXACT_PACKET_HASH_MATCH_VISIBLE"
+        else:
+            if visible_file_signals or await self._visible_uploaded_filename(path.name):
+                raise BrowserUIIncompatible(
+                    "unprepared recovery found an attachment without hash-verifiable file input"
+                )
+            selected_file_state = "NO_SELECTED_FILE_OR_VISIBLE_ATTACHMENT"
+
+        return {
+            "status": "PASS",
+            "new_chat_route_verified": True,
+            "logged_in_editor_ready": True,
+            "pro_mode_ready": True,
+            "composer_empty": True,
+            "visible_user_turn_count": 0,
+            "stop_visible": False,
+            "native_file_chooser_open": False,
+            "native_file_chooser_count": 0,
+            "native_file_chooser_unknown_owner_count": 0,
+            "selected_file_state": selected_file_state,
+            "packet_hash": packet_hash,
+            "submit_count": 0,
+        }
+
     async def recover_initial_prepared_without_mutation(
         self,
         *,
@@ -2768,23 +2967,29 @@ class PlaywrightChatGPTWebAdapter:
         # Current ChatGPT file tiles can expose the name only through their
         # visible accessibility label; older builds rendered it as text.  The
         # public UI may add ``(1)`` after repeated safe preparation attempts.
+        for attempt in range(100):
+            displayed = await self._visible_uploaded_filename(filename)
+            if displayed is not None:
+                return displayed
+            if attempt < 99:
+                await self.page.wait_for_timeout(100)
+        return None
+
+    async def _visible_uploaded_filename(self, filename: str) -> str | None:
         path = Path(filename)
         display_pattern = re.compile(
             rf"^{re.escape(path.stem)}(?:\(\d+\))?{re.escape(path.suffix)}$"
         )
-        for attempt in range(100):
-            label = self.page.get_by_label(display_pattern).first
-            if await label.count() and await label.is_visible():
-                displayed = (await label.get_attribute("aria-label") or "").strip()
-                if display_pattern.fullmatch(displayed):
-                    return displayed
-            text = self.page.get_by_text(display_pattern).first
-            if await text.count() and await text.is_visible():
-                displayed = (await text.inner_text()).strip().splitlines()[0]
-                if display_pattern.fullmatch(displayed):
-                    return displayed
-            if attempt < 99:
-                await self.page.wait_for_timeout(100)
+        label = self.page.get_by_label(display_pattern).first
+        if await label.count() and await label.is_visible():
+            displayed = (await label.get_attribute("aria-label") or "").strip()
+            if display_pattern.fullmatch(displayed):
+                return displayed
+        text = self.page.get_by_text(display_pattern).first
+        if await text.count() and await text.is_visible():
+            displayed = (await text.inner_text()).strip().splitlines()[0]
+            if display_pattern.fullmatch(displayed):
+                return displayed
         return None
 
     async def _reuse_matching_uploaded_packet(
