@@ -13,6 +13,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import re
 import time
 from typing import Any, Callable, Mapping, Sequence
 from urllib.parse import parse_qsl, urlsplit
@@ -80,6 +81,43 @@ _FACT_COLLECTIONS = ("material_facts", "counterfacts", "resolution_facts")
 _TRACKING_QUERY_KEYS = frozenset(
     {"fbclid", "gclid", "mc_cid", "mc_eid", "ref", "source"}
 )
+_LEGACY_NATIVE_FILE_CHOOSER_FAILURE_PREFIX = (
+    "BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet "
+    '(exit=1; #< CLIXML <Objs Version="1.1.0.1" '
+    'xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress"'
+)
+_NATIVE_FILE_CHOOSER_FAILURE_PHASES = frozenset(
+    {
+        "initialize",
+        "decode_packet_path",
+        "validate_packet_path",
+        "poll_for_chrome_open_dialog",
+        "verify_dialog_owner",
+        "inspect_dialog_controls",
+        "set_packet_path",
+        "invoke_open_button",
+        "dialog_not_found",
+        "complete",
+        "RESULT_MISSING",
+        "RESULT_INVALID",
+        "UNKNOWN",
+    }
+)
+_STRUCTURED_NATIVE_FILE_CHOOSER_FAILURE = re.compile(
+    r"\ABRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet "
+    r"\(phase=(?P<phase>[A-Za-z][A-Za-z0-9_]*); exit=(?:-?[0-9]+|unknown)"
+    r"(?:; error_id=[^;\r\n]*)?(?:; category=[^;\r\n]*)?"
+    r"; message=[^\r\n]{0,240}\)\Z"
+)
+
+
+def _is_exact_native_file_chooser_failure(error_class: str, message: str) -> bool:
+    if error_class != "BrowserUseBridgeError" or len(message) > 512 or "\n" in message:
+        return False
+    if message.startswith(_LEGACY_NATIVE_FILE_CHOOSER_FAILURE_PREFIX):
+        return True
+    match = _STRUCTURED_NATIVE_FILE_CHOOSER_FAILURE.fullmatch(message)
+    return bool(match and match.group("phase") in _NATIVE_FILE_CHOOSER_FAILURE_PHASES)
 
 
 @dataclass(frozen=True)
@@ -445,10 +483,11 @@ class FreshV3InitialLiveCanaryRunner:
         """Resume only an exact no-send job whose browser-open failure is safe.
 
         The durable attention event must prove the failure happened before any
-        browser preparation or during the read-only preflight. Narrow legacy
-        checks admit one older RPC-envelope error and one exact historical
-        BrowserUse handshake-context error; prepared, approved, submitted, or
-        captured states still fail closed.
+        browser preparation or during the read-only preflight. Exact native
+        chooser-selection failures are admitted only to the subsequent
+        same-tab, read-only recovery proof; this method itself does not make
+        the job resumable or submit anything. Prepared, approved, submitted,
+        or captured states still fail closed.
         """
 
         boundary, job = boundary_service.load_existing(
@@ -521,6 +560,17 @@ class FreshV3InitialLiveCanaryRunner:
             == "DRAFT_PREPARATION_OR_UNKNOWN"
             and attention_event.payload.get("submit_count") == 0
         )
+        exact_native_file_chooser_failure = bool(
+            _is_exact_native_file_chooser_failure(
+                job.last_error_class or "",
+                job.last_error_message or "",
+            )
+            and attention_event is not None
+            and attention_event.payload.get("safe_unprepared_resume") is False
+            and attention_event.payload.get("preparation_failure_stage")
+            == "DRAFT_PREPARATION_OR_UNKNOWN"
+            and attention_event.payload.get("submit_count") == 0
+        )
         prepared_receipt = (
             boundary.fresh_job_root
             / "fresh_session/fresh_v3_prepare_receipt.json"
@@ -555,6 +605,7 @@ class FreshV3InitialLiveCanaryRunner:
                 or exact_legacy_bridge_handshake_error
                 or exact_windows_packet_path_preflight_error
                 or exact_browseruse_attach_transport_timeout
+                or exact_native_file_chooser_failure
             )
             or attention_event is None
             or attention_event.from_status != JobStatus.BROWSER_PREPARING.value

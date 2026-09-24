@@ -685,10 +685,66 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             ).exists()
         )
 
-    def test_file_chooser_selection_failure_remains_blocked_for_same_unsent_job(self) -> None:
+    def test_structured_file_chooser_selection_failure_enters_read_only_recovery_gate(self) -> None:
         runner, spec = self._make_draft_preparation_attention_resume(
             "BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet "
-            "(phase=inspect_dialog_controls; exit=1; error_id=PatternUnavailable)"
+            "(phase=inspect_dialog_controls; exit=1; error_id=PatternUnavailable; "
+            "category=InvalidOperation; message=UI Automation could not inspect the dialog)"
+        )
+
+        boundary, resumed = runner._load_unprepared_attention_job(
+            FreshSessionBoundaryService(self.store),
+            spec=spec,
+            manifest=self.manifest,
+            job_id=self.fresh_job.job_id,
+        )
+
+        self.assertEqual(boundary.fresh_job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(resumed.submit_count, 0)
+        self.assertEqual(resumed.capture_count, 0)
+        self.assertIsNone(resumed.browser_session_id)
+        self.assertIsNone(resumed.conversation_id)
+        self.assertIsNone(resumed.approval_nonce_hash)
+        self.assertFalse(
+            (
+                self.boundary.fresh_job_root
+                / "fresh_session/fresh_v3_prepare_receipt.json"
+            ).exists()
+        )
+
+    def test_exact_legacy_clixml_file_chooser_failure_enters_read_only_recovery_gate(self) -> None:
+        runner, spec = self._make_draft_preparation_attention_resume(
+            "BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet "
+            '(exit=1; #< CLIXML <Objs Version="1.1.0.1" '
+            'xmlns="http://schemas.microsoft.com/powershell/2004/04">'
+            '<Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T>'
+        )
+
+        boundary, resumed = runner._load_unprepared_attention_job(
+            FreshSessionBoundaryService(self.store),
+            spec=spec,
+            manifest=self.manifest,
+            job_id=self.fresh_job.job_id,
+        )
+
+        self.assertEqual(boundary.fresh_job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(resumed.submit_count, 0)
+        self.assertEqual(resumed.capture_count, 0)
+        self.assertFalse(
+            (
+                self.boundary.fresh_job_root
+                / "fresh_session/fresh_v3_prepare_receipt.json"
+            ).exists()
+        )
+
+    def test_near_match_file_chooser_selection_failure_remains_blocked(self) -> None:
+        runner, spec = self._make_draft_preparation_attention_resume(
+            "BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet "
+            "(phase=inspect_dialog_controls; exit=1; error_id=PatternUnavailable; "
+            "category=InvalidOperation; message=UI Automation could not inspect the dialog); extra"
         )
 
         with self.assertRaisesRegex(ValueError, "known safe failure"):
@@ -751,7 +807,9 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
 
     async def test_ambiguous_attention_resume_preflights_same_tab_before_prepare(self) -> None:
         self._make_draft_preparation_attention_resume(
-            "BrowserUse bridge transport failed (TimeoutError: timed out)"
+            "BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet "
+            "(phase=inspect_dialog_controls; exit=1; error_id=PatternUnavailable; "
+            "category=InvalidOperation; message=UI Automation could not inspect the dialog)"
         )
         base = load_pro_first_local_config(
             Path(__file__).parents[1]
@@ -847,7 +905,9 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
 
     async def test_failed_ambiguous_attention_preflight_does_not_transition_or_prepare(self) -> None:
         self._make_draft_preparation_attention_resume(
-            "BrowserUse bridge transport failed (TimeoutError: timed out)"
+            "BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet "
+            "(phase=invoke_open_button; exit=1; error_id=IOException; "
+            "category=OperationStopped; message=dialog selection result is uncertain)"
         )
         base = load_pro_first_local_config(
             Path(__file__).parents[1]
