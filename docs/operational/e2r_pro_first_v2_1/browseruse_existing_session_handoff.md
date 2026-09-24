@@ -44,7 +44,7 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 ### 코드·CI 상태 정정
 
 - P109를 기록할 때 진행 중이던 세 workflow는 그 뒤 exact source head `617e204b4c0b4f9dce15f4185eff589af9042920`에서 모두 `SUCCESS`로 끝났다: [Pro PR 36069234793](https://github.com/Daikisong/stock_agent/actions/runs/36069234793), [Pro push 36069233229](https://github.com/Daikisong/stock_agent/actions/runs/36069233229), [V6 36069234853](https://github.com/Daikisong/stock_agent/actions/runs/36069234853). 두 Pro full-regression workflow와 V6 offline-contract를 포함해 run conclusion이 green이다. 테스트 개수는 출력에서 따로 확인하지 않았으므로 숫자는 주장하지 않는다.
-- 현재 문서-only branch head는 `7c215bfa668d334a87e113e124811c0b929aa37d`; PR #7은 `OPEN/DRAFT`이며 main에 병합되지 않았다. 이 문서 checkpoint는 source/test 코드를 바꾸지 않아 별도 CI run을 만들지 않았다. CI로 검증된 code SHA는 계속 `617e204...`다.
+- P110 시작 당시 문서-only branch head는 `7c215bfa668d334a87e113e124811c0b929aa37d`였고, 이번 P110 문서는 Korean commit `d6672968`로 push했다. PR #7은 `OPEN/DRAFT`이며 main에 병합되지 않았다. 이 문서 checkpoint는 source/test 코드를 바꾸지 않아 별도 CI run을 만들지 않았다. CI로 검증된 code SHA는 계속 `617e204...`다.
 - 전체 goal은 미완료: P9 full-thesis Pro canary는 `1/3` (C06 완료, C17/C28 대기). 이번 P110에서 query/fetch, 새 job/pass, 다른 archetype, 점수/Stage 변경은 0.
 
 ### 다음 한 단계

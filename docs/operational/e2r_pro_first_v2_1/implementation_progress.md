@@ -7693,6 +7693,7 @@ P109 상태 receipt: [p109_existing_login_session_and_exact_head_ci_receipt.json
 
 - P109 당시 `IN_PROGRESS`로 적었던 run 세 개는 이후 source code SHA `617e204b4c0b4f9dce15f4185eff589af9042920`에서 모두 `SUCCESS`로 완료됐다: [Pro PR 36069234793](https://github.com/Daikisong/stock_agent/actions/runs/36069234793), [Pro push 36069233229](https://github.com/Daikisong/stock_agent/actions/runs/36069233229), [V6 36069234853](https://github.com/Daikisong/stock_agent/actions/runs/36069234853). 두 Pro run은 full-regression을 포함하고 V6는 offline-contract를 포함한다. 테스트 총개수는 별도 확인되지 않았으므로 기재하지 않는다.
 - 현재 P110 문서 변경 전 branch/origin head는 P109 docs-only commit `7c215bfa668d334a87e113e124811c0b929aa37d`, worktree clean이었다. PR #7은 `OPEN/DRAFT`, `main` 미병합이다. 이 P110도 문서 전용 변경이라 새 workflow를 만들지 않는다. code CI의 검증 SHA는 `617e204...`로 구분해 둔다.
+- 이번 P110 문서는 한글 commit `d6672968` (`기존 로그인 탭 초안 보존 상태 문서화`)으로 PR #7 feature branch에 push했다. source/test 변경은 없다.
 - C15 SQLite를 이 작업에서 mode read-only 및 `PRAGMA query_only=ON`으로 확인한 durable 상태는 `PROJOB-df15a37c58ae7583924e58c0`, S-Oil `010950`, `2026-08-23`, `USER_ATTENTION_REQUIRED` v26, canonical packet hash `fa5845...320df`, submit/capture `0/0`, approval/browser/conversation binding 없음이다. 기존 `safe_unprepared_resume=false` event도 유지됐다. BrowserUse UI는 이에 따라 바뀌지 않았다.
 - 이번 P110에는 신규 research/query/fetch, 새 job/pass, C15 submit/capture, 다른 archetype, 점수/Stage 변경, PR merge가 없다.
 
