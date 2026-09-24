@@ -685,6 +685,33 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             ).exists()
         )
 
+    def test_file_chooser_selection_failure_remains_blocked_for_same_unsent_job(self) -> None:
+        runner, spec = self._make_draft_preparation_attention_resume(
+            "BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet "
+            "(phase=inspect_dialog_controls; exit=1; error_id=PatternUnavailable)"
+        )
+
+        with self.assertRaisesRegex(ValueError, "known safe failure"):
+            runner._load_unprepared_attention_job(
+                FreshSessionBoundaryService(self.store),
+                spec=spec,
+                manifest=self.manifest,
+                job_id=self.fresh_job.job_id,
+            )
+
+        current = self.store.get_job(self.fresh_job.job_id)
+        self.assertEqual(current.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(current.submit_count, 0)
+        self.assertEqual(current.capture_count, 0)
+        self.assertIsNone(current.browser_session_id)
+        self.assertIsNone(current.conversation_id)
+        self.assertFalse(
+            (
+                self.boundary.fresh_job_root
+                / "fresh_session/fresh_v3_prepare_receipt.json"
+            ).exists()
+        )
+
     def test_exact_browseruse_attach_rpc_timeout_requires_live_same_tab_preflight(self) -> None:
         runner, spec = self._make_draft_preparation_attention_resume(
             "BrowserUse bridge transport failed (TimeoutError: timed out)"

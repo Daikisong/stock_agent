@@ -1,7 +1,13 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 19:29 KST (P90: 같은 로그인 탭 첨부 실패와 파일 선택창 읽기 전용 확인).
+최종 갱신: 2026-09-24 19:54 KST (P91: 로그인 세션 우선 규칙 재강조 및 첨부 오류 진단 보강).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
+
+## 최우선 규칙 — 로그인된 그 세션에서만
+
+로그인이 필요한데 기존 BrowserUse 연결에서 사용자의 로그인 세션/작업 탭을 쓸 수 없다면, **브라우저 작업은 거기서 멈춘다.** 새 Chrome이나 창을 띄우기, 새 탭·프로필·CDP 세션으로 갈아타기, 재로그인 요구, 같은 요청을 다른 대화로 다시 보내기는 복구 방법이 아니다. “새 대화”가 필요할 때도 현재 로그인된 기존 탭 안에서만 연다. 이 규칙은 편의상의 선호가 아니라 인증 작업의 필수 경계다.
+
+실패 시에는 마지막으로 확인한 기존 탭/대상, 실제 수행 여부(입력·첨부·전송·다운로드), 도구가 반환한 정확한 오류, 읽기 전용으로 확인한 범위, 다음 한 단계만 기록한다. 기존 창·탭·로그인은 그대로 둔다. 화면이나 durable 상태가 불명확하면 재시도하지 않는다.
 
 ## 반드시 따를 실행 순서 — 같은 로그인 세션·같은 탭
 
@@ -21,7 +27,17 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 재개 지점 — P90 (2026-09-24 19:29 KST)
+## P91 — 기존 로그인 BrowserUse 세션 원칙 재강조 및 첨부 오류 진단 보강 (2026-09-24 19:54 KST)
+
+- **세션 지침:** 인증이 필요하면 기존 BrowserUse `extension` 연결 → `openTabs()` → 작업과 일치하는 descriptor를 `claimTab()` → claim이 반환한 바로 그 tab 객체만 사용한다. 기존 로그인 탭을 확인할 수 없다면 멈춘다. 이번 P91은 문서·코드·로컬 테스트 작업뿐이며 브라우저 UI를 연결하거나 조작하지 않았다. 따라서 live 탭의 현재 상태는 P90 이후 새로 확인한 것으로 취급하지 않는다.
+- **P91 코드 변경:** Windows native chooser bridge가 구조화된 `E2R_FILE_CHOOSER_RESULT` marker로 단계/오류 ID/category/message를 반환하고 PowerShell progress stream은 억제한다. JavaScript 쪽은 structured result와 exit code를 함께 검증하며, marker 누락/잘못된 JSON/성공 marker와 비정상 종료는 모두 실패로 처리한다. 진단 문자열은 제한 길이로 자르고 packet 경로를 숨긴다. 예상 밖 dialog control이 보일 때 취소 버튼을 자동 클릭하는 동작을 제거해 사용자 창을 임의 조작하지 않는다.
+- **재개 안전성:** chooser 선택 실패는 같은 unsent job을 자동 재개 가능하게 바꾸지 않는다. 회귀 테스트는 `safe_unprepared_resume=false`인 같은 job에서 prepare receipt 생성, browser/conversation binding, submit/capture가 계속 차단되는지 확인한다. 이 코드 변경은 과거 실제 첨부 실패의 원인을 확정하거나 해당 job을 재개 승인하지 않는다.
+- **로컬 검증:** bridge + fresh orchestration focused suite `105/105 PASS`; Pro-first static audit `PASS`, `critical_count=0`; `node --check`와 `git diff --check` PASS. 전체 master-goal acceptance battery는 374건 중 371 PASS, 3건 ERROR이며 모두 이 WSL 환경에서 Playwright Chromium이 `libnspr4.so`를 찾지 못한 browser-fixture setup 오류다. full unittest discover도 해당 시스템 라이브러리 누락으로 끝까지 검증되지 않았고 exit 137로 종료됐다. 이를 테스트 전체 성공이나 제품 실패로 표현하지 않는다. GitHub Actions는 CI dependency install이 포함된 exact code head에서 다시 확인해야 한다.
+- **현재 live 증거의 한계:** 마지막 실제 기존 로그인 탭 및 durable C15 R6 검사는 P90 (19:29 KST) 기록이다. 그때 same tab은 로그인된 ChatGPT/Pro로 read-only 관찰됐지만 chooser는 닫혀 있었고, 같은 C15 R6 job `PROJOB-df15a37c58ae7583924e58c0`은 `USER_ATTENTION_REQUIRED`, state version 20, submit/capture `0/0`, `safe_unprepared_resume=false`였다. 이는 P91 현재 화면 증거가 아니며, 새 코드도 durable gate를 덮어쓰지 않는다.
+- **다음 한 단계:** 변경분과 문서를 PR #7 branch에 한글 commit/push하고 새 exact-head CI를 확인한다. CI가 green이더라도 live UI 작업을 할 때는 먼저 동일 BrowserUse 로그인 세션의 기존 탭을 다시 열거·claim하고, 같은 job의 durable identity/recovery gate를 read-only로 확인한다. 기존 탭을 쓸 수 없거나 gate/상태가 불명확하면 멈춘다. 새 창·세션·재로그인은 사용하지 않는다.
+- 상세 구현과 실행 기록은 [implementation progress P91](implementation_progress.md#p91--기존-로그인-browseruse-세션-원칙과-첨부-오류-진단-보강-2026-09-24-1954-kst)에 있다. P90 아래는 당시 관찰의 기록이며, 충돌 시 이 P91 handoff가 우선한다.
+
+## P90 checkpoint — historical (P91이 현재 판정)
 
 - **로그인이 필요한 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 ChatGPT 탭에서만 한다.** 이번 확인은 persistent BrowserUse 세션에서 이미 claim해 둔 동일 tab 객체만 사용했다. 새 브라우저·창·탭·프로필·CDP 세션, 재로그인, 탭 이동/재전송은 없었다. 사용자의 창과 세션은 열린 채 보존한다.
 - 같은 탭의 읽기 전용 DOM 확인: `https://chatgpt.com/`, 로그인 prompt 없음, 계정 `Pro` 표시와 화면의 `6 Pro` control, 빈 composer, user turn 0, packet 파일명 미표시, file input 5개 모두 선택 파일 0. native chooser inspector도 동일 extension 탭에 연결해 조회했다. 첫 worker 실행은 작업 경로의 `PYTHONPATH` 누락으로 `ModuleNotFoundError: No module named 'e2r'`를 반환했다. `PYTHONPATH=src`를 지정한 재실행 결과는 `open=false`, `chrome_owned_dialog_count=0`, `unknown_owner_count=0`이다. 이는 **검사 시점**만 설명하며 이전 첨부 실패의 결과를 소급 입증하지 않는다.

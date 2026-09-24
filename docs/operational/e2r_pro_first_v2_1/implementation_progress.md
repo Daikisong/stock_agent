@@ -7108,3 +7108,40 @@ BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet 
 - 코드 검증 head는 `c4155c5ca6f75602928d123c48446c08160860a8`. 그 SHA의 Pro push [35982213116](https://github.com/Daikisong/stock_agent/actions/runs/35982213116), Pro PR [35982218832](https://github.com/Daikisong/stock_agent/actions/runs/35982218832), V6 PR [35982218910](https://github.com/Daikisong/stock_agent/actions/runs/35982218910)은 이전 19:01 KST 조회에서 모두 SUCCESS였다. 그 검증을 P90 문서 SHA의 새 CI 결과라고 부르지 않는다.
 - 다음 한 단계는 첨부 실패 경로를 코드/mock 및 PowerShell chooser bridge 경계에서 원인 분리하고, ambiguous chooser 결과를 재개 가능으로 잘못 취급하지 않는 회귀 테스트를 보강하는 것이다. 그 exact code head CI가 통과하기 전에는 실제 BrowserUse 첨부·전송을 재시도하지 않는다. 재개 시에도 같은 C15 R6 identity와 같은 사용자 로그인 `extension` 세션·기존 tab 객체를 다시 확인한다.
 - P90 동안 source query/fetch, 다른 archetype 실행, score/Stage 변경, 새 job/pass, ChatGPT prompt 입력·전송·capture는 모두 0이다. PR #7만 사용하고 `main`은 변경하지 않았다.
+
+## P91 — 기존 로그인 BrowserUse 세션 원칙 재강조 및 첨부 오류 진단 보강 (2026-09-24 19:54 KST)
+
+### 목적과 인증 세션 경계
+
+사용자가 BrowserUse 로그인 작업은 로그인해 둔 세션에서 하라고 다시 명확히 요청했다. 인증이 필요한 작업은 사용자의 기존 BrowserUse `extension` 세션에서 `openTabs()`로 기존 탭을 열거하고, 대상 작업과 일치하는 descriptor를 `claimTab()`해 그 호출이 반환한 동일 tab 객체만 사용한다. 새 창·새 브라우저·새 탭·프로필·별도 CDP·재로그인은 대체 경로가 아니다. 기존 세션/대상 탭을 연결하거나 확인하지 못하면 그 시점에서 멈추고 실제 오류와 확인 범위만 기록한다. “새 대화”가 필요해도 같은 로그인 탭 안에서만 연다. 이 규칙을 handoff 문서 첫 화면의 최우선 규칙으로 올렸다.
+
+P91에서는 브라우저 UI를 연결하거나 조작하지 않았다. 즉 아래는 코드/테스트 변경 기록이지, 새 live BrowserUse 확인 결과가 아니다. 사용자의 열린 창·탭·세션은 건드리지 않았다.
+
+### 첨부 chooser bridge 변경
+
+P90에 기록된 실제 오류는 `existing Chrome file chooser did not select the packet`; DB의 `last_error_message`는 CLIXML 출력 구간에서 잘려 있어 실제 원인은 미확정이었다. 이를 진단 가능하게 만들기 위해 chooser bridge와 회귀 검증을 보강했다.
+
+- PowerShell chooser가 구조화된 `E2R_FILE_CHOOSER_RESULT` JSON marker로 status, phase, PowerShell error ID/category, 제한된 message를 내보낸다. progress output은 억제해 호스트의 CLIXML progress가 결과 메시지를 가리지 않게 한다.
+- JS bridge는 structured marker와 종료 code를 모두 확인한다. marker 누락/JSON 오류/알 수 없는 status/`SELECTED`와 비정상 종료의 조합은 전부 실패로 처리한다. diagnostic은 길이를 제한하고 대상 packet 경로를 가린다.
+- 예상치 못한 dialog control이 발견됐을 때 `Cancel`을 자동 invoke하던 동작을 제거했다. global keystroke/SendKeys를 사용하지 않으며 사용자의 창을 추측해 닫지 않는다.
+- 회귀 테스트는 structured error가 CLIXML progress보다 우선하는지, unstructured result가 fail-closed인지, 대상 경로가 진단에서 가려지는지, 성공 marker도 exit code 0을 요구하는지, 자동 Cancel/SendKeys가 없는지 검사한다.
+- orchestration 회귀 테스트는 chooser selection failure가 같은 unsent job의 `USER_ATTENTION_REQUIRED`/submit 0/capture 0 상태에서 resume, prepare receipt, browser/conversation binding을 만들지 못하도록 보장한다.
+
+이 수정은 기존 P90 첨부 실패의 원인을 확정하지 않는다. 더 구체적인 오류를 다음 안전한 실행에서 남기도록 할 뿐이다. 같은 C15 R6 durable job의 P90 검사 상태는 `safe_unprepared_resume=false`; 이 gate가 바뀌지 않은 한 동일 job 첨부/입력/전송을 재시도하면 안 된다. 현재 native chooser가 닫혀 있다는 관찰만으로 이전 시도가 미첨부였다고 소급 추론하지 않는다.
+
+### 검증 및 환경 제한
+
+- `PYTHONPATH=src python3 -m unittest tests.test_e2r_pro_first_browseruse_extension_bridge tests.test_e2r_pro_first_v2_1_fresh_orchestration`: **105/105 PASS**.
+- `PYTHONPATH=src python3 -m e2r.cli.audit_e2r_pro_first_v2 --repo-root .`: **PASS**, `critical_count=0`.
+- `node --check src/e2r/pro_first/browser/browseruse_extension_bridge.mjs`, PowerShell parser-only 구문 검사, `git diff --check`: **PASS**. Parser-only 검사는 파일 선택창이나 브라우저 UI를 실행하지 않았다.
+- master-goal focused acceptance battery는 374개 중 371 PASS / 3 ERROR였다. 세 오류는 모두 이 WSL에서 Playwright bundled Chromium fixture를 시작할 때 시스템 라이브러리 `libnspr4.so`를 못 찾은 setup 오류다. assertion failure는 없었지만, 이 결과는 full acceptance PASS가 아니다.
+- `PYTHONPATH=src python -m unittest discover -s tests -v` 전체 실행도 브라우저 관련 오류 이후 process exit 137로 끝나 전체 테스트 통과를 입증하지 못했다. 단일 fixture에서 확인한 로더 오류는 `libnspr4.so: cannot open shared object file`; CI workflow는 `python -m playwright install --with-deps chromium`으로 해당 OS 의존성을 준비한다. 로컬 `sudo -n`에는 암호가 필요해 관리자 권한 설치를 시도하지 않았다. exact changed-head GitHub Actions 결과가 새 수정분의 전체 회귀 근거여야 한다.
+- static audit 결과는 `audit_hash=27e7f3321556341e36850b23df9c6c6bb9cd4eb51474d2fcb44c32b57475a5e0`, production audit `PASS`, `critical_count=0`이다.
+
+### 작업 경계와 다음 한 단계
+
+- P91에서 로그인 탭 확인/claim, prompt 입력, attachment/download, submit/capture, source query/fetch, 새 job/pass, 다른 archetype 실행, score/Stage 변경은 모두 0이다.
+- 이 시점의 local branch `feature/e2r-pro-first-browser-platform-20260822`는 PR #7 작업 branch다. P90 문서 commit `850e1cc458b882aaa62051c06ded0c0ff842c61e`가 기존 local/origin head이고, P91 코드·테스트·문서 diff는 아직 commit되지 않았다. `main`은 변경하지 않았다. P91 새 diff의 GitHub Actions는 아직 실행되지 않았다.
+- **다음 한 단계:** 아래 P91 변경분과 두 문서를 검토해 PR #7 branch에 한글 commit/push하고, 새 exact-head Actions가 완료될 때까지 확인한다. 그 후 live BrowserUse가 실제로 필요한 경우에만 사용자의 현재 로그인 `extension` 세션에서 기존 탭을 다시 열거·claim하고, 동일 job의 durable identity 및 safe-resume gate를 먼저 read-only 검증한다. 기존 로그인 탭을 사용할 수 없거나 상태가 불명확하면 멈춘다. 새 세션·창·재로그인으로 우회하지 않는다.
+
+상세 실행 요건과 최신 handoff는 [BrowserUse existing-session handoff P91](browseruse_existing_session_handoff.md#p91--기존-로그인-browseruse-세션-원칙-재강조-및-첨부-오류-진단-보강-2026-09-24-1954-kst)에 있다. master goal과 live canary는 아직 미완료다.

@@ -10,11 +10,87 @@ const MAX_REQUEST_BYTES = 64 * 1024 * 1024;
 const MAX_EVENT_ROWS = 2048;
 const DEFAULT_READ_ONLY_EVALUATE_TIMEOUT_MS = 10_000;
 export const BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS = 45_000;
+const NATIVE_FILE_CHOOSER_RESULT_PREFIX = "E2R_FILE_CHOOSER_RESULT:";
 const CHATGPT_ORIGIN = "https://chatgpt.com";
 const PRIVATE_IPV4 = /^(10\.(?:\d{1,3}\.){2}\d{1,3}|172\.(?:1[6-9]|2\d|3[01])\.(?:\d{1,3}\.)\d{1,3}|192\.168\.(?:\d{1,3}\.)\d{1,3})$/;
 const READ_ONLY_LOCATOR_COUNT_EXPRESSION = "elements => elements.length";
 const READ_ONLY_LOCATOR_VISIBLE_EXPRESSION = "element => { const rect = element.getBoundingClientRect(); const style = window.getComputedStyle(element); return rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.visibility !== 'collapse'; }";
 const READ_ONLY_LOCATOR_ENABLED_EXPRESSION = "element => !element.matches(':disabled') && !element.closest('[aria-disabled=\"true\"]')";
+
+function boundedDiagnosticText(value, limit = 240, targetPath = "") {
+  let text = String(value || "").replace(/[\r\n]+/g, " ").trim();
+  if (targetPath) text = text.split(String(targetPath)).join("<packet_path>");
+  return text.replace(/\b[A-Za-z]:\\[^\s;,)]+/g, "<windows_path>").slice(0, limit);
+}
+
+export function parseNativeFileChooserResult({ exitCode, stdout, stderr = "", targetPath = "" }) {
+  const normalizedExitCode = Number.isInteger(exitCode) ? exitCode : null;
+  const line = String(stdout || "")
+    .split(/\r?\n/)
+    .map(value => value.trim())
+    .reverse()
+    .find(value => value.startsWith(NATIVE_FILE_CHOOSER_RESULT_PREFIX));
+  if (!line) {
+    const fallbackOutput = [stdout, stderr]
+      .map(value => String(value || "").trim())
+      .find(value => value && !/^(?:#< CLIXML|<Objs\b)/i.test(value));
+    return {
+      selected: false,
+      phase: "RESULT_MISSING",
+      error_id: "STRUCTURED_RESULT_MISSING",
+      category: "Bridge",
+      message: boundedDiagnosticText(fallbackOutput, 240, targetPath)
+        || "PowerShell file chooser returned no structured result",
+    };
+  }
+  let payload;
+  try {
+    payload = JSON.parse(line.slice(NATIVE_FILE_CHOOSER_RESULT_PREFIX.length));
+  } catch {
+    return {
+      selected: false,
+      phase: "RESULT_INVALID",
+      error_id: "STRUCTURED_RESULT_INVALID",
+      category: "Bridge",
+      message: "PowerShell file chooser returned invalid structured JSON",
+    };
+  }
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    return {
+      selected: false,
+      phase: "RESULT_INVALID",
+      error_id: "STRUCTURED_RESULT_INVALID",
+      category: "Bridge",
+      message: "PowerShell file chooser returned an invalid result object",
+    };
+  }
+  const result = {
+    selected: payload.status === "SELECTED" && normalizedExitCode === 0,
+    phase: boundedDiagnosticText(payload.phase, 80, targetPath) || "UNKNOWN",
+    error_id: boundedDiagnosticText(payload.error_id, 120, targetPath),
+    category: boundedDiagnosticText(payload.category, 80, targetPath),
+    message: boundedDiagnosticText(payload.message, 240, targetPath),
+  };
+  if (payload.status === "SELECTED" && normalizedExitCode !== 0) {
+    return {
+      ...result,
+      selected: false,
+      error_id: result.error_id || "NONZERO_EXIT_AFTER_SELECTION",
+      category: result.category || "Bridge",
+      message: result.message || "PowerShell reported selection but exited unsuccessfully",
+    };
+  }
+  if (payload.status !== "SELECTED" && payload.status !== "FAILED") {
+    return {
+      selected: false,
+      phase: result.phase,
+      error_id: "STRUCTURED_RESULT_STATUS_INVALID",
+      category: "Bridge",
+      message: "PowerShell file chooser returned an unknown result status",
+    };
+  }
+  return result;
+}
 
 function assertPrivateBindHost(host) {
   if (!net.isIP(host)) throw new Error("bridge bind host must be an IP address");
@@ -518,10 +594,23 @@ async function resolveWslGateway(distroName) {
   return match[1];
 }
 
-function nativeFileDialogScript(targetPath) {
+export function nativeFileDialogScript(targetPath) {
   const targetB64 = Buffer.from(targetPath, "utf8").toString("base64");
   return `
 $ErrorActionPreference = "Stop"
+$ProgressPreference = "SilentlyContinue"
+$phase = "initialize"
+function Write-E2RChooserResult([string]$Status, [string]$Phase, [string]$ErrorId, [string]$Category, [string]$Message) {
+  $payload = [ordered]@{
+    status = $Status
+    phase = $Phase
+    error_id = $ErrorId
+    category = $Category
+    message = $Message
+  }
+  [Console]::Out.WriteLine("${NATIVE_FILE_CHOOSER_RESULT_PREFIX}" + ($payload | ConvertTo-Json -Compress))
+}
+try {
 Add-Type -AssemblyName UIAutomationClient
 Add-Type -AssemblyName UIAutomationTypes
 Add-Type -TypeDefinition @'
@@ -533,10 +622,13 @@ public static class E2RWindowApi {
   [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
 }
 '@
+$phase = "decode_packet_path"
 $targetPath = [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String("${targetB64}"))
+$phase = "validate_packet_path"
 if (-not (Test-Path -LiteralPath $targetPath -PathType Leaf)) { throw "Selected packet is not visible to Windows" }
 $deadline = [DateTime]::UtcNow.AddMilliseconds(${BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS})
 $matchedDialog = $false
+$phase = "poll_for_chrome_open_dialog"
 while ([DateTime]::UtcNow -lt $deadline) {
   $handle = [E2RWindowApi]::GetForegroundWindow()
   if ($handle -ne [IntPtr]::Zero) {
@@ -544,6 +636,7 @@ while ([DateTime]::UtcNow -lt $deadline) {
     if ($null -ne $dialog) {
       $title = [string]$dialog.Current.Name
       if ($title -match "^(Open|Open File|열기|파일 열기)$") {
+        $phase = "verify_dialog_owner"
         $owner = [E2RWindowApi]::GetWindow($handle, 4)
         [uint32]$ownerPid = 0
         [void][E2RWindowApi]::GetWindowThreadProcessId($owner, [ref]$ownerPid)
@@ -551,6 +644,7 @@ while ([DateTime]::UtcNow -lt $deadline) {
         if ($ownerPid -gt 0) { $ownerName = (Get-Process -Id $ownerPid -ErrorAction Stop).ProcessName }
         if ($ownerName -ne "chrome") { throw "Foreground file chooser is not owned by the existing Chrome process" }
         $matchedDialog = $true
+        $phase = "inspect_dialog_controls"
         $scope = [System.Windows.Automation.TreeScope]::Descendants
         $editCondition = New-Object System.Windows.Automation.PropertyCondition(
           [System.Windows.Automation.AutomationElement]::ControlTypeProperty,
@@ -571,28 +665,33 @@ while ([DateTime]::UtcNow -lt $deadline) {
         $cancelButton = $null
         foreach ($button in $buttons) {
           if ($button.Current.Name -match "^(Open|열기)$") { $openButton = $button }
-          if ($button.Current.Name -match "^(Cancel|취소)$") { $cancelButton = $button }
         }
         if ($null -eq $fileEdit -or $null -eq $openButton) {
-          if ($null -ne $cancelButton) {
-            $cancelPattern = $cancelButton.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern)
-            $cancelPattern.Invoke()
-          }
           throw "Chrome file chooser controls did not match the expected Open dialog"
         }
+        $phase = "set_packet_path"
         $valuePattern = $fileEdit.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern)
         $valuePattern.SetValue($targetPath)
+        $phase = "invoke_open_button"
         $openPattern = $openButton.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern)
         $openPattern.Invoke()
-        Write-Output "E2R_FILE_CHOOSER_SELECTED"
+        Write-E2RChooserResult -Status "SELECTED" -Phase "complete" -ErrorId "" -Category "" -Message ""
         exit 0
       }
     }
   }
   Start-Sleep -Milliseconds 100
 }
+$phase = "dialog_not_found"
 if ($matchedDialog) { throw "Chrome file chooser timed out before selecting the packet" }
 throw "No Chrome-owned Open dialog appeared; no global keystrokes were sent"
+} catch {
+  $message = [string]$_.Exception.Message
+  if ($targetPath) { $message = $message.Replace($targetPath, "<packet_path>") }
+  if ($message.Length -gt 240) { $message = $message.Substring(0, 240) }
+  Write-E2RChooserResult -Status "FAILED" -Phase $phase -ErrorId ([string]$_.FullyQualifiedErrorId) -Category ([string]$_.CategoryInfo.Category) -Message $message
+  exit 1
+}
 `;
 }
 
@@ -731,9 +830,21 @@ async function selectThroughVisibleWindowsDialog({ targetPath, distroName }) {
     targetPath,
     child,
     completion: exitCode.then(code => {
-      if (code !== 0 || !stdout.includes("E2R_FILE_CHOOSER_SELECTED")) {
-        const detail = (stderr || stdout).replace(/[\r\n]+/g, " ").slice(0, 350);
-        throw new Error(`existing Chrome file chooser did not select the packet (exit=${code}; ${detail})`);
+      const result = parseNativeFileChooserResult({
+        exitCode: code,
+        stdout,
+        stderr,
+        targetPath,
+      });
+      if (!result.selected) {
+        const details = [
+          `phase=${result.phase}`,
+          `exit=${code === null ? "unknown" : code}`,
+          result.error_id ? `error_id=${result.error_id}` : "",
+          result.category ? `category=${result.category}` : "",
+          result.message ? `message=${result.message}` : "",
+        ].filter(Boolean).join("; ");
+        throw new Error(`existing Chrome file chooser did not select the packet (${details})`);
       }
       return true;
     }),

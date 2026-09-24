@@ -112,6 +112,74 @@ assert.ok({BROWSERUSE_PACKET_ATTACH_RPC_TIMEOUT_SECONDS * 1000} > BROWSERUSE_NAT
         )
         self.assertEqual(completed.returncode, 0, completed.stderr)
 
+    def test_native_file_chooser_diagnostics_ignore_clixml_progress_and_fail_closed(self) -> None:
+        node = shutil.which("node")
+        self.assertIsNotNone(node)
+        bridge_path = (
+            Path(__file__).parents[1]
+            / "src/e2r/pro_first/browser/browseruse_extension_bridge.mjs"
+        ).resolve()
+        packet_path = r"C:\Users\fixture-user\packet.json"
+        script = f"""
+import assert from "node:assert/strict";
+import {{ nativeFileDialogScript, parseNativeFileChooserResult }} from {json.dumps(bridge_path.as_uri())};
+const packetPath = {json.dumps(packet_path)};
+const failurePayload = {{
+  status: "FAILED",
+  phase: "inspect_dialog_controls",
+  error_id: "PatternUnavailable",
+  category: "InvalidOperation",
+  message: "UI Automation could not inspect the dialog",
+}};
+const structured = parseNativeFileChooserResult({{
+  exitCode: 1,
+  stdout: "banner\\nE2R_FILE_CHOOSER_RESULT:" + JSON.stringify(failurePayload) + "\\n",
+  stderr: "#< CLIXML <progress>irrelevant host progress</progress>",
+  targetPath: packetPath,
+}});
+assert.deepEqual(structured, {{
+  selected: false,
+  phase: "inspect_dialog_controls",
+  error_id: "PatternUnavailable",
+  category: "InvalidOperation",
+  message: "UI Automation could not inspect the dialog",
+}});
+const fallback = parseNativeFileChooserResult({{
+  exitCode: 1,
+  stdout: "Actual parser error at " + packetPath,
+  stderr: "#< CLIXML <progress>irrelevant host progress</progress>",
+  targetPath: packetPath,
+}});
+assert.equal(fallback.selected, false);
+assert.equal(fallback.phase, "RESULT_MISSING");
+assert.match(fallback.message, /Actual parser error/);
+assert.doesNotMatch(fallback.message, /irrelevant host progress|fixture-user|packet\\.json/);
+const success = parseNativeFileChooserResult({{
+  exitCode: 0,
+  stdout: "E2R_FILE_CHOOSER_RESULT:" + JSON.stringify({{status:"SELECTED",phase:"complete"}}),
+}});
+assert.equal(success.selected, true);
+const mismatchedExit = parseNativeFileChooserResult({{
+  exitCode: 1,
+  stdout: "E2R_FILE_CHOOSER_RESULT:" + JSON.stringify({{status:"SELECTED",phase:"complete"}}),
+}});
+assert.equal(mismatchedExit.selected, false);
+const powershell = nativeFileDialogScript(packetPath);
+assert.ok(powershell.includes('$ProgressPreference = "SilentlyContinue"'));
+assert.ok(powershell.includes("E2R_FILE_CHOOSER_RESULT:"));
+assert.ok(powershell.includes("inspect_dialog_controls"));
+assert.ok(!powershell.includes("SendKeys"));
+assert.ok(!powershell.includes("cancelPattern.Invoke"));
+"""
+        completed = subprocess.run(
+            [str(node), "--input-type=module", "--eval", script],
+            cwd=Path(__file__).parents[1],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+
     async def test_native_file_chooser_inspection_is_a_read_only_bridge_call(self) -> None:
         client = BrowserUseBridgeClient(
             endpoint="http://127.0.0.1:12345",
