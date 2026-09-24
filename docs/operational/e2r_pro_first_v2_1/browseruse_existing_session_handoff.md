@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 19:54 KST (P91: 로그인 세션 우선 규칙 재강조 및 첨부 오류 진단 보강).
+최종 갱신: 2026-09-24 20:17 KST (P92: 기존 로그인 탭 read-only 확인과 chooser 오류 same-tab 복구 gate 보강).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,17 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## P91 — 기존 로그인 BrowserUse 세션 원칙 재강조 및 첨부 오류 진단 보강 (2026-09-24 19:54 KST)
+## P92 — 기존 로그인 탭과 same-job recovery 재개 지점 (2026-09-24 20:17 KST)
+
+- **로그인 세션:** WSL BrowserUse preflight exit `0`. persistent `mcp__node_repl__js`의 canonical bootstrap에서 `extension` 연결이 성공했다. `openTabs()`로 사용자가 이미 열어 둔 탭 2개를 확인했고, 그중 기존 `https://chatgpt.com/` / `ChatGPT` 탭 descriptor를 정확히 claim해 이후 read-only 검사에 같은 반환 tab 객체를 썼다. 새 창·브라우저·탭·프로필·CDP 세션, 재로그인, navigation은 없었다. 탭 ID·쿠키·토큰은 기록하지 않는다.
+- **현재 화면의 read-only 증거:** login password input `0`, visible composer `1`이 빈 상태, user/assistant message `0/0`, file input `5` 중 선택 파일 `0`. 계정 표시 `Pro`, model control label `6 Pro`가 보였다. 이는 현재 기존 탭에서 읽은 UI 상태이며, native chooser의 현재 상태나 어떤 canary turn이 실제 전송됐다는 증거는 아니다. prompt 입력·첨부·다운로드·submit/capture는 모두 0이다.
+- **미완료 C15 same-job:** Windows 중앙 SQLite를 `mode=ro` + `PRAGMA query_only=ON`으로 확인했다. `PROJOB-df15a37c58ae7583924e58c0`, C15 / `010950`, `USER_ATTENTION_REQUIRED`, version `20`; packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`; submit/capture `0/0`; browser/conversation binding 및 approval binding 없음; successor 없음. 최신 event의 `safe_unprepared_resume=false`, stage `DRAFT_PREPARATION_OR_UNKNOWN`는 그대로다.
+- **P92 recovery 코드:** commit `43251f9d29f3d003da96996adcc612b12becaae2`는 실제로 저장된 legacy PowerShell CLIXML chooser 오류와 새 구조화 chooser 실패만 좁게 same-tab read-only recovery gate의 후보로 허용한다. 이 허용만으로 job을 준비/전송하지 않는다. 기존 `_load_unprepared_attention_job`의 packet/job identity, zero submit/capture, 미결박 approval/browser/conversation, prepare receipt 부재 검사를 통과하고, 그 뒤에도 same claimed `extension` tab에서 exact packet hash·로그인/실제 `6 Pro`·new-chat route·빈 composer·turn 0·Stop 0·닫힌/owner 불명 native chooser 0·선택 파일 없음 또는 hash가 일치하는 exact packet을 read-only로 검증해야 한다. durable state가 중간에 바뀌어도 실패 처리한다. 성공해도 기존 job에서 **prepare only**, submit은 별도 approval gate 전까지 0이다.
+- **검증:** fresh orchestration + BrowserUse bridge `107/107 PASS`, P92 static audit `PASS / critical_count=0`, compile/diff 검사 PASS. 이 작업 시점의 origin head `8184f38f831909649caac66bec5da1c2f44c5e4b`에서는 Pro push [35990247608](https://github.com/Daikisong/stock_agent/actions/runs/35990247608), Pro PR [35990252048](https://github.com/Daikisong/stock_agent/actions/runs/35990252048), V6 PR [35990251811](https://github.com/Daikisong/stock_agent/actions/runs/35990251811)이 아직 full regression/unit suite 진행 중이었다. 이 run들은 P92 commit을 포함하지 않으며 P92 CI green으로 표현하지 않는다.
+- **다음 한 단계:** 두 P92 한글 커밋을 PR #7에 push한 뒤 그 exact head의 Pro push·Pro PR·V6 PR CI를 확인한다. 모두 성공한 뒤에만 같은 BrowserUse 로그인 탭을 다시 열거·claim해 C15 R6 durable identity와 native-dialog 포함 read-only recovery proof를 실행한다. 증명 전에는 packet/prompt를 쓰지 않는다. 성공 시에도 새 job이 아니라 이 exact job에서 prepare only로 멈춘다. 새 창·세션·재로그인으로 우회하지 않는다.
+- 전체 실행 기록은 [implementation progress P92](implementation_progress.md#p92--기존-로그인-browseruse-세션-재확인과-chooser-복구-gate-보강-2026-09-24-2017-kst)에 있다. P91 아래는 당시 상태 이력이며 충돌 시 이 P92 handoff가 우선한다.
+
+## P91 checkpoint — historical (P92가 현재 판정)
 
 - **세션 지침:** 인증이 필요하면 기존 BrowserUse `extension` 연결 → `openTabs()` → 작업과 일치하는 descriptor를 `claimTab()` → claim이 반환한 바로 그 tab 객체만 사용한다. 기존 로그인 탭을 확인할 수 없다면 멈춘다. 이번 P91은 문서·코드·로컬 테스트 작업뿐이며 브라우저 UI를 연결하거나 조작하지 않았다. 따라서 live 탭의 현재 상태는 P90 이후 새로 확인한 것으로 취급하지 않는다.
 - **P91 코드 변경:** Windows native chooser bridge가 구조화된 `E2R_FILE_CHOOSER_RESULT` marker로 단계/오류 ID/category/message를 반환하고 PowerShell progress stream은 억제한다. JavaScript 쪽은 structured result와 exit code를 함께 검증하며, marker 누락/잘못된 JSON/성공 marker와 비정상 종료는 모두 실패로 처리한다. 진단 문자열은 제한 길이로 자르고 packet 경로를 숨긴다. 예상 밖 dialog control이 보일 때 취소 버튼을 자동 클릭하는 동작을 제거해 사용자 창을 임의 조작하지 않는다.

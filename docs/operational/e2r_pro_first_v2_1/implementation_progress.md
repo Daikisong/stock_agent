@@ -7145,3 +7145,69 @@ P90에 기록된 실제 오류는 `existing Chrome file chooser did not select t
 - **다음 한 단계:** 아래 P91 변경분과 두 문서를 검토해 PR #7 branch에 한글 commit/push하고, 새 exact-head Actions가 완료될 때까지 확인한다. 그 후 live BrowserUse가 실제로 필요한 경우에만 사용자의 현재 로그인 `extension` 세션에서 기존 탭을 다시 열거·claim하고, 동일 job의 durable identity 및 safe-resume gate를 먼저 read-only 검증한다. 기존 로그인 탭을 사용할 수 없거나 상태가 불명확하면 멈춘다. 새 세션·창·재로그인으로 우회하지 않는다.
 
 상세 실행 요건과 최신 handoff는 [BrowserUse existing-session handoff P91](browseruse_existing_session_handoff.md#p91--기존-로그인-browseruse-세션-원칙-재강조-및-첨부-오류-진단-보강-2026-09-24-1954-kst)에 있다. master goal과 live canary는 아직 미완료다.
+
+## P92 — 기존 로그인 BrowserUse 세션 재확인과 chooser 복구 gate 보강 (2026-09-24 20:17 KST)
+
+### 목표 대비 현재 상태
+
+master goal은 36개 contract, multi-pass saturation/verifier repair, partial corpus score/publication 차단, frozen replay, 최소 3개 서로 다른 mechanism의 actual Pro live full-thesis canary를 요구한다. Offline 구조는 static audit에서 contract/prompt/generalization/scoring-publication/verifier-repair counters 0과 `critical_count=0`으로 확인됐지만, live canary 세 개를 full-thesis로 검증하지 못했다. 임의의 canary를 더 만들기 전에 기존 durable job을 복구할 수 있는지 먼저 확인했다.
+
+P92 시작 시 중앙 runtime SQLite를 `mode=ro` + `PRAGMA query_only=ON`으로 읽었다. 최신 기록의 요약은 다음과 같다.
+
+| Mechanism / target | 최신 durable 상태 | full-thesis 판정 |
+|---|---|---|
+| C06 / 000660 | job `FINAL`, research pass 19개; pass receipt의 `score_valid=0`, `publication_withheld=1`, `published_at=null` | **미증명**. FINAL row만으로 full-thesis pass라고 세지 않음 |
+| C17 / 011170 | `GAP_ADJUDICATION`; latest job의 initial pass complete, public-gap closure `FAILED_HARD`; score receipt 없음 | **미완료** |
+| C28 / 053800 | `GAP_ADJUDICATION`; latest job pass 16개; score receipt 없음 | **미완료** |
+| C15 / 010950 | `USER_ATTENTION_REQUIRED` v20; submit/capture `0/0`; approval/browser/conversation binding 없음; safe flag false | **미전송, recovery proof 대기** |
+
+수치는 2026-09-24 20:16 KST 읽기 전용 snapshot에서 가져왔다. 오래된 job row나 수동 label을 current canary 성공으로 집계하지 않는다.
+
+### 사용자 기존 로그인 탭 재확인 — read-only
+
+- WSL BrowserUse machine preflight는 exit `0`. persistent `mcp__node_repl__js`의 canonical bootstrap으로 실제 `extension` browser를 얻고, `browser.user.openTabs()`가 반환한 기존 탭 둘 중 ChatGPT root tab descriptor를 정확히 claim했다. 이후 동일한 반환 tab object에서만 읽었다.
+- 같은 탭은 `https://chatgpt.com/`, title `ChatGPT`; password input `0`, visible composer `1`이 비었고 user/assistant turn `0/0`, file input `5`, 선택 파일 `0`이었다. UI label `Pro`와 `6 Pro` model control이 보였다. 기존 탭은 열린 상태로 보존했다.
+- P92는 navigation·click·typing·attachment/download·submit/capture를 하지 않았다. native file chooser의 현재 open/owner 수는 이번 P92 DOM snapshot에서 검사하지 않았으므로 P90의 예전 `open=false`를 현재 값으로 재사용하지 않는다. 실제 복구 proof는 same tab에서 chooser 상태도 다시 읽어야 한다.
+- 새 Chrome/창/탭/프로필/CDP/relogin `0`; account token/cookie/tab ID를 저장하지 않았다.
+
+### C15 exact same-job 오류 복구 경로
+
+현재 C15 R6 `PROJOB-df15a37c58ae7583924e58c0`에 저장된 오류 message 길이는 425자이며 prefix는 다음과 같다.
+
+```text
+BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet (exit=1; #< CLIXML <Objs Version="1.1.0.1" ...><Obj S="progress" ...
+```
+
+중앙 DB event는 `BROWSER_PREPARING → USER_ATTENTION_REQUIRED`, stage `DRAFT_PREPARATION_OR_UNKNOWN`, `safe_unprepared_resume=false`, `submit_count=0`이다. 오류 suffix는 이전 PowerShell progress/CLIXML 처리로 잘렸으며 P91 구조화 로거가 이 과거 실패의 root cause를 소급 복원하지는 못한다.
+
+새 `live_canary_v3.py` gate는 이 정확한 legacy chooser signature와 P91 bridge가 만든 새 bounded structured chooser signature만 **same-tab read-only recovery preflight의 후보**로 인정한다. 이 검사만으로 DB state나 safe flag를 수정하지 않는다. 다른 error class/near-match/추가 text는 거절한다. 이후 경로가 요구하는 증거:
+
+- same logged-in BrowserUse `extension` tab 및 ChatGPT new-chat route;
+- 실제 `6 Pro`, 빈 composer, user turn 0, Stop indicator 없음;
+- native chooser가 닫혀 있고 Chrome/unknown-owner 대화상자 수 0;
+- 선택 파일이 없거나 exact packet JSON/hash와 보이는 이름이 모두 일치;
+- packet hash, job version/status, `submit_count=0`, `capture_count=0`, 미결박 approval/browser/conversation state가 preflight 전후 동일;
+- fresh prepare receipt가 기존부터 없어야 하며, 다른 successor가 없어야 함.
+
+검증이 실패하면 job은 `USER_ATTENTION_REQUIRED`에 남고 prepare/submit은 호출되지 않는다. 성공해도 기존 same job에서 prepare receipt만 만들고, submit은 별도 approval gate 전에는 여전히 0이다. 새 job을 만들거나 자동 재전송하지 않는다.
+
+### P92 변경과 검증
+
+- code/test commit `43251f9d29f3d003da96996adcc612b12becaae2`, 한글 메시지 `기존 chooser 오류를 same-tab 복구 증명에 결박`.
+- 회귀는 실제 CLIXML prefix와 새 structured failure가 same-tab gate 후보가 되는지, 메시지 near-match가 계속 차단되는지, 성공 preflight 전에는 prepare가 호출되지 않는지, native chooser가 열린 상태면 transition/prepare가 없는지를 검사한다.
+- `PYTHONPATH=src python3 -m unittest tests.test_e2r_pro_first_browseruse_extension_bridge tests.test_e2r_pro_first_v2_1_fresh_orchestration`: **107/107 PASS**.
+- `PYTHONPATH=src python3 -m e2r.cli.audit_e2r_pro_first_v2 --repo-root .`: **PASS**, `audit_hash=cf99d7cd7040bb10f2e3811d7b6d8ecc04e264b38b428439db27868e1a550460`, production audit `critical_count=0`; compile 및 `git diff --check` PASS.
+- P92 code+test commit은 20:17 KST 현재 local head `43251f9d…`; origin은 `8184f38f831909649caac66bec5da1c2f44c5e4b`. P92 handoff/progress 문서를 이어서 commit한 뒤 push할 예정이다. 따라서 P92 code SHA의 Actions는 아직 시작하지 않았다.
+- 이전 pushed SHA `8184f38f…`의 Pro push [35990247608](https://github.com/Daikisong/stock_agent/actions/runs/35990247608), Pro PR [35990252048](https://github.com/Daikisong/stock_agent/actions/runs/35990252048), V6 PR [35990251811](https://github.com/Daikisong/stock_agent/actions/runs/35990251811)은 full regression/unit-test step에서 진행 중이었고, 다른 해당 job은 성공했다. 이들은 P92 diff를 검증하지 않는다.
+- master-goal focused acceptance의 Playwright setup은 이 WSL에서 계속 `libnspr4.so` 때문에 실행되지 않는다. CI `playwright install --with-deps chromium` 경로로 검증해야 한다. 전체 goal acceptance를 PASS로 부르지 않는다.
+
+### 다음 한 단계와 금지 경계
+
+1. P92 handoff 및 progress를 Korean 문서 commit으로 붙여 PR #7 branch에 두 커밋을 push한다.
+2. exact pushed head에서 Pro push, Pro PR, V6 PR을 모두 끝까지 확인하고 full regression/static/reviewer 결과를 기록한다.
+3. green 이후에만 동일 BrowserUse `extension` 세션의 기존 ChatGPT tab을 다시 열거·claim하고, exact C15 R6 durable identity와 native chooser를 포함한 read-only recovery proof를 실행한다. 성공해도 prepare까지만; submit 전에 approval gate를 충족한다.
+4. C15/C17/C28 중 기존 job을 우선 이어서 actual Pro canary를 닫는다. 새 job이나 source-fetch campaign은 기존 exact job 복구/계속 진행이 불가능하다는 증거가 나온 경우에만 검토한다.
+
+새 pass, source query/fetch, 다른 archetype 실행, prompt input, attachment/download, submit/capture, score/Stage 변경은 P92 모두 `0`이다. PR #7은 Draft/open, `main` 미병합이다. 전체 master goal은 미완료다.
+
+최신 실행 절차는 [BrowserUse existing-session handoff P92](browseruse_existing_session_handoff.md#p92--기존-로그인-탭과-same-job-recovery-재개-지점-2026-09-24-2017-kst)에 있다.
