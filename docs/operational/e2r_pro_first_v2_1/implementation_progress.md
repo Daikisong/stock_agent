@@ -7570,4 +7570,29 @@ BRIDGE_OPERATION_FAILED: Cannot read properties of null (reading 'getByRole')
 
 P105 root locator source/test/doc diff는 아직 local이다. 한글 commit/push 뒤 새 exact-head Pro push/Pro PR/V6 CI 전체가 SUCCESS가 되기 전에는 same-job recovery를 다시 실행하지 않는다. green 뒤 durable state를 재확인하고 사용자의 기존 BrowserUse 세션에서 탭을 다시 열거·claim해 그 세션에서만 계속한다. 새 창/재로그인은 대체가 아니다. PR #7은 Draft/Open으로 두고 main에 병합하지 않는다. 전체 master goal은 미완료다.
 
-세부 인계와 P105 machine receipt는 [BrowserUse handoff P105](browseruse_existing_session_handoff.md#최신-인계--p105-2026-09-25-0552-kst) 및 [P105 receipt](p105_c15_root_locator_recovery_receipt.json)다.
+세부 인계와 P105 machine receipt는 [BrowserUse handoff P105](browseruse_existing_session_handoff.md#과거-인계--p105-2026-09-25-0552-kst-p106으로-superseded) 및 [P105 receipt](p105_c15_root_locator_recovery_receipt.json)다.
+
+## P106 — root locator CI green 뒤 C15 existing-tab download gate 재검증 (2026-09-25 06:47 KST)
+
+### exact-head CI와 기존 BrowserUse 세션
+
+- P105 source/test/docs commit SHA `1fc9e8024a9103e56c9d94f1fa0d42c4d583b62c`의 Pro PR [36058257097](https://github.com/Daikisong/stock_agent/actions/runs/36058257097), V6 PR [36058257109](https://github.com/Daikisong/stock_agent/actions/runs/36058257109), Pro push [36058250305](https://github.com/Daikisong/stock_agent/actions/runs/36058250305)은 모두 `SUCCESS`다. Pro PR, V6 PR, Pro push의 full unittest는 각각 7,948개 실행, skip 38, failure/error 0이다.
+- 매 UI 단계 직전 `browser.user.openTabs()`를 다시 호출했다. 사용자 BrowserUse `extension` 세션에 열린 탭 4개 중 기존 ChatGPT root 탭 하나를 선택·claim하고 claim이 반환한 동일 객체만 사용했다. 새 Chrome/창/탭/프로필/CDP/relogin은 없다.
+
+### C15 R6 재시도와 실제 차단점
+
+- 기존 target/job/session/run/pass를 그대로 사용했다: job `PROJOB-df15a37c58ae7583924e58c0`, run `PRORUN-ff542ef979f09bcaf7cf2545`, pass `PROPASS-a7654d1d80c9c041afb5777f`, fresh session `FRESH-V2-1-C15-R6-20260907T212025Z`, S-Oil `010950`, C15, packet canonical hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`.
+- root locator 수정은 통과했고 worker가 `FRESH_PACKET_READY`, `FRESH_UNPREPARED_ATTENTION_RESUME`을 내보냈다. 이후 exact visible composer filename button의 download 이벤트 대기 단계에서 `BrowserUIIncompatible: visible composer packet download was not observed in the claimed tab`로 멈췄다. 추가로 동일 exact tab에서 direct BrowserUse `waitForEvent("download")` + visible filename button click을 한 번 확인했으나 12초 timeout이었다.
+- 현재 page snapshot에는 Chat/실제 `6 Pro`와 packet tile 한 개가 보이며, tile subtree에는 visible download href/link이 없다. `input[type=file]` 5개는 모두 `files.length=0`이었다. 마지막 `tab.dev.logs()`는 error/warn 0건; `tab.capabilities.get("cdp")`의 실제 오류는 `Capability is not available: cdp`다.
+- P100에서 같은 이름의 tile을 다운로드해 175,126 bytes, raw SHA-256 `e1d1c44edfd0467aeac3aff1bd362cbb927bf01da135e91f3d9d5cd39f81324f`로 exact local packet과 일치시킨 과거 증거가 있다. 다만 P106의 새 다운로드는 관측되지 않았으므로 P100을 현재 다운로드 성공으로 재사용하지 않는다.
+- 첫 시도는 detached Node REPL worker에서 `BRIDGE_OPERATION_FAILED: node_repl exec context not found`로 막혔다. 이는 실행 순서 오류였다. 두 번째 시도는 worker와 `runUntil()`을 같은 awaited Node REPL call 안에서 실행해 실제 file-download gate까지 진행했다.
+
+### durable 상태·작업 범위
+
+실패 직후 DB는 SQLite `mode=ro` + `PRAGMA query_only=ON`으로 재확인했다. C15는 여전히 `USER_ATTENTION_REQUIRED` v26, packet hash 불변, approval/browser/conversation binding 없음, submit/capture `0/0`, successor 없음이다. 마지막 durable error와 event도 바뀌지 않았다. prompt 입력, 새 upload, submit, capture, query/fetch, 새 job/pass, 다른 archetype, score/Stage 변경은 0이다. 현재 tile은 제거하지 않았고 사용자 로그인 탭도 그대로 보존했다.
+
+### 다음 한 단계
+
+source-level generic BrowserUse file-card download verification을 개선하고 회귀시험·static audit·exact-head Pro/V6 CI를 통과시킨 뒤 같은 job을 재검증한다. 현재 미확인 tile을 삭제/대체하거나 다른 대화·새 브라우저로 이동하지 않는다. 사용자가 existing tile 교체를 명시적으로 승인하지 않는 한 draft를 유지한다. PR #7은 OPEN/DRAFT, main 미병합이다. master goal은 미완료다.
+
+세부 경과 및 실행 규칙은 [BrowserUse P106 handoff](browseruse_existing_session_handoff.md#최신-인계--p106-2026-09-25-0647-kst)와 [P106 machine receipt](p106_c15_download_event_recovery_receipt.json)을 따른다.

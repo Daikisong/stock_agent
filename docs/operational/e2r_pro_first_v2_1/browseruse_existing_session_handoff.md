@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-25 05:52 KST (P105: existing-tab same-job recovery에서 발견한 root locator 오류와 수정/검증 상태 기록).
+최종 갱신: 2026-09-25 06:47 KST (P106: root-locator 수정 exact-head CI 성공, 기존 탭 same-job 재개와 packet 다운로드 이벤트 차단 기록).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,45 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 인계 — P105, 2026-09-25 05:52 KST
+## 최신 인계 — P106, 2026-09-25 06:47 KST
+
+### 기존 로그인 세션만 사용
+
+로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 Chrome plugin `extension` 세션의 기존 탭에서만 진행한다. 실행 직전에 `browser.user.openTabs()`로 현재 탭을 열거하고 정확한 ChatGPT 작업 탭을 `claimTab()`한 뒤, 반환된 동일 Tab 객체만 사용한다. 이번 P106도 열린 탭 4개에서 기존 ChatGPT root 탭을 다시 찾아 claim했다. 새 브라우저·창·탭·프로필·CDP 세션을 만들거나 재로그인하지 않았다. 인증값·쿠키·tab ID는 기록하지 않는다.
+
+### exact-head CI
+
+P105 수정 commit/head `1fc9e8024a9103e56c9d94f1fa0d42c4d583b62c`의 아래 필수 run은 모두 `SUCCESS`다.
+
+- [Pro PR 36058257097](https://github.com/Daikisong/stock_agent/actions/runs/36058257097)
+- [V6 PR 36058257109](https://github.com/Daikisong/stock_agent/actions/runs/36058257109)
+- [Pro push 36058250305](https://github.com/Daikisong/stock_agent/actions/runs/36058250305)
+
+Pro PR, Pro push, V6 전체 테스트는 각각 **7,948개 실행 / skip 38 / failure 0 / error 0**으로 끝났다. 이 exact-head CI는 root `get_by_role` bridge fix와 회귀를 검증하지만, C15 live request 완료를 의미하지 않는다. PR #7은 OPEN/DRAFT이며 main에 병합하지 않았다.
+
+### C15 same-job 재개 결과
+
+- 대상은 동일 C15 R6 job `PROJOB-df15a37c58ae7583924e58c0`, S-Oil `010950`, `as_of_date=2026-08-23`; fresh session `FRESH-V2-1-C15-R6-20260907T212025Z`; packet canonical hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`다. predecessor-bound `FreshInitialCanarySpec`를 사용했고, 새 job/pass를 만들지 않았다.
+- root locator 수정 후 같은 탭에서 worker가 `FRESH_PACKET_READY`와 `FRESH_UNPREPARED_ATTENTION_RESUME`까지 진행했다. 이후 visible composer packet 다운로드를 검증하는 단계에서 다음으로 fail-closed했다.
+
+```text
+BrowserUIIncompatible: visible composer packet download was not observed in the claimed tab
+```
+
+- 별도 BrowserUse 직접 다운로드 이벤트 확인도 같은 기존 탭에서 exact filename button을 대상으로 한 번 수행했으나 `Timed out after 12000ms waiting for download`였다. 다운로드 사본/새 첨부는 얻지 못했다. DOM snapshot에는 `research_packet(20260924-172107).json` file group/button 및 제거 버튼만 있었고 file card subtree에 download link/href가 보이지 않았다. file input 5개 모두 `files.length=0`이었다.
+- **이전 P100의 실제 다운로드/hash 증거는 별도로 보존한다:** P100에서는 같은 filename tile의 visible download event로 175,126 bytes 사본을 받았고 raw SHA-256 `e1d1c44edfd0467aeac3aff1bd362cbb927bf01da135e91f3d9d5cd39f81324f`가 당시 local packet과 일치했으며 canonical hash도 durable hash와 같았다. 하지만 P106의 두 다운로드 재검증은 성공하지 않았으므로 과거 P100 결과를 이번 시점의 새 다운로드 성공으로 표현하지 않는다.
+- 기존 탭의 최종 read-only 확인: `https://chatgpt.com/` root, Chat 선택, 실제 `6 Pro` 표식, 빈 prompt composer, visible packet tile 1개. `tab.dev.logs({levels:["error","warn","warning"],limit:200})`는 0건. CDP capability 오류는 정확히 `Capability is not available: cdp`였다. 화면/탭을 이동하거나 파일을 제거하지 않았고 prompt 입력·upload·submit·capture는 없다.
+- 첫 harness 재시도는 detached Node REPL promise로 인해 `BRIDGE_OPERATION_FAILED: node_repl exec context not found`에서 실패했다. 이는 내 실행 순서 오류였으며 UI/DB 변화가 없었다. 이후 `runUntil(workerPromise)`를 같은 awaited Node REPL call에 넣어 재실행했고, 위의 실제 packet download gate까지 도달했다.
+
+### 최종 durable 상태와 다음 한 단계
+
+실패 후 SQLite를 `mode=ro` 및 `PRAGMA query_only=ON`으로 다시 읽었다. 같은 job은 계속 `USER_ATTENTION_REQUIRED`, version `26`, packet hash 불변, approval/browser/conversation binding 없음, submit/capture `0/0`, successor 없음이며 기존 last error/event도 변경되지 않았다. 같은 다운로드 event를 재시도하거나 파일 tile을 삭제하지 않는다.
+
+현재 blocker는 인증이 아니다. 이전 P100은 exact bytes를 확인했지만 현재 visible packet tile에서 download event가 재현되지 않아 이번 same-job gate를 통과하지 못했다. 다음 동작은 generic BrowserUse file-card verification 경로를 회귀시험과 exact-head CI로 수리하는 것이다. 현재 단일 tile을 제거하고 다시 첨부하는 행동은 아직 하지 않는다. submit/upload 권한 상태가 명확하지 않으므로 사용자가 그 대체를 명시적으로 승인하지 않는 한 기존 draft를 보존한다. query/fetch, 새 research pass/job, 다른 archetype, score/Stage 변경은 모두 0이다.
+
+P106 machine receipt: [p106_c15_download_event_recovery_receipt.json](p106_c15_download_event_recovery_receipt.json). 전체 master goal은 미완료다.
+
+## 과거 인계 — P105, 2026-09-25 05:52 KST (P106으로 superseded)
 
 ### 인증 세션은 사용자의 기존 로그인 탭만 사용
 
