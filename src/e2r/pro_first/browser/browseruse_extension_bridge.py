@@ -299,12 +299,14 @@ class BrowserUsePage:
         path: str,
         *,
         attach_selectors: tuple[str, ...],
+        upload_menu_selectors: tuple[str, ...] = (),
     ) -> None:
         result = await self.client.call(
             "page.attach_packet",
             request_timeout_seconds=BROWSERUSE_PACKET_ATTACH_RPC_TIMEOUT_SECONDS,
             path=str(path),
             attach_selectors=list(attach_selectors),
+            upload_menu_selectors=list(upload_menu_selectors),
         )
         if not isinstance(result, Mapping) or result.get("selected") is not True:
             raise BrowserUseBridgeError("the visible Chrome file chooser did not select the packet")

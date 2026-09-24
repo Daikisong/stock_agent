@@ -58,6 +58,7 @@ from .selector_registry import (
     SEND_SELECTORS,
     STOP_SELECTORS,
     USER_TURN_SELECTORS,
+    UPLOAD_MENU_ITEM_SELECTORS,
     WORK_MODE_ACTIVE_SELECTORS,
 )
 
@@ -161,7 +162,9 @@ class PlaywrightChatGPTWebAdapter:
             # visible attach control in the exact claimed user tab, then bind
             # the browser-selected File back to the durable packet hash.
             await existing_session_upload(
-                str(path), attach_selectors=tuple(ATTACH_BUTTON_SELECTORS)
+                str(path),
+                attach_selectors=tuple(ATTACH_BUTTON_SELECTORS),
+                upload_menu_selectors=tuple(UPLOAD_MENU_ITEM_SELECTORS),
             )
             displayed_filename = await self._wait_for_uploaded_filename(path.name)
             if displayed_filename is None:

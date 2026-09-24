@@ -20,7 +20,10 @@ from e2r.pro_first.browser.chatgpt_adapter import PlaywrightChatGPTWebAdapter
 from e2r.pro_first.browser.protocol import BrowserUIIncompatible
 from e2r.pro_first.browser.worker import ProBrowserWorker
 from e2r.pro_first.config import BrowserConnectionMode, ProBrowserConfig
-from e2r.pro_first.browser.selector_registry import ATTACH_BUTTON_SELECTORS
+from e2r.pro_first.browser.selector_registry import (
+    ATTACH_BUTTON_SELECTORS,
+    UPLOAD_MENU_ITEM_SELECTORS,
+)
 
 
 class BrowserUseBridgeEndpointTest(unittest.TestCase):
@@ -79,6 +82,7 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
         await BrowserUsePage(client).upload_file_via_existing_user_session(
             "/tmp/research_packet.json",
             attach_selectors=("button[aria-label='Attach files']",),
+            upload_menu_selectors=("[role='menuitem']:has-text('Upload files')",),
         )
 
         request = client._request.await_args
@@ -89,6 +93,10 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn(
             "request_timeout_seconds",
             request.args[1]["arguments"],
+        )
+        self.assertEqual(
+            request.args[1]["arguments"]["upload_menu_selectors"],
+            ["[role='menuitem']:has-text('Upload files')"],
         )
 
         node = shutil.which("node")
@@ -102,6 +110,100 @@ import assert from "node:assert/strict";
 import {{ BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS }} from {json.dumps(bridge_path.as_uri())};
 assert.equal(BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS, 45000);
 assert.ok({BROWSERUSE_PACKET_ATTACH_RPC_TIMEOUT_SECONDS * 1000} > BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS);
+"""
+        completed = subprocess.run(
+            [str(node), "--input-type=module", "--eval", script],
+            cwd=Path(__file__).parents[1],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+
+    def test_packet_attach_menu_is_state_aware_and_fails_closed(self) -> None:
+        node = shutil.which("node")
+        self.assertIsNotNone(node)
+        bridge_path = (
+            Path(__file__).parents[1]
+            / "src/e2r/pro_first/browser/browseruse_extension_bridge.mjs"
+        ).resolve()
+        script = f"""
+import assert from "node:assert/strict";
+import {{ prepareVisiblePacketUpload }} from {json.dumps(bridge_path.as_uri())};
+
+class Locator {{
+  constructor({{ present = true, expanded = null }} = {{}}) {{
+    this.present = present;
+    this.expanded = expanded;
+    this.first = this;
+    this.clicks = 0;
+    this.onClick = null;
+  }}
+  async count() {{ return this.present ? 1 : 0; }}
+  async evaluateAll() {{ return this.present ? 1 : 0; }}
+  async evaluate() {{ return this.present; }}
+  async getAttribute(name) {{ return name === "aria-expanded" ? this.expanded : null; }}
+  async click() {{ this.clicks += 1; if (this.onClick) await this.onClick(); }}
+}}
+function pageFor(attach, upload) {{
+  return {{
+    locator(selector) {{
+      if (selector === "attach") return attach;
+      if (selector === "upload") return upload;
+      throw new Error("unexpected selector: " + selector);
+    }},
+    async waitForTimeout() {{ return; }},
+  }};
+}}
+
+// An already expanded menu is reused; clicking the toggle again would close it.
+const expandedAttach = new Locator({{ expanded: "true" }});
+const expandedUpload = new Locator();
+await prepareVisiblePacketUpload({{
+  playwright: pageFor(expandedAttach, expandedUpload),
+  attachSelectors: ["attach"],
+  uploadMenuSelectors: ["upload"],
+}});
+assert.equal(expandedAttach.clicks, 0);
+assert.equal(expandedUpload.clicks, 1);
+
+// A collapsed control is opened once, then its visible upload item is selected.
+let expanded = "false";
+const collapsedAttach = new Locator({{ expanded }});
+collapsedAttach.onClick = async () => {{ expanded = "true"; collapsedAttach.expanded = expanded; }};
+const collapsedUpload = new Locator();
+await prepareVisiblePacketUpload({{
+  playwright: pageFor(collapsedAttach, collapsedUpload),
+  attachSelectors: ["attach"],
+  uploadMenuSelectors: ["upload"],
+}});
+assert.equal(collapsedAttach.clicks, 1);
+assert.equal(collapsedUpload.clicks, 1);
+
+// An expanded but unrecognized menu must stop before native chooser selection.
+const unknownAttach = new Locator({{ expanded: "true" }});
+const missingUpload = new Locator({{ present: false }});
+await assert.rejects(
+  prepareVisiblePacketUpload({{
+    playwright: pageFor(unknownAttach, missingUpload),
+    attachSelectors: ["attach"],
+    uploadMenuSelectors: ["upload"],
+  }}),
+  /no recognized visible file-upload action/,
+);
+assert.equal(unknownAttach.clicks, 0);
+assert.equal(missingUpload.clicks, 0);
+
+// A direct-chooser UI variant with no expanded web menu remains supported.
+const directAttach = new Locator({{ expanded: "false" }});
+const absentUpload = new Locator({{ present: false }});
+const directResult = await prepareVisiblePacketUpload({{
+  playwright: pageFor(directAttach, absentUpload),
+  attachSelectors: ["attach"],
+  uploadMenuSelectors: ["upload"],
+}});
+assert.deepEqual(directResult, {{ menu_item_selected: false }});
+assert.equal(directAttach.clicks, 1);
 """
         completed = subprocess.run(
             [str(node), "--input-type=module", "--eval", script],
@@ -607,6 +709,12 @@ class BrowserUsePacketUploadTest(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(
                 page.upload_file_via_existing_user_session.await_args.kwargs["attach_selectors"],
                 tuple(ATTACH_BUTTON_SELECTORS),
+            )
+            self.assertEqual(
+                page.upload_file_via_existing_user_session.await_args.kwargs[
+                    "upload_menu_selectors"
+                ],
+                tuple(UPLOAD_MENU_ITEM_SELECTORS),
             )
 
             different_file_page = FakeBrowserUsePage(json.dumps({"different": True}))

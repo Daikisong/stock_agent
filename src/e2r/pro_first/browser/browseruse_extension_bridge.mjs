@@ -508,6 +508,39 @@ export async function resolveFirstVisibleEnabledLocator(playwright, selectors) {
   return null;
 }
 
+export async function prepareVisiblePacketUpload({
+  playwright,
+  attachSelectors,
+  uploadMenuSelectors,
+}) {
+  const attach = await resolveFirstVisibleEnabledLocator(playwright, attachSelectors);
+  if (!attach) throw new Error("visible attachment button was not found in the claimed ChatGPT tab");
+
+  const initiallyExpanded = await attach.getAttribute("aria-expanded");
+  if (initiallyExpanded !== "true") await attach.click();
+
+  // Allow the visible menu's DOM to settle, but never toggle an already-open
+  // attachment menu. Only the generic file-upload action may advance to the
+  // native chooser; an unknown expanded menu fails closed.
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    const uploadAction = await resolveFirstVisibleEnabledLocator(playwright, uploadMenuSelectors);
+    if (uploadAction) {
+      await uploadAction.click();
+      return { menu_item_selected: true };
+    }
+    if (attempt < 9) await playwright.waitForTimeout(100);
+  }
+
+  const finallyExpanded = await attach.getAttribute("aria-expanded");
+  if (initiallyExpanded === "true" || finallyExpanded === "true") {
+    throw new Error("attachment menu is open but no recognized visible file-upload action was found");
+  }
+
+  // Some ChatGPT UI variants open the Chrome chooser directly. Preserve that
+  // visible path only when no expanded in-page menu is present.
+  return { menu_item_selected: false };
+}
+
 export function wslUncPath(value, distroName, platform = os.platform()) {
   const normalized = String(value || "");
   if (/^[a-zA-Z]:\\/.test(normalized) || normalized.startsWith("\\\\")) return normalized;
@@ -972,11 +1005,13 @@ export async function startBrowserUseExtensionBridge({
     throw new Error(`unsupported BrowserUse locator method: ${method}`);
   };
 
-  const attachPacket = async ({ filePath, attachSelectors }) => {
-    const attach = await resolveFirstVisibleEnabledLocator(tab.playwright, attachSelectors);
-    if (!attach) throw new Error("visible attachment button was not found in the claimed ChatGPT tab");
+  const attachPacket = async ({ filePath, attachSelectors, uploadMenuSelectors }) => {
     const targetPath = validatePacketPathForWindowsChooser({ pathValue: filePath, distroName });
-    await attach.click();
+    await prepareVisiblePacketUpload({
+      playwright: tab.playwright,
+      attachSelectors,
+      uploadMenuSelectors,
+    });
     const dialog = await selectThroughVisibleWindowsDialog({ targetPath, distroName });
     try {
       await dialog.completion;
@@ -1024,7 +1059,11 @@ export async function startBrowserUseExtensionBridge({
       return { value: await inspectNativeFileChooser() };
     }
     if (operation === "page.attach_packet") {
-      return { value: await attachPacket({ filePath: args.path, attachSelectors: args.attach_selectors }) };
+      return { value: await attachPacket({
+        filePath: args.path,
+        attachSelectors: args.attach_selectors,
+        uploadMenuSelectors: args.upload_menu_selectors,
+      }) };
     }
     if (operation === "event.start") {
       const eventName = String(args.event_name || "");

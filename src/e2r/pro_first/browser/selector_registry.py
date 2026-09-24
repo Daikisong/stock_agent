@@ -111,6 +111,22 @@ ATTACH_BUTTON_SELECTORS = (
     'button[aria-label*="Attach"]',
 )
 
+# The attachment control opens an in-page menu in current ChatGPT UI. Keep
+# these labels generic; company/archetype names do not belong in UI selectors.
+UPLOAD_MENU_ITEM_SELECTORS = (
+    '[role="menuitem"]:has-text("Upload file")',
+    '[role="menuitem"]:has-text("Upload files")',
+    '[role="menuitem"]:has-text("Upload from computer")',
+    '[role="menuitem"]:has-text("Add files")',
+    '[role="menuitem"]:has-text("파일 업로드")',
+    '[role="menuitem"]:has-text("파일 올리기")',
+    '[role="menuitem"]:has-text("컴퓨터에서 업로드")',
+    'button:has-text("Upload file")',
+    'button:has-text("Upload from computer")',
+    'button:has-text("파일 업로드")',
+    'button:has-text("컴퓨터에서 업로드")',
+)
+
 FILE_INPUT_SELECTORS = ('input[type="file"]',)
 
 LOGIN_INDICATOR_SELECTORS = (
