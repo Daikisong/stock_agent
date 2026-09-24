@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-24 20:47 KST / P95: 사용자가 로그인된 기존 BrowserUse 세션만 사용하라고 재확인; 브라우저 작업은 하지 않고 문서화; P94 CI 상태는 다음 재개 때 재확인`
+기준 시각: `2026-09-25 02:24 KST / P98: 기존 로그인 BrowserUse 탭에서 C15 same-job 재개 중 packet filename/hash 검증 실패; 미전송·submit/capture 0/0; 인수인계 최신화`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -19,7 +19,16 @@ ChatGPT 로그인 상태가 필요한 화면 작업은 사용자가 이미 로�
 
 WSL direct setup 전 machine preflight를 한 번 실행한다. Exit code `23`이면 stale BrowserUse session이다. 새 Chrome/profile이나 재로그인으로 우회하지 말고, 기존 로그인 세션과 같은 탭을 보존할 연결이 없으면 실제 오류를 기록하고 멈춘다. 상세 명령과 recovery 순서는 아래 handoff를 따른다.
 
-전체 절차와 최신 동일 탭 receipt는 [BrowserUse 로그인 세션 인수인계](browseruse_existing_session_handoff.md)를 기준으로 한다. 이 규칙과 아래 상세 기록에 모순이 있으면 이 규칙과 최신 checkpoint가 우선한다. 인증값·쿠키·세션 토큰은 기록하지 않는다.
+안정된 실행 규칙은 [BrowserUse 로그인 세션 인수인계](browseruse_existing_session_handoff.md)에, 최신 C15 시도와 오류 증거는 [P98 상세 인수인계](../e2r_pro_first_v2/browseruse_existing_session_handoff_20260924.md)에 기록한다. 서로 모순되면 이 문서의 최상단 규칙과 가장 최근 checkpoint가 우선한다. 인증값·쿠키·세션 토큰은 기록하지 않는다.
+
+## 지금 상태 — P98, 2026-09-25 02:24 KST
+
+- **로그인 세션 원칙:** BrowserUse 인증 작업은 사용자가 이미 로그인한 기존 `extension` 세션과 그 안의 정확한 작업 탭에서만 한다. 매번 `openTabs()`로 현재 탭을 확인하고, URL/계정/대화를 대조한 descriptor를 `claimTab()`한 뒤 반환된 동일 Tab 객체만 사용한다. 새 창·브라우저·탭·프로필·별도 CDP·재로그인으로 우회하지 않는다. 새 Chat이 필요하면 같은 기존 로그인 탭 안에서만 시작한다. 연결이나 대상 확인이 실패하면 화면을 보존하고 입력 전에 중단한다.
+- **C15 현재 결과:** `PROJOB-df15a37c58ae7583924e58c0` / `010950` / `2026-08-23`의 same-job 재개를 기존 로그인 세션에서 실제 시도했다. packet exact filename/hash 검증 실패로 멈췄다. durable status `USER_ATTENTION_REQUIRED`, v26, submit/capture `0/0`, `safe_unprepared_resume=false`; prompt/send/capture는 없으며 C15는 미완료다.
+- **마지막 UI 관찰:** 2026-09-25 02:21 KST경 사후 read-only 확인에서 같은 ChatGPT 탭은 로그인된 `대규 Pro`, 일반 `Chat`/`6 Pro`, 빈 composer, user/assistant turn `0/0`, 선택 파일 `0`이었다. 다음 실행 때 현재 상태를 다시 확인해야 하며 이 기록이나 tab ID는 현재 상태를 보장하지 않는다.
+- **Exact-head CI:** P98 점검 직전 head `81224b05826bd3be4b24510301181ad385a8dd41` 기준 Pro PR [36029814504](https://github.com/Daikisong/stock_agent/actions/runs/36029814504)와 V6 PR [36029816999](https://github.com/Daikisong/stock_agent/actions/runs/36029816999)은 `SUCCESS`; Pro push [36029817123](https://github.com/Daikisong/stock_agent/actions/runs/36029817123)은 02:24 KST 현재 `in_progress` (`core-unit`/`static-security` 성공, `full-regression`/`browser-mock-e2e` 진행 중)였다.
+- **다음 한 단계:** 실패한 exact packet file/hash 검증을 코드/mock 경계에서 원인 분리하고 회귀시험으로 고친다. 그 전에는 same job에 파일첨부를 blind retry하거나 prompt/send하지 않는다. 재개 전에 durable job을 read-only로 다시 확인하고, 인증 UI가 꼭 필요할 때만 사용자의 현재 기존 BrowserUse 로그인 탭을 재열거·claim한다.
+- 전체 목표는 미완료다. C06 live full-thesis PASS `1/3`; C15는 미전송 상태, C17/C28 full-thesis canary 미완료다. 추가 검색/fetch, 새 job, 다른 archetype 실행, score/Stage 변경은 P98 범위에 포함되지 않는다.
 
 phase commit 계보:
 
@@ -66,11 +75,13 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 initial/frozen canary           COMPLETE (separate from P9 live full-thesis run)
 P8 C17/C28 fresh initial canary           COMPLETE (initial only; later full-thesis live canaries incomplete)
-P9 live multi-pass saturation             IN_PROGRESS (C06 live full-thesis research/score/StageCourt PASS 1/3; C15 R6 recovery gate pending; C17/C28 incomplete)
-P10 final CI/audit                        IN_PROGRESS (PR #7 code head `100346ca`: V6 SUCCESS, Pro push/PR full regression running; live canary 3/3 미충족)
+P9 live multi-pass saturation             IN_PROGRESS (C06 live full-thesis PASS 1/3; C15 R6 exact packet file/hash verification failed before send, durable v26 and submit/capture 0/0; C17/C28 incomplete)
+P10 final CI/audit                        IN_PROGRESS (PR #7 head at P98 check `81224b05`: Pro PR + V6 SUCCESS; Pro push still in_progress; live canary 3/3 미충족)
 ```
 
-### 현재 재개 지점 (P89, 2026-09-24 19:05 KST; PR/CI 확인 19:01 KST)
+### Historical P89 checkpoint — P98의 현재 재개 지점으로 대체됨
+
+아래 내용은 2026-09-24 19:05 KST의 기록이며 현재 상태가 아니다. 특히 아래의 P89 CI/head, 브라우저 관찰, C15 DB version은 P97/P98에 의해 대체됐다.
 
 - P88에서 수정한 matcher는 DB에 실제 저장된 exact message `BrowserUse bridge transport failed (TimeoutError: timed out)`를 허용하며, `BrowserUseBridgeError` class, exact event stage, `safe_unprepared_resume=false`, submit/capture `0/0` 조건은 유지하고 suffix near-match를 거부한다. P89 source 변경 없이 이 코드를 담은 head의 CI가 통과했다.
 - **BrowserUse가 필요한 다음 단계는 반드시 사용자의 기존 로그인 세션을 사용한다.** 새 브라우저/창/탭/프로필/CDP, 재로그인, 다른 대화에서의 요청 반복은 하지 않는다. canonical BrowserUse runtime에서 `extension → browser.user.openTabs() → 정확한 descriptor claimTab() → claim 반환 동일 tab 객체` 순서를 따르고, 대상/로그인/실제 Pro/기존 응답·초안·첨부를 read-only로 재확인한다. 이미 결과나 JSON이 있으면 같은 탭에서 회수한다. 연결·열거·claim·대상 확인 중 하나라도 실패하면 실제 오류와 확인 범위를 기록하고 입력 전 중단한다.
@@ -7311,7 +7322,7 @@ P9 집계는 이제 **C06 1/3 live full-thesis research/score/StageCourt PASS**�
 
 현재 feature branch 변경분을 검토해 한글 commit/push한 다음 **새 exact-head Pro/V6 workflow가 완료될 때까지 확인**한다. CI green 후에만 같은 C15 job을 read-only로 다시 확인하고, 사용자 기존 `extension` 세션에서 현재 대상을 다시 열거·claim한 동일 tab으로만 이어간다. filechooser event 결과와 exact packet hash가 확인되기 전에는 prompt를 입력/전송하지 않는다. 실패 시 같은 화면/세션을 보존하고 정확한 오류를 기록한다. P96은 bridge integration fix이며 C15 canary 완료가 아니다. master goal과 C15 전송/응답/capture, 이후 C17/C28 canaries는 계속 미완료다.
 
-## P97 — 기존 로그인 BrowserUse 세션 사용 절차를 상단 인수인계로 고정 (2026-09-25 01:43 KST)
+## P97 — 기존 로그인 BrowserUse 세션 사용 절차를 상단 인수인계로 고정 (historical; P98 supersedes, 2026-09-25 01:43 KST)
 
 사용자가 다시 요청한 대로, 인증이 필요한 BrowserUse 작업에서는 사용자가 이미 로그인해 둔 **기존 `extension` 세션과 기존 작업 탭**을 사용해야 한다는 점을 실행자가 놓치지 않도록 인수인계 첫 화면을 정리했다. 절차를 `extension 연결 확인 → openTabs() 재열거 → URL/계정/대화 확인 → 정확한 descriptor claim → 반환된 동일 Tab 객체만 사용`으로 명시하고, 새 창·브라우저·탭·프로필·CDP·재로그인으로 우회하지 않으며 연결 실패 시 화면을 보존하고 입력 전에 멈추도록 금지 경로와 중단 조건을 함께 적었다. 새 Chat 대화와 새 브라우저 세션도 명확히 구분했다.
 
@@ -7319,4 +7330,41 @@ P9 집계는 이제 **C06 1/3 live full-thesis research/score/StageCourt PASS**�
 
 문서 갱신 시 PR #7 head는 `4a52dce987bdab8ee64d6122bd0796ca670d2e76`, `OPEN/DRAFT`였다. 해당 head의 Pro push run [36026896631](https://github.com/Daikisong/stock_agent/actions/runs/36026896631)과 Pro PR run [36026903641](https://github.com/Daikisong/stock_agent/actions/runs/36026903641)은 `in_progress`였으며, 각 run의 `core-unit`, `browser-mock-e2e`, `static-security` job은 성공하고 `full-regression`은 진행 중이었다. 같은 head의 V6 run [36026903629](https://github.com/Daikisong/stock_agent/actions/runs/36026903629)은 `SUCCESS`였다. 새 문서 변경의 커밋/CI 결과는 이 기록에 포함되지 않는다.
 
-다음 단계는 실행 중인 exact-head Pro regression 결론을 확인하고, canary를 실제 재개할 때만 P97의 기존 세션 절차를 그대로 적용하는 것이다. 현재 인증 세션 또는 정확한 작업 탭을 연결·확인하지 못하면 새 브라우저를 열지 않고 중단한다. 최신 절차는 [BrowserUse 기존 로그인 세션 인수인계](../e2r_pro_first_v2/browseruse_existing_session_handoff_20260924.md)다. master goal은 미완료다.
+P97 시점의 next-step note는 P98에서 대체됐다. current code/CI, C15 same-job outcome, exact next step는 [P98](#p98--기존-로그인-browseruse-탭에서-c15-packet-검증-실패-및-재개-상태-갱신-2026-09-25-0224-kst)를 따른다. master goal은 미완료다.
+
+## P98 — 기존 로그인 BrowserUse 탭에서 C15 packet 검증 실패 및 재개 상태 갱신 (2026-09-25 02:24 KST)
+
+### 사용자 지정 실행 경계
+
+사용자가 다시 명확히 요청했다. 인증이 필요할 때는 **이미 로그인되어 있는 그 BrowserUse 세션에서** 진행하며 새 창/브라우저를 만들거나 별도 세션으로 옮기지 않는다. 인수인계 첫 화면에도 이 규칙과 중단 조건을 유지한다. 실제 절차는 `extension 연결 → browser.user.openTabs() 재열거 → URL/계정/대화 확인 → 정확한 descriptor claimTab() → 반환된 같은 Tab 객체만 사용`이다. “새 Chat”은 기존 로그인 탭 안의 새 대화이지 새 브라우저 세션이 아니다. 연결·claim·화면 확인이 안 되면 기존 화면을 보존하고, 실제 오류/확인 범위만 기록한 뒤 입력 전에 멈춘다. 다른 CDP 포트에 보이지 않는다는 이유로 사용자 로그아웃을 추정하지 않는다.
+
+### same-job 시도 결과
+
+2026-09-25 02:21 KST경 위 절차로 사용자의 기존 BrowserUse `extension` 세션에서 ChatGPT 탭을 다시 열거하고, 정확한 탭 descriptor를 claim한 후 claim이 반환한 Tab 객체 하나로 C15 R6를 재개했다. 같은 existing logged-in session을 사용했다. 새 브라우저/창/탭/프로필, 재로그인, CDP attach, 전역 키 입력은 하지 않았다.
+
+| 항목 | 확인 결과 |
+| --- | --- |
+| 대상 | S-Oil `010950`, `as_of_date=2026-08-23`, C15 R6, `PROJOB-df15a37c58ae7583924e58c0` |
+| packet | canonical hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df` |
+| 상태 이동 | read-only same-job recovery proof 뒤 `USER_ATTENTION_REQUIRED` v24 → `BROWSER_PREPARING` v25 → `USER_ATTENTION_REQUIRED` v26 |
+| 실제 오류 | `BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab` |
+| 최종 durable state | `USER_ATTENTION_REQUIRED`, v26, `submit_count=0`, `capture_count=0`, browser/conversation/approval binding 없음, prepare receipt 없음 |
+| resume 안전 gate | latest event `safe_unprepared_resume=false`, `preparation_failure_stage=DRAFT_PREPARATION_OR_UNKNOWN` |
+| prompt / Pro send / capture | 모두 미실행; 요청 미전송 |
+| 사후 UI 확인 | 기존 탭 `https://chatgpt.com/`, 계정 `대규 Pro`, `Chat`/`6 Pro`; composer 빈 값, user/assistant turn `0/0`, 선택 파일 `0` |
+
+BrowserUse filechooser 경로로 exact packet 파일 선택을 시도했으나, claimed tab에서 filename과 canonical JSON hash가 함께 확인되지 않았다. 그러므로 **첨부 성공으로 인정하지 않는다.** 사후 화면에 파일이 선택되어 있지 않았다는 사실은 이 작업이 올바른 로그인 세션에서 진행됐다는 사실과 별개다. 현재 증거는 로그인 실패가 아니라 exact file/hash visibility 검증 실패를 보여준다. 왜 입력 파일/표시 파일/hash가 일치하지 않았는지는 확정되지 않았으므로, 원인을 만들어내지 않고 코드/mock 경계에서 진단한다.
+
+`tab.dev.logs({levels:["error","warn","warning"], limit:200})`는 빈 결과였고, 해당 탭의 CDP capability는 실제 `Capability is not available: cdp`였다. 이 capability 제한은 기술 공백으로 기록하며 정책 거절이나 로그인 세션 부재로 부르지 않는다. 기존 사용자 탭과 로그인은 보존했다. 이 문서화 pass에서는 브라우저를 다시 연결하거나 UI를 조작하지 않았다.
+
+이번 시도는 상태를 `USER_ATTENTION_REQUIRED`로 남겼고 `safe_unprepared_resume=false`로 fail-closed했다. blind retry, 새 job, prompt 재입력, 자동 전송을 하지 않는다. 다음에는 현재 BrowserUse 탭 목록과 durable job을 각각 재확인하고, 먼저 exact file/name/content/hash 검증 경계를 진단·수리하고 회귀시험을 추가한다. 수정과 exact-head CI가 확인되기 전까지 같은 첨부·전송을 반복하지 않는다. 검색/fetch, 새 research pass/job, 다른 archetype 실행, score/Stage 변경은 없었다.
+
+### PR/CI checkpoint
+
+오류 기록 직전 feature branch/PR #7은 head `81224b05826bd3be4b24510301181ad385a8dd41`, `OPEN/DRAFT/MERGEABLE`이었다. 2026-09-25 02:24 KST `gh`로 재확인:
+
+- Pro PR [run 36029814504](https://github.com/Daikisong/stock_agent/actions/runs/36029814504): `SUCCESS`, 모든 필수 job 성공.
+- V6 PR [run 36029816999](https://github.com/Daikisong/stock_agent/actions/runs/36029816999): `SUCCESS` (`offline-contract`; `main-authority`는 PR 경로상 skipped).
+- Pro push [run 36029817123](https://github.com/Daikisong/stock_agent/actions/runs/36029817123): `in_progress`; `core-unit`과 `static-security` 성공, `full-regression` Reviewer A–H 및 `browser-mock-e2e` 진행 중.
+
+이 P98은 진행상황과 오류를 두 Markdown 파일에 문서화한 checkpoint다. PR #7은 draft/open으로 둔다. overall goal은 계속 미완료이며 C06 full-thesis `1/3`; C15는 아직 미전송; C17/C28 canary는 미완료다. 새 검색이나 raw 자료 수집, 다른 archetype, 점수 변경, Pro 파이프라인 구현은 추가하지 않았다.

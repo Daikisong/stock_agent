@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 20:47 KST (P95: 로그인된 BrowserUse 세션 사용 지시를 최신 재개 지점에 재기록).
+최종 갱신: 2026-09-25 02:24 KST (P98: 기존 로그인 탭에서 same-job 진행 후 packet filename/hash 검증 실패 상태를 반영).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -26,6 +26,19 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 `browser.tabs.list()`의 빈 목록이나 CDP endpoint의 탭 부재는 사용자의 로그인 세션 부재를 증명하지 않는다. 새 브라우저를 열기 전에 반드시 위 `extension → openTabs() → claimTab()` 경로를 따른다. 인증 토큰·쿠키는 기록하지 않는다.
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
+
+## 최신 상태 — P98, 2026-09-25 02:24 KST
+
+- **인증 UI는 사용자의 기존 로그인 BrowserUse `extension` 세션과 기존 작업 탭에서만 한다.** 실행 때마다 `openTabs()`로 현재 탭을 확인하고, 서비스/계정/작업 대화를 대조해 정확한 descriptor를 claim한 뒤 반환된 동일 Tab 객체만 쓴다. 새 창·브라우저·탭·프로필·CDP 세션·재로그인으로 옮기지 않는다. 새 Chat이 필요하면 현재 로그인 탭 안에서만 시작한다. 목록/claim/대상 확인 실패 시 실제 오류와 확인 범위를 기록하고 입력 전에 정지한다.
+- 최근 C15 R6 same-job 시도는 기존 로그인 탭에서 진행됐지만 exact packet filename/canonical hash visibility check가 실패했다. **이는 로그인 실패로 판정된 것이 아니다.** 현재 확인된 오류는 `BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab`이며 root cause는 미확정이다. exact packet attachment는 성공으로 인정하지 않는다.
+- 마지막 durable snapshot: `PROJOB-df15a37c58ae7583924e58c0`, `USER_ATTENTION_REQUIRED`, version `26`, `submit_count=0`, `capture_count=0`, browser/conversation/approval binding 없음, prepare receipt 없음, `safe_unprepared_resume=false`. prompt/send/capture는 없고 요청은 미전송이다. 다음 재개 전에 현재 SQLite row/event를 read-only로 다시 확인한다.
+- 사후 read-only UI snapshot(2026-09-25 02:21 KST경): 기존 tab `1437795006`, ChatGPT root, 로그인 프로필 `대규 Pro`, `Chat`/`6 Pro`; composer 빈 값, user/assistant turn `0/0`, selected file `0`. 이건 기록 시각의 관찰이지 현재 탭 상태 보장이 아니다. 다음 동작 전에 반드시 목록을 재열거하고 재-claim한다.
+- 해당 시도 뒤 PR #7 head `81224b05826bd3be4b24510301181ad385a8dd41`: Pro PR [36029814504](https://github.com/Daikisong/stock_agent/actions/runs/36029814504)와 V6 PR [36029816999](https://github.com/Daikisong/stock_agent/actions/runs/36029816999)은 `SUCCESS`; Pro push [36029817123](https://github.com/Daikisong/stock_agent/actions/runs/36029817123)은 02:24 KST 기준 `in_progress`였다. PR은 `OPEN/DRAFT/MERGEABLE`, 이 목표에서 merge/draft 해제하지 않는다.
+- **다음 한 단계:** 동일 packet을 다시 첨부/전송하지 말고, 기존 job을 건드리지 않은 채 filename/content/hash visibility 경계를 코드/mock로 진단하고 회귀시험을 추가한다. 수정의 exact-head CI와 안전한 same-job 재개 조건이 확인된 뒤에만, 사용자의 현재 로그인 `extension` 탭을 다시 확인해 다음 동작을 판단한다.
+
+상세 장애 타임라인/DB event/마지막 UI 관찰은 [P98 상세 BrowserUse handoff](../e2r_pro_first_v2/browseruse_existing_session_handoff_20260924.md#2026-09-25-0221-kst-기존-로그인-탭에서-same-job-packet-검증-실패), 전체 progress는 [P98 implementation progress](implementation_progress.md#p98--기존-로그인-browseruse-탭에서-c15-packet-검증-실패-및-재개-상태-갱신-2026-09-25-0224-kst)를 본다.
+
+P95 및 그 이전 기록은 역사적 checkpoint다. 현재 C15 상태와 다음 한 단계는 이 문서 상단 P98만 기준으로 한다.
 
 ## P95 — 사용자의 로그인 세션 사용 지시 재확인 (2026-09-24 20:47 KST)
 

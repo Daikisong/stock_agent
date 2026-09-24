@@ -1,25 +1,24 @@
-# BrowserUse 기존 로그인 세션 인수인계 — 2026-09-24
+# BrowserUse 기존 로그인 세션 인수인계 — 2026-09-25
 
-기록 시각: `2026-09-24 23:02 KST`
-최종 갱신: `2026-09-25 01:43 KST`
+초기 기록 시각: `2026-09-24 23:02 KST`
+최종 갱신: `2026-09-25 02:24 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`  
 PR: `#7` draft 유지; 이 작업에서 merge 또는 draft 해제 금지  
-작업 시작 시 HEAD: `1bcd33033390fab8403db8b4efa7ac442bf30bee`
+이번 갱신 직전 HEAD: `81224b05826bd3be4b24510301181ad385a8dd41`
 
-## 최신 인수인계 요약 — 2026-09-25 01:43 KST
+## 최신 인수인계 요약 — 2026-09-25 02:24 KST
 
 **인증이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 바로 그 `extension` 세션과 기존 작업 탭에서만 한다.** 매 재개 시 `browser.user.openTabs()`로 현재 목록을 다시 확인하고, URL·계정 표시·작업 대화가 맞는 descriptor 하나를 `claimTab()`한 다음 그 반환 Tab 객체만 사용한다. 새 창·새 브라우저·새 탭·프로필·CDP attach·재로그인으로 옮기지 않는다. 새 Chat 대화가 필요하면 기존 로그인 탭 안에서만 연다. 세션/탭을 찾지 못하거나 기술 오류가 나면 새 세션으로 우회하지 말고, 기존 화면을 보존한 채 정확한 오류와 확인 범위만 기록하고 입력 전에 멈춘다. **다른 CDP 포트에서 안 보인다는 이유로 로그인 세션이 없다고 결론내리지 않는다.**
 
-- 진행 중인 단일 live canary는 C15 `010950`, `as_of_date=2026-08-23`, job `PROJOB-df15a37c58ae7583924e58c0`; packet SHA-256 `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`다. predecessor `PROJOB-7c02db014fefb06b1258ffe9`는 frozen/superseded이며 응답·계보를 재사용하지 않는다.
-- 마지막 read-only BrowserUse 확인(2026-09-25 01:11 KST): 기존 탭 ID `1437795006`, `https://chatgpt.com/`, 계정 `대규 Pro`, 일반 `Chat`, 실제 선택 표시 `6 Pro`; composer/user turn/선택 파일은 각각 빈 값/0/0. 탭은 현재 확인에서 첨부 메뉴를 열었다가 다시 닫았으며 packet·prompt를 첨부·입력·전송하지 않았다. ID는 다음 작업의 권한이 아니므로 재개 때 반드시 현재 탭 목록을 다시 열거하고 재-claim한다.
-- durable job의 마지막 read-only 상태는 `USER_ATTENTION_REQUIRED`, `state_version=24`, `submit_count=0`, `capture_count=0`; browser session/conversation 및 approval 값 없음, `fresh_v3_prepare_receipt.json` 없음이다. 마지막 durable 오류는 이전 Windows dialog fallback의 `No Chrome-owned Open dialog appeared`다.
-- 원인 정정: 설치된 BrowserUse extension은 `tab.playwright.waitForEvent("filechooser")`와 그 `FileChooser.setFiles()`를 제공한다. 기존 bridge는 이를 쓰지 않고 visible attach click 뒤 Windows native Open dialog만 찾았으므로, 관찰된 실패는 로그인/세션 부재가 아니라 **BrowserUse filechooser capability와 bridge의 native-dialog-only 경로가 맞지 않은 것**이다. 현재 local patch는 같은 탭에서 visible 업로드 메뉴 항목을 누르기 직전에 event를 arm하고 `setFiles(exact_packet_path)`를 사용하도록 했다. file name/hash 검증은 그대로 유지한다. 이벤트가 없거나 hash가 안 맞으면 fail-closed이며, 실제 첨부·전송 성공으로 간주하지 않는다. 구형 extension만 pre-armed native-dialog fallback을 쓴다.
-- 현재 feature worktree의 pushed HEAD는 `4a52dce987bdab8ee64d6122bd0796ca670d2e76`이며 이 문서 갱신을 시작하기 직전까지 worktree는 clean이었다. filechooser 수정은 한글 커밋 `기존 로그인 BrowserUse 파일 선택 연결과 인수인계 보완`에 포함됐다. 관련 로컬 회귀시험 `111/111 PASS`, `audit_e2r_pro_first_v2` 전체 정적 audit `PASS`/critical `0`, `node --check`, `compileall`, `git diff --check`도 PASS다.
-- PR #7은 현재 head `4a52dce987bdab8ee64d6122bd0796ca670d2e76`에서 `OPEN/DRAFT`, merge state `UNSTABLE`이다. 같은 head의 Pro push run [36026896631](https://github.com/Daikisong/stock_agent/actions/runs/36026896631) 및 Pro PR run [36026903641](https://github.com/Daikisong/stock_agent/actions/runs/36026903641)은 `in_progress`: 두 run 모두 `core-unit`, `browser-mock-e2e`, `static-security`는 성공했고 `full-regression` 전체 회귀 테스트가 진행 중이다. V6 PR run [36026903629](https://github.com/Daikisong/stock_agent/actions/runs/36026903629)은 `SUCCESS`. **Pro exact-head 전체 CI가 끝나기 전에는 live canary를 재개하지 않는다.**
+- 진행 중인 단일 live canary는 C15 `010950`, `as_of_date=2026-08-23`, job `PROJOB-df15a37c58ae7583924e58c0`; packet canonical SHA-256 `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`다. predecessor `PROJOB-7c02db014fefb06b1258ffe9`는 frozen/superseded이며 응답·계보를 재사용하지 않는다.
+- 2026-09-25 02:21 KST경 BrowserUse `extension`의 기존 로그인 ChatGPT 탭을 다시 열거·claim한 뒤 같은 반환 Tab에서 실제 same-job 재개를 시도했다. 마지막 사후 read-only 확인에서 tab ID `1437795006`, `https://chatgpt.com/`, 계정 `대규 Pro`, 일반 `Chat`, 모델 `6 Pro`였고, composer 비어 있음, user/assistant turn `0/0`, 선택 파일 `0`이었다. 이 값은 관찰 시점 기록일 뿐 다음 재개 시 현재 화면을 다시 확인해야 한다.
+- durable job은 `USER_ATTENTION_REQUIRED`, `state_version=26`, `submit_count=0`, `capture_count=0`; browser session/conversation 및 approval 값 없음, `fresh_v3_prepare_receipt.json` 없음이다. 최신 durable 오류는 `BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab`이며 latest event의 `safe_unprepared_resume=false`다.
+- 최신 시도는 같은 로그인 탭에서 BrowserUse filechooser 경로를 호출했으나 exact filename/canonical-hash 가시성 검증을 통과하지 못해 중단됐다. prompt 입력·send·Pro 요청·capture는 하지 않았다. 이 결과만으로 로그인 세션 문제라고 진단하지 않는다. 확인된 blocker는 **정확한 packet 파일/hash가 claimed tab에서 검증되지 않은 것**이며, 더 구체적인 원인은 미확정이다. 이 검증과 resume gate를 해결하기 전까지 같은 첨부를 재시도하지 않는다.
+- 이번 시도 직전 feature HEAD `81224b05826bd3be4b24510301181ad385a8dd41`에서 PR #7은 `OPEN/DRAFT/MERGEABLE`이었다. Pro PR run [36029814504](https://github.com/Daikisong/stock_agent/actions/runs/36029814504)와 V6 PR run [36029816999](https://github.com/Daikisong/stock_agent/actions/runs/36029816999)은 `SUCCESS`; Pro push run [36029817123](https://github.com/Daikisong/stock_agent/actions/runs/36029817123)은 02:24 KST 확인 시 `in_progress`였고 `core-unit`/`static-security`는 성공, `full-regression`/`browser-mock-e2e`는 진행 중이었다. 이후 push run의 상태를 이 기록으로 추정하지 않는다.
 - PR `#7`은 draft/open으로 유지하며 이 작업에서 draft 해제나 merge를 하지 않는다.
 
-이 요약은 아래 상세 타임라인에서 이전 상태를 덮어쓴다. 특히 과거의 “첨부 메뉴가 펼쳐져 있음”은 현재 UI 상태를 의미하지 않는다. 최신 관찰은 chooser 실패 뒤 composer가 비어 있고 선택 파일 0개였다는 것이다.
+이 요약은 아래 상세 타임라인에서 이전 상태를 덮어쓴다. 특히 과거의 “첨부 메뉴가 펼쳐져 있음”, `state_version=24`, `No Chrome-owned Open dialog appeared`는 현재 상태가 아니다. 최신 확인은 exact packet filename/hash 검증 실패 뒤 composer와 선택 파일이 비어 있었고, 요청은 전송되지 않았다는 것이다.
 
 ## 핵심 원칙 — 로그인 작업은 사용자가 이미 로그인한 세션에서
 
@@ -46,15 +45,24 @@ PR: `#7` draft 유지; 이 작업에서 merge 또는 draft 해제 금지
 | fresh session | `FRESH-V2-1-C15-R6-20260907T212025Z` |
 | packet SHA-256 | `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df` |
 | 기존 로그인 탭 | 마지막으로 관찰한 BrowserUse tab ID `1437795006`; 작업 재개 전 반드시 현재 목록에서 다시 확인하고 새로 claim할 것 |
-| 당시 탭 상태 | `https://chatgpt.com/`, 로그인 프로필 `대구 Pro`, 일반 `Chat` 선택, 실제 모델 `6 Pro`; composer 비어 있음, user turn 0, 첨부 파일 0 |
-| 마지막 UI 상태 | `파일 등 추가` 버튼 `aria-expanded=true`; 첨부 메뉴를 연 상태였고 Chrome 파일 열기 창은 없었음 |
-| 실제 전송 | **미전송** — packet 첨부 실패 전에 멈춤. prompt 입력·send·Pro 연구 요청 없음 |
-| durable 상태 | `USER_ATTENTION_REQUIRED`; `submit_count=0`, capture 0, pass/approval/prepare receipt 없음 |
+| 마지막 사후 read-only 탭 확인 | 2026-09-25 02:21 KST경 `1437795006`; `https://chatgpt.com/`, `대규 Pro`, `Chat`/`6 Pro`; composer 비어 있음, user/assistant turn `0/0`, 선택 파일 `0`. 다음 실행 전에 반드시 재확인 |
+| 첨부 검증 | BrowserUse filechooser를 호출했으나 exact filename/canonical packet hash가 claimed tab에서 확인되지 않아 실패; 검증된 첨부로 인정하지 않음 |
+| 실제 전송 | **미전송** — prompt 입력, send, Pro 연구 요청, capture 없음 |
+| durable 상태 | `USER_ATTENTION_REQUIRED`, `state_version=26`; `submit_count=0`, `capture_count=0`, browser/conversation/approval binding 및 prepare receipt 없음; `safe_unprepared_resume=false` |
 | 이전 job | `PROJOB-7c02db014fefb06b1258ffe9`는 frozen/superseded. 과거 응답을 새 job에 재사용하거나 이전 대화를 추가 follow-up 하지 말 것 |
 
 위 tab ID는 이전 관찰의 인수인계용 식별자일 뿐, 다음 시도의 권한이나 현재 탭 존재를 보장하지 않는다. 재개할 때 현재 BrowserUse 탭을 다시 열거하고 동일 로그인 작업 탭을 직접 확인해야 한다. 인증 토큰·쿠키는 문서화하지 않는다.
 
-## 최초 실패와 당시 진단 — P96 최신 진단으로 대체됨
+## 2026-09-25 02:21 KST: 기존 로그인 탭에서 same-job packet 검증 실패
+
+- 기존 BrowserUse `extension` 세션에서 `openTabs()`로 ChatGPT 탭을 다시 찾고, 정확한 descriptor를 claim한 뒤 claim이 반환한 같은 Tab 객체로만 작업했다. 새 브라우저/창/탭/프로필/CDP/재로그인은 사용하지 않았다. 사후 read-only 확인에서도 해당 탭은 로그인된 `Chat`/`6 Pro` 홈 화면이었다.
+- 정확한 C15 R6 job `PROJOB-df15a37c58ae7583924e58c0`과 packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`를 사용했다. read-only same-job recovery proof는 통과해 state v24에서 `BROWSER_PREPARING` v25로 진행했지만, BrowserUse filechooser 이후 claimed tab에서 exact packet file/hash 확인이 실패해 `USER_ATTENTION_REQUIRED` v26으로 돌아갔다.
+- 오류는 `BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab`이다. 최신 event payload는 `preparation_failure_stage=DRAFT_PREPARATION_OR_UNKNOWN`, `safe_unprepared_resume=false`, `submit_count=0`으로 fail-closed했다. DB read-only 재조회에서 `capture_count=0`, browser/conversation binding 없음, prepare receipt 없음도 확인했다.
+- 실패 뒤 같은 기존 탭을 read-only로 확인했을 때 URL은 `https://chatgpt.com/`, 로그인 계정 표시는 `대규 Pro`, `Chat` 및 `6 Pro` 선택, composer 비어 있음, user/assistant turn `0/0`, 선택 파일 `0`이었다. Browser console error/warn 목록은 비어 있었고 CDP capability는 `Capability is not available: cdp`였다. 이는 이 탭에서 CDP capability가 없다는 기술 한계이며 세션 로그인 실패나 정책 거절을 뜻하지 않는다.
+- 첨부 UI 경로는 시도됐지만 exact file/hash가 확인되지 않았으므로 **packet 첨부 성공으로 판정하지 않는다.** prompt 입력·send·Pro 요청·capture·새 job/pass, 검색/fetch, 다른 archetype 실행, score/Stage 변경은 없었다. 재개 전에 파일 선택 후 DOM `File`의 실제 name/content/hash가 왜 불일치했는지 코드/mock 경계에서 진단하고 회귀시험을 추가한다. 동일 job의 `safe_unprepared_resume=false`를 우회하거나 blind retry하지 않는다.
+- 다음 실행의 첫 단계는 current `extension` tab 목록과 durable job을 각각 다시 read-only 확인하는 것이다. 과거 tab ID나 아래의 historical UI 상태를 현재 상태로 간주하지 않는다. 로그인 탭이 목록에 없거나 정확한 대상을 claim하지 못하면 새 창/세션을 열지 않고 오류를 기록한 뒤 멈춘다.
+
+## 이전 chooser 실패와 당시 진단 — P98의 최신 실패와 구분
 
 실제 오류:
 
