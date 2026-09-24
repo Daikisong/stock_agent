@@ -6640,3 +6640,49 @@ P76 SQLite read-only receipt 기준 active job `PROJOB-df15a37c58ae7583924e58c0`
 이번 P77 문서/상태 갱신만으로 발생한 작업은 prompt input/upload/submit/capture `0/0/0/0`, source query/fetch `0/0`, score/Stage 변경 `0/0`이다. 다음 행동은 exact same-job preflight로 현재 durable 상태와 동일 tab의 대상/실제 모델/composer를 확인하고, 그 뒤에만 같은 기존 로그인 탭에서 runner를 재개하는 것이다. handshake/화면 상태가 예상과 다르면 입력 전에 중단하고 그대로 기록한다.
 
 세부 기계 판독 상태는 [P77 receipt](p77_browseruse_existing_session_docs_ci_receipt.json), 단일 작업자 인수인계는 [BrowserUse existing-session handoff](browseruse_existing_session_handoff.md)을 본다. master goal은 미완료이며 PR #7은 계속 draft/open이고 main merge는 금지다.
+
+## P78 — 사용자 기존 BrowserUse 세션 유지와 same-job preflight timeout 기록 (2026-09-24 12:59 KST)
+
+### 사용자 지시와 이번 범위
+
+사용자가 다시 분명히 요청했다: 인증된 브라우저가 필요한 일은 **이미 로그인되어 있는 BrowserUse 세션 쪽에서 진행**하고, 새 창을 임의로 만들지 말 것. 기존 `browseruse_existing_session_handoff.md`의 최우선 규칙을 유지하면서, 다음 작업자가 이번 재개 실패를 로그인 만료로 오진하거나 같은 selector를 무작정 반복하지 않도록 실제 시도·장애·안전 상태를 P78에 추가했다.
+
+이번 단계는 인수인계 문서와 영수증 갱신이다. 새 조사·job·browser session을 만들지 않았고, 점수/Stage 또는 production code도 바꾸지 않았다.
+
+### PR과 exact-head CI
+
+```text
+branch       feature/e2r-pro-first-browser-platform-20260822
+local/origin 96b73876a5d0fb58f2b226bb31420c4b6cf37b24 (동일)
+PR #7        OPEN / DRAFT / MERGEABLE; main 미병합
+```
+
+GitHub에서 세 run의 `headSha`가 모두 위 exact SHA임을 확인했다.
+
+| workflow | run | 결과 | 주요 결과 |
+|---|---:|---|---|
+| Pro push | [35950648915](https://github.com/Daikisong/stock_agent/actions/runs/35950648915) | SUCCESS | 7,923 tests, skipped 38, failure/error 0; Reviewer A–H PASS |
+| Pro PR | [35950652188](https://github.com/Daikisong/stock_agent/actions/runs/35950652188) | SUCCESS | 7,923 tests, skipped 38, failure/error 0 |
+| V6 PR | [35950652197](https://github.com/Daikisong/stock_agent/actions/runs/35950652197) | SUCCESS | Gate 1 4/4, Phase100 15/15, static audit critical 0, test failure/error 0 |
+
+### 기존 로그인 탭에서 한 same-job 재개 시도
+
+- 첫 harness에서 Windows-hosted Node REPL의 `spawn("python")`이 Windows Python 3.14를 실행해 WSL UNC SQLite 경로에 접근하다 `PermissionError: [WinError 5]`로 runner 시작 전 실패했다. 이는 브라우저 오류가 아니었다. 그 호출은 BrowserUse bridge/UI에 도달하지 않았고, 원인을 바로잡아 WSL `/usr/bin/python3`를 `wsl.exe --distribution Ubuntu-22.04 --cd <worktree> --exec ...` 경유로 실행했다.
+- 올바른 WSL worker 호출에서는 BrowserUse `extension`으로 사용자의 기존 탭을 열거하고 정확한 ChatGPT 탭을 claim한 뒤 같은 tab 객체를 사용했다. bridge와 worker도 하나의 `mcp__node_repl__js` 호출에서 `await bridge.runUntil(workerPromise)`로 묶었다. 새 window/tab/profile, CDP 대체 세션, 재로그인은 사용하지 않았다.
+- Python `inspect_state()`의 **읽기 전용 preflight**가 editor text 확인 중 실패했다. 정확한 예외:
+
+```text
+BrowserUseBridgeError: BRIDGE_OPERATION_FAILED: Timed out after 3000ms evaluating selector div.ProseMirror[contenteditable="true"] >> nth=0: Playwright selector deadline exceeded
+```
+
+- 실패 뒤 동일 기존 탭을 read-only로 다시 확인했다: ChatGPT origin/title, Pro 선택, 빈 composer, file input 0, Stop 0, Deep Research 비활성, user turn 0. `tab.dev.logs()` error/warn은 `[]`; `tab.capabilities.get("cdp")`는 `Capability is not available: cdp`를 반환했다. CDP capability 누락은 기술 한계이지 정책 거부가 아니다. 프로젝트 DB 및 adapter/bridge 증거로 UI에 쓰기 전 3초 timeout은 확인했지만, 현재 자료만으로 RPC timeout의 근본 원인은 단정하지 않는다.
+- SQLite를 `mode=ro` 및 `PRAGMA query_only=ON`으로 확인했다. active job `PROJOB-df15a37c58ae7583924e58c0` / `010950` / C15 R6는 `USER_ATTENTION_REQUIRED` version 12, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`다. 최신 event는 `READ_ONLY_BROWSER_PREFLIGHT`, `safe_unprepared_resume=true`; approval/browser/conversation 미결박, `submit_count=0`, `capture_count=0`, successor 없음이다.
+- 이 단계의 prompt input/upload/download/submit/capture는 `0/0/0/0/0`; source query/fetch `0/0`; score/Stage 변경 `0/0`이다. 실제 Pro 요청을 입력하거나 전송한 작업은 없다.
+
+### 다음 한 단계와 중지 경계
+
+1. 기존 BrowserUse 탭은 보존한다. REPL globals가 reset된 경우에만 정식 bootstrap을 다시 하고, `browser.user.openTabs()`에서 **기존 사용자 탭**을 확인한 뒤 exact descriptor를 claim한다. 새 브라우저를 띄우지 않는다.
+2. `page_helpers.editor_text()` → Python bridge → BrowserUse JS locator/evaluate 경로의 callback 형태, selector timeout/deadline 전파를 코드와 focused regression으로 조사한다. 같은 read-only selector를 곧바로 반복 실행하지 않는다. `tab.dev.logs()`와 CDP capability 결과는 이미 기록했으며, CDP가 없다는 사실을 보안 차단으로 표현하지 않는다.
+3. 코드 수정이 필요하면 generic fix/test를 기존 PR #7에만 올리고 exact-head Pro push, Pro PR, V6 PR Actions SUCCESS를 확인한다. 그 뒤 durable packet hash와 미전송 경계를 다시 검증하고, 동일 C15 R6만 같은 BrowserUse 로그인 세션·기존 탭에서 재개한다. UI 상태가 다르거나 전송 여부가 불명확하면 입력하지 않고 중단한다.
+
+기계 판독 세부는 [P78 BrowserUse receipt](p78_browseruse_same_session_preflight_receipt.json), 최신 실행 절차는 [BrowserUse existing-session handoff](browseruse_existing_session_handoff.md) 참조. master goal은 미완료이며, C15 R6 미전송, C06 1/3, C28 대기 상태다.

@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 12:07 KST (P77).
+최종 갱신: 2026-09-24 12:59 KST (P78).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
@@ -44,7 +44,25 @@ BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭�
 쉬운 예: 기존 ChatGPT 응답이나 Library에 JSON이 보이면 그 화면의 다운로드 동작을 같은 탭에서 수행하고,
 받은 파일을 준비된 E2R job에 연결한다. “새 세션에서 다시 생성”은 기본 복구 방법이 아니다.
 
-## 최신 상태 인수인계 (P77)
+## 최신 상태 인수인계 (P78)
+
+- 현재 PR #7 head는 `96b73876a5d0fb58f2b226bb31420c4b6cf37b24`; local branch와 `origin/feature/e2r-pro-first-browser-platform-20260822`가 일치한다. PR은 OPEN/DRAFT/MERGEABLE이고 `main`에는 병합하지 않았다.
+- 이 exact SHA의 Pro push [35950648915](https://github.com/Daikisong/stock_agent/actions/runs/35950648915), Pro PR [35950652188](https://github.com/Daikisong/stock_agent/actions/runs/35950652188), V6 PR [35950652197](https://github.com/Daikisong/stock_agent/actions/runs/35950652197)은 모두 SUCCESS다. Pro regression은 7,923 tests / skipped 38 / failure·error 0, Reviewer A–H PASS다. V6는 Gate 1 receipt 4/4, Phase100 15/15, production static audit critical 0, 전체 테스트 failure·error 0이다.
+- 사용자의 반복 지시를 실행 우선 규칙으로 다시 명시한다: 인증이 필요한 작업은 **사용자가 로그인해 둔 기존 BrowserUse `extension` 세션과 그 기존 작업 탭에서만** 한다. 새 창·탭·프로필·CDP 대체 세션·재로그인을 만들지 않는다. 연결·제어가 실패하면 그 오류와 확인 범위를 기록하고 멈춘다. 이 규칙은 로그인 만료를 가정하거나 별도 창으로 재시도할 권한을 주지 않는다.
+- 2026-09-24 12:54 KST 무렵 동일 C15 R6의 재개 과정에서 첫 harness는 Windows-hosted Node REPL의 `spawn("python")`을 사용해 Windows Python이 WSL UNC DB 경로에 접근하다 `WinError 5`로 runner 시작 전 실패했다. 이를 로그인/브라우저 오류로 취급하지 않고, 이후 `/usr/bin/python3`을 `wsl.exe --distribution Ubuntu-22.04 --cd <worktree> --exec ...`로 실행하는 방식으로 바로잡았다. 첫 실패에서 브라우저 UI 호출이나 job 전이는 없었다.
+- 바로잡은 worker는 **동일 BrowserUse extension 세션에서 열거·claim한 기존 ChatGPT 탭**으로 연결됐다. read-only `inspect_state()` 중 composer selector의 text 조회가 아래 3초 timeout으로 실패했다. 새 탭·창·프로필, navigation, 입력, 파일 선택·다운로드, submit, capture는 하지 않았다.
+
+```text
+BrowserUseBridgeError: BRIDGE_OPERATION_FAILED: Timed out after 3000ms evaluating selector div.ProseMirror[contenteditable="true"] >> nth=0: Playwright selector deadline exceeded
+```
+
+- 실패 후 같은 기존 탭을 읽기 전용으로 확인했다: `https://chatgpt.com/` / `ChatGPT`, 일반 Chat, 실제 선택 Pro, 빈 composer, file input 0, Stop control 0, Deep Research 비활성, 기존 user turn 0. `tab.dev.logs()`의 error/warn 결과는 `[]`; `tab.capabilities.get("cdp")`는 `Capability is not available: cdp`를 반환했다. 이것은 기술 capability 한계이지 정책 거부나 로그인 실패 증거가 아니다. 프로젝트 SQLite 및 adapter/bridge 근거로 selector timeout은 확인했지만, extension RPC timeout의 근본 원인은 아직 확정하지 않았다.
+- SQLite mode=ro 기준 같은 `PROJOB-df15a37c58ae7583924e58c0` / `010950` / C15 R6는 `USER_ATTENTION_REQUIRED`, version 12, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`다. `preparation_failure_stage=READ_ONLY_BROWSER_PREFLIGHT`, `safe_unprepared_resume=true`; approval/browser/conversation 미결박, submit/capture `0/0`, successor 없음이다. 새 job이나 새 조사 pass는 만들지 않았다.
+- 현재 한 단계는 selector/evaluate의 Python→BrowserUse RPC 경로와 deadline을 코드·테스트에서 조사하는 것이다. 같은 selector를 무작정 재시도하지 않는다. 코드 변경이 필요하면 generic regression을 추가해 기존 PR #7에만 반영하고 exact-head 필수 CI를 확인한다. 그 뒤에도 동일 unsent C15 R6만 기존 BrowserUse 세션·기존 탭에서 재개한다. bridge/worker는 한 active `mcp__node_repl__js` call에서 `await bridge.runUntil(workerPromise)`로 함께 실행하고, REPL reset 뒤에는 canonical bootstrap과 기존 탭 확인을 다시 한다.
+- P78 중 prompt input/upload/download/submit/capture, source query/fetch, score/Stage 변경은 모두 `0`이다. master goal 미완료, PR #7은 계속 draft/open이며 main merge 금지다.
+- 기계 판독 상태와 P78 실행 범위는 [P78 receipt](p78_browseruse_same_session_preflight_receipt.json), 이전 CI/세션 확인은 [P77 progress](implementation_progress.md#p77--기존-browseruse-로그인-탭-재확인과-p76-exact-head-ci-정정-2026-09-24-1207-kst)를 본다.
+
+## 이전 상태 인수인계 (P77)
 
 - 현재 PR #7 head는 `d294f395738254da1f616d361038a35548fa6c4e`; local branch와 `origin/feature/e2r-pro-first-browser-platform-20260822`가 일치한다. PR은 OPEN/DRAFT/MERGEABLE이고 `main`에는 병합하지 않았다.
 - 이 exact SHA에서 Pro push [35947967714](https://github.com/Daikisong/stock_agent/actions/runs/35947967714), Pro PR [35947970682](https://github.com/Daikisong/stock_agent/actions/runs/35947970682), V6 PR [35947970654](https://github.com/Daikisong/stock_agent/actions/runs/35947970654)이 모두 SUCCESS다. Pro full regression은 7,923 tests / skipped 38 / failure·error 0이며 independent Reviewer A–H PASS. V6는 Gate 1 receipt 4/4, Phase100 15/15, production static audit critical 0, 전체 unittest failure·error 0이다.
