@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-25 04:49 KST (P102: 같은 로그인 BrowserUse 탭에서 C15 재개를 시도했으나 첨부 제거 버튼을 파일로 오인한 generic snapshot parser 결함으로 전송 전 중단).
+최종 갱신: 2026-09-25 05:02 KST (P103: remove-action 오분류와 후속 BrowserUse read-only callback 공백을 수리하고 관련 테스트를 통과; exact-head CI 대기).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,36 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 인계 — P102, 2026-09-25 04:49 KST
+## 최신 인계 — P103, 2026-09-25 05:02 KST
+
+### 사용자의 인증 세션 지시
+
+BrowserUse에서 로그인이 필요한 작업이면 사용자가 이미 로그인한 바로 그 `extension` 세션과 그 세션 안의 기존 작업 탭을 사용한다. 새 Chrome/창/탭/프로필을 띄우거나 CDP의 다른 프로필·세션으로 옮기거나 재로그인하지 않는다. 실행 직전 `openTabs()`를 다시 열거하고 대상 descriptor를 확인해 claim한 다음, claim이 반환한 동일 Tab 객체만 쓴다. 필요한 새 Chat은 기존 탭 안에서만 연다. 연결/탭/대화/모드가 일치하지 않으면 기존 로그인 UI를 보존하고 입력 전에 멈춰 실제 오류를 기록한다.
+
+### C15 R6 재개 차단 원인과 수정
+
+P102의 실제 실패는 로그아웃/Pro 모드 문제가 아니었다. 기존 로그인 `https://chatgpt.com/` 탭의 실제 모드는 `6 Pro`, visible composer tile은 정확히 하나였다. 그 tile의 파일명은 attachment DIV와 attachment BUTTON의 accessible label로 나타났고, 또 다른 제거 버튼은 `파일 1 제거: research_packet(20260924-172107).json`라는 label을 가졌다. BrowserUse snapshot callback이 제거 버튼의 label 안 파일명 suffix를 추가 attachment로 세어 `unprepared recovery found multiple visible composer attachments`로 fail-closed했다.
+
+P103 code patch는 다음 경계를 수리했다.
+
+- BrowserUse `readonlyCallback`와 Python adapter의 두 composer snapshot 경로 모두 button/role=button의 명확한 remove/delete/clear/detach/cancel action label을 attachment filename 신호에서 제외한다. 영어 동사와 한국어 제거/삭제/지우기/해제/취소 label을 처리한다. 특정 종목이나 packet basename에는 분기하지 않는다.
+- 기존 packet tile 재검증에도 같은 reviewed read-only composer snapshot callback marker를 사용하게 해 callback 경로가 둘로 갈라지지 않게 했다.
+- exact packet button이 현재 composer form에 속하는지 검사하는 `E2R_PACKET_ATTACHMENT_IN_COMPOSER`용 reviewed read-only BrowserUse callback을 추가했다. 이전 extension callback allowlist에는 이 코드 경로가 없어 exact attachment hash 확인 다음 단계에서 별도 기술 오류가 날 수 있었다.
+- regression은 tile 1개+한국어 제거 button이 signal 1개로 남고, 실제 다른 파일이 추가되면 signal 2개가 유지되는지 검사한다. packet button과 composer가 같은 form인지도 PASS/FAIL 경계를 테스트한다.
+
+### 검증과 다음 한 단계
+
+- `tests.test_e2r_pro_first_browseruse_extension_bridge` + `UnpreparedRecoveryReadOnlyGateTest`: **19/19 PASS**.
+- 변경 영향 파일 전체 묶음 `tests.test_e2r_pro_first_browser_adapter`, `tests.test_e2r_pro_first_browseruse_extension_bridge`, `tests.test_e2r_pro_first_v2_1_fresh_orchestration`: **174/174 PASS**. 로컬 Chromium test를 위해 기존 Playwright shared-library 경로를 사용했다.
+- `python -m e2r.cli.audit_e2r_pro_first_v2 --repo-root .`: **PASS**, `critical_count=0`, static/generalization/prompt/scoring-publication/verifier-repair/contract audits 모두 PASS.
+- `node --check`, `python -m py_compile`, `git diff --check`: **PASS**.
+- P102 문서 commit의 Pro/V6 CI runs `36051031300`, `36051031101`, push run `36051024824`는 확인 시 `in_progress`였고, 이전 head `6679186fe6c279230a069e134a3fa39c5057b840`에서 실행 중이었다. 이들은 P103 code patch를 포함하지 않아 새 patch의 CI 증거로 쓰지 않는다. P103 changes를 한글 commit/push하고 새 exact-head Pro/V6 CI SUCCESS를 기다린다.
+
+실제 C15 재개/BrowserUse 재시도는 **아직 하지 않았다**. P102 마지막 read-only durable snapshot은 C15 `PROJOB-df15a37c58ae7583924e58c0`, `USER_ATTENTION_REQUIRED` v26, submit/capture `0/0`, approval/binding/prepare receipt 없음, `safe_unprepared_resume=false`였다. P103 code/test 작업은 DB 및 browser UI를 조작하지 않았다. CI가 green이면 그때 durable state를 read-only로 다시 확인하고, 사용자의 현재 기존 로그인 BrowserUse `extension` 세션에서 tab list를 다시 열거·claim해 same-job만 진행한다. hash/recovery gate가 통과하기 전 prompt 입력/전송하지 않는다.
+
+machine receipt: [P103 attachment-label recovery patch receipt](p103_c15_attachment_label_recovery_patch_receipt.json).
+
+## 과거 인계 — P102, 2026-09-25 04:49 KST (P103으로 superseded)
 
 ### 사용자의 인증 세션 지시
 

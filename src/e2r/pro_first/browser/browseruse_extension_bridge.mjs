@@ -190,13 +190,41 @@ export function readonlyCallback(expression) {
             && style.visibility !== "hidden" && style.display !== "none";
         };
         const candidates = [root.innerText || ""];
+        const attachmentActionLabelPattern = /^(?:remove|delete|clear|detach|dismiss|cancel)\b|^(?:file|attachment)\s+\d+\s*(?:remove|delete|clear|detach|dismiss|cancel)\b|^(?:파일|첨부|첨부파일?)\s*\d*\s*(?:제거|삭제|지우기|해제|취소)|^(?:제거|삭제|지우기|해제|취소)\s*(?:파일|첨부파일?)/i;
         for (const node of root.querySelectorAll("button,[role=button],[aria-label],[title]")) {
           if (!visible(node)) continue;
-          candidates.push(node.innerText || "", node.getAttribute("aria-label") || "", node.getAttribute("title") || "");
+          const labels = [node.innerText || "", node.getAttribute("aria-label") || "", node.getAttribute("title") || ""];
+          if (
+            node.matches("button,[role=button]")
+            && labels.some(value => attachmentActionLabelPattern.test(String(value).trim()))
+          ) continue;
+          candidates.push(...labels);
         }
         const filePattern = /[^\s\\/]+\.(?:pdf|docx?|xlsx?|csv|md|json|txt|png|jpe?g|zip)(?:\(\d+\))?$/i;
         const signals = [...new Set(candidates.map(value => String(value || "").trim()).filter(value => filePattern.test(value)))];
         return { visible_file_signals: signals };
+      },
+    },
+    {
+      matches: value => value.includes("E2R_PACKET_ATTACHMENT_IN_COMPOSER"),
+      callback: (element, editorSelectors) => {
+        const visible = node => {
+          const rect = node.getBoundingClientRect();
+          const style = window.getComputedStyle(node);
+          return rect.width > 0 && rect.height > 0
+            && style.visibility !== "hidden" && style.display !== "none";
+        };
+        let editor = null;
+        for (const selector of editorSelectors || []) {
+          try {
+            const matches = Array.from(document.querySelectorAll(selector));
+            editor = matches.find(visible) || null;
+          } catch {}
+          if (editor) break;
+        }
+        const editorForm = editor?.closest("form");
+        const fileForm = element.closest("form");
+        return Boolean(editorForm && fileForm && editorForm === fileForm);
       },
     },
     {

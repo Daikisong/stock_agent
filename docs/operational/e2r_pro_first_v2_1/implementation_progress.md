@@ -7503,3 +7503,27 @@ P98에서 기록한 same-job C15 R6 오류는 `BrowserUIIncompatible: the exact 
 P102는 code fix가 아닌 실패 원인/브라우저 세션 사용법 기록이다. P101에서 기록한 pushed branch head `3eb10efecfe652877f56566e4f1b0c0b6f53a5e8`과 그 SHA의 기존 CI SUCCESS는 unchanged code를 가리키며 P101/P102 문서 diff는 remote에 포함하지 않는다. 두 문서와 [P102 machine receipt](p102_c15_existing_session_attachment_label_misclassification_receipt.json)는 로컬 미커밋이다. PR #7은 Draft/Open으로 유지하고 main에 병합하지 않는다. master goal은 미완료다.
 
 최신 인증 세션/재개 지침은 [P102 BrowserUse handoff](browseruse_existing_session_handoff.md)를 따른다. 전체 목표 원문은 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`이다.
+
+## P103 — remove-action 오분류 및 후속 BrowserUse callback 경로 수리 (2026-09-25 05:02 KST)
+
+### 코드 변경
+
+- `browseruse_extension_bridge.mjs` 및 `chatgpt_adapter.py`의 visible composer-file snapshot이 button/`role=button`의 remove/delete/clear/detach/dismiss/cancel label을 파일 신호로 해석하지 않게 했다. 영어 및 UI에서 관찰한 `파일 1 제거: <filename>` 형식의 한국어 제거 action을 포함하며 symbol·archetype·packet basename 분기는 두지 않았다.
+- Python adapter에서 기존 attachment의 post-download 재검증 callback도 allowlisted `E2R_UNPREPARED_RECOVERY_COMPOSER_SNAPSHOT` 경로를 재사용하게 맞췄다.
+- BrowserUse extension bridge에 `E2R_PACKET_ATTACHMENT_IN_COMPOSER`용 명시적인 read-only callback을 추가해 packet button의 owning form과 현재 composer form의 동일성을 확인하도록 했다. 이 callback의 두 경계(같은 form/다른 form)를 unit test에 넣었다.
+- extension callback 회귀는 filename `research_packet(20260924-172107).json`의 tile DIV/button과 `파일 1 제거: ...` button이 있어도 file signal은 1개인 점, 실제 `unrelated.json`이 추가되면 signal 두 개가 남는 점을 검증한다. 기존 Python adapter test는 여러 실제 signal을 fail-closed하는 동작을 계속 확인한다.
+
+### 검증
+
+- `PYTHONPATH=src python -m unittest tests.test_e2r_pro_first_browseruse_extension_bridge tests.test_e2r_pro_first_browser_adapter.UnpreparedRecoveryReadOnlyGateTest -v`: **19/19 PASS**.
+- `LD_LIBRARY_PATH=/home/eorb915/.cache/e2r-playwright-libs/usr/lib/x86_64-linux-gnu PYTHONPATH=src python -m unittest tests.test_e2r_pro_first_browser_adapter tests.test_e2r_pro_first_browseruse_extension_bridge tests.test_e2r_pro_first_v2_1_fresh_orchestration -q`: **174/174 PASS**.
+- `PYTHONPATH=src python -m e2r.cli.audit_e2r_pro_first_v2 --repo-root .`: **PASS**, `critical_count=0`; 36-contract totality, generalization, prompt, verifier-repair, scoring/publication audits PASS. Production static audit hash `4d5bcbe91d597ff3873cf0fcdd6ef62bc48cace422104b5792f59873992866c4`.
+- `node --check src/e2r/pro_first/browser/browseruse_extension_bridge.mjs`, `python -m py_compile src/e2r/pro_first/browser/chatgpt_adapter.py`, `git diff --check`: **PASS**.
+
+### 상태와 다음 한 단계
+
+P102 문서 commit `6679186fe6c279230a069e134a3fa39c5057b840`의 Pro PR run `36051031300`, V6 PR run `36051031101`, Pro push run `36051024824`는 05:02 KST 조회 때 `in_progress`였다. 해당 runs는 P103 source patch 이전 SHA이므로 source 검증으로 세지 않는다. 다음은 code/test/P103 문서를 한글 commit/push하고 새 exact-head Pro/V6 Actions가 종료될 때까지 기다리는 것이다. green CI 전에는 live BrowserUse recovery를 반복하지 않는다.
+
+P103에는 BrowserUse live attempt가 없다. C15 DB는 마지막으로 P102에서 read-only 확인한 v26/`USER_ATTENTION_REQUIRED`/submit-capture `0/0` 그대로라는 것이 최신 확인 증거다. code/test 진행 중 durable DB나 browser UI를 쓰지 않았다. 다음 UI 시도도 사용자의 기존 로그인 BrowserUse `extension` session에서 현재 탭을 재열거하고 exact descriptor를 claim한 동일 Tab 객체에서만 한다. 새 browser/window/tab/profile/CDP/relogin 경로는 금지한다.
+
+P103 machine receipt: [p103_c15_attachment_label_recovery_patch_receipt.json](p103_c15_attachment_label_recovery_patch_receipt.json). 전체 master goal은 미완료이며 PR #7은 Draft/Open, main 미병합이다.

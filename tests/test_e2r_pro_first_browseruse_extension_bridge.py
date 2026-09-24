@@ -642,10 +642,39 @@ assert.ok(dispatchedReads.every(([,options]) => options.timeoutMs === 10000));
 const markerReader = readonlyCallback("(element, needle) => (element.innerText || '').toLowerCase().includes(needle)");
 assert.equal(markerReader({{ innerText: "Packet ready" }}, "packet"), true);
 const composerSnapshot = readonlyCallback("element => {{ /* E2R_UNPREPARED_RECOVERY_COMPOSER_SNAPSHOT */ return true; }}");
-const fileChip = {{innerText:"research_packet.json", getBoundingClientRect:() => ({{width:10,height:10}}), getAttribute:() => ""}};
-const composerRoot = {{innerText:"research_packet.json", querySelectorAll:() => [fileChip]}};
-const composerSnapshotRoot = {{closest:() => null,parentElement:{{parentElement:{{parentElement:composerRoot}}}}}};
-assert.deepEqual(composerSnapshot(composerSnapshotRoot), {{visible_file_signals:["research_packet.json"]}});
+const makeComposerNode = ({{tagName="DIV", role="", text="", ariaLabel="", title=""}} = {{}}) => ({{
+  tagName,
+  innerText:text,
+  getBoundingClientRect:() => ({{width:10,height:10}}),
+  getAttribute(name) {{ return name === "aria-label" ? ariaLabel : name === "title" ? title : name === "role" ? role : ""; }},
+  matches(selector) {{ return selector === "button,[role=button]" && (tagName === "BUTTON" || role === "button"); }},
+}});
+const packetName = "research_packet(20260924-172107).json";
+const fileChip = makeComposerNode({{ariaLabel:packetName}});
+const fileButton = makeComposerNode({{tagName:"BUTTON",ariaLabel:packetName}});
+const removeButton = makeComposerNode({{tagName:"BUTTON",ariaLabel:`파일 1 제거: ${{packetName}}`}});
+const composerRoot = {{
+  innerText:`6\\nPro\\n${{packetName}}\\n파일`,
+  querySelectorAll:() => [fileChip,fileButton,removeButton],
+}};
+const composerSnapshotRoot = {{closest:() => composerRoot}};
+assert.deepEqual(composerSnapshot(composerSnapshotRoot), {{visible_file_signals:[packetName]}});
+const secondFile = makeComposerNode({{tagName:"BUTTON",ariaLabel:"unrelated.json"}});
+composerRoot.querySelectorAll = () => [fileChip,fileButton,removeButton,secondFile];
+assert.deepEqual(composerSnapshot(composerSnapshotRoot), {{visible_file_signals:[packetName,"unrelated.json"]}});
+const currentComposerForm = {{}};
+const currentEditor = {{
+  getBoundingClientRect:() => ({{width:10,height:10}}),
+  closest(selector) {{ return selector === "form" ? currentComposerForm : null; }},
+}};
+const packetTileButton = {{
+  getBoundingClientRect:() => ({{width:10,height:10}}),
+  closest(selector) {{ return selector === "form" ? currentComposerForm : null; }},
+}};
+globalThis.document = {{querySelectorAll:selector => selector === "#composer-editor" ? [currentEditor] : []}};
+const packetAttachmentBinding = readonlyCallback("(element, editorSelectors) => {{ /* E2R_PACKET_ATTACHMENT_IN_COMPOSER */ return true; }}");
+assert.equal(packetAttachmentBinding(packetTileButton, ["#composer-editor"]), true);
+assert.equal(packetAttachmentBinding({{...packetTileButton,closest:selector => selector === "form" ? {{}} : null}}, ["#composer-editor"]), false);
 assert.throws(() => readonlyCallback("element => element.click()"), /read-only/);
 assert.throws(() => readonlyCallback("element => element.id"), /no reviewed read-only callback/);
 const activeAdapterCallbacks = [
@@ -660,6 +689,7 @@ const activeAdapterCallbacks = [
   "element => {{ const visit = node => node.nodeType === Node.TEXT_NODE ? node.nodeValue : ''; return Array.from(element.childNodes).map(visit).join(''); }}",
   "async input => {{ const file = input.files && input.files[0]; return file ? {{name: file.name, text: await file.text()}} : null; }}",
   "element => {{ /* E2R_UNPREPARED_RECOVERY_COMPOSER_SNAPSHOT */ return true; }}",
+  "(element, editorSelectors) => {{ /* E2R_PACKET_ATTACHMENT_IN_COMPOSER */ return true; }}",
 ];
 for (const expression of activeAdapterCallbacks) {{
   let callback;

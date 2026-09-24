@@ -474,15 +474,21 @@ class PlaywrightChatGPTWebAdapter:
                         && style.display !== 'none';
                 };
                 const candidates = [root.innerText || ''];
+                const attachmentActionLabelPattern = /^(?:remove|delete|clear|detach|dismiss|cancel)\b|^(?:file|attachment)\s+\d+\s*(?:remove|delete|clear|detach|dismiss|cancel)\b|^(?:파일|첨부|첨부파일?)\s*\d*\s*(?:제거|삭제|지우기|해제|취소)|^(?:제거|삭제|지우기|해제|취소)\s*(?:파일|첨부파일?)/i;
                 for (const node of root.querySelectorAll(
                     'button,[role=button],[aria-label],[title]'
                 )) {
                     if (!visible(node)) continue;
-                    candidates.push(
+                    const labels = [
                         node.innerText || '',
                         node.getAttribute('aria-label') || '',
                         node.getAttribute('title') || ''
-                    );
+                    ];
+                    if (
+                        node.matches('button,[role=button]')
+                        && labels.some(value => attachmentActionLabelPattern.test(String(value).trim()))
+                    ) continue;
+                    candidates.push(...labels);
                 }
                 const filePattern = /[^\s\\/]+\.(?:pdf|docx?|xlsx?|csv|md|json|txt|png|jpe?g|zip)(?:\(\d+\))?$/i;
                 const signals = [...new Set(
@@ -3157,7 +3163,7 @@ class PlaywrightChatGPTWebAdapter:
             return False
         current_snapshot = await editor.evaluate(
             r"""element => {
-                /* E2R_PACKET_COMPOSER_VISIBLE_FILES */
+                /* E2R_UNPREPARED_RECOVERY_COMPOSER_SNAPSHOT */
                 let root = element.closest('form');
                 if (!root) return { visible_file_signals: [] };
                 const visible = node => {
@@ -3168,15 +3174,21 @@ class PlaywrightChatGPTWebAdapter:
                         && style.display !== 'none';
                 };
                 const candidates = [root.innerText || ''];
+                const attachmentActionLabelPattern = /^(?:remove|delete|clear|detach|dismiss|cancel)\b|^(?:file|attachment)\s+\d+\s*(?:remove|delete|clear|detach|dismiss|cancel)\b|^(?:파일|첨부|첨부파일?)\s*\d*\s*(?:제거|삭제|지우기|해제|취소)|^(?:제거|삭제|지우기|해제|취소)\s*(?:파일|첨부파일?)/i;
                 for (const node of root.querySelectorAll(
                     'button,[role=button],[aria-label],[title]'
                 )) {
                     if (!visible(node)) continue;
-                    candidates.push(
+                    const labels = [
                         node.innerText || '',
                         node.getAttribute('aria-label') || '',
                         node.getAttribute('title') || ''
-                    );
+                    ];
+                    if (
+                        node.matches('button,[role=button]')
+                        && labels.some(value => attachmentActionLabelPattern.test(String(value).trim()))
+                    ) continue;
+                    candidates.push(...labels);
                 }
                 const filePattern = /[^\s\\/]+\.(?:pdf|docx?|xlsx?|csv|md|json|txt|png|jpe?g|zip)(?:\(\d+\))?$/i;
                 const signals = [...new Set(
