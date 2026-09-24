@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-25 07:42 KST (P108: exact-tile replacement 경로·회귀검증과 전체 로컬 테스트 OOM을 구분 기록).
+최종 갱신: 2026-09-25 07:49 KST (P109: 사용자의 기존 로그인 세션 지시와 최신 pushed head/CI 진행 상태 반영).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,26 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 인계 — P108, 2026-09-25 07:42 KST
+## 최신 인계 — P109, 2026-09-25 07:49 KST
+
+### 사용자 지시 — 로그인된 바로 그 세션에서 작업
+
+사용자가 재확인했다. **BrowserUse가 필요하고 로그인 상태가 필요하면, 이미 로그인되어 있는 사용자의 세션에서 하라.** 따라서 실행 직전에 현재 BrowserUse `extension`의 `browser.user.openTabs()`로 기존 탭을 다시 열거하고, 정확한 작업 ChatGPT 탭을 확인해 `claimTab()`한 뒤 반환된 동일 Tab 객체만 사용한다. 새 창/브라우저/탭/프로필/CDP 세션을 만들거나 재로그인을 요구하지 않는다. 새 대화가 필요하면 기존 로그인 탭 안에서만 연다. 연결·claim·대상 대화 확인이 안 되면 입력·첨부·다운로드·전송 전에 중단하고 오류와 확인 범위만 남긴다.
+
+### 현재 저장소/CI 상태
+
+- PR #7은 `OPEN/DRAFT`, URL [PR #7](https://github.com/Daikisong/stock_agent/pull/7), head `617e204b4c0b4f9dce15f4185eff589af9042920`이다. worktree와 `origin/feature/e2r-pro-first-browser-platform-20260822`는 해당 SHA로 같고, 확인 당시 worktree는 clean이다. main 미병합이다.
+- 해당 exact source head의 [Pro PR run 36069234793](https://github.com/Daikisong/stock_agent/actions/runs/36069234793), [Pro push run 36069233229](https://github.com/Daikisong/stock_agent/actions/runs/36069233229), [V6 run 36069234853](https://github.com/Daikisong/stock_agent/actions/runs/36069234853)는 모두 `IN_PROGRESS`다. 두 Pro run의 `static-security`만 `SUCCESS`; full regression/core-unit/browser mock E2E와 V6 offline-contract는 완료 전이다. `SUCCESS`로 부르지 않는다.
+- 이번 P109에서 브라우저 연결·탭 열거/claim·UI 입력·첨부·다운로드·전송·capture를 하지 않았다. C15 durable DB도 다시 읽지 않았다. 마지막 저장 상태는 P107 기준 C15 `PROJOB-df15a37c58ae7583924e58c0`, `USER_ATTENTION_REQUIRED` v26, submit/capture `0/0`, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, approval/browser/conversation binding 없음이며, 이는 현재 상태 재확인이 아니라 **마지막 기록 증거**다.
+- 새 조사·query/fetch·job/pass·다른 archetype·점수/Stage 변경은 이번 문서 checkpoint에 없다. 전체 master goal 미완료: P9 full-thesis Pro canary는 기존 확인 기준 `1/3` (C06만 완료, C17/C28 미완료). PR #7은 draft로 두며 main에 병합하지 않는다.
+
+### 다음 한 단계
+
+세 필수 workflow가 이 source head에서 끝날 때까지 기다린다. 모두 `SUCCESS`면 먼저 C15 durable state를 read-only로 다시 확인한다. 이후 BrowserUse가 필요할 때만 로그인된 기존 `extension` 세션에서 탭을 재열거·claim해 같은 탭에서 재개한다. 세션이나 대상을 확인할 수 없으면 새 세션으로 우회하지 않고 멈춘다.
+
+P109 상태 receipt: [p109_existing_login_session_and_exact_head_ci_receipt.json](p109_existing_login_session_and_exact_head_ci_receipt.json).
+
+## 과거 인계 — P108, 2026-09-25 07:42 KST (P109에서 superseded)
 
 ### 로그인된 기존 세션 원칙
 

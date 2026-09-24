@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-25 03:56 KST / P100: 기존 로그인 BrowserUse 탭의 composer packet tile을 다운로드해 exact SHA 확인; 미전송·submit/capture 0/0`
+기준 시각: `2026-09-25 07:49 KST / P109: PR #7 code head 617e204…에서 Pro PR·Pro push·V6 CI 진행 중; 기존 로그인 BrowserUse 세션만 사용`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -19,9 +19,21 @@ ChatGPT 로그인 상태가 필요한 화면 작업은 사용자가 이미 로�
 
 WSL direct setup 전 machine preflight를 한 번 실행한다. Exit code `23`이면 stale BrowserUse session이다. 새 Chrome/profile이나 재로그인으로 우회하지 말고, 기존 로그인 세션과 같은 탭을 보존할 연결이 없으면 실제 오류를 기록하고 멈춘다. 상세 명령과 recovery 순서는 아래 handoff를 따른다.
 
-안정된 실행 규칙과 latest C15 handoff는 [BrowserUse 로그인 세션 인수인계 P100](browseruse_existing_session_handoff.md#최신-상태--p100-2026-09-25-0356-kst)에 기록한다. P98 상세 파일은 당시 장애 이력이지 현재 브라우저 상태가 아니다. 서로 모순되면 이 문서의 최상단 규칙과 가장 최근 checkpoint가 우선한다. 인증값·쿠키·세션 토큰·tab ID는 기록하지 않는다.
+안정된 실행 규칙과 최신 C15 handoff는 [BrowserUse 기존 로그인 세션 인수인계 P109](browseruse_existing_session_handoff.md#최신-인계--p109-2026-09-25-0749-kst)에 기록한다. P98 및 이전 상세 파일은 당시 장애 이력이지 현재 브라우저 상태가 아니다. 서로 모순되면 이 문서의 최상단 규칙과 가장 최근 checkpoint가 우선한다. 인증값·쿠키·세션 토큰·tab ID는 기록하지 않는다.
 
-## 지금 상태 — P100, 2026-09-25 03:56 KST
+## 지금 상태 — P109, 2026-09-25 07:49 KST
+
+- **사용자 지시/필수 브라우저 경계:** 사용자는 BrowserUse가 로그인 상태를 필요로 하면 이미 로그인된 자기 세션에서 하라고 재확인했다. 매 실행 직전 `extension → browser.user.openTabs() → 정확한 기존 ChatGPT 작업 탭 확인 → claimTab() → 반환된 동일 Tab 객체`를 따른다. 새 창·브라우저·탭·프로필·CDP session·재로그인은 금지된 대체 경로다. 새 대화가 필요해도 기존 로그인 탭 안에서만 연다. 연결/대상 확인이 실패하면 입력·첨부·다운로드·전송 전에 멈춘다.
+- **Git/PR:** 작업 브랜치와 origin feature branch는 `617e204b4c0b4f9dce15f4185eff589af9042920`으로 일치하고, 기록 갱신 직전 worktree는 clean이었다. PR #7은 `OPEN/DRAFT/UNSTABLE`; main 미병합이다. 이번 문서 수정은 이 기록 뒤에 발생했으며 아직 반영/commit되지 않았다.
+- **exact-head CI:** [Pro PR 36069234793](https://github.com/Daikisong/stock_agent/actions/runs/36069234793), [Pro push 36069233229](https://github.com/Daikisong/stock_agent/actions/runs/36069233229), [V6 36069234853](https://github.com/Daikisong/stock_agent/actions/runs/36069234853)는 모두 `617e204b…`에서 `IN_PROGRESS`다. Pro PR/push의 `static-security`는 `SUCCESS`; full-regression, core-unit, browser-mock-e2e와 V6 offline-contract는 아직 끝나지 않았다. 실패 0이나 전체 SUCCESS로 추정하지 않는다.
+- **이번 P109에서 한/안 한 일:** 진행 문서와 인계 문서를 갱신하기 위한 read-only GitHub 상태 확인만 했다. BrowserUse에 연결하거나 탭을 읽거나 claim하지 않았고, C15 DB도 다시 읽지 않았다. prompt 입력·첨부·다운로드·전송·capture, query/fetch, 새 job/pass, 다른 archetype, 점수/Stage 변경은 하지 않았다. 따라서 기존 세션/대화와 DB의 현재 상태는 재확인된 것으로 표현하지 않는다.
+- **마지막 기록된 C15 증거 (현재 확인 아님):** P107 read-only receipt의 `PROJOB-df15a37c58ae7583924e58c0`, `USER_ATTENTION_REQUIRED` v26, submit/capture `0/0`, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, approval/browser/conversation binding 없음. live 재개 전 DB를 새로 read-only 확인해야 한다.
+- **전체 목표:** P9 live full-thesis Pro canary는 현재까지 기록상 `1/3` (C06 완료; C17/C28 미완료). 전체 goal은 미완료다. PR #7은 draft/open 유지, main 미병합.
+- **다음 한 단계:** 세 필수 exact-head workflow가 끝날 때까지 기다린다. 모두 `SUCCESS`인 경우에만 C15 DB를 read-only로 재확인하고, UI가 필요한 경우 사용자의 기존 로그인 BrowserUse 세션에서 현재 탭을 새로 열거·claim해 같은 탭으로 재개한다.
+
+P109 상태 영수증: [p109_existing_login_session_and_exact_head_ci_receipt.json](p109_existing_login_session_and_exact_head_ci_receipt.json).
+
+## 과거 기준선 — P100, 2026-09-25 03:56 KST (P109에서 대체됨)
 
 - **BrowserUse 인증 경계:** 로그인이 필요한 UI 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션 안의 기존 탭에서만 한다. 이번 read-only 확인은 현재 사용자 탭을 열거하고 ChatGPT 대상 descriptor를 claim한 뒤 그 반환 Tab 객체에서만 진행했다. 새 창/브라우저/탭/프로필/CDP 세션/재로그인은 없었다. 다음 실행 때도 `openTabs() → 대상 확인 → claimTab()`을 새로 수행하고, 기존 탭이나 로그인 상태가 안 보이면 세션을 바꾸지 말고 중단한다.
 - **C15 same-tab 증거:** composer에 `research_packet(20260924-172107).json`이 보였지만 file input은 비어 있었다. 같은 composer의 해당 타일을 통해 BrowserUse visible download event로 받은 사본은 175,126 bytes, raw SHA-256 `e1d1c44edfd0467aeac3aff1bd362cbb927bf01da135e91f3d9d5cd39f81324f`; exact local packet bytes와 일치하고 canonical hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`도 durable job packet hash와 일치했다. 파일명만으로 동일성을 인정하지 않았다.
@@ -7620,7 +7632,7 @@ adapter의 safe replacement 흐름을 구현하고, exact-name 기존 tile은 ha
 
 P107 상태 receipt: [p107_c15_existing_login_session_checkpoint_receipt.json](p107_c15_existing_login_session_checkpoint_receipt.json).
 
-## P108 — exact composer tile 복구 흐름 구현 및 검증 경계 기록 (2026-09-25 07:42 KST)
+## P108 — exact composer tile 복구 흐름 구현 및 검증 경계 기록 (2026-09-25 07:42 KST, P109에서 당시 상태 기록을 supersede)
 
 ### 코드/테스트 상태
 
@@ -7645,3 +7657,23 @@ P107 상태 receipt: [p107_c15_existing_login_session_checkpoint_receipt.json](p
 전체 master goal은 미완료다. 기록상 P9 live Pro full-thesis canary는 3개 요구 중 C06 1개만 확인됐으며 C17/C28이 남아 있다. P108에서도 새 research pass, 다른 archetype, 점수/Stage 변경, PR merge는 하지 않았다.
 
 P108 상태 receipt: [p108_c15_attachment_replacement_and_validation_receipt.json](p108_c15_attachment_replacement_and_validation_receipt.json).
+
+## P109 — 기존 로그인 세션 지시 및 exact-head CI 인계 갱신 (2026-09-25 07:49 KST)
+
+### 사용자 지시
+
+사용자는 BrowserUse가 필요한 로그인 작업은 사용자가 이미 로그인해 둔 **그 세션**에서 하라고 재확인했다. 작업 직전에 `extension → browser.user.openTabs() → 정확한 기존 작업 탭 확인 → claimTab() → claim 반환 동일 Tab 객체` 순서로 진행한다. 새 Chrome/창/탭/프로필/CDP/relogin으로 옮기지 않는다. 새 대화가 필요한 경우에도 기존 로그인 탭 안에서만 시작한다. 연결 또는 대상 확인이 안 되면 입력·첨부·다운로드·전송 전에 멈추고 실제 오류/확인 범위만 남긴다.
+
+### 현재 GitHub/검증 상태
+
+- PR #7은 [OPEN/DRAFT](https://github.com/Daikisong/stock_agent/pull/7), head `617e204b4c0b4f9dce15f4185eff589af9042920`, `UNSTABLE`이다. 이 확인 시점에 local branch, origin feature branch, PR head가 같았고 worktree는 clean이었다. main에는 병합되지 않았다.
+- 해당 head의 [Pro PR run 36069234793](https://github.com/Daikisong/stock_agent/actions/runs/36069234793), [Pro push run 36069233229](https://github.com/Daikisong/stock_agent/actions/runs/36069233229), [V6 run 36069234853](https://github.com/Daikisong/stock_agent/actions/runs/36069234853)은 모두 `IN_PROGRESS`다. Pro PR/push의 `static-security`는 `SUCCESS`; `full-regression`, `core-unit`, `browser-mock-e2e`, V6 `offline-contract`는 진행 중이다. 전체 테스트 결론은 아직 없다.
+- 이번 P109는 진행 문서와 handoff를 고치기 위해 Git/PR/Actions를 읽기 전용으로 확인했다. BrowserUse 연결/탭 열거/claim, C15 DB 조회, UI 조작은 하지 않았다. 입력·첨부·다운로드·전송·capture, query/fetch, 새 job/pass, 다른 archetype, 점수/Stage 변경은 0.
+- C15의 마지막 기록 증거는 P107 read-only receipt 기준 `PROJOB-df15a37c58ae7583924e58c0`, `USER_ATTENTION_REQUIRED` v26, submit/capture `0/0`, canonical packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, approval/browser/conversation binding 없음이다. P109에서 재조회하지 않았으므로 live 재개 전 최신 durable state를 다시 읽는다.
+- 전체 master goal은 미완료다. 기록상 P9 live full-thesis Pro canary `1/3`: C06만 완료, C17/C28 미완료. PR #7은 draft/open 유지하고 main에 병합하지 않는다.
+
+### 다음 한 단계
+
+세 필수 Actions가 exact source head에서 끝날 때까지 기다린다. 셋 다 `SUCCESS`이면 C15 durable state를 read-only로 재확인한다. 이후 실제 브라우저 작업이 필요할 경우 사용자의 기존 로그인 `extension` 탭을 그때 다시 열거·claim해 같은 Tab 객체로만 진행한다. 이보다 앞서 보내거나 다른 session으로 우회하지 않는다.
+
+P109 상태 receipt: [p109_existing_login_session_and_exact_head_ci_receipt.json](p109_existing_login_session_and_exact_head_ci_receipt.json).
