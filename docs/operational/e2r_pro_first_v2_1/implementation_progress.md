@@ -7455,3 +7455,51 @@ P98에서 기록한 same-job C15 R6 오류는 `BrowserUIIncompatible: the exact 
 - 다음 한 단계: code+tests+문서를 기존 PR #7 feature branch에 한글 commit/push한 뒤 새 Pro/V6 exact-head CI를 끝까지 기다린다. CI가 끝나기 전에는 Pro UI 준비나 전송을 하지 않는다. 필요한 UI 작업은 매번 사용자 기존 로그인 `extension` 세션에서 current tab list를 재열거하고 정확한 대상 탭을 claim해 그 객체 하나로만 진행한다. goal은 아직 미완료다.
 
 세션 작업 지침과 오류/상태 인수인계는 [BrowserUse P100 handoff](browseruse_existing_session_handoff.md#최신-상태--p100-2026-09-25-0356-kst), bridge 기술 계약은 [BrowserUse bridge 문서](browseruse_extension_bridge.md)에서 P100 항목을 참조한다.
+
+## P101 — 사용자의 기존 로그인 BrowserUse 세션 원칙 재강조 및 CI checkpoint (2026-09-25 04:26 KST)
+
+### 사용자 지시 — 인증이 필요하면 이미 로그인한 그 세션에서
+
+사용자는 로그인 상태가 필요한 BrowserUse 작업을 사용자가 이미 로그인해 둔 세션에서 진행하라고 다시 명확히 지시했다. 이는 단순 선호가 아니라 필수 실행 조건이다. 다음 작업은 현재 Codex 세션에서 BrowserUse Chrome plugin의 `extension`을 실제 연결하고, `openTabs()`로 현재 사용 탭을 다시 열거한 다음, URL·목표 대화·실제 Pro 모드가 맞는 기존 탭 하나를 `claimTab()`해 반환된 그 Tab 객체만 써야 한다. 새 브라우저·창·탭·프로필·별도 CDP 연결·재로그인으로 바꾸지 않는다. “새 Chat”은 그 기존 로그인 탭 안의 새 대화일 뿐 새 세션이 아니다. 대상 탭을 찾거나 claim/상태 확인할 수 없으면 기존 로그인 UI를 보존하고 실제 오류와 확인 범위만 기록한 뒤 입력 전에 중단한다. 다른 탭/터미널에 전역 키 입력을 보내지 않으며, 과거 tab ID·스크린샷·로그인 표시는 지금 상태를 증명하지 않는다.
+
+### 현재 checkpoint
+
+- PR #7: `OPEN/DRAFT/MERGEABLE`; head `3eb10efecfe652877f56566e4f1b0c0b6f53a5e8`, origin feature branch와 같다. 문서 갱신 전 worktree는 clean이었으며 현재 P101 두 문서는 local uncommitted다. PR draft 해제/merge는 하지 않는다.
+- 동일 SHA Pro PR run [36045098375](https://github.com/Daikisong/stock_agent/actions/runs/36045098375): `SUCCESS`; `core-unit`, `static-security`, `browser-mock-e2e`, full existing regression suite, independent Reviewer A–H leaf gates가 모두 통과했다. 이 결론은 pushed code head의 것이고 현재 local P101 문서 변경은 포함하지 않는다.
+- 동일 SHA V6 offline-contract run [36045098343](https://github.com/Daikisong/stock_agent/actions/runs/36045098343): `SUCCESS`. 동일 SHA Pro push run [36045089867](https://github.com/Daikisong/stock_agent/actions/runs/36045089867)도 `SUCCESS`.
+- 전체 master goal은 미완료다. 기록상 실제 Pro full-thesis canary는 C06 `1/3`; PR #7은 draft/open이며 main 미병합 상태다.
+
+### C15 durable state와 기존 로그인 탭 확인
+
+- DB는 SQLite `mode=ro`, `PRAGMA query_only=ON`으로 확인했다. `PROJOB-df15a37c58ae7583924e58c0`: symbol `010950`, as-of `2026-08-23`, `USER_ATTENTION_REQUIRED`, version `26`; packet hash는 기존 `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`; `submit_count/capture_count=0/0` 유지. approval packet hash/consumed time, browser session ID, conversation ID는 null. 최신 event `safe_unprepared_resume=false`, `automatic_resubmit_allowed=false`, `automatic_login_allowed=false`; 마지막 오류는 `BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab`이다. read-only 재확인에서 row/event 변경은 없었다.
+- WSL BrowserUse preflight exit `0`. 현재 `mcp__node_repl__js`에서 canonical bootstrap으로 실제 Chrome plugin `extension`을 연결하고 `browser.user.openTabs()`를 fresh 호출했다. 현재 목록에서 ChatGPT root 탭 하나를 정확히 골라 `claimTab()`한 뒤 claim 반환 객체만 사용했다. 기존 탭에는 로그인 profile과 Chat, 실제 `6 Pro`, 빈 composer, `research_packet(20260924-172107).json` tile 하나가 보였다. 새 창·브라우저·탭·프로필·CDP session을 만들지 않았고, 재로그인/첨부 변경/다운로드/입력/전송도 하지 않았다. P100에서 같은 tile의 raw file bytes와 canonical packet hash가 exact C15 packet과 일치함을 확인한 이력이 있다.
+- 이 read-only UI 확인은 durable approval이 아니다. `approval_packet_hash=null`, `approval_consumed_at=null`, `safe_unprepared_resume=false`이므로 이번 단계에서 prompt submit/capture를 진행하지 않았다. User session/tab은 보존했다.
+
+이번 P101은 실행 규칙/진행 문서 갱신, exact-head CI 확인, SQLite read-only 조회, 기존 BrowserUse 로그인 탭의 read-only 확인이다. prompt 입력, 첨부 조작·다운로드, 전송, capture, 새 job/pass, query/fetch, 다른 archetype, 점수/Stage 변경은 모두 0이다. 인증 비밀·쿠키·tab ID는 기록하지 않았다. 두 P101 문서는 현재 local uncommitted다.
+
+**다음 한 단계:** exact C15 job의 durable approval/recovery gate가 성립하는지 확인한다. 그 gate를 통과하는 경우에도 필요한 인증 UI 작업은 사용자의 기존 로그인 BrowserUse `extension` 세션에서 현재 탭을 다시 열거하고 정확한 기존 작업 탭을 claim해 그 객체 하나로만 한다. approval/recovery state가 일치하지 않거나 same-session tab을 쓸 수 없으면 새 세션·재전송으로 우회하지 말고 멈춘다. 다른 archetype/canary를 임의로 실행하거나 goal 완료를 선언하지 않는다.
+
+최신 인증 UI 실행 절차와 정확한 재개 순서는 [P101 BrowserUse handoff](browseruse_existing_session_handoff.md#최신-인계--p101-2026-09-25-0426-kst)를 따른다. 전체 목표 원문은 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`이다.
+
+## P102 — 같은 로그인 BrowserUse 탭에서 C15 재개 시도, 제거 버튼 오분류 원인 확인 (2026-09-25 04:49 KST)
+
+### 다시 확인한 사용자 지시: 인증된 바로 그 세션 사용
+
+사용자는 BrowserUse 작업에 로그인이 필요하면 사용자가 이미 로그인해 둔 세션에서 하라고 다시 명시했다. 이번 재개 시도는 새 Chrome/창/탭/프로필/CDP session/로그인을 만들지 않았다. 현재 BrowserUse Chrome plugin `extension` 세션의 `openTabs()`에서 기존 `https://chatgpt.com/` 탭을 확인하고, 그 descriptor를 claim한 다음 **claim 반환 객체 하나로만** 작업했다. 화면에서 로그인 상태와 실제 `6 Pro`, 빈 composer를 확인했다. 이후 작업에서도 매번 현재 탭 목록을 새로 읽고 정확히 그 로그인 세션의 기존 대화 탭을 claim한다. 새 Chat 대화는 필요할 때만 같은 탭 내부에서 연다. 연결·claim·계정/대화/Pro 상태가 불일치하면 기존 화면을 보존하고, 입력 전에 실제 오류를 기록한 뒤 멈춘다.
+
+### C15 R6 attempt 결과 및 parser root cause
+
+- 대상: S-Oil `010950`, `as_of_date=2026-08-23`, `C15_MATERIAL_SPREAD_SUPERCYCLE`, 기존 job `PROJOB-df15a37c58ae7583924e58c0`; packet canonical hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`.
+- BrowserUse `extension`에서 보인 composer에는 `research_packet(20260924-172107).json` tile 하나가 있었다. read-only DOM snapshot에서 같은 파일명이 attachment `DIV[aria-label]` 및 attachment `BUTTON[aria-label]`에 표현됐고, 제거 action button label은 `파일 1 제거: research_packet(20260924-172107).json`이었다.
+- generic visible-file parser는 action label 끝에 들어 있는 `.json` 파일명을 별도 신호로 세어 `BrowserUIIncompatible: unprepared recovery found multiple visible composer attachments`로 fail-closed했다. 화면 타일은 1개라 실제 중복 첨부가 아니다. 확인된 root cause는 remove-button accessible label이 attachment filename으로 오인되는 snapshot classifier 결함이다.
+- 실행 결과 `FAILED_SAFE_NO_AUTOMATIC_RESUBMIT`, `submitObserved=false`. 분기는 BROWSER_PREPARING 및 prepare/send 전에 중단됐다. prompt 입력·신규 첨부·다운로드·submit·capture·query/fetch는 이번 시도에서 모두 0이다. 새 job/pass도 생성하지 않았다.
+- 실패 전후 SQLite `mode=ro` + `PRAGMA query_only=ON` 결과 C15는 동일하게 `USER_ATTENTION_REQUIRED`, version 26, `submit_count/capture_count=0/0`이다. approval hash/time, browser/conversation binding, prepare receipt는 없다. `safe_unprepared_resume=false`, 이전 durable error `BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab` 유지. 이번 parser 오류는 DB에 기록되거나 prior error를 덮지 않았다.
+- 같은 claimed tab `tab.dev.logs()` error/warn 목록은 비었고 `tab.capabilities.get("cdp")`는 정확히 `Capability is not available: cdp`로 실패했다. DOM read-only 확인은 가능했다. CDP 부재는 technical capability gap일 뿐 로그인 또는 policy 오류가 아니다.
+
+### 다음 조치
+
+다음 한 단계는 코드에서 generic file-signal classifier를 고쳐 제거/삭제 action label을 첨부 개수로 세지 않게 하고, “실제 tile 1개+제거 버튼은 1개”, “실제 파일 2개는 fail-closed” 회귀 테스트를 추가하는 것이다. 이후 focused tests와 static audit를 실행하고 PR #7의 해당 exact code head Actions SUCCESS를 기다린다. green 이후 같은 durable C15 job을 read-only 확인하고, 사용자가 로그인한 기존 BrowserUse `extension` 세션의 현재 탭을 다시 열거·claim해 same-job recovery만 시도한다. 이 수정/검증 전에는 브라우저 재시도, prompt 입력, 새 연구/자료수집을 하지 않는다.
+
+P102는 code fix가 아닌 실패 원인/브라우저 세션 사용법 기록이다. P101에서 기록한 pushed branch head `3eb10efecfe652877f56566e4f1b0c0b6f53a5e8`과 그 SHA의 기존 CI SUCCESS는 unchanged code를 가리키며 P101/P102 문서 diff는 remote에 포함하지 않는다. 두 문서와 [P102 machine receipt](p102_c15_existing_session_attachment_label_misclassification_receipt.json)는 로컬 미커밋이다. PR #7은 Draft/Open으로 유지하고 main에 병합하지 않는다. master goal은 미완료다.
+
+최신 인증 세션/재개 지침은 [P102 BrowserUse handoff](browseruse_existing_session_handoff.md)를 따른다. 전체 목표 원문은 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`이다.
