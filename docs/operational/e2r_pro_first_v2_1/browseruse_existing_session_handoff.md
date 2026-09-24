@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 19:05 KST (P89: 문서 전용 커밋 push, 검증 head와 branch HEAD 구분).
+최종 갱신: 2026-09-24 19:29 KST (P90: 같은 로그인 탭 첨부 실패와 파일 선택창 읽기 전용 확인).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 반드시 따를 실행 순서 — 같은 로그인 세션·같은 탭
@@ -21,7 +21,18 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 재개 지점 — P89 (2026-09-24 19:05 KST; PR/CI 확인 19:01 KST, 문서 push 후)
+## 최신 재개 지점 — P90 (2026-09-24 19:29 KST)
+
+- **로그인이 필요한 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 ChatGPT 탭에서만 한다.** 이번 확인은 persistent BrowserUse 세션에서 이미 claim해 둔 동일 tab 객체만 사용했다. 새 브라우저·창·탭·프로필·CDP 세션, 재로그인, 탭 이동/재전송은 없었다. 사용자의 창과 세션은 열린 채 보존한다.
+- 같은 탭의 읽기 전용 DOM 확인: `https://chatgpt.com/`, 로그인 prompt 없음, 계정 `Pro` 표시와 화면의 `6 Pro` control, 빈 composer, user turn 0, packet 파일명 미표시, file input 5개 모두 선택 파일 0. native chooser inspector도 동일 extension 탭에 연결해 조회했다. 첫 worker 실행은 작업 경로의 `PYTHONPATH` 누락으로 `ModuleNotFoundError: No module named 'e2r'`를 반환했다. `PYTHONPATH=src`를 지정한 재실행 결과는 `open=false`, `chrome_owned_dialog_count=0`, `unknown_owner_count=0`이다. 이는 **검사 시점**만 설명하며 이전 첨부 실패의 결과를 소급 입증하지 않는다.
+- 중앙 SQLite를 `mode=ro`와 `PRAGMA query_only=ON`으로 확인했다. 같은 C15 R6 `PROJOB-df15a37c58ae7583924e58c0` / S-Oil `010950` / packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`는 `USER_ATTENTION_REQUIRED`, state version 20이다. `submit_count=0`, `capture_count=0`, approval/browser/conversation binding은 모두 null, `superseded_by_fresh_job_id=null`이다. 최신 event는 `BROWSER_PREPARING → USER_ATTENTION_REQUIRED`, event time `2026-09-24T10:21:46.569280Z`, `DRAFT_PREPARATION_OR_UNKNOWN`, `safe_unprepared_resume=false`, `automatic_resubmit_allowed=false`다.
+- same-job 첨부 시도의 영속 오류는 `BrowserUseBridgeError: BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet (exit=1; #< CLIXML …)`다. DB에 저장된 상세 문자열은 PowerShell CLIXML 출력부터 잘려 있어 실제 선택 실패 원인은 확정하지 않았다. 현재 검사에서 파일 선택창이 닫혀 있어도 이전 시도에서 packet이 선택되지 않았다고 단정하지 않는다. durable gate가 `safe_unprepared_resume=false`이므로 동일 packet 재첨부·prompt 재입력·재전송은 금지한다.
+- 이번 확인 중 BrowserUse 입력·첨부 재시도·다운로드·submit/capture, navigation, 새 job/pass, source query/fetch, score/Stage 변경은 0이다. 첫 worker의 `PYTHONPATH` 오류는 읽기 전용 검사 실행 문제이며 로그인 실패나 정책 거부가 아니다.
+- PR #7은 확인 시 OPEN/DRAFT/MERGEABLE, base `main`, 미병합이었다. 기준 branch/document head는 `d88f6ff41546b8396fa21128c0612ca4df24272e`; 코드 검증 head `c4155c5ca6f75602928d123c48446c08160860a8`의 Pro push [35982213116](https://github.com/Daikisong/stock_agent/actions/runs/35982213116), Pro PR [35982218832](https://github.com/Daikisong/stock_agent/actions/runs/35982218832), V6 PR [35982218910](https://github.com/Daikisong/stock_agent/actions/runs/35982218910)은 모두 SUCCESS였다. P90은 문서 갱신이며 이 green run을 새 문서 SHA의 CI로 표현하지 않는다.
+- **다음 한 단계:** 첨부 실패를 코드/mock 경로에서 원인 분리하고 ambiguous chooser 결과를 다루는 회귀 검증을 보강한 뒤 기존 PR #7 branch의 exact-head CI를 확인한다. 그 전에 사용자 탭에서 재첨부/전송하지 않는다. live 재개가 안전해지면 기존 BrowserUse 세션에서 같은 탭을 다시 열거·claim하고 durable identity와 read-only gate를 대조한다. 상태가 불명확하면 중단하며 새 세션으로 우회하지 않는다.
+- 상세 실행 경계와 P90 증거는 [implementation progress P90](implementation_progress.md#p90--기존-로그인-browseruse-세션의-same-job-첨부-오류와-파일-선택창-읽기-전용-확인-2026-09-24-1929-kst)을 따른다. 아래 P89/P86 블록은 과거 체크포인트이며 충돌 시 P90이 우선한다.
+
+## P89 checkpoint — historical (P90이 현재 판정)
 
 - **사용자 로그인 세션 원칙은 바뀌지 않는다.** BrowserUse가 필요한 다음 단계는 사용자가 이미 로그인해 둔 BrowserUse Chrome `extension` 연결에서 시작한다. `browser.user.openTabs()`로 기존 탭을 다시 열거하고, 대상 작업 대화와 일치하는 정확한 descriptor를 `browser.user.claimTab()`에 넘긴다. 이후 read-only 확인부터 결과 회수까지 claim이 반환한 같은 tab 객체만 쓴다. 새 Chrome/창/탭/프로필/CDP 세션, 재로그인, 다른 대화에서의 재전송·재다운로드는 하지 않는다.
 - **P89 문서 갱신에서는 브라우저 UI를 호출하거나 조작하지 않았다.** 마지막 실제 existing-session 화면 관찰은 P88의 2026-09-24 18:32 KST 검사다. 그 시점에 기존 `https://chatgpt.com/` ChatGPT 탭을 claim하여 login prompt 없음, `6 Pro` 표시, 빈 composer, user turn 0, 선택 파일 0을 read-only 확인했다. 이를 P89 현재 화면 상태로 간주하지 않으며, 다음 작업 때 같은 세션에서 다시 확인한다.

@@ -7071,3 +7071,40 @@ claim/대상 확인이 실패하면 실제 오류와 확인 범위를 기록하�
 - C15 R6 durable SQLite의 마지막 확인도 P88 read-only snapshot이다. job `PROJOB-df15a37c58ae7583924e58c0`, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, `USER_ATTENTION_REQUIRED` v18, submit/capture 0/0, browser/conversation binding 없음, `safe_unprepared_resume=false`. 모든 resume 시도 전에 DB를 `mode=ro`와 `PRAGMA query_only=ON`으로 다시 읽어 identity/state를 확인해야 한다.
 - P89 중 prompt 입력·attach/download/submit/capture, source query/fetch, 새 job/pass, score/Stage 수정은 0이다. 사용자 탭은 종료하거나 초기화하지 않았다.
 - **다음 한 단계:** 필수 exact-head CI green을 확인했으므로, live canary 업무를 재개할 때는 같은 C15 R6 job의 durable state를 read-only로 재확인하고, 사용자의 기존 BrowserUse `extension` 세션에서 대상 ChatGPT 탭을 다시 열거·claim하여 same-tab recovery proof를 실행한다. 어떤 proof라도 불일치/불명확하거나 tab claim에 실패하면 입력 전에 멈춘다. 새 브라우저나 재로그인으로 우회하지 않는다.
+
+## P90 — 기존 로그인 BrowserUse 세션의 same-job 첨부 오류와 파일 선택창 읽기 전용 확인 (2026-09-24 19:29 KST)
+
+### 사용자 지정 경계: 로그인된 그 세션에서만 진행
+
+사용자가 “BrowserUse를 쓸 때 로그인 세션이 필요하면 그 세션 쪽에서 하라”고 다시 지시했다. 이번 확인은 이미 연결돼 있던 BrowserUse `extension` 세션과 앞서 claim한 정확히 같은 ChatGPT tab 객체에서만 했다. 새 Chrome/창/탭/프로필/CDP 세션, 재로그인, 다른 대화로 이동은 없었다. 다음 실제 UI 작업도 `openTabs() → 정확한 기존 대화 descriptor claim → 같은 tab 객체 재사용` 순서이며, 연결·대상 확인 실패 시 우회하지 않고 멈춘다.
+
+### Same-tab read-only 확인
+
+- 검사 시각 `2026-09-24 19:29 KST`. 같은 tab URL은 `https://chatgpt.com/`; 로그인 prompt 없음, 계정 `Pro` 표시와 화면 control `6 Pro`, `Chat` 화면이었다. composer 텍스트는 비어 있고 사용자 메시지 0, packet 이름 미표시, file input 5개의 선택 파일 수는 모두 0이었다. 입력/첨부/다운로드/submit/capture는 하지 않았다.
+- 같은 tab으로 production BrowserUse worker의 read-only `inspect_native_file_chooser_state()`를 호출했다. 첫 WSL worker는 현재 worktree의 `PYTHONPATH`를 넘기지 않아 `ModuleNotFoundError: No module named 'e2r'`로 끝났다. 이는 로그인/브라우저 오류가 아니며 job이나 탭 상태 변경도 없었다. `PYTHONPATH=src`를 추가한 재실행의 실제 결과는 다음과 같다.
+
+```json
+{"open":false,"chrome_owned_dialog_count":0,"unknown_owner_count":0}
+```
+
+이것은 19:29 KST 검사 순간에 보이는 native dialog 상태다. 직전 첨부가 packet을 선택했는지, 오류 원인이 무엇인지 소급해서 증명하지 않는다.
+
+### Durable same-job 결과와 안전 경계
+
+- 중앙 Windows SQLite를 `mode=ro`로 열고 `PRAGMA query_only=ON`을 실행해 읽었다. 경로: `C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\live_v2\20260823T145430Z\pro_first.sqlite3`.
+- 유일한 active same-job 대상은 C15 R6 / S-Oil `010950` / `PROJOB-df15a37c58ae7583924e58c0`. packet hash는 `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df` 그대로다. status `USER_ATTENTION_REQUIRED`, `state_version=20`, `submit_count=0`, `capture_count=0`, approval/browser/conversation binding은 모두 null, `superseded_by_fresh_job_id=null`이다.
+- DB `updated_at=2026-09-24T10:21:46.569280Z` (19:21:46 KST). 최신 event는 `BROWSER_PREPARING → USER_ATTENTION_REQUIRED`, idempotency key `fresh-v3-browser-attention:PROJOB-df15a37c58ae7583924e58c0:19`, stage `DRAFT_PREPARATION_OR_UNKNOWN`, `safe_unprepared_resume=false`, `automatic_resubmit_allowed=false`이다.
+- 영속 `last_error_class=BrowserUseBridgeError`; `last_error_message`의 확인된 prefix는 다음과 같다. 저장 필드는 CLIXML 출력 뒤 잘려 있으므로 세부 예외 원인을 추측하지 않는다.
+
+```text
+BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet (exit=1; #< CLIXML …)
+```
+
+- 실제 첨부 경로에서 packet 선택을 완료했다는 증거가 없고, 결과가 불명확한 실제 시도였으므로 같은 job이 현재 `safe_unprepared_resume=false`인 것을 존중한다. 첨부 재시도, prompt 입력, submit, 자동 재전송, 새 job 생성은 하지 않는다. 현재 chooser `open=false`를 근거로 과거 시도가 안전했다고 간주하지 않는다.
+
+### CI/문서 head 및 다음 한 단계
+
+- 현재 작업 branch `feature/e2r-pro-first-browser-platform-20260822`; P90 시작 시 remote/local document head `d88f6ff41546b8396fa21128c0612ca4df24272e`. PR #7은 2026-09-24 19:29 KST 조회상 OPEN / DRAFT / MERGEABLE, base `main`이며 미병합이다.
+- 코드 검증 head는 `c4155c5ca6f75602928d123c48446c08160860a8`. 그 SHA의 Pro push [35982213116](https://github.com/Daikisong/stock_agent/actions/runs/35982213116), Pro PR [35982218832](https://github.com/Daikisong/stock_agent/actions/runs/35982218832), V6 PR [35982218910](https://github.com/Daikisong/stock_agent/actions/runs/35982218910)은 이전 19:01 KST 조회에서 모두 SUCCESS였다. 그 검증을 P90 문서 SHA의 새 CI 결과라고 부르지 않는다.
+- 다음 한 단계는 첨부 실패 경로를 코드/mock 및 PowerShell chooser bridge 경계에서 원인 분리하고, ambiguous chooser 결과를 재개 가능으로 잘못 취급하지 않는 회귀 테스트를 보강하는 것이다. 그 exact code head CI가 통과하기 전에는 실제 BrowserUse 첨부·전송을 재시도하지 않는다. 재개 시에도 같은 C15 R6 identity와 같은 사용자 로그인 `extension` 세션·기존 tab 객체를 다시 확인한다.
+- P90 동안 source query/fetch, 다른 archetype 실행, score/Stage 변경, 새 job/pass, ChatGPT prompt 입력·전송·capture는 모두 0이다. PR #7만 사용하고 `main`은 변경하지 않았다.
