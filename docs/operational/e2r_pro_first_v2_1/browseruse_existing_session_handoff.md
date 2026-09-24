@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 18:32 KST (P88: exact-head CI, 기존 탭 관찰, durable recovery 오류 불일치 수리 기록).
+최종 갱신: 2026-09-24 19:04 KST (P89: exact-head CI 완료 확인, 기존 로그인 세션 사용 규칙 재확인).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 반드시 따를 실행 순서 — 같은 로그인 세션·같은 탭
@@ -21,17 +21,17 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 재개 지점 — P88 (2026-09-24 18:32 KST)
+## 최신 재개 지점 — P89 (2026-09-24 19:04 KST; PR/CI 재확인 19:01 KST)
 
-- PR #7은 OPEN/DRAFT/MERGEABLE, main 미병합이다. exact head는 `956535588feda0fef6c07b9ca4bd2630b4beccde`이며 한글 commit은 `BrowserUse recovery 테스트에 미확정 picker 상태 보완`이다.
-- 같은 SHA의 Pro push [35975891389](https://github.com/Daikisong/stock_agent/actions/runs/35975891389)와 Pro PR [35975895348](https://github.com/Daikisong/stock_agent/actions/runs/35975895348)은 SUCCESS다. V6 [35975895401](https://github.com/Daikisong/stock_agent/actions/runs/35975895401)은 18:32 KST 조회 시 `offline-contract / Run full unit-test suite`가 계속 `in_progress`; receipt consistency와 production static audit은 PASS, 전체 테스트는 아직 결론 전이다.
-- P88에서는 machine preflight exit `0` 뒤 기존 BrowserUse `extension`의 사용자 탭 두 개를 읽기 전용 열거하고, `https://chatgpt.com/` / title `ChatGPT`인 기존 탭 하나를 정확히 claim했다. 같은 탭의 관찰은 로그인 prompt 없음, 모델 메뉴 표시 `6 Pro`, 빈 composer 1개, user turn 0, file input 5개, 선택 파일 0이었다. 탭 이동·새 창/탭 생성·입력·첨부·전송은 없었다. 이는 검사 시점의 화면 증거이며, P86 상태를 재사용하거나 durable same-job gate를 대신하지 않는다.
-- durable C15 R6 job을 P88에 mode=ro + `PRAGMA query_only=ON`으로 다시 읽었다. DB상 최신 갱신은 여전히 `2026-09-24T07:28:13.906437Z`: S-Oil `010950`, `USER_ATTENTION_REQUIRED`, version 18, submit/capture `0/0`, browser/conversation binding 없음, `safe_unprepared_resume=false`; last error class/message는 `BrowserUseBridgeError` / `BrowserUse bridge transport failed (TimeoutError: timed out)`. 새 pass/event나 DB write는 없다.
-- P87의 CI 실패 원인은 테스트 proxy fixture 두 곳에 `unknown_owner_count`가 빠진 것이었다. 생산 fail-closed 판정은 완화하지 않고 fixture만 고쳤으며, exact-head Pro push/PR은 통과했다. P88 NSLAB Raw acquire/recover는 `skipped`여서 새 fetch는 없었다.
-- 해당 exact DB message에는 `BRIDGE_OPERATION_FAILED:` 접두사가 없다. 기존 allowlist/test는 접두사가 있을 때만 열려 있어 같은 job을 복구 함수가 거부할 결함을 확인했다. production allowlist를 DB에 실제 기록된 단일 exact message에 맞추고, suffix near-match 차단을 유지한 채 orchestration 91/91과 local production static audit (`critical_count=0`)을 통과시켰다. 이 수정은 아직 remote PR head `95653558…`에 포함되지 않았으며 현재 V6 run도 수정 전 head를 검사 중이다.
-- 상세 진행 기록은 [implementation progress](implementation_progress.md)의 P88 항목에 있다. 아래 P87/P86 항목은 당시 시각의 이력이며, 현재 상태는 이 P88 블록을 우선한다.
+- PR #7은 OPEN/DRAFT/MERGEABLE, base `main`, 미병합이다. `feature/e2r-pro-first-browser-platform-20260822`의 local HEAD와 origin branch HEAD는 모두 `c4155c5ca6f75602928d123c48446c08160860a8`이다. 한글 commit은 `BrowserUse 재개 오류 매칭과 로그인 세션 인수인계 보강`이다.
+- 이 exact SHA의 GitHub Actions를 2026-09-24 19:01 KST에 다시 조회했다. Pro push [35982213116](https://github.com/Daikisong/stock_agent/actions/runs/35982213116), Pro PR [35982218832](https://github.com/Daikisong/stock_agent/actions/runs/35982218832), V6 PR [35982218910](https://github.com/Daikisong/stock_agent/actions/runs/35982218910)이 모두 `completed / success`다. 이로써 956 이전 head에서 미완료였던 V6 확인을 포함해 P89 code head의 필수 CI가 green이다.
+- **사용자 로그인 세션 원칙은 바뀌지 않는다.** BrowserUse가 필요한 다음 단계는 사용자가 이미 로그인해 둔 BrowserUse Chrome `extension` 연결에서 시작한다. `browser.user.openTabs()`로 기존 탭을 다시 열거하고, 대상 작업 대화와 일치하는 정확한 descriptor를 `browser.user.claimTab()`에 넘긴다. 이후 read-only 확인부터 결과 회수까지 claim이 반환한 같은 tab 객체만 쓴다. 새 Chrome/창/탭/프로필/CDP 세션, 재로그인, 다른 대화에서의 재전송·재다운로드는 하지 않는다.
+- **P89 문서 갱신에서는 브라우저 UI를 호출하거나 조작하지 않았다.** 마지막 실제 existing-session 화면 관찰은 P88의 2026-09-24 18:32 KST 검사다. 그 시점에 기존 `https://chatgpt.com/` ChatGPT 탭을 claim하여 login prompt 없음, `6 Pro` 표시, 빈 composer, user turn 0, 선택 파일 0을 read-only 확인했다. 이를 P89 현재 화면 상태로 간주하지 않으며, 다음 작업 때 같은 세션에서 다시 확인한다.
+- C15 R6 durable job의 마지막 DB 증거도 P88 mode=ro + `PRAGMA query_only=ON` 검사다: `PROJOB-df15a37c58ae7583924e58c0`, S-Oil `010950`, `USER_ATTENTION_REQUIRED` v18, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, submit/capture `0/0`, browser/conversation binding 없음, `safe_unprepared_resume=false`. 다음 UI 작업 전에 durable state를 다시 read-only 조회하고 same-tab proof와 exact identity를 대조해야 한다. 화면만 보고 재개 안전성을 추론하지 않는다.
+- P89에서 새 ChatGPT 입력·첨부·전송·다운로드, research query/fetch, 새 job/pass, score/Stage 변경은 하지 않았다. 기존 로그인 세션은 유지하며 종료·초기화하지 않는다.
+- 상세 진행은 [implementation progress](implementation_progress.md)의 P89 항목을 따른다. P88 이하 블록은 기록 시점의 역사이며, 충돌하면 이 P89 지침이 우선한다.
 
-## P86 확인 기록 — historical (P88이 현재 판정)
+## P86 확인 기록 — historical (P89가 현재 판정)
 
 이 P86 checkpoint는 17:10 KST 당시의 기록이다. 아래 P83/P84/P80/P81 등 이전 체크포인트도 당시 이력이며 현재 다음 단계에는 적용하지 않는다.
 

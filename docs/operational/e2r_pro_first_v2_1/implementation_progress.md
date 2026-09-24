@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-24 18:32 KST / P88: 기존 로그인 탭·DB 재확인, recovery error matcher 보정, Pro CI 2개 SUCCESS, V6 진행 중`
+기준 시각: `2026-09-24 19:04 KST / P89: PR #7 exact-head 필수 CI 3개 SUCCESS (19:01 재확인); 다음 UI는 기존 로그인 BrowserUse 세션·정확한 탭에서만`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -67,10 +67,20 @@ P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
 P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS; C15 R6 unsent/read-only recovery gate pending; C28 pending)
-P10 final CI/audit                        IN_PROGRESS (PR #7 exact head 95653558: Pro push + Pro PR SUCCESS; V6 full unittest still in progress; live 3/3 미충족)
+P10 final CI/audit                        IN_PROGRESS (PR #7 exact head c4155c5: Pro push + Pro PR + V6 SUCCESS; live 3/3 미충족)
 ```
 
-### 현재 재개 지점 (P88, 2026-09-24 18:32 KST)
+### 현재 재개 지점 (P89, 2026-09-24 19:04 KST; PR/CI 재확인 19:01 KST)
+
+- PR #7은 OPEN/DRAFT/MERGEABLE, base `main`, 미병합이다. branch `feature/e2r-pro-first-browser-platform-20260822`의 local/origin HEAD는 `c4155c5ca6f75602928d123c48446c08160860a8`이며 한글 commit은 `BrowserUse 재개 오류 매칭과 로그인 세션 인수인계 보강`이다. main은 변경하지 않았다.
+- exact-head GitHub Actions를 19:01 KST에 다시 확인했다. Pro push [35982213116](https://github.com/Daikisong/stock_agent/actions/runs/35982213116), Pro PR [35982218832](https://github.com/Daikisong/stock_agent/actions/runs/35982218832), V6 PR [35982218910](https://github.com/Daikisong/stock_agent/actions/runs/35982218910)이 모두 같은 `c4155c5…` SHA에서 `completed / success`다. P89 exact-head 필수 CI는 green이다.
+- P88에서 수정한 matcher는 DB에 실제 저장된 exact message `BrowserUse bridge transport failed (TimeoutError: timed out)`를 허용하며, `BrowserUseBridgeError` class, exact event stage, `safe_unprepared_resume=false`, submit/capture `0/0` 조건은 유지하고 suffix near-match를 거부한다. P89 source 변경 없이 이 코드를 담은 head의 CI가 통과했다.
+- **BrowserUse가 필요한 다음 단계는 반드시 사용자의 기존 로그인 세션을 사용한다.** 새 브라우저/창/탭/프로필/CDP, 재로그인, 다른 대화에서의 요청 반복은 하지 않는다. canonical BrowserUse runtime에서 `extension → browser.user.openTabs() → 정확한 descriptor claimTab() → claim 반환 동일 tab 객체` 순서를 따르고, 대상/로그인/실제 Pro/기존 응답·초안·첨부를 read-only로 재확인한다. 이미 결과나 JSON이 있으면 같은 탭에서 회수한다. 연결·열거·claim·대상 확인 중 하나라도 실패하면 실제 오류와 확인 범위를 기록하고 입력 전 중단한다.
+- P89는 문서 및 CI 상태 확인만 수행했다. 이 회차에서 실제 BrowserUse UI, 새 브라우저, 입력·첨부·다운로드·전송은 사용하지 않았다. 마지막 실브라우저 read-only 관찰은 P88 18:32 KST이며, 이를 지금의 화면 상태로 간주하지 않는다.
+- durable C15 R6의 마지막 DB 판정도 P88의 read-only snapshot이다. 다음 live recovery 전 `mode=ro` + `PRAGMA query_only=ON`으로 같은 job/version/hash/status/submit/capture/approval/browser/conversation binding/event를 다시 확인하고, 같은 existing tab의 same-session read-only proof와 대조한다. 두 증거가 일치하기 전까지 upload/input/submit 금지다.
+- full-thesis goal은 미완료다. P7 C06 full-thesis canary는 1/3, C15 R6 same-job resume gate는 다음 미해결 실행 단계, C28 canary는 미완료다. PR CI SUCCESS는 live canary 통과나 goal completion을 뜻하지 않는다.
+
+### P88 historical checkpoint — P89가 현재 재개 지점
 
 - PR #7은 OPEN/DRAFT/MERGEABLE, base `main`, main 미병합이다. local/origin branch HEAD는 `956535588feda0fef6c07b9ca4bd2630b4beccde`, 한글 commit `BrowserUse recovery 테스트에 미확정 picker 상태 보완`. 현재 worktree에는 아래 P88 recovery matcher와 그 회귀시험 및 문서 변경이 local-only로 남아 있다.
 - exact-head Pro push [35975891389](https://github.com/Daikisong/stock_agent/actions/runs/35975891389) 및 Pro PR [35975895348](https://github.com/Daikisong/stock_agent/actions/runs/35975895348)은 SUCCESS. V6 [35975895401](https://github.com/Daikisong/stock_agent/actions/runs/35975895401)은 18:32 KST 조회 시 `offline-contract / Run full unit-test suite`가 진행 중이었다. Gate 1 tracked-receipt consistency와 production static audit은 PASS지만 full suite conclusion 전이므로 exact-head 전체 green은 아직 아니다.
@@ -80,7 +90,7 @@ P10 final CI/audit                        IN_PROGRESS (PR #7 exact head 95653558
 - 같은 job의 resume allowlist는 `BRIDGE_OPERATION_FAILED:` 접두사가 붙은 문자열만 비교했으므로 실제 durable message를 거부할 defect가 있었다. matcher와 fixture를 실제 저장 문자열의 exact match로 바꿨고, extra suffix near-match는 계속 reject한다. local fresh-orchestration **91/91 PASS**, production static audit **PASS / critical_count=0**, `py_compile` 및 `git diff --check` PASS. 이 patch는 원격 CI 검증 전이다.
 - **다음 한 단계:** 동일 SHA의 V6 전체 테스트 완료/conclusion 확인. SUCCESS 전에는 same-job BrowserUse recovery, 입력, 첨부, 전송을 시작하지 않는다. 이후 브라우저가 필요하면 [BrowserUse 기존 로그인 세션 인수인계](browseruse_existing_session_handoff.md)의 `extension → openTabs() → claimTab()` 절차로 기존 정확한 탭만 사용한다. 세션이나 탭을 claim할 수 없으면 오류를 기록하고 멈춘다.
 
-### P77 historical checkpoint — P88이 현재 재개 지점
+### P77 historical checkpoint — P88 이전 상태
 
 - 현재 branch는 `feature/e2r-pro-first-browser-platform-20260822`, PR #7은 OPEN/DRAFT/MERGEABLE이며 `main`에는 병합하지 않는다.
 - 현재 local/origin head는 모두 P76 `d294f395738254da1f616d361038a35548fa6c4e`다. exact-head Pro push [35947967714](https://github.com/Daikisong/stock_agent/actions/runs/35947967714), Pro PR [35947970682](https://github.com/Daikisong/stock_agent/actions/runs/35947970682), V6 PR [35947970654](https://github.com/Daikisong/stock_agent/actions/runs/35947970654)이 모두 SUCCESS다. Pro regression 7,923 / skipped 38 / failure·error 0, Reviewer A–H PASS; V6 Gate 1 receipt 4/4, Phase100 15/15, production static audit critical 0, 전체 unittest failure·error 0이다.
@@ -6991,7 +7001,9 @@ canonical BrowserUse bootstrap
 
 위 두 mock fixture correction과 P87 handoff를 한글 commit으로 **기존 PR #7 branch**에 push한다. 그 정확한 SHA에서 Pro push + Pro PR + V6 Actions가 모두 SUCCESS인지 확인한다. 그 뒤에만 persistent `mcp__node_repl__js`의 canonical BrowserUse bootstrap으로 이미 로그인된 `extension` 세션의 기존 ChatGPT 탭을 다시 열거하고 정확히 claim한다. **새 창·탭·프로필·CDP 세션·재로그인은 금지**한다. 동일 C15 R6 durable state와 same-tab read-only gate가 모두 일치해야 recovery 준비로 진행하며, 탭을 claim할 수 없거나 증명이 불완전하면 입력·첨부 전에 멈춘다. 자세한 기준은 [BrowserUse existing-session handoff](browseruse_existing_session_handoff.md) 첫머리다.
 
-## P88 — 기존 로그인 BrowserUse 세션 원칙 및 exact-head 재개 지점 (2026-09-24 18:32 KST)
+## P88 historical checkpoint — 기존 로그인 BrowserUse 세션 원칙 및 exact-head 재개 지점 (2026-09-24 18:32 KST)
+
+> P88 당시의 판단과 “다음 한 단계” 기록이다. 현재 기준은 아래 P89 및 문서 상단의 현재 재개 지점이며, P88의 956 SHA/V6 진행 중 표기를 현재 CI 상태로 사용하지 않는다.
 
 ### 목적과 변경 범위
 
@@ -7019,3 +7031,39 @@ claim/대상 확인이 실패하면 실제 오류와 확인 범위를 기록하�
 ### 다음 한 단계
 
 동일 SHA 956의 V6 run terminal conclusion을 확인한다. 그 뒤 code/test/docs를 한글 commit으로 기존 PR #7에 push하고 새 exact-head 필수 workflow들이 모두 SUCCESS인지 다시 기다린다. 수정된 head의 CI green 뒤에만 durable same-job state를 다시 읽고, 기존 claimed tab과 durable identity를 대조하는 read-only recovery gate를 한다. 그 전에 tab에서 입력·첨부·전송하지 않는다. tab claim 실패나 identity mismatch면 새 브라우저를 열지 않는다.
+
+## P89 — exact-head CI green 이후 기존 로그인 세션 handoff (문서 갱신 2026-09-24 19:04 KST, CI 확인 19:01 KST)
+
+### 범위
+
+사용자는 BrowserUse가 필요한 로그인 작업은 새 창/세션이 아니라 이미 로그인된 기존 세션에서 계속하라고 재강조했다. 이 checkpoint는 해당 실행 규칙을 맨 앞에 두고, 이전 P88의 미완료 CI/로컬-only 설명을 현재 상태와 분리했다. 이번 턴은 문서와 GitHub Actions 상태만 확인했으며 브라우저 화면 조작은 하지 않았다.
+
+### 현재 저장소 및 CI
+
+- 작업 branch `feature/e2r-pro-first-browser-platform-20260822`; local HEAD와 origin HEAD 모두 `c4155c5ca6f75602928d123c48446c08160860a8`.
+- PR #7: OPEN / DRAFT / MERGEABLE, base `main`; main 미병합.
+- 같은 head에서 Pro push [35982213116](https://github.com/Daikisong/stock_agent/actions/runs/35982213116), Pro PR [35982218832](https://github.com/Daikisong/stock_agent/actions/runs/35982218832), V6 PR [35982218910](https://github.com/Daikisong/stock_agent/actions/runs/35982218910)이 2026-09-24 19:01 KST 확인 시 각각 `completed / success`.
+- P88에 수정한 exact error matcher, fixture/test 보정은 이 CI 검증 head에 포함됐다. CI green은 코드 검증만 의미하며 live full-thesis canary 완료나 전체 goal 완료를 뜻하지 않는다.
+
+### 다음 BrowserUse 작업의 필수 동선
+
+```text
+활성 Codex 세션의 BrowserUse 도구 확인
+→ canonical persistent Node REPL bootstrap
+→ 반환 Agent에서 extension browser 획득
+→ browser.user.openTabs()로 기존 사용자 탭 확인
+→ 정확한 작업 탭 descriptor 하나를 claimTab()
+→ 이후 같은 claim 반환 tab 객체만 사용
+```
+
+- 사용자가 로그인한 기존 BrowserUse `extension` 세션과 정확한 기존 작업 탭을 사용한다. 새 브라우저/창/탭/프로필/CDP 세션이나 재로그인으로 바꾸지 않는다. “새 Chat”이 필요하면 기존 로그인 탭 안에서만 시작한다.
+- 탭이 이미 열린 상태에서 결과/JSON/다운로드가 있으면 새 요청을 만들지 말고 같은 탭에서 회수한다. 대화/URL/로그인/실제 Pro/초안/첨부를 확인하고, 입력·첨부·전송 직전에 다시 검증한다.
+- 연결·열거·claim·대상 대화 확인이 실패하거나 화면 상태가 예상과 다르면 읽기 전용 확인에서 멈춘다. 마지막 확인 시각, 작업 대상, 실제 전송 여부, 실제 오류와 확인 범위만 기록한다. 기존 창/탭/로그인을 종료·초기화하지 않고 토큰/쿠키도 문서화하지 않는다.
+- BrowserUse의 agent tab 목록이나 CDP endpoint에 사용자의 탭이 없다는 이유만으로 로그아웃/세션 만료로 결론 내리지 않는다. 사용자의 extension `openTabs()` 경로를 먼저 확인한다. 다른 backend는 같은 로그인 세션과 정확한 탭을 보존할 수 있음이 증명된 경우에만 검토한다.
+
+### 마지막으로 확인된 live 상태와 제한
+
+- 기존 ChatGPT 탭의 마지막 read-only 관찰은 P88, 2026-09-24 18:32 KST다. 그 시점에 기존 `https://chatgpt.com/` 탭을 claim하여 login prompt 없음, `6 Pro`, 빈 composer, user turn 0, 선택 파일 0을 확인했다. P89에서는 화면을 다시 열거나 조작하지 않았으므로 이 값은 현재 화면 증거가 아니다.
+- C15 R6 durable SQLite의 마지막 확인도 P88 read-only snapshot이다. job `PROJOB-df15a37c58ae7583924e58c0`, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, `USER_ATTENTION_REQUIRED` v18, submit/capture 0/0, browser/conversation binding 없음, `safe_unprepared_resume=false`. 모든 resume 시도 전에 DB를 `mode=ro`와 `PRAGMA query_only=ON`으로 다시 읽어 identity/state를 확인해야 한다.
+- P89 중 prompt 입력·attach/download/submit/capture, source query/fetch, 새 job/pass, score/Stage 수정은 0이다. 사용자 탭은 종료하거나 초기화하지 않았다.
+- **다음 한 단계:** 필수 exact-head CI green을 확인했으므로, live canary 업무를 재개할 때는 같은 C15 R6 job의 durable state를 read-only로 재확인하고, 사용자의 기존 BrowserUse `extension` 세션에서 대상 ChatGPT 탭을 다시 열거·claim하여 same-tab recovery proof를 실행한다. 어떤 proof라도 불일치/불명확하거나 tab claim에 실패하면 입력 전에 멈춘다. 새 브라우저나 재로그인으로 우회하지 않는다.
