@@ -1,24 +1,37 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 17:30 KST (P87 exact-head CI 실패 원인과 test fixture 보정 인수인계).
-사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
-아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
+최종 갱신: 2026-09-24 18:32 KST (P88: exact-head CI, 기존 탭 관찰, durable recovery 오류 불일치 수리 기록).
+이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
-## 최신 상태 — P87 (2026-09-24 17:30 KST)
+## 반드시 따를 실행 순서 — 같은 로그인 세션·같은 탭
 
-P87에서도 최우선 원칙은 동일하다: 로그인 필요한 일은 사용자가 이미 로그인해 둔 BrowserUse `extension`의 **기존 작업 탭**에서 한다. 그 탭을 찾거나 claim할 수 없으면 새 브라우저로 우회하지 않는다.
+1. 현재 Codex 대화에서 실제 BrowserUse 연결 도구를 사용한다. WSL이면 canonical persistent `mcp__node_repl__js` bootstrap을 쓰고 `setupBrowserRuntime()`이 반환한 Agent를 `globalThis.agent`에 저장한 뒤 `agent.browsers.get("extension")`을 사용한다. 설정 파일이나 preflight 성공만으로 브라우저 연결 성공이라고 하지 않는다.
+2. `browser.user.openTabs()`로 사용자가 이미 열어 둔 탭을 확인하고, 서비스·대화·작업이 일치하는 정확한 descriptor 하나를 `browser.user.claimTab()`에 넘긴다. 이후에는 claim이 반환한 **바로 그 tab 객체 하나**만 사용한다.
+3. 입력·첨부·다운로드·전송 전에 같은 탭의 URL/대화와 로그인 상태를 다시 확인한다. 기존 응답이나 파일이 있으면 새 요청을 보내지 말고 그 탭에서 회수한다. 새 대화가 필요해도 기존 로그인 탭 안에서만 연다.
+4. extension 연결, 기존 탭 열거/claim, 대상 대화 확인 중 하나라도 실패하면 즉시 멈춘다. 확인 범위와 **실제 오류 문자열**만 기록한다. 새 Chrome/창/탭/프로필, 별도 CDP 세션, 재로그인, 다른 대화에서의 재전송·재다운로드로 우회하지 않는다. 다른 backend는 동일한 로그인 세션과 정확한 탭을 보존한다는 사실이 확인될 때만 사용할 수 있다.
+5. 기존 초안·응답·첨부를 덮어쓰거나, 결과가 이미 있을 수 있는 요청을 중복 전송하지 않는다. 전송은 durable job의 approval/exactly-once gate까지 통과한 경우에만 한다.
 
-- 마지막 실제 세션 점검은 P86의 read-only 확인이다. 같은 로그인 ChatGPT 탭에서 login prompt 없음, 실제 `Pro`, 빈 composer, user turn 0, file input 5개 비어 있음, 화면상 packet 이름 없음이 관찰됐다. Windows UIA는 최상위 창 24개를 읽어 Chrome 소유 `Open` dialog 후보 0 / 판별 불가 owner 0을 반환했다. 그 이후 UI 조작이나 새 브라우저/탭 생성은 없으므로, 이 값을 새 확인처럼 표현하지 않는다.
-- durable C15 R6 job의 마지막 read-only SQLite 상태는 P85의 `2026-09-24T07:28:13.906437Z`: `USER_ATTENTION_REQUIRED`, version 18, submit/capture `0/0`, browser/conversation binding 없음, `safe_unprepared_resume=false`. 다음 재개 전에 same-job durable state를 다시 읽는다.
-- PR #7은 OPEN/DRAFT/MERGEABLE, main 미병합이다. pushed head `35f9c20d261802763a4d71582d53655cf3135847`; 한글 commit `기존 로그인 탭 첨부 timeout 복구와 인수인계 보강`.
-- Exact-head Pro push run [35974596344](https://github.com/Daikisong/stock_agent/actions/runs/35974596344)은 마지막 조회에서 in progress: `static-security` PASS, `browser-mock-e2e` 101 tests 중 error 1/failure 1, `core-unit` 296 tests 중 error 1/failure 1, `full-regression` 진행 중. Pro PR run [35974601713](https://github.com/Daikisong/stock_agent/actions/runs/35974601713)은 pending; V6 run [35974601514](https://github.com/Daikisong/stock_agent/actions/runs/35974601514)은 전체 테스트 진행 중.
-- 두 실패는 테스트 proxy가 새 read-only picker contract의 `unknown_owner_count` 필드를 누락해 fail-closed한 것으로 로그에서 확인됐다. 생산 코드를 느슨하게 하지 않고 기존 proxy fixture 두 곳에 `unknown_owner_count: 0`을 더했다. 이 보정은 다음 한글 commit/push에 포함할 local diff다.
-- NSLAB public-host raw-acquire run [35974601512](https://github.com/Daikisong/stock_agent/actions/runs/35974601512)는 `skipped`; 새 fetch는 실행되지 않았다. P86 로컬 focused 106/106 및 static audit PASS였지만, Playwright integration tests는 로컬 Chromium의 `libnspr4.so` 누락 때문에 실행하지 못해 위 fixture 누락을 놓쳤다.
-- 따라서 현재 exact-head CI는 아직 green이 아니며 same-job recovery 금지다. 보정된 테스트/문서를 같은 PR branch에 push한 뒤, 새 exact head의 Pro push, Pro PR, V6가 모두 SUCCESS여야 기존 로그인 탭에서 read-only same-tab gate를 다시 확인한다. packet attach/prompt/submit은 그 확인과 durable state 대조 전까지 하지 않는다.
+WSL에서 직접 BrowserUse runtime을 연결하기 전에는 machine preflight를 한 번 실행한다. Exit code `23`은 stale BrowserUse session이므로 새 Chrome/profile을 열거나 다시 로그인해 우회하지 말고, 같은 로그인 세션을 보존할 수 있는 현재 경로가 없으면 그 자리에서 오류와 확인 범위를 기록하고 멈춘다.
 
-세부 P87 경과: [implementation progress P87](implementation_progress.md#p87).
+```powershell
+powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$env:LOCALAPPDATA\CodexBrowserUseRuntime\Repair-CodexBrowserUse.ps1" -Quiet -FailIfCurrentSessionStale'
+```
 
-## P86 확인 기록 — historical (P87이 현재 판정)
+`browser.tabs.list()`의 빈 목록이나 CDP endpoint의 탭 부재는 사용자의 로그인 세션 부재를 증명하지 않는다. 새 브라우저를 열기 전에 반드시 위 `extension → openTabs() → claimTab()` 경로를 따른다. 인증 토큰·쿠키는 기록하지 않는다.
+
+예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
+
+## 최신 재개 지점 — P88 (2026-09-24 18:32 KST)
+
+- PR #7은 OPEN/DRAFT/MERGEABLE, main 미병합이다. exact head는 `956535588feda0fef6c07b9ca4bd2630b4beccde`이며 한글 commit은 `BrowserUse recovery 테스트에 미확정 picker 상태 보완`이다.
+- 같은 SHA의 Pro push [35975891389](https://github.com/Daikisong/stock_agent/actions/runs/35975891389)와 Pro PR [35975895348](https://github.com/Daikisong/stock_agent/actions/runs/35975895348)은 SUCCESS다. V6 [35975895401](https://github.com/Daikisong/stock_agent/actions/runs/35975895401)은 18:32 KST 조회 시 `offline-contract / Run full unit-test suite`가 계속 `in_progress`; receipt consistency와 production static audit은 PASS, 전체 테스트는 아직 결론 전이다.
+- P88에서는 machine preflight exit `0` 뒤 기존 BrowserUse `extension`의 사용자 탭 두 개를 읽기 전용 열거하고, `https://chatgpt.com/` / title `ChatGPT`인 기존 탭 하나를 정확히 claim했다. 같은 탭의 관찰은 로그인 prompt 없음, 모델 메뉴 표시 `6 Pro`, 빈 composer 1개, user turn 0, file input 5개, 선택 파일 0이었다. 탭 이동·새 창/탭 생성·입력·첨부·전송은 없었다. 이는 검사 시점의 화면 증거이며, P86 상태를 재사용하거나 durable same-job gate를 대신하지 않는다.
+- durable C15 R6 job을 P88에 mode=ro + `PRAGMA query_only=ON`으로 다시 읽었다. DB상 최신 갱신은 여전히 `2026-09-24T07:28:13.906437Z`: S-Oil `010950`, `USER_ATTENTION_REQUIRED`, version 18, submit/capture `0/0`, browser/conversation binding 없음, `safe_unprepared_resume=false`; last error class/message는 `BrowserUseBridgeError` / `BrowserUse bridge transport failed (TimeoutError: timed out)`. 새 pass/event나 DB write는 없다.
+- P87의 CI 실패 원인은 테스트 proxy fixture 두 곳에 `unknown_owner_count`가 빠진 것이었다. 생산 fail-closed 판정은 완화하지 않고 fixture만 고쳤으며, exact-head Pro push/PR은 통과했다. P88 NSLAB Raw acquire/recover는 `skipped`여서 새 fetch는 없었다.
+- 해당 exact DB message에는 `BRIDGE_OPERATION_FAILED:` 접두사가 없다. 기존 allowlist/test는 접두사가 있을 때만 열려 있어 같은 job을 복구 함수가 거부할 결함을 확인했다. production allowlist를 DB에 실제 기록된 단일 exact message에 맞추고, suffix near-match 차단을 유지한 채 orchestration 91/91과 local production static audit (`critical_count=0`)을 통과시켰다. 이 수정은 아직 remote PR head `95653558…`에 포함되지 않았으며 현재 V6 run도 수정 전 head를 검사 중이다.
+- 상세 진행 기록은 [implementation progress](implementation_progress.md)의 P88 항목에 있다. 아래 P87/P86 항목은 당시 시각의 이력이며, 현재 상태는 이 P88 블록을 우선한다.
+
+## P86 확인 기록 — historical (P88이 현재 판정)
 
 이 P86 checkpoint는 17:10 KST 당시의 기록이다. 아래 P83/P84/P80/P81 등 이전 체크포인트도 당시 이력이며 현재 다음 단계에는 적용하지 않는다.
 

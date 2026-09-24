@@ -514,7 +514,7 @@ class FreshV3InitialLiveCanaryRunner:
         exact_browseruse_attach_transport_timeout = bool(
             job.last_error_class == "BrowserUseBridgeError"
             and job.last_error_message
-            == "BRIDGE_OPERATION_FAILED: BrowserUse bridge transport failed (TimeoutError: timed out)"
+            == "BrowserUse bridge transport failed (TimeoutError: timed out)"
             and attention_event is not None
             and attention_event.payload.get("safe_unprepared_resume") is False
             and attention_event.payload.get("preparation_failure_stage")

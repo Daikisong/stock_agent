@@ -687,7 +687,7 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
 
     def test_exact_browseruse_attach_rpc_timeout_requires_live_same_tab_preflight(self) -> None:
         runner, spec = self._make_draft_preparation_attention_resume(
-            "BRIDGE_OPERATION_FAILED: BrowserUse bridge transport failed (TimeoutError: timed out)"
+            "BrowserUse bridge transport failed (TimeoutError: timed out)"
         )
         boundary, resumed = runner._load_unprepared_attention_job(
             FreshSessionBoundaryService(self.store),
@@ -712,7 +712,7 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
 
     def test_near_match_browseruse_attach_rpc_timeout_remains_blocked(self) -> None:
         runner, spec = self._make_draft_preparation_attention_resume(
-            "BRIDGE_OPERATION_FAILED: BrowserUse bridge transport failed (TimeoutError: timed out); extra"
+            "BrowserUse bridge transport failed (TimeoutError: timed out); extra"
         )
         with self.assertRaisesRegex(ValueError, "known safe failure"):
             runner._load_unprepared_attention_job(
@@ -724,7 +724,7 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
 
     async def test_ambiguous_attention_resume_preflights_same_tab_before_prepare(self) -> None:
         self._make_draft_preparation_attention_resume(
-            "BRIDGE_OPERATION_FAILED: BrowserUse bridge transport failed (TimeoutError: timed out)"
+            "BrowserUse bridge transport failed (TimeoutError: timed out)"
         )
         base = load_pro_first_local_config(
             Path(__file__).parents[1]
@@ -820,7 +820,7 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
 
     async def test_failed_ambiguous_attention_preflight_does_not_transition_or_prepare(self) -> None:
         self._make_draft_preparation_attention_resume(
-            "BRIDGE_OPERATION_FAILED: BrowserUse bridge transport failed (TimeoutError: timed out)"
+            "BrowserUse bridge transport failed (TimeoutError: timed out)"
         )
         base = load_pro_first_local_config(
             Path(__file__).parents[1]
