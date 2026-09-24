@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-25 06:47 KST (P106: root-locator 수정 exact-head CI 성공, 기존 탭 same-job 재개와 packet 다운로드 이벤트 차단 기록).
+최종 갱신: 2026-09-25 07:16 KST (P107: 사용자 지시 재확인, 기존 로그인 세션 원칙과 현재 코드/CI 경계 기록).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -26,6 +26,27 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 `browser.tabs.list()`의 빈 목록이나 CDP endpoint의 탭 부재는 사용자의 로그인 세션 부재를 증명하지 않는다. 새 브라우저를 열기 전에 반드시 위 `extension → openTabs() → claimTab()` 경로를 따른다. 인증 토큰·쿠키는 기록하지 않는다.
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
+
+## 최신 인계 — P107, 2026-09-25 07:16 KST
+
+### 사용자가 재확인한 필수 실행 방식
+
+사용자는 “BrowserUse를 쓸 때 로그인이 필요하면 로그인되어 있는 세션 쪽에서 하라”고 재차 요청했다. 이 작업에서는 사용자가 이미 로그인해 둔 BrowserUse Chrome `extension` 세션이 유일한 인증 브라우저다. 작업 직전에 `browser.user.openTabs()`로 기존 탭을 새로 열거하고, 대상 ChatGPT 작업 탭의 URL·대화·실제 Pro 모드를 확인한 뒤 그 descriptor를 `claimTab()`에 넘긴다. 이후 모든 확인/입력은 claim이 돌려준 **같은 Tab 객체**에서만 한다. 새 창·새 탭·새 프로필·별도 CDP 브라우저·재로그인은 대체 경로가 아니다. 연결/claim/대상 확인이 안 되면 UI를 보존하고 실제 오류만 기록한 뒤 입력 전에 멈춘다. 새 대화가 꼭 필요해도 로그인된 기존 탭 안에서만 연다.
+
+쉬운 구분: JSON이 Library 미리보기 안에 열려 있고 그 화면에 실제 다운로드 버튼이 있으면 같은 로그인 탭에서 그 버튼을 사용한다. 반대로 빈 Chat composer에 붙어 있는 파일 이름 tile은 첨부 상태 표시일 수 있으므로 다운로드 링크라고 간주하거나 파일 이름 버튼을 다운로드로 무조건 클릭하지 않는다. 먼저 현재 탭의 화면/DOM에서 실제 action을 확인하고, 원본 bytes/hash를 증명할 수 없으면 그 상태를 그대로 기록하고 멈춘다.
+
+### 현재 checkpoint와 사실 경계
+
+- PR #7은 `OPEN/DRAFT/CLEAN`, remote head 및 origin feature head는 `f49ff8a0d8d56ac5ca4d1dda9292ebc6e0d52013`이다. 이 SHA의 Pro PR [36064013627](https://github.com/Daikisong/stock_agent/actions/runs/36064013627), Pro push [36064009596](https://github.com/Daikisong/stock_agent/actions/runs/36064009596), V6 [36064013622](https://github.com/Daikisong/stock_agent/actions/runs/36064013622)는 `SUCCESS`다. 이 run들은 현재 로컬 미커밋 adapter/protocol 변경 전의 SHA를 검증한 것이며, 그 미커밋 변경을 검증했다고 해석하면 안 된다.
+- 현재 worktree에는 `src/e2r/pro_first/browser/chatgpt_adapter.py`와 `protocol.py`에만 미커밋 변경이 있다. 목적은 visible attachment tile을 다운로드 증거로 오인하지 않도록 하고, 실제 첨부 시 선택한 로컬 파일의 SHA-256/packet hash와 upload 발생 여부를 prepare receipt에 전달하는 것이다. 현재 diff는 아직 회귀 테스트·orchestration 통합·정확한 원격 CI 검증을 마치지 않은 WIP이며 완료된 수정으로 취급하지 않는다.
+- 이번 기록 시점의 기존 로그인 탭은 읽기 전용으로 확인했다. 주소는 ChatGPT root, 선택 모드는 Chat, 실제 `6 Pro` 표시가 있었고 composer는 비어 있었으며 timestamped packet tile 하나가 보였다. tile 자체에는 download URL/action이 확인되지 않았고 file input 5개는 모두 비어 있었다. 탭을 이동하지 않았고 prompt 입력·첨부 교체·다운로드·전송·capture도 하지 않았다. CDP capability는 실제 오류 `Capability is not available: cdp`로 사용할 수 없었다. 인증 문제로 분류하지 않는다.
+- C15 `PROJOB-df15a37c58ae7583924e58c0`은 SQLite `mode=ro` + `PRAGMA query_only=ON`으로 확인했다. 상태는 `USER_ATTENTION_REQUIRED` v26, packet canonical hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, submit/capture `0/0`, approval/browser/conversation binding 없음, `safe_unprepared_resume=false`, successor 없음이다. 새 job/pass, query/fetch, 다른 archetype, 점수/Stage 변경은 하지 않았다.
+
+### 다음 한 단계
+
+먼저 generic adapter의 safe-replacement 경로를 끝까지 구현하고, “기존 exact-name tile은 다운로드 없이 replacement-required”, “다른/multiple 파일은 fail-closed”, “같은 탭에서 hash 확인된 로컬 packet만 첨부” 회귀 테스트를 추가한다. orchestration이 그 증거를 durable receipt에 남기는지도 검증한다. source/test/docs 변경을 Korean commit으로 PR #7 branch에 push한 뒤 새 exact-head Pro PR, Pro push, V6 CI가 모두 끝나고 성공한 경우에만 same-job C15 작업을 재개한다. 그때도 실행 직전에 로그인된 `extension` 탭을 다시 열거·claim해 그 탭에서만 한다. 현재 열린 tab tile을 삭제/교체하거나 prompt를 입력하지 않는다. PR #7은 draft/open 유지, main 미병합이다. 전체 master goal은 미완료다.
+
+P107 상태 receipt: [p107_c15_existing_login_session_checkpoint_receipt.json](p107_c15_existing_login_session_checkpoint_receipt.json).
 
 ## 최신 인계 — P106, 2026-09-25 06:47 KST
 

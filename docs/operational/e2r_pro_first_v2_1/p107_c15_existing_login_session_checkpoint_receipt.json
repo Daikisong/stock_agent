@@ -1,0 +1,96 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p107_c15_existing_login_session_checkpoint_v1",
+  "recorded_at": "2026-09-25T07:16:00+09:00",
+  "status": "EXISTING_SESSION_CONFIRMED_LOCAL_ADAPTER_WIP_UNTESTED",
+  "git": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "head_sha": "f49ff8a0d8d56ac5ca4d1dda9292ebc6e0d52013",
+    "origin_head_sha": "f49ff8a0d8d56ac5ca4d1dda9292ebc6e0d52013",
+    "uncommitted_source_files": [
+      "src/e2r/pro_first/browser/chatgpt_adapter.py",
+      "src/e2r/pro_first/browser/protocol.py"
+    ],
+    "uncommitted_documentation_files": [
+      "docs/operational/e2r_pro_first_v2_1/browseruse_existing_session_handoff.md",
+      "docs/operational/e2r_pro_first_v2_1/implementation_progress.md",
+      "docs/operational/e2r_pro_first_v2_1/p107_c15_existing_login_session_checkpoint_receipt.json"
+    ],
+    "worktree_clean": false
+  },
+  "pull_request": {
+    "number": 7,
+    "url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "state": "OPEN",
+    "draft": true,
+    "merge_state": "CLEAN",
+    "main_merged": false
+  },
+  "ci_for_remote_head_only": {
+    "head_sha": "f49ff8a0d8d56ac5ca4d1dda9292ebc6e0d52013",
+    "pro_pr": {
+      "run_id": "36064013627",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/36064013627"
+    },
+    "pro_push": {
+      "run_id": "36064009596",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/36064009596"
+    },
+    "v6": {
+      "run_id": "36064013622",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/36064013622"
+    },
+    "includes_local_uncommitted_source_changes": false
+  },
+  "browseruse": {
+    "backend": "Chrome BrowserUse extension",
+    "preflight_exit_code": 0,
+    "existing_open_tabs_enumerated": true,
+    "open_tab_count": 4,
+    "exact_existing_chatgpt_root_tab_claimed": true,
+    "same_claimed_tab_object_used": true,
+    "url": "https://chatgpt.com/",
+    "chat_selected": true,
+    "actual_pro_model_marker": "6 Pro",
+    "composer_empty": true,
+    "visible_packet_tile_count": 1,
+    "visible_packet_filename": "research_packet(20260924-172107).json",
+    "visible_download_action_or_href": false,
+    "file_input_count": 5,
+    "selected_file_count": 0,
+    "dev_error_warn_count": 0,
+    "cdp_error": "Capability is not available: cdp",
+    "new_browser_window_tab_profile_or_cdp_session_created": false,
+    "relogin_performed": false
+  },
+  "target_job": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "symbol": "010950",
+    "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "packet_canonical_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "database_access": "SQLite mode=ro; PRAGMA query_only=ON",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 26,
+    "safe_unprepared_resume": false,
+    "approval_browser_or_conversation_binding": null,
+    "submit_count": 0,
+    "capture_count": 0,
+    "successor_job_id": null
+  },
+  "actions_in_checkpoint": {
+    "prompt_input": false,
+    "visible_tile_removed_or_replaced": false,
+    "packet_upload": false,
+    "download": false,
+    "submit": false,
+    "capture": false,
+    "new_job_or_pass": false,
+    "source_query_or_fetch": false,
+    "other_archetype": false,
+    "score_or_stage_change": false
+  },
+  "next_step": "Finish generic exact-packet replacement path and regression/orchestration tests; push a Korean commit to PR #7 and wait for all required workflows on the new exact head before resuming the same job in the user's existing logged-in BrowserUse tab.",
+  "master_goal_complete": false
+}

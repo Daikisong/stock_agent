@@ -7596,3 +7596,26 @@ P105 root locator source/test/doc diff는 아직 local이다. 한글 commit/push
 source-level generic BrowserUse file-card download verification을 개선하고 회귀시험·static audit·exact-head Pro/V6 CI를 통과시킨 뒤 같은 job을 재검증한다. 현재 미확인 tile을 삭제/대체하거나 다른 대화·새 브라우저로 이동하지 않는다. 사용자가 existing tile 교체를 명시적으로 승인하지 않는 한 draft를 유지한다. PR #7은 OPEN/DRAFT, main 미병합이다. master goal은 미완료다.
 
 세부 경과 및 실행 규칙은 [BrowserUse P106 handoff](browseruse_existing_session_handoff.md#최신-인계--p106-2026-09-25-0647-kst)와 [P106 machine receipt](p106_c15_download_event_recovery_receipt.json)을 따른다.
+
+## P107 — 기존 로그인 BrowserUse 세션 원칙 재확인 및 다음 작업 인계 (2026-09-25 07:16 KST)
+
+사용자가 다시 요청했다. **로그인이 필요한 BrowserUse 작업이면 이미 로그인되어 있는 바로 그 세션에서 한다.** 작업 직전에 현재 Codex 연결의 BrowserUse `extension`에서 `browser.user.openTabs()`를 새로 호출하고, 정확한 기존 ChatGPT 작업 탭 descriptor를 `claimTab()`한 뒤 claim이 반환한 같은 Tab 객체만 사용한다. 연결/claim/URL·대화·실제 Pro 모드를 확인할 수 없으면 기존 화면을 보존하고 입력 전에 멈춘다. 새 창·탭·브라우저·프로필·CDP session·재로그인은 우회책이 아니며, 다른 대화에서 같은 요청을 재전송하지 않는다. 이 규칙과 현재 상태의 자세한 실행 순서는 [P107 BrowserUse handoff](browseruse_existing_session_handoff.md#최신-인계--p107-2026-09-25-0716-kst)에 있다.
+
+### 현재 코드·CI 기준선
+
+- PR #7은 `OPEN/DRAFT/CLEAN`이다. branch와 `origin` 모두 `f49ff8a0d8d56ac5ca4d1dda9292ebc6e0d52013`을 가리킨다. 그 SHA의 Pro PR [36064013627](https://github.com/Daikisong/stock_agent/actions/runs/36064013627), Pro push [36064009596](https://github.com/Daikisong/stock_agent/actions/runs/36064009596), V6 [36064013622](https://github.com/Daikisong/stock_agent/actions/runs/36064013622)는 모두 `SUCCESS`다. PR은 draft로 유지하고 main에는 병합하지 않는다.
+- 현재 local worktree에는 `src/e2r/pro_first/browser/chatgpt_adapter.py`와 `protocol.py`에 미커밋 변경이 있다. visible composer file tile을 다운로드로 간주하지 않고, 이후 exact local packet upload의 raw SHA/canonical hash와 실제 upload 수행 여부를 prepare 결과로 남기려는 작업이다. **아직 incomplete WIP이며 test·orchestration 연결·새 exact-head CI 검증 전이다.** 위 `f49ff8a...`의 SUCCESS는 이 local diff를 검증한 CI가 아니다.
+
+### 기존 로그인 세션에서의 현재 확인
+
+- 이번 작업에서 BrowserUse preflight는 성공(exit 0)했고, `extension` 세션의 현재 탭 4개를 열거해 기존 ChatGPT root 탭 하나를 claim했다. 이후 read-only 확인은 그 claim이 돌려준 동일 Tab 객체에서만 했다. Chat 선택, 실제 `6 Pro`, 빈 composer, 기존 packet filename tile 1개가 보였다. file input은 5개 모두 비어 있고 tile에는 download URL/action이 확인되지 않았다. `tab.dev.logs()` warning/error는 0건, 실제 CDP capability 오류는 `Capability is not available: cdp`였다.
+- 새 브라우저/창/탭/프로필/CDP 연결을 만들거나 재로그인하지 않았다. prompt 입력, 파일 tile 삭제/교체, 다운로드, upload, submit, capture는 모두 0이다. 인증 문제가 아니라 현재 composer tile의 원본 파일/hash를 이 화면만으로 증명할 수 없는 UI/action mismatch다. Library의 실제 다운로드 화면과 composer의 첨부 표시를 구분해야 한다.
+- C15 `PROJOB-df15a37c58ae7583924e58c0`은 SQLite `mode=ro` + `PRAGMA query_only=ON`으로 확인했다: `USER_ATTENTION_REQUIRED` v26, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, approval/browser/conversation binding 없음, `safe_unprepared_resume=false`, submit/capture `0/0`, successor 없음. 현재 탭과 durable job은 변경하지 않았다.
+
+### 다음 한 단계와 완료 범위
+
+adapter의 safe replacement 흐름을 구현하고, exact-name 기존 tile은 hash 검증 전 reuse/download로 오인하지 않는 것, unrelated/multiple tile은 fail-closed하는 것, 같은 탭에서 hash 증명된 로컬 packet만 첨부하는 것, orchestration이 그 receipt를 보존하는 것을 회귀 테스트로 검증한다. 이후 Korean commit/push를 하고 그 새 SHA의 Pro PR, Pro push, V6 CI가 전부 SUCCESS일 때만 같은 C15 job을 다시 시도한다. 그때도 로그인된 기존 BrowserUse `extension` 세션에서 탭을 재열거·claim해 해당 탭 하나만 쓴다. 새 research/job/pass, query/fetch, 다른 archetype, 점수/Stage 변경, PR merge는 이번 단계에 포함되지 않는다.
+
+전체 master goal은 미완료다. 기록상 P9 실제 Pro full-thesis canary는 3개 요구 중 C06 1개만 확인됐고 C17/C28은 남아 있다. 이번 P107은 문서·현재 상태 인계와 local code WIP를 정리했을 뿐, 해당 hard gate를 완료한 것으로 표시하지 않는다.
+
+P107 상태 receipt: [p107_c15_existing_login_session_checkpoint_receipt.json](p107_c15_existing_login_session_checkpoint_receipt.json).
