@@ -642,6 +642,10 @@ class BrowserUseWorkerIntegrationTest(unittest.IsolatedAsyncioTestCase):
 
 class BrowserUsePacketUploadTest(unittest.IsolatedAsyncioTestCase):
     async def test_packet_uses_visible_session_upload_and_exact_file_hash(self) -> None:
+        self.assertIn(
+            '[role="group"] div[tabindex="0"]:has-text("사진 및 파일 추가")',
+            UPLOAD_MENU_ITEM_SELECTORS,
+        )
         with TemporaryDirectory() as temporary_directory:
             packet_path = Path(temporary_directory) / "research_packet.json"
             payload = {"schema_version": "e2r_pro_research_packet_v1", "facts": []}

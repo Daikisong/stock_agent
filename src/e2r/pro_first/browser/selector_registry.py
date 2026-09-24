@@ -114,6 +114,9 @@ ATTACH_BUTTON_SELECTORS = (
 # The attachment control opens an in-page menu in current ChatGPT UI. Keep
 # these labels generic; company/archetype names do not belong in UI selectors.
 UPLOAD_MENU_ITEM_SELECTORS = (
+    '[role="group"] div[tabindex="0"]:has-text("사진 및 파일 추가")',
+    '[role="group"] div[tabindex="0"]:has-text("Add photos & files")',
+    '[role="group"] div[tabindex="0"]:has-text("Add photos and files")',
     '[role="menuitem"]:has-text("Upload file")',
     '[role="menuitem"]:has-text("Upload files")',
     '[role="menuitem"]:has-text("Upload from computer")',

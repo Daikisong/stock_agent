@@ -1,6 +1,6 @@
 # BrowserUse 기존 로그인 세션 인수인계 — 2026-09-24
 
-기록 시각: `2026-09-24 22:26 KST`
+기록 시각: `2026-09-24 23:02 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`  
 PR: `#7` draft 유지; 이 작업에서 merge 또는 draft 해제 금지  
@@ -58,6 +58,25 @@ no global keystrokes were sent)
 이번 수정에서 첨부 버튼을 누른 뒤 메뉴 단계를 건너뛰던 경로를 상태 인식형으로 바꿨다. `aria-expanded=true`이면 버튼을 다시 누르지 않고 보이는 일반 파일 업로드 항목을 고른다. 접혀 있으면 한 번 열고 항목을 찾는다. 열린 메뉴에 인식 가능한 업로드 항목이 없으면 파일 선택 단계로 넘어가지 않고 fail closed한다. 메뉴가 열리지 않는 UI 변형만 기존 direct native chooser 경로를 허용한다. 업로드 뒤의 filename·exact packet hash 확인은 유지했다.
 
 로컬 검증: BrowserUse extension bridge 관련 단위/통합시험 `14/14 PASS`, V2 static audit `2/2 PASS`, `node --check` PASS, `git diff --check` PASS. 두 Playwright/Chromium 기반 suite는 테스트 setup의 브라우저 시작 단계에서 환경 오류로 멈췄다: `libnspr4.so: cannot open shared object file`. 이는 제품 assertion 실패가 아니라 현재 WSL 런타임 의존성 누락이며, PR CI에서 같은 head의 전체 결과를 확인해야 한다. 실제 브라우저 조작은 하지 않았고 실제 전송·파일 첨부도 여전히 0건이다.
+
+### 2026-09-24 23:02 KST: 기존 탭 재확인과 UI 문구 보정
+
+수정 전 커밋 `33f94af21c7866eaa47cad8e3818ab64d2142393`의 Pro CI `36006574739`와 V6 CI `36006574637`는 모두 SUCCESS였다. 그 뒤 **같은 로그인 탭** `1437795006`을 BrowserUse extension의 `openTabs()` 결과에서 다시 찾고 claim하여 읽기 전용 확인했다.
+
+```text
+URL               https://chatgpt.com/
+계정 표시          대규 Pro
+모드               Chat 선택 / Work 미선택 / 6 Pro 표시
+composer           길이 0
+user turn          0
+선택된 파일         0
+첨부 메뉴           이미 펼쳐져 있음
+전송               없음
+```
+
+캡처와 DOM에서 실제 업로드 선택 행은 ARIA `menuitem`이나 `button`이 아니라 `[role="group"]` 안의 `div[tabindex="0"]`였으며, 실제 Korean UI text는 `사진 및 파일 추가` / `컴퓨터에서 업로드하세요`였다. 따라서 이전 코드의 일반 `Upload file`/`파일 업로드` selector는 현재 화면의 항목을 찾지 못할 수 있다. 이를 바탕으로 generic selector `div[tabindex="0"]` + `사진 및 파일 추가`를 추가하고 회귀시험에 고정했다. 동일 claimed tab에서 read-only locator 확인 결과 selector count `1`, text `사진 및 파일 추가\n컴퓨터에서 업로드하세요`, `tabindex=0`이었다. 이 확인은 클릭하지 않고 끝냈다.
+
+이번 재확인에서도 항목을 클릭하지 않았다. 파일 첨부·prompt 입력·전송 모두 0건이며, 이전 job은 여전히 `USER_ATTENTION_REQUIRED / submit_count=0` 상태다. 현재 변경은 새 코드이므로 새 commit의 PR CI가 통과하기 전에는 live canary를 재개하지 않는다.
 
 ## 다음 단계
 
