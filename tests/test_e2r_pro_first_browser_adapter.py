@@ -112,6 +112,66 @@ class _RecoveryVisiblePacketButton:
         self.page.packet_button_clicks += 1
 
 
+class _RecoveryRemoveButton:
+    def __init__(self, page: "_RecoveryPreflightPage", label: str) -> None:
+        self.page = page
+        self.label = label
+
+    async def count(self) -> int:
+        return 1
+
+    async def is_visible(self) -> bool:
+        return True
+
+    async def is_enabled(self) -> bool:
+        return True
+
+    async def get_attribute(self, name: str) -> str | None:
+        return self.label if name == "aria-label" else None
+
+    async def inner_text(self) -> str:
+        return ""
+
+    async def click(self, **_kwargs: object) -> None:
+        self.page.remove_button_clicks += 1
+        self.page.visible_file_signals = ()
+        self.page.snapshot = {"visible_file_signals": []}
+        self.page.editor.snapshot = self.page.snapshot
+
+
+class _RecoveryRemoveButtons:
+    def __init__(self, page: "_RecoveryPreflightPage") -> None:
+        self.page = page
+
+    async def count(self) -> int:
+        return len(self.page.remove_button_labels)
+
+    def nth(self, index: int) -> _RecoveryRemoveButton:
+        return _RecoveryRemoveButton(self.page, self.page.remove_button_labels[index])
+
+
+class _RecoveryPacketGroup:
+    def __init__(self, page: "_RecoveryPreflightPage", name: str) -> None:
+        self.page = page
+        self.name = name
+
+    async def count(self) -> int:
+        return int(self.page.visible_file_signals == (self.name,))
+
+    async def is_visible(self) -> bool:
+        return await self.count() == 1
+
+    async def evaluate(self, expression: str, *_args: object) -> object:
+        if "E2R_PACKET_ATTACHMENT_IN_COMPOSER" in expression:
+            return self.page.packet_button_in_composer
+        raise AssertionError(expression)
+
+    def locator(self, selector: str) -> _RecoveryRemoveButtons:
+        if selector != 'button, [role="button"]':
+            raise AssertionError(selector)
+        return _RecoveryRemoveButtons(self.page)
+
+
 class _RecoveryPacketDownload:
     def __init__(self, filename: str, content: bytes) -> None:
         self.suggested_filename = filename
@@ -153,6 +213,7 @@ class _RecoveryPreflightPage:
         chooser_unknown_owners: int = 0,
         packet_download_bytes: bytes | None = None,
         packet_button_in_composer: bool = True,
+        remove_button_labels: tuple[str, ...] | None = None,
     ) -> None:
         self.inspect_native_file_chooser_state = AsyncMock(
             return_value={
@@ -175,6 +236,16 @@ class _RecoveryPreflightPage:
         self.packet_download_bytes = packet_download_bytes
         self.packet_button_in_composer = packet_button_in_composer
         self.packet_button_clicks = 0
+        self.remove_button_clicks = 0
+        self.remove_button_labels = tuple(
+            remove_button_labels
+            if remove_button_labels is not None
+            else (
+                (f"파일 1 제거: {visible_file_signals[0]}",)
+                if len(visible_file_signals) == 1
+                else ()
+            )
+        )
         self.download_timeouts: list[int] = []
 
     def locator(self, selector: str) -> _RecoveryPreflightLocator:
@@ -200,10 +271,14 @@ class _RecoveryPreflightPage:
         *,
         name: str,
         exact: bool = False,
-    ) -> _RecoveryVisiblePacketButton:
-        if role != "button" or not exact:
+    ) -> _RecoveryVisiblePacketButton | _RecoveryPacketGroup:
+        if not exact:
             raise AssertionError((role, name, exact))
-        return _RecoveryVisiblePacketButton(self, name)
+        if role == "button":
+            return _RecoveryVisiblePacketButton(self, name)
+        if role == "group":
+            return _RecoveryPacketGroup(self, name)
+        raise AssertionError((role, name, exact))
 
     def expect_download(self, *, timeout: int) -> _RecoveryDownloadExpectation:
         self.download_timeouts.append(timeout)
@@ -258,7 +333,7 @@ class UnpreparedRecoveryReadOnlyGateTest(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(proof["native_file_chooser_open"])
         page.inspect_native_file_chooser_state.assert_awaited_once()
 
-    async def test_visible_timestamped_packet_is_download_hashed_and_reused_without_duplicate_upload(self) -> None:
+    async def test_visible_timestamped_packet_requires_replacement_without_clicking_filename(self) -> None:
         visible_filename = "research_packet(20260924-172107).json"
         page = _RecoveryPreflightPage(
             visible_file_signals=(visible_filename,),
@@ -271,24 +346,62 @@ class UnpreparedRecoveryReadOnlyGateTest(unittest.IsolatedAsyncioTestCase):
             packet_hash=self.packet_hash,
         )
 
-        self.assertEqual(proof["selected_file_state"], "EXACT_PACKET_HASH_MATCH_VISIBLE")
+        self.assertEqual(
+            proof["selected_file_state"],
+            "VISIBLE_PACKET_HASH_UNVERIFIED_REPLACEMENT_REQUIRED",
+        )
         self.assertEqual(proof["visible_packet_filename"], visible_filename)
-        self.assertEqual(
-            proof["packet_file_sha256"],
-            hashlib.sha256(self.packet_path.read_bytes()).hexdigest(),
+        self.assertIsNone(proof["packet_file_sha256"])
+        self.assertIsNone(proof["packet_attachment_verification"])
+        self.assertEqual(page.packet_button_clicks, 0)
+        self.assertEqual(page.download_timeouts, [])
+
+    async def test_exact_visible_tile_is_replaced_by_hash_verified_local_packet(self) -> None:
+        visible_filename = "research_packet(20260924-172107).json"
+        page = _RecoveryPreflightPage(
+            visible_file_signals=(visible_filename,),
+            packet_download_bytes=self.packet_path.read_bytes(),
         )
-        self.assertEqual(
-            proof["packet_attachment_verification"],
-            "VISIBLE_COMPOSER_DOWNLOAD_RAW_AND_CANONICAL_HASH_MATCH",
+        adapter = self._adapter(page)
+        expected_file_sha256 = hashlib.sha256(self.packet_path.read_bytes()).hexdigest()
+
+        async def upload_exact_packet(path: str | Path) -> str:
+            selected_path = Path(path)
+            page.visible_file_signals = (selected_path.name,)
+            page.snapshot = {"visible_file_signals": [selected_path.name]}
+            page.editor.snapshot = page.snapshot
+            adapter._uploaded_filename = selected_path.name
+            adapter._packet_upload_performed_since_prepare = True
+            adapter._verified_existing_packet_attachment = {
+                "filename": selected_path.name,
+                "file_sha256": expected_file_sha256,
+                "packet_hash": self.packet_hash,
+                "verification": "BROWSERUSE_FILECHOOSER_EXACT_LOCAL_BYTES_SHA256",
+                "selection_mode": "browseruse_filechooser_event",
+            }
+            return selected_path.name
+
+        adapter.upload_packet = AsyncMock(side_effect=upload_exact_packet)  # type: ignore[method-assign]
+        receipt = await adapter.replace_unverified_packet_attachment(
+            packet_path=self.packet_path,
+            packet_hash=self.packet_hash,
+            visible_filename=visible_filename,
         )
-        self.assertEqual(page.packet_button_clicks, 1)
-        self.assertEqual(page.download_timeouts, [10_000])
+
+        self.assertEqual(receipt["status"], "PASS")
+        self.assertEqual(receipt["removed_unverified_filename"], visible_filename)
+        self.assertEqual(receipt["uploaded_filename"], self.packet_path.name)
+        self.assertEqual(receipt["file_sha256"], expected_file_sha256)
+        self.assertEqual(receipt["packet_hash"], self.packet_hash)
+        self.assertEqual(page.remove_button_clicks, 1)
+        self.assertEqual(page.packet_button_clicks, 0)
+        self.assertEqual(page.download_timeouts, [])
+        adapter.upload_packet.assert_awaited_once_with(self.packet_path.resolve())
 
         adapter.ensure_deep_research_mode = AsyncMock()  # type: ignore[method-assign]
         adapter.set_prompt = AsyncMock()  # type: ignore[method-assign]
         adapter.snapshot_attachment_keys = AsyncMock(return_value=())  # type: ignore[method-assign]
         adapter._wait_for_send_ready = AsyncMock(return_value=object())  # type: ignore[method-assign]
-        adapter.upload_packet = AsyncMock(return_value="duplicate.json")  # type: ignore[method-assign]
         prompt = "test prompt\n[[E2R_PRO_JOB_ID:PROJOB-test]]"
         prepared = await adapter.prepare_without_submit(
             browser_session_id="BROWSER-existing-session",
@@ -297,19 +410,32 @@ class UnpreparedRecoveryReadOnlyGateTest(unittest.IsolatedAsyncioTestCase):
             prompt=prompt,
             prompt_hash=canonical_hash({"prompt": prompt}),
         )
-        self.assertEqual(prepared.uploaded_filename, visible_filename)
-        adapter.upload_packet.assert_not_awaited()
-        adapter.set_prompt.assert_awaited_once_with(prompt)
-        self.assertEqual(page.packet_button_clicks, 1)
+        self.assertEqual(prepared.uploaded_filename, self.packet_path.name)
+        self.assertTrue(prepared.packet_upload_performed)
+        self.assertEqual(
+            prepared.packet_attachment_verification["file_sha256"],
+            expected_file_sha256,
+        )
+        adapter.upload_packet.assert_awaited_once()
 
-        page.visible_file_signals = (visible_filename, "unrelated.json")
-        page.snapshot = {"visible_file_signals": list(page.visible_file_signals)}
-        page.editor.snapshot = page.snapshot
-        with self.assertRaisesRegex(BrowserUIIncompatible, "disappeared"):
-            await adapter._reuse_matching_uploaded_packet(
-                self.packet_path,
-                self.packet_hash,
+    async def test_visible_tile_with_ambiguous_remove_action_fails_without_mutation(self) -> None:
+        visible_filename = "research_packet(20260924-172107).json"
+        page = _RecoveryPreflightPage(
+            visible_file_signals=(visible_filename,),
+            remove_button_labels=(f"Open {visible_filename}",),
+            packet_button_in_composer=True,
+        )
+        adapter = self._adapter(page)
+        adapter.upload_packet = AsyncMock()  # type: ignore[method-assign]
+
+        with self.assertRaisesRegex(BrowserUIIncompatible, "one unambiguous visible remove action"):
+            await adapter.replace_unverified_packet_attachment(
+                packet_path=self.packet_path,
+                packet_hash=self.packet_hash,
+                visible_filename=visible_filename,
             )
+
+        self.assertEqual(page.remove_button_clicks, 0)
         adapter.upload_packet.assert_not_awaited()
 
     async def test_open_dialog_nonempty_composer_user_turn_and_mismatched_file_fail_closed(self) -> None:
@@ -336,18 +462,23 @@ class UnpreparedRecoveryReadOnlyGateTest(unittest.IsolatedAsyncioTestCase):
                         packet_hash=self.packet_hash,
                     )
 
-    async def test_visible_attachment_download_mismatch_or_multiple_cards_fails_closed(self) -> None:
+    async def test_unverified_attachment_is_not_downloaded_and_multiple_cards_fail_closed(self) -> None:
         filename = "research_packet(20260924-172107).json"
         wrong_packet = json.dumps({"schema_version": "other"}).encode()
         wrong_bytes_page = _RecoveryPreflightPage(
             visible_file_signals=(filename,),
             packet_download_bytes=wrong_packet,
         )
-        with self.assertRaisesRegex(BrowserUIIncompatible, "bytes differ"):
-            await self._adapter(wrong_bytes_page).verify_unprepared_recovery_state(
-                packet_path=self.packet_path,
-                packet_hash=self.packet_hash,
-            )
+        proof = await self._adapter(wrong_bytes_page).verify_unprepared_recovery_state(
+            packet_path=self.packet_path,
+            packet_hash=self.packet_hash,
+        )
+        self.assertEqual(
+            proof["selected_file_state"],
+            "VISIBLE_PACKET_HASH_UNVERIFIED_REPLACEMENT_REQUIRED",
+        )
+        self.assertEqual(wrong_bytes_page.packet_button_clicks, 0)
+        self.assertEqual(wrong_bytes_page.download_timeouts, [])
 
         multiple_cards_page = _RecoveryPreflightPage(
             visible_file_signals=(filename, "unrelated.json"),

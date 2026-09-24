@@ -114,6 +114,8 @@ class PreparedBrowserJob:
     send_ready: bool
     preexisting_attachment_keys: tuple[AttachmentKey, ...]
     submit_count: int = 0
+    packet_upload_performed: bool = False
+    packet_attachment_verification: Mapping[str, Any] | None = None
 
     def __post_init__(self) -> None:
         if self.state is not BrowserUIState.AWAITING_USER_APPROVAL:

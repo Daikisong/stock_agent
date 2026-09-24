@@ -8,7 +8,6 @@ import hashlib
 import json
 import re
 import secrets
-import tempfile
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
@@ -97,6 +96,7 @@ class PlaywrightChatGPTWebAdapter:
         )
         self._uploaded_filename: str | None = None
         self._verified_existing_packet_attachment: Mapping[str, str] | None = None
+        self._packet_upload_performed_since_prepare = False
         self._prepared_binding: dict[str, str] | None = None
         self._preexisting_attachment_keys: frozenset[str] = frozenset()
         self._prepared_job_id: str | None = None
@@ -204,6 +204,14 @@ class PlaywrightChatGPTWebAdapter:
                     f"uploaded packet filename was not confirmed in the DOM: {path.name}"
                 )
             self._uploaded_filename = displayed_filename
+            self._packet_upload_performed_since_prepare = True
+            self._verified_existing_packet_attachment = {
+                "filename": displayed_filename,
+                "file_sha256": expected_file_sha256,
+                "packet_hash": expected_hash,
+                "verification": "BROWSERUSE_FILECHOOSER_EXACT_LOCAL_BYTES_SHA256",
+                "selection_mode": str(receipt["selection_mode"]),
+            }
             return displayed_filename
 
         file_input = await first_existing(self.page, FILE_INPUT_SELECTORS)
@@ -231,6 +239,14 @@ class PlaywrightChatGPTWebAdapter:
                 f"uploaded packet filename was not confirmed in the DOM: {path.name}"
             )
         self._uploaded_filename = displayed_filename
+        self._packet_upload_performed_since_prepare = True
+        self._verified_existing_packet_attachment = {
+            "filename": displayed_filename,
+            "file_sha256": expected_file_sha256,
+            "packet_hash": expected_hash,
+            "verification": "PLAYWRIGHT_SELECTED_FILE_EXACT_LOCAL_BYTES_SHA256",
+            "selection_mode": "playwright_file_input",
+        }
         return displayed_filename
 
     async def set_prompt(self, prompt: str) -> None:
@@ -348,6 +364,8 @@ class PlaywrightChatGPTWebAdapter:
         )
         if uploaded_filename is None:
             uploaded_filename = await self.upload_packet(packet_path)
+        packet_upload_performed = self._packet_upload_performed_since_prepare
+        self._packet_upload_performed_since_prepare = False
         await self.set_prompt(prompt)
         preexisting = await self.snapshot_attachment_keys()
         send = await self._wait_for_send_ready()
@@ -376,6 +394,12 @@ class PlaywrightChatGPTWebAdapter:
             send_ready=True,
             preexisting_attachment_keys=preexisting,
             submit_count=0,
+            packet_upload_performed=packet_upload_performed,
+            packet_attachment_verification=(
+                dict(self._verified_existing_packet_attachment)
+                if self._verified_existing_packet_attachment is not None
+                else None
+            ),
         )
 
     async def verify_unprepared_recovery_state(
@@ -455,58 +479,8 @@ class PlaywrightChatGPTWebAdapter:
                     "unprepared recovery refuses an existing user turn"
                 )
 
-        composer_snapshot = await editor.evaluate(
-            r"""element => {
-                /* E2R_UNPREPARED_RECOVERY_COMPOSER_SNAPSHOT */
-                let root = element.closest('form');
-                if (!root) {
-                    root = element;
-                    for (let depth = 0; root && depth < 3; depth += 1) {
-                        root = root.parentElement;
-                    }
-                }
-                if (!root) return { visible_file_signals: [] };
-                const visible = node => {
-                    const rect = node.getBoundingClientRect();
-                    const style = window.getComputedStyle(node);
-                    return rect.width > 0 && rect.height > 0
-                        && style.visibility !== 'hidden'
-                        && style.display !== 'none';
-                };
-                const candidates = [root.innerText || ''];
-                const attachmentActionLabelPattern = /^(?:remove|delete|clear|detach|dismiss|cancel)\b|^(?:file|attachment)\s+\d+\s*(?:remove|delete|clear|detach|dismiss|cancel)\b|^(?:파일|첨부|첨부파일?)\s*\d*\s*(?:제거|삭제|지우기|해제|취소)|^(?:제거|삭제|지우기|해제|취소)\s*(?:파일|첨부파일?)/i;
-                for (const node of root.querySelectorAll(
-                    'button,[role=button],[aria-label],[title]'
-                )) {
-                    if (!visible(node)) continue;
-                    const labels = [
-                        node.innerText || '',
-                        node.getAttribute('aria-label') || '',
-                        node.getAttribute('title') || ''
-                    ];
-                    if (
-                        node.matches('button,[role=button]')
-                        && labels.some(value => attachmentActionLabelPattern.test(String(value).trim()))
-                    ) continue;
-                    candidates.push(...labels);
-                }
-                const filePattern = /[^\s\\/]+\.(?:pdf|docx?|xlsx?|csv|md|json|txt|png|jpe?g|zip)(?:\(\d+\))?$/i;
-                const signals = [...new Set(
-                    candidates
-                        .map(value => String(value || '').trim())
-                        .filter(value => filePattern.test(value))
-                )];
-                return { visible_file_signals: signals };
-            }"""
-        )
-        if not isinstance(composer_snapshot, Mapping):
-            raise BrowserUIIncompatible(
-                "unprepared recovery composer attachment snapshot is malformed"
-            )
-        visible_file_signals = tuple(
-            str(value).strip()
-            for value in composer_snapshot.get("visible_file_signals") or ()
-            if str(value).strip()
+        visible_file_signals = await self._composer_visible_file_signals(
+            editor=editor
         )
 
         file_inputs = self.page.locator('input[type="file"]')
@@ -535,7 +509,7 @@ class PlaywrightChatGPTWebAdapter:
             raise BrowserUIIncompatible(
                 "unprepared recovery found multiple selected files"
             )
-        packet_attachment_receipt: Mapping[str, str] | None = None
+        verified_packet_attachment: Mapping[str, str] | None = None
         if selected_files:
             selected = selected_files[0]
             try:
@@ -567,17 +541,35 @@ class PlaywrightChatGPTWebAdapter:
                     "unprepared recovery found multiple visible composer attachments"
                 )
             if visible_file_signals:
-                packet_attachment_receipt = (
-                    await self._download_and_verify_existing_packet_attachment(
-                        packet_path=path,
-                        packet_hash=packet_hash,
-                        visible_filename=visible_file_signals[0],
+                visible_filename = visible_file_signals[0]
+                if not self._is_packet_filename_variant(
+                    visible_filename,
+                    path.name,
+                ):
+                    raise BrowserUIIncompatible(
+                        "unprepared recovery found a different visible packet filename"
                     )
-                )
-                self._verified_existing_packet_attachment = dict(
-                    packet_attachment_receipt
-                )
-                selected_file_state = "EXACT_PACKET_HASH_MATCH_VISIBLE"
+                if not await self._visible_packet_button_is_in_current_composer(
+                    visible_filename
+                ):
+                    raise BrowserUIIncompatible(
+                        "exact visible packet button is not uniquely bound to the composer"
+                    )
+                verified = self._verified_existing_packet_attachment
+                packet_bytes = path.read_bytes()
+                expected_file_sha256 = hashlib.sha256(packet_bytes).hexdigest()
+                if (
+                    verified is not None
+                    and verified.get("packet_hash") == packet_hash
+                    and verified.get("file_sha256") == expected_file_sha256
+                    and verified.get("filename") == visible_filename
+                ):
+                    verified_packet_attachment = verified
+                    selected_file_state = "EXACT_PACKET_HASH_MATCH_VISIBLE"
+                else:
+                    selected_file_state = (
+                        "VISIBLE_PACKET_HASH_UNVERIFIED_REPLACEMENT_REQUIRED"
+                    )
             elif await self._visible_uploaded_filename(path.name):
                 raise BrowserUIIncompatible(
                     "unprepared recovery found an attachment without hash-verifiable file input"
@@ -599,18 +591,18 @@ class PlaywrightChatGPTWebAdapter:
             "selected_file_state": selected_file_state,
             "packet_hash": packet_hash,
             "visible_packet_filename": (
-                packet_attachment_receipt.get("filename")
-                if packet_attachment_receipt is not None
+                visible_file_signals[0]
+                if len(visible_file_signals) == 1
                 else None
             ),
             "packet_file_sha256": (
-                packet_attachment_receipt.get("file_sha256")
-                if packet_attachment_receipt is not None
+                verified_packet_attachment.get("file_sha256")
+                if verified_packet_attachment is not None
                 else None
             ),
             "packet_attachment_verification": (
-                packet_attachment_receipt.get("verification")
-                if packet_attachment_receipt is not None
+                verified_packet_attachment.get("verification")
+                if verified_packet_attachment is not None
                 else None
             ),
             "submit_count": 0,
@@ -3158,13 +3150,34 @@ class PlaywrightChatGPTWebAdapter:
         )
         if same_composer is not True:
             return False
-        editor = await first_visible(self.page, EDITOR_SELECTORS)
-        if editor is None:
+        try:
+            current_signals = await self._composer_visible_file_signals()
+        except BrowserUIIncompatible:
             return False
-        current_snapshot = await editor.evaluate(
+        return current_signals == (visible_filename,)
+
+    async def _composer_visible_file_signals(
+        self,
+        *,
+        editor: Any | None = None,
+    ) -> tuple[str, ...]:
+        """Read unique file names from the visible composer, excluding actions."""
+
+        editor = editor or await first_visible(self.page, EDITOR_SELECTORS)
+        if editor is None:
+            raise BrowserUIIncompatible(
+                "unprepared recovery composer attachment snapshot has no editor"
+            )
+        snapshot = await editor.evaluate(
             r"""element => {
                 /* E2R_UNPREPARED_RECOVERY_COMPOSER_SNAPSHOT */
                 let root = element.closest('form');
+                if (!root) {
+                    root = element;
+                    for (let depth = 0; root && depth < 3; depth += 1) {
+                        root = root.parentElement;
+                    }
+                }
                 if (!root) return { visible_file_signals: [] };
                 const visible = node => {
                     const rect = node.getBoundingClientRect();
@@ -3199,128 +3212,199 @@ class PlaywrightChatGPTWebAdapter:
                 return { visible_file_signals: signals };
             }"""
         )
-        if not isinstance(current_snapshot, Mapping):
-            return False
-        current_signals = tuple(
+        if not isinstance(snapshot, Mapping):
+            raise BrowserUIIncompatible(
+                "unprepared recovery composer attachment snapshot is malformed"
+            )
+        return tuple(
             str(value).strip()
-            for value in current_snapshot.get("visible_file_signals") or ()
+            for value in snapshot.get("visible_file_signals") or ()
             if str(value).strip()
         )
-        return current_signals == (visible_filename,)
 
-    async def _download_and_verify_existing_packet_attachment(
+    async def replace_unverified_packet_attachment(
         self,
         *,
-        packet_path: Path,
+        packet_path: str | Path,
         packet_hash: str,
         visible_filename: str,
-    ) -> Mapping[str, str]:
-        """Hash one exact visible composer file without re-uploading it."""
+    ) -> Mapping[str, Any]:
+        """Replace one exact unverified composer tile with exact local bytes.
 
-        packet_bytes = packet_path.read_bytes()
+        The filename button itself is never treated as a download control.
+        Only the uniquely named attachment group and its uniquely identified
+        remove action may be clicked. The same adapter/tab then selects the
+        durable packet through its normal visible file chooser path.
+        """
+
+        path = Path(packet_path).resolve()
+        try:
+            packet_bytes = path.read_bytes()
+            payload = json.loads(packet_bytes.decode("utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
+            raise BrowserUIIncompatible(
+                "replacement packet is not readable canonical JSON"
+            ) from error
+        if canonical_hash(payload) != packet_hash:
+            raise BrowserUIIncompatible(
+                "replacement packet file hash differs from the exact durable packet"
+            )
         expected_file_sha256 = hashlib.sha256(packet_bytes).hexdigest()
-        if not self._is_packet_filename_variant(visible_filename, packet_path.name):
+        if not self._is_packet_filename_variant(visible_filename, path.name):
             raise BrowserUIIncompatible(
                 "visible composer attachment filename differs from the exact packet"
             )
-        if not await self._visible_packet_button_is_in_current_composer(
-            visible_filename
-        ):
-            raise BrowserUIIncompatible(
-                "exact visible packet button is not uniquely bound to the composer"
-            )
 
-        expect_download = getattr(self.page, "expect_download", None)
-        if not callable(expect_download):
-            raise BrowserUIIncompatible(
-                "same-session packet verification requires visible BrowserUse download support"
-            )
-        try:
-            async with expect_download(timeout=10_000) as download_info:
-                await self.page.get_by_role(
-                    "button",
-                    name=visible_filename,
-                    exact=True,
-                ).click(timeout=5_000)
-            download = await download_info.value
-        except Exception as error:
-            raise BrowserUIIncompatible(
-                "visible composer packet download was not observed in the claimed tab"
-            ) from error
-
-        if str(getattr(download, "suggested_filename", "") or "") != visible_filename:
-            raise BrowserUIIncompatible(
-                "downloaded composer packet filename differs from its visible file card"
-            )
-        with tempfile.TemporaryDirectory(prefix="e2r-verified-visible-packet-") as directory:
-            downloaded_path = Path(directory) / "visible_packet.json"
-            await download.save_as(str(downloaded_path))
-            try:
-                downloaded_bytes = downloaded_path.read_bytes()
-                downloaded_payload = json.loads(downloaded_bytes.decode("utf-8"))
-            except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
-                raise BrowserUIIncompatible(
-                    "downloaded visible composer packet is not readable canonical JSON"
-                ) from error
-        if (
-            hashlib.sha256(downloaded_bytes).hexdigest() != expected_file_sha256
-            or canonical_hash(downloaded_payload) != packet_hash
-        ):
-            raise BrowserUIIncompatible(
-                "downloaded visible composer packet bytes differ from the exact durable packet"
-            )
-        current_url = urlsplit(str(self.page.url or ""))
-        if (
-            current_url.scheme != "https"
-            or current_url.netloc != "chatgpt.com"
-            or current_url.path not in {"", "/"}
-            or current_url.query
-            or current_url.fragment
-            or self.conversation_id() is not None
-            or not await self._visible_packet_button_is_in_current_composer(
-                visible_filename
-            )
-        ):
-            raise BrowserUIIncompatible(
-                "visible packet verification changed or left the existing composer"
-            )
-        current_editor = await first_visible(self.page, EDITOR_SELECTORS)
-        if current_editor is None or (await editor_text(current_editor)).strip():
-            raise BrowserUIIncompatible(
-                "visible packet verification changed the blank composer"
-            )
-        for selector in USER_TURN_SELECTORS:
-            if await self.page.locator(selector).count():
-                raise BrowserUIIncompatible(
-                    "visible packet verification found a user turn in the composer"
-                )
-        if await first_visible(self.page, STOP_SELECTORS) is not None:
-            raise BrowserUIIncompatible(
-                "visible packet verification found a running conversation"
-            )
-        inspect_native_chooser = getattr(
-            self.page, "inspect_native_file_chooser_state", None
+        before = await self.verify_unprepared_recovery_state(
+            packet_path=path,
+            packet_hash=packet_hash,
         )
-        if not callable(inspect_native_chooser):
-            raise BrowserUIIncompatible(
-                "visible packet verification lost native file chooser inspection"
-            )
-        chooser = await inspect_native_chooser()
         if (
-            not isinstance(chooser, Mapping)
-            or chooser.get("open") is not False
-            or int(chooser.get("chrome_owned_dialog_count", -1)) != 0
-            or int(chooser.get("unknown_owner_count", -1)) != 0
+            before.get("selected_file_state")
+            != "VISIBLE_PACKET_HASH_UNVERIFIED_REPLACEMENT_REQUIRED"
+            or before.get("visible_packet_filename") != visible_filename
         ):
             raise BrowserUIIncompatible(
-                "visible packet verification left native file chooser state unknown"
+                "unverified visible packet replacement preflight did not match the exact tile"
+            )
+
+        group = self.page.get_by_role(
+            "group",
+            name=visible_filename,
+            exact=True,
+        )
+        if (
+            await group.count() != 1
+            or not await group.is_visible()
+        ):
+            raise BrowserUIIncompatible(
+                "exact visible packet group is not uniquely available for replacement"
+            )
+        same_composer = await group.evaluate(
+            r"""(element, editorSelectors) => {
+                /* E2R_PACKET_ATTACHMENT_IN_COMPOSER */
+                let editor = null;
+                for (const selector of editorSelectors || []) {
+                    try {
+                        const matches = Array.from(document.querySelectorAll(selector));
+                        editor = matches.find(node => {
+                            const rect = node.getBoundingClientRect();
+                            const style = window.getComputedStyle(node);
+                            return rect.width > 0 && rect.height > 0
+                                && style.visibility !== 'hidden'
+                                && style.display !== 'none';
+                        }) || null;
+                    } catch {}
+                    if (editor) break;
+                }
+                const editorForm = editor?.closest('form');
+                const groupForm = element.closest('form');
+                return Boolean(editorForm && groupForm && editorForm === groupForm);
+            }""",
+            list(EDITOR_SELECTORS),
+        )
+        if same_composer is not True:
+            raise BrowserUIIncompatible(
+                "exact visible packet group is not bound to the current composer"
+            )
+
+        buttons = group.locator('button, [role="button"]')
+        remove_actions: list[Any] = []
+        for index in range(await buttons.count()):
+            button = buttons.nth(index)
+            labels = (
+                await button.get_attribute("aria-label") or "",
+                await button.get_attribute("title") or "",
+                await button.inner_text(),
+            )
+            if any(
+                self._is_exact_attachment_remove_label(label, visible_filename)
+                for label in labels
+            ):
+                if await button.is_visible() and await button.is_enabled():
+                    remove_actions.append(button)
+        if len(remove_actions) != 1:
+            raise BrowserUIIncompatible(
+                "exact packet group does not have one unambiguous visible remove action"
+            )
+        await remove_actions[0].click()
+
+        for attempt in range(100):
+            remaining = await self._composer_visible_file_signals()
+            if not remaining:
+                break
+            if attempt < 99:
+                await self.page.wait_for_timeout(100)
+        else:
+            raise BrowserUIIncompatible(
+                "exact visible packet tile did not disappear after its remove action"
+            )
+
+        cleared = await self.verify_unprepared_recovery_state(
+            packet_path=path,
+            packet_hash=packet_hash,
+        )
+        if cleared.get("selected_file_state") != "NO_SELECTED_FILE_OR_VISIBLE_ATTACHMENT":
+            raise BrowserUIIncompatible(
+                "composer did not return to the verified empty-file state after removal"
+            )
+
+        uploaded_filename = await self.upload_packet(path)
+        verification = self._verified_existing_packet_attachment
+        if (
+            verification is None
+            or verification.get("packet_hash") != packet_hash
+            or verification.get("file_sha256") != expected_file_sha256
+            or verification.get("filename") != uploaded_filename
+            or verification.get("verification")
+            != "BROWSERUSE_FILECHOOSER_EXACT_LOCAL_BYTES_SHA256"
+            or verification.get("selection_mode")
+            not in {"browseruse_filechooser_event", "native_windows_dialog"}
+            or not self._is_packet_filename_variant(uploaded_filename, path.name)
+        ):
+            raise BrowserUIIncompatible(
+                "replacement upload lacks exact local packet byte/hash verification"
+            )
+        after = await self.verify_unprepared_recovery_state(
+            packet_path=path,
+            packet_hash=packet_hash,
+        )
+        if (
+            after.get("selected_file_state") != "EXACT_PACKET_HASH_MATCH_VISIBLE"
+            or after.get("visible_packet_filename") != uploaded_filename
+            or after.get("packet_file_sha256") != expected_file_sha256
+        ):
+            raise BrowserUIIncompatible(
+                "replacement packet is not visibly bound to its exact local byte hash"
             )
         return {
-            "filename": visible_filename,
+            "schema_version": "e2r_pro_packet_attachment_replacement_v1",
+            "status": "PASS",
+            "removed_unverified_filename": visible_filename,
+            "uploaded_filename": uploaded_filename,
             "file_sha256": expected_file_sha256,
             "packet_hash": packet_hash,
-            "verification": "VISIBLE_COMPOSER_DOWNLOAD_RAW_AND_CANONICAL_HASH_MATCH",
+            "verification": verification["verification"],
+            "selection_mode": verification.get("selection_mode"),
+            "submit_count": 0,
         }
+
+    @staticmethod
+    def _is_exact_attachment_remove_label(label: str, filename: str) -> bool:
+        normalized = " ".join(str(label or "").split())
+        if not normalized or not normalized.casefold().endswith(filename.casefold()):
+            return False
+        prefix = normalized[: len(normalized) - len(filename)]
+        prefix = prefix.strip(" :：-–—\t")
+        return any(
+            re.fullmatch(pattern, prefix, flags=re.IGNORECASE)
+            for pattern in (
+                r"(?:file|attachment)\s*\d*\s*(?:remove|delete|clear|detach|dismiss|cancel)",
+                r"(?:remove|delete|clear|detach|dismiss|cancel)\s*(?:file|attachment)\s*\d*",
+                r"(?:파일|첨부파일?)\s*\d*\s*(?:제거|삭제|지우기|해제|취소)",
+                r"(?:제거|삭제|지우기|해제|취소)\s*(?:파일|첨부파일?)\s*\d*",
+            )
+        )
 
     async def _selected_packet_filename_if_hash_matches(
         self,

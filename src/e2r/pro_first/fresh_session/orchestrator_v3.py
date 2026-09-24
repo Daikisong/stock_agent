@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
 import json
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -587,6 +588,7 @@ class FreshSessionOrchestratorV3:
         adapter: ChatGPTWebAdapter,
         *,
         browser_session_id: str,
+        packet_attachment_replacement_receipt: Mapping[str, Any] | None = None,
     ) -> PreparedFreshV3Initial:
         job = self._ensure_browser_preparing(built.job.job_id)
         if job.status != JobStatus.BROWSER_PREPARING.value:
@@ -632,6 +634,17 @@ class FreshSessionOrchestratorV3:
             state={
                 "state": prepared.state.value,
                 "uploaded_filename": prepared.uploaded_filename,
+                "packet_upload_performed": prepared.packet_upload_performed,
+                "packet_attachment_verification": (
+                    dict(prepared.packet_attachment_verification)
+                    if prepared.packet_attachment_verification is not None
+                    else None
+                ),
+                "packet_attachment_replacement_receipt": (
+                    dict(packet_attachment_replacement_receipt)
+                    if packet_attachment_replacement_receipt is not None
+                    else None
+                ),
                 "send_ready": prepared.send_ready,
                 "pro_mode_ready": prepared.deep_research_ready,
                 "legacy_deep_research_allowed": False,
@@ -657,6 +670,18 @@ class FreshSessionOrchestratorV3:
             "new_chat_route_verified": True,
             "packet_hash": prepared.packet_hash,
             "prompt_hash": prepared.prompt_hash,
+            "uploaded_filename": prepared.uploaded_filename,
+            "packet_upload_performed": prepared.packet_upload_performed,
+            "packet_attachment_verification": (
+                dict(prepared.packet_attachment_verification)
+                if prepared.packet_attachment_verification is not None
+                else None
+            ),
+            "packet_attachment_replacement_receipt": (
+                dict(packet_attachment_replacement_receipt)
+                if packet_attachment_replacement_receipt is not None
+                else None
+            ),
             "submit_count": 0,
             "score_authority": False,
             "stage_authority": False,
@@ -700,6 +725,8 @@ class FreshSessionOrchestratorV3:
                 )
         else:
             self._ensure_browser_preparing(built.job.job_id)
+        replacement_started = False
+        packet_attachment_replacement_receipt: Mapping[str, Any] | None = None
         try:
             session = await ProBrowserWorker(config.browser).open(
                 job_id=built.job.job_id
@@ -751,6 +778,7 @@ class FreshSessionOrchestratorV3:
                     not in {
                         "NO_SELECTED_FILE_OR_VISIBLE_ATTACHMENT",
                         "EXACT_PACKET_HASH_MATCH_VISIBLE",
+                        "VISIBLE_PACKET_HASH_UNVERIFIED_REPLACEMENT_REQUIRED",
                     }
                 ):
                     raise FreshSessionBoundaryError(
@@ -781,6 +809,89 @@ class FreshSessionOrchestratorV3:
                     raise FreshSessionBoundaryError(
                         "durable job changed during unprepared recovery preflight"
                     )
+                selected_file_state = str(proof["selected_file_state"])
+                if selected_file_state == (
+                    "VISIBLE_PACKET_HASH_UNVERIFIED_REPLACEMENT_REQUIRED"
+                ):
+                    replacer = getattr(
+                        session.adapter,
+                        "replace_unverified_packet_attachment",
+                        None,
+                    )
+                    visible_filename = str(
+                        proof.get("visible_packet_filename") or ""
+                    )
+                    if not callable(replacer) or not visible_filename:
+                        raise FreshSessionBoundaryError(
+                            "exact visible packet tile has no safe same-session replacement path"
+                        )
+                    replacement_started = True
+                    packet_attachment_replacement_receipt = await replacer(
+                        packet_path=built.packet_bundle.research_packet_json,
+                        packet_hash=built.packet_bundle.packet_hash,
+                        visible_filename=visible_filename,
+                    )
+                    local_packet_bytes = Path(
+                        built.packet_bundle.research_packet_json
+                    ).read_bytes()
+                    expected_file_sha256 = hashlib.sha256(
+                        local_packet_bytes
+                    ).hexdigest()
+                    if (
+                        not isinstance(packet_attachment_replacement_receipt, Mapping)
+                        or packet_attachment_replacement_receipt.get("schema_version")
+                        != "e2r_pro_packet_attachment_replacement_v1"
+                        or packet_attachment_replacement_receipt.get("status") != "PASS"
+                        or packet_attachment_replacement_receipt.get(
+                            "removed_unverified_filename"
+                        )
+                        != visible_filename
+                        or not str(
+                            packet_attachment_replacement_receipt.get(
+                                "uploaded_filename"
+                            )
+                            or ""
+                        )
+                        or packet_attachment_replacement_receipt.get("verification")
+                        != "BROWSERUSE_FILECHOOSER_EXACT_LOCAL_BYTES_SHA256"
+                        or packet_attachment_replacement_receipt.get(
+                            "selection_mode"
+                        )
+                        not in {
+                            "browseruse_filechooser_event",
+                            "native_windows_dialog",
+                        }
+                        or packet_attachment_replacement_receipt.get("packet_hash")
+                        != built.packet_bundle.packet_hash
+                        or packet_attachment_replacement_receipt.get("file_sha256")
+                        != expected_file_sha256
+                        or packet_attachment_replacement_receipt.get("submit_count") != 0
+                    ):
+                        raise FreshSessionBoundaryError(
+                            "same-session replacement receipt does not prove the exact local packet"
+                        )
+                    replacement_receipt = {
+                        "schema_version": "e2r_pro_packet_attachment_replacement_v1",
+                        "job_id": built.job.job_id,
+                        **dict(packet_attachment_replacement_receipt),
+                    }
+                    write_runtime_json_once(
+                        self.boundary.fresh_job_root
+                        / "fresh_session/packet_attachment_replacement_receipt.json",
+                        replacement_receipt,
+                    )
+                    proof = {
+                        **dict(proof),
+                        "selected_file_state": "EXACT_PACKET_HASH_MATCH_VISIBLE",
+                        "visible_packet_filename": packet_attachment_replacement_receipt.get(
+                            "uploaded_filename"
+                        ),
+                        "packet_file_sha256": expected_file_sha256,
+                        "packet_attachment_verification": packet_attachment_replacement_receipt.get(
+                            "verification"
+                        ),
+                    }
+
                 self.store.transition(
                     current_job.job_id,
                     expected_version=current_job.state_version,
@@ -812,6 +923,11 @@ class FreshSessionOrchestratorV3:
                         "packet_attachment_verification": proof.get(
                             "packet_attachment_verification"
                         ),
+                        "packet_attachment_replacement_receipt": (
+                            dict(packet_attachment_replacement_receipt)
+                            if packet_attachment_replacement_receipt is not None
+                            else None
+                        ),
                         "submit_count": 0,
                         "capture_count": 0,
                     },
@@ -838,6 +954,9 @@ class FreshSessionOrchestratorV3:
                 built,
                 session.adapter,
                 browser_session_id=session.browser_session_id,
+                packet_attachment_replacement_receipt=(
+                    packet_attachment_replacement_receipt
+                ),
             )
             return PreparedFreshV3BrowserRuntime(
                 built=built,
@@ -852,7 +971,12 @@ class FreshSessionOrchestratorV3:
                     self._record_browser_attention(
                         built.job.job_id,
                         error,
-                        safe_unprepared_resume=False,
+                        safe_unprepared_resume=replacement_started,
+                        preparation_failure_stage=(
+                            "EXACT_PACKET_ATTACHMENT_REPLACEMENT"
+                            if replacement_started
+                            else None
+                        ),
                     )
             raise
 
@@ -1604,6 +1728,7 @@ class FreshSessionOrchestratorV3:
         if safe_unprepared_resume and safe_stage not in {
             "READ_ONLY_BROWSER_PREFLIGHT",
             "BROWSER_SESSION_OPEN",
+            "EXACT_PACKET_ATTACHMENT_REPLACEMENT",
         }:
             raise ValueError("unsupported safe unprepared-resume failure stage")
         self.store.transition(

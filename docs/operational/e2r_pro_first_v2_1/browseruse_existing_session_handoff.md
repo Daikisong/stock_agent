@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-25 07:16 KST (P107: 사용자 지시 재확인, 기존 로그인 세션 원칙과 현재 코드/CI 경계 기록).
+최종 갱신: 2026-09-25 07:42 KST (P108: exact-tile replacement 경로·회귀검증과 전체 로컬 테스트 OOM을 구분 기록).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,28 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 인계 — P107, 2026-09-25 07:16 KST
+## 최신 인계 — P108, 2026-09-25 07:42 KST
+
+### 로그인된 기존 세션 원칙
+
+사용자의 지시는 유지한다. 인증이 필요한 BrowserUse 작업은 매번 실행 직전에 로그인된 BrowserUse Chrome `extension` 세션에서 기존 탭을 다시 열거하고(`browser.user.openTabs()`), 정확한 ChatGPT 작업 탭 descriptor를 `claimTab()`한 후 반환된 동일 Tab 객체만 사용한다. 새 브라우저·창·탭·프로필·CDP 연결·재로그인은 금지된 대체 경로다. 연결/대상 확인이 되지 않으면 기존 UI를 보존하고 입력 전에 중단한다. P108에는 live BrowserUse 작업이 없으므로 탭·로그인 상태를 다시 확인하거나 조작하지 않았다. P107에서 확인한 기존 세션/탭 상태는 그 시점의 증거로만 남긴다.
+
+### 코드 WIP와 검증
+
+- 기존 visible composer file tile을 download event로 간주하거나 filename button을 다운로드로 클릭하던 경로를 제거했다. 파일 선택이 남아 있지 않은 tile은 `VISIBLE_PACKET_HASH_UNVERIFIED_REPLACEMENT_REQUIRED`로 분류한다.
+- 같은 adapter/tab 안에서 정확한 accessible group이 current composer form에 속하는지 확인하고, exact filename이 포함된 단 하나의 영어/한국어 remove action만 찾는다. 제거 후 composer/file chooser/turn 상태를 read-only로 다시 확인하고, 그 다음에만 같은 BrowserUse session의 file chooser로 durable local packet을 선택한다. BrowserUse filechooser receipt의 raw SHA-256, canonical packet hash, visible filename이 모두 맞아야 성공이다. 다른 파일·여러 tile·모호한 제거 버튼·일치하지 않는 hash는 fail-closed다.
+- 실제 upload 수행 여부와 packet byte/hash 증거를 `PreparedBrowserJob`, prepared state/event, versioned runtime replacement receipt에 연결했다. live canary의 upload count도 “무조건 1”이 아니라 실제 수행 여부를 반영한다.
+- 최종 수정 뒤 focused adapter/orchestration 회귀 **9/9 PASS**, `py_compile`/`git diff --check` PASS. Production static audit **PASS**, `critical_count=0`, hash `731b15cb0631ee40a836fb12f1c507e8aaf91354ef44930d585e04886e8c688c`.
+- 전체 로컬 `PYTHONPATH=src python -m unittest discover -s tests -q`는 약 3분 30초 뒤 exit `137`로 종료돼 **완주/통과로 간주하지 않는다**. `dmesg`에는 그 시각 OOM killer가 Python process 하나를 종료한 기록이 있다. 테스트 failure/error summary는 나오지 않았다. 재실행으로 메모리를 더 압박하지 않고 원격 full suite로 확인한다.
+- PR #7 remote head `8f3845454519127cbc840449e80115a5b693801e`는 `OPEN/DRAFT`; 동일 head의 Pro push [36067050644](https://github.com/Daikisong/stock_agent/actions/runs/36067050644)와 V6 [36067055253](https://github.com/Daikisong/stock_agent/actions/runs/36067055253)는 `SUCCESS`. Pro PR [36067055134](https://github.com/Daikisong/stock_agent/actions/runs/36067055134)는 07:42 KST 조회 때 independent Reviewer A–H leaf gates 실행 중이었다. 이 CI는 문서 P107 commit만 포함하며 아래 local code WIP를 검증하지 않는다.
+
+### 현재 경계와 다음 한 단계
+
+현재 local source/test 변경은 미커밋이다. C15 `PROJOB-df15a37c58ae7583924e58c0`의 최신 durable evidence는 P107 read-only receipt(`USER_ATTENTION_REQUIRED` v26, submit/capture `0/0`, binding 없음)이며 P108에서 DB/UI는 다시 읽거나 변경하지 않았다. 새 연구/job/pass, source query/fetch, 다른 archetype, 점수/Stage 변경은 없다. 다음 한 단계는 이 source/test/P108 문서를 Korean commit으로 PR #7 branch에 push하고 새 exact-head Pro PR, Pro push, V6 CI를 끝까지 통과시키는 것이다. green 이후에만 C15 state를 read-only 재확인한 다음, 로그인된 기존 `extension` 탭을 다시 열거·claim해 그 same session에서 재개한다. PR #7은 draft/open 유지, main 미병합이다. 전체 goal은 미완료다.
+
+P108 상태 receipt: [p108_c15_attachment_replacement_and_validation_receipt.json](p108_c15_attachment_replacement_and_validation_receipt.json).
+
+## 과거 인계 — P107, 2026-09-25 07:16 KST (P108으로 superseded)
 
 ### 사용자가 재확인한 필수 실행 방식
 

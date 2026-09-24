@@ -7619,3 +7619,29 @@ adapter의 safe replacement 흐름을 구현하고, exact-name 기존 tile은 ha
 전체 master goal은 미완료다. 기록상 P9 실제 Pro full-thesis canary는 3개 요구 중 C06 1개만 확인됐고 C17/C28은 남아 있다. 이번 P107은 문서·현재 상태 인계와 local code WIP를 정리했을 뿐, 해당 hard gate를 완료한 것으로 표시하지 않는다.
 
 P107 상태 receipt: [p107_c15_existing_login_session_checkpoint_receipt.json](p107_c15_existing_login_session_checkpoint_receipt.json).
+
+## P108 — exact composer tile 복구 흐름 구현 및 검증 경계 기록 (2026-09-25 07:42 KST)
+
+### 코드/테스트 상태
+
+- 기존 visible filename button을 download action으로 클릭하고 download event를 기다리던 검증을 제거했다. composer에 exact packet 이름의 tile만 보이고 브라우저 `input.files`가 비어 있으면 성공 처리하지 않고 `VISIBLE_PACKET_HASH_UNVERIFIED_REPLACEMENT_REQUIRED`로 분류한다.
+- 복구 함수는 기존 로그인 BrowserUse adapter/tab 안에서 exact accessible group이 current composer form에 있는지 확인하고, 해당 filename이 명시된 고유한 영어/한국어 remove action 하나만 찾는다. 제거 후 빈 composer/no user turn/no running turn/native chooser closed 상태를 다시 검사하고, 같은 tab의 BrowserUse file chooser로 packet을 다시 선택한다. `BROWSERUSE_FILECHOOSER_EXACT_LOCAL_BYTES_SHA256`, canonical packet hash, exact visible filename/receipt가 모두 맞을 때만 진행한다. ambiguous/multiple/unrelated tile, wrong hash, unknown filechooser state는 모두 fail-closed다.
+- `PreparedBrowserJob`에 actual packet-upload 여부와 exact file/hash verification receipt를 추가했다. Fresh V3 orchestrator는 replacement proof를 immutable runtime receipt 및 job event/prepared state로 전달한다. canary `upload_count`는 예정 횟수가 아니라 실제 BrowserUse file selection 여부를 센다.
+- adapter + BrowserUse bridge + fresh orchestration 관련 테스트 묶음은 이 수정 중 **178/178 PASS**한 기록이 있고, 최종 raw-hash/receipt 조건 tighten 뒤 현재 focused adapter/orchestration 회귀 **9/9 PASS**다. 변경 파일 `py_compile` 및 `git diff --check` PASS.
+- 현재 source 기준 production static audit **PASS**, `critical_count=0`, production hash `731b15cb0631ee40a836fb12f1c507e8aaf91354ef44930d585e04886e8c688c`.
+
+### 전체 suite 및 원격 CI
+
+- 전체 local unittest 실행은 약 3분 30초 뒤 process exit `137`로 끝나 완료되지 않았다. 그 시각 kernel log에 OOM killer가 Python process 하나를 종료한 증거가 있다. 이는 pass도 test failure도 아니므로 full-suite status는 **미완료**다. 메모리 압박을 키우는 즉시 반복 실행은 하지 않는다.
+- P107 문서 commit `8f3845454519127cbc840449e80115a5b693801e`의 Pro push [36067050644](https://github.com/Daikisong/stock_agent/actions/runs/36067050644)와 V6 [36067055253](https://github.com/Daikisong/stock_agent/actions/runs/36067055253)는 `SUCCESS`. 같은 head의 Pro PR [36067055134](https://github.com/Daikisong/stock_agent/actions/runs/36067055134)는 07:42 KST 확인 때 independent Reviewer A–H leaf gates 단계에서 실행 중이었다. 이 성공/진행 결과는 P108 local source/test 변경이 아닌 문서-only head를 가리킨다.
+- PR #7은 `OPEN/DRAFT`, current remote head `8f3845454519127cbc840449e80115a5b693801e`; main 미병합. P108 source/test/docs는 아직 local uncommitted이며 이 exact head CI의 green으로 오인하지 않는다.
+
+### 기존 세션·durable 상태 및 다음 한 단계
+
+사용자가 다시 지시한 기존 로그인 BrowserUse `extension` 세션 원칙은 [P108 handoff](browseruse_existing_session_handoff.md#최신-인계--p108-2026-09-25-0742-kst)에 상단 인계로 기록했다. P108에서는 BrowserUse UI나 DB를 다시 접근하지 않았다. C15 `PROJOB-df15a37c58ae7583924e58c0`의 최신 durable read-only 상태는 P107 receipt 기준 `USER_ATTENTION_REQUIRED` v26, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, approval/browser/conversation binding 없음, `safe_unprepared_resume=false`, submit/capture `0/0`, successor 없음이다. 새 job/pass, query/fetch, 다른 archetype, score/Stage 변경은 0이다.
+
+다음 한 단계는 local source/test/P108 문서를 Korean commit으로 PR #7 branch에 push하고, **그 새 exact head**의 Pro PR, Pro push, V6 전체 workflow가 종료되어 SUCCESS가 되는지 확인하는 것이다. 그 뒤에만 durable state를 read-only로 재조회하고 사용자의 현재 로그인 BrowserUse `extension` 탭을 다시 열거·claim해 같은 session에서 same-job C15 복구를 시도한다. 새 창/탭/프로필/relogin으로 우회하지 않는다.
+
+전체 master goal은 미완료다. 기록상 P9 live Pro full-thesis canary는 3개 요구 중 C06 1개만 확인됐으며 C17/C28이 남아 있다. P108에서도 새 research pass, 다른 archetype, 점수/Stage 변경, PR merge는 하지 않았다.
+
+P108 상태 receipt: [p108_c15_attachment_replacement_and_validation_receipt.json](p108_c15_attachment_replacement_and_validation_receipt.json).

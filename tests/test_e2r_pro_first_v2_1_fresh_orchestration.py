@@ -301,6 +301,8 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         error_message: str,
         *,
         error_class: str = "BrowserUseBridgeError",
+        safe_unprepared_resume: bool = False,
+        preparation_failure_stage: str = "DRAFT_PREPARATION_OR_UNKNOWN",
     ):
         current = self.store.get_job(self.fresh_job.job_id)
         preparing = self.store.transition(
@@ -323,8 +325,8 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 "automatic_login_allowed": False,
                 "automatic_resubmit_allowed": False,
                 "new_chat_route_required": True,
-                "safe_unprepared_resume": False,
-                "preparation_failure_stage": "DRAFT_PREPARATION_OR_UNKNOWN",
+                "safe_unprepared_resume": safe_unprepared_resume,
+                "preparation_failure_stage": preparation_failure_stage,
                 "submit_count": 0,
             },
             updates={
@@ -492,6 +494,29 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertIsNone(resumed.browser_session_id)
         self.assertIsNone(resumed.conversation_id)
         self.assertIsNone(resumed.approval_consumed_at)
+
+    def test_exact_packet_replacement_failure_is_retryable_only_as_unprepared_attention(self) -> None:
+        runner, spec = self._make_draft_preparation_attention_resume(
+            "BrowserUIIncompatible: exact packet replacement needs same-tab recovery",
+            error_class="BrowserUIIncompatible",
+            safe_unprepared_resume=True,
+            preparation_failure_stage="EXACT_PACKET_ATTACHMENT_REPLACEMENT",
+        )
+
+        boundary, resumed = runner._load_unprepared_attention_job(
+            FreshSessionBoundaryService(self.store),
+            spec=spec,
+            manifest=self.manifest,
+            job_id=self.fresh_job.job_id,
+        )
+
+        self.assertEqual(boundary.fresh_job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(resumed.submit_count, 0)
+        self.assertEqual(resumed.capture_count, 0)
+        self.assertIsNone(resumed.browser_session_id)
+        self.assertIsNone(resumed.conversation_id)
 
     async def test_browseruse_worker_open_error_is_recorded_as_safe_before_page_preparation(self) -> None:
         base = load_pro_first_local_config(
@@ -1028,6 +1053,136 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         )
         self.assertTrue(event.payload.get("safe_unprepared_resume"))
         self.assertFalse(event.payload.get("automatic_resubmit_allowed"))
+        await runtime.close()
+
+    async def test_unverified_visible_packet_is_replaced_and_receipted_before_prepare(self) -> None:
+        self._make_draft_preparation_attention_resume(
+            "BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab"
+        )
+        base = load_pro_first_local_config(
+            Path(__file__).parents[1]
+            / "configs/e2r_pro_first_local.example.yaml"
+        )
+        config = replace(
+            base,
+            runtime_root=self.boundary.fresh_runtime_root,
+            browser=replace(
+                base.browser,
+                mode=BrowserConnectionMode.BROWSER_USE_EXTENSION,
+            ),
+        )
+        visible_filename = "research_packet(20260924-172107).json"
+        local_file_sha256 = hashlib.sha256(
+            Path(self.built.packet_bundle.research_packet_json).read_bytes()
+        ).hexdigest()
+        proof = {
+            "status": "PASS",
+            "new_chat_route_verified": True,
+            "logged_in_editor_ready": True,
+            "pro_mode_ready": True,
+            "composer_empty": True,
+            "visible_user_turn_count": 0,
+            "stop_visible": False,
+            "native_file_chooser_open": False,
+            "native_file_chooser_count": 0,
+            "native_file_chooser_unknown_owner_count": 0,
+            "selected_file_state": "VISIBLE_PACKET_HASH_UNVERIFIED_REPLACEMENT_REQUIRED",
+            "visible_packet_filename": visible_filename,
+            "packet_hash": self.built.packet_bundle.packet_hash,
+            "submit_count": 0,
+        }
+        replacement = {
+            "schema_version": "e2r_pro_packet_attachment_replacement_v1",
+            "status": "PASS",
+            "removed_unverified_filename": visible_filename,
+            "uploaded_filename": "research_packet.json",
+            "file_sha256": local_file_sha256,
+            "packet_hash": self.built.packet_bundle.packet_hash,
+            "verification": "BROWSERUSE_FILECHOOSER_EXACT_LOCAL_BYTES_SHA256",
+            "selection_mode": "browseruse_filechooser_event",
+            "submit_count": 0,
+        }
+        order: list[str] = []
+
+        async def inspect(**_kwargs):
+            order.append("read_only_preflight")
+            return proof
+
+        async def replace_packet(**kwargs):
+            order.append("replace_exact_packet")
+            self.assertEqual(
+                kwargs["packet_hash"], self.built.packet_bundle.packet_hash
+            )
+            self.assertEqual(kwargs["visible_filename"], visible_filename)
+            return replacement
+
+        adapter = SimpleNamespace(
+            verify_unprepared_recovery_state=AsyncMock(side_effect=inspect),
+            replace_unverified_packet_attachment=AsyncMock(
+                side_effect=replace_packet
+            ),
+        )
+        page = SimpleNamespace(goto=AsyncMock())
+        session = SimpleNamespace(
+            adapter=adapter,
+            page=page,
+            browser_session_id="BROWSER-same-claimed-tab",
+            close=AsyncMock(),
+        )
+
+        async def prepare(*_args, **kwargs):
+            order.append("prepare_packet")
+            self.assertEqual(
+                kwargs["packet_attachment_replacement_receipt"], replacement
+            )
+            return object()
+
+        with (
+            patch(
+                "e2r.pro_first.fresh_session.orchestrator_v3.ProBrowserWorker.open",
+                new=AsyncMock(return_value=session),
+            ),
+            patch.object(
+                self.orchestrator,
+                "prepare_initial_with_adapter",
+                new=AsyncMock(side_effect=prepare),
+            ) as prepare_packet,
+        ):
+            runtime = await self.orchestrator.prepare_initial_in_logged_in_browser(
+                self.built,
+                config=config,
+                resume_unprepared_attention=True,
+            )
+
+        self.assertEqual(
+            order,
+            ["read_only_preflight", "replace_exact_packet", "prepare_packet"],
+        )
+        adapter.replace_unverified_packet_attachment.assert_awaited_once()
+        page.goto.assert_not_awaited()
+        prepare_packet.assert_awaited_once()
+        receipt_path = (
+            self.boundary.fresh_job_root
+            / "fresh_session/packet_attachment_replacement_receipt.json"
+        )
+        durable_receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        self.assertEqual(durable_receipt["job_id"], self.fresh_job.job_id)
+        self.assertEqual(durable_receipt["packet_hash"], self.built.packet_bundle.packet_hash)
+        self.assertEqual(durable_receipt["file_sha256"], local_file_sha256)
+        event = next(
+            row
+            for row in self.store.list_events(self.fresh_job.job_id)
+            if row.idempotency_key.startswith(
+                "fresh-v3-browser-recovery-preflight:"
+            )
+        )
+        self.assertEqual(
+            event.payload["selected_file_state"],
+            "EXACT_PACKET_HASH_MATCH_VISIBLE",
+        )
+        self.assertEqual(
+            event.payload["packet_attachment_replacement_receipt"], replacement
+        )
         await runtime.close()
 
     async def test_failed_ambiguous_attention_preflight_does_not_transition_or_prepare(self) -> None:

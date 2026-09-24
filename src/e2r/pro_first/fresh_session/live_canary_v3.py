@@ -358,7 +358,9 @@ class FreshV3InitialLiveCanaryRunner:
                 "FRESH_NEW_CHAT_PREPARED",
                 job_id=fresh_job.job_id,
                 submit_count=0,
-                upload_count=0 if resume_prepared_job_id else 1,
+                upload_count=int(
+                    runtime.prepared.prepared.packet_upload_performed
+                ),
                 prepared_draft_recovered=resume_prepared_job_id is not None,
                 unprepared_attention_resumed=(
                     resume_unprepared_attention_job_id is not None
@@ -534,6 +536,16 @@ class FreshV3InitialLiveCanaryRunner:
             == "BROWSER_SESSION_OPEN"
             and attention_event.payload.get("submit_count") == 0
         )
+        safe_packet_replacement_event = bool(
+            attention_event is not None
+            and attention_event.from_status == JobStatus.BROWSER_PREPARING.value
+            and attention_event.to_status == JobStatus.USER_ATTENTION_REQUIRED.value
+            and attention_event.actor == "v2.1-fresh-v3-browser-worker"
+            and attention_event.payload.get("safe_unprepared_resume") is True
+            and attention_event.payload.get("preparation_failure_stage")
+            == "EXACT_PACKET_ATTACHMENT_REPLACEMENT"
+            and attention_event.payload.get("submit_count") == 0
+        )
         legacy_preflight_error = bool(
             job.last_error_class == "TypeError"
             and job.last_error_message == "'NoneType' object is not subscriptable"
@@ -627,6 +639,7 @@ class FreshV3InitialLiveCanaryRunner:
             or not (
                 safe_preflight_event
                 or safe_session_open_event
+                or safe_packet_replacement_event
                 or legacy_preflight_error
                 or exact_legacy_bridge_handshake_error
                 or exact_windows_packet_path_preflight_error
