@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 09:55 KST (P74).
+최종 갱신: 2026-09-24 10:42 KST (P75).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
@@ -44,27 +44,34 @@ BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭�
 쉬운 예: 기존 ChatGPT 응답이나 Library에 JSON이 보이면 그 화면의 다운로드 동작을 같은 탭에서 수행하고,
 받은 파일을 준비된 E2R job에 연결한다. “새 세션에서 다시 생성”은 기본 복구 방법이 아니다.
 
-## 최신 상태 인수인계 (P74)
+## 최신 상태 인수인계 (P75)
 
-- 로그인 필요 작업은 사용자가 로그인해 둔 BrowserUse `extension` 세션의 기존 ChatGPT 탭 하나에서만 수행한다.
-  새 Chrome/CDP 세션, 새 창·프로필·탭, 재로그인으로 우회하지 않는다. 현재도 기존에 claim한 같은 tab 객체를 사용하며,
-  tab ID·계정 식별자·cookie/token은 기록하지 않는다.
-- P73 commit `c456397f38da814b0ced218ed15b0a7436c0a99d`의 push/PR/V6 Actions 세 개는 모두 SUCCESS
-  (full regression 7,920 / skipped 38 / failure·error 0). 그러나 P74는 추가 코드 변경이므로 이 결과는 P74 검증이 아니다.
-- 동일 탭의 마지막 읽기 전용 확인: `https://chatgpt.com/`, title `ChatGPT`, Chat 선택 / Work 미선택,
-  선택된 `ChatGPT 모델 선택` 값 `Pro`, composer 1개·빈 상태다. 새 입력, 첨부, 전송 또는 navigation은 없었다.
-- P73 CI green 뒤 전송 전 첨부 경로 검사에서 `browseruse_extension_bridge.mjs`의 `attachPacket()`만
-  `.first`를 property처럼 접근하는 잔여 결함을 찾았다. extension의 method형 `first()`에서는 locator 대신 함수가 반환되어
-  packet attach 전에 실패할 수 있다. P74는 공통 visible/enabled locator resolver로 이 경로를 고치고 method/property/fallback/no-match
-  regression을 추가했다. bridge + fresh orchestration 91/91 PASS, Node syntax / whitespace check PASS.
-- 현재 P74 diff는 local only, exact-head Actions pending이다. C15 R6
-  `PROJOB-df15a37c58ae7583924e58c0` / `010950` / C15 R6는 기존 packet hash 그대로이며
-  `USER_ATTENTION_REQUIRED`, version 6, approval/browser/conversation 미결박, submit/capture `0/0` 상태다.
-- 지금까지 prompt input/upload/submit/capture `0/0/0/0`, 신규 query/fetch `0/0`, score/Stage 변경 `0/0`이다.
-  다음 한 단계: P74 코드·회귀·진행기록을 한글 commit으로 기존 PR #7 branch에 push하고 exact-head Pro push/PR 및 V6 PR
-  Actions SUCCESS를 확인한 뒤, 같은 C15 job을 같은 BrowserUse 탭에서만 resume한다.
-- 세부 기록: [P74 progress](implementation_progress.md#p74--browseruse-native-packet-attachments-first-호출-보완-2026-09-24-0955-kst),
-  [P74 machine receipt](p74_browseruse_attachment_locator_receipt.json), [P73 progress](implementation_progress.md#p73--browseruse-locator-firstlast-api-차이-수정-및-same-tab-read-only-통합-확인-2026-09-24-0927-kst).
+- **로그인·Pro 작업은 사용자가 이미 로그인한 BrowserUse `extension`의 같은 기존 탭에서만 한다.** 새 창/탭/프로필,
+  CDP 대체 세션, 재로그인을 열지 않는다. 정확한 기존 사용자 탭을 claim한 객체를 계속 쓰고, tab ID·계정 식별자·cookie/token은 기록하지 않는다.
+- 2026-09-24 10:42 KST에 그 기존 탭을 다시 읽기 전용으로 확인했다: `https://chatgpt.com/`, title `ChatGPT`, editor 1개,
+  editor 빈 상태. 같은 탭을 Python worker에 연결한 `inspect_state()` smoke도 통과했다. adapter guard는 일반 Chat + 실제 Pro,
+  Work 비활성, legacy Deep Research 비활성을 확인하는 경로다. 새 navigation, prompt 입력, packet 첨부, submit, capture는 없었다.
+- P75에서 발견한 오류는 BrowserUse extension의 `evaluate()`가 callback 함수 객체를 요구하는데 bridge가 문자열로 함수를 호출했던 것이다.
+  기존 탭의 read-only login preflight는 selector 평가 3초 timeout으로 멈췄다. 동적 코드 생성 대신 검토된 static read-only callback allowlist를
+  추가했고, 모르는 callback은 fail-closed한다. bridge + fresh orchestration 91/91 PASS, `node --check`와 `git diff --check` PASS.
+- 중앙 DB를 read-only로 확인한 동일 C15 R6 job `PROJOB-df15a37c58ae7583924e58c0` / `010950`은 기존 packet hash를 보존하며
+  `USER_ATTENTION_REQUIRED` / version 8이다. approval/browser/conversation 미결박, submit/capture `0/0`; 마지막 event는
+  `READ_ONLY_BROWSER_PREFLIGHT`, `safe_unprepared_resume=true`다. 현재 오류는 callback selector timeout이며 login 실패나 사용자 인증 요청이 아니다.
+- 원격에서 확인한 이전 P74 head `8b86d2db6479c40d4bc0463354dc9a3de711087e`의 Pro push, Pro PR, V6 PR Actions는 모두 SUCCESS
+  (7,920 tests / 38 skipped / failure·error 0)였다. P75 diff는 이보다 뒤의 변경이므로 새 exact-head CI가 끝나기 전까지 canary를 재개하지 않는다.
+- 이번 smoke와 DB 재조회에서도 prompt input/upload/submit/capture `0/0/0/0`, 새 source query/fetch `0/0`, score/Stage 변경 `0/0`이다.
+  다음 한 단계는 P75 코드·회귀·문서·receipt를 한글 commit으로 기존 PR #7 branch에 push하고 exact-head Pro push/PR 및 V6 PR CI SUCCESS를 확인하는 것.
+  green 뒤에만 동일한 unsent C15 R6 job을 **같은 기존 BrowserUse 로그인 세션·같은 기존 탭**에서 재개한다.
+- 세부 기록: [P75 progress](implementation_progress.md#p75--browseruse-dom-evaluate-callback-계약-보정과-동일-로그인-탭-smoke-2026-09-24-1042-kst),
+  [P75 machine receipt](p75_browseruse_evaluate_callback_receipt.json), [P74 prior CI and attachment fix](p74_browseruse_attachment_locator_receipt.json).
+
+## 직전 상태 인수인계 (P74, P75가 최신 상태를 대체)
+
+- P74 변경은 attachment helper의 callable `first()`와 Playwright property형 `first`를 함께 지원하도록 고쳤다.
+- 그 P74 head `8b86d2db6479c40d4bc0463354dc9a3de711087e`는 Pro push run [35940763725](https://github.com/Daikisong/stock_agent/actions/runs/35940763725),
+  Pro PR run [35940765268](https://github.com/Daikisong/stock_agent/actions/runs/35940765268), V6 PR run
+  [35940765227](https://github.com/Daikisong/stock_agent/actions/runs/35940765227)이 모두 SUCCESS였다.
+- P74 당시 same-tab attachment locator read-only smoke는 PASS; click/upload는 하지 않았다. 상세는 [P74 progress](implementation_progress.md#p74--browseruse-native-packet-attachments-first-호출-보완-2026-09-24-0955-kst)와 receipt에 있다.
 
 ## 이전 상태 인수인계 (P73, superseded)
 

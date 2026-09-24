@@ -146,7 +146,7 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
         ).resolve()
         script = f"""
 import assert from "node:assert/strict";
-const {{ resolveBrowserUseLocatorMember, resolveFirstVisibleEnabledLocator }} = await import({json.dumps(bridge_path.as_uri())});
+const {{ resolveBrowserUseLocatorMember, resolveFirstVisibleEnabledLocator, readonlyCallback }} = await import({json.dumps(bridge_path.as_uri())});
 const child = {{ count: async () => 1 }};
 const browserUse = {{
   called: false,
@@ -170,6 +170,31 @@ assert.equal(firstCalls, 2);
 const playwrightPage = {{ locator() {{ return {{ first: attachButton }}; }} }};
 assert.strictEqual(await resolveFirstVisibleEnabledLocator(playwrightPage, ["#attach"]), attachButton);
 assert.strictEqual(await resolveFirstVisibleEnabledLocator(browserUsePage, ["#missing"]), null);
+const tagReader = readonlyCallback("element => element.tagName.toLowerCase()");
+assert.equal(tagReader({{ tagName: {{ toLowerCase: () => "div" }} }}), "div");
+const markerReader = readonlyCallback("(element, needle) => (element.innerText || '').toLowerCase().includes(needle)");
+assert.equal(markerReader({{ innerText: "Packet ready" }}, "packet"), true);
+assert.throws(() => readonlyCallback("element => element.click()"), /read-only/);
+assert.throws(() => readonlyCallback("element => element.id"), /no reviewed read-only callback/);
+const activeAdapterCallbacks = [
+  "element => element.value ?? ''",
+  "([userSelector, requiredMarkers]) => {{ const observedUserTurnCount = 0; return document.querySelectorAll(userSelector); }}",
+  "element => (element.innerText || '').trim().slice(-2000)",
+  "elements => elements.map(element => ({{url: element.href, aria_label: element.getAttribute('aria-label')}}))",
+  "element => {{ const turn = element.closest('[data-message-id], [data-turn-id]'); return turn ? turn.getAttribute('data-message-id') : null; }}",
+  "element => element.tagName.toLowerCase() === 'body' || element.matches('section[data-turn]')",
+  "element => `assistant-section-${{element.outerHTML.slice(0, 200)}}`",
+  "selector => ({{operational_status_texts: [], citation_registry: []}})",
+  "element => {{ const visit = node => node.nodeType === Node.TEXT_NODE ? node.nodeValue : ''; return Array.from(element.childNodes).map(visit).join(''); }}",
+  "async input => {{ const file = input.files && input.files[0]; return file ? {{name: file.name, text: await file.text()}} : null; }}",
+];
+for (const expression of activeAdapterCallbacks) {{
+  let callback;
+  try {{ callback = readonlyCallback(expression); }} catch (error) {{
+    throw new Error(String(expression) + " :: " + error.message);
+  }}
+  assert.equal(typeof callback, "function", expression);
+}}
 """
         result = subprocess.run(
             [str(node), "--input-type=module", "--eval", script],

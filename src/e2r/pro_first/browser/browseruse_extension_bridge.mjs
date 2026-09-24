@@ -34,36 +34,6 @@ async function tabTitle(tab) {
   return String(typeof tab.title === "function" ? await tab.title() : tab.title || "");
 }
 
-function javascriptLiteral(value) {
-  if (value === undefined) return "undefined";
-  if (value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
-    return JSON.stringify(value);
-  }
-  if (value instanceof RegExp) {
-    return `new RegExp(${JSON.stringify(value.source)},${JSON.stringify(value.flags)})`;
-  }
-  if (Array.isArray(value)) return `[${value.map(javascriptLiteral).join(",")}]`;
-  if (typeof value === "object") {
-    return `{${Object.entries(value).map(([key, item]) => `${JSON.stringify(key)}:${javascriptLiteral(item)}`).join(",")}}`;
-  }
-  throw new Error("DOM inspection argument is not a plain JSON value");
-}
-
-function readonlyInvocation(expression, { receiver = null, argument = undefined } = {}) {
-  const source = String(expression || "").trim();
-  assertReadOnlyDomExpression(source);
-  const match = source.match(/^(?:async\s+)?(?:\(\s*[^)]*\)|([A-Za-z_$][\w$]*))\s*=>/);
-  if (!match) {
-    throw new Error("DOM bridge accepts only read-only arrow callbacks");
-  }
-  const parameters = source.slice(0, match[0].lastIndexOf("=>")).replace(/^async\s+/, "").trim();
-  const hasExplicitParameters = parameters !== "()";
-  const args = [];
-  if (receiver !== null) args.push(receiver);
-  if (argument !== undefined || hasExplicitParameters && receiver === null) args.push(javascriptLiteral(argument));
-  return `(${source})(${args.join(",")})`;
-}
-
 function jsonRegex(value) {
   if (Array.isArray(value)) return value.map(jsonRegex);
   if (!value || typeof value !== "object") return value;
@@ -80,6 +50,190 @@ function assertReadOnlyDomExpression(expression) {
   if (forbidden.test(source)) {
     throw new Error("DOM bridge permits read-only public-page inspection only");
   }
+}
+
+export function readonlyCallback(expression) {
+  const source = String(expression || "").trim();
+  assertReadOnlyDomExpression(source);
+  const callbacks = [
+    {
+      matches: value => /^element\s*=>\s*element\.tagName\.toLowerCase\(\)$/.test(value),
+      callback: element => element.tagName.toLowerCase(),
+    },
+    {
+      matches: value => /element\.value\s*\?\?/.test(value),
+      callback: element => element.value ?? "",
+    },
+    {
+      matches: value => value.includes("includes(needle)") && value.includes("element.innerText"),
+      callback: (element, needle) => (element.innerText || "").toLowerCase().includes(needle),
+    },
+    {
+      matches: value => value.includes("requiredMarkers") && value.includes("observedUserTurnCount"),
+      callback: ([userSelector, requiredMarkers]) => {
+        const matches = Array.from(document.querySelectorAll(userSelector));
+        const turns = [];
+        const seen = new Set();
+        for (const match of matches) {
+          const turn = match.closest('section[data-turn="user"], article[data-turn="user"]') || match;
+          if (seen.has(turn)) continue;
+          seen.add(turn);
+          turns.push(turn);
+        }
+        let bestMissing = [...requiredMarkers];
+        for (const turn of turns) {
+          const text = turn.textContent || "";
+          const missing = requiredMarkers.filter(marker => !text.includes(marker));
+          if (missing.length < bestMissing.length) bestMissing = missing;
+          if (missing.length) continue;
+          const identified = turn.closest("[data-message-id], [data-turn-id]")
+            || turn.querySelector("[data-message-id], [data-turn-id]");
+          const turnId = identified && (
+            identified.getAttribute("data-message-id") || identified.getAttribute("data-turn-id")
+          );
+          return {
+            observedUserTurnCount: turns.length,
+            missingMarkers: [],
+            markerMatched: true,
+            userTurnId: turnId || null,
+          };
+        }
+        return {
+          observedUserTurnCount: turns.length,
+          missingMarkers: bestMissing,
+          markerMatched: false,
+          userTurnId: null,
+        };
+      },
+    },
+    {
+      matches: value => value.includes("slice(-2000)") && value.includes("element.innerText"),
+      callback: element => (element.innerText || "").trim().slice(-2000),
+    },
+    {
+      matches: value => value.includes("aria_label") && value.includes("elements.map(element => ({"),
+      callback: elements => elements.map(element => ({
+        url: element.href || element.getAttribute("href") || "",
+        text: (element.innerText || "").trim(),
+        aria_label: element.getAttribute("aria-label") || "",
+        title: element.getAttribute("title") || "",
+      })).filter(row => /^https?:\/\//i.test(row.url)),
+    },
+    {
+      matches: value => value.includes("element.closest('[data-message-id], [data-turn-id]')"),
+      callback: element => {
+        const turn = element.closest("[data-message-id], [data-turn-id]");
+        return turn ? (turn.getAttribute("data-message-id") || turn.getAttribute("data-turn-id")) : null;
+      },
+    },
+    {
+      matches: value => value.includes("element.matches(") && value.includes("section[data-turn]"),
+      callback: element => {
+        const tag = element.tagName.toLowerCase();
+        return tag === "html" || tag === "body" || element.matches(
+          "article, section[data-turn], [data-message-author-role], [data-message-id], [data-turn-id]",
+        );
+      },
+    },
+    {
+      matches: value => value.includes("assistant-section-") && value.includes("outerHTML.slice(0, 200)"),
+      callback: element => {
+        const direct = element.getAttribute("data-message-id") || element.getAttribute("data-turn-id");
+        if (direct) return direct;
+        if (element.matches('section[data-turn="assistant"]')) {
+          return `assistant-section-${Array.from(
+            document.querySelectorAll('section[data-turn="assistant"]'),
+          ).indexOf(element)}`;
+        }
+        return element.getAttribute("data-testid") || element.outerHTML.slice(0, 200);
+      },
+    },
+    {
+      matches: value => value.includes("operational_status_texts") && value.includes("citation_registry"),
+      callback: selector => {
+        const matches = Array.from(document.querySelectorAll(selector));
+        const turns = [];
+        const seen = new Set();
+        for (const match of matches) {
+          const turn = match.closest('section[data-turn="assistant"]') || match;
+          if (seen.has(turn)) continue;
+          seen.add(turn);
+          const style = window.getComputedStyle(turn);
+          const visible = turn.isConnected
+            && style.display !== "none"
+            && style.visibility !== "hidden"
+            && (turn.getClientRects().length > 0 || turn.offsetWidth > 0 || turn.offsetHeight > 0);
+          if (visible) turns.push(turn);
+        }
+        const element = turns.at(-1);
+        if (!element) return null;
+        const identified = element.closest("[data-message-id], [data-turn-id]")
+          || element.querySelector("[data-message-id], [data-turn-id]");
+        const anchors = Array.from(element.querySelectorAll("a[href]")).map(node => ({
+          url: node.href || node.getAttribute("href") || "",
+          text: (node.innerText || "").trim(),
+          aria_label: node.getAttribute("aria-label") || "",
+          title: node.getAttribute("title") || "",
+        })).filter(row => /^https?:\/\//i.test(row.url));
+        const buttonTexts = Array.from(element.querySelectorAll("button"))
+          .map(node => (node.innerText || "").trim());
+        const operationalStatusTexts = Array.from(
+          element.querySelectorAll("[data-streaming-response-status] .select-none"),
+        ).map(node => (node.innerText || "").trim()).filter(Boolean);
+        const labelledCitation = Boolean(element.querySelector(
+          '[data-testid*="citation"], [data-testid*="source"]',
+        )) || buttonTexts.some(value => {
+          const text = value.toLowerCase();
+          return text === "sources" || text === "출처";
+        });
+        return {
+          raw_text: (element.innerText || "").trim(),
+          turn_id: identified
+            ? (identified.getAttribute("data-message-id") || identified.getAttribute("data-turn-id"))
+            : null,
+          button_texts: buttonTexts,
+          operational_status_texts: operationalStatusTexts,
+          citation_registry: anchors,
+          has_citations: anchors.length > 0 || labelledCitation,
+        };
+      },
+    },
+    {
+      matches: value => value.includes("Node.TEXT_NODE") && value.includes("element.childNodes"),
+      callback: element => {
+        const visit = node => {
+          if (node.nodeType === Node.TEXT_NODE) return node.nodeValue || "";
+          if (node.nodeType !== Node.ELEMENT_NODE) return "";
+          if (node.tagName === "BR") return "\n";
+          return Array.from(node.childNodes).map(visit).join("");
+        };
+        const rows = Array.from(element.childNodes);
+        if (
+          rows.length
+          && rows.some(child => child.nodeType === Node.ELEMENT_NODE && (child.tagName === "P" || child.tagName === "DIV"))
+          && rows.every(child => child.nodeType === Node.TEXT_NODE || (
+            child.nodeType === Node.ELEMENT_NODE && (child.tagName === "P" || child.tagName === "DIV")
+          ))
+        ) {
+          return rows.map(row => {
+            const text = row.textContent || "";
+            return text.endsWith("\n") ? text.slice(0, -1) : text;
+          }).join("\n");
+        }
+        return Array.from(element.childNodes).map(visit).join("");
+      },
+    },
+    {
+      matches: value => value.includes("input.files") && value.includes("await file.text()"),
+      callback: async input => {
+        const file = input.files && input.files[0];
+        return file ? { name: file.name, text: await file.text() } : null;
+      },
+    },
+  ];
+  const match = callbacks.find(candidate => candidate.matches(source));
+  if (!match) throw new Error("DOM bridge has no reviewed read-only callback for this expression");
+  return match.callback;
 }
 
 function simplify(value) {
@@ -439,7 +593,7 @@ export async function startBrowserUseExtensionBridge({
     if (method === "inner_text") return await locator.innerText(options);
     if (method === "text_content") return await locator.textContent(options);
     if (method === "get_attribute") return await locator.getAttribute(String(args.name), options);
-    if (method === "input_value") return await locator.evaluate("element.value ?? ''", null);
+    if (method === "input_value") return await locator.evaluate(element => element.value ?? "", null);
     if (method === "fill") return await locator.fill(String(args.value), options);
     if (method === "click") return await locator.click(options);
     if (method === "press") return await locator.press(String(args.key), options);
@@ -449,7 +603,8 @@ export async function startBrowserUseExtensionBridge({
       assertReadOnlyDomExpression(expression);
       const receiver = method === "evaluate" ? "element" : "elements";
       return simplify(await locator[method === "evaluate" ? "evaluate" : "evaluateAll"](
-        readonlyInvocation(expression, { receiver, argument: jsonRegex(args.argument) }),
+        readonlyCallback(expression),
+        jsonRegex(args.argument),
       ));
     }
     throw new Error(`unsupported BrowserUse locator method: ${method}`);
@@ -498,7 +653,8 @@ export async function startBrowserUseExtensionBridge({
       const expression = String(args.expression || "");
       assertReadOnlyDomExpression(expression);
       return { value: simplify(await tab.playwright.evaluate(
-        readonlyInvocation(expression, { argument: jsonRegex(args.argument) }),
+        readonlyCallback(expression),
+        jsonRegex(args.argument),
       )) };
     }
     if (operation === "page.attach_packet") {
