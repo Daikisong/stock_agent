@@ -113,3 +113,11 @@ Durable ledger는 **읽기 전용**으로 확인했다. `PROJOB-df15a37c58ae7583
 - 로컬 브랜치를 `origin/feature/e2r-pro-first-browser-platform-20260822`와 fetch로 동기화했으며, 이번 문서 보강 전 worktree는 clean이었다.
 
 다음 단계는 동일 탭에서 위 복구 preflight와 exact packet attach를 실행하고, 전송/수신 여부와 최종 durable 상태를 다시 기록하는 것이다. 새 창·새 프로필을 열어서 해결하려 하지 않는다.
+
+## 2026-09-24 23:53 KST: 복구 gate의 오류문구 결함
+
+재개 시도는 브라우저 준비 단계에 도달하기 전에 `_load_unprepared_attention_job()`에서 멈췄다. 원인은 job 데이터나 로그인 탭이 아니라, 기존 chooser 오류의 `error_id`에 들어 있던 `; no global keystrokes were sent` 구분자를 native chooser 실패 regex가 허용하지 않은 것이다. 실제 오류는 `dialog_not_found`였고 “Chrome Open dialog가 나타나지 않았으며 전역 키 입력을 보내지 않았다”고 명시했지만, 코드의 형식검사가 이를 safe exact failure로 인식하지 못했다.
+
+수정은 좁게 제한했다. `_STRUCTURED_NATIVE_FILE_CHOOSER_FAILURE`가 error id 안의 정확한 문구 `; no global keystrokes were sent`만 추가로 허용하도록 하고, 이 실제 오류문구로 동일 unsent job이 read-only 복구 gate에 들어가는 회귀시험을 추가했다. 유사하지만 exact match가 아닌 오류는 계속 차단한다. 관련 native chooser/resume 회귀시험 `5/5 PASS`, `git diff --check` PASS.
+
+차단 당시에도 기존 job은 `USER_ATTENTION_REQUIRED / state_version=22 / submit_count=0 / capture_count=0`이었다. 오류 gate가 browser worker보다 앞에서 실패했으므로 이 재시도에서는 BrowserUse page RPC, file upload, composer 입력, 전송이 하나도 일어나지 않았다. 시도용 bridge를 종료했고 기존 로그인 탭 `1437795006`은 보존했다. 이 코드 수정의 새 head CI가 확인되기 전에는 live resume를 다시 시작하지 않는다.

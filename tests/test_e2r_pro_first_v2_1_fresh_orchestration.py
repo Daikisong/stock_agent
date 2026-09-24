@@ -714,6 +714,37 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             ).exists()
         )
 
+    def test_exact_dialog_not_found_error_with_embedded_safe_detail_can_resume_unsent_job(self) -> None:
+        runner, spec = self._make_draft_preparation_attention_resume(
+            "BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet "
+            "(phase=dialog_not_found; exit=1; "
+            "error_id=No Chrome-owned Open dialog appeared; no global keystrokes were sent; "
+            "category=OperationStopped; "
+            "message=No Chrome-owned Open dialog appeared; no global keystrokes were sent)"
+        )
+
+        boundary, resumed = runner._load_unprepared_attention_job(
+            FreshSessionBoundaryService(self.store),
+            spec=spec,
+            manifest=self.manifest,
+            job_id=self.fresh_job.job_id,
+        )
+
+        self.assertEqual(boundary.fresh_job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(resumed.submit_count, 0)
+        self.assertEqual(resumed.capture_count, 0)
+        self.assertIsNone(resumed.browser_session_id)
+        self.assertIsNone(resumed.conversation_id)
+        self.assertIsNone(resumed.approval_nonce_hash)
+        self.assertFalse(
+            (
+                self.boundary.fresh_job_root
+                / "fresh_session/fresh_v3_prepare_receipt.json"
+            ).exists()
+        )
+
     def test_exact_legacy_clixml_file_chooser_failure_enters_read_only_recovery_gate(self) -> None:
         runner, spec = self._make_draft_preparation_attention_resume(
             "BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet "

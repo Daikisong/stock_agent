@@ -106,7 +106,8 @@ _NATIVE_FILE_CHOOSER_FAILURE_PHASES = frozenset(
 _STRUCTURED_NATIVE_FILE_CHOOSER_FAILURE = re.compile(
     r"\ABRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet "
     r"\(phase=(?P<phase>[A-Za-z][A-Za-z0-9_]*); exit=(?:-?[0-9]+|unknown)"
-    r"(?:; error_id=[^;\r\n]*)?(?:; category=[^;\r\n]*)?"
+    r"(?:; error_id=[^;\r\n]*(?:; no global keystrokes were sent)?)?"
+    r"(?:; category=[^;\r\n]*)?"
     r"; message=[^\r\n]{0,240}\)\Z"
 )
 
