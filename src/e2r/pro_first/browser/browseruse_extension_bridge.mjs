@@ -92,6 +92,18 @@ function simplify(value) {
   return String(value);
 }
 
+export async function resolveBrowserUseLocatorMember(base, memberName) {
+  if (!base || !["first", "last"].includes(memberName)) {
+    throw new Error("unsupported BrowserUse locator member");
+  }
+  const member = base[memberName];
+  const locator = await (typeof member === "function" ? member.call(base) : member);
+  if (!locator || typeof locator.count !== "function") {
+    throw new Error(`BrowserUse locator ${memberName} did not return a locator`);
+  }
+  return locator;
+}
+
 function wslUncPath(value, distroName) {
   const normalized = String(value || "");
   if (/^[a-zA-Z]:\\/.test(normalized) || normalized.startsWith("\\\\")) return normalized;
@@ -379,7 +391,7 @@ export async function startBrowserUseExtensionBridge({
     return value;
   };
 
-  const makeLocator = args => {
+  const makeLocator = async args => {
     const { parent_handle: parentHandle, method, selector, value, options = {}, index } = args;
     const base = parentHandle ? findHandle(locators, parentHandle, "locator") : null;
     let locator;
@@ -387,8 +399,8 @@ export async function startBrowserUseExtensionBridge({
       if (base) throw new Error("root locator cannot have a parent");
       if (typeof selector !== "string" || selector.length > 4_000) throw new Error("invalid visible locator selector");
       locator = tab.playwright.locator(selector);
-    } else if (method === "first") locator = base.first;
-    else if (method === "last") locator = base.last;
+    } else if (method === "first") locator = await resolveBrowserUseLocatorMember(base, "first");
+    else if (method === "last") locator = await resolveBrowserUseLocatorMember(base, "last");
     else if (method === "nth") locator = base.nth(Number(index));
     else if (method === "locator") locator = base.locator(String(selector), jsonRegex(options));
     else if (method === "get_by_role") locator = base.getByRole(String(value), jsonRegex(options));
@@ -455,7 +467,7 @@ export async function startBrowserUseExtensionBridge({
   };
 
   const dispatch = async (operation, args) => {
-    if (operation === "locator.create") return { value: { handle: makeLocator(args) } };
+    if (operation === "locator.create") return { value: { handle: await makeLocator(args) } };
     if (operation.startsWith("locator.")) {
       return { value: await callLocator({ ...args, method: operation.slice("locator.".length) }) };
     }

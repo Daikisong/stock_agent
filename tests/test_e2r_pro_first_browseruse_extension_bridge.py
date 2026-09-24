@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import shutil
+import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -112,7 +114,7 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
             / "src/e2r/pro_first/browser/browseruse_extension_bridge.mjs"
         ).read_text(encoding="utf-8")
         self.assertIn(
-            'if (operation === "locator.create") return { value: { handle: makeLocator(args) } };',
+            'if (operation === "locator.create") return { value: { handle: await makeLocator(args) } };',
             bridge_source,
         )
 
@@ -129,6 +131,44 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
             "locator.create response did not include an opaque handle",
         ):
             await BrowserUsePage(client).locator("textarea").count()
+
+    def test_first_and_last_support_browseruse_methods_and_playwright_properties(
+        self,
+    ) -> None:
+        node = shutil.which("node")
+        self.assertIsNotNone(
+            node,
+            "Node.js is required for the BrowserUse bridge contract test",
+        )
+        bridge_path = (
+            Path(__file__).parents[1]
+            / "src/e2r/pro_first/browser/browseruse_extension_bridge.mjs"
+        ).resolve()
+        script = f"""
+import assert from "node:assert/strict";
+const {{ resolveBrowserUseLocatorMember }} = await import({json.dumps(bridge_path.as_uri())});
+const child = {{ count: async () => 1 }};
+const browserUse = {{
+  called: false,
+  first() {{ this.called = true; return child; }},
+  last: async function() {{ return child; }}
+}};
+assert.strictEqual(await resolveBrowserUseLocatorMember(browserUse, "first"), child);
+assert.equal(browserUse.called, true);
+assert.strictEqual(await resolveBrowserUseLocatorMember(browserUse, "last"), child);
+const playwrightStyle = {{ first: child, last: child }};
+assert.strictEqual(await resolveBrowserUseLocatorMember(playwrightStyle, "first"), child);
+assert.strictEqual(await resolveBrowserUseLocatorMember(playwrightStyle, "last"), child);
+await assert.rejects(resolveBrowserUseLocatorMember({{}}, "first"), /did not return a locator/);
+"""
+        result = subprocess.run(
+            [str(node), "--input-type=module", "--eval", script],
+            cwd=Path(__file__).parents[1],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
 
 
 class BrowserUseWorkerIntegrationTest(unittest.IsolatedAsyncioTestCase):

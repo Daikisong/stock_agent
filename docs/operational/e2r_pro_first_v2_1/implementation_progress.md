@@ -6364,3 +6364,66 @@ P71 machine receipt: [p71_wsl_boundary_resume_receipt.json](p71_wsl_boundary_res
 새 창/재로그인/대체 탭을 열지 않고, 불확실한 submit 결과가 생기면 자동 재전송하지 않는다.
 상세 상태: [P72 receipt](p72_browseruse_rpc_preflight_recovery_receipt.json),
 [BrowserUse 인수인계 P72](browseruse_existing_session_handoff.md).
+
+## P73 — BrowserUse locator first/last API 차이 수정 및 same-tab read-only 통합 확인 (2026-09-24 09:27 KST)
+
+### 기존 로그인 세션 유지 원칙과 실제 시도 경계
+
+- 사용자의 지시에 따라 Chrome BrowserUse `extension`이 연결한 **기존 로그인 세션의 기존 ChatGPT 탭 하나**만 사용했다.
+  새 창·브라우저·프로필·탭 생성, 재로그인은 없었다. 실패 후에도 동일 탭을 읽기 전용으로 다시 확인했다.
+- 첫 재개 명령은 Windows Node REPL에 Linux 절대 경로 `file:///home/...`를 그대로 import URL로 전달해
+  `File URL path must be absolute`로 거부됐다. bridge 생성·탭 제어·Python runner·DB 변경 전 발생한 실행 경로 오류였다.
+  WSL UNC 경로를 `pathToFileURL()`로 변환하고 Python은 `wsl.exe`로 실행하도록 고쳐 두 번째 시도에 사용했다.
+- 두 번째 시도는 P72의 exact same-job `resume_unprepared_attention_job_id` gate를 통과하고 기존 C15 R6를 재사용했다.
+  그러나 adapter의 읽기 전용 `ensure_logged_in()`에서 다시 멈췄다. prompt 입력·packet upload·submit·capture 전 실패이며
+  자동 재전송은 실행되지 않았다.
+
+### 정확한 root cause와 재현
+
+실패 메시지는 `BrowserUseBridgeError: BRIDGE_OPERATION_FAILED: locator.count is not a function`이다. P72에서 고친 것은
+RPC `locator.create` 응답 envelope였지만, 이어서 실제 extension API의 `first`/`last` 모양도 Playwright와 다르다는 점이
+드러났다.
+
+```text
+BrowserUse extension runtime: locator.first / locator.last = function
+adapter bridge의 이전 구현: base.first / base.last 값을 locator로 취급
+결과: handle map에 locator 대신 function 저장 → 뒤이은 .count() 호출에서 실패
+```
+
+기존 탭에서 읽기 전용 introspection으로 `first()`/`last()`가 locator를 반환하고 `count()`가 실행되는 것을 확인했다.
+현재 composer의 `div.ProseMirror[contenteditable="true"]`, `[contenteditable="true"]`, `[role="textbox"]`는
+각각 count 1 / visible true다. `textarea` selector가 0개로 나오는 것도 확인해, 실제 UI에 맞는 기존 selector registry의
+contenteditable 경로가 사용됨을 검증했다. ChatGPT React hydration #418 로그는 계속 관찰되지만 이번 직접 traceback의 원인은
+bridge가 function-valued locator API를 property로 처리한 계약 mismatch다.
+
+### 수리와 증거
+
+- `resolveBrowserUseLocatorMember()`를 추가해 BrowserUse의 callable `first()`/`last()`와 Playwright-style property locator
+  두 형식을 모두 처리하고 결과가 locator인지 검증한다. `makeLocator()`는 async가 되어 RPC의 `value.handle` envelope 안에
+  생성 완료한 opaque handle만 돌려준다.
+- Node regression은 BrowserUse function 형식(비동기 `last()` 포함), Playwright property 형식, 잘못된 결과 fail-closed를
+  확인한다. BrowserUse bridge와 fresh orchestration 합계 **91/91 PASS**; `node --check` 및 `git diff --check`도 PASS다.
+- 패치 후 실제 BrowserUse bridge를 통해 같은 claimed tab의 visible composer locator를 읽은 read-only smoke가 PASS했다.
+  `[contenteditable]` 계열 locator count/visible이 정확히 `1/true`였고 입력, 클릭, 업로드, 전송, navigation은 없었다.
+  smoke는 테스트 전용 bridge job identity를 써 실제 research job이나 ledger를 만들지 않았다.
+- 전체 repository unittest, production static audit, exact-head GitHub Actions는 아직 새 패치를 검증하지 않았다.
+  앞선 `b8c4c77e...` head의 세 Actions SUCCESS(7,919 tests / 38 skipped / failure·error 0)는 이전 코드까지만 증명한다.
+
+### 현재 durable 상태와 다음 한 단계
+
+- 중앙 SQLite를 `mode=ro` + `query_only=ON`으로 조회했다. 동일
+  `PROJOB-df15a37c58ae7583924e58c0` / `010950` / C15 R6는 `USER_ATTENTION_REQUIRED`, version 6이며 packet hash는
+  `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df` 그대로다. 최근 실패 이벤트는
+  `READ_ONLY_BROWSER_PREFLIGHT` / `safe_unprepared_resume=true`이고 `submit_count=0`이다. approval 필드 전부 null,
+  `browser_session_id`/`conversation_id` null, `capture_count=0`; 새 successor job은 만들지 않았다.
+- 마지막 same-tab 확인은 ChatGPT origin, Chat 선택, Work 미선택, 빈 composer, packet 첨부 없음이다. 현재 compact composer의
+  모델 선택기는 계정 구독 표시가 아닌 `ChatGPT 모델 선택` control의 공개 선택값 `Pro`를 보이며, 활성 Deep Research control은
+  없다. adapter도 이 정확한 공개 `Pro` label을 요구한다. runner가 같은 탭을 새 Chat route로 확인하기 전 snapshot에는 `6 Pro`가
+  보였지만, 새 route 이후의 현재 UI label은 `Pro`이므로 두 관찰을 구분해 기록한다.
+  지금까지 이 C15 R6에서 prompt 입력 0, upload 0, submit 0, capture 0, 새 source query/fetch 0, score/Stage 변경 0이다.
+- 다음 한 단계는 P73 code/test/docs를 한글 커밋으로 기존 PR #7 branch에 push하고 exact-head Pro-first/V6 Actions SUCCESS를
+  기다리는 것이다. green 확인 뒤 **같은 BrowserUse 세션·같은 기존 탭·같은 R6 job**만 recovery gate로 재개한다.
+  CI 전에는 packet 입력/첨부/Pro submit을 하지 않으며 새 창·재로그인으로 우회하지 않는다.
+
+세부 값은 [P73 machine receipt](p73_browseruse_locator_api_receipt.json)와
+[최신 BrowserUse 인수인계 P73](browseruse_existing_session_handoff.md)을 참조한다.

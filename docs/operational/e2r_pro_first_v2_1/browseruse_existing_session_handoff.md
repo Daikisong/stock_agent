@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 08:40 KST (P72).
+최종 갱신: 2026-09-24 09:23 KST (P73).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
@@ -44,7 +44,32 @@ BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭�
 쉬운 예: 기존 ChatGPT 응답이나 Library에 JSON이 보이면 그 화면의 다운로드 동작을 같은 탭에서 수행하고,
 받은 파일을 준비된 E2R job에 연결한다. “새 세션에서 다시 생성”은 기본 복구 방법이 아니다.
 
-## 최신 상태 인수인계 (P72)
+## 최신 상태 인수인계 (P73)
+
+- 최우선 사용 규칙: 로그인 작업은 사용자가 이미 로그인한 BrowserUse `extension` 세션의 **기존 작업 탭 하나**에서만 한다.
+  이번에도 기존 ChatGPT 탭을 exact claim한 반환 객체 하나로 확인했다. 새 browser/window/profile/tab, 재로그인은 0회다.
+  tab ID, 계정 식별자, 쿠키·token은 기록하지 않는다.
+- P73에서 P72와 같은 C15 R6 job을 안전 재개했지만, 실제 입력·첨부·전송 전에 BrowserUse locator bridge의 두 번째
+  계약 차이로 read-only login preflight가 실패했다: `locator.count is not a function`. traceback의 원인은 BrowserUse
+  extension이 `first()`/`last()`를 함수로 제공하는데 bridge가 Playwright property처럼 handle에 저장한 것이다.
+- 함수형과 property형을 모두 지원하도록 bridge를 로컬 수정했고, 같은 기존 BrowserUse 탭을 통해 read-only bridge smoke를
+  통과했다. visible composer locator `count=1`, `is_visible=true`; composer는 빈 상태였다. 이 smoke는 UI 입력, 첨부, 클릭,
+  전송 또는 navigation을 수행하지 않았다.
+- 현재 compact composer의 공개 선택값은 `ChatGPT 모델 선택` control의 `Pro`이며 Chat 버튼 활성, Work 비활성,
+  Deep Research 활성 control 없음, 빈 composer다. 직전 `page.goto` 이전 snapshot의 `6 Pro`와 구별해 기록한다.
+  이 `Pro`는 로그인 계정의 구독 badge가 아니라 adapter가 요구하는 선택된 composer control의 값이다.
+- 실제 실패 뒤 SQLite read-only 조회 결과 active
+  `PROJOB-df15a37c58ae7583924e58c0`는 `USER_ATTENTION_REQUIRED` / version 6이며 packet hash는 동일하다.
+  approval/browser/conversation binding은 없고 submit/capture `0/0`이다. 최근 event는 안전한 read-only preflight resume를
+  허용한다. job successor를 만들지 않았다.
+- 로컬 BrowserUse bridge + fresh orchestration tests **91/91 PASS**, Node syntax / whitespace checks PASS.
+  이 P73 patch의 전체 회귀 및 exact-head CI는 아직 pending이다. 이전 `b8c4c77e...`의 CI 결과를 P73 green으로 세지 않는다.
+- 현 시점 C15 R6의 prompt/upload/submit/capture/query/fetch/score/Stage 변경은 모두 0이다. 다음 한 단계는 한글 commit/push로
+  PR #7 exact head를 만들고 CI SUCCESS를 기다리는 것. 그 뒤에도 same existing BrowserUse tab과 same R6 job만 쓴다.
+- 상세 root cause, 각 시도, read-only evidence, local test 범위는 [P73 progress](implementation_progress.md)와
+  [P73 receipt](p73_browseruse_locator_api_receipt.json)에 있다.
+
+## 이전 상태 인수인계 (P72, superseded)
 
 - 로그인 필요 작업은 사용자의 BrowserUse Chrome plugin `extension`이 연결한 **이미 로그인된 기존 세션과 정확히 claim한 기존 탭**에서만 한다.
   이번 확인에서도 사용자 탭은 ChatGPT 하나였고, 기존 tab 객체를 유지했다. 탭 ID·계정·쿠키·인증값은 기록하지 않았다.
