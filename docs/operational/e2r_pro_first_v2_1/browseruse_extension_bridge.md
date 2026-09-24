@@ -1,7 +1,7 @@
 # 기존 BrowserUse 탭과 Pro-first pipeline 연결
 
-최종 갱신: 2026-09-24 07:45 KST (P71).
-상태: **기존 로그인 BrowserUse 탭의 실제 `6 Pro` 확인과 P70 exact-head CI는 완료. Windows↔WSL runtime-root 경계는 로컬 수리 및 실제 job read-only resume 확인까지 통과했으며, P71 diff exact-head CI와 C15 R6 upload/submit/capture는 아직 pending이다.**
+최종 갱신: 2026-09-24 12:07 KST (P77 상태 요약; 구현 이력은 아래 각 phase 시점 기록).
+현재 상태: PR #7의 P76 head `d294f395738254da1f616d361038a35548fa6c4e`에서 Pro push/PR 및 V6 PR GitHub Actions가 모두 SUCCESS다. 상세 CI 수치와 C15 R6 재개 지점은 [최신 BrowserUse 인수인계](browseruse_existing_session_handoff.md#최신-상태-인수인계-p77)와 [진행 장부 P77](implementation_progress.md#p77--기존-browseruse-로그인-탭-재확인과-p76-exact-head-ci-정정-2026-09-24-1207-kst)를 따른다. 로그인 작업은 사용자가 이미 로그인한 **동일 BrowserUse extension 세션의 기존 탭에서만** 수행하며, CDP·새 창/탭/프로필·재로그인 대체는 금지한다.
 
 ## 왜 이 연결이 필요한가
 

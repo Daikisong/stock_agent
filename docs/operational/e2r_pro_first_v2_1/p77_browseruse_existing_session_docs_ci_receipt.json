@@ -1,0 +1,86 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p77_browseruse_existing_session_docs_ci_v1",
+  "observed_at": "2026-09-24T12:07:00+09:00",
+  "status": "P76_EXACT_HEAD_CI_GREEN_EXISTING_BROWSERUSE_TAB_RECONFIRMED_DOCS_UPDATED_GOAL_INCOMPLETE",
+  "goal_complete": false,
+  "repository": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "head_sha": "d294f395738254da1f616d361038a35548fa6c4e",
+    "origin_head_sha": "d294f395738254da1f616d361038a35548fa6c4e",
+    "pull_request": 7,
+    "pull_request_url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "pull_request_state": "OPEN",
+    "pull_request_draft": true,
+    "pull_request_mergeable": true,
+    "main_merge": false
+  },
+  "github_actions": {
+    "exact_head_sha": "d294f395738254da1f616d361038a35548fa6c4e",
+    "pro_push": {
+      "run_id": 35947967714,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35947967714",
+      "conclusion": "SUCCESS",
+      "full_unittest_count": 7923,
+      "skipped_count": 38,
+      "failure_count": 0,
+      "error_count": 0,
+      "independent_reviewer_gate": "A-H PASS"
+    },
+    "pro_pr": {
+      "run_id": 35947970682,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35947970682",
+      "conclusion": "SUCCESS",
+      "full_unittest_count": 7923,
+      "skipped_count": 38,
+      "failure_count": 0,
+      "error_count": 0
+    },
+    "v6_pr": {
+      "run_id": 35947970654,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35947970654",
+      "conclusion": "SUCCESS",
+      "gate1_receipt": "4/4 PASS",
+      "phase100": "15/15 PASS",
+      "production_static_audit_critical_count": 0,
+      "full_unittest_failure_count": 0,
+      "full_unittest_error_count": 0
+    }
+  },
+  "browseruse": {
+    "backend": "existing Chrome BrowserUse extension session",
+    "existing_claimed_user_tab_reused": true,
+    "read_only_recheck_at": "2026-09-24 12:07 KST",
+    "user_tab_count": 1,
+    "origin": "https://chatgpt.com",
+    "title": "ChatGPT",
+    "new_window_tab_or_profile_created": false,
+    "cdp_fallback_used": false,
+    "relogin_performed": false,
+    "navigation_or_input_performed": false,
+    "prompt_input_upload_submit_capture": [0, 0, 0, 0],
+    "source_query_fetch": [0, 0],
+    "score_stage_changes": [0, 0],
+    "note": "Existing Pro selection, blank composer, and zero selected files were confirmed read-only in P76 on this same tab. This P77 check only re-read the exact claimed tab origin/title and did not change the page."
+  },
+  "active_c15_r6_job_last_read_only_state": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "symbol": "010950",
+    "archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 10,
+    "packet_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "approval_browser_conversation_bound": false,
+    "submit_count": 0,
+    "capture_count": 0,
+    "successor_job_created": false,
+    "last_read_only_source": "P76 SQLite mode=ro; PRAGMA query_only=ON"
+  },
+  "browseruse_execution_contract": [
+    "Use only the user's existing BrowserUse extension session and the exact existing claimed task tab for login-required work.",
+    "Await globalThis.agent.browsers.get(\"extension\"); enumerate user tabs with browser.user.openTabs(); pass the exact existing descriptor to claimTab(); retain the actual claimed tab object.",
+    "Do not use CDP, a new window/tab/profile, relogin, or another session as a replacement.",
+    "Run the bridge and Python worker in one active mcp__node_repl__js call and await bridge.runUntil(workerPromise); never leave dispatch as an unawaited background promise across calls."
+  ],
+  "next_step": "Revalidate the exact same C15 R6 job and the same existing claimed logged-in tab immediately before work; resume only that job in one active BrowserUse node_repl call. Stop before UI input if the handshake, tab identity, actual Pro selection, composer, packet hash, or durable no-submit state differs.",
+  "main_goal_complete": false
+}

@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 11:30 KST (P76).
+최종 갱신: 2026-09-24 12:07 KST (P77).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
@@ -44,7 +44,18 @@ BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭�
 쉬운 예: 기존 ChatGPT 응답이나 Library에 JSON이 보이면 그 화면의 다운로드 동작을 같은 탭에서 수행하고,
 받은 파일을 준비된 E2R job에 연결한다. “새 세션에서 다시 생성”은 기본 복구 방법이 아니다.
 
-## 최신 상태 인수인계 (P76)
+## 최신 상태 인수인계 (P77)
+
+- 현재 PR #7 head는 `d294f395738254da1f616d361038a35548fa6c4e`; local branch와 `origin/feature/e2r-pro-first-browser-platform-20260822`가 일치한다. PR은 OPEN/DRAFT/MERGEABLE이고 `main`에는 병합하지 않았다.
+- 이 exact SHA에서 Pro push [35947967714](https://github.com/Daikisong/stock_agent/actions/runs/35947967714), Pro PR [35947970682](https://github.com/Daikisong/stock_agent/actions/runs/35947970682), V6 PR [35947970654](https://github.com/Daikisong/stock_agent/actions/runs/35947970654)이 모두 SUCCESS다. Pro full regression은 7,923 tests / skipped 38 / failure·error 0이며 independent Reviewer A–H PASS. V6는 Gate 1 receipt 4/4, Phase100 15/15, production static audit critical 0, 전체 unittest failure·error 0이다.
+- 2026-09-24 12:07 KST에 **이미 연결된 BrowserUse extension 세션과 기존에 claim한 tab 객체**만 읽기 전용으로 재확인했다. `browser.user.openTabs()`는 사용자 탭 1개를 반환했고 claim 객체의 origin/title은 `https://chatgpt.com` / `ChatGPT`였다. 새 창·탭·프로필, CDP 대체 세션, 재로그인, navigation, 입력·첨부·전송은 하지 않았다. P76 당시 같은 탭에서 실제 Pro 선택, 빈 composer, 첨부 0을 확인한 이후에도 탭을 reset/닫지 않았다.
+- 다음 작업에서 지켜야 할 bootstrap 순서: 현재 persistent `mcp__node_repl__js`에서 BrowserUse runtime이 반환한 Agent를 `globalThis.agent`에 보관하고, `globalThis.browser = await globalThis.agent.browsers.get("extension")`로 extension을 기다린 뒤 `browser.user.openTabs()` → 정확한 기존 descriptor를 `browser.user.claimTab()` → 반환된 실제 tab 객체 하나를 계속 사용한다. 탭 선택 API의 Promise를 await하지 않으면 이후 `tabs`/browser 접근이 실패할 수 있다. `browser.tabs.list()`는 사용자 외부 탭을 찾는 대체 수단이 아니다.
+- 실제 C15 R6 재개에서는 bridge 생성과 Python worker promise를 별도 Node REPL 호출로 나누지 않는다. 둘을 같은 활성 `mcp__node_repl__js` 호출에서 실행하고 `await bridge.runUntil(workerPromise)`를 완료한다. 이 실행문맥 조건은 로그인/인증과 별개이며, 실패해도 새 창이나 재로그인으로 우회하지 않는다.
+- 마지막 SQLite read-only 검증의 active job은 `PROJOB-df15a37c58ae7583924e58c0` / `010950` / C15 R6, `USER_ATTENTION_REQUIRED` version 10, 동일 packet hash다. approval/browser/conversation 미결박, submit/capture `0/0`, successor 없음. P76의 exact handshake 오류 외에는 같은 job을 임의 재시도하지 않는다.
+- 이번 P77 문서/상태 확인 중 prompt input/upload/submit/capture, source query/fetch, score/Stage 변경은 모두 0이다. 현재 한 단계는 위 same-job 경계를 지켜 C15 R6를 **그 기존 로그인 탭**에서 재개하는 것이다. 새 browser/session/job을 만들지 않는다.
+- 세부 CI/진행 기록은 [P77 progress](implementation_progress.md#p77--기존-browseruse-로그인-탭-재확인과-p76-exact-head-ci-정정-2026-09-24-1207-kst), [P77 receipt](p77_browseruse_existing_session_docs_ci_receipt.json)을 본다.
+
+## 직전 상태 인수인계 (P76, P77에서 exact-head CI 상태 갱신)
 
 - 로그인 필요 작업은 사용자가 이미 로그인한 BrowserUse `extension`의 **그 기존 세션과 기존 ChatGPT 탭**에서만 한다.
   새 browser/window/tab/profile, CDP 대체 연결, 재로그인은 하지 않는다. claim한 바로 그 tab object를 유지하며 tab ID,
