@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 14:27 KST (P81 실패 경계와 기존 로그인 세션 규칙을 인수인계 최상단에 재정리; 실패 시각 14:23 KST).
+최종 갱신: 2026-09-24 14:37 KST (P81 커밋·push 완료, exact-head Actions 진행 중; same-tab 실패 시각 14:23 KST).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
@@ -66,16 +66,16 @@ BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭�
 쉬운 예: 기존 ChatGPT 응답이나 Library에 JSON이 보이면 그 화면의 다운로드 동작을 같은 탭에서 수행하고,
 받은 파일을 준비된 E2R job에 연결한다. “새 세션에서 다시 생성”은 기본 복구 방법이 아니다.
 
-## 최신 상태 인수인계 (P81, 2026-09-24 14:23 KST)
+## 최신 상태 인수인계 (P81, 2026-09-24 14:37 KST)
 
-- PR #7은 OPEN/DRAFT/MERGEABLE, main 미병합이다. 원격 head `281354cfc6d8e88f21c2bd1b32db72fea6f2f155`의 Pro push [35955888505](https://github.com/Daikisong/stock_agent/actions/runs/35955888505), Pro PR [35955892468](https://github.com/Daikisong/stock_agent/actions/runs/35955892468), V6 PR [35955892448](https://github.com/Daikisong/stock_agent/actions/runs/35955892448)은 모두 SUCCESS다. P81 selector read-path patch는 현재 local diff이며 이 성공 CI에는 포함되지 않았다.
+- PR #7은 OPEN/DRAFT/MERGEABLE, main 미병합이다. 새 head `7830b9a5baccaa7119d52892480504c82014ea26`를 한글 commit `7830b9a5`로 push했다. 이 head의 Pro push [35960262909](https://github.com/Daikisong/stock_agent/actions/runs/35960262909), Pro PR [35960267593](https://github.com/Daikisong/stock_agent/actions/runs/35960267593), V6 PR [35960267632](https://github.com/Daikisong/stock_agent/actions/runs/35960267632)은 14:37 KST 확인 시 모두 `in_progress`다. 기존 SHA `281354cf`의 세 성공 run은 과거 코드 검증이며 P81 결과와 혼동하지 않는다.
 - 로그인 필요 화면 작업은 P80에서 연결한 BrowserUse `extension`의 **동일 사용자 ChatGPT 탭**으로만 한다. 그 탭의 login/Pro/composer read-only preflight는 PASS였지만, same-job initial runner가 `first_visible()`의 selector 조회에서 다시 3초 timeout을 냈다. 현재 화면은 여전히 ChatGPT home이고 login prompt 없음, composer 1개, `Pro` 선택 control, user turn 0, packet attachment 0이다. `tab.dev.logs()`는 0건이고 `tab.capabilities.get("cdp")`는 `Capability is not available: cdp`를 반환했다.
 - SQLite mode=ro + `PRAGMA query_only=ON`의 active C15 R6는 `PROJOB-df15a37c58ae7583924e58c0`, `USER_ATTENTION_REQUIRED` version 14다. packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df` 그대로, approval/browser/conversation 미결박, submit/capture `0/0`, successor 없음이다. 새 실패 이벤트는 `READ_ONLY_BROWSER_PREFLIGHT`, `safe_unprepared_resume=true`; 현재 last error는 기존과 동일한 3000ms selector timeout이다.
 - 이 시도는 전송·첨부 전에 멈췄다. 같은 탭에서 새 window/tab/profile/CDP, 재로그인, navigation, prompt/file/upload/download/submit/capture, source query/fetch, score/Stage 변경은 0이다. 사용자 기존 탭은 열린 상태로 보존했다.
 - 원인 범위: P79가 `evaluate` 계열에 10초 상한을 전달했지만, 설치된 BrowserUse API에서 `locator.count()`, `isVisible()`, `isEnabled()`는 해당 timeout option을 노출하지 않는다. E2R의 selector helper/attachment lookup이 이 raw API를 바로 호출해 3초 selector deadline이 남아 있었다. 어느 단일 API call에서 이번 timeout이 발생했는지는 직접 계측 전이므로 단정하지 않는다.
 - P81 local patch는 읽기 전용 count/visibility/enabled 조회를 reviewed `evaluateAll/evaluate` callback으로 우회하고 10초 상한을 전달한다. `innerText/textContent/getAttribute`에도 bounded timeout을 전달하며, adapter preflight와 attachment lookup이 같은 helper를 사용한다. action (`click/fill/submit`)은 read-only 경로로 바꾸지 않았다.
-- P81 local tests: BrowserUse bridge 10/10 PASS, fresh orchestration 85/85 PASS, JS `node --check` PASS. P81 code/tests/docs는 아직 commit/push 및 exact-head CI 전이다.
-- 다음 한 단계: P81 patch를 한글 commit으로 기존 PR #7에만 push한다. 세 exact-head CI가 모두 SUCCESS일 때까지 같은 job 재시도/전송은 하지 않는다. Green 뒤에는 정확히 같은 C15 R6 job과 같은 BrowserUse 탭만 다시 사용한다. mismatch가 있으면 멈춘다.
+- P81 tests: BrowserUse bridge 10/10 PASS, fresh orchestration 85/85 PASS, JS `node --check` PASS. 추가 문서 확인 뒤 bridge+orchestration 로컬 재실행 95/95 PASS, `git diff --check` PASS다. 코드는 commit/push됐으며 exact-head CI는 아직 진행 중이다.
+- 다음 한 단계: 위 세 run이 정확한 SHA `7830b9a5…`에서 모두 SUCCESS인지 확인한다. 그 전에는 같은 job 재시도/전송을 하지 않는다. Green 뒤에는 정확히 같은 C15 R6 job과 같은 BrowserUse 탭만 다시 사용한다. mismatch가 있으면 멈춘다.
 
 P81 상세 진행기록은 [implementation progress P81](implementation_progress.md#p81--browseruse-selector-read-path-timeout-보강과-same-job-실패-경계-기록-2026-09-24-1423-kst)을 참조한다.
 

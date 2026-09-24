@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-24 14:27 KST / P81: 기존 BrowserUse 탭에서 selector timeout 재발, 회귀 수정은 local diff`
+기준 시각: `2026-09-24 14:37 KST / P81: 기존 BrowserUse 탭에서 selector timeout 재발, 수정 커밋·push 완료, exact-head CI 진행 중`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -65,12 +65,13 @@ P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
 P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS; C15 R6 same job remains unsent after same-tab read-only selector timeout; C28 pending)
-P10 final CI/audit                        IN_PROGRESS (P79 pushed head 281354cf: exact-head Pro push/PR + V6 PR Actions SUCCESS; P81 read-only selector patch is local, not yet CI-verified; live 3/3 미충족)
+P10 final CI/audit                        IN_PROGRESS (P79 head 281354cf CI SUCCESS; P81 head 7830b9a5 pushed and exact-head Pro push/PR + V6 PR runs in progress; live 3/3 미충족)
 ```
 
-### 현재 재개 지점 (P81, 2026-09-24 14:27 KST)
+### 현재 재개 지점 (P81, 2026-09-24 14:37 KST)
 
-- PR #7은 OPEN/DRAFT/MERGEABLE이며 main 미병합이다. 마지막 pushed head는 `281354cfc6d8e88f21c2bd1b32db72fea6f2f155`; 그 SHA의 Pro push [35955888505](https://github.com/Daikisong/stock_agent/actions/runs/35955888505), Pro PR [35955892468](https://github.com/Daikisong/stock_agent/actions/runs/35955892468), V6 PR [35955892448](https://github.com/Daikisong/stock_agent/actions/runs/35955892448)은 모두 SUCCESS다. 현재 P81 코드·테스트·문서 변경은 그 CI에 포함되지 않았다.
+- PR #7은 OPEN/DRAFT/MERGEABLE이며 main 미병합이다. 새 pushed head는 `7830b9a5baccaa7119d52892480504c82014ea26` (한글 commit `7830b9a5`). 기존 SHA `281354cf`의 Pro push/PR 및 V6 PR 세 run은 모두 SUCCESS지만 P81 검증을 대신하지 않는다.
+- 새 head `7830b9a5…`의 Pro push [35960262909](https://github.com/Daikisong/stock_agent/actions/runs/35960262909), Pro PR [35960267593](https://github.com/Daikisong/stock_agent/actions/runs/35960267593), V6 PR [35960267632](https://github.com/Daikisong/stock_agent/actions/runs/35960267632)은 14:37 KST 현재 모두 `in_progress`다. 두 Pro run의 `static-security`는 PASS했고 Pro PR의 `browser-mock-e2e`도 PASS했다. Pro full-regression/core-unit과 V6 full unittest는 아직 진행 중이다.
 - C15 R6는 동일한 durable job `PROJOB-df15a37c58ae7583924e58c0`이며, `USER_ATTENTION_REQUIRED`, state version 14, 기존 packet hash 유지, approval/browser/conversation 미결박, submit/capture `0/0`, successor 없음이다. 2026-09-24 14:23 KST의 실제 재개 시도는 같은 기존 BrowserUse 로그인 탭에서 **읽기 전용 selector 확인 중** 아래 timeout으로 끝났다. prompt 입력·첨부·전송 전 단계에서 정지했다.
 
 ```text
@@ -79,7 +80,7 @@ BrowserUseBridgeError: BRIDGE_OPERATION_FAILED: Timed out after 3000ms evaluatin
 
 - 실패 뒤에도 같은 탭은 ChatGPT home, 로그인 prompt 없음, composer 1개, `Pro` 선택, user turn 0, attachment 0이었다. 새 창·탭·프로필·CDP 세션·재로그인·navigation·입력·다운로드·전송·capture는 없었고, 사용자의 탭을 열린 상태로 보존했다. `tab.dev.logs()` 0건, CDP 요청은 정확히 `Capability is not available: cdp`였다.
 - 원인은 아직 개별 API 호출까지 계측되지 않았다. 설치된 BrowserUse API의 `locator.count()/isVisible()/isEnabled()`에 timeout option이 없는데 기존 adapter가 그 API를 직접 써 3초 deadline이 남는 경로를 확인했다. P81 local patch는 이런 read-only 조회를 bounded `evaluate/evaluateAll` helper로 보내며, action API는 그대로 둔다.
-- P81 local 검증: BrowserUse bridge 10/10 PASS, fresh orchestration 85/85 PASS, JS `node --check` PASS. 이는 pushed-head CI가 아니다.
+- P81 로컬 검증: BrowserUse bridge 10/10 PASS, fresh orchestration 85/85 PASS, JS `node --check` PASS; 문서 최신화 후 bridge+orchestration 재실행 95/95 PASS 및 `git diff --check` PASS. 원격 exact-head CI는 위 링크에서 진행 중이다.
 - **다음 한 단계:** P81 코드·회귀·문서를 한글 commit으로 기존 PR #7 브랜치에만 반영하고, 새 exact-head Pro push/Pro PR/V6 PR Actions 세 건이 모두 SUCCESS인지 확인한다. 그 전에는 어떤 same-job submit도 하지 않는다. CI green 뒤에는 동일 C15 R6 job과 이미 로그인된 동일 BrowserUse 탭만 재확인해 한 번 재개한다.
 
 ### 지금부터 재개할 때의 짧은 인수인계 (P77)
@@ -6821,12 +6822,12 @@ P81 local diff는 count/visibility/enabled 및 text/attribute/value를 reviewed 
 | `tests.test_e2r_pro_first_browseruse_extension_bridge` | 10/10 PASS |
 | `tests.test_e2r_pro_first_v2_1_fresh_orchestration` | 85/85 PASS |
 | JS `node --check` | PASS |
-| P81 exact-head GitHub Actions | 아직 commit/push 전, 미실행 |
+| P81 exact-head GitHub Actions | Pro push/Pro PR/V6 PR 세 run 시작; 최종 결론 대기 중 |
 
 ### 다음 한 단계 — CI 전 same-job 재전송 금지
 
-1. P81 코드·회귀 테스트·이 문서를 한글 커밋으로 기존 PR #7 브랜치에만 push한다.
-2. 그 정확한 SHA의 Pro push, Pro PR, V6 PR GitHub Actions 세 run이 모두 `SUCCESS`인지 확인한다. 이전 SHA의 green은 P81을 검증하지 않는다.
+1. P81 코드·회귀 테스트·문서를 한글 commit `7830b9a5`로 기존 PR #7 브랜치에 push했다.
+2. 위에 연결한 정확한 SHA의 Pro push, Pro PR, V6 PR Actions 세 run이 모두 `SUCCESS`인지 기다려 확인한다. 이전 SHA의 green은 P81을 검증하지 않는다.
 3. green 뒤에만 같은 C15 R6 job과 사용자의 동일 기존 BrowserUse 로그인 탭을 다시 열거·claim해 상태를 재검증한다. mismatch나 timeout 재발이면 입력/전송 전에 멈추고 새 세션으로 우회하지 않는다.
 
 이번 P81 문서 갱신으로 끝난 것은 인수인계 정리뿐이다. Pro 요청 전송, research saturation, C15/C28 canary 완료나 전체 master goal 완료를 주장하지 않는다.
