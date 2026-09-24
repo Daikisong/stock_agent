@@ -17,6 +17,9 @@ from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
 
+BROWSERUSE_DOM_EVALUATE_TIMEOUT_MS = 10_000
+
+
 class BrowserUseBridgeError(RuntimeError):
     """A fail-closed BrowserUse bridge or identity error."""
 
@@ -223,11 +226,12 @@ class BrowserUsePage:
             options=_jsonable(options),
         )
 
-    async def evaluate(self, expression: str, argument: Any = None) -> Any:
+    async def evaluate(self, expression: str, argument: Any = None, **options: Any) -> Any:
         return await self.client.call(
             "page.evaluate",
             expression=str(expression),
             argument=_jsonable(argument),
+            options=_read_only_evaluate_options(options),
         )
 
     def locator(self, selector: str) -> "BrowserUseLocator":
@@ -477,7 +481,7 @@ class BrowserUseLocator:
             "evaluate",
             expression=str(expression),
             argument=_jsonable(argument),
-            options=_jsonable(options),
+            options=_read_only_evaluate_options(options),
         )
 
     async def evaluate_all(self, expression: str, argument: Any = None, **options: Any) -> Any:
@@ -485,7 +489,7 @@ class BrowserUseLocator:
             "evaluate_all",
             expression=str(expression),
             argument=_jsonable(argument),
-            options=_jsonable(options),
+            options=_read_only_evaluate_options(options),
         )
 
     async def set_input_files(self, *_args: Any, **_kwargs: Any) -> None:
@@ -598,6 +602,19 @@ def _jsonable(value: Any) -> Any:
     if isinstance(value, (str, int, float, bool)) or value is None:
         return value
     raise TypeError(f"unsupported BrowserUse bridge argument: {type(value).__name__}")
+
+
+def _read_only_evaluate_options(options: Mapping[str, Any]) -> dict[str, Any]:
+    """Translate Playwright-style bounded evaluation timeouts to BrowserUse's API."""
+    normalized = dict(_jsonable(options) or {})
+    timeout_ms = normalized.pop("timeoutMs", None)
+    legacy_timeout = normalized.pop("timeout", None)
+    if timeout_ms is None:
+        timeout_ms = legacy_timeout
+    normalized["timeoutMs"] = (
+        BROWSERUSE_DOM_EVALUATE_TIMEOUT_MS if timeout_ms is None else timeout_ms
+    )
+    return normalized
 
 
 def _origin(url: str) -> str:

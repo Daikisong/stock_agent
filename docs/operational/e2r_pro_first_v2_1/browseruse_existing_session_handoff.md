@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 12:59 KST (P78).
+최종 갱신: 2026-09-24 13:26 KST (P79 진행 중).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
@@ -44,7 +44,17 @@ BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭�
 쉬운 예: 기존 ChatGPT 응답이나 Library에 JSON이 보이면 그 화면의 다운로드 동작을 같은 탭에서 수행하고,
 받은 파일을 준비된 E2R job에 연결한다. “새 세션에서 다시 생성”은 기본 복구 방법이 아니다.
 
-## 최신 상태 인수인계 (P78)
+## 최신 상태 인수인계 (P79 작업 checkpoint)
+
+- P79 시작 시점의 마지막 pushed head는 `7f74d55b2c96851ca394c5f01de88b17a8f2961e`; PR #7은 OPEN/DRAFT/MERGEABLE, `main` 미병합이다. 이 head의 Pro push [35953918533](https://github.com/Daikisong/stock_agent/actions/runs/35953918533), Pro PR [35953921419](https://github.com/Daikisong/stock_agent/actions/runs/35953921419), V6 PR [35953921411](https://github.com/Daikisong/stock_agent/actions/runs/35953921411)이 모두 SUCCESS로 종료됐다. P79 브리지/테스트 변경은 이 CI 이후의 현재 worktree diff이며 아직 새 head CI를 받지 않았다.
+- 이번 timeout 진단의 구체적 결함: 현재 설치된 BrowserUse API 계약상 `locator.evaluate(pageFunction, arg?, options?)` 및 `evaluateAll(..., options?)`의 세 번째 인자는 `PlaywrightEvaluateOptions.timeoutMs`다. 기존 Python→JS bridge는 `locator.evaluate/evaluateAll`에서 options를 전달하지 않았고, `page.evaluate`도 options를 버렸다. Python Playwright facade가 `timeout`을 전달하더라도 extension API는 `timeoutMs`를 사용하므로 이름 변환이 필요하다. P79 local diff는 이 변환/전달을 보완하고, DOM read-only evaluate에 10초 상한을 둔다. 이는 3초 오류를 설명할 수 있는 실제 계약 누락이지만, 아직 같은 탭에서 수정 전후를 비교하지 않았으므로 live root cause 확정으로 승격하지 않는다.
+- P79 local verification: `test_e2r_pro_first_browseruse_extension_bridge.py` 10/10 PASS; `test_e2r_pro_first_v2_1_fresh_orchestration.py` 85/85 PASS; Python compileall, JS `node --check`, `git diff --check` PASS. Local mock Chromium suite는 WSL dynamic library `libnspr4.so` 부재로 시작하지 못해 중단했다. 이것은 headless test runtime의 기술 문제이지 사용자의 로그인 BrowserUse 세션 문제는 아니다. P79 exact-head CI가 전체 browser/full regression 검증의 다음 증거다.
+- BrowserUse 로그인 탭은 P78에서 확인된 **동일한 사용자 기존 `extension` 세션/ChatGPT 탭**을 그대로 보존한다. P79 코드 조사 중 browser window/tab/profile/CDP, navigation, 재로그인, prompt/file/submit/capture는 하지 않았다. 다음 live 시도 직전 canonical BrowserUse bootstrap 후 existing user tabs를 다시 열거하고 exact existing tab을 claim/reuse한다. 새 창/새 세션은 금지한다.
+- SQLite read-only 재검증: `PROJOB-df15a37c58ae7583924e58c0` / 010950 / C15 R6는 `USER_ATTENTION_REQUIRED` version 12, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`; latest event `READ_ONLY_BROWSER_PREFLIGHT`, `safe_unprepared_resume=true`, approval/browser/conversation 미결박, submit/capture 0/0, successor 없음. 기존 3초 timeout은 아직 마지막 오류다. P79 수정 전송이나 same-job retry는 아직 없었다.
+- 현재 다음 한 단계: P79 generic 브리지 수정/회귀/문서/receipt를 한글 commit으로 기존 PR #7에만 push하고 새 exact-head Pro push, Pro PR, V6 PR Actions SUCCESS를 확인한다. Green 뒤에만 같은 C15 R6를 기존 BrowserUse 로그인 세션·동일 기존 탭으로 read-only preflight 재개한다. 10초 timeout이 성공하더라도 그것만으로 연구 완료는 아니다. 이후 master goal의 동일 Pro conversation, 승인 범위, multi-pass saturation, verifier repair, full thesis score gate, cross-mechanism canaries를 계속 수행한다.
+- P79 machine receipt: [P79 receipt](p79_browseruse_evaluate_timeout_bridge_receipt.json). 앞선 탭/오류/미전송 관찰은 [P78 progress](implementation_progress.md#p78--사용자-기존-browseruse-세션-유지와-same-job-preflight-timeout-기록-2026-09-24-1259-kst) 참조.
+
+## 이전 상태 인수인계 (P78)
 
 - 현재 PR #7 head는 `96b73876a5d0fb58f2b226bb31420c4b6cf37b24`; local branch와 `origin/feature/e2r-pro-first-browser-platform-20260822`가 일치한다. PR은 OPEN/DRAFT/MERGEABLE이고 `main`에는 병합하지 않았다.
 - 이 exact SHA의 Pro push [35950648915](https://github.com/Daikisong/stock_agent/actions/runs/35950648915), Pro PR [35950652188](https://github.com/Daikisong/stock_agent/actions/runs/35950652188), V6 PR [35950652197](https://github.com/Daikisong/stock_agent/actions/runs/35950652197)은 모두 SUCCESS다. Pro regression은 7,923 tests / skipped 38 / failure·error 0, Reviewer A–H PASS다. V6는 Gate 1 receipt 4/4, Phase100 15/15, production static audit critical 0, 전체 테스트 failure·error 0이다.

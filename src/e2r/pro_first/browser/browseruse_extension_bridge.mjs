@@ -8,6 +8,7 @@ import { spawn } from "node:child_process";
 
 const MAX_REQUEST_BYTES = 64 * 1024 * 1024;
 const MAX_EVENT_ROWS = 2048;
+const DEFAULT_READ_ONLY_EVALUATE_TIMEOUT_MS = 10_000;
 const CHATGPT_ORIGIN = "https://chatgpt.com";
 const PRIVATE_IPV4 = /^(10\.(?:\d{1,3}\.){2}\d{1,3}|172\.(?:1[6-9]|2\d|3[01])\.(?:\d{1,3}\.)\d{1,3}|192\.168\.(?:\d{1,3}\.)\d{1,3})$/;
 
@@ -41,6 +42,23 @@ function jsonRegex(value) {
     return new RegExp(value.__e2r_regex__, String(value.flags || ""));
   }
   return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, jsonRegex(item)]));
+}
+
+export function browserUseOptions(value = {}) {
+  const options = jsonRegex(value || {});
+  if (!options || typeof options !== "object" || Array.isArray(options)) return options;
+  const timeout = options.timeoutMs ?? options.timeout;
+  delete options.timeout;
+  if (timeout !== undefined && timeout !== null) options.timeoutMs = timeout;
+  return options;
+}
+
+function readOnlyEvaluationOptions(value = {}) {
+  const options = browserUseOptions(value);
+  if (options.timeoutMs === undefined || options.timeoutMs === null) {
+    options.timeoutMs = DEFAULT_READ_ONLY_EVALUATE_TIMEOUT_MS;
+  }
+  return options;
 }
 
 function assertReadOnlyDomExpression(expression) {
@@ -234,6 +252,18 @@ export function readonlyCallback(expression) {
   const match = callbacks.find(candidate => candidate.matches(source));
   if (!match) throw new Error("DOM bridge has no reviewed read-only callback for this expression");
   return match.callback;
+}
+
+export async function evaluateReadOnlyLocator(locator, method, expression, argument, options = {}) {
+  if (!locator || !["evaluate", "evaluate_all"].includes(method)) {
+    throw new Error("read-only BrowserUse locator evaluation received an invalid locator or method");
+  }
+  const methodName = method === "evaluate" ? "evaluate" : "evaluateAll";
+  return simplify(await locator[methodName](
+    readonlyCallback(expression),
+    jsonRegex(argument),
+    readOnlyEvaluationOptions(options),
+  ));
 }
 
 function simplify(value) {
@@ -586,26 +616,34 @@ export async function startBrowserUseExtensionBridge({
 
   const callLocator = async ({ handle, method, ...args }) => {
     const locator = findHandle(locators, handle, "locator");
-    const options = jsonRegex(args.options || {});
+    const options = browserUseOptions(args.options || {});
     if (method === "count") return await locator.count();
     if (method === "is_visible") return await locator.isVisible(options);
     if (method === "is_enabled") return await locator.isEnabled(options);
     if (method === "inner_text") return await locator.innerText(options);
     if (method === "text_content") return await locator.textContent(options);
     if (method === "get_attribute") return await locator.getAttribute(String(args.name), options);
-    if (method === "input_value") return await locator.evaluate(element => element.value ?? "", null);
+    if (method === "input_value") {
+      return await evaluateReadOnlyLocator(
+        locator,
+        "evaluate",
+        "element => element.value ?? ''",
+        null,
+        options,
+      );
+    }
     if (method === "fill") return await locator.fill(String(args.value), options);
     if (method === "click") return await locator.click(options);
     if (method === "press") return await locator.press(String(args.key), options);
     if (method === "wait_for") return await locator.waitFor({ state: String(args.state || "visible"), ...options });
     if (method === "evaluate" || method === "evaluate_all") {
-      const expression = String(args.expression || "");
-      assertReadOnlyDomExpression(expression);
-      const receiver = method === "evaluate" ? "element" : "elements";
-      return simplify(await locator[method === "evaluate" ? "evaluate" : "evaluateAll"](
-        readonlyCallback(expression),
-        jsonRegex(args.argument),
-      ));
+      return await evaluateReadOnlyLocator(
+        locator,
+        method,
+        String(args.expression || ""),
+        args.argument,
+        options,
+      );
     }
     throw new Error(`unsupported BrowserUse locator method: ${method}`);
   };
@@ -633,11 +671,11 @@ export async function startBrowserUseExtensionBridge({
     if (operation === "page.goto") {
       const requested = new URL(String(args.url || ""));
       if (requested.origin !== CHATGPT_ORIGIN) throw new Error("navigation outside ChatGPT is forbidden");
-      await tab.goto(requested.href, args.options || {});
+      await tab.goto(requested.href, browserUseOptions(args.options || {}));
       return { value: null };
     }
     if (operation === "page.reload") {
-      await tab.reload(args.options || {});
+      await tab.reload(browserUseOptions(args.options || {}));
       return { value: null };
     }
     if (operation === "page.wait_for_timeout") {
@@ -646,7 +684,7 @@ export async function startBrowserUseExtensionBridge({
       return { value: null };
     }
     if (operation === "page.wait_for_load_state") {
-      await tab.playwright.waitForLoadState(String(args.state || "load"), args.options || {});
+      await tab.playwright.waitForLoadState(String(args.state || "load"), browserUseOptions(args.options || {}));
       return { value: null };
     }
     if (operation === "page.evaluate") {
@@ -655,6 +693,7 @@ export async function startBrowserUseExtensionBridge({
       return { value: simplify(await tab.playwright.evaluate(
         readonlyCallback(expression),
         jsonRegex(args.argument),
+        readOnlyEvaluationOptions(args.options || {}),
       )) };
     }
     if (operation === "page.attach_packet") {

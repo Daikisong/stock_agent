@@ -6686,3 +6686,52 @@ BrowserUseBridgeError: BRIDGE_OPERATION_FAILED: Timed out after 3000ms evaluatin
 3. 코드 수정이 필요하면 generic fix/test를 기존 PR #7에만 올리고 exact-head Pro push, Pro PR, V6 PR Actions SUCCESS를 확인한다. 그 뒤 durable packet hash와 미전송 경계를 다시 검증하고, 동일 C15 R6만 같은 BrowserUse 로그인 세션·기존 탭에서 재개한다. UI 상태가 다르거나 전송 여부가 불명확하면 입력하지 않고 중단한다.
 
 기계 판독 세부는 [P78 BrowserUse receipt](p78_browseruse_same_session_preflight_receipt.json), 최신 실행 절차는 [BrowserUse existing-session handoff](browseruse_existing_session_handoff.md) 참조. master goal은 미완료이며, C15 R6 미전송, C06 1/3, C28 대기 상태다.
+
+## P79 — BrowserUse evaluate timeout/options 계약 수리 (2026-09-24 13:26 KST, CI 전)
+
+### 현재 goal 상태 재검증
+
+- Master goal 원문 기준 이번 목표는 36/36 contract, multi-pass saturation, verifier repair, full-thesis score/publication gate, actual Pro live canary 3개를 요구한다. 현재는 이를 완료하지 않았으며 PR #7은 계속 draft/open이다.
+- P79 시작 시 pushed head/local/origin은 모두 `7f74d55b2c96851ca394c5f01de88b17a8f2961e`. 해당 head의 Pro push [35953918533](https://github.com/Daikisong/stock_agent/actions/runs/35953918533), Pro PR [35953921419](https://github.com/Daikisong/stock_agent/actions/runs/35953921419), V6 PR [35953921411](https://github.com/Daikisong/stock_agent/actions/runs/35953921411)이 모두 SUCCESS다. 현재 P79 코드 변경은 이 green 이후의 uncommitted diff라 아직 그 CI로 검증하지 않았다.
+- SQLite mode=ro + `PRAGMA query_only=ON` 재검증에서 active C15 R6 `PROJOB-df15a37c58ae7583924e58c0`은 `USER_ATTENTION_REQUIRED` version 12, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, approval/browser/conversation 미결박, submit/capture 0/0, successor 없음이다. 기존 마지막 오류는 3초 `READ_ONLY_BROWSER_PREFLIGHT` selector timeout이며 `safe_unprepared_resume=true`다.
+
+### 코드 원인과 수리
+
+로컬에 설치된 Chrome BrowserUse plugin의 `docs/api.json`에서 `PlaywrightLocator.evaluate(pageFunction, arg?, options?)` / `evaluateAll(..., options?)` 및 `PlaywrightEvaluateOptions.timeoutMs` 계약을 확인했다. 저장소 bridge의 call path를 비교한 결과:
+
+```text
+Python BrowserUseLocator.evaluate(**options)
+→ RPC payload에 options 포함
+→ JS callLocator가 options를 받지만 locator.evaluate/evaluateAll 호출에는 전달하지 않음
+→ BrowserUse의 기본 3000ms selector/evaluate deadline에 묶일 수 있음
+```
+
+추가로 page evaluate가 options를 버렸고, Python facade가 넘기는 Playwright식 `timeout`은 BrowserUse extension이 쓰는 `timeoutMs`와 달라 다른 page/locator operation에서도 적용되지 않을 수 있었다. P79 diff는 다음을 구현했다.
+
+- bounded DOM read-only evaluate 기본 timeout `10,000ms`; Python facade가 explicit `timeout` 또는 `timeoutMs`를 정규화한다.
+- JS bridge가 Python `timeout`을 BrowserUse `timeoutMs`로 정규화하고 locator/page evaluate/evaluateAll 세 번째 options 인자에 전달한다.
+- `input_value` inline evaluator도 같은 reviewed read-only callback 경로와 bounded timeout을 사용한다.
+- Python-to-RPC timeout argument, JS callback+argument+options 전달 및 alias precedence 회귀를 추가했다.
+
+이는 API 계약상의 결함을 입증하지만, 동일한 기존 탭에서 3초→10초 수정 전후를 아직 live 비교하지 않았으므로 UI failure의 단독 근본 원인으로 선언하지 않는다. P79 exact-head CI와 같은 tab의 read-only 재확인이 다음 증거다.
+
+### 검증
+
+| 검사 | 결과 |
+|---|---|
+| `test_e2r_pro_first_browseruse_extension_bridge.py` | 10/10 PASS |
+| `test_e2r_pro_first_v2_1_fresh_orchestration.py` | 85/85 PASS |
+| Python `compileall` / JS `node --check` / `git diff --check` | PASS |
+| local `test_e2r_pro_first_v2_1_fresh_browser_e2e.py` | 2 setup error: Chromium이 `libnspr4.so` 부재로 실행되지 않음 |
+| local combined browser adapter suite | headless Chromium launch에서 동일 missing shared library 반복; 실패 폭주를 확인해 test process 중단 |
+| P79 changed-code GitHub Actions | 아직 commit/push 전, 미실행 |
+
+로컬 Chromium 의존성 오류는 logged-in BrowserUse session의 상태와 무관하다. P78 pushed head의 clean CI는 full Pro 7,923 tests/skipped 38/failure·error 0, Reviewer A–H PASS 및 V6 receipt 4/4, Phase100 15/15, static critical 0으로 green이었다. P79 변경분은 다음 exact-head CI에서 재검증해야 한다.
+
+### 기존 로그인 세션 경계와 다음 한 단계
+
+- P79 code investigation 중 기존 BrowserUse 사용자 탭을 열거나 조작하지 않았다. P78에서 확인했던 로그인 세션·기존 ChatGPT 탭은 보존했고 새 창/tab/profile/CDP/relogin은 0이다. prompt input/upload/download/submit/capture, source query/fetch, score/Stage 변화도 0이다.
+- 다음은 generic bridge code/test/doc/receipt를 한글 commit으로 기존 PR #7에 push한 다음 세 필수 exact-head Actions가 전부 SUCCESS인지 확인하는 것이다. Green 이후에만 active Node REPL의 canonical BrowserUse bootstrap으로 **기존 `extension` 세션에서 이미 열려 있는 동일 ChatGPT 탭**을 exact-claim하고, 같은 C15 R6 job의 read-only `inspect_state()`를 재개한다. 재확인 전에는 packet 입력·전송 금지. 새 browser/window/login/job은 금지한다.
+- 성공한 read-only preflight는 다음 canary 단계만 연다. master goal은 여전히 C15 R6 actual Pro pass 및 saturation, C28 canary, remaining cross-mechanism live canaries, final scoring/CI/audit가 남아 미완료다.
+
+기계 판독 상태는 [P79 receipt](p79_browseruse_evaluate_timeout_bridge_receipt.json), 상세 사용 규칙은 [BrowserUse handoff P79](browseruse_existing_session_handoff.md)을 참조한다.

@@ -90,6 +90,60 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(calls[2][1]["parent_handle"], "handle-2")
         self.assertEqual(calls[3][1]["handle"], "handle-3")
 
+    async def test_read_only_evaluate_uses_bounded_timeout_and_translates_python_alias(self) -> None:
+        client = BrowserUseBridgeClient(
+            endpoint="http://127.0.0.1:12345",
+            token="x" * 48,
+        )
+        client.session_id = "BROWSERUSE-test-session"
+        calls: list[tuple[str, dict[str, object]]] = []
+
+        async def fake_call(operation: str, **arguments: object) -> object:
+            calls.append((operation, dict(arguments)))
+            if operation == "locator.create":
+                return {"handle": f"handle-{len(calls)}"}
+            if operation in {"locator.evaluate", "locator.evaluate_all", "page.evaluate"}:
+                return "div"
+            if operation == "locator.click":
+                return None
+            raise AssertionError(operation)
+
+        client.call = fake_call  # type: ignore[method-assign]
+        page = BrowserUsePage(client)
+
+        self.assertEqual(
+            await page.locator("div.ProseMirror").evaluate("element => element.tagName.toLowerCase()"),
+            "div",
+        )
+        self.assertEqual(calls[-1][1]["options"], {"timeoutMs": 10_000})
+
+        self.assertEqual(
+            await page.locator("div.ProseMirror").evaluate(
+                "element => element.tagName.toLowerCase()",
+                timeout=8_765,
+            ),
+            "div",
+        )
+        self.assertEqual(calls[-1][1]["options"], {"timeoutMs": 8_765})
+
+        self.assertEqual(
+            await page.locator("div.ProseMirror").evaluate_all(
+                "elements => elements.map(element => element.tagName)",
+                timeoutMs=6_543,
+            ),
+            "div",
+        )
+        self.assertEqual(calls[-1][1]["options"], {"timeoutMs": 6_543})
+
+        self.assertEqual(
+            await page.evaluate("selector => document.querySelector(selector)", "body", timeout=4_321),
+            "div",
+        )
+        self.assertEqual(calls[-1][1]["options"], {"timeoutMs": 4_321})
+
+        await page.locator("button").click(timeout=3_210)
+        self.assertEqual(calls[-1][1]["options"], {"timeout": 3_210})
+
     async def test_locator_create_consumes_the_rpc_value_envelope(self) -> None:
         client = BrowserUseBridgeClient(
             endpoint="http://127.0.0.1:12345",
@@ -117,6 +171,7 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
             'if (operation === "locator.create") return { value: { handle: await makeLocator(args) } };',
             bridge_source,
         )
+        self.assertIn("return await evaluateReadOnlyLocator(", bridge_source)
 
     async def test_locator_create_missing_handle_fails_with_bridge_error(self) -> None:
         client = BrowserUseBridgeClient(
@@ -146,7 +201,7 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
         ).resolve()
         script = f"""
 import assert from "node:assert/strict";
-const {{ resolveBrowserUseLocatorMember, resolveFirstVisibleEnabledLocator, readonlyCallback }} = await import({json.dumps(bridge_path.as_uri())});
+const {{ resolveBrowserUseLocatorMember, resolveFirstVisibleEnabledLocator, readonlyCallback, evaluateReadOnlyLocator, browserUseOptions }} = await import({json.dumps(bridge_path.as_uri())});
 const child = {{ count: async () => 1 }};
 const browserUse = {{
   called: false,
@@ -170,8 +225,26 @@ assert.equal(firstCalls, 2);
 const playwrightPage = {{ locator() {{ return {{ first: attachButton }}; }} }};
 assert.strictEqual(await resolveFirstVisibleEnabledLocator(playwrightPage, ["#attach"]), attachButton);
 assert.strictEqual(await resolveFirstVisibleEnabledLocator(browserUsePage, ["#missing"]), null);
+assert.deepEqual(browserUseOptions({{ timeout: 3210, force: true }}), {{ timeoutMs: 3210, force: true }});
+assert.deepEqual(browserUseOptions({{ timeout: 4321, timeoutMs: 7654 }}), {{ timeoutMs: 7654 }});
 const tagReader = readonlyCallback("element => element.tagName.toLowerCase()");
 assert.equal(tagReader({{ tagName: {{ toLowerCase: () => "div" }} }}), "div");
+const evaluateCalls = [];
+const evaluationLocator = {{
+  async evaluate(...args) {{ evaluateCalls.push(["evaluate", args]); return "DIV"; }},
+  async evaluateAll(...args) {{ evaluateCalls.push(["evaluateAll", args]); return ["DIV"]; }}
+}};
+assert.equal(await evaluateReadOnlyLocator(evaluationLocator, "evaluate", "element => element.tagName.toLowerCase()", null, {{ timeoutMs: 7654 }}), "DIV");
+assert.equal(typeof evaluateCalls[0][1][0], "function");
+assert.equal(evaluateCalls[0][1][0]({{ tagName: "DIV" }}), "div");
+assert.equal(evaluateCalls[0][1][1], null);
+assert.deepEqual(evaluateCalls[0][1][2], {{ timeoutMs: 7654 }});
+assert.deepEqual(await evaluateReadOnlyLocator(evaluationLocator, "evaluate_all", "elements => elements.map(element => ({{url: element.href, aria_label: element.getAttribute('aria-label')}}))", null, {{ timeoutMs: 4321 }}), ["DIV"]);
+assert.deepEqual(evaluateCalls[1][1][2], {{ timeoutMs: 4321 }});
+const defaultEvaluationCalls = [];
+const defaultEvaluationLocator = {{ async evaluate(...args) {{ defaultEvaluationCalls.push(args); return "DIV"; }} }};
+await evaluateReadOnlyLocator(defaultEvaluationLocator, "evaluate", "element => element.tagName.toLowerCase()");
+assert.deepEqual(defaultEvaluationCalls[0][2], {{ timeoutMs: 10000 }});
 const markerReader = readonlyCallback("(element, needle) => (element.innerText || '').toLowerCase().includes(needle)");
 assert.equal(markerReader({{ innerText: "Packet ready" }}, "packet"), true);
 assert.throws(() => readonlyCallback("element => element.click()"), /read-only/);
