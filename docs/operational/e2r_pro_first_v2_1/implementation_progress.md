@@ -7368,3 +7368,52 @@ BrowserUse filechooser 경로로 exact packet 파일 선택을 시도했으나, 
 - Pro push [run 36029817123](https://github.com/Daikisong/stock_agent/actions/runs/36029817123): `in_progress`; `core-unit`과 `static-security` 성공, `full-regression` Reviewer A–H 및 `browser-mock-e2e` 진행 중.
 
 이 P98은 진행상황과 오류를 두 Markdown 파일에 문서화한 checkpoint다. PR #7은 draft/open으로 둔다. overall goal은 계속 미완료이며 C06 full-thesis `1/3`; C15는 아직 미전송; C17/C28 canary는 미완료다. 새 검색이나 raw 자료 수집, 다른 archetype, 점수 변경, Pro 파이프라인 구현은 추가하지 않았다.
+
+## P99 — 기존 로그인 BrowserUse 세션 유지 및 packet SHA-256 선택 receipt 수정 (2026-09-25 02:47 KST)
+
+### 사용자 지시와 인증 세션 실행 규칙
+
+사용자가 다시 강조했다: BrowserUse 작업에 로그인 세션이 필요하면 새 브라우저를 띄우지 말고 사용자가 이미 로그인해 둔 그쪽 세션에서 작업한다. 이는 문서 선호가 아니라 인증 UI의 필수 경계다. 다음 실행자는 다음 순서를 그대로 따른다.
+
+```text
+실제 BrowserUse 연결 확인
+→ extension session의 현재 openTabs() 열거
+→ URL/계정/작업 대화가 일치하는 기존 탭 descriptor 선택
+→ 정확한 descriptor를 claimTab()
+→ claim이 반환한 동일 Tab 객체만 사용
+→ 입력·첨부·다운로드·전송 직전 같은 탭과 상태 재확인
+```
+
+- 새 Chrome/창/탭/프로필/CDP 세션, 재로그인, 다른 대화로 재전송·재다운로드하지 않는다. 새 대화가 필요한 경우도 기존 로그인 탭 안에서만 시작한다.
+- extension 연결, 기존 탭 열거/claim, 계정·대화 확인 중 하나라도 실패하거나 예상과 다른 UI가 보이면 입력 전에 중단한다. 실제 오류 문자열, 확인 범위, 입력/첨부/전송/다운로드 여부만 남긴다. 인증 토큰·쿠키는 기록하지 않는다.
+- 이전 tab ID나 이전 로그인 표시를 현재 권한/상태로 간주하지 않는다. 작업 직전마다 현재 탭을 다시 찾는다. 다른 backend는 동일한 로그인 세션과 정확한 탭을 보존한다는 사실을 실제로 확인할 수 있을 때만 고려한다.
+
+### C15 packet 실패와 코드 변경
+
+P98에서 기록한 same-job C15 R6 오류는 `BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab`이다. 로그인 자체가 실패했다는 증거는 없으며, 정확한 원인은 미확정이다. 한 가지 가능한 설명은 ChatGPT UI가 파일을 수락하고 첨부 타일을 그린 뒤 `input.files`를 비워, 화면 렌더링을 기다린 후 DOM `File`을 읽던 검증 순서가 실패할 수 있다는 것이다. 이 설명은 아직 실제 UI에서 검증되지 않은 가설로만 남긴다.
+
+이번 local candidate는 선택 경계를 다음과 같이 바꿨다.
+
+- Python은 packet JSON을 읽어 기존 canonical hash 검증을 유지하고, 선택 파일 raw bytes의 SHA-256을 계산한다.
+- Node/Windows BrowserUse bridge는 Windows에 보이는 exact path를 chooser 호출 전·후에 해시하고 expected raw SHA-256과 비교한다. `FileChooser.setFiles(exact_path)`의 성공, 파일명, raw SHA, 선택 backend를 receipt로 반환한다.
+- Python bridge는 그 receipt의 selected/filename/SHA/backend를 다시 검사한다. ChatGPT가 DOM `File`을 노출하고 있으면 content의 canonical hash도 검증하되, app이 input을 소비했다면 빈 DOM input 자체를 이유로 선택 receipt를 폐기하지 않는다. 최종 첨부 filename이 화면에 나타나는 확인은 그대로 유지한다.
+- exact failure 문구 `BrowserUIIncompatible`만 같은 unsent job의 read-only recovery 후보로 추가했다. `safe_unprepared_resume`은 true로 바꾸지 않았고, 이 예외만으로 prepare/submit을 허용하지 않는다. 접미사 등 near-match는 계속 막는다.
+- 회귀시험은 UI가 filename tile을 그리며 DOM file input을 비우는 경우도 모의한다. 정확한 receipt+tile은 통과하고, 다른 packet bytes/receipt와 거의 같은 오류문구는 거부한다.
+
+이는 bridge/backend와 mock contract의 코드 검증이다. 실제 ChatGPT 탭에 파일을 붙여 receipt가 올바른 UI 수락을 의미하는지 확인한 것은 아니다. 따라서 live 첨부 복구 성공이나 C15 Pro 요청 전송 성공으로 집계하지 않는다.
+
+### 로컬 검증과 PR 상태
+
+- `PYTHONPATH=src python -m unittest tests.test_e2r_pro_first_browseruse_extension_bridge tests.test_e2r_pro_first_v2_1_fresh_orchestration -v`: **113/113 PASS**.
+- `python -m py_compile ...`: PASS; `node --check src/e2r/pro_first/browser/browseruse_extension_bridge.mjs`: PASS; `git diff --check`: PASS.
+- `PYTHONPATH=src python -m e2r.cli.audit_e2r_pro_first_v2 --repo-root .`: **PASS**, `critical_count=0`, audit hash `3bce37f9cc4b76787d1ccfe00fc2452e7a3d9a5cb6d80ab3774be9af1d923303`.
+- 이 검증은 현재 local uncommitted diff에 대한 것이다. 기준 pushed head `cbedcf2c5d7a7dcb946b3466623eebf0df23e0b7`의 Pro PR [36034866981](https://github.com/Daikisong/stock_agent/actions/runs/36034866981)은 `pending`, Pro push [36034858436](https://github.com/Daikisong/stock_agent/actions/runs/36034858436)은 `in_progress`, V6 [36034866695](https://github.com/Daikisong/stock_agent/actions/runs/36034866695)은 `SUCCESS`였다. 미커밋 수정은 이들 run에 포함되지 않는다.
+- PR #7은 `OPEN/DRAFT/MERGEABLE`로 유지하고 `main`에 병합하지 않는다. 최신 C15 durable state는 이 checkpoint에서 다시 읽지 않았다. P98 snapshot은 version 26, submit/capture `0/0`, 미결박 browser/conversation, prepare receipt 없음이었다. 재개 전에 DB row/event 및 exact packet hash를 read-only로 다시 확인한다.
+
+### 이번 checkpoint의 실행 범위와 다음 한 단계
+
+이번 P99에서는 브라우저에 접속하거나 기존 탭을 열거/claim하지 않았다. 파일 첨부/다운로드, ChatGPT 입력/전송/capture, 새 job/pass, 검색/fetch, 다른 archetype, score/Stage 변경은 모두 0이다. root worktree의 사용자 변경 `AGENTS.md`는 건드리지 않았다.
+
+다음은 이 코드와 이 문서를 한글 commit으로 같은 PR #7 feature branch에 push하고 **새 exact-head CI 전체가 종료될 때까지 확인하는 것**이다. 그 CI가 green인 뒤에만 durable job을 read-only로 확인하고, BrowserUse가 필요하면 로그인된 사용자의 기존 `extension` 세션에서 현재 탭을 다시 열거·claim한다. 같은 exact 탭을 확인하지 못하면 즉시 중단한다. read-only recovery와 첨부 수락 검증 전에는 prompt를 채우거나 전송하지 않는다. 전체 master goal은 계속 미완료다.
+
+인증 UI 실행 순서와 latest handoff는 [P99 BrowserUse handoff](browseruse_existing_session_handoff.md#최신-상태--p99-2026-09-25-0247-kst)다.

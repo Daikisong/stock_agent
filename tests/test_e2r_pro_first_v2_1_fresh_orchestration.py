@@ -296,7 +296,12 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             revision_valuation_snapshot={"snapshot_date": "2026-08-23"},
         )
 
-    def _make_draft_preparation_attention_resume(self, error_message: str):
+    def _make_draft_preparation_attention_resume(
+        self,
+        error_message: str,
+        *,
+        error_class: str = "BrowserUseBridgeError",
+    ):
         current = self.store.get_job(self.fresh_job.job_id)
         preparing = self.store.transition(
             self.fresh_job.job_id,
@@ -323,7 +328,7 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 "submit_count": 0,
             },
             updates={
-                "last_error_class": "BrowserUseBridgeError",
+                "last_error_class": error_class,
                 "last_error_message": error_message,
             },
         )
@@ -771,6 +776,51 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
                 / "fresh_session/fresh_v3_prepare_receipt.json"
             ).exists()
         )
+
+    def test_exact_packet_hash_visibility_failure_enters_only_read_only_recovery_gate(self) -> None:
+        runner, spec = self._make_draft_preparation_attention_resume(
+            "the exact BrowserUse packet file/hash was not visible in the claimed tab",
+            error_class="BrowserUIIncompatible",
+        )
+
+        boundary, resumed = runner._load_unprepared_attention_job(
+            FreshSessionBoundaryService(self.store),
+            spec=spec,
+            manifest=self.manifest,
+            job_id=self.fresh_job.job_id,
+        )
+
+        self.assertEqual(boundary.fresh_job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(resumed.submit_count, 0)
+        self.assertEqual(resumed.capture_count, 0)
+        self.assertIsNone(resumed.browser_session_id)
+        self.assertIsNone(resumed.conversation_id)
+        self.assertFalse(
+            (
+                self.boundary.fresh_job_root
+                / "fresh_session/fresh_v3_prepare_receipt.json"
+            ).exists()
+        )
+
+    def test_near_match_packet_hash_visibility_failure_remains_blocked(self) -> None:
+        runner, spec = self._make_draft_preparation_attention_resume(
+            "the exact BrowserUse packet file/hash was not visible in the claimed tab; extra",
+            error_class="BrowserUIIncompatible",
+        )
+
+        with self.assertRaisesRegex(ValueError, "known safe failure"):
+            runner._load_unprepared_attention_job(
+                FreshSessionBoundaryService(self.store),
+                spec=spec,
+                manifest=self.manifest,
+                job_id=self.fresh_job.job_id,
+            )
+
+        current = self.store.get_job(self.fresh_job.job_id)
+        self.assertEqual(current.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(current.submit_count, 0)
+        self.assertEqual(current.capture_count, 0)
 
     def test_near_match_browseruse_filechooser_event_failure_remains_blocked(self) -> None:
         runner, spec = self._make_draft_preparation_attention_resume(

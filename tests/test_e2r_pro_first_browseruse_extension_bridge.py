@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import shutil
 import subprocess
@@ -72,18 +73,26 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
             token="x" * 48,
         )
         client.session_id = "BROWSERUSE-test-session"
+        expected_file_sha256 = "a" * 64
         client._request = AsyncMock(  # type: ignore[method-assign]
             return_value={
-                "value": {"selected": True, "filename": "research_packet.json"},
+                "value": {
+                    "selected": True,
+                    "filename": "research_packet.json",
+                    "file_sha256": expected_file_sha256,
+                    "selection_mode": "browseruse_filechooser_event",
+                },
                 "page_url": "https://chatgpt.com/",
             }
         )
 
-        await BrowserUsePage(client).upload_file_via_existing_user_session(
+        selection_receipt = await BrowserUsePage(client).upload_file_via_existing_user_session(
             "/tmp/research_packet.json",
+            expected_file_sha256=expected_file_sha256,
             attach_selectors=("button[aria-label='Attach files']",),
             upload_menu_selectors=("[role='menuitem']:has-text('Upload files')",),
         )
+        self.assertEqual(selection_receipt["file_sha256"], expected_file_sha256)
 
         request = client._request.await_args
         self.assertEqual(
@@ -98,6 +107,30 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
             request.args[1]["arguments"]["upload_menu_selectors"],
             ["[role='menuitem']:has-text('Upload files')"],
         )
+        self.assertEqual(
+            request.args[1]["arguments"]["expected_file_sha256"],
+            expected_file_sha256,
+        )
+
+        mismatched_client = BrowserUseBridgeClient(
+            endpoint="http://127.0.0.1:12345",
+            token="x" * 48,
+        )
+        mismatched_client.session_id = "BROWSERUSE-test-session"
+        mismatched_client.call = AsyncMock(  # type: ignore[method-assign]
+            return_value={
+                "selected": True,
+                "filename": "research_packet.json",
+                "file_sha256": "b" * 64,
+                "selection_mode": "browseruse_filechooser_event",
+            }
+        )
+        with self.assertRaisesRegex(BrowserUseBridgeError, "bytes that differ"):
+            await BrowserUsePage(mismatched_client).upload_file_via_existing_user_session(
+                "/tmp/research_packet.json",
+                expected_file_sha256=expected_file_sha256,
+                attach_selectors=("button[aria-label='Attach files']",),
+            )
 
         node = shutil.which("node")
         self.assertIsNotNone(node)
@@ -129,6 +162,10 @@ assert.ok({BROWSERUSE_PACKET_ATTACH_RPC_TIMEOUT_SECONDS * 1000} > BROWSERUSE_NAT
         ).resolve()
         script = f"""
 import assert from "node:assert/strict";
+import crypto from "node:crypto";
+import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
 import {{ prepareVisiblePacketUpload, assignPacketThroughBrowserUseFileChooser }} from {json.dumps(bridge_path.as_uri())};
 
 class Locator {{
@@ -220,22 +257,39 @@ assert.deepEqual(directResult, {{ menu_item_selected: false }});
 assert.equal(directAttach.clicks, 1);
 assert.equal(directAttach.beforeArmed, true);
 
-const selectedFiles = [];
-const selected = await assignPacketThroughBrowserUseFileChooser({{
-  async setFiles(files, options) {{ selectedFiles.push({{ files, options }}); }},
-}}, "C:\\\\fixture\\\\packet.json");
-assert.deepEqual(selected, {{
-  selected: true,
-  filename: "packet.json",
-  selection_mode: "browseruse_filechooser_event",
-}});
-assert.equal(selectedFiles.length, 1);
-assert.equal(selectedFiles[0].files, "C:\\\\fixture\\\\packet.json");
-assert.equal(selectedFiles[0].options.timeoutMs, 45000);
-await assert.rejects(
-  assignPacketThroughBrowserUseFileChooser({{}}, "C:\\\\fixture\\\\packet.json"),
-  /did not provide a setFiles handle/,
-);
+const fixtureDirectory = await fs.mkdtemp(path.join(os.tmpdir(), "e2r-browseruse-packet-"));
+try {{
+  const targetPath = path.join(fixtureDirectory, "packet.json");
+  await fs.writeFile(targetPath, '{{"packet":"exact bytes"}}', "utf8");
+  const expectedFileSha256 = crypto.createHash("sha256").update(await fs.readFile(targetPath)).digest("hex");
+  const selectedFiles = [];
+  const selected = await assignPacketThroughBrowserUseFileChooser({{
+    async setFiles(files, options) {{ selectedFiles.push({{ files, options }}); }},
+  }}, targetPath, expectedFileSha256);
+  assert.deepEqual(selected, {{
+    selected: true,
+    filename: "packet.json",
+    file_sha256: expectedFileSha256,
+    selection_mode: "browseruse_filechooser_event",
+  }});
+  assert.equal(selectedFiles.length, 1);
+  assert.equal(selectedFiles[0].files, targetPath);
+  assert.equal(selectedFiles[0].options.timeoutMs, 45000);
+  await assert.rejects(
+    assignPacketThroughBrowserUseFileChooser(
+      {{ async setFiles() {{ throw new Error("must not select mismatched bytes"); }} }},
+      targetPath,
+      "0".repeat(64),
+    ),
+    /differ from the exact prepared file/,
+  );
+  await assert.rejects(
+    assignPacketThroughBrowserUseFileChooser({{}}, targetPath, expectedFileSha256),
+    /did not provide a setFiles handle/,
+  );
+}} finally {{
+  await fs.rm(fixtureDirectory, {{ recursive: true, force: true }});
+}}
 """
         completed = subprocess.run(
             [str(node), "--input-type=module", "--eval", script],
@@ -702,42 +756,66 @@ class BrowserUsePacketUploadTest(unittest.IsolatedAsyncioTestCase):
                     return self.text
 
             class SelectedFile:
-                def __init__(self, selected_text: str) -> None:
+                def __init__(self, selected_text: str | None) -> None:
                     self.selected_text = selected_text
 
-                async def evaluate(self, _expression: str) -> dict[str, str]:
+                async def evaluate(self, _expression: str) -> dict[str, str] | None:
+                    if self.selected_text is None:
+                        return None
                     return {"name": packet_path.name, "text": self.selected_text}
 
             class FileInputs:
-                def __init__(self, selected_text: str) -> None:
-                    self.selected_text = selected_text
+                def __init__(self, page: "FakeBrowserUsePage") -> None:
+                    self.page = page
 
                 async def count(self) -> int:
                     return 1
 
                 def nth(self, _index: int) -> SelectedFile:
-                    return SelectedFile(self.selected_text)
+                    return SelectedFile(self.page.selected_text)
 
             class FakeBrowserUsePage:
-                def __init__(self, selected_text: str) -> None:
-                    self.upload_file_via_existing_user_session = AsyncMock()
+                def __init__(
+                    self,
+                    selected_text: str,
+                    *,
+                    clear_after_visible: bool = False,
+                ) -> None:
                     self.selected_text = selected_text
+                    self.clear_after_visible = clear_after_visible
+                    self.upload_file_via_existing_user_session = AsyncMock(
+                        return_value={
+                            "selected": True,
+                            "filename": packet_path.name,
+                            "file_sha256": hashlib.sha256(
+                                packet_path.read_bytes()
+                            ).hexdigest(),
+                            "selection_mode": "browseruse_filechooser_event",
+                        }
+                    )
 
                 def get_by_label(self, _pattern: object) -> Locator:
                     return Locator(present=False)
 
                 def get_by_text(self, _pattern: object) -> Locator:
+                    if self.clear_after_visible:
+                        # Model a UI that consumes input.files while rendering
+                        # the visible attachment tile.
+                        self.selected_text = None
                     return Locator(present=True, text=packet_path.name)
 
                 def locator(self, selector: str) -> object:
                     if selector == 'input[type="file"]':
-                        return FileInputs(self.selected_text)
+                        return FileInputs(self)
                     raise AssertionError(selector)
 
                 async def wait_for_timeout(self, _milliseconds: int) -> None:
                     return None
 
-            page = FakeBrowserUsePage(json.dumps(payload))
+            page = FakeBrowserUsePage(
+                json.dumps(payload),
+                clear_after_visible=True,
+            )
             filename = await PlaywrightChatGPTWebAdapter(page).upload_packet(packet_path)
 
             self.assertEqual(filename, packet_path.name)
@@ -752,9 +830,19 @@ class BrowserUsePacketUploadTest(unittest.IsolatedAsyncioTestCase):
                 ],
                 tuple(UPLOAD_MENU_ITEM_SELECTORS),
             )
+            self.assertEqual(
+                page.upload_file_via_existing_user_session.await_args.kwargs[
+                    "expected_file_sha256"
+                ],
+                hashlib.sha256(packet_path.read_bytes()).hexdigest(),
+            )
+            self.assertIsNone(page.selected_text)
 
             different_file_page = FakeBrowserUsePage(json.dumps({"different": True}))
-            with self.assertRaisesRegex(BrowserUIIncompatible, "exact BrowserUse packet file/hash"):
+            with self.assertRaisesRegex(
+                BrowserUIIncompatible,
+                "selected BrowserUse packet content differs from the exact packet",
+            ):
                 await PlaywrightChatGPTWebAdapter(different_file_page).upload_packet(packet_path)
 
     async def test_worker_refuses_handoff_for_a_different_tab_identity(self) -> None:

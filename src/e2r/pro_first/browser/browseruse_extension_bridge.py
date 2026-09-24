@@ -298,13 +298,18 @@ class BrowserUsePage:
         self,
         path: str,
         *,
+        expected_file_sha256: str,
         attach_selectors: tuple[str, ...],
         upload_menu_selectors: tuple[str, ...] = (),
-    ) -> None:
+    ) -> Mapping[str, Any]:
+        expected_sha256 = str(expected_file_sha256 or "").lower()
+        if re.fullmatch(r"[a-f0-9]{64}", expected_sha256) is None:
+            raise ValueError("exact packet file SHA-256 is required for BrowserUse upload")
         result = await self.client.call(
             "page.attach_packet",
             request_timeout_seconds=BROWSERUSE_PACKET_ATTACH_RPC_TIMEOUT_SECONDS,
             path=str(path),
+            expected_file_sha256=expected_sha256,
             attach_selectors=list(attach_selectors),
             upload_menu_selectors=list(upload_menu_selectors),
         )
@@ -312,6 +317,16 @@ class BrowserUsePage:
             raise BrowserUseBridgeError("the visible Chrome file chooser did not select the packet")
         if str(result.get("filename") or "") != str(path).rsplit("/", 1)[-1]:
             raise BrowserUseBridgeError("the visible Chrome file chooser selected a different filename")
+        if str(result.get("file_sha256") or "").lower() != expected_sha256:
+            raise BrowserUseBridgeError(
+                "the visible Chrome file chooser selected bytes that differ from the exact packet"
+            )
+        if result.get("selection_mode") not in {
+            "browseruse_filechooser_event",
+            "native_windows_dialog",
+        }:
+            raise BrowserUseBridgeError("the visible Chrome file chooser returned an unknown selection mode")
+        return dict(result)
 
     async def wait_for_visible_artifact_response(
         self,

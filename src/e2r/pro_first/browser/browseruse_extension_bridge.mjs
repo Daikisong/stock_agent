@@ -549,16 +549,33 @@ export async function prepareVisiblePacketUpload({
   return { menu_item_selected: false };
 }
 
-export async function assignPacketThroughBrowserUseFileChooser(chooser, targetPath) {
+export async function assignPacketThroughBrowserUseFileChooser(
+  chooser,
+  targetPath,
+  expectedFileSha256,
+) {
   if (!chooser || typeof chooser.setFiles !== "function") {
     throw new Error("BrowserUse filechooser event did not provide a setFiles handle");
+  }
+  const expected = String(expectedFileSha256 || "").toLowerCase();
+  if (!/^[a-f0-9]{64}$/.test(expected)) {
+    throw new Error("exact packet file SHA-256 is required for BrowserUse selection");
+  }
+  const beforeSelectionSha256 = packetFileSha256(targetPath);
+  if (beforeSelectionSha256 !== expected) {
+    throw new Error("Windows-visible packet bytes differ from the exact prepared file");
   }
   await chooser.setFiles(targetPath, {
     timeoutMs: BROWSERUSE_FILE_CHOOSER_TIMEOUT_MS,
   });
+  const afterSelectionSha256 = packetFileSha256(targetPath);
+  if (afterSelectionSha256 !== expected) {
+    throw new Error("packet file bytes changed during BrowserUse selection");
+  }
   return {
     selected: true,
     filename: crossPlatformBasename(targetPath),
+    file_sha256: afterSelectionSha256,
     selection_mode: "browseruse_filechooser_event",
   };
 }
@@ -578,6 +595,10 @@ export function wslUncPath(value, distroName, platform = os.platform()) {
 
 function crossPlatformBasename(value) {
   return String(value || "").replace(/[\\/]+$/, "").split(/[\\/]/).at(-1) || "";
+}
+
+function packetFileSha256(targetPath) {
+  return crypto.createHash("sha256").update(fs.readFileSync(targetPath)).digest("hex");
 }
 
 function powerShellEncoded(script) {
@@ -1031,8 +1052,20 @@ export async function startBrowserUseExtensionBridge({
     throw new Error(`unsupported BrowserUse locator method: ${method}`);
   };
 
-  const attachPacket = async ({ filePath, attachSelectors, uploadMenuSelectors }) => {
+  const attachPacket = async ({
+    filePath,
+    expectedFileSha256,
+    attachSelectors,
+    uploadMenuSelectors,
+  }) => {
     const targetPath = validatePacketPathForWindowsChooser({ pathValue: filePath, distroName });
+    const expected = String(expectedFileSha256 || "").toLowerCase();
+    if (!/^[a-f0-9]{64}$/.test(expected)) {
+      throw new Error("exact packet file SHA-256 is required before opening the file chooser");
+    }
+    if (packetFileSha256(targetPath) !== expected) {
+      throw new Error("Windows-visible packet bytes differ from the exact prepared file");
+    }
     const fileChooserEventsAvailable = typeof tab.playwright.waitForEvent === "function";
     let fileChooserPromise = null;
     let nativeDialogPromise = null;
@@ -1074,16 +1107,25 @@ export async function startBrowserUseExtensionBridge({
           }
           throw error;
         }
-        return await assignPacketThroughBrowserUseFileChooser(chooser, targetPath);
+        return await assignPacketThroughBrowserUseFileChooser(
+          chooser,
+          targetPath,
+          expected,
+        );
       }
       if (!nativeDialogPromise) {
         throw new Error("visible packet upload did not arm a supported file chooser");
       }
       const dialog = await nativeDialogPromise;
       await dialog.completion;
+      const fileSha256 = packetFileSha256(dialog.targetPath);
+      if (fileSha256 !== expected) {
+        throw new Error("packet file bytes changed during Windows chooser selection");
+      }
       return {
         selected: true,
         filename: crossPlatformBasename(dialog.targetPath),
+        file_sha256: fileSha256,
         selection_mode: "native_windows_dialog",
       };
     } catch (error) {
@@ -1136,6 +1178,7 @@ export async function startBrowserUseExtensionBridge({
     if (operation === "page.attach_packet") {
       return { value: await attachPacket({
         filePath: args.path,
+        expectedFileSha256: args.expected_file_sha256,
         attachSelectors: args.attach_selectors,
         uploadMenuSelectors: args.upload_menu_selectors,
       }) };

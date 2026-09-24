@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import base64
+import hashlib
 import json
 import re
 import secrets
@@ -153,6 +154,15 @@ class PlaywrightChatGPTWebAdapter:
         path = Path(packet_path).resolve()
         if not path.is_file():
             raise FileNotFoundError(path)
+        try:
+            packet_bytes = path.read_bytes()
+            packet_payload = json.loads(packet_bytes.decode("utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
+            raise BrowserUIIncompatible(
+                "BrowserUse packet is not readable canonical JSON"
+            ) from error
+        expected_hash = canonical_hash(packet_payload)
+        expected_file_sha256 = hashlib.sha256(packet_bytes).hexdigest()
         existing_session_upload = getattr(
             self.page, "upload_file_via_existing_user_session", None
         )
@@ -160,31 +170,36 @@ class PlaywrightChatGPTWebAdapter:
             # Trigger the official BrowserUse filechooser event through the
             # visible attach control in this exact claimed tab, then use its
             # FileChooser.setFiles handle (never direct input.setInputFiles).
-            # Bind the browser-selected File back to the durable packet hash.
-            await existing_session_upload(
+            # The web app may consume/clear input.files after accepting the
+            # attachment, so bind the exact local bytes to the chooser receipt
+            # and visible filename instead of reading input.files after waiting
+            # for the attachment tile to render.
+            receipt = await existing_session_upload(
                 str(path),
+                expected_file_sha256=expected_file_sha256,
                 attach_selectors=tuple(ATTACH_BUTTON_SELECTORS),
                 upload_menu_selectors=tuple(UPLOAD_MENU_ITEM_SELECTORS),
+            )
+            if (
+                not isinstance(receipt, Mapping)
+                or receipt.get("selected") is not True
+                or str(receipt.get("filename") or "") != path.name
+                or str(receipt.get("file_sha256") or "").lower()
+                != expected_file_sha256
+                or receipt.get("selection_mode")
+                not in {"browseruse_filechooser_event", "native_windows_dialog"}
+            ):
+                raise BrowserUIIncompatible(
+                    "BrowserUse exact packet selection receipt did not match local packet bytes"
+                )
+            await self._validate_selected_packet_if_present(
+                path,
+                expected_hash,
             )
             displayed_filename = await self._wait_for_uploaded_filename(path.name)
             if displayed_filename is None:
                 raise BrowserUIIncompatible(
                     f"uploaded packet filename was not confirmed in the DOM: {path.name}"
-                )
-            try:
-                expected_hash = canonical_hash(
-                    json.loads(path.read_text(encoding="utf-8"))
-                )
-            except (OSError, json.JSONDecodeError) as error:
-                raise BrowserUIIncompatible(
-                    "BrowserUse packet is not readable canonical JSON"
-                ) from error
-            selected_filename = await self._selected_packet_filename_if_hash_matches(
-                path, expected_hash
-            )
-            if selected_filename != path.name:
-                raise BrowserUIIncompatible(
-                    "the exact BrowserUse packet file/hash was not visible in the claimed tab"
                 )
             self._uploaded_filename = displayed_filename
             return displayed_filename
@@ -200,6 +215,14 @@ class PlaywrightChatGPTWebAdapter:
                 await attach.click()
             chooser = await chooser_info.value
             await chooser.set_files(str(path))
+        if not await self._validate_selected_packet_if_present(
+            path,
+            expected_hash,
+            require_selected=True,
+        ):
+            raise BrowserUIIncompatible(
+                "the exact packet file/hash was not visible after file selection"
+            )
         displayed_filename = await self._wait_for_uploaded_filename(path.name)
         if displayed_filename is None:
             raise BrowserUIIncompatible(
@@ -3041,6 +3064,59 @@ class PlaywrightChatGPTWebAdapter:
                 continue
             return str(selected.get("name") or "")
         return None
+
+    async def _validate_selected_packet_if_present(
+        self,
+        packet_path: Path,
+        packet_hash: str,
+        *,
+        require_selected: bool = False,
+    ) -> bool:
+        """Cross-check any live browser File without requiring a consumed input."""
+
+        inputs = self.page.locator('input[type="file"]')
+        selected_count = 0
+        for index in range(await inputs.count()):
+            item = inputs.nth(index)
+            try:
+                selected = await item.evaluate(
+                    """async input => {
+                        const file = input.files && input.files[0];
+                        return file ? {name: file.name, text: await file.text()} : null;
+                    }"""
+                )
+            except Exception as error:
+                raise BrowserUIIncompatible(
+                    "selected BrowserUse file contents could not be inspected"
+                ) from error
+            if selected is None:
+                continue
+            if not isinstance(selected, Mapping):
+                raise BrowserUIIncompatible(
+                    "selected BrowserUse file evidence was malformed"
+                )
+            selected_count += 1
+            if selected_count > 1:
+                raise BrowserUIIncompatible(
+                    "multiple BrowserUse files were selected for the packet"
+                )
+            if str(selected.get("name") or "") != packet_path.name:
+                raise BrowserUIIncompatible(
+                    "a different BrowserUse file is selected than the exact packet"
+                )
+            try:
+                payload = json.loads(str(selected.get("text") or ""))
+            except json.JSONDecodeError as error:
+                raise BrowserUIIncompatible(
+                    "selected BrowserUse packet is not valid JSON"
+                ) from error
+            if canonical_hash(payload) != packet_hash:
+                raise BrowserUIIncompatible(
+                    "selected BrowserUse packet content differs from the exact packet"
+                )
+        if require_selected and selected_count == 0:
+            return False
+        return selected_count == 1
 
     async def _manual_login_required(self) -> bool:
         if "/auth/" in self.page.url:

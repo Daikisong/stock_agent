@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-25 02:24 KST (P98: 기존 로그인 탭에서 same-job 진행 후 packet filename/hash 검증 실패 상태를 반영).
+최종 갱신: 2026-09-25 02:47 KST (P99: 기존 로그인 세션 사용 원칙 재강조, packet 선택 SHA-256 결박 수정과 로컬 회귀 검증 상태 반영).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,18 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 상태 — P98, 2026-09-25 02:24 KST
+## 최신 상태 — P99, 2026-09-25 02:47 KST
+
+- **로그인된 BrowserUse 세션 사용은 필수다.** 인증이 필요한 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension`의 기존 세션에서만 한다. 작업 직전 `openTabs()`로 현재 탭을 다시 열거하고, URL·대화·계정·모드를 확인해 정확한 기존 탭 descriptor를 `claimTab()`한 뒤 claim이 반환한 바로 그 Tab 객체만 사용한다. 새 브라우저/창/탭/프로필/CDP 세션, 재로그인, 다른 대화로 재전송하는 우회는 하지 않는다. 같은 세션의 대상 탭을 연결하거나 확인하지 못하면 입력/첨부/다운로드/전송 전에 중단하고 실제 오류와 확인 범위만 기록한다. 과거 tab ID와 로그인 관찰은 현재 상태를 보장하지 않는다.
+- P98의 C15 R6 실패는 로그인 문제로 판정하지 않았다. 당시 같은 로그인 탭에서 발생한 정확한 오류는 `BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab`이다. 그 이후 재시도나 BrowserUse UI 조작은 이번 P99에서 하지 않았다.
+- 코드 수정 가설: 앱이 파일을 받아 첨부 타일을 렌더링하며 `input.files`를 비울 수 있어, 타일 렌더링을 기다린 뒤 DOM `File`을 읽는 방식이 실패 원인일 수 있다. **아직 live UI에서 검증되지 않은 가설**이다. 수정은 로컬 packet raw SHA-256을 BrowserUse `FileChooser.setFiles(exact_path)` 전후 Windows 쪽에서 확인하고, 같은 SHA/파일명 선택 receipt를 Python 경계에서 검증하도록 했다. DOM File이 남아 있으면 canonical packet hash도 대조하며, 첨부 파일명의 화면 확인은 계속 요구한다. 이 경로가 실제 ChatGPT 탭에서 정확한 첨부로 수락되는지는 아직 미확인이다.
+- 로컬 검증: BrowserUse bridge + fresh orchestration 관련 **113/113 tests PASS**; `py_compile`, Node `--check`, `git diff --check` PASS; E2R v2 static audit `PASS`, `critical_count=0`, audit hash `3bce37f9cc4b76787d1ccfe00fc2452e7a3d9a5cb6d80ab3774be9af1d923303`. 이는 현재 uncommitted local candidate의 검증이며 GitHub CI나 live BrowserUse 성공을 뜻하지 않는다.
+- C15 durable 상태는 이 P99에서 재조회하지 않았다. 마지막 read-only snapshot(P98, 02:24 KST)은 `PROJOB-df15a37c58ae7583924e58c0`, `USER_ATTENTION_REQUIRED`, v26, submit/capture `0/0`, browser/conversation binding 없음, prepare receipt 없음, `safe_unprepared_resume=false`였다. 어떤 재개 전에도 DB row/event와 packet hash를 다시 read-only 확인해야 한다.
+- PR #7은 마지막 확인 시 `OPEN/DRAFT/MERGEABLE`, pushed head `cbedcf2c5d7a7dcb946b3466623eebf0df23e0b7`였다. 그 head의 Pro PR run [36034866981](https://github.com/Daikisong/stock_agent/actions/runs/36034866981)은 `pending`, Pro push run [36034858436](https://github.com/Daikisong/stock_agent/actions/runs/36034858436)은 `in_progress`, V6 run [36034866695](https://github.com/Daikisong/stock_agent/actions/runs/36034866695)은 `SUCCESS`였다. 새 로컬 변경은 아직 이 head에 포함되지 않았으므로 새 한글 commit/push 뒤의 exact-head CI가 별도로 필요하다. PR은 draft 상태를 유지하고 이 목표에서 merge하지 않는다.
+- P99에서는 브라우저를 연결하거나 탭을 열거/claim하지 않았고, UI 입력·첨부·다운로드·전송·capture도 하지 않았다. 새 query/fetch/job/pass, 다른 archetype, score/Stage 변경도 0이다.
+- **다음 한 단계:** 이 수정과 본 handoff/progress 문서를 같은 PR #7 feature branch에 한글 commit/push하고 exact-head 필수 CI를 기다린다. CI가 green이면 그때 현재 durable job과 사용자의 기존 BrowserUse 로그인 탭을 각각 다시 확인한다. 탭 확인 실패 시 browser action 없이 멈춘다. 같은 탭에서 read-only recovery가 통과하고 exact attachment 경로를 확인하기 전에는 prompt 입력/전송하지 않는다.
+
+## 역사적 상태 — P98, 2026-09-25 02:24 KST
 
 - **인증 UI는 사용자의 기존 로그인 BrowserUse `extension` 세션과 기존 작업 탭에서만 한다.** 실행 때마다 `openTabs()`로 현재 탭을 확인하고, 서비스/계정/작업 대화를 대조해 정확한 descriptor를 claim한 뒤 반환된 동일 Tab 객체만 쓴다. 새 창·브라우저·탭·프로필·CDP 세션·재로그인으로 옮기지 않는다. 새 Chat이 필요하면 현재 로그인 탭 안에서만 시작한다. 목록/claim/대상 확인 실패 시 실제 오류와 확인 범위를 기록하고 입력 전에 정지한다.
 - 최근 C15 R6 same-job 시도는 기존 로그인 탭에서 진행됐지만 exact packet filename/canonical hash visibility check가 실패했다. **이는 로그인 실패로 판정된 것이 아니다.** 현재 확인된 오류는 `BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab`이며 root cause는 미확정이다. exact packet attachment는 성공으로 인정하지 않는다.
