@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 20:31 KST (P93: 기존 로그인 세션 사용 규칙 재확인, exact-head CI 진행과 C06 receipt authority/status 정합성 확인 대기 기록).
+최종 갱신: 2026-09-24 20:47 KST (P95: 로그인된 BrowserUse 세션 사용 지시를 최신 재개 지점에 재기록).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,58 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## P93 — 세션 규칙 재확인 및 현재 blocker handoff (2026-09-24 20:31 KST)
+## P95 — 사용자의 로그인 세션 사용 지시 재확인 (2026-09-24 20:47 KST)
+
+사용자가 다시 명확히 요청했다: 인증이 필요한 BrowserUse 작업은 **이미 로그인되어 있는 사용자의 세션 쪽에서** 해야 한다. 이 프로젝트의 다음 인증 UI 작업은 아래 한 경로만 따른다.
+
+```text
+현재 Codex 세션의 BrowserUse 연결 확인
+→ 사용자의 기존 Chrome `extension` 세션
+→ openTabs()로 실제 열린 탭 열거
+→ 대상 서비스/작업과 정확히 일치하는 기존 탭 descriptor 선택
+→ claimTab() 반환 객체 하나만 계속 사용
+→ 입력/첨부/다운로드/전송 직전에 같은 탭과 현재 상태 재확인
+```
+
+- 사용자가 로그인한 기존 탭을 쓰며, 새 Chrome/창/탭/프로필, 별도 CDP 연결, 재로그인으로 대체하지 않는다. “새 Chat”은 새 브라우저 세션을 뜻하지 않는다. 정말 새 대화가 필요하면 로그인된 기존 탭 안에서만 만든다.
+- 기존 응답이나 Library 파일이 이미 있으면 새 요청을 다시 보내지 말고 같은 탭에서 회수한다. 전송이 필요하면 기존 durable job의 approval/exactly-once gate도 별도로 통과해야 한다.
+- extension 연결, 대상 탭 claim, 로그인/작업 대상 확인에 실패하거나 화면 상태가 예상과 다르면 상호작용을 중단한다. 실제 오류 문자열, 확인한 범위, 전송 등 실제 실행 여부만 기록하고 세션을 바꿔 우회하지 않는다.
+- BrowserUse preflight 성공이나 다른 브라우저에서 탭이 보이지 않는 사실만으로 연결/로그인 상태를 단정하지 않는다. 인증 정보·쿠키·토큰은 기록하지 않는다.
+- 이번 P95 문서 갱신은 저장소 문서만 수정했다. BrowserUse 연결, 탭 열거, 화면 확인, 입력/첨부/다운로드/전송은 수행하지 않았다. 다음 C15 same-job recovery 전에 P94에 기록된 CI 상태를 다시 확인하고, 위 same-session 절차로 새로 관찰한다.
+
+이 지시는 새 작업이 시작될 때마다 적용한다. 이전 탭 관찰 결과를 현재 상태로 재사용하지 않는다.
+
+## P94 — C06 live full-thesis receipt 재검산 및 P93 정정 (2026-09-24 20:44 KST)
+
+P93에서 C06 pass row의 `score_valid=0` 및 pass 19 detail의 `research_status=RESEARCH_RUNNING`을 전체 canary 미증명 근거로 쓴 판단은 **잘못되었고 여기서 정정한다**. 두 필드는 pass-local 레코드다. `pro_research_passes` schema 자체가 `score_valid=0` 및 `publication_withheld=1`만 허용하며, 이후 생성된 독립 hashed saturation receipt와 final score/StageCourt receipts가 completion authority다. `full_thesis_eligibility`는 score/Stage 권한을 갖지 않고 scorer 전에는 `score_valid=false`, `FULL_THESIS_SCORE_PENDING`으로 기록하는 gate receipt다. deterministic scorer의 `production_score_authority=true` 및 StageCourt의 `production_stage_authority=true`는 별도 권한 계층이므로 nested eligibility의 false와 모순이 아니다.
+
+### 현재 C06의 직접 증거
+
+2026-09-24 20:42 KST에 runtime 파일과 DB를 읽기 전용으로 다시 대조했다. Runtime job root는 `C:\Users\eorb9\AppData\Local\E2R\ProFirstRuntime\fresh_v2_1\20260828T203034Z\jobs\PROJOB-287556cc59c10f124d615c4d`이고, durable DB snapshot은 `live_v2\20260823T145430Z\pro_first.sqlite3`다.
+
+| Gate | 저장된 증거 |
+|---|---|
+| Multi-pass | 동일 job, 동일 conversation, 동일 approval scope에 19개 submitted pass row. Pass roster에는 PUBLIC_GAP_CLOSURE, VERIFIER_REPAIR, SATURATION_AUDIT가 있고, 일부 transport `FAILED_HARD` 이후에도 후속 pass가 완료됨 |
+| Saturation | `research_saturation_receipt.json`: `FULL_THESIS_READY`, hash `34416085416b25dfefcc09b1891dfe0740063d45833bea7a229a41664a0d24e7`, 28/28 mandatory question decisions, nonterminal/public gap/verifier/provider-parser/lifecycle/source-linkage blocker 각각 0, `component_entry_allowed=true` |
+| Question outcomes | `SUPPORTED_NON_SCORING` 16, `PARTIALLY_SUPPORTED_SCORING` 7, `COUNTER_SUPPORTED` 1, `EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH` 2, `NOT_APPLICABLE_WITH_REASON` 2 |
+| Full-thesis canary | `fresh_v3_full_thesis_receipt.json`: `FRESH_V3_FULL_THESIS_FINAL`, job `FINAL`, saturation valid, public gap 0, repair/provider/lifecycle/source-linkage blocker 0, `hidden_chatgpt_api_used=false` |
+| Score/StageCourt | 56 accepted claims; component 7/7; Judge 21/21; deterministic score `23.275`, `score_valid=true`, `full_score_valid=true`; AtomicStageCourt decision `FINAL`, canonical Stage `0` |
+
+따라서 C06은 **실제 Pro multi-pass research → saturation → component/Judge → deterministic score → StageCourt** canary로 통과했다. “P93에서 canary를 보류했다”는 문장을 현재 판정으로 사용하지 않는다. 000660 frozen-MD partial-corpus replay와는 별도 run이며, 그 replay의 partial guard 결과를 변경하지 않는다.
+
+### 남은 publish 경계
+
+- 이 fresh live-canary runner는 `ProScoringPipelineService.run_job()` 뒤 full-thesis receipt만 만들고 종료한다. 현재 해당 job의 `published_at`은 null이고 `pro_publications` row도 없다. 즉 C06 canary는 score/StageCourt까지 증명했지만 **이 run만으로 publish를 증명하지는 않는다**.
+- 일반 `ProFirstPostImportCoordinator`는 `FINAL`에서 `ProResultPublisher.publish()`를 호출한다. unit/integration 경로가 그 full-thesis/partial-withheld 동작을 검증하는지 별도로 audit한다. historical canary를 실제 dashboard에 publish하거나 runtime DB를 변경하지 않았다.
+- C06은 goal의 actual live full-thesis canary 3개 중 **1/3**로 센다. C17/C28 live full-thesis canary와 exact-head Pro CI는 여전히 미완료다.
+
+### exact-head CI 재확인
+
+2026-09-24 20:44 KST, code head `100346caf0a31886e9aff6d1a0ef65e22e6820b6`에서 V6 run [35992525826](https://github.com/Daikisong/stock_agent/actions/runs/35992525826)은 `SUCCESS`; Pro push [35992521406](https://github.com/Daikisong/stock_agent/actions/runs/35992521406)과 Pro PR [35992525796](https://github.com/Daikisong/stock_agent/actions/runs/35992525796)은 `full-regression` 진행 중이다. PR #7 latest ref는 문서 전용 commit `f648cd3f179ea47d4f15855efb518b18270d892f`, draft/open이며 main은 미병합이다. `CLEAN`/`UNSTABLE` mergeability 표시는 CI 결론을 대체하지 않는다.
+
+이번 P94는 Windows runtime DB와 artifact에 read-only로 접근했다. BrowserUse UI, input/attachment/submit/capture, query/fetch, new job/pass, score/Stage/publication 변경은 0이다. 다음 순서는 exact Pro CI가 끝날 때까지 확인하고, 그 후 C15 existing-job same-tab recovery proof를 진행하는 것이다. 인증 UI가 필요하면 이 문서 상단의 기존 로그인 `extension` 세션·동일 탭 규칙만 사용한다.
+
+## P93 — 세션 규칙 재확인 및 현재 blocker handoff (2026-09-24 20:31 KST; C06 결론은 P94에서 정정)
 
 ### 로그인 세션에 대한 사용자 요청 — 실행 시 최우선
 
