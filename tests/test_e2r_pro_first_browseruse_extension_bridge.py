@@ -171,7 +171,10 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
             'if (operation === "locator.create") return { value: { handle: await makeLocator(args) } };',
             bridge_source,
         )
-        self.assertIn("return await evaluateReadOnlyLocator(", bridge_source)
+        self.assertIn(
+            "callReadOnlyLocatorMethod(locator, method, args)",
+            bridge_source,
+        )
 
     async def test_locator_create_missing_handle_fails_with_bridge_error(self) -> None:
         client = BrowserUseBridgeClient(
@@ -201,7 +204,7 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
         ).resolve()
         script = f"""
 import assert from "node:assert/strict";
-const {{ resolveBrowserUseLocatorMember, resolveFirstVisibleEnabledLocator, readonlyCallback, evaluateReadOnlyLocator, browserUseOptions }} = await import({json.dumps(bridge_path.as_uri())});
+const {{ resolveBrowserUseLocatorMember, resolveFirstVisibleEnabledLocator, readonlyCallback, evaluateReadOnlyLocator, countReadOnlyLocator, isVisibleReadOnlyLocator, isEnabledReadOnlyLocator, callReadOnlyLocatorMethod, browserUseOptions }} = await import({json.dumps(bridge_path.as_uri())});
 const child = {{ count: async () => 1 }};
 const browserUse = {{
   called: false,
@@ -215,9 +218,26 @@ const playwrightStyle = {{ first: child, last: child }};
 assert.strictEqual(await resolveBrowserUseLocatorMember(playwrightStyle, "first"), child);
 assert.strictEqual(await resolveBrowserUseLocatorMember(playwrightStyle, "last"), child);
 await assert.rejects(resolveBrowserUseLocatorMember({{}}, "first"), /did not return a locator/);
-const invisible = {{ count: async () => 0, isVisible: async () => false, isEnabled: async () => false }};
-const attachButton = {{ count: async () => 1, isVisible: async () => true, isEnabled: async () => true }};
-const rows = {{ "#hidden": invisible, "#attach": attachButton, "#missing": invisible }};
+const selectorCalls = [];
+globalThis.window = {{ getComputedStyle: element => ({{ visibility: element.visibility || "visible" }}) }};
+const element = ({{ width = 10, height = 10, visibility = "visible", disabled = false, ariaDisabled = false }} = {{}}) => ({{
+  visibility,
+  disabled,
+  getBoundingClientRect() {{ return {{ width, height }}; }},
+  matches(selector) {{ return selector === ":disabled" && disabled; }},
+  closest(selector) {{ return selector === '[aria-disabled="true"]' && ariaDisabled ? this : null; }},
+  getAttribute(name) {{ return name === "aria-disabled" && ariaDisabled ? "true" : null; }},
+}});
+const selectorLocator = elements => ({{
+  async count() {{ throw new Error("unbounded locator.count must not be used"); }},
+  async isVisible() {{ throw new Error("unbounded locator.isVisible must not be used"); }},
+  async isEnabled() {{ throw new Error("unbounded locator.isEnabled must not be used"); }},
+  async evaluateAll(callback, argument, options) {{ selectorCalls.push(["evaluateAll", options]); return callback(elements, argument); }},
+  async evaluate(callback, argument, options) {{ selectorCalls.push(["evaluate", options]); return callback(elements[0], argument); }},
+}});
+const invisible = selectorLocator([element({{ width: 0, height: 0 }})]);
+const attachButton = selectorLocator([element()]);
+const rows = {{ "#hidden": invisible, "#attach": attachButton, "#missing": selectorLocator([]) }};
 let firstCalls = 0;
 const browserUsePage = {{ locator(selector) {{ return {{ first() {{ firstCalls += 1; return rows[selector]; }} }}; }} }};
 assert.strictEqual(await resolveFirstVisibleEnabledLocator(browserUsePage, ["#hidden", "#attach"]), attachButton);
@@ -225,6 +245,8 @@ assert.equal(firstCalls, 2);
 const playwrightPage = {{ locator() {{ return {{ first: attachButton }}; }} }};
 assert.strictEqual(await resolveFirstVisibleEnabledLocator(playwrightPage, ["#attach"]), attachButton);
 assert.strictEqual(await resolveFirstVisibleEnabledLocator(browserUsePage, ["#missing"]), null);
+assert.equal(selectorCalls.length, 9);
+assert.ok(selectorCalls.every(([, options]) => options.timeoutMs === 10000));
 assert.deepEqual(browserUseOptions({{ timeout: 3210, force: true }}), {{ timeoutMs: 3210, force: true }});
 assert.deepEqual(browserUseOptions({{ timeout: 4321, timeoutMs: 7654 }}), {{ timeoutMs: 7654 }});
 const tagReader = readonlyCallback("element => element.tagName.toLowerCase()");
@@ -245,6 +267,36 @@ const defaultEvaluationCalls = [];
 const defaultEvaluationLocator = {{ async evaluate(...args) {{ defaultEvaluationCalls.push(args); return "DIV"; }} }};
 await evaluateReadOnlyLocator(defaultEvaluationLocator, "evaluate", "element => element.tagName.toLowerCase()");
 assert.deepEqual(defaultEvaluationCalls[0][2], {{ timeoutMs: 10000 }});
+const boundedSelectorCalls = [];
+const boundedSelectorLocator = {{
+  async evaluateAll(...args) {{ boundedSelectorCalls.push(["evaluateAll", args]); return args[0]([element(), element()], args[1]); }},
+  async evaluate(...args) {{ boundedSelectorCalls.push(["evaluate", args]); return args[0](element(), args[1]); }}
+}};
+assert.equal(await countReadOnlyLocator(boundedSelectorLocator), 2);
+assert.equal(await isVisibleReadOnlyLocator(boundedSelectorLocator), true);
+assert.equal(await isEnabledReadOnlyLocator(boundedSelectorLocator), true);
+assert.deepEqual(boundedSelectorCalls.map(([,args]) => args[2]), [{{timeoutMs:10000}}, {{timeoutMs:10000}}, {{timeoutMs:10000}}]);
+assert.equal(await countReadOnlyLocator(boundedSelectorLocator, {{timeout: 4321}}), 2);
+assert.deepEqual(boundedSelectorCalls[3][1][2], {{timeoutMs:4321}});
+const dispatchedReads = [];
+const apiLocator = {{
+  async count() {{ throw new Error("unbounded count API called"); }},
+  async isVisible() {{ throw new Error("unbounded isVisible API called"); }},
+  async isEnabled() {{ throw new Error("unbounded isEnabled API called"); }},
+  async evaluateAll(callback, argument, options) {{ dispatchedReads.push(["evaluateAll", options]); return callback([element(), element()], argument); }},
+  async evaluate(callback, argument, options) {{ dispatchedReads.push(["evaluate", options]); return callback(element(), argument); }},
+  async innerText(options) {{ dispatchedReads.push(["innerText", options]); return "visible text"; }},
+  async textContent(options) {{ dispatchedReads.push(["textContent", options]); return "raw text"; }},
+  async getAttribute(name, options) {{ dispatchedReads.push(["getAttribute", options]); return name; }},
+}};
+assert.deepEqual(await callReadOnlyLocatorMethod(apiLocator, "count"), {{handled:true, value:2}});
+assert.deepEqual(await callReadOnlyLocatorMethod(apiLocator, "is_visible"), {{handled:true, value:true}});
+assert.deepEqual(await callReadOnlyLocatorMethod(apiLocator, "is_enabled"), {{handled:true, value:true}});
+assert.deepEqual(await callReadOnlyLocatorMethod(apiLocator, "inner_text"), {{handled:true, value:"visible text"}});
+assert.deepEqual(await callReadOnlyLocatorMethod(apiLocator, "text_content"), {{handled:true, value:"raw text"}});
+assert.deepEqual(await callReadOnlyLocatorMethod(apiLocator, "get_attribute", {{name:"role"}}), {{handled:true, value:"role"}});
+assert.deepEqual(await callReadOnlyLocatorMethod(apiLocator, "click"), {{handled:false, value:null}});
+assert.ok(dispatchedReads.every(([,options]) => options.timeoutMs === 10000));
 const markerReader = readonlyCallback("(element, needle) => (element.innerText || '').toLowerCase().includes(needle)");
 assert.equal(markerReader({{ innerText: "Packet ready" }}, "packet"), true);
 assert.throws(() => readonlyCallback("element => element.click()"), /read-only/);

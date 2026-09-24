@@ -11,6 +11,9 @@ const MAX_EVENT_ROWS = 2048;
 const DEFAULT_READ_ONLY_EVALUATE_TIMEOUT_MS = 10_000;
 const CHATGPT_ORIGIN = "https://chatgpt.com";
 const PRIVATE_IPV4 = /^(10\.(?:\d{1,3}\.){2}\d{1,3}|172\.(?:1[6-9]|2\d|3[01])\.(?:\d{1,3}\.)\d{1,3}|192\.168\.(?:\d{1,3}\.)\d{1,3})$/;
+const READ_ONLY_LOCATOR_COUNT_EXPRESSION = "elements => elements.length";
+const READ_ONLY_LOCATOR_VISIBLE_EXPRESSION = "element => { const rect = element.getBoundingClientRect(); const style = window.getComputedStyle(element); return rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.visibility !== 'collapse'; }";
+const READ_ONLY_LOCATOR_ENABLED_EXPRESSION = "element => !element.matches(':disabled') && !element.closest('[aria-disabled=\"true\"]')";
 
 function assertPrivateBindHost(host) {
   if (!net.isIP(host)) throw new Error("bridge bind host must be an IP address");
@@ -74,6 +77,25 @@ export function readonlyCallback(expression) {
   const source = String(expression || "").trim();
   assertReadOnlyDomExpression(source);
   const callbacks = [
+    {
+      matches: value => value === READ_ONLY_LOCATOR_COUNT_EXPRESSION,
+      callback: elements => elements.length,
+    },
+    {
+      matches: value => value === READ_ONLY_LOCATOR_VISIBLE_EXPRESSION,
+      callback: element => {
+        const rect = element.getBoundingClientRect();
+        const style = window.getComputedStyle(element);
+        return rect.width > 0
+          && rect.height > 0
+          && style.visibility !== "hidden"
+          && style.visibility !== "collapse";
+      },
+    },
+    {
+      matches: value => value === READ_ONLY_LOCATOR_ENABLED_EXPRESSION,
+      callback: element => !element.matches(":disabled") && !element.closest('[aria-disabled="true"]'),
+    },
     {
       matches: value => /^element\s*=>\s*element\.tagName\.toLowerCase\(\)$/.test(value),
       callback: element => element.tagName.toLowerCase(),
@@ -266,6 +288,87 @@ export async function evaluateReadOnlyLocator(locator, method, expression, argum
   ));
 }
 
+export async function countReadOnlyLocator(locator, options = {}) {
+  const count = await evaluateReadOnlyLocator(
+    locator,
+    "evaluate_all",
+    READ_ONLY_LOCATOR_COUNT_EXPRESSION,
+    null,
+    options,
+  );
+  return Number(count) || 0;
+}
+
+export async function isVisibleReadOnlyLocator(locator, options = {}) {
+  return Boolean(await evaluateReadOnlyLocator(
+    locator,
+    "evaluate",
+    READ_ONLY_LOCATOR_VISIBLE_EXPRESSION,
+    null,
+    options,
+  ));
+}
+
+export async function isEnabledReadOnlyLocator(locator, options = {}) {
+  return Boolean(await evaluateReadOnlyLocator(
+    locator,
+    "evaluate",
+    READ_ONLY_LOCATOR_ENABLED_EXPRESSION,
+    null,
+    options,
+  ));
+}
+
+export async function callReadOnlyLocatorMethod(locator, method, args = {}) {
+  const options = browserUseOptions(args.options || {});
+  if (method === "count") {
+    return { handled: true, value: await countReadOnlyLocator(locator, options) };
+  }
+  if (method === "is_visible") {
+    return { handled: true, value: await isVisibleReadOnlyLocator(locator, options) };
+  }
+  if (method === "is_enabled") {
+    return { handled: true, value: await isEnabledReadOnlyLocator(locator, options) };
+  }
+  if (method === "inner_text") {
+    return { handled: true, value: await locator.innerText(readOnlyEvaluationOptions(options)) };
+  }
+  if (method === "text_content") {
+    return { handled: true, value: await locator.textContent(readOnlyEvaluationOptions(options)) };
+  }
+  if (method === "get_attribute") {
+    return {
+      handled: true,
+      value: await locator.getAttribute(String(args.name), readOnlyEvaluationOptions(options)),
+    };
+  }
+  if (method === "input_value") {
+    return {
+      handled: true,
+      value: await evaluateReadOnlyLocator(
+        locator,
+        "evaluate",
+        "element => element.value ?? ''",
+        null,
+        options,
+      ),
+    };
+  }
+  if (method === "evaluate" || method === "evaluate_all") {
+    return {
+      handled: true,
+      value: await evaluateReadOnlyLocator(
+        locator,
+        method,
+        String(args.expression || ""),
+        args.argument,
+        options,
+      ),
+    };
+  }
+  return { handled: false, value: null };
+}
+
 function simplify(value) {
   if (value === undefined) return null;
   if (value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") return value;
@@ -292,7 +395,11 @@ export async function resolveFirstVisibleEnabledLocator(playwright, selectors) {
   for (const selector of selectors || []) {
     const base = playwright.locator(String(selector));
     const candidate = await resolveBrowserUseLocatorMember(base, "first");
-    if (await candidate.count() && await candidate.isVisible() && await candidate.isEnabled()) {
+    if (
+      await countReadOnlyLocator(candidate)
+      && await isVisibleReadOnlyLocator(candidate)
+      && await isEnabledReadOnlyLocator(candidate)
+    ) {
       return candidate;
     }
   }
@@ -616,35 +723,13 @@ export async function startBrowserUseExtensionBridge({
 
   const callLocator = async ({ handle, method, ...args }) => {
     const locator = findHandle(locators, handle, "locator");
+    const readOnly = await callReadOnlyLocatorMethod(locator, method, args);
+    if (readOnly.handled) return readOnly.value;
     const options = browserUseOptions(args.options || {});
-    if (method === "count") return await locator.count();
-    if (method === "is_visible") return await locator.isVisible(options);
-    if (method === "is_enabled") return await locator.isEnabled(options);
-    if (method === "inner_text") return await locator.innerText(options);
-    if (method === "text_content") return await locator.textContent(options);
-    if (method === "get_attribute") return await locator.getAttribute(String(args.name), options);
-    if (method === "input_value") {
-      return await evaluateReadOnlyLocator(
-        locator,
-        "evaluate",
-        "element => element.value ?? ''",
-        null,
-        options,
-      );
-    }
     if (method === "fill") return await locator.fill(String(args.value), options);
     if (method === "click") return await locator.click(options);
     if (method === "press") return await locator.press(String(args.key), options);
     if (method === "wait_for") return await locator.waitFor({ state: String(args.state || "visible"), ...options });
-    if (method === "evaluate" || method === "evaluate_all") {
-      return await evaluateReadOnlyLocator(
-        locator,
-        method,
-        String(args.expression || ""),
-        args.argument,
-        options,
-      );
-    }
     throw new Error(`unsupported BrowserUse locator method: ${method}`);
   };
 

@@ -1,8 +1,30 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 13:26 KST (P79 진행 중).
+최종 갱신: 2026-09-24 14:27 KST (P81 실패 경계와 기존 로그인 세션 규칙을 인수인계 최상단에 재정리; 실패 시각 14:23 KST).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
+
+## 실제 실행 순서 — 로그인 세션 작업이면 여기부터
+
+로그인된 화면에서 ChatGPT 응답 확인·다운로드·Pro 전송을 해야 한다면, **사용자가 로그인해 둔 BrowserUse Chrome `extension` 세션과 그 안의 기존 작업 탭을 실제로 사용한다.** 별도 창이 더 편해 보여도 새 Codex Chrome/CDP 창을 열어 대체하지 않는다.
+
+여기서 “새 대화”는 기존 로그인 탭 안의 대화를 바꾸는 것이지 새 브라우저나 별도 탭을 띄우는 뜻이 아니다. Library에 결과가 보이거나 기존 대화에 응답이 있으면 그 같은 탭에서 먼저 회수한다. 아래 경계가 서로 헷갈리면 오른쪽 행동만 한다.
+
+| 상황 | 해야 할 일 | 하지 말 것 |
+|---|---|---|
+| 로그인이 필요한 화면 | `extension`의 기존 사용자 탭을 찾아 claim하고 계속 재사용 | 새 Chrome/창/프로필/CDP를 열어 같은 계정으로 다시 로그인 |
+| 기존 응답·JSON·파일이 있음 | 같은 탭에서 응답을 확인하고 다운로드 | 새 대화를 만들어 같은 요청을 다시 보내기 |
+| 새 Chat이 실제로 필요함 | 기존 로그인 탭 안에서만 새 Chat 시작 | 새 브라우저나 별도 로그인 세션 생성 |
+| extension/탭 claim/대상 확인 실패 | 읽기 전용으로 확인된 상태와 정확한 오류를 남기고 정지 | 다른 세션으로 이동, 재로그인, 첨부·전송 재시도 |
+
+1. 정식 BrowserUse runtime bootstrap을 하고 `setupBrowserRuntime()`이 돌려준 Agent를 보관한다. `agent.browsers.get("extension")`으로 BrowserUse extension을 가져온다.
+2. `browser.user.openTabs()`에서 기존 사용자 탭을 열거한다. 서비스 주소·현재 대화·작업 목적이 일치하는 descriptor 하나를 고르고 `browser.user.claimTab()`으로 claim한다.
+3. 이후 작업은 claim이 반환한 **그 tab 객체 하나**에서만 한다. 먼저 현재 대화, 기존 응답/첨부, 로그인, 실제 Pro 선택을 확인한다. 결과물이 이미 있으면 그 대화의 결과물을 같은 탭에서 회수한다.
+4. 새 대화가 꼭 필요해도 같은 로그인 탭 안에서만 연다. 기존 초안이나 응답을 덮어쓰지 않는다. 실제 입력·첨부·전송은 대상 tab과 요청 내용을 다시 확인한 뒤 승인된 범위에서 한다.
+5. BrowserUse extension 도구를 현재 실행에서 사용할 수 없거나 기존 탭 claim이 실패하면 확인 범위와 **실제 오류**를 남기고 거기서 멈춘다. 다른 backend는 바로 그 로그인 세션·같은 탭을 제어할 수 있음이 확인될 때만 고려한다. 새 창·새 탭·새 프로필·다른 CDP 세션·재로그인·재전송으로 우회하지 않는다. 실제 정책 거부가 확인된 경우에만 정책 문제로 기록하고, 그 외 연결 문제는 기술 실패로 정확히 분류한다.
+
+금지 예: 기존 ChatGPT 탭을 확인하지 않고 Codex가 새 브라우저를 띄워 같은 계정으로 로그인하려고 시도하는 것.
+올바른 예: BrowserUse extension에서 사용자의 기존 로그인 탭을 claim하고, 이미 표시된 응답의 다운로드를 그 탭에서 실행하는 것.
 
 ## 최우선 실행 규칙 (P67)
 
@@ -44,15 +66,32 @@ BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭�
 쉬운 예: 기존 ChatGPT 응답이나 Library에 JSON이 보이면 그 화면의 다운로드 동작을 같은 탭에서 수행하고,
 받은 파일을 준비된 E2R job에 연결한다. “새 세션에서 다시 생성”은 기본 복구 방법이 아니다.
 
-## 최신 상태 인수인계 (P79 작업 checkpoint)
+## 최신 상태 인수인계 (P81, 2026-09-24 14:23 KST)
 
-- P79 시작 시점의 마지막 pushed head는 `7f74d55b2c96851ca394c5f01de88b17a8f2961e`; PR #7은 OPEN/DRAFT/MERGEABLE, `main` 미병합이다. 이 head의 Pro push [35953918533](https://github.com/Daikisong/stock_agent/actions/runs/35953918533), Pro PR [35953921419](https://github.com/Daikisong/stock_agent/actions/runs/35953921419), V6 PR [35953921411](https://github.com/Daikisong/stock_agent/actions/runs/35953921411)이 모두 SUCCESS로 종료됐다. P79 브리지/테스트 변경은 이 CI 이후의 현재 worktree diff이며 아직 새 head CI를 받지 않았다.
-- 이번 timeout 진단의 구체적 결함: 현재 설치된 BrowserUse API 계약상 `locator.evaluate(pageFunction, arg?, options?)` 및 `evaluateAll(..., options?)`의 세 번째 인자는 `PlaywrightEvaluateOptions.timeoutMs`다. 기존 Python→JS bridge는 `locator.evaluate/evaluateAll`에서 options를 전달하지 않았고, `page.evaluate`도 options를 버렸다. Python Playwright facade가 `timeout`을 전달하더라도 extension API는 `timeoutMs`를 사용하므로 이름 변환이 필요하다. P79 local diff는 이 변환/전달을 보완하고, DOM read-only evaluate에 10초 상한을 둔다. 이는 3초 오류를 설명할 수 있는 실제 계약 누락이지만, 아직 같은 탭에서 수정 전후를 비교하지 않았으므로 live root cause 확정으로 승격하지 않는다.
-- P79 local verification: `test_e2r_pro_first_browseruse_extension_bridge.py` 10/10 PASS; `test_e2r_pro_first_v2_1_fresh_orchestration.py` 85/85 PASS; Python compileall, JS `node --check`, `git diff --check` PASS. Local mock Chromium suite는 WSL dynamic library `libnspr4.so` 부재로 시작하지 못해 중단했다. 이것은 headless test runtime의 기술 문제이지 사용자의 로그인 BrowserUse 세션 문제는 아니다. P79 exact-head CI가 전체 browser/full regression 검증의 다음 증거다.
-- BrowserUse 로그인 탭은 P78에서 확인된 **동일한 사용자 기존 `extension` 세션/ChatGPT 탭**을 그대로 보존한다. P79 코드 조사 중 browser window/tab/profile/CDP, navigation, 재로그인, prompt/file/submit/capture는 하지 않았다. 다음 live 시도 직전 canonical BrowserUse bootstrap 후 existing user tabs를 다시 열거하고 exact existing tab을 claim/reuse한다. 새 창/새 세션은 금지한다.
-- SQLite read-only 재검증: `PROJOB-df15a37c58ae7583924e58c0` / 010950 / C15 R6는 `USER_ATTENTION_REQUIRED` version 12, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`; latest event `READ_ONLY_BROWSER_PREFLIGHT`, `safe_unprepared_resume=true`, approval/browser/conversation 미결박, submit/capture 0/0, successor 없음. 기존 3초 timeout은 아직 마지막 오류다. P79 수정 전송이나 same-job retry는 아직 없었다.
-- 현재 다음 한 단계: P79 generic 브리지 수정/회귀/문서/receipt를 한글 commit으로 기존 PR #7에만 push하고 새 exact-head Pro push, Pro PR, V6 PR Actions SUCCESS를 확인한다. Green 뒤에만 같은 C15 R6를 기존 BrowserUse 로그인 세션·동일 기존 탭으로 read-only preflight 재개한다. 10초 timeout이 성공하더라도 그것만으로 연구 완료는 아니다. 이후 master goal의 동일 Pro conversation, 승인 범위, multi-pass saturation, verifier repair, full thesis score gate, cross-mechanism canaries를 계속 수행한다.
-- P79 machine receipt: [P79 receipt](p79_browseruse_evaluate_timeout_bridge_receipt.json). 앞선 탭/오류/미전송 관찰은 [P78 progress](implementation_progress.md#p78--사용자-기존-browseruse-세션-유지와-same-job-preflight-timeout-기록-2026-09-24-1259-kst) 참조.
+- PR #7은 OPEN/DRAFT/MERGEABLE, main 미병합이다. 원격 head `281354cfc6d8e88f21c2bd1b32db72fea6f2f155`의 Pro push [35955888505](https://github.com/Daikisong/stock_agent/actions/runs/35955888505), Pro PR [35955892468](https://github.com/Daikisong/stock_agent/actions/runs/35955892468), V6 PR [35955892448](https://github.com/Daikisong/stock_agent/actions/runs/35955892448)은 모두 SUCCESS다. P81 selector read-path patch는 현재 local diff이며 이 성공 CI에는 포함되지 않았다.
+- 로그인 필요 화면 작업은 P80에서 연결한 BrowserUse `extension`의 **동일 사용자 ChatGPT 탭**으로만 한다. 그 탭의 login/Pro/composer read-only preflight는 PASS였지만, same-job initial runner가 `first_visible()`의 selector 조회에서 다시 3초 timeout을 냈다. 현재 화면은 여전히 ChatGPT home이고 login prompt 없음, composer 1개, `Pro` 선택 control, user turn 0, packet attachment 0이다. `tab.dev.logs()`는 0건이고 `tab.capabilities.get("cdp")`는 `Capability is not available: cdp`를 반환했다.
+- SQLite mode=ro + `PRAGMA query_only=ON`의 active C15 R6는 `PROJOB-df15a37c58ae7583924e58c0`, `USER_ATTENTION_REQUIRED` version 14다. packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df` 그대로, approval/browser/conversation 미결박, submit/capture `0/0`, successor 없음이다. 새 실패 이벤트는 `READ_ONLY_BROWSER_PREFLIGHT`, `safe_unprepared_resume=true`; 현재 last error는 기존과 동일한 3000ms selector timeout이다.
+- 이 시도는 전송·첨부 전에 멈췄다. 같은 탭에서 새 window/tab/profile/CDP, 재로그인, navigation, prompt/file/upload/download/submit/capture, source query/fetch, score/Stage 변경은 0이다. 사용자 기존 탭은 열린 상태로 보존했다.
+- 원인 범위: P79가 `evaluate` 계열에 10초 상한을 전달했지만, 설치된 BrowserUse API에서 `locator.count()`, `isVisible()`, `isEnabled()`는 해당 timeout option을 노출하지 않는다. E2R의 selector helper/attachment lookup이 이 raw API를 바로 호출해 3초 selector deadline이 남아 있었다. 어느 단일 API call에서 이번 timeout이 발생했는지는 직접 계측 전이므로 단정하지 않는다.
+- P81 local patch는 읽기 전용 count/visibility/enabled 조회를 reviewed `evaluateAll/evaluate` callback으로 우회하고 10초 상한을 전달한다. `innerText/textContent/getAttribute`에도 bounded timeout을 전달하며, adapter preflight와 attachment lookup이 같은 helper를 사용한다. action (`click/fill/submit`)은 read-only 경로로 바꾸지 않았다.
+- P81 local tests: BrowserUse bridge 10/10 PASS, fresh orchestration 85/85 PASS, JS `node --check` PASS. P81 code/tests/docs는 아직 commit/push 및 exact-head CI 전이다.
+- 다음 한 단계: P81 patch를 한글 commit으로 기존 PR #7에만 push한다. 세 exact-head CI가 모두 SUCCESS일 때까지 같은 job 재시도/전송은 하지 않는다. Green 뒤에는 정확히 같은 C15 R6 job과 같은 BrowserUse 탭만 다시 사용한다. mismatch가 있으면 멈춘다.
+
+P81 상세 진행기록은 [implementation progress P81](implementation_progress.md#p81--browseruse-selector-read-path-timeout-보강과-same-job-실패-경계-기록-2026-09-24-1423-kst)을 참조한다.
+
+## 최신 상태 인수인계 (P80, 2026-09-24 14:08 KST)
+
+- PR #7은 OPEN/DRAFT/MERGEABLE이며 main에는 미병합이다. 현재 local/origin head는 `281354cfc6d8e88f21c2bd1b32db72fea6f2f155` (`BrowserUse 읽기 전용 평가 timeout 전달을 보정`)이다.
+- 이 정확한 head의 Pro push [35955888505](https://github.com/Daikisong/stock_agent/actions/runs/35955888505), Pro PR [35955892468](https://github.com/Daikisong/stock_agent/actions/runs/35955892468), V6 PR [35955892448](https://github.com/Daikisong/stock_agent/actions/runs/35955892448)은 모두 SUCCESS로 종료됐다. 각 실행의 head SHA는 `281354cfc6d8e88f21c2bd1b32db72fea6f2f155`다.
+- P79 수정 범위와 기술적 근거는 아래 P79 기록을 참조한다. 같은 로그인 탭에서 수정 전후 live 비교는 아직 하지 않았고, 따라서 timeout의 단독 근본 원인을 확정하지 않았다.
+- C15 R6 durable job은 `PROJOB-df15a37c58ae7583924e58c0` / 010950, `USER_ATTENTION_REQUIRED` version 12, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`다. 기존 latest event는 read-only preflight이며 `safe_unprepared_resume=true`; approval/browser/conversation 미결박, submit/capture 0/0, successor 없음이다.
+- exact-head CI green 뒤 canonical BrowserUse bootstrap으로 `extension` 사용자 탭을 열거했고, 기존 ChatGPT 탭 하나(`chatgpt.com` home)를 정확히 claim했다. 로그인 prompt 없음, composer 1개, composer 근처 실제 선택 `Pro` control, 기존 conversation 없음이 확인됐다. production adapter의 동일 bridge-worker `ensure_logged_in()` + `inspect_state()`도 `DEEP_RESEARCH_MODE_READY` / `pro_mode_ready=true`, editor ready, packet/prompt 없음, submit control 비활성, stop 없음으로 PASS했다. 수정된 10초 read-only evaluate 경로에서 이전 3초 timeout은 재현되지 않았다. 이 성공은 기존 오류의 유일한 root cause까지 입증하지는 않는다.
+- 같은 시점 SQLite mode=ro + `query_only=ON` 재확인: 동일 C15 R6 `PROJOB-df15a37c58ae7583924e58c0`, state version 12, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df` 그대로다. `USER_ATTENTION_REQUIRED`, browser/conversation/approval 미결박, submit/capture `0/0`, successor 없음이다. 역사적 `last_error`에는 이전 3초 timeout이 남아 있지만 새 read-only preflight는 성공했다.
+- 이번 P80 브라우저 확인은 claim한 그 기존 사용자 탭에서만 수행했다. 새 창/탭/프로필/CDP 세션, 재로그인, navigation, prompt 입력, upload/download, submit/capture, 새 source query/fetch, score/Stage 변경은 전부 0이다. 사용자 탭은 열린 상태로 두었다. 실제 로그인 브라우저 작업의 필수 경로는 이 문서 위쪽 “실제 실행 순서”다.
+- 다음 한 단계: 사용자가 앞서 허가한 실제 전송 범위 안에서 **같은 C15 R6 job만** `resume_unprepared_attention_job_id`로 초기 Pro pass에 재개한다. 전송 직전 동일 packet hash, version/unsent 상태, 같은 tab, 실제 Pro 선택을 다시 확인한다. 하나라도 예상과 다르면 전송하지 말고 오류를 기록한다. 새 job·새 브라우저·새 세션은 만들지 않는다.
+- CI green과 read-only 재확인만으로 full goal이 완료되는 것은 아니다. master goal, 동일 Pro conversation, 승인 범위, multi-pass saturation, verifier repair, full thesis gate와 canary 요구사항은 계속 열린다.
+
+P79 receipt: [P79 receipt](p79_browseruse_evaluate_timeout_bridge_receipt.json). P80 same-tab read-only 결과와 다음 동작은 위 checkpoint에 기록했다. 이전 3초 오류 및 그 전의 같은 탭 실패 이력은 [P78 progress](implementation_progress.md#p78--사용자-기존-browseruse-세션-유지와-same-job-preflight-timeout-기록-2026-09-24-1259-kst)를 참조한다.
 
 ## 이전 상태 인수인계 (P78)
 
