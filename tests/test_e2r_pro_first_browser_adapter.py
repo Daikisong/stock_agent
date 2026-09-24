@@ -264,6 +264,7 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
                     return_value={
                         "open": chooser_open,
                         "chrome_owned_dialog_count": int(chooser_open),
+                        "unknown_owner_count": 0,
                     }
                 )
 
@@ -296,6 +297,7 @@ class ProFirstBrowserAdapterTest(unittest.IsolatedAsyncioTestCase):
                     return_value={
                         "open": chooser_open,
                         "chrome_owned_dialog_count": int(chooser_open),
+                        "unknown_owner_count": 0,
                     }
                 )
 

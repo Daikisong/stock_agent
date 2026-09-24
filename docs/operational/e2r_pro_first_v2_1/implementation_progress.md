@@ -6971,3 +6971,23 @@ canonical BrowserUse bootstrap
 ### 다음 한 단계
 
 회귀·문서 변경을 한글 commit으로 기존 PR #7 branch에만 push하고, 수정된 **정확한 head**의 필수 GitHub Actions가 모두 SUCCESS인지 확인한다. 그 뒤에만 C15 R6 `PROJOB-df15a37c58ae7583924e58c0`을 재사용해, 사용자의 기존 BrowserUse `extension` 로그인 세션에서 같은 ChatGPT 탭을 다시 claim한다. read-only same-tab gate와 durable identity가 모두 일치할 때만 같은 job 준비를 이어간다. 탭 연결이 안 되거나 상태 불명/불일치면 새 브라우저를 열지 않고 입력 전에 정지한다. 최신 실행 절차는 [BrowserUse existing-session handoff P86](browseruse_existing_session_handoff.md) 첫머리를 따른다.
+
+## P87 — exact-head CI가 찾은 BrowserUse recovery mock contract 누락 (2026-09-24 17:30 KST)
+
+### P86 commit/push 및 원격 검증
+
+- P86 code+documentation은 한글 commit `35f9c20d261802763a4d71582d53655cf3135847` (`기존 로그인 탭 첨부 timeout 복구와 인수인계 보강`)으로 PR #7 기존 branch에 push했다. PR #7은 OPEN/DRAFT/MERGEABLE이며 main은 변경하지 않았다.
+- Pro push workflow [35974596344](https://github.com/Daikisong/stock_agent/actions/runs/35974596344)에서 `static-security` job은 PASS했다. `browser-mock-e2e`는 101 tests, error 1/failure 1; `core-unit`은 296 tests, error 1/failure 1이다. `full-regression`은 마지막 조회에서 계속 실행 중이었다.
+- 별도 Pro PR run [35974601713](https://github.com/Daikisong/stock_agent/actions/runs/35974601713)은 pending, V6 run [35974601514](https://github.com/Daikisong/stock_agent/actions/runs/35974601514)은 full unit tests 중이었다. NSLAB public-host raw-acquire run [35974601512](https://github.com/Daikisong/stock_agent/actions/runs/35974601512)는 `skipped`, 따라서 그 run에서 fetch는 발생하지 않았다.
+- 실패 로그의 실제 원인: `test_unprepared_recovery_requires_clean_same_session_browser_state`의 `SameSessionPageProxy`와 `test_unprepared_recovery_fails_closed_for_open_dialog_or_user_draft`의 두 proxy가 `unknown_owner_count`를 결과에 넣지 않았다. 새 production gate는 이 필드가 없으면 파일 선택기 소유자를 검증할 수 없다고 판단해 fail-closed했다. 이 동작은 의도된 안전 동작이며 production gate를 완화하지 않는다.
+
+### 즉시 보정과 한계
+
+- 두 Playwright test proxy response 모두에 `unknown_owner_count: 0`을 명시했다. 실제 picker open / owner unknown 회귀는 별도 `UnpreparedRecoveryReadOnlyGateTest`에서 계속 fail-closed 검증한다.
+- 보정 후 locally run한 BrowserUse bridge + read-only gate + 전체 fresh orchestration suite **106/106 PASS**; Node syntax, Python compile, `git diff --check` PASS다. Production static audit은 직전 P86 source diff에서 `critical_count=0` PASS다.
+- 이 WSL 환경에서 전체 `ProFirstBrowserAdapterTest`는 Chromium launch의 `libnspr4.so` 누락으로 실행할 수 없다. 따라서 failing Playwright integration tests는 이곳에서 재현하지 못했고, 설치된 브라우저 의존성을 가진 CI의 재검증을 사용한다. 이 오류는 사용자의 BrowserUse 로그인 세션과 별개다.
+- P87 중 사용자의 실제 ChatGPT 탭을 새로 열거나 조작하지 않았다. P86 read-only check 뒤 input, attachment retry, submit, capture, new query/fetch, score/Stage change는 없다. Durable same-job state는 P85 snapshot 이후 쓰지 않았으므로 재개 전 다시 확인해야 한다.
+
+### 다음 한 단계
+
+위 두 mock fixture correction과 P87 handoff를 한글 commit으로 **기존 PR #7 branch**에 push한다. 그 정확한 SHA에서 Pro push + Pro PR + V6 Actions가 모두 SUCCESS인지 확인한다. 그 뒤에만 persistent `mcp__node_repl__js`의 canonical BrowserUse bootstrap으로 이미 로그인된 `extension` 세션의 기존 ChatGPT 탭을 다시 열거하고 정확히 claim한다. **새 창·탭·프로필·CDP 세션·재로그인은 금지**한다. 동일 C15 R6 durable state와 same-tab read-only gate가 모두 일치해야 recovery 준비로 진행하며, 탭을 claim할 수 없거나 증명이 불완전하면 입력·첨부 전에 멈춘다. 자세한 기준은 [BrowserUse existing-session handoff P87](browseruse_existing_session_handoff.md) 첫머리다.

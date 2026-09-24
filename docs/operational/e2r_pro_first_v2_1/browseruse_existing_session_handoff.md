@@ -1,12 +1,26 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 17:10 KST (P86 same-session 읽기 전용 recovery gate와 재개 절차 갱신).
+최종 갱신: 2026-09-24 17:30 KST (P87 exact-head CI 실패 원인과 test fixture 보정 인수인계).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
-## 최신 상태 — P86 (2026-09-24 17:10 KST)
+## 최신 상태 — P87 (2026-09-24 17:30 KST)
 
-이 상단 P86이 현재 운영판정이다. 아래 P83/P84/P80/P81 등 예전 체크포인트의 실행 계획과 CI 상태는 당시 이력이며, 현재 다음 단계에는 적용하지 않는다.
+P87에서도 최우선 원칙은 동일하다: 로그인 필요한 일은 사용자가 이미 로그인해 둔 BrowserUse `extension`의 **기존 작업 탭**에서 한다. 그 탭을 찾거나 claim할 수 없으면 새 브라우저로 우회하지 않는다.
+
+- 마지막 실제 세션 점검은 P86의 read-only 확인이다. 같은 로그인 ChatGPT 탭에서 login prompt 없음, 실제 `Pro`, 빈 composer, user turn 0, file input 5개 비어 있음, 화면상 packet 이름 없음이 관찰됐다. Windows UIA는 최상위 창 24개를 읽어 Chrome 소유 `Open` dialog 후보 0 / 판별 불가 owner 0을 반환했다. 그 이후 UI 조작이나 새 브라우저/탭 생성은 없으므로, 이 값을 새 확인처럼 표현하지 않는다.
+- durable C15 R6 job의 마지막 read-only SQLite 상태는 P85의 `2026-09-24T07:28:13.906437Z`: `USER_ATTENTION_REQUIRED`, version 18, submit/capture `0/0`, browser/conversation binding 없음, `safe_unprepared_resume=false`. 다음 재개 전에 same-job durable state를 다시 읽는다.
+- PR #7은 OPEN/DRAFT/MERGEABLE, main 미병합이다. pushed head `35f9c20d261802763a4d71582d53655cf3135847`; 한글 commit `기존 로그인 탭 첨부 timeout 복구와 인수인계 보강`.
+- Exact-head Pro push run [35974596344](https://github.com/Daikisong/stock_agent/actions/runs/35974596344)은 마지막 조회에서 in progress: `static-security` PASS, `browser-mock-e2e` 101 tests 중 error 1/failure 1, `core-unit` 296 tests 중 error 1/failure 1, `full-regression` 진행 중. Pro PR run [35974601713](https://github.com/Daikisong/stock_agent/actions/runs/35974601713)은 pending; V6 run [35974601514](https://github.com/Daikisong/stock_agent/actions/runs/35974601514)은 전체 테스트 진행 중.
+- 두 실패는 테스트 proxy가 새 read-only picker contract의 `unknown_owner_count` 필드를 누락해 fail-closed한 것으로 로그에서 확인됐다. 생산 코드를 느슨하게 하지 않고 기존 proxy fixture 두 곳에 `unknown_owner_count: 0`을 더했다. 이 보정은 다음 한글 commit/push에 포함할 local diff다.
+- NSLAB public-host raw-acquire run [35974601512](https://github.com/Daikisong/stock_agent/actions/runs/35974601512)는 `skipped`; 새 fetch는 실행되지 않았다. P86 로컬 focused 106/106 및 static audit PASS였지만, Playwright integration tests는 로컬 Chromium의 `libnspr4.so` 누락 때문에 실행하지 못해 위 fixture 누락을 놓쳤다.
+- 따라서 현재 exact-head CI는 아직 green이 아니며 same-job recovery 금지다. 보정된 테스트/문서를 같은 PR branch에 push한 뒤, 새 exact head의 Pro push, Pro PR, V6가 모두 SUCCESS여야 기존 로그인 탭에서 read-only same-tab gate를 다시 확인한다. packet attach/prompt/submit은 그 확인과 durable state 대조 전까지 하지 않는다.
+
+세부 P87 경과: [implementation progress P87](implementation_progress.md#p87).
+
+## P86 확인 기록 — historical (P87이 현재 판정)
+
+이 P86 checkpoint는 17:10 KST 당시의 기록이다. 아래 P83/P84/P80/P81 등 이전 체크포인트도 당시 이력이며 현재 다음 단계에는 적용하지 않는다.
 
 **로그인이 필요한 작업이면 사용자가 이미 로그인해 둔 BrowserUse Chrome `extension` 세션에서 기존 작업 탭을 찾아, 그 정확한 탭에서 진행한다.** 새 창·새 탭·새 프로필·별도 CDP 세션을 만들거나 다시 로그인하는 것은 대체 방법이 아니다. 기존 탭을 찾거나 claim할 수 없으면 브라우저 작업을 멈추고 실제 오류와 확인 범위를 문서화한다. “새 Chat”이 필요해도 같은 로그인 탭 안에서만 연다.
 
