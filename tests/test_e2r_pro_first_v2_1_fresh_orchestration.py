@@ -9,9 +9,10 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 import unittest
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
 
 from e2r.pro_first.approval import ProApprovalService
+from e2r.pro_first.browser.browseruse_extension_bridge import BrowserUseBridgeError
 from e2r.pro_first.browser.protocol import (
     BrowserInspection,
     BrowserResultSnapshot,
@@ -21,7 +22,7 @@ from e2r.pro_first.browser.protocol import (
     PreparedBrowserJob,
     PreparedFollowupPass,
 )
-from e2r.pro_first.config import load_pro_first_local_config
+from e2r.pro_first.config import BrowserConnectionMode, load_pro_first_local_config
 from e2r.pro_first.capture.receipt import CaptureReceipt, file_sha256
 from e2r.pro_first.fresh_session import (
     FreshInitialCanarySpec,
@@ -433,6 +434,176 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
         self.assertIsNone(resumed.browser_session_id)
         self.assertIsNone(resumed.conversation_id)
         self.assertIsNone(resumed.approval_consumed_at)
+
+    async def test_browseruse_worker_open_error_is_recorded_as_safe_before_page_preparation(self) -> None:
+        base = load_pro_first_local_config(
+            Path(__file__).parents[1]
+            / "configs/e2r_pro_first_local.example.yaml"
+        )
+        config = replace(
+            base,
+            runtime_root=self.boundary.fresh_runtime_root,
+            browser=replace(
+                base.browser,
+                mode=BrowserConnectionMode.BROWSER_USE_EXTENSION,
+            ),
+        )
+        with patch(
+            "e2r.pro_first.fresh_session.orchestrator_v3.ProBrowserWorker.open",
+            new_callable=AsyncMock,
+            side_effect=BrowserUseBridgeError("handshake failed before a session was returned"),
+        ):
+            with self.assertRaisesRegex(BrowserUseBridgeError, "handshake failed"):
+                await self.orchestrator.prepare_initial_in_logged_in_browser(
+                    self.built,
+                    config=config,
+                )
+
+        job = self.store.get_job(self.fresh_job.job_id)
+        events = self.store.list_events(self.fresh_job.job_id)
+        event = next(
+            row for row in events if row.idempotency_key.startswith("fresh-v3-browser-attention:")
+        )
+        self.assertEqual(job.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(event.payload.get("safe_unprepared_resume"), True)
+        self.assertEqual(
+            event.payload.get("preparation_failure_stage"),
+            "BROWSER_SESSION_OPEN",
+        )
+        self.assertEqual(event.payload.get("submit_count"), 0)
+        self.assertEqual(job.submit_count, 0)
+        self.assertEqual(job.capture_count, 0)
+        self.assertIsNone(job.browser_session_id)
+        self.assertIsNone(job.conversation_id)
+
+    def test_exact_persisted_browseruse_exec_context_failure_can_resume_unsent_job(self) -> None:
+        current = self.store.get_job(self.fresh_job.job_id)
+        preparing = self.store.transition(
+            self.fresh_job.job_id,
+            expected_version=current.state_version,
+            to_status=JobStatus.BROWSER_PREPARING,
+            actor="v2.1-fresh-v3-browser-worker",
+            idempotency_key=f"test-browser-preparing:{self.fresh_job.job_id}",
+        )
+        self.store.transition(
+            self.fresh_job.job_id,
+            expected_version=preparing.state_version,
+            to_status=JobStatus.USER_ATTENTION_REQUIRED,
+            actor="v2.1-fresh-v3-browser-worker",
+            idempotency_key=(
+                f"fresh-v3-browser-attention:{self.fresh_job.job_id}:"
+                f"{preparing.state_version}"
+            ),
+            payload={
+                "automatic_login_allowed": False,
+                "automatic_resubmit_allowed": False,
+                "new_chat_route_required": True,
+                "safe_unprepared_resume": False,
+                "preparation_failure_stage": "DRAFT_PREPARATION_OR_UNKNOWN",
+                "submit_count": 0,
+            },
+            updates={
+                "last_error_class": "BrowserUseBridgeError",
+                "last_error_message": (
+                    "BRIDGE_OPERATION_FAILED: node_repl exec context not found"
+                ),
+            },
+        )
+        base = load_pro_first_local_config(
+            Path(__file__).parents[1]
+            / "configs/e2r_pro_first_local.example.yaml"
+        )
+        runner = FreshV3InitialLiveCanaryRunner(
+            replace(base, runtime_root=self.boundary.fresh_runtime_root),
+            old_runtime_root=self.boundary.old_runtime_root,
+            fresh_runtime_root=self.boundary.fresh_runtime_root,
+            repo_root=self.root,
+            store=self.store,
+            source_verifier=object(),
+            report_structurer=object(),
+        )
+        spec = FreshInitialCanarySpec(
+            old_job_id=self.old_job.job_id,
+            old_run_id=OLD_RUN,
+            old_conversation_id=OLD_CONVERSATION,
+            fresh_session_id=self.boundary.fresh_session_id,
+            archetype_ids=(ARCHETYPE,),
+        )
+
+        boundary, resumed = runner._load_unprepared_attention_job(
+            FreshSessionBoundaryService(self.store),
+            spec=spec,
+            manifest=self.manifest,
+            job_id=self.fresh_job.job_id,
+        )
+
+        self.assertEqual(boundary.fresh_job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(resumed.submit_count, 0)
+        self.assertEqual(resumed.capture_count, 0)
+        self.assertIsNone(resumed.browser_session_id)
+        self.assertIsNone(resumed.conversation_id)
+        self.assertIsNone(resumed.approval_consumed_at)
+
+    def test_near_match_browseruse_exec_context_error_remains_blocked(self) -> None:
+        current = self.store.get_job(self.fresh_job.job_id)
+        preparing = self.store.transition(
+            self.fresh_job.job_id,
+            expected_version=current.state_version,
+            to_status=JobStatus.BROWSER_PREPARING,
+            actor="v2.1-fresh-v3-browser-worker",
+            idempotency_key=f"test-browser-preparing:{self.fresh_job.job_id}",
+        )
+        self.store.transition(
+            self.fresh_job.job_id,
+            expected_version=preparing.state_version,
+            to_status=JobStatus.USER_ATTENTION_REQUIRED,
+            actor="v2.1-fresh-v3-browser-worker",
+            idempotency_key=(
+                f"fresh-v3-browser-attention:{self.fresh_job.job_id}:"
+                f"{preparing.state_version}"
+            ),
+            payload={
+                "new_chat_route_required": True,
+                "safe_unprepared_resume": False,
+                "preparation_failure_stage": "DRAFT_PREPARATION_OR_UNKNOWN",
+                "submit_count": 0,
+            },
+            updates={
+                "last_error_class": "BrowserUseBridgeError",
+                "last_error_message": (
+                    "BRIDGE_OPERATION_FAILED: node_repl exec context not found; extra"
+                ),
+            },
+        )
+        base = load_pro_first_local_config(
+            Path(__file__).parents[1]
+            / "configs/e2r_pro_first_local.example.yaml"
+        )
+        runner = FreshV3InitialLiveCanaryRunner(
+            replace(base, runtime_root=self.boundary.fresh_runtime_root),
+            old_runtime_root=self.boundary.old_runtime_root,
+            fresh_runtime_root=self.boundary.fresh_runtime_root,
+            repo_root=self.root,
+            store=self.store,
+            source_verifier=object(),
+            report_structurer=object(),
+        )
+        spec = FreshInitialCanarySpec(
+            old_job_id=self.old_job.job_id,
+            old_run_id=OLD_RUN,
+            old_conversation_id=OLD_CONVERSATION,
+            fresh_session_id=self.boundary.fresh_session_id,
+            archetype_ids=(ARCHETYPE,),
+        )
+
+        with self.assertRaisesRegex(ValueError, "read-only preflight failure"):
+            runner._load_unprepared_attention_job(
+                FreshSessionBoundaryService(self.store),
+                spec=spec,
+                manifest=self.manifest,
+                job_id=self.fresh_job.job_id,
+            )
 
     def test_unprepared_attention_resume_rejects_jobs_with_prepared_receipt(self) -> None:
         current = self.store.get_job(self.fresh_job.job_id)

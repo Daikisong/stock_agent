@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 10:42 KST (P75).
+최종 갱신: 2026-09-24 11:30 KST (P76).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
@@ -44,7 +44,31 @@ BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭�
 쉬운 예: 기존 ChatGPT 응답이나 Library에 JSON이 보이면 그 화면의 다운로드 동작을 같은 탭에서 수행하고,
 받은 파일을 준비된 E2R job에 연결한다. “새 세션에서 다시 생성”은 기본 복구 방법이 아니다.
 
-## 최신 상태 인수인계 (P75)
+## 최신 상태 인수인계 (P76)
+
+- 로그인 필요 작업은 사용자가 이미 로그인한 BrowserUse `extension`의 **그 기존 세션과 기존 ChatGPT 탭**에서만 한다.
+  새 browser/window/tab/profile, CDP 대체 연결, 재로그인은 하지 않는다. claim한 바로 그 tab object를 유지하며 tab ID,
+  계정 식별자, cookie/token은 기록하지 않는다.
+- 2026-09-24 11:29 KST에 같은 탭을 읽기 전용 확인했다: ChatGPT origin/title, Pro control 활성, composer 1개·빈 상태,
+  selected file 0, legacy Deep Research 비활성. C15 R6 runner 실패 뒤에도 job marker는 화면에 없었다. 사용자의 탭을 닫거나 reset하지 않았다.
+- P75 CI 통과 후 C15 R6 same-job resume를 시도했지만, `BrowserUseBridgeClient.connect()` handshake에서
+  `BRIDGE_OPERATION_FAILED: node_repl exec context not found`로 멈췄다. bridge `runUntil()`을 이전 Node REPL 호출에서 background로
+  남긴 뒤 다음 도구 호출에서 Python worker를 실행해 BrowserUse가 요구하는 활성 `node_repl` execution context를 놓친 것이다.
+  로그인/인증 문제는 아니다. handshake 단계라 runner가 `page.goto`, prompt 입력, upload, submit, capture에 도달하지 않았다.
+- 이 미전송 job 오류는 `USER_ATTENTION_REQUIRED` / version 10, submit/capture `0/0`, approval/browser/conversation 미결박,
+  packet hash unchanged다. 당시 attention event가 `safe_unprepared_resume=false`여서 그대로 재시도하지 않았다.
+- P76 local patch는 (1) BrowserUse worker-open failure를 `BROWSER_SESSION_OPEN`으로 안전 기록하고, (2) 기존 durable row는
+  정확한 이 handshake 오류·동일 unsent identity·미결박·prepare receipt 부재일 때만 복구하며, (3) 근접 문자열/기타 오류는 차단한다.
+  Focused bridge + orchestration 94/94 PASS; P76 exact-head CI는 아직 pending이다.
+- 중요한 실행 방식: 실제 worker를 재개할 때 bridge와 Python worker를 별도 Node REPL 호출로 나누지 않는다.
+  **하나의 active `mcp__node_repl__js` 호출 안에서 `await bridge.runUntil(workerPromise)`를 실행**해 RPC 서비스와 브라우저 callback의
+  실행문맥을 유지한다. 사용자의 기존 탭은 그대로 두고 새로운 브라우저를 만들지 않는다.
+- 다음 한 단계: P76 코드를 한글 커밋으로 기존 PR #7 branch에 push하고 exact-head Pro push/PR + V6 PR Actions SUCCESS를 기다린다.
+  그 뒤에만 동일 C15 R6 job을 동일 BrowserUse 로그인 탭에서 재개한다.
+- 세부 내역: [P76 progress](implementation_progress.md#p76--same-tab-browseruse-실행문맥-실패의-무전송-복구-게이트-보강-2026-09-24-1130-kst),
+  [P76 receipt](p76_browseruse_exec_context_recovery_receipt.json).
+
+## 직전 상태 인수인계 (P75, P76이 최신 상태를 대체)
 
 - **로그인·Pro 작업은 사용자가 이미 로그인한 BrowserUse `extension`의 같은 기존 탭에서만 한다.** 새 창/탭/프로필,
   CDP 대체 세션, 재로그인을 열지 않는다. 정확한 기존 사용자 탭을 claim한 객체를 계속 쓰고, tab ID·계정 식별자·cookie/token은 기록하지 않는다.

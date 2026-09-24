@@ -439,12 +439,13 @@ class FreshV3InitialLiveCanaryRunner:
         manifest: OldAnswerLeakageManifest,
         job_id: str,
     ) -> tuple[Any, Any]:
-        """Resume only an exact no-send job whose preflight failure is safe.
+        """Resume only an exact no-send job whose browser-open failure is safe.
 
-        The durable attention event must prove the failure happened in the
-        read-only browser preflight. A compatibility check admits the single
-        older TypeError shape from the pre-marker BrowserUse RPC envelope; all
-        prepared, approved, submitted, or captured states fail closed.
+        The durable attention event must prove the failure happened before any
+        browser preparation or during the read-only preflight. Narrow legacy
+        checks admit one older RPC-envelope error and one exact historical
+        BrowserUse handshake-context error; prepared, approved, submitted, or
+        captured states still fail closed.
         """
 
         boundary, job = boundary_service.load_existing(
@@ -473,9 +474,29 @@ class FreshV3InitialLiveCanaryRunner:
             == "READ_ONLY_BROWSER_PREFLIGHT"
             and attention_event.payload.get("submit_count") == 0
         )
+        safe_session_open_event = bool(
+            attention_event is not None
+            and attention_event.from_status == JobStatus.BROWSER_PREPARING.value
+            and attention_event.to_status == JobStatus.USER_ATTENTION_REQUIRED.value
+            and attention_event.actor == "v2.1-fresh-v3-browser-worker"
+            and attention_event.payload.get("safe_unprepared_resume") is True
+            and attention_event.payload.get("preparation_failure_stage")
+            == "BROWSER_SESSION_OPEN"
+            and attention_event.payload.get("submit_count") == 0
+        )
         legacy_preflight_error = bool(
             job.last_error_class == "TypeError"
             and job.last_error_message == "'NoneType' object is not subscriptable"
+        )
+        exact_legacy_bridge_handshake_error = bool(
+            job.last_error_class == "BrowserUseBridgeError"
+            and job.last_error_message
+            == "BRIDGE_OPERATION_FAILED: node_repl exec context not found"
+            and attention_event is not None
+            and attention_event.payload.get("safe_unprepared_resume") is False
+            and attention_event.payload.get("preparation_failure_stage")
+            == "DRAFT_PREPARATION_OR_UNKNOWN"
+            and attention_event.payload.get("submit_count") == 0
         )
         prepared_receipt = (
             boundary.fresh_job_root
@@ -504,7 +525,12 @@ class FreshV3InitialLiveCanaryRunner:
                 )
             )
             or prepared_receipt.exists()
-            or not (safe_preflight_event or legacy_preflight_error)
+            or not (
+                safe_preflight_event
+                or safe_session_open_event
+                or legacy_preflight_error
+                or exact_legacy_bridge_handshake_error
+            )
             or attention_event is None
             or attention_event.from_status != JobStatus.BROWSER_PREPARING.value
             or attention_event.to_status != JobStatus.USER_ATTENTION_REQUIRED.value

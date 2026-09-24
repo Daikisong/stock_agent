@@ -1,0 +1,141 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p76_browseruse_exec_context_recovery_v1",
+  "observed_at": "2026-09-24T11:30:02+09:00",
+  "status": "SAME_TAB_HANDSHAKE_CONTEXT_FAILURE_NO_SEND_NARROW_RECOVERY_PATCH_LOCAL_PASS_EXACT_HEAD_CI_PENDING",
+  "goal_complete": false,
+  "repository": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "pre_patch_head": "2bf6d852095da87a522794a27987f1f48e55441c",
+    "patch_committed": false,
+    "patch_pushed": false,
+    "exact_head_ci": "PENDING",
+    "pull_request": 7,
+    "pull_request_state": "OPEN",
+    "pull_request_draft": true,
+    "pull_request_mergeable": true,
+    "main_merge": false
+  },
+  "previous_green_head": {
+    "head_sha": "2bf6d852095da87a522794a27987f1f48e55441c",
+    "pro_push_run": {
+      "run_id": 35944900937,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35944900937",
+      "conclusion": "SUCCESS",
+      "full_unittest_count": 7920,
+      "skipped_count": 38,
+      "failure_count": 0,
+      "error_count": 0,
+      "independent_reviewer_gate": "A-H PASS"
+    },
+    "pro_pr_run": {
+      "run_id": 35944903862,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35944903862",
+      "conclusion": "SUCCESS"
+    },
+    "v6_pr_run": {
+      "run_id": 35944903871,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35944903871",
+      "conclusion": "SUCCESS",
+      "gate1_receipt_tests": "4/4 PASS",
+      "production_static_audit_critical_count_sum": 0,
+      "full_unittest_count": 7920,
+      "skipped_count": 38,
+      "failure_count": 0,
+      "error_count": 0
+    },
+    "note": "All three runs verify P75 head only. They do not verify the P76 local patch."
+  },
+  "browseruse": {
+    "backend": "Chrome BrowserUse extension",
+    "existing_logged_in_session_reused": true,
+    "same_existing_claimed_tab_reused": true,
+    "new_browser_window_tab_or_profile_created": false,
+    "cdp_fallback_used": false,
+    "relogin_performed": false,
+    "user_tab_closed_or_reset": false,
+    "same_tab_post_failure_read_only_observation": {
+      "origin": "https://chatgpt.com/",
+      "title": "ChatGPT",
+      "pro_control_active": true,
+      "composer_count": 1,
+      "composer_blank": true,
+      "selected_file_count": 0,
+      "legacy_deep_research_active": false,
+      "active_c15_job_marker_visible": false
+    },
+    "failed_execution_shape": {
+      "bridge_created_for_exact_existing_tab": true,
+      "run_until_left_as_unawaited_background_promise": true,
+      "python_worker_started_in_later_node_repl_call": true,
+      "failure_stage": "BROWSERUSE_HANDSHAKE_BEFORE_SESSION_RETURN",
+      "error": "BRIDGE_OPERATION_FAILED: node_repl exec context not found",
+      "root_cause": "BrowserUse dispatch requires the active node_repl execution context; the bridge request service outlived its originating tool call.",
+      "login_or_authentication_failure": false,
+      "page_goto_reached": false,
+      "prompt_input": false,
+      "packet_upload": false,
+      "submit": false,
+      "capture": false
+    },
+    "correct_execution_contract": "Within one active mcp__node_repl__js call, await bridge.runUntil(workerPromise); do not move Python worker execution into a later Node REPL call."
+  },
+  "durable_job_read_only": {
+    "database_access": "mode=ro; PRAGMA query_only=ON",
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "symbol": "010950",
+    "archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 10,
+    "packet_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "packet_hash_matches_expected": true,
+    "last_error_class": "BrowserUseBridgeError",
+    "last_error_message": "BRIDGE_OPERATION_FAILED: node_repl exec context not found",
+    "latest_event": {
+      "from_status": "BROWSER_PREPARING",
+      "to_status": "USER_ATTENTION_REQUIRED",
+      "event_idempotency_key_suffix": 9,
+      "preparation_failure_stage": "DRAFT_PREPARATION_OR_UNKNOWN",
+      "safe_unprepared_resume": false,
+      "submit_count": 0
+    },
+    "approval_fields_null": true,
+    "browser_session_bound": false,
+    "conversation_bound": false,
+    "submit_count": 0,
+    "capture_count": 0,
+    "successor_job_created": false
+  },
+  "code_change": {
+    "files": [
+      "src/e2r/pro_first/fresh_session/orchestrator_v3.py",
+      "src/e2r/pro_first/fresh_session/live_canary_v3.py",
+      "tests/test_e2r_pro_first_v2_1_fresh_orchestration.py"
+    ],
+    "change": "Record a BrowserUse worker-open failure before page preparation as BROWSER_SESSION_OPEN; admit the one exact already-persisted node_repl handshake error for same-job recovery only if identity, no-submit/no-capture, unbound approval/browser/conversation, and no-prepare-receipt checks all pass.",
+    "near_match_behavior": "FAIL_CLOSED",
+    "automatic_resubmit_enabled": false
+  },
+  "local_verification": {
+    "focused_suites": [
+      "tests.test_e2r_pro_first_browseruse_extension_bridge",
+      "tests.test_e2r_pro_first_v2_1_fresh_orchestration"
+    ],
+    "tests_run": 94,
+    "passed": 94,
+    "failure_count": 0,
+    "error_count": 0,
+    "node_check": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "other_zero_counts": {
+    "prompt_input": 0,
+    "packet_upload": 0,
+    "submit": 0,
+    "capture": 0,
+    "new_source_queries": 0,
+    "new_source_fetches": 0,
+    "score_changes": 0,
+    "stage_changes": 0
+  },
+  "next_step": "Commit P76 code/tests/Korean documentation/receipt and push only to existing PR #7 branch. Wait for exact-head Pro push, Pro PR, and V6 PR Actions SUCCESS. Then resume the same unsent C15 R6 through one active BrowserUse node_repl call using await bridge.runUntil(workerPromise) with the exact same existing logged-in tab."
+}

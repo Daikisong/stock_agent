@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-24 10:42 KST / P75: BrowserUse evaluate callback 계약 수리, 같은 로그인 탭 read-only 통합 smoke PASS, exact-head CI 대기`
+기준 시각: `2026-09-24 11:30 KST / P76: same-tab BrowserUse 실행문맥 오류의 무전송 복구 게이트 보강, exact-head CI 대기`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -52,19 +52,20 @@ P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
 P7 000660 fresh canary                    COMPLETE
 P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS; C15 R6 same job remains unsent at read-only BrowserUse preflight; C28 pending)
-P10 final CI/audit                        IN_PROGRESS (P74 head 8b86d2db exact-head Pro push/PR + V6 PR Actions SUCCESS; P75 local 91/91 + same-tab smoke PASS, new exact-head CI pending; live 3/3 미충족)
+P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS; C15 R6 same job still unsent after BrowserUse handshake-context error; C28 pending)
+P10 final CI/audit                        IN_PROGRESS (P75 head 2bf6d852 exact-head Pro push/PR + V6 PR Actions SUCCESS; P76 local 94/94 + same-tab no-mutation check PASS, new exact-head CI pending; live 3/3 미충족)
 ```
 
-### 지금부터 재개할 때의 짧은 인수인계 (P75)
+### 지금부터 재개할 때의 짧은 인수인계 (P76)
 
 - 현재 branch는 `feature/e2r-pro-first-browser-platform-20260822`, PR #7은 OPEN/DRAFT/MERGEABLE이며 `main`에는 병합하지 않는다.
-- 마지막 원격 검증 head는 P74 `8b86d2db6479c40d4bc0463354dc9a3de711087e`다. 이 head의 Pro push, Pro PR, V6 PR Actions는 SUCCESS다. P75는 새 코드 변경이므로 그 결과를 P75 CI로 세지 않는다.
-- P75는 BrowserUse DOM evaluation을 문자열 호출식으로 넘기던 계약을 발견했다. extension API는 함수 callback을 요구하므로 read-only inspector가 3초 timeout했다. 임의 동적 코드 생성을 추가하지 않고, 검토된 static read-only callback allowlist를 추가했으며 미등록 표현식은 fail-closed다.
-- P75 로컬 BrowserUse bridge + fresh orchestration 회귀는 91/91 PASS, `node --check`와 `git diff --check` PASS. 같은 BrowserUse extension의 기존 claim tab을 통한 Python worker `inspect_state()` smoke도 PASS했다. prompt 입력, 첨부, 전송, 캡처 및 navigation은 하지 않았다.
-- 중앙 SQLite `mode=ro` 확인: 동일 C15 R6 job은 `USER_ATTENTION_REQUIRED` / version 8, 기존 packet hash 일치, approval/browser/conversation 미결박, submit/capture 0/0. 마지막 실패는 `READ_ONLY_BROWSER_PREFLIGHT`의 `div.ProseMirror[contenteditable="true"] >> nth=0` 평가 timeout이며, event의 `safe_unprepared_resume=true`다.
-- 다음은 P75 변경을 한글 커밋으로 기존 PR #7 branch에 push하고 exact-head Pro push/PR 및 V6 PR CI를 기다리는 것. green 전에는 canary runner를 resume하지 않는다. green 후에도 같은 unsent C15 R6 job을 **사용자 기존 로그인 BrowserUse 세션의 같은 기존 탭**에서만 한 번 재개한다. 새 창/프로필/CDP 세션/재로그인은 금지한다.
-- 자세한 원인, smoke 범위, 오류, 상태 및 수치는 [P75 progress](#p75--browseruse-dom-evaluate-callback-계약-보정과-동일-로그인-탭-smoke-2026-09-24-1042-kst), [P75 receipt](p75_browseruse_evaluate_callback_receipt.json), [BrowserUse handoff](browseruse_existing_session_handoff.md)을 본다.
+- 마지막 green head는 P75 `2bf6d852095da87a522794a27987f1f48e55441c`다. Pro push/PR 및 V6 PR Actions 세 run이 모두 SUCCESS (7,920 tests / 38 skipped / failure·error 0); Gate 1 receipt 4/4 PASS, production static audit critical 0, Reviewer A–H PASS다. P76은 새 diff라 이를 P76 CI로 세지 않는다.
+- P75의 DOM callback 수리와 same-tab smoke 뒤 C15 R6 runner를 시도했다. bridge `runUntil()`을 이전 `node_repl` 호출에서 unawaited background promise로 두고 Python runner는 다음 호출에서 실행했다. BrowserUse가 활성 `node_repl` 문맥을 요구해 handshake가 `BRIDGE_OPERATION_FAILED: node_repl exec context not found`로 실패했다. 이는 로그인/Pro 오류가 아니다.
+- 실패는 `BrowserUseBridgeClient.connect()` 단계였다. worker session이 반환되기 전이라 `page.goto`, prompt 입력, upload, submit, capture는 없었다. 사후 같은 기존 탭의 read-only 확인은 ChatGPT/Pro, 빈 composer, selected file 0, legacy Deep Research 비활성이었다. 새 창·탭·프로필/CDP·재로그인은 없었다.
+- 중앙 SQLite `mode=ro` 확인: 같은 C15 R6 job, packet hash 일치, `USER_ATTENTION_REQUIRED` version 10; approval/browser/conversation 미결박, submit/capture `0/0`. event는 `DRAFT_PREPARATION_OR_UNKNOWN` / `safe_unprepared_resume=false`라 그대로 재시도하지 않았다. P76은 BrowserUse worker-open 오류를 `BROWSER_SESSION_OPEN` 안전 단계로 기록하고, 기존 job에는 위 **정확한 단일 handshake 오류**만 좁게 복구 허용한다. 근접 문자열과 다른 오류는 계속 fail-closed다.
+- P76 focused BrowserUse bridge + fresh orchestration 회귀 **94/94 PASS**, `node --check` 및 `git diff --check` PASS. P76 exact-head CI는 아직 pending이다.
+- **다음 한 단계:** P76 코드·회귀·문서·receipt를 한글 commit으로 기존 PR #7 branch에 push하고 exact-head Pro push/PR 및 V6 PR SUCCESS를 기다린다. green 뒤 same-job 재개 때 bridge와 Python worker를 **같은 active `mcp__node_repl__js` 호출 안에서 `await bridge.runUntil(workerPromise)`로 함께 실행**한다. 같은 미전송 C15 R6만 기존 로그인 BrowserUse 탭에서 재개한다. 새 browser/session은 만들지 않는다.
+- 자세한 원인, 같은 탭 증거, DB 상태, 오류와 테스트는 [P76 progress](#p76--same-tab-browseruse-실행문맥-실패의-무전송-복구-게이트-보강-2026-09-24-1130-kst), [P76 receipt](p76_browseruse_exec_context_recovery_receipt.json), [BrowserUse handoff](browseruse_existing_session_handoff.md)을 본다.
 
 아직 선언할 수 있는 최종 verdict는 없다. 특히 old run을 완료한 것으로 간주하거나
 `PRO_FIRST_V2_1_OPERATIONAL_RESEARCH_READY`를 선언하지 않는다. P70에서 exact-head GitHub CI는 green이 됐지만,
@@ -72,7 +73,7 @@ P10 final CI/audit                        IN_PROGRESS (P74 head 8b86d2db exact-h
 
 현재 확인된 live full-thesis 통과는 C06 한 건이다. C15 R5는 초기 material 24개 중 23개가 수용돼
 초기 효율 검문을 통과했지만 후속 결과가 회수되지 않아 full-thesis PASS가 아니다. 활성 C15 R6는
-same-job initial Pro 요청 전 read-only browser preflight의 callback API 오류로 멈춰 있으며 아직 전송하지 않았다.
+same-job initial Pro 요청 handshake에서 BrowserUse 실행문맥 오류로 멈춰 있으며 아직 전송하지 않았다.
 9월 1일 실행의
 감시 프로세스는 이미 종료됐으며, DB의 `RESEARCH_RUNNING` 값만으로 현재 서버가 계산 중이라고
 주장하지 않는다. 9월 8일 처음 확인한 디버깅 연결(9222/9234)에는 ChatGPT page가 없었지만,
@@ -6541,3 +6542,51 @@ bridge가 function-valued locator API를 property로 처리한 계약 mismatch�
   **다음 한 단계:** P75 코드·회귀·이 문서·receipt를 한글 커밋으로 기존 PR #7 branch에 push하고, 그 exact SHA에 연결된 Pro push/PR 및
   V6 PR Actions가 전부 SUCCESS인지 확인한다. 그 뒤 동일한 미전송 C15 R6만 같은 기존 BrowserUse 로그인 탭에서 재개한다.
 - PR #7은 OPEN/DRAFT/MERGEABLE이며 main 미병합이다. master goal은 미완료, live full-thesis canary는 C06 1/3이고 C15/C28은 남아 있다.
+
+## P76 — same-tab BrowserUse 실행문맥 실패의 무전송 복구 게이트 보강 (2026-09-24 11:30 KST)
+
+### P75 CI 확인 뒤 실행한 실제 같은-job 시도
+
+- P75 head `2bf6d852095da87a522794a27987f1f48e55441c`의 Pro push run
+  [35944900937](https://github.com/Daikisong/stock_agent/actions/runs/35944900937), Pro PR run
+  [35944903862](https://github.com/Daikisong/stock_agent/actions/runs/35944903862), V6 PR run
+  [35944903871](https://github.com/Daikisong/stock_agent/actions/runs/35944903871)은 전부 SUCCESS였다.
+  Pro full regression 7,920 / skipped 38 / failure·error 0, Reviewer A–H PASS; V6 Gate 1 receipt 4/4, production static audit
+  `critical_count_sum=0`, 전체 7,920 / skipped 38 / failure·error 0이다.
+- 같은 C15 R6 job `PROJOB-df15a37c58ae7583924e58c0`를 기존 사용자 로그인 BrowserUse `extension` 세션의 기존 탭에만 연결해 재개했다.
+  새 창·탭·프로필, CDP 대체, 재로그인은 쓰지 않았다. 입력 직전 읽기 전용 확인은 ChatGPT, Pro 활성, 빈 composer였다.
+- 실행 과정에서 bridge server를 한 `mcp__node_repl__js` 호출에서 시작했지만, `runUntil()`의 반환 promise를 await하지 않고 background로 남긴 뒤
+  Python worker를 다음 Node REPL 도구 호출에서 실행했다. BrowserUse extension은 RPC dispatch가 활성 Node REPL execution context 안에서
+  실행돼야 한다. 그래서 handshake가 `BRIDGE_OPERATION_FAILED: node_repl exec context not found`로 실패했다.
+- 오류는 Python `ProBrowserWorker.open()`의 `BrowserUseBridgeClient.connect()` handshake 안에서 발생했다. session object가 반환되기 전에 멈춰
+  `page.goto`, `prepare_without_submit`, editor 입력, packet 첨부, submit, result capture에 도달하지 않았다. pipeline progress에는 같은 job의
+  `FRESH_PACKET_READY` 및 `FRESH_UNPREPARED_ATTENTION_RESUME`만 찍혔으며 automatic resubmit은 false다.
+- 실패 뒤 bridge를 닫아 private handoff를 정리했지만 사용자 Chrome 탭은 열어 둔 채 보존했다. 같은 tab의 사후 읽기 전용 결과는 ChatGPT origin/title,
+  Pro active, composer 1개·blank, selected file 0, legacy Deep Research inactive, 활성 job marker 없음이다.
+
+### Durable 상태, 안전 처리와 코드 변경
+
+- SQLite `mode=ro` + `query_only=ON`으로 확인한 동일 job은 `USER_ATTENTION_REQUIRED` / version 10, packet hash
+  `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df` 유지, approval/browser/conversation 미결박,
+  submit/capture `0/0`, successor 없음이다. 실패 event는 `DRAFT_PREPARATION_OR_UNKNOWN` / `safe_unprepared_resume=false`라
+  안전 표식이 없는 상태에서 무조건 재시도하지 않았다.
+- `orchestrator_v3.py`는 BrowserUse 모드에서 `ProBrowserWorker.open()` 자체가 실패하면 사용자 page 조작 전의
+  `BROWSER_SESSION_OPEN` 단계로 기록하고, no-send 재개 가능한 attention event를 남기도록 바꿨다.
+- 현재 durable job을 복구하기 위해 `_load_unprepared_attention_job`에는 `BrowserUseBridgeError`와 정확히 일치하는
+  `BRIDGE_OPERATION_FAILED: node_repl exec context not found`를, exact event shape / same job identity / submit·capture 0 /
+  approval·browser·conversation 미결박 / prepare receipt 없음 조건에서만 허용하는 compatibility case를 추가했다.
+  오류 문자열이 조금이라도 다르거나 다른 오류·준비 상태이면 기존처럼 fail-closed다. 자동 전송 재시도는 추가하지 않았다.
+- 회귀 3개: BrowserUse worker-open failure의 safe event 분류, 기존 exact persisted handshake failure same-job 복구 가능,
+  near-match 오류 복구 거부. P75 suites 합계 **94/94 PASS**; `node --check`, `git diff --check`도 PASS다.
+
+### 현재 gate와 다음 한 단계
+
+- P76 코드/테스트/문서/receipt는 P75 green head 위의 local diff다. 새 SHA는 아직 commit/push/CI 전이며, P75의 성공을 P76의 CI로 세지 않는다.
+- P76 changes는 additional source research가 아니다: prompt input/upload/submit/capture `0/0/0/0`, source query/fetch `0/0`, score/Stage 변화 `0/0`.
+- **다음 한 단계:** P76 전체 변경을 한글 commit으로 기존 PR #7 branch에 push하고 exact-head Pro push/PR + V6 PR Actions SUCCESS를 기다린다.
+  green 전에는 active C15 R6 runner를 다시 실행하지 않는다. green 뒤에는 bridge start, `runUntil`, Python worker를 **같은 active
+  `mcp__node_repl__js` 호출 내부에서** 묶고 `await bridge.runUntil(workerPromise)`를 사용한다. 이전 handshake error를 안전하게 해소하고 같은
+  C15 job을 기존 로그인 탭에서 재개하되, 새로운 browser/session/job은 만들지 않는다.
+- PR #7은 계속 OPEN/DRAFT/MERGEABLE이며 main 미병합이다. master goal 미완료; C06 1/3, C15 R6 미전송, C28 pending이다.
+- 기계 판독용 상세는 [P76 receipt](p76_browseruse_exec_context_recovery_receipt.json), 최신 브라우저 인수인계는
+  [BrowserUse handoff P76](browseruse_existing_session_handoff.md)을 본다.

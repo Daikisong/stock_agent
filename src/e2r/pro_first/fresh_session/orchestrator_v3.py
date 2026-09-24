@@ -10,7 +10,7 @@ from typing import Any, Mapping, Sequence
 from ..approval import ExactlyOnceSubmitCoordinator, SubmitResult
 from ..browser.protocol import ChatGPTWebAdapter, PreparedBrowserJob
 from ..browser.worker import BrowserWorkerSession, ProBrowserWorker
-from ..config import ProFirstLocalConfig
+from ..config import BrowserConnectionMode, ProFirstLocalConfig
 from ..ids import canonical_hash, canonical_json, stable_id
 from ..job_store import ProFirstJobStore
 from ..models import JobStatus, ProResearchJob
@@ -686,7 +686,17 @@ class FreshSessionOrchestratorV3:
                 job_id=built.job.job_id
             )
         except Exception as error:
-            self._record_browser_attention(built.job.job_id, error)
+            browseruse_open_failure = (
+                config.browser.mode is BrowserConnectionMode.BROWSER_USE_EXTENSION
+            )
+            self._record_browser_attention(
+                built.job.job_id,
+                error,
+                safe_unprepared_resume=browseruse_open_failure,
+                preparation_failure_stage=(
+                    "BROWSER_SESSION_OPEN" if browseruse_open_failure else None
+                ),
+            )
             raise
         try:
             current_conversation = session.adapter.conversation_id()
@@ -1459,10 +1469,17 @@ class FreshSessionOrchestratorV3:
         error: Exception,
         *,
         safe_unprepared_resume: bool = False,
+        preparation_failure_stage: str | None = None,
     ) -> None:
         current = self.store.get_job(job_id)
         if current.status != JobStatus.BROWSER_PREPARING.value:
             return
+        safe_stage = preparation_failure_stage or "READ_ONLY_BROWSER_PREFLIGHT"
+        if safe_unprepared_resume and safe_stage not in {
+            "READ_ONLY_BROWSER_PREFLIGHT",
+            "BROWSER_SESSION_OPEN",
+        }:
+            raise ValueError("unsupported safe unprepared-resume failure stage")
         self.store.transition(
             job_id,
             expected_version=current.state_version,
@@ -1477,7 +1494,7 @@ class FreshSessionOrchestratorV3:
                 "new_chat_route_required": True,
                 "safe_unprepared_resume": bool(safe_unprepared_resume),
                 "preparation_failure_stage": (
-                    "READ_ONLY_BROWSER_PREFLIGHT"
+                    safe_stage
                     if safe_unprepared_resume
                     else "DRAFT_PREPARATION_OR_UNKNOWN"
                 ),
