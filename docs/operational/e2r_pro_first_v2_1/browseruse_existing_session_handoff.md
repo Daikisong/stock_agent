@@ -1,8 +1,28 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 15:43 KST (P84 기존 로그인 탭 사용 재확인 및 P83 commit/CI 상태 갱신; 상세는 진행 장부 P84).
+최종 갱신: 2026-09-24 16:32 KST (P85 기존 로그인 탭에서 첨부 단계 timeout 발생; 안전 상태와 다음 조치 갱신).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
+
+## 최신 상태 — P85 (2026-09-24 16:28 KST)
+
+**로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 `extension` 세션의 기존 작업 탭에서만 한다.** 새 창·새 탭·새 프로필·별도 CDP 세션을 만들거나 재로그인하는 것은 대체 방법이 아니다. 기존 작업 탭을 찾거나 claim할 수 없으면 그 브라우저 단계에서 멈추고 정확한 오류와 확인 범위를 문서화한다.
+
+- 검증된 PR #7 head `07c60ca2a04a89867636ff064dd3efe63cc13fef`의 push/PR/V6 GitHub Actions는 모두 `SUCCESS` 확인 상태다. PR #7은 OPEN/DRAFT/MERGEABLE이며 main에는 미병합이다. 이 head의 검증은 첨부 RPC timeout 경계 이전 코드까지 포함한다.
+- 그 뒤 동일 C15 R6 job `PROJOB-df15a37c58ae7583924e58c0`만 대상으로, 기존 BrowserUse `extension` 세션에서 확인했던 사용자의 ChatGPT 탭을 재사용해 packet 첨부 단계를 한 번 시도했다. 새 browser/window/tab/profile/CDP session이나 새 job은 만들지 않았다. 로그인 prompt는 보이지 않았고 실제 `Pro` 모드와 빈 composer를 사전 확인했다.
+- 첨부 RPC가 다음 오류로 끝났다. 이 오류는 파일 선택/첨부 결과가 확정되었다는 뜻이 아니다.
+
+```text
+BrowserUseBridgeError: BrowserUse bridge transport failed (TimeoutError: timed out)
+```
+
+- 마지막 durable SQLite read는 `2026-09-24T07:28:13.906437Z` (16:28:13 KST)이며, mode=ro 및 `PRAGMA query_only=ON`으로 확인했다. 같은 job은 `USER_ATTENTION_REQUIRED`, state version 18, packet hash 불변이다. `submit_count=0`, `capture_count=0`, approval/browser/conversation binding 없음, successor 없음. 최신 event는 `DRAFT_PREPARATION_OR_UNKNOWN`, `safe_unprepared_resume=false`, `automatic_resubmit_allowed=false`다.
+- 오류 뒤 같은 기존 탭의 읽기 전용 DOM에서는 `chatgpt.com`, 로그인 prompt 없음, 빈 composer, user turn 0, 파일명 표시 없음이 관찰됐다. **Windows 네이티브 파일 선택기 상태는 확인되지 않았고, 파일 선택기가 열렸는지/선택됐는지 증거가 없다.** 따라서 “미첨부 확정”이나 “안전하게 재시도 가능”으로 바꿔 해석하지 않는다. 해당 파일 선택기를 닫거나 조작하지 않았고, 전송도 하지 않았다.
+- 코드에는 Python RPC timeout 기본 30초와 Windows 파일 선택기 polling 상한 45초가 함께 있다. 이 예산 불일치가 timeout 원인일 가능성은 있지만, 이번 발생의 인과관계는 아직 계측으로 입증되지 않았다. 장애를 로그인 만료나 제품 정책 거부라고 단정하지 않는다.
+- **재개 금지 조건:** 현재 `safe_unprepared_resume=false`이고 OS 파일 선택기/첨부 상태가 미확정이다. 새 runner 호출, 첨부 재시도, prompt 입력, 전송은 하지 않는다. 먼저 기존 사용자 세션·탭을 보존한 채 파일 선택기 상태를 읽기 전용으로 판별하고, bridge timeout/cancellation 경계를 테스트로 수리한 뒤, 동일 job의 durable 상태 및 실제 탭 상태가 모두 안전하다고 확인될 때만 이어간다. 상태를 증명할 수 없으면 여기서 멈춘다.
+- 이번 시도에서 새 job, source query/fetch, prompt 전송, response capture, 점수/Stage 변경은 모두 0이다. 문서 갱신만으로 브라우저를 열거나 사용자 탭을 조작하지 않는다.
+
+다음 상세 기록: [implementation progress P85](implementation_progress.md#p85--기존-로그인-browseruse-탭-유지와-첨부-rpc-timeout의-미확정-안전상태-기록-2026-09-24-1628-kst).
 
 ## 가장 중요한 규칙 — 로그인된 바로 그 세션과 탭
 

@@ -6890,3 +6890,33 @@ P81 local diff는 count/visibility/enabled 및 text/attribute/value를 reviewed 
 - Pro push [35964475812](https://github.com/Daikisong/stock_agent/actions/runs/35964475812), Pro PR [35964479716](https://github.com/Daikisong/stock_agent/actions/runs/35964479716), V6 PR [35964479682](https://github.com/Daikisong/stock_agent/actions/runs/35964479682)은 조회 시 모두 정확한 P83 head에서 `in_progress`였다. P81의 green run은 P83 코드를 검증하지 않으므로 다음 same-job 브라우저 시도 전 이 세 P83 run이 모두 SUCCESS여야 한다.
 - P83 packet path 오류는 파일 선택기를 누르기 전 로컬 경로 검사에서 났으므로 packet upload, prompt 입력, Pro submit, capture는 발생하지 않았다. 고친 `/mnt/c/...` → Windows native drive path는 persistent Windows Node REPL에서 읽기 smoke-test를 통과했다. persistent REPL의 ESM cache를 피하려면 바뀐 bridge는 commit SHA query를 포함해 다시 import해야 한다.
 - 다음 한 단계는 현재 exact-head Actions 세 run의 최종 결과를 확인하는 것이다. 전부 SUCCESS일 때에만 기존 BrowserUse `extension` 세션의 같은 작업 탭을 다시 claim하고 동일 C15 R6 job의 identity/hash/blank composer/Pro/no-submit 상태를 읽기 전용으로 확인한다. 불일치나 기술 오류면 전송하지 않고 기록 후 멈춘다. 새 job·새 브라우저·새 세션·추가 검색/fetch·점수/Stage 변경은 이번 복구 단계에 포함되지 않는다.
+
+## P85 — 기존 로그인 BrowserUse 탭 유지와 첨부 RPC timeout의 미확정 안전상태 기록 (2026-09-24 16:28 KST)
+
+### 사용자가 지정한 브라우저 경계
+
+로그인된 웹 서비스가 필요한 작업은 사용자가 이미 로그인해 둔 **그 BrowserUse `extension` 세션과 정확한 기존 작업 탭**에서 한다. 별도 창·탭·프로필·CDP 세션 생성, 재로그인, 다른 세션에서 재전송은 하지 않는다. 현재 탭 목록에서 작업 대화를 찾고 정확한 descriptor를 claim한 뒤 반환된 **동일 tab 객체 하나**를 상태 확인부터 승인된 작업과 결과 회수까지 유지한다. 새 대화가 필요해도 같은 로그인 탭 안에서만 시작한다. 기존 응답이나 Library 파일이 있으면 먼저 같은 탭에서 재사용한다.
+
+연결/claim/대상 확인이 실패하면 실제 오류, 마지막으로 확인된 상태, 확인하지 못한 범위를 남기고 멈춘다. 화면에 입력·첨부·전송을 하기 전 같은 탭의 현재 URL/대화, 로그인, 실제 모드, 초안/첨부 상태를 재확인한다. 불확실한 첨부·전송 결과는 성공이나 안전한 실패로 추정하지 않으며, 동일 요청을 재시도하지 않는다. 기존 사용자 창·탭·로그인을 보존한다.
+
+### Same-job 첨부 시도와 관찰 결과
+
+- 검증된 PR #7 head `07c60ca2a04a89867636ff064dd3efe63cc13fef`에서 Pro push [35966122970](https://github.com/Daikisong/stock_agent/actions/runs/35966122970), Pro PR [35966126970](https://github.com/Daikisong/stock_agent/actions/runs/35966126970), V6 PR [35966127040](https://github.com/Daikisong/stock_agent/actions/runs/35966127040)은 모두 `SUCCESS`로 확인됐다. PR #7은 OPEN/DRAFT/MERGEABLE, main 미병합이다. 이 검증 head에는 이번 첨부 RPC timeout 관련 미수정 사항이 포함되지 않는다.
+- 승인된 범위의 same-job 실행은 C15 R6 `PROJOB-df15a37c58ae7583924e58c0`과 기존 사용자 BrowserUse 탭만 사용했다. 새 job이나 브라우저 세션/창/탭을 만들지 않았다. packet hash는 `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df` 그대로이며 run/pass identity도 기존 것을 재사용했다.
+- 실행 출력에서 packet이 준비된 뒤 runner가 `FRESH_UNPREPARED_ATTENTION_RESUME`을 기록했다. 첨부 RPC가 다음 실제 오류로 실패했다.
+
+```text
+BrowserUseBridgeError: BrowserUse bridge transport failed (TimeoutError: timed out)
+```
+
+- SQLite는 mode=ro + `PRAGMA query_only=ON`으로 다시 확인했다. `2026-09-24T07:28:13.906437Z`의 durable state: `USER_ATTENTION_REQUIRED`, version 18, `submit_count=0`, `capture_count=0`, `approval_browser_session_id/browser_session_id/conversation_id=NULL`, successor 없음. latest event는 `BROWSER_PREPARING → USER_ATTENTION_REQUIRED`, stage `DRAFT_PREPARATION_OR_UNKNOWN`, `safe_unprepared_resume=false`, `automatic_resubmit_allowed=false`다. Packet hash는 변하지 않았다.
+- BrowserUse의 동일 기존 탭을 읽기 전용 확인했을 때 URL은 ChatGPT, 로그인 prompt는 보이지 않았고 composer는 빈 상태, user turn 0, 화면 파일명 표시 없음이었다. 이것만으로 OS 파일 선택기 상태를 알 수 없다. Windows 프로세스 열거도 file chooser 열림/닫힘을 판정하지 못했다. 그래서 packet이 첨부되지 않았다고 확정하지 않으며, 현재 재개를 안전하다고 표시하지 않는다.
+- `tab.dev.logs()`에는 `2026-09-24T07:27:36.329Z` React `RecoverableError: Minified React error #418` hydration mismatch가 한 건 있었다. 시간상 같은 구간에서 관찰됐을 뿐 첨부 timeout의 원인으로 입증되지 않았다. CDP capability 미확인/미지원은 정책 거부로 기록하지 않는다.
+
+### 원인 범위와 다음 안전 조치
+
+- bridge 코드에서 `BrowserUseBridgeClient`의 RPC timeout 기본값은 30초이고, Windows Chrome file chooser 감지 루프는 최대 45초 기다린다. 첨부 RPC가 어느 쪽에서 먼저 끊겼는지 확인할 명시적 phase telemetry가 없다. timeout 예산 불일치는 가능한 원인이지만 **근본 원인 확정은 아니다**.
+- 실제 `attach.click()` 이후 파일 선택기 감지/선택 경로의 오류이므로, P83의 “클릭 전 path validation 실패는 safe unprepared”와 같은 복구 사유로 취급하면 안 된다. 기존 job의 현재 event가 `safe_unprepared_resume=false`이므로 자동 재개·중복 첨부·전송 금지다.
+- 다음 순서는 (1) 기존 사용자 로그인 세션/창을 그대로 보존하며 OS 파일 선택기 유무를 읽기 전용으로 판별, (2) 결과가 불명확하면 입력 없이 중단, (3) 별도 코드 수정에서 RPC와 native chooser timeout/cancellation을 일치시키고 ambiguous outcome 회귀 테스트 추가 및 exact-head CI, (4) durable job과 동일 탭 상태가 모두 명확해진 뒤에만 같은 job을 다시 여는 것이다. 다른 세션/탭에서 재시도하거나 새 job을 만들지 않는다.
+
+이 P85 문서 갱신 동안 BrowserUse 호출/화면 조작은 하지 않았다. 새 창·탭·프로필, navigation, login, prompt input, attach/download/submit/capture, source query/fetch, score/Stage 변경은 0이다. Full research goal은 미완료이며 PR #7은 draft/open, main 미변경이다. 최신 운영 절차는 [BrowserUse existing-session handoff](browseruse_existing_session_handoff.md) 상단 P85를 본다.
