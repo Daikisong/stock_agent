@@ -146,7 +146,7 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
         ).resolve()
         script = f"""
 import assert from "node:assert/strict";
-const {{ resolveBrowserUseLocatorMember }} = await import({json.dumps(bridge_path.as_uri())});
+const {{ resolveBrowserUseLocatorMember, resolveFirstVisibleEnabledLocator }} = await import({json.dumps(bridge_path.as_uri())});
 const child = {{ count: async () => 1 }};
 const browserUse = {{
   called: false,
@@ -160,6 +160,16 @@ const playwrightStyle = {{ first: child, last: child }};
 assert.strictEqual(await resolveBrowserUseLocatorMember(playwrightStyle, "first"), child);
 assert.strictEqual(await resolveBrowserUseLocatorMember(playwrightStyle, "last"), child);
 await assert.rejects(resolveBrowserUseLocatorMember({{}}, "first"), /did not return a locator/);
+const invisible = {{ count: async () => 0, isVisible: async () => false, isEnabled: async () => false }};
+const attachButton = {{ count: async () => 1, isVisible: async () => true, isEnabled: async () => true }};
+const rows = {{ "#hidden": invisible, "#attach": attachButton, "#missing": invisible }};
+let firstCalls = 0;
+const browserUsePage = {{ locator(selector) {{ return {{ first() {{ firstCalls += 1; return rows[selector]; }} }}; }} }};
+assert.strictEqual(await resolveFirstVisibleEnabledLocator(browserUsePage, ["#hidden", "#attach"]), attachButton);
+assert.equal(firstCalls, 2);
+const playwrightPage = {{ locator() {{ return {{ first: attachButton }}; }} }};
+assert.strictEqual(await resolveFirstVisibleEnabledLocator(playwrightPage, ["#attach"]), attachButton);
+assert.strictEqual(await resolveFirstVisibleEnabledLocator(browserUsePage, ["#missing"]), null);
 """
         result = subprocess.run(
             [str(node), "--input-type=module", "--eval", script],

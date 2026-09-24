@@ -104,6 +104,17 @@ export async function resolveBrowserUseLocatorMember(base, memberName) {
   return locator;
 }
 
+export async function resolveFirstVisibleEnabledLocator(playwright, selectors) {
+  for (const selector of selectors || []) {
+    const base = playwright.locator(String(selector));
+    const candidate = await resolveBrowserUseLocatorMember(base, "first");
+    if (await candidate.count() && await candidate.isVisible() && await candidate.isEnabled()) {
+      return candidate;
+    }
+  }
+  return null;
+}
+
 function wslUncPath(value, distroName) {
   const normalized = String(value || "");
   if (/^[a-zA-Z]:\\/.test(normalized) || normalized.startsWith("\\\\")) return normalized;
@@ -445,14 +456,7 @@ export async function startBrowserUseExtensionBridge({
   };
 
   const attachPacket = async ({ filePath, attachSelectors }) => {
-    let attach = null;
-    for (const selector of attachSelectors || []) {
-      const candidate = tab.playwright.locator(String(selector)).first;
-      if (await candidate.count() && await candidate.isVisible() && await candidate.isEnabled()) {
-        attach = candidate;
-        break;
-      }
-    }
+    const attach = await resolveFirstVisibleEnabledLocator(tab.playwright, attachSelectors);
     if (!attach) throw new Error("visible attachment button was not found in the claimed ChatGPT tab");
     const targetPath = validatePacketPathForWindowsChooser({ pathValue: filePath, distroName });
     await attach.click();

@@ -6427,3 +6427,42 @@ bridge가 function-valued locator API를 property로 처리한 계약 mismatch�
 
 세부 값은 [P73 machine receipt](p73_browseruse_locator_api_receipt.json)와
 [최신 BrowserUse 인수인계 P73](browseruse_existing_session_handoff.md)을 참조한다.
+
+### P73 후속 검증 (2026-09-24 09:50 KST)
+
+- P73 commit `c456397f38da814b0ced218ed15b0a7436c0a99d`에 연결된 Pro push, Pro PR, V6 PR Actions run
+  `35938647681`, `35938651371`, `35938651326`은 모두 SUCCESS다. 전체 회귀는 7,920 tests / 38 skipped / failure·error 0,
+  independent Reviewer A–H gate도 PASS다. 이 결과는 아래 P74 patch 전 head까지만 증명한다.
+- 같은 로그인 BrowserUse 탭을 다시 읽기 전용으로 확인했다. ChatGPT origin, 제목 `ChatGPT`, Chat 선택, Work 미선택,
+  composer 1개·빈 상태, 선택된 composer model label `Pro`였다. 화면 입력/첨부/전송/capture와 navigation은 없었다.
+
+## P74 — BrowserUse native packet attachment의 first() 호출 보완 (2026-09-24 09:55 KST)
+
+### 추가로 발견한 남은 계약 차이
+
+- P73 CI가 녹색인 뒤 같은 로그인 탭의 현재 상태를 다시 확인하고, runner 재개 전에 실제 파일 첨부 경로를 코드까지 추적했다.
+- 일반 locator RPC에서는 `first()` 함수형 API를 보완했으나, native `page.attach_packet` helper 한 곳이 여전히
+  `tab.playwright.locator(selector).first`를 Playwright property처럼 다뤘다. BrowserUse extension에서는 이 값이 locator가 아니라
+  함수이므로 packet upload 시 `count()`를 호출할 수 없는 동일 종류의 실패가 예상됐다. 이것은 P73 Actions가 잡지 못한 코드 경로다.
+- 이 발견 전후로 C15 R6의 prompt input, packet upload, submit, capture는 계속 0이다. 같은 기존 작업을 재개하기 전 발견했으며,
+  새 BrowserUse session/window/tab/profile, CDP 대체 연결, 재로그인은 사용하지 않았다.
+
+### 수정과 로컬 검증
+
+- JS bridge에서 `resolveFirstVisibleEnabledLocator()`를 공통화했다. BrowserUse method형과 Playwright property형을 모두 처리하고,
+  selector 순서대로 count/visible/enabled를 확인해 첫 사용 가능 첨부 locator만 반환한다. `attachPacket()`은 이 함수를 사용한다.
+- Node contract regression은 method형 `first()`, property형 `first`, selector fallback, no-match 상태를 검사한다.
+  BrowserUse bridge + fresh orchestration 테스트 **91/91 PASS**, `node --check`, `git diff --check` PASS.
+- 추가로 실제 기존 BrowserUse 탭의 production attachment selector 목록을 같은 resolver에 전달한 read-only smoke가 PASS했다.
+  첨부 locator `count=1 / visible=true / enabled=true`; 버튼 click, file chooser, packet selection/upload는 실행하지 않았다.
+- P74 변경은 아직 commit/push 전이다. 따라서 P73 exact-head CI는 P74 patch CI가 아니며, 다음 단계는 한글 commit/push 후
+  새 exact-head Pro push/PR 및 V6 PR Actions SUCCESS를 기다리는 것이다. 이를 확인하기 전에는 기존 C15 R6 runner를 재개하지 않는다.
+
+### 로그인 세션 사용 규칙 및 현재 경계
+
+- 사용자 지시에 따라 로그인 필요 작업은 BrowserUse extension이 연결한 **기존 로그인 세션의 기존 ChatGPT 탭**에서만 한다.
+  정확히 claim한 tab 객체를 유지하고, 입력 직전 대상 대화·첨부·실제 Chat/Pro 모드·빈 초안을 다시 확인한다.
+- P74 시점의 읽기 전용 확인은 ChatGPT origin, Chat 선택, Work 미선택, model control `Pro`, 빈 composer다.
+  prompt/upload/submit/capture 0/0/0/0, 신규 query/fetch 0/0, score/Stage 변경 0/0이다.
+- 상세 root cause, CI 경계, 다음 조치는 [P74 receipt](p74_browseruse_attachment_locator_receipt.json) 및
+  [BrowserUse handoff P74](browseruse_existing_session_handoff.md)에 기록한다.

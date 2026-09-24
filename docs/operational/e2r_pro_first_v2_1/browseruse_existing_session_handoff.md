@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 09:23 KST (P73).
+최종 갱신: 2026-09-24 09:55 KST (P74).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
@@ -44,7 +44,29 @@ BrowserUse `extension`에서 `browser.user.openTabs()`로 기존 사용자 탭�
 쉬운 예: 기존 ChatGPT 응답이나 Library에 JSON이 보이면 그 화면의 다운로드 동작을 같은 탭에서 수행하고,
 받은 파일을 준비된 E2R job에 연결한다. “새 세션에서 다시 생성”은 기본 복구 방법이 아니다.
 
-## 최신 상태 인수인계 (P73)
+## 최신 상태 인수인계 (P74)
+
+- 로그인 필요 작업은 사용자가 로그인해 둔 BrowserUse `extension` 세션의 기존 ChatGPT 탭 하나에서만 수행한다.
+  새 Chrome/CDP 세션, 새 창·프로필·탭, 재로그인으로 우회하지 않는다. 현재도 기존에 claim한 같은 tab 객체를 사용하며,
+  tab ID·계정 식별자·cookie/token은 기록하지 않는다.
+- P73 commit `c456397f38da814b0ced218ed15b0a7436c0a99d`의 push/PR/V6 Actions 세 개는 모두 SUCCESS
+  (full regression 7,920 / skipped 38 / failure·error 0). 그러나 P74는 추가 코드 변경이므로 이 결과는 P74 검증이 아니다.
+- 동일 탭의 마지막 읽기 전용 확인: `https://chatgpt.com/`, title `ChatGPT`, Chat 선택 / Work 미선택,
+  선택된 `ChatGPT 모델 선택` 값 `Pro`, composer 1개·빈 상태다. 새 입력, 첨부, 전송 또는 navigation은 없었다.
+- P73 CI green 뒤 전송 전 첨부 경로 검사에서 `browseruse_extension_bridge.mjs`의 `attachPacket()`만
+  `.first`를 property처럼 접근하는 잔여 결함을 찾았다. extension의 method형 `first()`에서는 locator 대신 함수가 반환되어
+  packet attach 전에 실패할 수 있다. P74는 공통 visible/enabled locator resolver로 이 경로를 고치고 method/property/fallback/no-match
+  regression을 추가했다. bridge + fresh orchestration 91/91 PASS, Node syntax / whitespace check PASS.
+- 현재 P74 diff는 local only, exact-head Actions pending이다. C15 R6
+  `PROJOB-df15a37c58ae7583924e58c0` / `010950` / C15 R6는 기존 packet hash 그대로이며
+  `USER_ATTENTION_REQUIRED`, version 6, approval/browser/conversation 미결박, submit/capture `0/0` 상태다.
+- 지금까지 prompt input/upload/submit/capture `0/0/0/0`, 신규 query/fetch `0/0`, score/Stage 변경 `0/0`이다.
+  다음 한 단계: P74 코드·회귀·진행기록을 한글 commit으로 기존 PR #7 branch에 push하고 exact-head Pro push/PR 및 V6 PR
+  Actions SUCCESS를 확인한 뒤, 같은 C15 job을 같은 BrowserUse 탭에서만 resume한다.
+- 세부 기록: [P74 progress](implementation_progress.md#p74--browseruse-native-packet-attachments-first-호출-보완-2026-09-24-0955-kst),
+  [P74 machine receipt](p74_browseruse_attachment_locator_receipt.json), [P73 progress](implementation_progress.md#p73--browseruse-locator-firstlast-api-차이-수정-및-same-tab-read-only-통합-확인-2026-09-24-0927-kst).
+
+## 이전 상태 인수인계 (P73, superseded)
 
 - 최우선 사용 규칙: 로그인 작업은 사용자가 이미 로그인한 BrowserUse `extension` 세션의 **기존 작업 탭 하나**에서만 한다.
   이번에도 기존 ChatGPT 탭을 exact claim한 반환 객체 하나로 확인했다. 새 browser/window/profile/tab, 재로그인은 0회다.
