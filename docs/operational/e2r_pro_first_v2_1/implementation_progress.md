@@ -6853,3 +6853,25 @@ P81 local diff는 count/visibility/enabled 및 text/attribute/value를 reviewed 
 ### 다음 한 단계
 
 위 문서 계약에 따라 same-job을 이어갈 때는 현재 로그인된 기존 BrowserUse `extension` 세션을 먼저 확인하고 정확한 작업 탭 하나를 claim한다. 읽기 전용 상태와 기존 C15 R6 job identity가 모두 일치해야만 다음 승인된 작업으로 진행한다. 연결 실패·탭 불명·상태 mismatch 시에는 정확한 증거를 남기고 멈추며, 새 브라우저나 재로그인으로 우회하지 않는다.
+
+## P83 — Windows mounted-drive packet 경로와 정확한 same-job 재개 게이트 (2026-09-24 15:23 KST)
+
+### 세션·job 재검증
+
+- Windows BrowserUse preflight exit 0. persistent Node REPL에서 BrowserUse extension 사용자 탭을 다시 열거해 기존 ChatGPT 탭 하나를 claim했다. 새 창/탭/profile/CDP/relogin은 없었다.
+- 같은 tab 객체의 read-only DOM과 worker 확인: ChatGPT origin, 로그인 prompt 없음, 일반 Chat에서 실제 Pro 표시, editor 1개·빈 상태, user turn 0, packet 미첨부, stop control 없음. 화면에는 Pro 사용량 1% 잔여 표시가 있었다. DevTools error/warn는 0건이다.
+- 첫 WSL worker 호출은 실행 환경에 PYTHONPATH=src가 없어 ModuleNotFoundError: No module named e2r로 브라우저 연결 전 실패했다. 같은 Node REPL·같은 탭·같은 job으로 WSL env만 보정한 뒤 read-only worker는 login/state DEEP_RESEARCH_MODE_READY, editor_ready/deep_research_ready true, packet_uploaded/prompt_ready/send_ready/stop_visible false, conversation 미결박으로 통과했다.
+- SQLite mode=ro + PRAGMA query_only=ON: 같은 C15 R6 job PROJOB-df15a37c58ae7583924e58c0, packet hash fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df, submit/capture 0/0, approval/browser/conversation binding 없음이었다. 최신 attention 전이는 version 14에서 16으로 늘었고 새 successor는 없다.
+
+### canary attempt와 근본 원인
+
+- C15 packet/prompt는 기존 job에서 다시 읽고 hash/leakage 검증을 통과했다: run PRORUN-ff542ef979f09bcaf7cf2545, initial pass PROPASS-a7654d1d80c9c041afb5777f, leakage_count 0. 새 job은 만들지 않았다.
+- Windows packet upload 전에 실패한 정확한 오류: BRIDGE_OPERATION_FAILED: packet file is not readable from the Windows file chooser. attach locator를 찾은 뒤에도 파일 경로 검증이 attach.click()보다 먼저 실행되어, 실제 클릭·Open dialog·업로드·prompt 입력·submit에는 도달하지 않았다. 오류 후 같은 탭은 로그인된 ChatGPT home, 빈 composer, packet 미첨부였다. Source query/fetch와 score/Stage 변경은 0이다.
+- 확인된 원인: bridge의 wslUncPath가 /mnt/c/...를 \\wsl.localhost\\Ubuntu-22.04\\mnt\\c\\...로 바꿨다. Windows Node fs.statSync에서 이 UNC 접근은 EPERM이었지만 C:\\Users\\... native path는 같은 175,126-byte packet을 읽었다.
+
+### P83 코드·회귀 및 다음 단계
+
+- JS wslUncPath가 Windows에서 /mnt/<drive>/...를 native drive path로 매핑하고 /home/...는 distro UNC로 유지하도록 고쳤다. exact historical pre-click path-validation error만 same unsent job의 safe unprepared recovery gate에 허용한다. extra suffix near-match는 계속 차단한다.
+- 회귀: mounted C/Z drive 변환·native path 보존·Linux runtime 거부, exact same-job recovery 허용, path error near-match 차단을 추가했다. focused BrowserUse bridge + fresh orchestration 97/97 PASS, node --check PASS, git diff --check PASS.
+- 이 수정은 아직 현재 branch에 commit/push되지 않은 시점의 기록이다. P81 code SHA 7830b9a5의 CI 성공은 P83을 검증하지 않는다. 한글 commit/push 후 exact-head Pro push, Pro PR, V6 PR 모두 SUCCESS여야만 동일 C15 R6 job을 다시 시도한다.
+- 다음 시도도 기존 로그인 BrowserUse extension 세션·현재 작업 탭만 쓴다. worker는 same job identity, blank composer, exact packet hash, 실제 Pro, no-submit 상태를 재확인한 뒤 1회 준비/전송한다. mismatch/오류이면 입력 전에 멈춘다. 새 tab/window/job 및 automatic resubmit는 금지다.

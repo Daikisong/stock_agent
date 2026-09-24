@@ -204,7 +204,11 @@ class BrowserUseBridgeClientTest(unittest.IsolatedAsyncioTestCase):
         ).resolve()
         script = f"""
 import assert from "node:assert/strict";
-const {{ resolveBrowserUseLocatorMember, resolveFirstVisibleEnabledLocator, readonlyCallback, evaluateReadOnlyLocator, countReadOnlyLocator, isVisibleReadOnlyLocator, isEnabledReadOnlyLocator, callReadOnlyLocatorMethod, browserUseOptions }} = await import({json.dumps(bridge_path.as_uri())});
+const {{ resolveBrowserUseLocatorMember, resolveFirstVisibleEnabledLocator, readonlyCallback, evaluateReadOnlyLocator, countReadOnlyLocator, isVisibleReadOnlyLocator, isEnabledReadOnlyLocator, callReadOnlyLocatorMethod, browserUseOptions, wslUncPath }} = await import({json.dumps(bridge_path.as_uri())});
+assert.equal(wslUncPath("/mnt/c/Users/eorb9/file.json", "Ubuntu-22.04", "win32"), "C:\\\\Users\\\\eorb9\\\\file.json");
+assert.equal(wslUncPath("/mnt/z/folder/file.json", "Ubuntu-22.04", "win32"), "Z:\\\\folder\\\\file.json");
+assert.equal(wslUncPath("C:\\\\Users\\\\eorb9\\\\file.json", "Ubuntu-22.04", "win32"), "C:\\\\Users\\\\eorb9\\\\file.json");
+assert.throws(() => wslUncPath("/mnt/c/file.json", "Ubuntu-22.04", "linux"), /requires Windows/);
 const child = {{ count: async () => 1 }};
 const browserUse = {{
   called: false,

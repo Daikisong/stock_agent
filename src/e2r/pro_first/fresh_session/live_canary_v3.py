@@ -498,6 +498,16 @@ class FreshV3InitialLiveCanaryRunner:
             == "DRAFT_PREPARATION_OR_UNKNOWN"
             and attention_event.payload.get("submit_count") == 0
         )
+        exact_windows_packet_path_preflight_error = bool(
+            job.last_error_class == "BrowserUseBridgeError"
+            and job.last_error_message
+            == "BRIDGE_OPERATION_FAILED: packet file is not readable from the Windows file chooser"
+            and attention_event is not None
+            and attention_event.payload.get("safe_unprepared_resume") is False
+            and attention_event.payload.get("preparation_failure_stage")
+            == "DRAFT_PREPARATION_OR_UNKNOWN"
+            and attention_event.payload.get("submit_count") == 0
+        )
         prepared_receipt = (
             boundary.fresh_job_root
             / "fresh_session/fresh_v3_prepare_receipt.json"
@@ -530,6 +540,7 @@ class FreshV3InitialLiveCanaryRunner:
                 or safe_session_open_event
                 or legacy_preflight_error
                 or exact_legacy_bridge_handshake_error
+                or exact_windows_packet_path_preflight_error
             )
             or attention_event is None
             or attention_event.from_status != JobStatus.BROWSER_PREPARING.value
@@ -538,7 +549,7 @@ class FreshV3InitialLiveCanaryRunner:
             or attention_event.payload.get("submit_count") != 0
         ):
             raise ValueError(
-                "unprepared attention resume requires the exact unsent job and a read-only preflight failure"
+                "unprepared attention resume requires the exact unsent job and a known safe failure before packet/prompt input"
             )
         return boundary, job
 

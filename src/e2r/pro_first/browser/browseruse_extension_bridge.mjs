@@ -406,11 +406,16 @@ export async function resolveFirstVisibleEnabledLocator(playwright, selectors) {
   return null;
 }
 
-function wslUncPath(value, distroName) {
+export function wslUncPath(value, distroName, platform = os.platform()) {
   const normalized = String(value || "");
   if (/^[a-zA-Z]:\\/.test(normalized) || normalized.startsWith("\\\\")) return normalized;
   if (!normalized.startsWith("/")) throw new Error("packet path must be an absolute WSL or Windows path");
-  if (os.platform() !== "win32") throw new Error("native file chooser bridge requires Windows BrowserUse runtime");
+  if (platform !== "win32") throw new Error("native file chooser bridge requires Windows BrowserUse runtime");
+  const mountedDrive = normalized.match(/^\/mnt\/([a-zA-Z])(?:\/(.*))?$/);
+  if (mountedDrive) {
+    const tail = (mountedDrive[2] || "").replaceAll("/", "\\");
+    return mountedDrive[1].toUpperCase() + ":\\" + tail;
+  }
   return `\\\\wsl.localhost\\${distroName}${normalized.replaceAll("/", "\\")}`;
 }
 

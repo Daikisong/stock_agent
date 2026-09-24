@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 14:57 KST (P81 코드 SHA CI 3/3 SUCCESS; 문서-only 후속 head CI는 갱신 시점에 진행 중; same-tab 실패 시각 14:23 KST).
+최종 갱신: 2026-09-24 15:23 KST (P83 Windows mounted-drive 파일 경로 수정·same-job 재개 경계 보강; 상세는 진행 장부 P83).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
@@ -13,6 +13,14 @@
 - 응답/JSON/파일이 이미 있으면 새 요청을 보내지 말고 그 응답을 같은 탭에서 회수·다운로드한다. 입력·첨부·전송 전에는 같은 탭의 URL/대화, 로그인, 실제 선택 모드, 초안·첨부 상태를 다시 확인한다.
 - BrowserUse 도구, 세션 또는 정확한 탭의 연결이 실패하면 확인한 범위·마지막 안전 상태·**실제 오류 문자열**을 기록하고 그 단계에서 멈춘다. 다른 세션으로 전송·다운로드를 반복하지 않는다. 기술 오류를 정책 거부로 바꿔 적지 않는다.
 - 기록에는 민감정보를 남기지 않는다. 사용자의 기존 창·탭·로그인은 종료하거나 초기화하지 않는다.
+
+## 최신 재개 상태 — P83
+
+- 현재 작업은 기존 C15 R6 job PROJOB-df15a37c58ae7583924e58c0 하나다. DB read-only 기준 USER_ATTENTION_REQUIRED v16, packet hash 불변, browser/conversation binding 없음, submit/capture 0/0, approval 미발급, 새 successor 없음이다.
+- 이전 3초 selector timeout은 P81 bounded read-path 수정 후 같은 로그인 탭의 ensure_logged_in()/inspect_state()에서 재현되지 않았다. 실제 Pro/Chat, 로그인, 빈 composer가 확인됐고 같은 탭에서 C15 R6 canary runner가 packet/prompt 해시를 재검증했다.
+- 파일 첨부 단계는 Windows 파일 선택기를 누르기 전 경로 검사에서 실패했다: BRIDGE_OPERATION_FAILED: packet file is not readable from the Windows file chooser. 원인은 WSL /mnt/c/...를 \\wsl.localhost\\Ubuntu-22.04\\mnt\\c\\...로 잘못 변환한 것이며, Windows native C:\\... 경로는 같은 파일을 읽었다. 그래서 packet 업로드·prompt 입력·전송은 발생하지 않았다.
+- P83 수정은 /mnt/<drive>/...를 C:\\... native path로 변환하고, 기존 /home/...는 distro UNC로 유지한다. 현재 job의 이 정확한 pre-click path-validation 실패만 동일 unsent job에서 재개 가능하게 좁게 허용하고 near-match는 계속 막는다.
+- 다음 브라우저 시도는 P83 변경의 exact-head Pro push/Pro PR/V6 PR Actions가 모두 SUCCESS인 뒤에만 한다. 기존 BrowserUse extension 세션에서 같은 사용자 탭을 다시 claim하고, packet/prompt/빈 composer/실제 Pro/submit 0을 재확인한다. 새 창·탭·프로필·CDP 대체·재로그인·새 job은 금지다.
 
 ## 실제 실행 순서 — 로그인 세션 작업이면 여기부터
 

@@ -296,6 +296,59 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             revision_valuation_snapshot={"snapshot_date": "2026-08-23"},
         )
 
+    def _make_draft_preparation_attention_resume(self, error_message: str):
+        current = self.store.get_job(self.fresh_job.job_id)
+        preparing = self.store.transition(
+            self.fresh_job.job_id,
+            expected_version=current.state_version,
+            to_status=JobStatus.BROWSER_PREPARING,
+            actor="v2.1-fresh-v3-browser-worker",
+            idempotency_key=f"test-browser-preparing:{self.fresh_job.job_id}",
+        )
+        self.store.transition(
+            self.fresh_job.job_id,
+            expected_version=preparing.state_version,
+            to_status=JobStatus.USER_ATTENTION_REQUIRED,
+            actor="v2.1-fresh-v3-browser-worker",
+            idempotency_key=(
+                f"fresh-v3-browser-attention:{self.fresh_job.job_id}:"
+                f"{preparing.state_version}"
+            ),
+            payload={
+                "automatic_login_allowed": False,
+                "automatic_resubmit_allowed": False,
+                "new_chat_route_required": True,
+                "safe_unprepared_resume": False,
+                "preparation_failure_stage": "DRAFT_PREPARATION_OR_UNKNOWN",
+                "submit_count": 0,
+            },
+            updates={
+                "last_error_class": "BrowserUseBridgeError",
+                "last_error_message": error_message,
+            },
+        )
+        base = load_pro_first_local_config(
+            Path(__file__).parents[1]
+            / "configs/e2r_pro_first_local.example.yaml"
+        )
+        runner = FreshV3InitialLiveCanaryRunner(
+            replace(base, runtime_root=self.boundary.fresh_runtime_root),
+            old_runtime_root=self.boundary.old_runtime_root,
+            fresh_runtime_root=self.boundary.fresh_runtime_root,
+            repo_root=self.root,
+            store=self.store,
+            source_verifier=object(),
+            report_structurer=object(),
+        )
+        spec = FreshInitialCanarySpec(
+            old_job_id=self.old_job.job_id,
+            old_run_id=OLD_RUN,
+            old_conversation_id=OLD_CONVERSATION,
+            fresh_session_id=self.boundary.fresh_session_id,
+            archetype_ids=(ARCHETYPE,),
+        )
+        return runner, spec
+
     def test_new_runtime_job_run_and_pass_are_distinct(self) -> None:
         self.assertNotEqual(
             self.boundary.old_runtime_root,
@@ -597,7 +650,46 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             archetype_ids=(ARCHETYPE,),
         )
 
-        with self.assertRaisesRegex(ValueError, "read-only preflight failure"):
+        with self.assertRaisesRegex(ValueError, "known safe failure"):
+            runner._load_unprepared_attention_job(
+                FreshSessionBoundaryService(self.store),
+                spec=spec,
+                manifest=self.manifest,
+                job_id=self.fresh_job.job_id,
+            )
+
+    def test_exact_windows_file_chooser_path_validation_failure_can_resume_same_unsent_job(self) -> None:
+        runner, spec = self._make_draft_preparation_attention_resume(
+            "BRIDGE_OPERATION_FAILED: packet file is not readable from the Windows file chooser"
+        )
+        boundary, resumed = runner._load_unprepared_attention_job(
+            FreshSessionBoundaryService(self.store),
+            spec=spec,
+            manifest=self.manifest,
+            job_id=self.fresh_job.job_id,
+        )
+
+        self.assertEqual(boundary.fresh_job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(resumed.submit_count, 0)
+        self.assertEqual(resumed.capture_count, 0)
+        self.assertIsNone(resumed.browser_session_id)
+        self.assertIsNone(resumed.conversation_id)
+        self.assertIsNone(resumed.approval_nonce_hash)
+        self.assertIsNone(resumed.approval_consumed_at)
+        self.assertFalse(
+            (
+                self.boundary.fresh_job_root
+                / "fresh_session/fresh_v3_prepare_receipt.json"
+            ).exists()
+        )
+
+    def test_near_match_windows_file_chooser_path_error_remains_blocked(self) -> None:
+        runner, spec = self._make_draft_preparation_attention_resume(
+            "BRIDGE_OPERATION_FAILED: packet file is not readable from the Windows file chooser; extra"
+        )
+        with self.assertRaisesRegex(ValueError, "known safe failure"):
             runner._load_unprepared_attention_job(
                 FreshSessionBoundaryService(self.store),
                 spec=spec,
@@ -661,7 +753,7 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             archetype_ids=(ARCHETYPE,),
         )
 
-        with self.assertRaisesRegex(ValueError, "read-only preflight failure"):
+        with self.assertRaisesRegex(ValueError, "known safe failure"):
             runner._load_unprepared_attention_job(
                 FreshSessionBoundaryService(self.store),
                 spec=spec,
