@@ -6822,12 +6822,34 @@ P81 local diff는 count/visibility/enabled 및 text/attribute/value를 reviewed 
 | `tests.test_e2r_pro_first_browseruse_extension_bridge` | 10/10 PASS |
 | `tests.test_e2r_pro_first_v2_1_fresh_orchestration` | 85/85 PASS |
 | JS `node --check` | PASS |
-| P81 exact-head GitHub Actions | Pro push/Pro PR/V6 PR 세 run 시작; 최종 결론 대기 중 |
+| P81 코드 SHA `7830b9a5baccaa7119d52892480504c82014ea26` exact-head GitHub Actions | Pro push [35960262909](https://github.com/Daikisong/stock_agent/actions/runs/35960262909), Pro PR [35960267593](https://github.com/Daikisong/stock_agent/actions/runs/35960267593), V6 PR [35960267632](https://github.com/Daikisong/stock_agent/actions/runs/35960267632) 모두 SUCCESS |
 
-### 다음 한 단계 — CI 전 same-job 재전송 금지
+### 다음 한 단계 — 같은 로그인 탭에서 same-job read-only 재확인
 
-1. P81 코드·회귀 테스트·문서를 한글 commit `7830b9a5`로 기존 PR #7 브랜치에 push했다.
-2. 위에 연결한 정확한 SHA의 Pro push, Pro PR, V6 PR Actions 세 run이 모두 `SUCCESS`인지 기다려 확인한다. 이전 SHA의 green은 P81을 검증하지 않는다.
-3. green 뒤에만 같은 C15 R6 job과 사용자의 동일 기존 BrowserUse 로그인 탭을 다시 열거·claim해 상태를 재검증한다. mismatch나 timeout 재발이면 입력/전송 전에 멈추고 새 세션으로 우회하지 않는다.
+1. P81 코드 커밋 `7830b9a5`의 세 exact-head workflow는 모두 SUCCESS다. 문서-only 후속 head와 코드 검증 head를 혼동하지 않는다.
+2. 다음 브라우저 단계는 active Node REPL의 정식 BrowserUse bootstrap으로 **이미 로그인된 동일 `extension` 세션**에서 기존 사용자 탭을 다시 열거하고 정확한 작업 탭 하나를 claim하는 것이다. claim이 반환한 동일 tab 객체만 사용한다.
+3. 같은 C15 R6 job의 durable identity와 그 탭의 로그인/대화/실제 모드/첨부 상태를 먼저 읽기 전용으로 대조한다. 일치가 확인되기 전에는 입력·첨부·다운로드·전송하지 않는다. 연결 오류나 mismatch가 있으면 새 세션으로 우회하지 않고 기록 후 멈춘다.
 
 이번 P81 문서 갱신으로 끝난 것은 인수인계 정리뿐이다. Pro 요청 전송, research saturation, C15/C28 canary 완료나 전체 master goal 완료를 주장하지 않는다.
+
+## P82 — 기존 로그인 BrowserUse 세션 원칙을 최상단 실행 규칙으로 재강조 (2026-09-24 14:57 KST)
+
+### 사용자 지시와 문서 변경
+
+사용자가 다시 명확히 요청했다: BrowserUse에서 로그인이 필요한 작업은 새로 연 브라우저가 아니라 **이미 로그인되어 있는 사용자의 세션 쪽에서 진행**해야 한다. handoff 문서에 흩어져 있던 규칙을 첫 화면의 짧은 실행 계약으로 올렸다.
+
+- 기존 BrowserUse `extension` 세션에서 사용자 탭을 열거하고, 정확한 기존 작업 탭을 claim한 뒤 반환된 같은 tab 객체만 쓴다.
+- 새 창·탭·프로필·별도 CDP 세션·재로그인은 대체 경로가 아니다. 기존 응답/파일은 같은 탭에서 회수하고, 새 Chat이 필요해도 같은 로그인 탭 안에서만 연다.
+- extension/세션/탭 연결이 실패하거나 대상이 불명확하면 실제 오류와 확인 범위를 남기고 멈춘다. 새 세션에서 입력·다운로드·전송을 반복하지 않는다.
+- 쓰기 동작 직전에 정확한 탭, 현재 대화, 로그인, 실제 모드, 초안·첨부를 확인한다. 인증 토큰·쿠키 및 민감한 tab 식별자는 문서/영수증에 넣지 않는다.
+
+### 현재 저장소 및 CI 스냅샷
+
+- PR #7은 OPEN/DRAFT/MERGEABLE, main 미병합이다. 문서 작성 전 branch와 origin은 `ad723a656af87a42504c35e1206ee95191550f93`에서 일치했다.
+- P81 코드 SHA `7830b9a5baccaa7119d52892480504c82014ea26`의 Pro push [35960262909](https://github.com/Daikisong/stock_agent/actions/runs/35960262909), Pro PR [35960267593](https://github.com/Daikisong/stock_agent/actions/runs/35960267593), V6 PR [35960267632](https://github.com/Daikisong/stock_agent/actions/runs/35960267632)은 모두 `SUCCESS`다.
+- 문서-only 후속 SHA `ad723a656af87a42504c35e1206ee95191550f93`의 Pro push [35960934645](https://github.com/Daikisong/stock_agent/actions/runs/35960934645), Pro PR [35960938219](https://github.com/Daikisong/stock_agent/actions/runs/35960938219), V6 PR [35960938049](https://github.com/Daikisong/stock_agent/actions/runs/35960938049)은 확인 시 `in_progress`였다. 이는 P81 코드 검증 성공과 별개다.
+- 이 P82 문서 작업에서는 BrowserUse를 열거나 사용자 탭을 조작하지 않았다. 새 세션·탭 생성, navigation, login, input/upload/download/submit/capture, 새 query/fetch, score/Stage 변경은 하지 않았다.
+
+### 다음 한 단계
+
+위 문서 계약에 따라 same-job을 이어갈 때는 현재 로그인된 기존 BrowserUse `extension` 세션을 먼저 확인하고 정확한 작업 탭 하나를 claim한다. 읽기 전용 상태와 기존 C15 R6 job identity가 모두 일치해야만 다음 승인된 작업으로 진행한다. 연결 실패·탭 불명·상태 mismatch 시에는 정확한 증거를 남기고 멈추며, 새 브라우저나 재로그인으로 우회하지 않는다.
