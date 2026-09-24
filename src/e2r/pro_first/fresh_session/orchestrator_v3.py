@@ -805,6 +805,13 @@ class FreshSessionOrchestratorV3:
                         "native_file_chooser_count": 0,
                         "native_file_chooser_unknown_owner_count": 0,
                         "selected_file_state": proof["selected_file_state"],
+                        "visible_packet_filename": proof.get(
+                            "visible_packet_filename"
+                        ),
+                        "packet_file_sha256": proof.get("packet_file_sha256"),
+                        "packet_attachment_verification": proof.get(
+                            "packet_attachment_verification"
+                        ),
                         "submit_count": 0,
                         "capture_count": 0,
                     },

@@ -8,6 +8,7 @@ import hashlib
 import json
 import re
 import secrets
+import tempfile
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
@@ -95,6 +96,7 @@ class PlaywrightChatGPTWebAdapter:
             server_persistence_poll_interval_ms
         )
         self._uploaded_filename: str | None = None
+        self._verified_existing_packet_attachment: Mapping[str, str] | None = None
         self._prepared_binding: dict[str, str] | None = None
         self._preexisting_attachment_keys: frozenset[str] = frozenset()
         self._prepared_job_id: str | None = None
@@ -527,6 +529,7 @@ class PlaywrightChatGPTWebAdapter:
             raise BrowserUIIncompatible(
                 "unprepared recovery found multiple selected files"
             )
+        packet_attachment_receipt: Mapping[str, str] | None = None
         if selected_files:
             selected = selected_files[0]
             try:
@@ -553,11 +556,28 @@ class PlaywrightChatGPTWebAdapter:
                 )
             selected_file_state = "EXACT_PACKET_HASH_MATCH_VISIBLE"
         else:
-            if visible_file_signals or await self._visible_uploaded_filename(path.name):
+            if len(visible_file_signals) > 1:
+                raise BrowserUIIncompatible(
+                    "unprepared recovery found multiple visible composer attachments"
+                )
+            if visible_file_signals:
+                packet_attachment_receipt = (
+                    await self._download_and_verify_existing_packet_attachment(
+                        packet_path=path,
+                        packet_hash=packet_hash,
+                        visible_filename=visible_file_signals[0],
+                    )
+                )
+                self._verified_existing_packet_attachment = dict(
+                    packet_attachment_receipt
+                )
+                selected_file_state = "EXACT_PACKET_HASH_MATCH_VISIBLE"
+            elif await self._visible_uploaded_filename(path.name):
                 raise BrowserUIIncompatible(
                     "unprepared recovery found an attachment without hash-verifiable file input"
                 )
-            selected_file_state = "NO_SELECTED_FILE_OR_VISIBLE_ATTACHMENT"
+            else:
+                selected_file_state = "NO_SELECTED_FILE_OR_VISIBLE_ATTACHMENT"
 
         return {
             "status": "PASS",
@@ -572,6 +592,21 @@ class PlaywrightChatGPTWebAdapter:
             "native_file_chooser_unknown_owner_count": 0,
             "selected_file_state": selected_file_state,
             "packet_hash": packet_hash,
+            "visible_packet_filename": (
+                packet_attachment_receipt.get("filename")
+                if packet_attachment_receipt is not None
+                else None
+            ),
+            "packet_file_sha256": (
+                packet_attachment_receipt.get("file_sha256")
+                if packet_attachment_receipt is not None
+                else None
+            ),
+            "packet_attachment_verification": (
+                packet_attachment_receipt.get("verification")
+                if packet_attachment_receipt is not None
+                else None
+            ),
             "submit_count": 0,
         }
 
@@ -3023,6 +3058,31 @@ class PlaywrightChatGPTWebAdapter:
     ) -> str | None:
         """Reuse a visible selected file only after exact JSON hash validation."""
 
+        verified_existing = self._verified_existing_packet_attachment
+        if verified_existing is not None:
+            packet_bytes = packet_path.read_bytes()
+            expected_file_sha256 = hashlib.sha256(packet_bytes).hexdigest()
+            visible_filename = str(verified_existing.get("filename") or "")
+            if (
+                verified_existing.get("packet_hash") != packet_hash
+                or verified_existing.get("file_sha256") != expected_file_sha256
+                or not self._is_packet_filename_variant(
+                    visible_filename,
+                    packet_path.name,
+                )
+            ):
+                raise BrowserUIIncompatible(
+                    "verified visible packet attachment no longer matches the durable packet"
+                )
+            if not await self._visible_packet_button_is_in_current_composer(
+                visible_filename
+            ):
+                raise BrowserUIIncompatible(
+                    "verified packet attachment disappeared from the existing composer"
+                )
+            self._uploaded_filename = visible_filename
+            return visible_filename
+
         selected_name = await self._selected_packet_filename_if_hash_matches(
             packet_path,
             packet_hash,
@@ -3034,6 +3094,221 @@ class PlaywrightChatGPTWebAdapter:
             self._uploaded_filename = displayed
             return displayed
         return None
+
+    @staticmethod
+    def _is_packet_filename_variant(actual: str, expected: str) -> bool:
+        if actual == expected:
+            return True
+        suffix = Path(expected).suffix
+        if not suffix:
+            return False
+        stem = expected[: -len(suffix)]
+        return re.fullmatch(
+            re.escape(stem) + r"\((?:\d+|\d{8}-\d{6})\)" + re.escape(suffix),
+            actual,
+            flags=re.IGNORECASE,
+        ) is not None
+
+    async def _visible_packet_button_is_in_current_composer(
+        self,
+        visible_filename: str,
+    ) -> bool:
+        """Bind one visible file button to the current composer form."""
+
+        candidate = self.page.get_by_role(
+            "button",
+            name=visible_filename,
+            exact=True,
+        )
+        if (
+            await candidate.count() != 1
+            or not await candidate.is_visible()
+            or not await candidate.is_enabled()
+        ):
+            return False
+        same_composer = await candidate.evaluate(
+            r"""(element, editorSelectors) => {
+                /* E2R_PACKET_ATTACHMENT_IN_COMPOSER */
+                const visible = node => {
+                    const rect = node.getBoundingClientRect();
+                    const style = window.getComputedStyle(node);
+                    return rect.width > 0 && rect.height > 0
+                        && style.visibility !== 'hidden'
+                        && style.display !== 'none';
+                };
+                let editor = null;
+                for (const selector of editorSelectors || []) {
+                    try {
+                        const matches = Array.from(document.querySelectorAll(selector));
+                        editor = matches.find(visible) || null;
+                    } catch {}
+                    if (editor) break;
+                }
+                const editorForm = editor?.closest('form');
+                const fileForm = element.closest('form');
+                return Boolean(editorForm && fileForm && editorForm === fileForm);
+            }""",
+            list(EDITOR_SELECTORS),
+        )
+        if same_composer is not True:
+            return False
+        editor = await first_visible(self.page, EDITOR_SELECTORS)
+        if editor is None:
+            return False
+        current_snapshot = await editor.evaluate(
+            r"""element => {
+                /* E2R_PACKET_COMPOSER_VISIBLE_FILES */
+                let root = element.closest('form');
+                if (!root) return { visible_file_signals: [] };
+                const visible = node => {
+                    const rect = node.getBoundingClientRect();
+                    const style = window.getComputedStyle(node);
+                    return rect.width > 0 && rect.height > 0
+                        && style.visibility !== 'hidden'
+                        && style.display !== 'none';
+                };
+                const candidates = [root.innerText || ''];
+                for (const node of root.querySelectorAll(
+                    'button,[role=button],[aria-label],[title]'
+                )) {
+                    if (!visible(node)) continue;
+                    candidates.push(
+                        node.innerText || '',
+                        node.getAttribute('aria-label') || '',
+                        node.getAttribute('title') || ''
+                    );
+                }
+                const filePattern = /[^\s\\/]+\.(?:pdf|docx?|xlsx?|csv|md|json|txt|png|jpe?g|zip)(?:\(\d+\))?$/i;
+                const signals = [...new Set(
+                    candidates
+                        .map(value => String(value || '').trim())
+                        .filter(value => filePattern.test(value))
+                )];
+                return { visible_file_signals: signals };
+            }"""
+        )
+        if not isinstance(current_snapshot, Mapping):
+            return False
+        current_signals = tuple(
+            str(value).strip()
+            for value in current_snapshot.get("visible_file_signals") or ()
+            if str(value).strip()
+        )
+        return current_signals == (visible_filename,)
+
+    async def _download_and_verify_existing_packet_attachment(
+        self,
+        *,
+        packet_path: Path,
+        packet_hash: str,
+        visible_filename: str,
+    ) -> Mapping[str, str]:
+        """Hash one exact visible composer file without re-uploading it."""
+
+        packet_bytes = packet_path.read_bytes()
+        expected_file_sha256 = hashlib.sha256(packet_bytes).hexdigest()
+        if not self._is_packet_filename_variant(visible_filename, packet_path.name):
+            raise BrowserUIIncompatible(
+                "visible composer attachment filename differs from the exact packet"
+            )
+        if not await self._visible_packet_button_is_in_current_composer(
+            visible_filename
+        ):
+            raise BrowserUIIncompatible(
+                "exact visible packet button is not uniquely bound to the composer"
+            )
+
+        expect_download = getattr(self.page, "expect_download", None)
+        if not callable(expect_download):
+            raise BrowserUIIncompatible(
+                "same-session packet verification requires visible BrowserUse download support"
+            )
+        try:
+            async with expect_download(timeout=10_000) as download_info:
+                await self.page.get_by_role(
+                    "button",
+                    name=visible_filename,
+                    exact=True,
+                ).click(timeout=5_000)
+            download = await download_info.value
+        except Exception as error:
+            raise BrowserUIIncompatible(
+                "visible composer packet download was not observed in the claimed tab"
+            ) from error
+
+        if str(getattr(download, "suggested_filename", "") or "") != visible_filename:
+            raise BrowserUIIncompatible(
+                "downloaded composer packet filename differs from its visible file card"
+            )
+        with tempfile.TemporaryDirectory(prefix="e2r-verified-visible-packet-") as directory:
+            downloaded_path = Path(directory) / "visible_packet.json"
+            await download.save_as(str(downloaded_path))
+            try:
+                downloaded_bytes = downloaded_path.read_bytes()
+                downloaded_payload = json.loads(downloaded_bytes.decode("utf-8"))
+            except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
+                raise BrowserUIIncompatible(
+                    "downloaded visible composer packet is not readable canonical JSON"
+                ) from error
+        if (
+            hashlib.sha256(downloaded_bytes).hexdigest() != expected_file_sha256
+            or canonical_hash(downloaded_payload) != packet_hash
+        ):
+            raise BrowserUIIncompatible(
+                "downloaded visible composer packet bytes differ from the exact durable packet"
+            )
+        current_url = urlsplit(str(self.page.url or ""))
+        if (
+            current_url.scheme != "https"
+            or current_url.netloc != "chatgpt.com"
+            or current_url.path not in {"", "/"}
+            or current_url.query
+            or current_url.fragment
+            or self.conversation_id() is not None
+            or not await self._visible_packet_button_is_in_current_composer(
+                visible_filename
+            )
+        ):
+            raise BrowserUIIncompatible(
+                "visible packet verification changed or left the existing composer"
+            )
+        current_editor = await first_visible(self.page, EDITOR_SELECTORS)
+        if current_editor is None or (await editor_text(current_editor)).strip():
+            raise BrowserUIIncompatible(
+                "visible packet verification changed the blank composer"
+            )
+        for selector in USER_TURN_SELECTORS:
+            if await self.page.locator(selector).count():
+                raise BrowserUIIncompatible(
+                    "visible packet verification found a user turn in the composer"
+                )
+        if await first_visible(self.page, STOP_SELECTORS) is not None:
+            raise BrowserUIIncompatible(
+                "visible packet verification found a running conversation"
+            )
+        inspect_native_chooser = getattr(
+            self.page, "inspect_native_file_chooser_state", None
+        )
+        if not callable(inspect_native_chooser):
+            raise BrowserUIIncompatible(
+                "visible packet verification lost native file chooser inspection"
+            )
+        chooser = await inspect_native_chooser()
+        if (
+            not isinstance(chooser, Mapping)
+            or chooser.get("open") is not False
+            or int(chooser.get("chrome_owned_dialog_count", -1)) != 0
+            or int(chooser.get("unknown_owner_count", -1)) != 0
+        ):
+            raise BrowserUIIncompatible(
+                "visible packet verification left native file chooser state unknown"
+            )
+        return {
+            "filename": visible_filename,
+            "file_sha256": expected_file_sha256,
+            "packet_hash": packet_hash,
+            "verification": "VISIBLE_COMPOSER_DOWNLOAD_RAW_AND_CANONICAL_HASH_MATCH",
+        }
 
     async def _selected_packet_filename_if_hash_matches(
         self,

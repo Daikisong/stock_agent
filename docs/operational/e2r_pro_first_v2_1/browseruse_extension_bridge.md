@@ -1,6 +1,6 @@
 # 기존 BrowserUse 탭과 Pro-first pipeline 연결
 
-최종 갱신: 2026-09-25 01:17 KST (현재 첨부 bridge 구현 기준; exact-head CI와 canary 진행은 최신 handoff/progress 기록 참조).
+최종 갱신: 2026-09-25 03:56 KST (P100: consumed file input의 기존 visible packet tile을 같은 로그인 탭에서 hash 검증하는 경계 추가; exact-head CI는 최신 handoff 참조).
 로그인 작업은 사용자가 이미 로그인한 **동일 BrowserUse extension 세션의 기존 탭에서만** 수행하며, CDP·새 창/탭/프로필·재로그인 대체는 금지한다.
 
 ## 왜 이 연결이 필요한가
@@ -70,6 +70,15 @@ Bridge endpoint는 WSL의 현재 default route에서 Windows private gateway를 
   browser-selected `File` 내용의 canonical hash를 durable packet hash와 대조한다. 현재 UI에서 menu row를 인식하지
   못하면 fail-closed한다. filechooser event API가 없는 구형 BrowserUse extension만 Windows Chrome-owned Open
   dialog fallback을 쓰며, 그 watcher도 visible click 전에 arm한다.
+- 이미 composer에 붙어 있는 파일의 recovery: 앱이 첨부 tile을 그린 다음 `input.files`를 소비했으면 빈 file input만
+  근거로 첨부 성공/실패를 추정하지 않는다. recovery gate는 현재 new-chat composer form 안에서 유일한 exact packet
+  이름의 visible file button인지 확인한 후 그 버튼의 일반 UI 다운로드 동작만 감싼 `expect_download`를 사용한다.
+  임시 경로에 저장한 사본의 raw SHA-256과 parsed JSON의 canonical hash가 모두 durable packet과 일치하고, 같은
+  root route/tile·빈 composer·0 user turns·정지되지 않은 화면·닫힌 native chooser가 유지된 경우에만 PASS한다. 그 한
+  adapter instance 안에서만 그 첨부를 재사용해 두 번째 upload를 막는다. 이름/bytes/hash mismatch, 여러 tile, 다른
+  route/form, download event 누락은 모두
+  fail-closed한다. 이 검사도 사용자의 기존 로그인 `extension` 세션의 exact claimed tab에서만 가능하며, 새 창·탭·
+  프로필·CDP·재로그인으로 대체하지 않는다.
 - 결과 회수: BrowserUse extension이 지원하는 visible `download` event와 `saveAs`만 연결한다. 현재 BrowserUse
   `playwright.waitForEvent`는 `download`와 `filechooser`만 제공하며 `response` event/body는 제공하지 않는다.
   그러므로 response-only 또는 private authenticated-fetch가 필요한 artifact 경로는 **fail-closed**한다. 새
@@ -108,6 +117,21 @@ upload, send, capture 또는 live canary 결과는 증명하지 않는다. 활�
   queue only이고, browser action은 `runUntil`의 활성 REPL dispatcher에서만 수행한다.
 - `waitForEvent("response")`는 실제 API가 지원하지 않는다. response body를 얻기 위해 CDP나 private API로 바꾸지
   않는다.
+
+## P100 — 기존 composer packet tile의 hash 확인 경계 (2026-09-25 03:56 KST)
+
+사용자의 기존 BrowserUse 로그인 ChatGPT 탭에 timestamp suffix가 붙은 `research_packet(20260924-172107).json` tile이
+보였으나 DOM `input.files`는 비어 있었다. 그 동일 tile의 visible download 동작으로 받은 파일은 175,126 bytes,
+raw SHA-256 `e1d1c44edfd0467aeac3aff1bd362cbb927bf01da135e91f3d9d5cd39f81324f`였고, C15 local packet raw bytes 및
+canonical hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`와 일치했다. 실제 browser action은
+기존 로그인 `extension` 세션의 현재 사용 탭에서 수행했다. 새 browser/window/tab/profile/CDP/relogin 없이 기존
+탭을 유지했다. 이 확인에서 prompt 입력, submit, response capture, query/fetch는 0이다.
+
+이를 generic recovery 코드로 좁게 구현했다. adapter는 정확한 composer button 하나만 다운로드하고 hash를 검증한 뒤
+same-instance receipt로 재사용한다. 이 local code path는 아직 actual UI recovery로 실행되지 않았다. P100 focused
+mock/bridge/orchestration regression은 118/118 PASS; full browser-launch test가 필요한 adapter class는 현 WSL의
+Playwright Chromium dependency `libnspr4.so` 부재 때문에 setup에서 실행되지 않았다. exact-head CI outcome은
+[BrowserUse handoff](browseruse_existing_session_handoff.md#최신-상태--p100-2026-09-25-0356-kst)에서 추적한다.
 
 ## 검증·다음 단계
 

@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-25 02:24 KST / P98: 기존 로그인 BrowserUse 탭에서 C15 same-job 재개 중 packet filename/hash 검증 실패; 미전송·submit/capture 0/0; 인수인계 최신화`
+기준 시각: `2026-09-25 03:56 KST / P100: 기존 로그인 BrowserUse 탭의 composer packet tile을 다운로드해 exact SHA 확인; 미전송·submit/capture 0/0`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -19,9 +19,20 @@ ChatGPT 로그인 상태가 필요한 화면 작업은 사용자가 이미 로�
 
 WSL direct setup 전 machine preflight를 한 번 실행한다. Exit code `23`이면 stale BrowserUse session이다. 새 Chrome/profile이나 재로그인으로 우회하지 말고, 기존 로그인 세션과 같은 탭을 보존할 연결이 없으면 실제 오류를 기록하고 멈춘다. 상세 명령과 recovery 순서는 아래 handoff를 따른다.
 
-안정된 실행 규칙은 [BrowserUse 로그인 세션 인수인계](browseruse_existing_session_handoff.md)에, 최신 C15 시도와 오류 증거는 [P98 상세 인수인계](../e2r_pro_first_v2/browseruse_existing_session_handoff_20260924.md)에 기록한다. 서로 모순되면 이 문서의 최상단 규칙과 가장 최근 checkpoint가 우선한다. 인증값·쿠키·세션 토큰은 기록하지 않는다.
+안정된 실행 규칙과 latest C15 handoff는 [BrowserUse 로그인 세션 인수인계 P100](browseruse_existing_session_handoff.md#최신-상태--p100-2026-09-25-0356-kst)에 기록한다. P98 상세 파일은 당시 장애 이력이지 현재 브라우저 상태가 아니다. 서로 모순되면 이 문서의 최상단 규칙과 가장 최근 checkpoint가 우선한다. 인증값·쿠키·세션 토큰·tab ID는 기록하지 않는다.
 
-## 지금 상태 — P98, 2026-09-25 02:24 KST
+## 지금 상태 — P100, 2026-09-25 03:56 KST
+
+- **BrowserUse 인증 경계:** 로그인이 필요한 UI 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션 안의 기존 탭에서만 한다. 이번 read-only 확인은 현재 사용자 탭을 열거하고 ChatGPT 대상 descriptor를 claim한 뒤 그 반환 Tab 객체에서만 진행했다. 새 창/브라우저/탭/프로필/CDP 세션/재로그인은 없었다. 다음 실행 때도 `openTabs() → 대상 확인 → claimTab()`을 새로 수행하고, 기존 탭이나 로그인 상태가 안 보이면 세션을 바꾸지 말고 중단한다.
+- **C15 same-tab 증거:** composer에 `research_packet(20260924-172107).json`이 보였지만 file input은 비어 있었다. 같은 composer의 해당 타일을 통해 BrowserUse visible download event로 받은 사본은 175,126 bytes, raw SHA-256 `e1d1c44edfd0467aeac3aff1bd362cbb927bf01da135e91f3d9d5cd39f81324f`; exact local packet bytes와 일치하고 canonical hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`도 durable job packet hash와 일치했다. 파일명만으로 동일성을 인정하지 않았다.
+- **실제 작업 범위:** 기존 로그인 ChatGPT 탭에서 파일 타일 다운로드 1회 외 UI 동작은 하지 않았다. 새 창/탭/로그인, prompt 입력, submit, capture, query/fetch, 새 job/pass, 다른 archetype, 점수/Stage 변경은 0회. 첨부 identity 증명은 요청 전송 또는 canary 완료를 뜻하지 않는다.
+- **코드 candidate:** `input.files`가 소비된 상태에서 현재 composer의 단일 정확한 파일 버튼을 다운로드해 raw SHA-256 + canonical hash를 둘 다 비교한다. 다운로드명이 packet basename/검증 허용 suffix와 다르거나, 여러 파일·잘못된 bytes·다른 route/composer·download event 누락이면 fail-closed한다. 검증 receipt는 같은 adapter에서만 재사용해 duplicate upload를 막고 transition에 filename/hash/검증 방식을 남긴다.
+- **로컬 검증:** Browser adapter mock recovery gate + BrowserUse extension bridge + fresh orchestration **118/118 PASS**. 브라우저 실행을 포함한 전체 adapter class는 WSL Playwright Chromium 실행파일이 `libnspr4.so`를 찾지 못해 `TargetClosedError`로 setup에서 멈췄다. 이는 테스트 assertion failure가 아니지만 해당 class의 full pass도 아니다. exact-head GitHub Actions가 변경 전체를 검증해야 한다.
+- **C15 durable state:** 마지막 read-only DB 확인은 `PROJOB-df15a37c58ae7583924e58c0`, `USER_ATTENTION_REQUIRED` v26, submit/capture `0/0`, browser/conversation binding과 prepare receipt 없음, `safe_unprepared_resume=false`였다. 이를 UI 파일 증거만으로 변경하지 않았다. 재개 전 DB row/event/version/hash를 다시 mode=ro로 읽는다.
+- **PR/CI:** local base/pushed feature head `cdf8f20478fdc1302730462d1e010c6b652b15b4`의 Pro PR/push와 V6 workflow는 SUCCESS였다. 현재 P100 diff는 그 run에 포함되지 않는다. PR #7은 OPEN/DRAFT; main에 병합하지 않는다. 현재 local candidate의 audit·commit/push·exact-head CI는 PENDING.
+- 전체 master goal은 미완료다. C06 full-thesis live canary는 `1/3`; C15는 여전히 미전송; C17/C28 full-thesis canary와 final exact-head validation은 미완료다.
+
+## 역사적 상태 — P98, 2026-09-25 02:24 KST (P100에서 supersede)
 
 - **로그인 세션 원칙:** BrowserUse 인증 작업은 사용자가 이미 로그인한 기존 `extension` 세션과 그 안의 정확한 작업 탭에서만 한다. 매번 `openTabs()`로 현재 탭을 확인하고, URL/계정/대화를 대조한 descriptor를 `claimTab()`한 뒤 반환된 동일 Tab 객체만 사용한다. 새 창·브라우저·탭·프로필·별도 CDP·재로그인으로 우회하지 않는다. 새 Chat이 필요하면 같은 기존 로그인 탭 안에서만 시작한다. 연결이나 대상 확인이 실패하면 화면을 보존하고 입력 전에 중단한다.
 - **C15 현재 결과:** `PROJOB-df15a37c58ae7583924e58c0` / `010950` / `2026-08-23`의 same-job 재개를 기존 로그인 세션에서 실제 시도했다. packet exact filename/hash 검증 실패로 멈췄다. durable status `USER_ATTENTION_REQUIRED`, v26, submit/capture `0/0`, `safe_unprepared_resume=false`; prompt/send/capture는 없으며 C15는 미완료다.
@@ -7416,4 +7427,31 @@ P98에서 기록한 same-job C15 R6 오류는 `BrowserUIIncompatible: the exact 
 
 다음은 이 코드와 이 문서를 한글 commit으로 같은 PR #7 feature branch에 push하고 **새 exact-head CI 전체가 종료될 때까지 확인하는 것**이다. 그 CI가 green인 뒤에만 durable job을 read-only로 확인하고, BrowserUse가 필요하면 로그인된 사용자의 기존 `extension` 세션에서 현재 탭을 다시 열거·claim한다. 같은 exact 탭을 확인하지 못하면 즉시 중단한다. read-only recovery와 첨부 수락 검증 전에는 prompt를 채우거나 전송하지 않는다. 전체 master goal은 계속 미완료다.
 
-인증 UI 실행 순서와 latest handoff는 [P99 BrowserUse handoff](browseruse_existing_session_handoff.md#최신-상태--p99-2026-09-25-0247-kst)다.
+인증 UI 실행 순서와 latest handoff는 [P100 BrowserUse handoff](browseruse_existing_session_handoff.md#최신-상태--p100-2026-09-25-0356-kst)다.
+
+## P100 — 기존 로그인 탭의 composer packet을 hash로 확인 (2026-09-25 03:56 KST)
+
+### BrowserUse 사용 경계 및 실제 확인
+
+사용자가 다시 지정한 대로 인증 UI는 사용자가 로그인해 둔 **그 BrowserUse `extension` 세션의 기존 작업 탭에서만** 했다. 현재 열린 사용자 탭을 다시 열거하고 ChatGPT 대상 descriptor 하나를 확인해 claim했으며, claim이 돌려준 바로 그 tab 객체만 사용했다. 다른 창·브라우저·탭·프로필·CDP session을 만들거나 재로그인하지 않았다. 기존 탭과 로그인은 종료/초기화하지 않았다. 이 문서에는 인증값·쿠키·tab ID를 저장하지 않는다.
+
+관찰 당시 `https://chatgpt.com/`의 기존 Chat 탭에서 로그인 상태와 실제 `6 Pro` 선택이 보였고, user/assistant turn `0/0`, 빈 composer, `input.files` 0개였지만 `research_packet(20260924-172107).json` tile 하나가 있었다. 이는 file input이 이미 앱에 의해 소비됐을 수 있다는 UI 상태이지, 파일 내용 증거는 아니다. 그래서 same composer 안의 그 visible tile만 클릭해 BrowserUse download event로 파일을 내려받았다. 사본은 175,126 bytes, raw SHA-256 `e1d1c44edfd0467aeac3aff1bd362cbb927bf01da135e91f3d9d5cd39f81324f`이며 durable C15 packet의 local bytes와 정확히 일치했다. JSON canonical hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df` 역시 job의 packet hash와 일치했다. 따라서 이 타일이 exact packet임을 bytes 수준에서 확인했다.
+
+이것은 같은 세션에서 받은 attachment file을 확인한 결과일 뿐 요청 전송이 아니다. prompt 입력/전송, response capture, 새 대화, 새 job/pass, query/fetch, 다른 archetype 실행, 점수/Stage 변경은 0회다. 파일 다운로드 1회 외 기존 탭 상태를 수정하지 않았다.
+
+### 코드 변경 및 회귀 경계
+
+- `verify_unprepared_recovery_state()`는 DOM file input이 비었더라도 exact filename variant를 가진 visible file signal이 하나 있을 때만 recovery candidate로 본다.
+- visible button을 exact role/name으로 하나만 찾고 현재 composer form에 속하는지 확인한다. 그 same-tab button의 Playwright download event로 임시 사본을 받고, `suggested_filename`, raw SHA-256 및 canonical packet hash를 모두 검사한다. 이후 route/tile, 빈 composer, user-turn 0, running-turn 부재, 닫힌 native chooser를 다시 확인하며 하나라도 변하면 거부한다.
+- hash가 맞은 receipt는 same adapter instance에 저장한다. `prepare_without_submit()`은 tile이 그대로 있는지 다시 확인해 그 첨부를 재사용하므로 duplicate upload를 하지 않는다. 다른 이름/bytes/hash, 여러 tile, download 불가 또는 UI 불일치는 fail-closed다.
+- orchestrator의 append-only recovery event에 검증된 filename, raw file SHA-256, verification method를 남긴다. 이 증거는 submit 권한을 만들지 않고 기존 approval/exactly-once gate를 우회하지 않는다.
+
+### 검증·현황·다음 한 단계
+
+- `PYTHONPATH=src python -m unittest tests.test_e2r_pro_first_browser_adapter.UnpreparedRecoveryReadOnlyGateTest tests.test_e2r_pro_first_browseruse_extension_bridge tests.test_e2r_pro_first_v2_1_fresh_orchestration`: **118/118 PASS** (2026-09-25). 새 회귀는 timestamped exact attachment의 visible download + raw/canonical hash 일치, 같은 adapter에서 재사용해 upload를 생략, 잘못된 bytes 및 여러 첨부 fail-closed를 검사한다.
+- 브라우저 실행에 의존하는 `ProFirstBrowserAdapterTest` class도 같은 실행에 포함해 시도했으나, 이 WSL의 Playwright Chromium은 `libnspr4.so`를 못 찾아 `TargetClosedError`로 각 test `asyncSetUp`에서 시작하지 못했다. 이것은 source assertion failure가 아니며 전체 adapter class의 pass로 세지 않는다. 해당 테스트는 변경에 대한 원격 exact-head CI로 검증해야 한다.
+- P100 code head는 아직 이전 pushed head `cdf8f20478fdc1302730462d1e010c6b652b15b4`와 다르다. 그 기준 head의 Pro PR/push 및 V6 workflows는 SUCCESS였지만 P100 diff를 포함하지 않는다. local static audit **PASS / critical_count=0** (`930614b9868fcfba1cfb4455194beae4474ab23639344912b2445b516f2523be`), `py_compile`, Node `--check`, `git diff --check`도 PASS다. push 뒤 새 exact-head workflows는 PENDING이며, CI green 전 same-job recovery/prepare/send를 하지 않는다.
+- C15 last read-only durable snapshot: `PROJOB-df15a37c58ae7583924e58c0`, `USER_ATTENTION_REQUIRED` v26, submit/capture `0/0`, browser/conversation binding 없음, prepare receipt 없음, `safe_unprepared_resume=false`. 다음 재개 직전 SQLite row/event/version/hash를 read-only로 새로 확인한다.
+- 다음 한 단계: code+tests+문서를 기존 PR #7 feature branch에 한글 commit/push한 뒤 새 Pro/V6 exact-head CI를 끝까지 기다린다. CI가 끝나기 전에는 Pro UI 준비나 전송을 하지 않는다. 필요한 UI 작업은 매번 사용자 기존 로그인 `extension` 세션에서 current tab list를 재열거하고 정확한 대상 탭을 claim해 그 객체 하나로만 진행한다. goal은 아직 미완료다.
+
+세션 작업 지침과 오류/상태 인수인계는 [BrowserUse P100 handoff](browseruse_existing_session_handoff.md#최신-상태--p100-2026-09-25-0356-kst), bridge 기술 계약은 [BrowserUse bridge 문서](browseruse_extension_bridge.md)에서 P100 항목을 참조한다.

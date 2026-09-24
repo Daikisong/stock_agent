@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-25 02:47 KST (P99: 기존 로그인 세션 사용 원칙 재강조, packet 선택 SHA-256 결박 수정과 로컬 회귀 검증 상태 반영).
+최종 갱신: 2026-09-25 03:56 KST (P100: 같은 로그인 BrowserUse 탭의 기존 packet 첨부를 read-only 다운로드로 exact hash 확인, 회귀검증 및 다음 한 단계 기록).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,18 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 상태 — P99, 2026-09-25 02:47 KST
+## 최신 상태 — P100, 2026-09-25 03:56 KST
+
+- **사용자가 지정한 인증 세션 원칙:** 로그인 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 `extension` 세션 안의 기존 작업 탭에서만 한다. 이번 확인도 현재 BrowserUse 세션의 열린 사용자 탭을 다시 열거하고 ChatGPT 탭 하나를 정확히 claim한 뒤, claim이 돌려준 같은 Tab 객체에서만 진행했다. 새 브라우저/창/프로필/CDP 세션/재로그인/새 탭은 만들지 않았고, 기존 ChatGPT 탭과 로그인은 닫거나 초기화하지 않았다. 다음 실행에서도 과거 tab ID나 이 관찰을 현재 상태로 간주하지 말고 `openTabs() → 대상 대조 → claimTab()`을 새로 한다.
+- **같은 탭의 packet 파일 관찰:** 관찰 당시 `https://chatgpt.com/` 기존 Chat 탭에 로그인 상태와 실제 `6 Pro` 선택이 보였고, user/assistant turn `0/0`, 빈 composer, `input.files` 0개였지만 `research_packet(20260924-172107).json` 타일 하나가 있었다. 다른 대화/탭으로 이동하지 않고 같은 composer의 해당 파일 타일만 눌러 BrowserUse visible download event로 확인했다. 받은 파일은 175,126 bytes, raw SHA-256 `e1d1c44edfd0467aeac3aff1bd362cbb927bf01da135e91f3d9d5cd39f81324f`로, C15의 exact local packet bytes와 일치했다. canonical packet hash도 durable packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`와 일치한다. 파일 타일의 동일성은 파일명 추정이 아니라 다운로드한 실제 bytes의 이중 hash로 확인한 것이다.
+- 이 UI 증거는 “첨부 tile이 exact C15 packet이다”를 확인하지만 prompt 전송, Pro 요청, response/capture 또는 canary 성공을 뜻하지 않는다. 이번 동작은 파일 타일의 **다운로드 1회**였고, prompt 입력·submit·capture·새 대화·새 job/pass·query/fetch·다른 archetype·점수/Stage 변경은 0회다. 화면/다운로드 이벤트만으로 durable job을 바꾸지 않았다.
+- 로컬 코드 candidate는 `input.files`가 이미 소비됐더라도 현재 composer 안의 정확한 단일 파일 버튼만 visible download event로 내려받아 raw SHA-256과 canonical hash를 모두 대조한다. hash 불일치, 이름 alias 불일치, 여러 첨부, 다른 composer/route, download 미관찰은 fail-closed다. 일치한 receipt는 같은 adapter 인스턴스에서만 재사용해 prepare 때 중복 upload를 막는다. 이 generic code path는 live ChatGPT에서 아직 실행하지 않았다.
+- **로컬 검증:** Browser adapter의 비브라우저 mock recovery gate + BrowserUse bridge + fresh orchestration **118/118 PASS** (2026-09-25). `py_compile`, Node `--check`, `git diff --check`도 PASS. E2R v2 static audit **PASS / critical_count=0**, production static audit hash `930614b9868fcfba1cfb4455194beae4474ab23639344912b2445b516f2523be`. 브라우저 실행이 필요한 `ProFirstBrowserAdapterTest` 전체 묶음은 WSL의 Playwright Chromium process가 `libnspr4.so`를 찾지 못해 setup 단계에서 error가 났다. 이는 source assertion 결과가 아니며 이번 로컬 전체 adapter pass로 세지 않는다. exact-head GitHub Actions에서 변경분 전체 검증이 필요하다.
+- **C15 durable state:** 마지막 read-only SQLite snapshot은 `PROJOB-df15a37c58ae7583924e58c0`, `USER_ATTENTION_REQUIRED` v26, `submit_count=0`, `capture_count=0`, browser/conversation binding 없음, prepare receipt 없음, `safe_unprepared_resume=false`였다. UI의 파일 hash 일치가 durable recovery permission을 대체하지 않는다. 재개 직전 DB row/event/version/hash를 다시 read-only 확인하고, same-tab proof와 교차 검사한다.
+- **현재 코드/CI 위치:** pushed base head는 `cdf8f20478fdc1302730462d1e010c6b652b15b4`이며 해당 head의 Pro PR/push, V6 Actions는 SUCCESS였다. P100 변경은 현재 local candidate라 아직 그 원격 run에 포함되지 않았으며, static audit, 한글 commit/push, 변경 SHA의 exact-head CI는 다음 한 단계다. PR #7은 OPEN/DRAFT로 유지하고 merge/draft 해제를 하지 않는다.
+- **다음 한 단계:** code+회귀시험+이 문서를 같은 feature branch에 한글 commit/push하고 새 exact-head Pro/V6 Actions가 끝날 때까지 기다린다. green 전에는 same-job prepare/resume/send를 하지 않는다. green 뒤에도 현재 durable job과 사용자의 기존 BrowserUse 로그인 탭을 각각 다시 확인한 후, 같은 탭의 exact attachment proof가 통과할 때만 다음 승인 경계를 판단한다.
+
+## 역사적 상태 — P99, 2026-09-25 02:47 KST
 
 - **로그인된 BrowserUse 세션 사용은 필수다.** 인증이 필요한 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension`의 기존 세션에서만 한다. 작업 직전 `openTabs()`로 현재 탭을 다시 열거하고, URL·대화·계정·모드를 확인해 정확한 기존 탭 descriptor를 `claimTab()`한 뒤 claim이 반환한 바로 그 Tab 객체만 사용한다. 새 브라우저/창/탭/프로필/CDP 세션, 재로그인, 다른 대화로 재전송하는 우회는 하지 않는다. 같은 세션의 대상 탭을 연결하거나 확인하지 못하면 입력/첨부/다운로드/전송 전에 중단하고 실제 오류와 확인 범위만 기록한다. 과거 tab ID와 로그인 관찰은 현재 상태를 보장하지 않는다.
 - P98의 C15 R6 실패는 로그인 문제로 판정하지 않았다. 당시 같은 로그인 탭에서 발생한 정확한 오류는 `BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab`이다. 그 이후 재시도나 BrowserUse UI 조작은 이번 P99에서 하지 않았다.
