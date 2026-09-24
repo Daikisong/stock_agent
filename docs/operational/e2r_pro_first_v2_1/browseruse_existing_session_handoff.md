@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 15:23 KST (P83 Windows mounted-drive 파일 경로 수정·same-job 재개 경계 보강; 상세는 진행 장부 P83).
+최종 갱신: 2026-09-24 15:43 KST (P84 기존 로그인 탭 사용 재확인 및 P83 commit/CI 상태 갱신; 상세는 진행 장부 P84).
 사용자의 명시적 요청을 기록한 운영 지침이며, 로그인 세션이 필요한 작업의 기준 backend는 BrowserUse다.
 아래 P57/P58 실행 내용은 이력과 장애 범위를 구분해 보존한다. BrowserUse 세션을 CDP로 대체하라는 뜻이 아니다.
 
@@ -15,6 +15,15 @@
 - 기록에는 민감정보를 남기지 않는다. 사용자의 기존 창·탭·로그인은 종료하거나 초기화하지 않는다.
 
 ## 최신 재개 상태 — P83
+
+### P84 현재 인수인계 요약 (2026-09-24 15:43 KST)
+
+- 로그인 필요한 작업은 사용자의 **기존 BrowserUse `extension` 세션에서 이미 로그인된 정확한 작업 탭**에서만 한다. 새 창·탭·프로필·별도 CDP 세션·재로그인은 대체 경로가 아니다. 새 Chat 대화가 필요해도 같은 로그인 탭 안에서만 시작한다.
+- 먼저 기존 탭을 열거하고 대상 대화를 확인해 정확한 탭 하나를 claim한다. 이후 그 tab 객체에서 URL/대화, 로그인, 실제 Pro 모드, 기존 응답·초안·첨부를 확인한다. 응답/파일이 이미 있으면 같은 탭에서 재사용·다운로드한다. 입력·첨부·전송 직전에도 같은 탭과 상태를 재확인한다.
+- 세션이나 정확한 탭을 연결·claim하지 못하면 실제 오류 문자열과 확인 범위를 기록하고 멈춘다. 다른 세션에서 재로그인·다운로드·재전송하지 않는다. 사용자의 기존 창·탭·로그인은 보존한다.
+- 이번 문서 갱신에서는 BrowserUse를 호출하지 않았다. 마지막 실제 브라우저 확인(15:23 KST)은 기존 로그인 ChatGPT 탭, 일반 Chat의 실제 Pro, 빈 composer였다. C15 R6 packet은 업로드·전송되지 않았다.
+- 현재 PR #7 head `65493bcc939168dd40eef88de37abfa7d0b5d3b3`의 Pro push [35964475812](https://github.com/Daikisong/stock_agent/actions/runs/35964475812), Pro PR [35964479716](https://github.com/Daikisong/stock_agent/actions/runs/35964479716), V6 PR [35964479682](https://github.com/Daikisong/stock_agent/actions/runs/35964479682)은 확인 시 모두 같은 SHA에서 `in_progress`였다. 세 run이 모두 SUCCESS가 되기 전에는 same-job 브라우저 재개/전송을 하지 않는다.
+- P83 경로 수정 후 persistent Windows Node REPL에서 cache-busted bridge import로 `/mnt/c/...`가 native `C:\Users\...`로 변환되고 파일을 읽을 수 있음을 확인했다. REPL은 이전 모듈을 cache할 수 있으므로 이후 source 변경 검증은 commit SHA query를 붙인 import를 사용한다.
 
 - 현재 작업은 기존 C15 R6 job PROJOB-df15a37c58ae7583924e58c0 하나다. DB read-only 기준 USER_ATTENTION_REQUIRED v16, packet hash 불변, browser/conversation binding 없음, submit/capture 0/0, approval 미발급, 새 successor 없음이다.
 - 이전 3초 selector timeout은 P81 bounded read-path 수정 후 같은 로그인 탭의 ensure_logged_in()/inspect_state()에서 재현되지 않았다. 실제 Pro/Chat, 로그인, 빈 composer가 확인됐고 같은 탭에서 C15 R6 canary runner가 packet/prompt 해시를 재검증했다.

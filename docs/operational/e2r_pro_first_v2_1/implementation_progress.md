@@ -6873,5 +6873,20 @@ P81 local diff는 count/visibility/enabled 및 text/attribute/value를 reviewed 
 
 - JS wslUncPath가 Windows에서 /mnt/<drive>/...를 native drive path로 매핑하고 /home/...는 distro UNC로 유지하도록 고쳤다. exact historical pre-click path-validation error만 same unsent job의 safe unprepared recovery gate에 허용한다. extra suffix near-match는 계속 차단한다.
 - 회귀: mounted C/Z drive 변환·native path 보존·Linux runtime 거부, exact same-job recovery 허용, path error near-match 차단을 추가했다. focused BrowserUse bridge + fresh orchestration 97/97 PASS, node --check PASS, git diff --check PASS.
-- 이 수정은 아직 현재 branch에 commit/push되지 않은 시점의 기록이다. P81 code SHA 7830b9a5의 CI 성공은 P83을 검증하지 않는다. 한글 commit/push 후 exact-head Pro push, Pro PR, V6 PR 모두 SUCCESS여야만 동일 C15 R6 job을 다시 시도한다.
+- 이 문장은 P83 기록을 작성한 시점의 상태였다. 이후 수정은 한글 commit `65493bcc939168dd40eef88de37abfa7d0b5d3b3`으로 push되어 PR #7 head가 됐다. P81 code SHA `7830b9a5`의 CI 성공은 P83을 검증하지 않는다. P83 exact-head Pro push/Pro PR/V6 PR은 현재 확인 시 모두 `in_progress`이며, 세 run이 모두 SUCCESS여야만 동일 C15 R6 job을 다시 시도한다.
 - 다음 시도도 기존 로그인 BrowserUse extension 세션·현재 작업 탭만 쓴다. worker는 same job identity, blank composer, exact packet hash, 실제 Pro, no-submit 상태를 재확인한 뒤 1회 준비/전송한다. mismatch/오류이면 입력 전에 멈춘다. 새 tab/window/job 및 automatic resubmit는 금지다.
+
+## P84 — 기존 로그인 세션 사용 규칙 재확인 및 최신 인수인계 (2026-09-24 15:43 KST)
+
+사용자가 다시 지시한 핵심은 BrowserUse가 필요한 로그인 작업을 사용자의 **이미 로그인된 세션 쪽에서** 진행하라는 것이다. 이는 브라우저 선택의 취향이 아니라 실행 경계다. 현재 기준 절차와 중단 조건은 [BrowserUse existing-session handoff](browseruse_existing_session_handoff.md) 첫머리에 모아 두었다.
+
+- 인증 작업은 기존 BrowserUse Chrome `extension` 세션에서 기존 탭 목록을 읽고, 작업 대화와 일치하는 탭을 정확히 claim한 다음, 반환된 동일 tab 객체만 사용한다. 별도 창·탭·프로필·CDP 세션을 만들거나 재로그인하지 않는다. 새 Chat이 필요해도 같은 로그인 탭 안에서 시작한다.
+- 쓰기 동작 전에는 같은 탭에서 URL/대화, 로그인, 실제 Pro 모드, 사용자 초안·진행 중 응답·첨부를 다시 확인한다. 이미 생성된 응답이나 Library artifact가 있으면 그것을 같은 탭에서 회수하며 요청을 중복 전송하지 않는다.
+- BrowserUse 연결/claim/대상 판별이 실패하면 정확한 오류와 확인 범위를 문서화하고 멈춘다. 다른 세션으로 우회하지 않고 기존 사용자 창·탭·로그인을 보존한다. 이 문서 갱신 중에는 BrowserUse를 호출하거나 사용자의 세션을 조작하지 않았다.
+
+### 현재 기술·CI 상태
+
+- PR #7은 OPEN / DRAFT / MERGEABLE이다. branch와 origin은 `65493bcc939168dd40eef88de37abfa7d0b5d3b3`에서 일치한다. main에는 미병합이다.
+- Pro push [35964475812](https://github.com/Daikisong/stock_agent/actions/runs/35964475812), Pro PR [35964479716](https://github.com/Daikisong/stock_agent/actions/runs/35964479716), V6 PR [35964479682](https://github.com/Daikisong/stock_agent/actions/runs/35964479682)은 조회 시 모두 정확한 P83 head에서 `in_progress`였다. P81의 green run은 P83 코드를 검증하지 않으므로 다음 same-job 브라우저 시도 전 이 세 P83 run이 모두 SUCCESS여야 한다.
+- P83 packet path 오류는 파일 선택기를 누르기 전 로컬 경로 검사에서 났으므로 packet upload, prompt 입력, Pro submit, capture는 발생하지 않았다. 고친 `/mnt/c/...` → Windows native drive path는 persistent Windows Node REPL에서 읽기 smoke-test를 통과했다. persistent REPL의 ESM cache를 피하려면 바뀐 bridge는 commit SHA query를 포함해 다시 import해야 한다.
+- 다음 한 단계는 현재 exact-head Actions 세 run의 최종 결과를 확인하는 것이다. 전부 SUCCESS일 때에만 기존 BrowserUse `extension` 세션의 같은 작업 탭을 다시 claim하고 동일 C15 R6 job의 identity/hash/blank composer/Pro/no-submit 상태를 읽기 전용으로 확인한다. 불일치나 기술 오류면 전송하지 않고 기록 후 멈춘다. 새 job·새 브라우저·새 세션·추가 검색/fetch·점수/Stage 변경은 이번 복구 단계에 포함되지 않는다.
