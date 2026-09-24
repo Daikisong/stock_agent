@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-25 07:49 KST (P109: 사용자의 기존 로그인 세션 지시와 최신 pushed head/CI 진행 상태 반영).
+최종 갱신: 2026-09-25 08:27 KST (P110: exact-head CI 완료 정정 및 기존 로그인 탭의 미전송 첨부 초안 보존).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,33 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 인계 — P109, 2026-09-25 07:49 KST
+## 최신 인계 — P110, 2026-09-25 08:27 KST
+
+### 사용자가 지정한 로그인 세션 사용
+
+사용자는 BrowserUse에서 인증이 필요하면 이미 로그인해 둔 **그 세션**을 쓰라고 재차 지시했다. 이번 확인은 Windows BrowserUse preflight exit `0` 뒤 기존 `extension` 세션에서 `browser.user.openTabs()`를 새로 호출하고, 기존 ChatGPT root 탭 descriptor를 claim한 다음 claim이 반환한 동일 Tab 객체에서만 read-only로 했다. 새 창/브라우저/탭/프로필/CDP 연결, 재로그인, 새 대화 열기, 다른 대화 재전송은 하지 않았다.
+
+### 현재 같은 탭에서 확인된 상태와 보존 경계
+
+- 열려 있는 기존 사용자 탭은 4개였다. 기존 ChatGPT 탭은 `https://chatgpt.com/`의 root 화면이며 대화 ID 경로가 없다. 화면에 로그인된 계정 UI와 `6 Pro` 모델 label이 보였다. 보이는 대화 turn은 user 0 / assistant 0, composer text는 비어 있었다.
+- 그런데 composer에는 `research_packet(20260924-172107).json`이라는 **미전송 첨부 tile**과 해당 tile의 remove action이 이미 있었다. Browser file input의 selected-file count는 0이지만, 이것은 앱 UI의 첨부 draft가 없다는 뜻이 아니다.
+- C15 same-job durable packet의 이름은 `research_packet.json`, canonical hash는 `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`다. 화면의 20260924 tile은 이 packet/hash와 동일하다고 증명되지 않았으므로 대상 파일로 취급하지 않는다.
+- 사용자의 기존 초안·첨부를 덮어쓰거나 이동하지 말라는 규칙에 따라, 타일 삭제, 새 대화 전환, file upload, prompt 입력, 다운로드, submit, capture를 모두 하지 않았다. 기존 탭과 로그인 상태는 그대로다. 이는 인증/BrowserUse 연결 실패가 아니라 **기존 미전송 draft를 보존하기 위해 멈춘 상태**다.
+- C15 DB는 이번 실행 중 SQLite read-only/query-only로 확인한 기록에 따라 `PROJOB-df15a37c58ae7583924e58c0`, `USER_ATTENTION_REQUIRED` v26, submit/capture `0/0`, approval/browser/conversation binding 없음이다. 실제 UI action은 DB를 바꾸지 않았다. 마지막 durable recovery event의 `safe_unprepared_resume=false` 역시 그대로다.
+
+### 코드·CI 상태 정정
+
+- P109를 기록할 때 진행 중이던 세 workflow는 그 뒤 exact source head `617e204b4c0b4f9dce15f4185eff589af9042920`에서 모두 `SUCCESS`로 끝났다: [Pro PR 36069234793](https://github.com/Daikisong/stock_agent/actions/runs/36069234793), [Pro push 36069233229](https://github.com/Daikisong/stock_agent/actions/runs/36069233229), [V6 36069234853](https://github.com/Daikisong/stock_agent/actions/runs/36069234853). 두 Pro full-regression workflow와 V6 offline-contract를 포함해 run conclusion이 green이다. 테스트 개수는 출력에서 따로 확인하지 않았으므로 숫자는 주장하지 않는다.
+- 현재 문서-only branch head는 `7c215bfa668d334a87e113e124811c0b929aa37d`; PR #7은 `OPEN/DRAFT`이며 main에 병합되지 않았다. 이 문서 checkpoint는 source/test 코드를 바꾸지 않아 별도 CI run을 만들지 않았다. CI로 검증된 code SHA는 계속 `617e204...`다.
+- 전체 goal은 미완료: P9 full-thesis Pro canary는 `1/3` (C06 완료, C17/C28 대기). 이번 P110에서 query/fetch, 새 job/pass, 다른 archetype, 점수/Stage 변경은 0.
+
+### 다음 한 단계
+
+현재 composer에 이미 붙은 다른 JSON draft를 지워도 되는지 사용자 확인이 필요하다. 명시 승인이 있기 전에는 이 draft를 지우거나 새 대화로 전환하지 않는다. 진행 승인이 나면 현재 로그인된 **같은 extension 탭**에서 C15 packet의 exact file/hash를 검증한 뒤에만 same-job 재개를 검토한다. 허용된 다음 동작이 불명확한 동안 UI를 그대로 보존한다.
+
+P110 상태 receipt: [p110_existing_login_tab_draft_preservation_receipt.json](p110_existing_login_tab_draft_preservation_receipt.json).
+
+## 과거 인계 — P109, 2026-09-25 07:49 KST (P110에서 superseded)
 
 ### 사용자 지시 — 로그인된 바로 그 세션에서 작업
 
@@ -44,7 +70,7 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 세 필수 workflow가 이 source head에서 끝날 때까지 기다린다. 모두 `SUCCESS`면 먼저 C15 durable state를 read-only로 다시 확인한다. 이후 BrowserUse가 필요할 때만 로그인된 기존 `extension` 세션에서 탭을 재열거·claim해 같은 탭에서 재개한다. 세션이나 대상을 확인할 수 없으면 새 세션으로 우회하지 않고 멈춘다.
 
-P109 상태 receipt: [p109_existing_login_session_and_exact_head_ci_receipt.json](p109_existing_login_session_and_exact_head_ci_receipt.json).
+P109 상태 receipt: [p109_existing_login_session_and_exact_head_ci_receipt.json](p109_existing_login_session_and_exact_head_ci_receipt.json). 당시 run 상태 `IN_PROGRESS`는 P109 기록 시점의 snapshot이며, 이후 P110에서 세 run의 최종 `SUCCESS`를 확인했다.
 
 ## 과거 인계 — P108, 2026-09-25 07:42 KST (P109에서 superseded)
 

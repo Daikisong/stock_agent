@@ -7677,3 +7677,29 @@ P108 상태 receipt: [p108_c15_attachment_replacement_and_validation_receipt.jso
 세 필수 Actions가 exact source head에서 끝날 때까지 기다린다. 셋 다 `SUCCESS`이면 C15 durable state를 read-only로 재확인한다. 이후 실제 브라우저 작업이 필요할 경우 사용자의 기존 로그인 `extension` 탭을 그때 다시 열거·claim해 같은 Tab 객체로만 진행한다. 이보다 앞서 보내거나 다른 session으로 우회하지 않는다.
 
 P109 상태 receipt: [p109_existing_login_session_and_exact_head_ci_receipt.json](p109_existing_login_session_and_exact_head_ci_receipt.json).
+
+## P110 — 기존 로그인 탭 확인 및 미전송 첨부 draft 보존 (2026-09-25 08:27 KST)
+
+사용자는 다시 한 번 BrowserUse에서 로그인 상태가 필요하면 새 브라우저가 아니라 이미 로그인해 둔 세션을 쓰라고 지시했다. 이에 WSL BrowserUse preflight를 먼저 실행해 exit `0`을 확인하고, persistent Node REPL의 기존 BrowserUse `extension`을 사용했다. `browser.user.openTabs()`로 그 시점의 기존 탭 4개를 열거한 뒤 `https://chatgpt.com/`의 기존 ChatGPT root 탭을 정확히 claim했다. 이후 확인은 claim이 반환한 동일 Tab 객체의 read-only 평가로 제한했다.
+
+### 기존 세션에서 확인한 사실
+
+- ChatGPT root 화면에서 로그인된 계정 UI와 `6 Pro` label이 보였다. URL은 `/` root이며 현재 대화 ID는 없고, 읽을 수 있는 user/assistant turn은 각각 0이다. composer text는 비어 있다.
+- 기존 composer에 `research_packet(20260924-172107).json` 첨부 tile과 remove action이 이미 표시돼 있었다. `input[type=file]`의 selected-file 수는 0이지만, 앱 차원의 visible attachment draft가 존재한다는 사실은 별개다.
+- 활성 C15 same-job packet은 `research_packet.json`, canonical packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`다. 기존 tile의 이름·원본 hash가 대상 packet과 같다는 증거는 없다. 따라서 그 tile을 task packet 또는 다운로드 완료로 간주하지 않았다.
+- 기존 draft를 보존하기 위해 tile 제거, 새 대화 전환, prompt 입력, 첨부/upload, 다운로드, submit, capture를 전혀 하지 않았다. 새 browser/window/tab/profile/CDP/relogin도 사용하지 않았다. 기존 로그인 세션만 read-only로 확인했고 UI는 변경하지 않았다.
+
+### CI 및 저장소 기준선
+
+- P109 당시 `IN_PROGRESS`로 적었던 run 세 개는 이후 source code SHA `617e204b4c0b4f9dce15f4185eff589af9042920`에서 모두 `SUCCESS`로 완료됐다: [Pro PR 36069234793](https://github.com/Daikisong/stock_agent/actions/runs/36069234793), [Pro push 36069233229](https://github.com/Daikisong/stock_agent/actions/runs/36069233229), [V6 36069234853](https://github.com/Daikisong/stock_agent/actions/runs/36069234853). 두 Pro run은 full-regression을 포함하고 V6는 offline-contract를 포함한다. 테스트 총개수는 별도 확인되지 않았으므로 기재하지 않는다.
+- 현재 P110 문서 변경 전 branch/origin head는 P109 docs-only commit `7c215bfa668d334a87e113e124811c0b929aa37d`, worktree clean이었다. PR #7은 `OPEN/DRAFT`, `main` 미병합이다. 이 P110도 문서 전용 변경이라 새 workflow를 만들지 않는다. code CI의 검증 SHA는 `617e204...`로 구분해 둔다.
+- C15 SQLite를 이 작업에서 mode read-only 및 `PRAGMA query_only=ON`으로 확인한 durable 상태는 `PROJOB-df15a37c58ae7583924e58c0`, S-Oil `010950`, `2026-08-23`, `USER_ATTENTION_REQUIRED` v26, canonical packet hash `fa5845...320df`, submit/capture `0/0`, approval/browser/conversation binding 없음이다. 기존 `safe_unprepared_resume=false` event도 유지됐다. BrowserUse UI는 이에 따라 바뀌지 않았다.
+- 이번 P110에는 신규 research/query/fetch, 새 job/pass, C15 submit/capture, 다른 archetype, 점수/Stage 변경, PR merge가 없다.
+
+### 현재 blocker와 다음 한 단계
+
+기존 로그인 세션 접근 자체는 정상이다. 멈춘 이유는 현재 composer에 작업 대상과 다른 미전송 JSON 첨부 draft가 이미 있어, 이를 지우거나 새 대화로 넘기면 사용자의 기존 초안을 손상시킬 수 있기 때문이다. 해당 첨부를 제거해도 된다는 사용자의 명시적인 확인 전에는 같은 탭을 그대로 보존한다. 다음 한 단계는 이 초안의 보존/제거 가능 여부를 확인받는 것이다. 승인되면 새 세션으로 옮기지 않고 현재 로그인 BrowserUse `extension` 탭 안에서만 C15 same-job의 exact packet/hash gate를 다시 통과시킨다.
+
+전체 P9 live Pro full-thesis canary는 `1/3`(C06 완료, C17/C28 대기)로 계속 미완료다. PR #7은 draft/open으로 유지하며 main에 병합하지 않는다.
+
+P110 상태 receipt: [p110_existing_login_tab_draft_preservation_receipt.json](p110_existing_login_tab_draft_preservation_receipt.json).
