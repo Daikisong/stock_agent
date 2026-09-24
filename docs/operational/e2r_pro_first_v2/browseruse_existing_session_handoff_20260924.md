@@ -1,13 +1,13 @@
 # BrowserUse 기존 로그인 세션 인수인계 — 2026-09-24
 
 기록 시각: `2026-09-24 23:02 KST`
-최종 갱신: `2026-09-25 01:17 KST`
+최종 갱신: `2026-09-25 01:43 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`  
 PR: `#7` draft 유지; 이 작업에서 merge 또는 draft 해제 금지  
 작업 시작 시 HEAD: `1bcd33033390fab8403db8b4efa7ac442bf30bee`
 
-## 최신 인수인계 요약 — 2026-09-25 01:17 KST
+## 최신 인수인계 요약 — 2026-09-25 01:43 KST
 
 **인증이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 바로 그 `extension` 세션과 기존 작업 탭에서만 한다.** 매 재개 시 `browser.user.openTabs()`로 현재 목록을 다시 확인하고, URL·계정 표시·작업 대화가 맞는 descriptor 하나를 `claimTab()`한 다음 그 반환 Tab 객체만 사용한다. 새 창·새 브라우저·새 탭·프로필·CDP attach·재로그인으로 옮기지 않는다. 새 Chat 대화가 필요하면 기존 로그인 탭 안에서만 연다. 세션/탭을 찾지 못하거나 기술 오류가 나면 새 세션으로 우회하지 말고, 기존 화면을 보존한 채 정확한 오류와 확인 범위만 기록하고 입력 전에 멈춘다. **다른 CDP 포트에서 안 보인다는 이유로 로그인 세션이 없다고 결론내리지 않는다.**
 
@@ -15,21 +15,27 @@ PR: `#7` draft 유지; 이 작업에서 merge 또는 draft 해제 금지
 - 마지막 read-only BrowserUse 확인(2026-09-25 01:11 KST): 기존 탭 ID `1437795006`, `https://chatgpt.com/`, 계정 `대규 Pro`, 일반 `Chat`, 실제 선택 표시 `6 Pro`; composer/user turn/선택 파일은 각각 빈 값/0/0. 탭은 현재 확인에서 첨부 메뉴를 열었다가 다시 닫았으며 packet·prompt를 첨부·입력·전송하지 않았다. ID는 다음 작업의 권한이 아니므로 재개 때 반드시 현재 탭 목록을 다시 열거하고 재-claim한다.
 - durable job의 마지막 read-only 상태는 `USER_ATTENTION_REQUIRED`, `state_version=24`, `submit_count=0`, `capture_count=0`; browser session/conversation 및 approval 값 없음, `fresh_v3_prepare_receipt.json` 없음이다. 마지막 durable 오류는 이전 Windows dialog fallback의 `No Chrome-owned Open dialog appeared`다.
 - 원인 정정: 설치된 BrowserUse extension은 `tab.playwright.waitForEvent("filechooser")`와 그 `FileChooser.setFiles()`를 제공한다. 기존 bridge는 이를 쓰지 않고 visible attach click 뒤 Windows native Open dialog만 찾았으므로, 관찰된 실패는 로그인/세션 부재가 아니라 **BrowserUse filechooser capability와 bridge의 native-dialog-only 경로가 맞지 않은 것**이다. 현재 local patch는 같은 탭에서 visible 업로드 메뉴 항목을 누르기 직전에 event를 arm하고 `setFiles(exact_packet_path)`를 사용하도록 했다. file name/hash 검증은 그대로 유지한다. 이벤트가 없거나 hash가 안 맞으면 fail-closed이며, 실제 첨부·전송 성공으로 간주하지 않는다. 구형 extension만 pre-armed native-dialog fallback을 쓴다.
-- 현재 feature worktree의 last committed HEAD는 `4aca6686aa7155fcaedcaef90d3ff83f55b4586a`; 위 filechooser 수정과 최신 문서 보강은 아직 미커밋이다. 이 수정본 기준 로컬 회귀시험 `111/111 PASS`, `audit_e2r_pro_first_v2` 전체 정적 audit `PASS`/critical `0`, `node --check`, `compileall`, `git diff --check` 모두 PASS다.
-- 커밋 `4aca6686...`의 Pro run [36022829567](https://github.com/Daikisong/stock_agent/actions/runs/36022829567)는 2026-09-25 01:17 KST 확인 시 `in_progress`: `core-unit`, `browser-mock-e2e`, `static-security` 성공, `full-regression`의 독립 reviewer gate 진행 중. 같은 SHA의 V6 run [36022834278](https://github.com/Daikisong/stock_agent/actions/runs/36022834278)은 `SUCCESS`. **이 로컬 수정 head의 CI는 아직 생성되지 않았고, live canary는 새 exact-head 필수 CI green 뒤에만 재개한다.**
+- 현재 feature worktree의 pushed HEAD는 `4a52dce987bdab8ee64d6122bd0796ca670d2e76`이며 이 문서 갱신을 시작하기 직전까지 worktree는 clean이었다. filechooser 수정은 한글 커밋 `기존 로그인 BrowserUse 파일 선택 연결과 인수인계 보완`에 포함됐다. 관련 로컬 회귀시험 `111/111 PASS`, `audit_e2r_pro_first_v2` 전체 정적 audit `PASS`/critical `0`, `node --check`, `compileall`, `git diff --check`도 PASS다.
+- PR #7은 현재 head `4a52dce987bdab8ee64d6122bd0796ca670d2e76`에서 `OPEN/DRAFT`, merge state `UNSTABLE`이다. 같은 head의 Pro push run [36026896631](https://github.com/Daikisong/stock_agent/actions/runs/36026896631) 및 Pro PR run [36026903641](https://github.com/Daikisong/stock_agent/actions/runs/36026903641)은 `in_progress`: 두 run 모두 `core-unit`, `browser-mock-e2e`, `static-security`는 성공했고 `full-regression` 전체 회귀 테스트가 진행 중이다. V6 PR run [36026903629](https://github.com/Daikisong/stock_agent/actions/runs/36026903629)은 `SUCCESS`. **Pro exact-head 전체 CI가 끝나기 전에는 live canary를 재개하지 않는다.**
 - PR `#7`은 draft/open으로 유지하며 이 작업에서 draft 해제나 merge를 하지 않는다.
 
 이 요약은 아래 상세 타임라인에서 이전 상태를 덮어쓴다. 특히 과거의 “첨부 메뉴가 펼쳐져 있음”은 현재 UI 상태를 의미하지 않는다. 최신 관찰은 chooser 실패 뒤 composer가 비어 있고 선택 파일 0개였다는 것이다.
 
-## 핵심 원칙
+## 핵심 원칙 — 로그인 작업은 사용자가 이미 로그인한 세션에서
 
-로그인이 필요한 ChatGPT Pro 작업은 사용자가 이미 로그인해 둔 Chrome의 **기존 BrowserUse extension 세션과 기존 작업 탭**에서만 한다. 새 창·새 프로필·임시/헤드리스 브라우저·CDP로 대체하지 않는다. 로그인 세션을 다시 만들거나 재로그인시키지 않는다.
+인증이 필요한 ChatGPT Pro 작업의 유일한 기본 경로는 사용자가 이미 로그인해 둔 Chrome의 **BrowserUse `extension` 세션과 기존 작업 탭**이다. 설정 파일이나 machine preflight 성공만으로 연결됐다고 보지 말고, 활성 BrowserUse 도구에서 실제 extension 연결과 대상 탭을 확인한다.
 
-실행 전에는 현재 Codex 세션의 BrowserUse 도구를 통해 `extension` browser를 얻고 `browser.user.openTabs()`로 사용자의 탭을 열거한다. 대상 ChatGPT 탭을 URL·계정·작업 대화로 확인한 뒤 반환된 그 탭 객체를 `browser.user.claimTab(tab)`으로 결박한다. 이후 탐색·첨부·전송·결과 확인은 동일한 claimed tab 객체만 쓴다. `browser.tabs.list()`에 탭이 없거나 다른 CDP 포트에서 발견되지 않는다는 사실은 사용자 세션이 없다는 증거가 아니다.
+매 실행·재개 때 아래 순서를 지킨다.
 
-새 연구 대화가 필요해도 같은 로그인 탭 안에서만 만든다. 전송 직전 tab, URL/대화, 일반 Chat 모드, 실제 `Pro` 선택, 초안·첨부 상태를 다시 확인한다. 화면이 예상과 다르면 변경을 중단하고 읽기 전용으로 조사한다. 종료·보류 시 사용자의 창·탭·로그인을 닫거나 초기화하지 않는다.
+1. 현재 Codex 세션에서 BrowserUse `extension` browser를 얻고 `browser.user.openTabs()`로 현재 탭을 다시 열거한다.
+2. `https://chatgpt.com/`, 로그인 계정 표시, 대화/작업 내용을 대조해 대상 descriptor 하나를 특정한다. 저장된 tab ID는 다음 실행 때 유효하다고 가정하지 않는다.
+3. 그 descriptor를 `browser.user.claimTab()`에 넘기고, 이후에는 **claim이 반환한 동일 Tab 객체만** 사용한다.
+4. 읽기·첨부·입력·전송 직전 URL/대화, 실제 Chat/Pro 선택, 기존 초안·응답·파일 상태를 확인한다. 새 대화가 필요해도 기존 로그인 탭 안에서만 시작한다.
+5. 연결·탭 확인·화면 상태가 예상과 다르면 사용자의 세션과 화면을 보존하고, 실제 오류 및 확인 범위를 적은 뒤 입력 전에 멈춘다. 새 창이나 별도 세션으로 재시도하지 않는다.
 
-쉬운 예: ChatGPT에 로그인된 기존 탭 A에서 자료를 받아야 하면 탭 A를 BrowserUse로 claim해 그 안에서 받는다. 탭 A를 찾지 못하면 새 Chrome B를 열어 로그인을 요청하지 않고, BrowserUse 연결/탭 확인 오류를 기록한 뒤 멈춘다.
+금지 대체 경로: 새 창·새 브라우저·새 탭·새/임시 프로필·헤드리스 브라우저·별도 CDP attach·재로그인·쿠키 복사·전역 키 입력. 다른 CDP endpoint나 `browser.tabs.list()`에 사용자의 탭이 없다는 사실만으로 로그아웃 또는 세션 만료라고 결론내리지 않는다. 기술 연결 오류는 기술 오류로 기록한다. 종료·보류할 때 사용자의 기존 창·탭·로그인을 닫거나 초기화하지 않는다.
+
+쉬운 예: 로그인된 기존 탭 A에서 Pro 자료를 받아야 하면 A를 현재 목록에서 다시 찾아 claim하고 A에서만 진행한다. A가 목록에 없거나 claim이 실패하면 새 Chrome B를 열어 로그인시키지 말고, 오류와 확인 범위를 남긴 뒤 멈춘다. “새 Chat”은 같은 탭 안의 새 대화이며, 새 브라우저 세션이 아니다.
 
 ## 이번 시도 식별자와 실제 상태
 

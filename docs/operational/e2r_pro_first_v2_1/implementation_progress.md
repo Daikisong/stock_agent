@@ -7310,3 +7310,13 @@ P9 집계는 이제 **C06 1/3 live full-thesis research/score/StageCourt PASS**�
 ### 다음 한 단계 및 미완료 범위
 
 현재 feature branch 변경분을 검토해 한글 commit/push한 다음 **새 exact-head Pro/V6 workflow가 완료될 때까지 확인**한다. CI green 후에만 같은 C15 job을 read-only로 다시 확인하고, 사용자 기존 `extension` 세션에서 현재 대상을 다시 열거·claim한 동일 tab으로만 이어간다. filechooser event 결과와 exact packet hash가 확인되기 전에는 prompt를 입력/전송하지 않는다. 실패 시 같은 화면/세션을 보존하고 정확한 오류를 기록한다. P96은 bridge integration fix이며 C15 canary 완료가 아니다. master goal과 C15 전송/응답/capture, 이후 C17/C28 canaries는 계속 미완료다.
+
+## P97 — 기존 로그인 BrowserUse 세션 사용 절차를 상단 인수인계로 고정 (2026-09-25 01:43 KST)
+
+사용자가 다시 요청한 대로, 인증이 필요한 BrowserUse 작업에서는 사용자가 이미 로그인해 둔 **기존 `extension` 세션과 기존 작업 탭**을 사용해야 한다는 점을 실행자가 놓치지 않도록 인수인계 첫 화면을 정리했다. 절차를 `extension 연결 확인 → openTabs() 재열거 → URL/계정/대화 확인 → 정확한 descriptor claim → 반환된 동일 Tab 객체만 사용`으로 명시하고, 새 창·브라우저·탭·프로필·CDP·재로그인으로 우회하지 않으며 연결 실패 시 화면을 보존하고 입력 전에 멈추도록 금지 경로와 중단 조건을 함께 적었다. 새 Chat 대화와 새 브라우저 세션도 명확히 구분했다.
+
+이번 P97은 문서와 원격 상태만 확인했다. BrowserUse runtime을 연결하지 않았고 기존 탭/로그인 상태를 재확인하거나 변경하지 않았다. prompt 입력, 파일 첨부/다운로드, 전송, capture, 신규 검색/fetch, canary/job/pass, 점수/Stage 변경은 모두 0이다. 마지막으로 확인된 기존 탭 및 C15 durable state는 P96 시점 정보이므로 다음 실행 시 현재 상태로 간주하지 말고 다시 읽기 전용 확인해야 한다.
+
+문서 갱신 시 PR #7 head는 `4a52dce987bdab8ee64d6122bd0796ca670d2e76`, `OPEN/DRAFT`였다. 해당 head의 Pro push run [36026896631](https://github.com/Daikisong/stock_agent/actions/runs/36026896631)과 Pro PR run [36026903641](https://github.com/Daikisong/stock_agent/actions/runs/36026903641)은 `in_progress`였으며, 각 run의 `core-unit`, `browser-mock-e2e`, `static-security` job은 성공하고 `full-regression`은 진행 중이었다. 같은 head의 V6 run [36026903629](https://github.com/Daikisong/stock_agent/actions/runs/36026903629)은 `SUCCESS`였다. 새 문서 변경의 커밋/CI 결과는 이 기록에 포함되지 않는다.
+
+다음 단계는 실행 중인 exact-head Pro regression 결론을 확인하고, canary를 실제 재개할 때만 P97의 기존 세션 절차를 그대로 적용하는 것이다. 현재 인증 세션 또는 정확한 작업 탭을 연결·확인하지 못하면 새 브라우저를 열지 않고 중단한다. 최신 절차는 [BrowserUse 기존 로그인 세션 인수인계](../e2r_pro_first_v2/browseruse_existing_session_handoff_20260924.md)다. master goal은 미완료다.
