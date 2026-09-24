@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 20:17 KST (P92: 기존 로그인 탭 read-only 확인과 chooser 오류 same-tab 복구 gate 보강).
+최종 갱신: 2026-09-24 20:31 KST (P93: 기존 로그인 세션 사용 규칙 재확인, exact-head CI 진행과 C06 receipt authority/status 정합성 확인 대기 기록).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,44 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## P92 — 기존 로그인 탭과 same-job recovery 재개 지점 (2026-09-24 20:17 KST)
+## P93 — 세션 규칙 재확인 및 현재 blocker handoff (2026-09-24 20:31 KST)
+
+### 로그인 세션에 대한 사용자 요청 — 실행 시 최우선
+
+- 인증이 필요한 BrowserUse 작업은 반드시 사용자가 이미 로그인한 BrowserUse `extension` 세션과 그 안의 기존 대상 탭에서 한다. Pro 모드 대화 입력·파일 첨부·Library 다운로드도 예외가 아니다.
+- 새 Chrome/창/탭/프로필/CDP 세션을 열어 대신 작업하거나, 새 로그인·다른 대화에서 같은 요청을 다시 보내는 것은 금지한다. 새 Chat 대화가 꼭 필요하면 기존 로그인 탭 안에서 시작한다.
+- 작업 직전 `openTabs()`로 현재 탭을 다시 확인하고 대상 descriptor를 정확히 `claimTab()`한 뒤, 그 반환 객체만 사용한다. 사전 점검 성공은 실제 세션 연결이나 로그인 확인을 뜻하지 않는다.
+- 현재 연결에서 기존 세션·대상 탭을 읽고 조작할 수 없으면 즉시 멈춘다. 마지막으로 확인한 범위와 도구의 정확한 오류만 기록한다. 창·탭을 바꾸거나 재전송해 우회하지 않는다.
+- 이 P93 문서 갱신에서는 BrowserUse를 연결하거나 브라우저 화면을 읽지 않았다. 앞선 P92 탭 관찰을 현재 상태로 간주하지 않는다. 다음 인증 작업 직전에 위 절차를 다시 수행한다.
+
+### 현재 저장소·CI 상태
+
+- PR #7은 `OPEN`, `DRAFT`, head `100346caf0a31886e9aff6d1a0ef65e22e6820b6`이며 `main`에는 병합되지 않았다. 2026-09-24 20:31 KST에 GitHub 상태는 `mergeStateStatus=UNSTABLE`이었다.
+- 이 exact head의 GitHub Actions는 아직 전부 성공 완료가 아니다: Pro push run [35992521406](https://github.com/Daikisong/stock_agent/actions/runs/35992521406)은 `in_progress` (core-unit, browser-mock-e2e, static-security 성공; full regression 진행 중), Pro PR run [35992525796](https://github.com/Daikisong/stock_agent/actions/runs/35992525796)은 `in_progress` (full regression, browser-mock-e2e, core-unit jobs 진행 중), V6 run [35992525826](https://github.com/Daikisong/stock_agent/actions/runs/35992525826)은 `in_progress` (전체 unit suite 실행 중). 완료 판정이나 canary 작업 재개 조건으로 사용하지 않는다.
+- goal acceptance의 live full-thesis canary는 미완료다. PR CI가 끝나기 전에 BrowserUse에 prompt 입력·첨부·전송을 하지 않는다. 인증 세션을 쓸 때도 기존 세션·기존 탭 원칙은 그대로 적용한다.
+
+### C06 receipt authority/status 정합성 — 미해결, canary 성공으로 집계 금지
+
+2026-09-24 20:25 KST에 Windows runtime DB를 `mode=ro` 및 `PRAGMA query_only=ON`으로 읽어 C06 / 000660 최신 job `PROJOB-287556cc59c10f124d615c4d`를 재확인했다. job row는 `FINAL`이고 pass 19개지만 아래 authority/terminal 값의 계층 간 관계가 확인되지 않았다.
+
+| 근거 위치 | 관찰값 |
+|---|---|
+| pass receipts 19개 | 모두 `score_valid=0`, `publication_withheld=1`; 마지막 pass는 `SATURATION_AUDIT / COMPLETE`이나 `research_status=RESEARCH_RUNNING` |
+| score receipt 상위 필드 | `score_valid=true`, `production_score_authority=true`; 결정론 점수 `23.275` 및 내부 scorer audit의 `full_score_valid=true` |
+| 같은 receipt의 `full_thesis_eligibility` | `status=FULL_THESIS_SCORE_ELIGIBLE`와 동시에 `score_valid=false`, `score_authority=false`, `stage_authority=false`, `stage_status=FULL_THESIS_SCORE_PENDING`, `publication_status=WITHHELD_UNTIL_DETERMINISTIC_STAGECOURT` |
+| StageCourt receipt | decision은 `FINAL`, canonical stage `0`, 점수 `23.275`; receipt 필드는 `production_score_authority=false`, `production_stage_authority=true` |
+
+이 필드들은 서로 다른 authority 계층을 뜻할 수도 있어 현재 스냅샷만으로 코드 결함이라고 단정하지 않는다. 다만 `job.status=FINAL`, score receipt 단독 `score_valid=true`, 또는 StageCourt `decision_status=FINAL`만으로 C06 live full-thesis canary를 통과 처리하지 않는다. `full_thesis_eligibility`와 producer authority 관계 및 `RESEARCH_RUNNING` terminal status의 대응을 코드/receipt 계보에서 확인하기 전까지 C06은 **판정 보류**다. runtime DB는 읽기 전용으로 확인했으며 고치거나 점수·Stage를 바꾸지 않았다.
+
+### 다음 한 단계
+
+1. exact head의 Pro push, Pro PR, V6 Actions가 모두 종료될 때까지 확인한다.
+2. C06 receipt authority/status 계층을 source code와 receipt 생성 순서에서 추적한다. 의미 관계를 확인하기 전에는 C06을 canary PASS로 세지 않는다.
+3. 승인·same-job recovery gate가 허용할 때만 기존 로그인 BrowserUse 탭에서 기존 durable job을 이어간다. 새 browser/session이나 중복 job/전송으로 우회하지 않는다.
+
+이번 P93 기록은 DB read-only 확인과 문서화만 수행했다. BrowserUse 조작, prompt/attachment/download/submit/capture, query/fetch, 새 job/pass, 점수/Stage 변경은 모두 0이다. P92 아래 기록은 당시 snapshot으로 보존하며, 현재 상태와 충돌하면 이 P93 handoff가 우선한다.
+
+## P92 — 기존 로그인 탭과 same-job recovery 재개 지점 (2026-09-24 20:17 KST; historical snapshot)
 
 - **로그인 세션:** WSL BrowserUse preflight exit `0`. persistent `mcp__node_repl__js`의 canonical bootstrap에서 `extension` 연결이 성공했다. `openTabs()`로 사용자가 이미 열어 둔 탭 2개를 확인했고, 그중 기존 `https://chatgpt.com/` / `ChatGPT` 탭 descriptor를 정확히 claim해 이후 read-only 검사에 같은 반환 tab 객체를 썼다. 새 창·브라우저·탭·프로필·CDP 세션, 재로그인, navigation은 없었다. 탭 ID·쿠키·토큰은 기록하지 않는다.
 - **현재 화면의 read-only 증거:** login password input `0`, visible composer `1`이 빈 상태, user/assistant message `0/0`, file input `5` 중 선택 파일 `0`. 계정 표시 `Pro`, model control label `6 Pro`가 보였다. 이는 현재 기존 탭에서 읽은 UI 상태이며, native chooser의 현재 상태나 어떤 canary turn이 실제 전송됐다는 증거는 아니다. prompt 입력·첨부·다운로드·submit/capture는 모두 0이다.

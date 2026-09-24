@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-24 19:05 KST / P89: 코드 head c4155c5의 CI 3개 SUCCESS, 문서-only head 42df5bad push; 다음 UI는 기존 로그인 BrowserUse 세션·정확한 탭에서만`
+기준 시각: `2026-09-24 20:31 KST / P93: PR #7 head 100346ca; exact-head CI 진행 중; BrowserUse는 기존 로그인 세션·정확한 기존 탭만; C06 receipt authority/status 정합성 확인 대기`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -64,10 +64,10 @@ P3 Initial Prompt V3                      COMPLETE
 P4 local preflight                        COMPLETE
 P5 compact RepairDeltaV3                  COMPLETE
 P6 fresh-session orchestration            COMPLETE
-P7 000660 fresh canary                    COMPLETE
-P8 C17/C28 fresh initial canary           COMPLETE
-P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS; C15 R6 unsent/read-only recovery gate pending; C28 pending)
-P10 final CI/audit                        IN_PROGRESS (PR #7 exact head c4155c5: Pro push + Pro PR + V6 SUCCESS; live 3/3 미충족)
+P7 000660 initial/frozen canary           COMPLETE (later full-thesis live status is under P9 and unproven)
+P8 C17/C28 fresh initial canary           COMPLETE (initial only; later full-thesis live canaries incomplete)
+P9 live multi-pass saturation             IN_PROGRESS (C06 full-thesis status disputed by receipt/authority mismatch; C15 R6 recovery gate pending; C17/C28 incomplete)
+P10 final CI/audit                        IN_PROGRESS (PR #7 exact head `100346ca`: Pro push/PR + V6 all in progress; live canary 3/3 미충족)
 ```
 
 ### 현재 재개 지점 (P89, 2026-09-24 19:05 KST; PR/CI 확인 19:01 KST)
@@ -7211,3 +7211,42 @@ BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet 
 새 pass, source query/fetch, 다른 archetype 실행, prompt input, attachment/download, submit/capture, score/Stage 변경은 P92 모두 `0`이다. PR #7은 Draft/open, `main` 미병합이다. 전체 master goal은 미완료다.
 
 최신 실행 절차는 [BrowserUse existing-session handoff P92](browseruse_existing_session_handoff.md#p92--기존-로그인-탭과-same-job-recovery-재개-지점-2026-09-24-2017-kst)에 있다.
+
+## P93 — 기존 로그인 세션 원칙 및 receipt/CI blocker 최신화 (2026-09-24 20:31 KST)
+
+### 사용자 요청과 BrowserUse 경계
+
+- 사용자는 인증이 필요한 BrowserUse 작업을 사용자가 이미 로그인해 둔 바로 그 세션에서 수행하라고 재확인했다. 다음 UI 작업은 `extension → openTabs() → 정확한 기존 대상 descriptor claimTab() → claim 반환 동일 tab 객체` 절차만 사용한다.
+- 새 브라우저·창·탭·프로필·별도 CDP, 재로그인, 다른 대화에서 재전송으로 우회하지 않는다. 기존 탭을 연결/확인하지 못하면 거기서 중단하고 실제 오류와 확인 범위만 기록한다. 새 Chat이 필요해도 같은 로그인 탭 안에서 시작한다.
+- P93은 상태 문서와 read-only runtime DB 점검만 했다. 브라우저 연결/조작, 입력·첨부·다운로드·submit/capture, 새 query/fetch/job/pass, 점수/Stage 변경은 0이다. 실제 세션 상태는 다음 인증 작업 직전에 다시 확인해야 한다.
+
+### exact-head Actions 상태
+
+2026-09-24 20:31 KST, PR #7은 `OPEN/DRAFT`, head `100346caf0a31886e9aff6d1a0ef65e22e6820b6`, `mergeStateStatus=UNSTABLE`이다. exact-head run은 아직 전부 완료되지 않았다.
+
+| Workflow | Run | 당시 상태 | 진행 단계 |
+|---|---:|---|---|
+| Pro-first push | [35992521406](https://github.com/Daikisong/stock_agent/actions/runs/35992521406) | `in_progress` | core-unit, browser-mock-e2e, static-security 성공; full regression 실행 중 |
+| Pro-first PR | [35992525796](https://github.com/Daikisong/stock_agent/actions/runs/35992525796) | `in_progress` | full regression, browser-mock-e2e, core-unit jobs 실행 중 |
+| V6 verification | [35992525826](https://github.com/Daikisong/stock_agent/actions/runs/35992525826) | `in_progress` | 전체 unit-test suite 실행 중 |
+
+이들은 exact P93 문서 시점의 상태이며 `SUCCESS`로 표현하지 않는다. live BrowserUse 작업 재개 또는 goal 완료 전에는 이 세 run의 결론을 확인해야 한다.
+
+### C06 / 000660 receipt authority/status 정합성 미확인 — 최신 판정 보류
+
+2026-09-24 20:25 KST에 중앙 runtime DB를 `mode=ro`와 `PRAGMA query_only=ON`으로 조회했다. job `PROJOB-287556cc59c10f124d615c4d`는 `FINAL`, pass 19개지만 receipt 계층별 authority/status의 연결 관계가 문서만으로 설명되지 않는다.
+
+- 19개 pass row는 모두 `score_valid=0`, `publication_withheld=1`; 마지막 `SATURATION_AUDIT`는 `COMPLETE`인데 detail은 `research_status=RESEARCH_RUNNING`.
+- score receipt 상위 수준은 `score_valid=true`, `production_score_authority=true`, score `23.275`, nested scorer `full_score_valid=true`로 기록한다.
+- 그 receipt 안 `full_thesis_eligibility`는 `score_valid=false`, `score_authority=false`, `stage_authority=false`, `FULL_THESIS_SCORE_PENDING`, `WITHHELD_UNTIL_DETERMINISTIC_STAGECOURT`를 기록한다.
+- StageCourt receipt는 `decision_status=FINAL`, canonical stage `0`이며 `production_score_authority=false`, `production_stage_authority=true`라고 기록한다.
+
+이 필드가 서로 다른 authority 계층을 뜻할 수 있으므로 이것만으로 코드 결함이라고 단정하지 않는다. 다만 row-level `FINAL`, standalone `score_valid=true`, StageCourt `FINAL`만으로는 full-thesis canary PASS가 입증되지 않는다. 코드/receipt 생성 순서에서 각 authority와 terminal status의 대응을 확인할 때까지 C06은 **미증명/판정 보류**다. DB를 수정하거나 점수·Stage를 변경하지 않았다. 앞선 P92 snapshot의 C06 라벨보다 본 P93 판정이 우선한다.
+
+### 다음 한 단계
+
+1. head `100346ca`의 Pro push, Pro PR, V6 workflows 완료와 결론 확인.
+2. C06 authority/status 계층의 의미와 생성 경로 추적. 필요하면 기존 job/receipt를 읽어 비교하되 새 research/fetch/canary는 만들지 않는다.
+3. 이후 승인 gate가 허용하면 기존 BrowserUse 로그인 세션의 기존 exact tab에서만 기존 durable canary를 재개한다. 연결 실패면 중단한다.
+
+PR #7은 Draft/open이며 `main`에 병합하지 않았다. overall master goal은 미완료다. 자세한 BrowserUse·C15 recovery 및 receipt 근거는 [최신 P93 handoff](browseruse_existing_session_handoff.md#p93--세션-규칙-재확인-및-현재-blocker-handoff-2026-09-24-2026-kst)를 기준으로 한다.
