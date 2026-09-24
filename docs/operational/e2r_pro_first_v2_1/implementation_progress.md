@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-24 19:04 KST / P89: PR #7 exact-head 필수 CI 3개 SUCCESS (19:01 재확인); 다음 UI는 기존 로그인 BrowserUse 세션·정확한 탭에서만`
+기준 시각: `2026-09-24 19:05 KST / P89: 코드 head c4155c5의 CI 3개 SUCCESS, 문서-only head 42df5bad push; 다음 UI는 기존 로그인 BrowserUse 세션·정확한 탭에서만`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -70,10 +70,14 @@ P9 live multi-pass saturation             IN_PROGRESS (C06 1/3 PASS; C15 R6 unse
 P10 final CI/audit                        IN_PROGRESS (PR #7 exact head c4155c5: Pro push + Pro PR + V6 SUCCESS; live 3/3 미충족)
 ```
 
-### 현재 재개 지점 (P89, 2026-09-24 19:04 KST; PR/CI 재확인 19:01 KST)
+### 현재 재개 지점 (P89, 2026-09-24 19:05 KST; PR/CI 확인 19:01 KST)
 
-- PR #7은 OPEN/DRAFT/MERGEABLE, base `main`, 미병합이다. branch `feature/e2r-pro-first-browser-platform-20260822`의 local/origin HEAD는 `c4155c5ca6f75602928d123c48446c08160860a8`이며 한글 commit은 `BrowserUse 재개 오류 매칭과 로그인 세션 인수인계 보강`이다. main은 변경하지 않았다.
-- exact-head GitHub Actions를 19:01 KST에 다시 확인했다. Pro push [35982213116](https://github.com/Daikisong/stock_agent/actions/runs/35982213116), Pro PR [35982218832](https://github.com/Daikisong/stock_agent/actions/runs/35982218832), V6 PR [35982218910](https://github.com/Daikisong/stock_agent/actions/runs/35982218910)이 모두 같은 `c4155c5…` SHA에서 `completed / success`다. P89 exact-head 필수 CI는 green이다.
+- P88에서 수정한 matcher는 DB에 실제 저장된 exact message `BrowserUse bridge transport failed (TimeoutError: timed out)`를 허용하며, `BrowserUseBridgeError` class, exact event stage, `safe_unprepared_resume=false`, submit/capture `0/0` 조건은 유지하고 suffix near-match를 거부한다. P89 source 변경 없이 이 코드를 담은 head의 CI가 통과했다.
+- **BrowserUse가 필요한 다음 단계는 반드시 사용자의 기존 로그인 세션을 사용한다.** 새 브라우저/창/탭/프로필/CDP, 재로그인, 다른 대화에서의 요청 반복은 하지 않는다. canonical BrowserUse runtime에서 `extension → browser.user.openTabs() → 정확한 descriptor claimTab() → claim 반환 동일 tab 객체` 순서를 따르고, 대상/로그인/실제 Pro/기존 응답·초안·첨부를 read-only로 재확인한다. 이미 결과나 JSON이 있으면 같은 탭에서 회수한다. 연결·열거·claim·대상 확인 중 하나라도 실패하면 실제 오류와 확인 범위를 기록하고 입력 전 중단한다.
+- P89는 문서 및 CI 상태 확인만 수행했다. 이 회차에서 실제 BrowserUse UI, 새 브라우저, 입력·첨부·다운로드·전송은 사용하지 않았다. 마지막 실브라우저 read-only 관찰은 P88 18:32 KST이며, 이를 지금의 화면 상태로 간주하지 않는다.
+- durable C15 R6의 마지막 DB 판정도 P88의 read-only snapshot이다. 다음 live recovery 전 `mode=ro` + `PRAGMA query_only=ON`으로 같은 job/version/hash/status/submit/capture/approval/browser/conversation binding/event를 다시 확인하고, 같은 existing tab의 same-session read-only proof와 대조한다. 두 증거가 일치하기 전까지 upload/input/submit 금지다.
+- full-thesis goal은 미완료다. P7 C06 full-thesis canary는 1/3, C15 R6 same-job resume gate는 다음 미해결 실행 단계, C28 canary는 미완료다. PR CI SUCCESS는 live canary 통과나 goal completion을 뜻하지 않는다.
+- 문서 전용 한글 commit `42df5bad8bc709f68520394c56298f46a576f04b` (`P89 기존 로그인 BrowserUse 세션 인수인계 문서화`)를 기존 PR #7 branch에 push했다. 이 commit은 두 markdown 문서만 변경하며 main은 그대로다. GitHub Actions 조회에서는 이 docs-only SHA의 새 run이 생성되지 않았다. CI 증거는 바로 전 code head `c4155c5…` 기준으로 아래 세 run 모두 SUCCESS다.
 - P88에서 수정한 matcher는 DB에 실제 저장된 exact message `BrowserUse bridge transport failed (TimeoutError: timed out)`를 허용하며, `BrowserUseBridgeError` class, exact event stage, `safe_unprepared_resume=false`, submit/capture `0/0` 조건은 유지하고 suffix near-match를 거부한다. P89 source 변경 없이 이 코드를 담은 head의 CI가 통과했다.
 - **BrowserUse가 필요한 다음 단계는 반드시 사용자의 기존 로그인 세션을 사용한다.** 새 브라우저/창/탭/프로필/CDP, 재로그인, 다른 대화에서의 요청 반복은 하지 않는다. canonical BrowserUse runtime에서 `extension → browser.user.openTabs() → 정확한 descriptor claimTab() → claim 반환 동일 tab 객체` 순서를 따르고, 대상/로그인/실제 Pro/기존 응답·초안·첨부를 read-only로 재확인한다. 이미 결과나 JSON이 있으면 같은 탭에서 회수한다. 연결·열거·claim·대상 확인 중 하나라도 실패하면 실제 오류와 확인 범위를 기록하고 입력 전 중단한다.
 - P89는 문서 및 CI 상태 확인만 수행했다. 이 회차에서 실제 BrowserUse UI, 새 브라우저, 입력·첨부·다운로드·전송은 사용하지 않았다. 마지막 실브라우저 read-only 관찰은 P88 18:32 KST이며, 이를 지금의 화면 상태로 간주하지 않는다.
@@ -7032,7 +7036,7 @@ claim/대상 확인이 실패하면 실제 오류와 확인 범위를 기록하�
 
 동일 SHA 956의 V6 run terminal conclusion을 확인한다. 그 뒤 code/test/docs를 한글 commit으로 기존 PR #7에 push하고 새 exact-head 필수 workflow들이 모두 SUCCESS인지 다시 기다린다. 수정된 head의 CI green 뒤에만 durable same-job state를 다시 읽고, 기존 claimed tab과 durable identity를 대조하는 read-only recovery gate를 한다. 그 전에 tab에서 입력·첨부·전송하지 않는다. tab claim 실패나 identity mismatch면 새 브라우저를 열지 않는다.
 
-## P89 — exact-head CI green 이후 기존 로그인 세션 handoff (문서 갱신 2026-09-24 19:04 KST, CI 확인 19:01 KST)
+## P89 — exact-head CI green 이후 기존 로그인 세션 handoff (문서 갱신 2026-09-24 19:05 KST, CI 확인 19:01 KST)
 
 ### 범위
 
@@ -7040,10 +7044,10 @@ claim/대상 확인이 실패하면 실제 오류와 확인 범위를 기록하�
 
 ### 현재 저장소 및 CI
 
-- 작업 branch `feature/e2r-pro-first-browser-platform-20260822`; local HEAD와 origin HEAD 모두 `c4155c5ca6f75602928d123c48446c08160860a8`.
+- 작업 branch `feature/e2r-pro-first-browser-platform-20260822`; 현재 local/origin HEAD 모두 문서 전용 commit `42df5bad8bc709f68520394c56298f46a576f04b`. 바로 전 code head는 `c4155c5ca6f75602928d123c48446c08160860a8`.
 - PR #7: OPEN / DRAFT / MERGEABLE, base `main`; main 미병합.
 - 같은 head에서 Pro push [35982213116](https://github.com/Daikisong/stock_agent/actions/runs/35982213116), Pro PR [35982218832](https://github.com/Daikisong/stock_agent/actions/runs/35982218832), V6 PR [35982218910](https://github.com/Daikisong/stock_agent/actions/runs/35982218910)이 2026-09-24 19:01 KST 확인 시 각각 `completed / success`.
-- P88에 수정한 exact error matcher, fixture/test 보정은 이 CI 검증 head에 포함됐다. CI green은 코드 검증만 의미하며 live full-thesis canary 완료나 전체 goal 완료를 뜻하지 않는다.
+- P88에 수정한 exact error matcher, fixture/test 보정은 code head `c4155c5…`에 포함됐다. CI green은 코드 검증만 의미하며 live full-thesis canary 완료나 전체 goal 완료를 뜻하지 않는다. 후속 `42df5bad…`는 문서 전용이고 그 SHA에서 새 Actions run은 없었다.
 
 ### 다음 BrowserUse 작업의 필수 동선
 

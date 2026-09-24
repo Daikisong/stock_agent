@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-24 19:04 KST (P89: exact-head CI 완료 확인, 기존 로그인 세션 사용 규칙 재확인).
+최종 갱신: 2026-09-24 19:05 KST (P89: 문서 전용 커밋 push, 검증 head와 branch HEAD 구분).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 반드시 따를 실행 순서 — 같은 로그인 세션·같은 탭
@@ -21,10 +21,13 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 재개 지점 — P89 (2026-09-24 19:04 KST; PR/CI 재확인 19:01 KST)
+## 최신 재개 지점 — P89 (2026-09-24 19:05 KST; PR/CI 확인 19:01 KST, 문서 push 후)
 
-- PR #7은 OPEN/DRAFT/MERGEABLE, base `main`, 미병합이다. `feature/e2r-pro-first-browser-platform-20260822`의 local HEAD와 origin branch HEAD는 모두 `c4155c5ca6f75602928d123c48446c08160860a8`이다. 한글 commit은 `BrowserUse 재개 오류 매칭과 로그인 세션 인수인계 보강`이다.
-- 이 exact SHA의 GitHub Actions를 2026-09-24 19:01 KST에 다시 조회했다. Pro push [35982213116](https://github.com/Daikisong/stock_agent/actions/runs/35982213116), Pro PR [35982218832](https://github.com/Daikisong/stock_agent/actions/runs/35982218832), V6 PR [35982218910](https://github.com/Daikisong/stock_agent/actions/runs/35982218910)이 모두 `completed / success`다. 이로써 956 이전 head에서 미완료였던 V6 확인을 포함해 P89 code head의 필수 CI가 green이다.
+- **사용자 로그인 세션 원칙은 바뀌지 않는다.** BrowserUse가 필요한 다음 단계는 사용자가 이미 로그인해 둔 BrowserUse Chrome `extension` 연결에서 시작한다. `browser.user.openTabs()`로 기존 탭을 다시 열거하고, 대상 작업 대화와 일치하는 정확한 descriptor를 `browser.user.claimTab()`에 넘긴다. 이후 read-only 확인부터 결과 회수까지 claim이 반환한 같은 tab 객체만 쓴다. 새 Chrome/창/탭/프로필/CDP 세션, 재로그인, 다른 대화에서의 재전송·재다운로드는 하지 않는다.
+- **P89 문서 갱신에서는 브라우저 UI를 호출하거나 조작하지 않았다.** 마지막 실제 existing-session 화면 관찰은 P88의 2026-09-24 18:32 KST 검사다. 그 시점에 기존 `https://chatgpt.com/` ChatGPT 탭을 claim하여 login prompt 없음, `6 Pro` 표시, 빈 composer, user turn 0, 선택 파일 0을 read-only 확인했다. 이를 P89 현재 화면 상태로 간주하지 않으며, 다음 작업 때 같은 세션에서 다시 확인한다.
+- PR #7은 OPEN/DRAFT/MERGEABLE, base `main`, 미병합이다. 문서 전용 커밋 push 이후 현재 local/origin branch HEAD는 모두 `42df5bad8bc709f68520394c56298f46a576f04b` (`P89 기존 로그인 BrowserUse 세션 인수인계 문서화`)다. **코드 검증 head는 직전 `c4155c5ca6f75602928d123c48446c08160860a8`** (`BrowserUse 재개 오류 매칭과 로그인 세션 인수인계 보강`)다.
+- 코드 검증 head `c4155c5…`의 GitHub Actions를 2026-09-24 19:01 KST에 조회했다. Pro push [35982213116](https://github.com/Daikisong/stock_agent/actions/runs/35982213116), Pro PR [35982218832](https://github.com/Daikisong/stock_agent/actions/runs/35982218832), V6 PR [35982218910](https://github.com/Daikisong/stock_agent/actions/runs/35982218910)이 모두 `completed / success`다. `42df5bad…`는 문서 두 개만 바꾼 후속 commit이며 해당 SHA에서 별도 Actions run은 생성되지 않았다.
+- C15 R6 durable job의 마지막 DB 증거도 P88 mode=ro + `PRAGMA query_only=ON` 검사다: `PROJOB-df15a37c58ae7583924e58c0`, S-Oil `010950`, `USER_ATTENTION_REQUIRED` v18, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, submit/capture `0/0`, browser/conversation binding 없음, `safe_unprepared_resume=false`. 다음 UI 작업 전에 durable state를 다시 read-only 조회하고 same-tab proof와 exact identity를 대조해야 한다. 화면만 보고 재개 안전성을 추론하지 않는다.
 - **사용자 로그인 세션 원칙은 바뀌지 않는다.** BrowserUse가 필요한 다음 단계는 사용자가 이미 로그인해 둔 BrowserUse Chrome `extension` 연결에서 시작한다. `browser.user.openTabs()`로 기존 탭을 다시 열거하고, 대상 작업 대화와 일치하는 정확한 descriptor를 `browser.user.claimTab()`에 넘긴다. 이후 read-only 확인부터 결과 회수까지 claim이 반환한 같은 tab 객체만 쓴다. 새 Chrome/창/탭/프로필/CDP 세션, 재로그인, 다른 대화에서의 재전송·재다운로드는 하지 않는다.
 - **P89 문서 갱신에서는 브라우저 UI를 호출하거나 조작하지 않았다.** 마지막 실제 existing-session 화면 관찰은 P88의 2026-09-24 18:32 KST 검사다. 그 시점에 기존 `https://chatgpt.com/` ChatGPT 탭을 claim하여 login prompt 없음, `6 Pro` 표시, 빈 composer, user turn 0, 선택 파일 0을 read-only 확인했다. 이를 P89 현재 화면 상태로 간주하지 않으며, 다음 작업 때 같은 세션에서 다시 확인한다.
 - C15 R6 durable job의 마지막 DB 증거도 P88 mode=ro + `PRAGMA query_only=ON` 검사다: `PROJOB-df15a37c58ae7583924e58c0`, S-Oil `010950`, `USER_ATTENTION_REQUIRED` v18, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, submit/capture `0/0`, browser/conversation binding 없음, `safe_unprepared_resume=false`. 다음 UI 작업 전에 durable state를 다시 read-only 조회하고 same-tab proof와 exact identity를 대조해야 한다. 화면만 보고 재개 안전성을 추론하지 않는다.
