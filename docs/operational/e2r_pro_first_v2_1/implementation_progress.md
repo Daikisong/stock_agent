@@ -7285,3 +7285,28 @@ P9 집계는 이제 **C06 1/3 live full-thesis research/score/StageCourt PASS**�
 사용자는 인증이 필요한 브라우저 작업을 이미 로그인해 둔 사용자의 세션에서 하라고 재강조했다. 남은 C15 same-job recovery 등 로그인 UI가 필요한 단계는 `extension → openTabs() → 정확한 기존 대상 탭 claimTab() → claim 반환 객체만 사용`으로 진행한다. 새 브라우저/창/탭/프로필/CDP 세션이나 재로그인은 대체 경로가 아니다. 새 Chat 대화가 필요하면 같은 로그인 탭 안에서만 시작하며, 기존 응답/파일이 있으면 중복 요청 대신 그 탭에서 회수한다. 연결·탭·대상 확인에 실패하면 실제 오류와 확인 범위만 기록하고 입력 전에 멈춘다.
 
 이번 P95는 문서 갱신뿐이다. BrowserUse를 연결하거나 탭/페이지를 확인하지 않았고, prompt 입력·첨부·다운로드·전송·capture도 0이다. P94 handoff의 CI 결과는 그 시점 snapshot이므로 C15 재개 전에 exact current PR/code head의 workflow 결론을 새로 확인한다. 최신 세션 지침은 [P95 BrowserUse handoff](browseruse_existing_session_handoff.md#p95--사용자의-로그인-세션-사용-지시-재확인-2026-09-24-2047-kst)다. master goal은 미완료다.
+
+## P96 — 로그인된 기존 BrowserUse 탭 유지와 filechooser bridge 수정 (2026-09-25 01:17 KST)
+
+### 작업 원칙 — 인증된 BrowserUse는 기존 로그인 세션만
+
+사용자가 다시 지시한 대로 ChatGPT 로그인/기존 대화가 필요한 UI 작업은 사용자가 이미 로그인해 둔 Chrome의 BrowserUse `extension` 세션 안에서만 수행한다. 실행 시 `browser.user.openTabs()`로 현재 탭을 열거하고, URL·계정 표시·목표 대화로 확인한 descriptor를 `browser.user.claimTab()`에 전달한 뒤 **claim 반환 Tab 객체 하나만** 사용한다. 마지막으로 본 tab ID는 재개 권한이 아니므로 매번 다시 찾는다. 새 창·브라우저·탭·프로필·CDP connection을 만들거나 재로그인으로 바꾸지 않는다. 새 Chat 대화가 필요하면 그 기존 탭 내부에서만 연다. 연결·대상 불일치·화면 예상 불일치 시 기존 세션을 보존하고 오류/확인 범위를 기록한 뒤 입력 전에 멈춘다. 이전 기록에 나온 기술 오류는 로그인 세션 부재나 정책 거절로 오분류하지 않는다.
+
+### 원인 및 수정
+
+2026-09-25 01:11 KST경 동일 BrowserUse `extension` 탭 ID `1437795006`을 현재 `openTabs()` 결과에서 다시 찾아 claim하여 읽기 전용 확인했다. 계정 표시는 `대규 Pro`, 화면은 `Chat` 및 실제 모델 표시 `6 Pro`, composer 비어 있음, user turn 0, file input 선택 0이었다. `tab.dev.logs({levels:["error","warn","warning"], limit:200})`는 빈 목록이었다. 첨부 버튼은 menu를 여는 control이었다. `사진 및 파일 추가` 메뉴를 열어 DOM을 확인한 뒤 다시 닫았다. 별도 브라우저·로그인 세션·CDP attach를 만들지 않았고 전송/첨부를 하지 않았다.
+
+기존 정확한 오류는 `No Chrome-owned Open dialog appeared; no global keystrokes were sent`였다. installed BrowserUse extension이 실제 `playwright.waitForEvent("filechooser")`와 `FileChooser.setFiles()`를 노출하는데 기존 bridge가 이를 호출하지 않고 Windows native Open dialog만 기다리는 API 연결 불일치를 확인했다. 이건 로그인/탭 문제가 아니다. source 변경은 `attachPacket()`이 same claimed tab의 visible upload row click 직전에 filechooser event를 arm하고 exact packet path를 공식 BrowserUse chooser handle에 할당하도록 한다. 직접 `input[type=file].setInputFiles`, CDP, private HTTP, global keystrokes는 사용하지 않는다. 메뉴 toggle 앞에 chooser waiter를 조기 생성하지 않으며, visible row를 찾을 수 없으면 fail-closed다. 기존 filename/canonical hash 검증과 pre-submit gate는 유지한다. event API가 없는 구형 extension만 native dialog fallback을 쓰고 click 전에 watcher를 arm한다. Windows path basename/extension도 cross-platform 검증하도록 수정했다.
+
+동일 C15 durable job의 latest read-only snapshot은 `PROJOB-df15a37c58ae7583924e58c0`, `USER_ATTENTION_REQUIRED`, state version `24`, submit/capture `0/0`, session/conversation/approval 없음, prepare receipt 없음이었다. packet hash는 `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`. 따라서 C15를 성공으로 표현하면 안 된다. 현재까지 packet upload, prompt input, submit, capture는 모두 0이며 요청은 아직 전송되지 않았다.
+
+### 회귀 검증과 CI 구분
+
+- `tests.test_e2r_pro_first_browseruse_extension_bridge` 및 `tests.test_e2r_pro_first_v2_1_fresh_orchestration`: **111/111 PASS**. 검사는 visible menu/chooser 순서, same-gap failure message exact recovery, near-match rejection, Windows-style packet path filename을 포함한다.
+- `PYTHONPATH=src python -m e2r.cli.audit_e2r_pro_first_v2 --repo-root .`: **PASS**, critical `0`, 모든 static contract counters `0`.
+- `node --check src/e2r/pro_first/browser/browseruse_extension_bridge.mjs`, `PYTHONPATH=src python -m compileall -q src/e2r/pro_first/browser src/e2r/pro_first/fresh_session`, `git diff --check`: **PASS**.
+- 직전 commit `4aca6686aa7155fcaedcaef90d3ff83f55b4586a` Pro Actions [36022829567](https://github.com/Daikisong/stock_agent/actions/runs/36022829567)은 2026-09-25 01:17 KST 확인 시 `in_progress`: `core-unit`, `browser-mock-e2e`, `static-security` 성공; `full-regression` reviewer gate 진행 중. 동일 head V6 [36022834278](https://github.com/Daikisong/stock_agent/actions/runs/36022834278)은 `SUCCESS`. local source/doc patch는 아직 미커밋/미푸시라 이 Actions 결과를 새 코드의 검증으로 취급하지 않는다.
+
+### 다음 한 단계 및 미완료 범위
+
+현재 feature branch 변경분을 검토해 한글 commit/push한 다음 **새 exact-head Pro/V6 workflow가 완료될 때까지 확인**한다. CI green 후에만 같은 C15 job을 read-only로 다시 확인하고, 사용자 기존 `extension` 세션에서 현재 대상을 다시 열거·claim한 동일 tab으로만 이어간다. filechooser event 결과와 exact packet hash가 확인되기 전에는 prompt를 입력/전송하지 않는다. 실패 시 같은 화면/세션을 보존하고 정확한 오류를 기록한다. P96은 bridge integration fix이며 C15 canary 완료가 아니다. master goal과 C15 전송/응답/capture, 이후 C17/C28 canaries는 계속 미완료다.

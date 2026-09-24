@@ -157,10 +157,10 @@ class PlaywrightChatGPTWebAdapter:
             self.page, "upload_file_via_existing_user_session", None
         )
         if callable(existing_session_upload):
-            # BrowserUse does not expose Playwright's file-chooser handle or
-            # synthetic set_input_files().  Select the JSON through the
-            # visible attach control in the exact claimed user tab, then bind
-            # the browser-selected File back to the durable packet hash.
+            # Trigger the official BrowserUse filechooser event through the
+            # visible attach control in this exact claimed tab, then use its
+            # FileChooser.setFiles handle (never direct input.setInputFiles).
+            # Bind the browser-selected File back to the durable packet hash.
             await existing_session_upload(
                 str(path),
                 attach_selectors=tuple(ATTACH_BUTTON_SELECTORS),

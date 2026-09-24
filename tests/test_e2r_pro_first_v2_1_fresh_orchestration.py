@@ -745,6 +745,52 @@ class ProFirstV21FreshOrchestrationTest(unittest.IsolatedAsyncioTestCase):
             ).exists()
         )
 
+    def test_exact_browseruse_filechooser_event_timeout_enters_read_only_recovery_gate(self) -> None:
+        runner, spec = self._make_draft_preparation_attention_resume(
+            "BRIDGE_OPERATION_FAILED: BrowserUse file chooser event did not arrive before timeout; "
+            "no file was assigned"
+        )
+
+        boundary, resumed = runner._load_unprepared_attention_job(
+            FreshSessionBoundaryService(self.store),
+            spec=spec,
+            manifest=self.manifest,
+            job_id=self.fresh_job.job_id,
+        )
+
+        self.assertEqual(boundary.fresh_job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.job_id, self.fresh_job.job_id)
+        self.assertEqual(resumed.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(resumed.submit_count, 0)
+        self.assertEqual(resumed.capture_count, 0)
+        self.assertIsNone(resumed.browser_session_id)
+        self.assertIsNone(resumed.conversation_id)
+        self.assertFalse(
+            (
+                self.boundary.fresh_job_root
+                / "fresh_session/fresh_v3_prepare_receipt.json"
+            ).exists()
+        )
+
+    def test_near_match_browseruse_filechooser_event_failure_remains_blocked(self) -> None:
+        runner, spec = self._make_draft_preparation_attention_resume(
+            "BRIDGE_OPERATION_FAILED: BrowserUse file chooser event did not arrive before timeout; "
+            "no file was assigned; extra"
+        )
+
+        with self.assertRaisesRegex(ValueError, "known safe failure"):
+            runner._load_unprepared_attention_job(
+                FreshSessionBoundaryService(self.store),
+                spec=spec,
+                manifest=self.manifest,
+                job_id=self.fresh_job.job_id,
+            )
+
+        current = self.store.get_job(self.fresh_job.job_id)
+        self.assertEqual(current.status, JobStatus.USER_ATTENTION_REQUIRED.value)
+        self.assertEqual(current.submit_count, 0)
+        self.assertEqual(current.capture_count, 0)
+
     def test_exact_legacy_clixml_file_chooser_failure_enters_read_only_recovery_gate(self) -> None:
         runner, spec = self._make_draft_preparation_attention_resume(
             "BRIDGE_OPERATION_FAILED: existing Chrome file chooser did not select the packet "

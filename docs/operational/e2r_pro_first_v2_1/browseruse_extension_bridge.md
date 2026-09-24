@@ -1,7 +1,7 @@
 # 기존 BrowserUse 탭과 Pro-first pipeline 연결
 
-최종 갱신: 2026-09-24 12:07 KST (P77 상태 요약; 구현 이력은 아래 각 phase 시점 기록).
-현재 상태: PR #7의 P76 head `d294f395738254da1f616d361038a35548fa6c4e`에서 Pro push/PR 및 V6 PR GitHub Actions가 모두 SUCCESS다. 상세 CI 수치와 C15 R6 재개 지점은 [최신 BrowserUse 인수인계](browseruse_existing_session_handoff.md#최신-상태-인수인계-p77)와 [진행 장부 P77](implementation_progress.md#p77--기존-browseruse-로그인-탭-재확인과-p76-exact-head-ci-정정-2026-09-24-1207-kst)를 따른다. 로그인 작업은 사용자가 이미 로그인한 **동일 BrowserUse extension 세션의 기존 탭에서만** 수행하며, CDP·새 창/탭/프로필·재로그인 대체는 금지한다.
+최종 갱신: 2026-09-25 01:17 KST (현재 첨부 bridge 구현 기준; exact-head CI와 canary 진행은 최신 handoff/progress 기록 참조).
+로그인 작업은 사용자가 이미 로그인한 **동일 BrowserUse extension 세션의 기존 탭에서만** 수행하며, CDP·새 창/탭/프로필·재로그인 대체는 금지한다.
 
 ## 왜 이 연결이 필요한가
 
@@ -63,9 +63,13 @@ Bridge endpoint는 WSL의 현재 default route에서 Windows private gateway를 
 - 읽기: URL/title, visible locator의 count/text/attribute/value, 허용된 read-only DOM expression.
 - visible 조작: locator click/fill/press, ChatGPT origin 안의 navigation/reload. hidden network/API/storage 호출,
   synthetic DOM mutation, CDP 세션 생성은 거부한다.
-- packet 첨부: visible attach locator를 누른 뒤 **기존 Chrome 프로세스 소유의 Windows Open dialog**에서 JSON을
-  선택한다. global keystroke나 `set_input_files`를 쓰지 않는다. UI에 표시된 파일명뿐 아니라 browser-selected
-  file 내용의 canonical hash도 durable packet hash와 일치해야 한다.
+- packet 첨부: 같은 claimed tab의 visible attach/upload 항목을 누르기 직전에
+  `playwright.waitForEvent("filechooser")`를 arm하고, 그 실제 UI 동작으로 발생한 BrowserUse `FileChooser` handle의
+  `setFiles(exact_packet_path)`를 호출한다. 이는 installed Chrome plugin이 노출하는 `filechooser` event API이며,
+  direct `input[type=file].setInputFiles`, CDP, private HTTP, global keystroke가 아니다. 이후 UI 표시 파일명과
+  browser-selected `File` 내용의 canonical hash를 durable packet hash와 대조한다. 현재 UI에서 menu row를 인식하지
+  못하면 fail-closed한다. filechooser event API가 없는 구형 BrowserUse extension만 Windows Chrome-owned Open
+  dialog fallback을 쓰며, 그 watcher도 visible click 전에 arm한다.
 - 결과 회수: BrowserUse extension이 지원하는 visible `download` event와 `saveAs`만 연결한다. 현재 BrowserUse
   `playwright.waitForEvent`는 `download`와 `filechooser`만 제공하며 `response` event/body는 제공하지 않는다.
   그러므로 response-only 또는 private authenticated-fetch가 필요한 artifact 경로는 **fail-closed**한다. 새

@@ -129,12 +129,13 @@ assert.ok({BROWSERUSE_PACKET_ATTACH_RPC_TIMEOUT_SECONDS * 1000} > BROWSERUSE_NAT
         ).resolve()
         script = f"""
 import assert from "node:assert/strict";
-import {{ prepareVisiblePacketUpload }} from {json.dumps(bridge_path.as_uri())};
+import {{ prepareVisiblePacketUpload, assignPacketThroughBrowserUseFileChooser }} from {json.dumps(bridge_path.as_uri())};
 
 class Locator {{
-  constructor({{ present = true, expanded = null }} = {{}}) {{
+  constructor({{ present = true, expanded = null, hasPopup = null }} = {{}}) {{
     this.present = present;
     this.expanded = expanded;
+    this.hasPopup = hasPopup;
     this.first = this;
     this.clicks = 0;
     this.onClick = null;
@@ -142,7 +143,11 @@ class Locator {{
   async count() {{ return this.present ? 1 : 0; }}
   async evaluateAll() {{ return this.present ? 1 : 0; }}
   async evaluate() {{ return this.present; }}
-  async getAttribute(name) {{ return name === "aria-expanded" ? this.expanded : null; }}
+  async getAttribute(name) {{
+    if (name === "aria-expanded") return this.expanded;
+    if (name === "aria-haspopup") return this.hasPopup;
+    return null;
+  }}
   async click() {{ this.clicks += 1; if (this.onClick) await this.onClick(); }}
 }}
 function pageFor(attach, upload) {{
@@ -159,26 +164,34 @@ function pageFor(attach, upload) {{
 // An already expanded menu is reused; clicking the toggle again would close it.
 const expandedAttach = new Locator({{ expanded: "true" }});
 const expandedUpload = new Locator();
+const expandedOrder = [];
+expandedUpload.onClick = async () => expandedOrder.push("upload-click");
 await prepareVisiblePacketUpload({{
   playwright: pageFor(expandedAttach, expandedUpload),
   attachSelectors: ["attach"],
   uploadMenuSelectors: ["upload"],
+  beforeChooserTrigger: () => expandedOrder.push("arm-filechooser"),
 }});
 assert.equal(expandedAttach.clicks, 0);
 assert.equal(expandedUpload.clicks, 1);
+assert.deepEqual(expandedOrder, ["arm-filechooser", "upload-click"]);
 
 // A collapsed control is opened once, then its visible upload item is selected.
 let expanded = "false";
-const collapsedAttach = new Locator({{ expanded }});
-collapsedAttach.onClick = async () => {{ expanded = "true"; collapsedAttach.expanded = expanded; }};
+const collapsedAttach = new Locator({{ expanded, hasPopup: "menu" }});
+const collapsedOrder = [];
+collapsedAttach.onClick = async () => {{ collapsedOrder.push("attach-click"); expanded = "true"; collapsedAttach.expanded = expanded; }};
 const collapsedUpload = new Locator();
+collapsedUpload.onClick = async () => collapsedOrder.push("upload-click");
 await prepareVisiblePacketUpload({{
   playwright: pageFor(collapsedAttach, collapsedUpload),
   attachSelectors: ["attach"],
   uploadMenuSelectors: ["upload"],
+  beforeChooserTrigger: () => collapsedOrder.push("arm-filechooser"),
 }});
 assert.equal(collapsedAttach.clicks, 1);
 assert.equal(collapsedUpload.clicks, 1);
+assert.deepEqual(collapsedOrder, ["attach-click", "arm-filechooser", "upload-click"]);
 
 // An expanded but unrecognized menu must stop before native chooser selection.
 const unknownAttach = new Locator({{ expanded: "true" }});
@@ -201,9 +214,28 @@ const directResult = await prepareVisiblePacketUpload({{
   playwright: pageFor(directAttach, absentUpload),
   attachSelectors: ["attach"],
   uploadMenuSelectors: ["upload"],
+  beforeChooserTrigger: () => {{ directAttach.beforeArmed = true; }},
 }});
 assert.deepEqual(directResult, {{ menu_item_selected: false }});
 assert.equal(directAttach.clicks, 1);
+assert.equal(directAttach.beforeArmed, true);
+
+const selectedFiles = [];
+const selected = await assignPacketThroughBrowserUseFileChooser({{
+  async setFiles(files, options) {{ selectedFiles.push({{ files, options }}); }},
+}}, "C:\\\\fixture\\\\packet.json");
+assert.deepEqual(selected, {{
+  selected: true,
+  filename: "packet.json",
+  selection_mode: "browseruse_filechooser_event",
+}});
+assert.equal(selectedFiles.length, 1);
+assert.equal(selectedFiles[0].files, "C:\\\\fixture\\\\packet.json");
+assert.equal(selectedFiles[0].options.timeoutMs, 45000);
+await assert.rejects(
+  assignPacketThroughBrowserUseFileChooser({{}}, "C:\\\\fixture\\\\packet.json"),
+  /did not provide a setFiles handle/,
+);
 """
         completed = subprocess.run(
             [str(node), "--input-type=module", "--eval", script],

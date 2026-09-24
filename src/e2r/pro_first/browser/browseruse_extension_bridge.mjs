@@ -10,6 +10,7 @@ const MAX_REQUEST_BYTES = 64 * 1024 * 1024;
 const MAX_EVENT_ROWS = 2048;
 const DEFAULT_READ_ONLY_EVALUATE_TIMEOUT_MS = 10_000;
 export const BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS = 45_000;
+export const BROWSERUSE_FILE_CHOOSER_TIMEOUT_MS = BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS;
 const NATIVE_FILE_CHOOSER_RESULT_PREFIX = "E2R_FILE_CHOOSER_RESULT:";
 const CHATGPT_ORIGIN = "https://chatgpt.com";
 const PRIVATE_IPV4 = /^(10\.(?:\d{1,3}\.){2}\d{1,3}|172\.(?:1[6-9]|2\d|3[01])\.(?:\d{1,3}\.)\d{1,3}|192\.168\.(?:\d{1,3}\.)\d{1,3})$/;
@@ -512,19 +513,26 @@ export async function prepareVisiblePacketUpload({
   playwright,
   attachSelectors,
   uploadMenuSelectors,
+  beforeChooserTrigger,
 }) {
   const attach = await resolveFirstVisibleEnabledLocator(playwright, attachSelectors);
   if (!attach) throw new Error("visible attachment button was not found in the claimed ChatGPT tab");
 
   const initiallyExpanded = await attach.getAttribute("aria-expanded");
-  if (initiallyExpanded !== "true") await attach.click();
+  if (initiallyExpanded !== "true") {
+    const popupKind = String(await attach.getAttribute("aria-haspopup") || "").toLowerCase();
+    const opensInPageMenu = popupKind === "menu" || popupKind === "true";
+    if (!opensInPageMenu) beforeChooserTrigger?.();
+    await attach.click();
+  }
 
   // Allow the visible menu's DOM to settle, but never toggle an already-open
-  // attachment menu. Only the generic file-upload action may advance to the
-  // native chooser; an unknown expanded menu fails closed.
+  // attachment menu. Only the generic file-upload action may trigger a
+  // filechooser event; an unknown expanded menu fails closed.
   for (let attempt = 0; attempt < 10; attempt += 1) {
     const uploadAction = await resolveFirstVisibleEnabledLocator(playwright, uploadMenuSelectors);
     if (uploadAction) {
+      beforeChooserTrigger?.();
       await uploadAction.click();
       return { menu_item_selected: true };
     }
@@ -536,9 +544,23 @@ export async function prepareVisiblePacketUpload({
     throw new Error("attachment menu is open but no recognized visible file-upload action was found");
   }
 
-  // Some ChatGPT UI variants open the Chrome chooser directly. Preserve that
-  // visible path only when no expanded in-page menu is present.
+  // Some ChatGPT UI variants open the chooser directly from the visible attach
+  // control. Preserve that path only when no expanded in-page menu is present.
   return { menu_item_selected: false };
+}
+
+export async function assignPacketThroughBrowserUseFileChooser(chooser, targetPath) {
+  if (!chooser || typeof chooser.setFiles !== "function") {
+    throw new Error("BrowserUse filechooser event did not provide a setFiles handle");
+  }
+  await chooser.setFiles(targetPath, {
+    timeoutMs: BROWSERUSE_FILE_CHOOSER_TIMEOUT_MS,
+  });
+  return {
+    selected: true,
+    filename: crossPlatformBasename(targetPath),
+    selection_mode: "browseruse_filechooser_event",
+  };
 }
 
 export function wslUncPath(value, distroName, platform = os.platform()) {
@@ -552,6 +574,10 @@ export function wslUncPath(value, distroName, platform = os.platform()) {
     return mountedDrive[1].toUpperCase() + ":\\" + tail;
   }
   return `\\\\wsl.localhost\\${distroName}${normalized.replaceAll("/", "\\")}`;
+}
+
+function crossPlatformBasename(value) {
+  return String(value || "").replace(/[\\/]+$/, "").split(/[\\/]/).at(-1) || "";
 }
 
 function powerShellEncoded(script) {
@@ -836,7 +862,7 @@ function validatePacketPathForWindowsChooser({ pathValue, distroName }) {
   if (!stat.isFile() || stat.size < 1 || stat.size > 32 * 1024 * 1024) {
     throw new Error("packet file must be a nonempty regular JSON file under 32 MiB");
   }
-  if (path.extname(targetPath).toLowerCase() !== ".json") {
+  if (path.win32.extname(targetPath).toLowerCase() !== ".json") {
     throw new Error("BrowserUse packet attachment must be a JSON file");
   }
   return targetPath;
@@ -1007,17 +1033,66 @@ export async function startBrowserUseExtensionBridge({
 
   const attachPacket = async ({ filePath, attachSelectors, uploadMenuSelectors }) => {
     const targetPath = validatePacketPathForWindowsChooser({ pathValue: filePath, distroName });
-    await prepareVisiblePacketUpload({
-      playwright: tab.playwright,
-      attachSelectors,
-      uploadMenuSelectors,
-    });
-    const dialog = await selectThroughVisibleWindowsDialog({ targetPath, distroName });
+    const fileChooserEventsAvailable = typeof tab.playwright.waitForEvent === "function";
+    let fileChooserPromise = null;
+    let nativeDialogPromise = null;
+    const beforeChooserTrigger = () => {
+      if (fileChooserEventsAvailable) {
+        if (!fileChooserPromise) {
+          fileChooserPromise = tab.playwright.waitForEvent("filechooser", {
+            timeoutMs: BROWSERUSE_FILE_CHOOSER_TIMEOUT_MS,
+          });
+          // The upload UI may fail closed before a chooser event exists. Keep
+          // that bounded event rejection observed even on the error path.
+          fileChooserPromise.catch(() => {});
+        }
+        return;
+      }
+      if (!nativeDialogPromise) {
+        // Older extension builds lack the FileChooser handle. Arm the visible
+        // Chrome-window watcher before the triggering click to avoid a race.
+        nativeDialogPromise = selectThroughVisibleWindowsDialog({ targetPath, distroName });
+      }
+    };
     try {
+      await prepareVisiblePacketUpload({
+        playwright: tab.playwright,
+        attachSelectors,
+        uploadMenuSelectors,
+        beforeChooserTrigger,
+      });
+      if (fileChooserPromise) {
+        let chooser;
+        try {
+          chooser = await fileChooserPromise;
+        } catch (error) {
+          const detail = String(error?.message || error || "");
+          if (/timeout|timed out|exceeded/i.test(detail)) {
+            throw new Error(
+              "BrowserUse file chooser event did not arrive before timeout; no file was assigned",
+            );
+          }
+          throw error;
+        }
+        return await assignPacketThroughBrowserUseFileChooser(chooser, targetPath);
+      }
+      if (!nativeDialogPromise) {
+        throw new Error("visible packet upload did not arm a supported file chooser");
+      }
+      const dialog = await nativeDialogPromise;
       await dialog.completion;
-      return { selected: true, filename: path.basename(dialog.targetPath) };
+      return {
+        selected: true,
+        filename: crossPlatformBasename(dialog.targetPath),
+        selection_mode: "native_windows_dialog",
+      };
     } catch (error) {
-      try { dialog.child.kill(); } catch {}
+      if (nativeDialogPromise) {
+        try {
+          const dialog = await nativeDialogPromise;
+          dialog.child.kill();
+        } catch {}
+      }
       throw error;
     }
   };

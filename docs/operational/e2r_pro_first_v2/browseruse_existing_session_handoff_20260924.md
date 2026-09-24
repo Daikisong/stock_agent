@@ -1,21 +1,23 @@
 # BrowserUse 기존 로그인 세션 인수인계 — 2026-09-24
 
 기록 시각: `2026-09-24 23:02 KST`
-최종 갱신: `2026-09-25 00:45 KST`
+최종 갱신: `2026-09-25 01:17 KST`
 
 작업 브랜치: `feature/e2r-pro-first-browser-platform-20260822`  
 PR: `#7` draft 유지; 이 작업에서 merge 또는 draft 해제 금지  
-수정 전 HEAD: `1bcd33033390fab8403db8b4efa7ac442bf30bee`
+작업 시작 시 HEAD: `1bcd33033390fab8403db8b4efa7ac442bf30bee`
 
-## 최신 인수인계 요약 — 2026-09-25 00:45 KST
+## 최신 인수인계 요약 — 2026-09-25 01:17 KST
 
-**로그인된 기존 BrowserUse 세션만 사용한다.** 이 문서의 Chrome 작업은 기존 extension 세션에서 현재 탭을 열거하고, `https://chatgpt.com/`의 로그인된 작업 탭을 직접 확인한 뒤 그 탭 객체를 claim해 수행한다. 새 Chrome/창/프로필/CDP, 재로그인, 전역 키 입력은 대체 경로로 쓰지 않는다. 실패하면 기존 창을 보존하고 읽기 전용 점검 및 정확한 오류 기록만 한다.
+**인증이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 바로 그 `extension` 세션과 기존 작업 탭에서만 한다.** 매 재개 시 `browser.user.openTabs()`로 현재 목록을 다시 확인하고, URL·계정 표시·작업 대화가 맞는 descriptor 하나를 `claimTab()`한 다음 그 반환 Tab 객체만 사용한다. 새 창·새 브라우저·새 탭·프로필·CDP attach·재로그인으로 옮기지 않는다. 새 Chat 대화가 필요하면 기존 로그인 탭 안에서만 연다. 세션/탭을 찾지 못하거나 기술 오류가 나면 새 세션으로 우회하지 말고, 기존 화면을 보존한 채 정확한 오류와 확인 범위만 기록하고 입력 전에 멈춘다. **다른 CDP 포트에서 안 보인다는 이유로 로그인 세션이 없다고 결론내리지 않는다.**
 
-- 현재 작업은 `PROJOB-df15a37c58ae7583924e58c0` 하나다. 이전 job `PROJOB-7c02db014fefb06b1258ffe9`는 frozen/superseded이며 응답·계보를 재사용하지 않는다.
-- 현재 PR `#7`은 draft/open 상태로 둔다. 이 작업에서 draft 해제나 merge를 하지 않는다.
-- 코드 수정 commit `0d35d5e143327b0fc6788a61aa203074e5d62fee` (`chooser 오류 상세문구 복구검사 보완`)의 Pro push workflow `36016191427`은 마지막 확인 시 4/4 job SUCCESS다. PR Pro workflow `36016196506`은 마지막 확인 시 대기 중이었으므로, PR 전체 CI green이라고 단정하지 않는다.
-- 실전 canary 재개는 기존 탭의 읽기 전용 preflight를 다시 통과한 뒤에만 허용한다. 직전 실행은 첨부 파일 chooser에서 fail-closed 됐으며, ChatGPT에 packet·prompt를 넣거나 요청을 전송하지 않았다.
-- durable job 마지막 관찰: `USER_ATTENTION_REQUIRED`, `state_version=24`, `submit_count=0`, `capture_count=0`; browser session/conversation 및 approval 값 없음, `fresh_v3_prepare_receipt.json` 없음.
+- 진행 중인 단일 live canary는 C15 `010950`, `as_of_date=2026-08-23`, job `PROJOB-df15a37c58ae7583924e58c0`; packet SHA-256 `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`다. predecessor `PROJOB-7c02db014fefb06b1258ffe9`는 frozen/superseded이며 응답·계보를 재사용하지 않는다.
+- 마지막 read-only BrowserUse 확인(2026-09-25 01:11 KST): 기존 탭 ID `1437795006`, `https://chatgpt.com/`, 계정 `대규 Pro`, 일반 `Chat`, 실제 선택 표시 `6 Pro`; composer/user turn/선택 파일은 각각 빈 값/0/0. 탭은 현재 확인에서 첨부 메뉴를 열었다가 다시 닫았으며 packet·prompt를 첨부·입력·전송하지 않았다. ID는 다음 작업의 권한이 아니므로 재개 때 반드시 현재 탭 목록을 다시 열거하고 재-claim한다.
+- durable job의 마지막 read-only 상태는 `USER_ATTENTION_REQUIRED`, `state_version=24`, `submit_count=0`, `capture_count=0`; browser session/conversation 및 approval 값 없음, `fresh_v3_prepare_receipt.json` 없음이다. 마지막 durable 오류는 이전 Windows dialog fallback의 `No Chrome-owned Open dialog appeared`다.
+- 원인 정정: 설치된 BrowserUse extension은 `tab.playwright.waitForEvent("filechooser")`와 그 `FileChooser.setFiles()`를 제공한다. 기존 bridge는 이를 쓰지 않고 visible attach click 뒤 Windows native Open dialog만 찾았으므로, 관찰된 실패는 로그인/세션 부재가 아니라 **BrowserUse filechooser capability와 bridge의 native-dialog-only 경로가 맞지 않은 것**이다. 현재 local patch는 같은 탭에서 visible 업로드 메뉴 항목을 누르기 직전에 event를 arm하고 `setFiles(exact_packet_path)`를 사용하도록 했다. file name/hash 검증은 그대로 유지한다. 이벤트가 없거나 hash가 안 맞으면 fail-closed이며, 실제 첨부·전송 성공으로 간주하지 않는다. 구형 extension만 pre-armed native-dialog fallback을 쓴다.
+- 현재 feature worktree의 last committed HEAD는 `4aca6686aa7155fcaedcaef90d3ff83f55b4586a`; 위 filechooser 수정과 최신 문서 보강은 아직 미커밋이다. 이 수정본 기준 로컬 회귀시험 `111/111 PASS`, `audit_e2r_pro_first_v2` 전체 정적 audit `PASS`/critical `0`, `node --check`, `compileall`, `git diff --check` 모두 PASS다.
+- 커밋 `4aca6686...`의 Pro run [36022829567](https://github.com/Daikisong/stock_agent/actions/runs/36022829567)는 2026-09-25 01:17 KST 확인 시 `in_progress`: `core-unit`, `browser-mock-e2e`, `static-security` 성공, `full-regression`의 독립 reviewer gate 진행 중. 같은 SHA의 V6 run [36022834278](https://github.com/Daikisong/stock_agent/actions/runs/36022834278)은 `SUCCESS`. **이 로컬 수정 head의 CI는 아직 생성되지 않았고, live canary는 새 exact-head 필수 CI green 뒤에만 재개한다.**
+- PR `#7`은 draft/open으로 유지하며 이 작업에서 draft 해제나 merge를 하지 않는다.
 
 이 요약은 아래 상세 타임라인에서 이전 상태를 덮어쓴다. 특히 과거의 “첨부 메뉴가 펼쳐져 있음”은 현재 UI 상태를 의미하지 않는다. 최신 관찰은 chooser 실패 뒤 composer가 비어 있고 선택 파일 0개였다는 것이다.
 
@@ -46,7 +48,7 @@ PR: `#7` draft 유지; 이 작업에서 merge 또는 draft 해제 금지
 
 위 tab ID는 이전 관찰의 인수인계용 식별자일 뿐, 다음 시도의 권한이나 현재 탭 존재를 보장하지 않는다. 재개할 때 현재 BrowserUse 탭을 다시 열거하고 동일 로그인 작업 탭을 직접 확인해야 한다. 인증 토큰·쿠키는 문서화하지 않는다.
 
-## 실패 원인과 코드 경로
+## 최초 실패와 당시 진단 — P96 최신 진단으로 대체됨
 
 실제 오류:
 
@@ -57,7 +59,7 @@ error_id=No Chrome-owned Open dialog appeared;
 no global keystrokes were sent)
 ```
 
-`src/e2r/pro_first/browser/browseruse_extension_bridge.mjs`의 `attachPacket()`은 현재 보이는 첨부 버튼을 클릭한 직후 Windows의 Chrome-owned `Open` 창만 기다린다. ChatGPT의 `파일 등 추가`는 먼저 웹페이지 안의 첨부 메뉴를 여는 버튼인데, 이 흐름은 메뉴에서 실제 업로드 항목을 선택하지 않고 native file chooser 대기로 넘어갔다. 따라서 클릭이 무조건 실패한 것이 아니라, **웹 메뉴 단계와 Windows 파일 선택 단계 사이의 전이가 빠진 것**이 원인이다.
+2026-09-24 시점의 초진은 `attachPacket()`이 첨부 메뉴 단계를 놓쳤을 가능성에 초점을 뒀다. 그 뒤 installed extension API를 확인해 더 직접적인 불일치를 찾았다. bridge가 BrowserUse `filechooser` handle 대신 Windows Chrome-owned `Open` 창만 기다렸던 것이다. 따라서 이 절의 과거 메뉴 전이 가설은 원인 판정으로 사용하지 말고 아래 P96 기록을 따른다.
 
 같은 세션에서 수행한 추가 관찰:
 
@@ -66,11 +68,11 @@ no global keystrokes were sent)
 - 다른 탭·브라우저를 열거나 전역 키 입력을 보내지 않았다.
 - 기존 화면은 보존했다. 메뉴가 이미 expanded일 수 있으므로 다음 시도에서 첨부 버튼을 무조건 다시 누르지 않는다.
 
-## 코드 수정 및 검증 상태
+## 초기 코드 수정 및 검증 상태 — 이후 P96 수정으로 대체됨
 
 이번 수정에서 첨부 버튼을 누른 뒤 메뉴 단계를 건너뛰던 경로를 상태 인식형으로 바꿨다. `aria-expanded=true`이면 버튼을 다시 누르지 않고 보이는 일반 파일 업로드 항목을 고른다. 접혀 있으면 한 번 열고 항목을 찾는다. 열린 메뉴에 인식 가능한 업로드 항목이 없으면 파일 선택 단계로 넘어가지 않고 fail closed한다. 메뉴가 열리지 않는 UI 변형만 기존 direct native chooser 경로를 허용한다. 업로드 뒤의 filename·exact packet hash 확인은 유지했다.
 
-로컬 검증: BrowserUse extension bridge 관련 단위/통합시험 `14/14 PASS`, V2 static audit `2/2 PASS`, `node --check` PASS, `git diff --check` PASS. 두 Playwright/Chromium 기반 suite는 테스트 setup의 브라우저 시작 단계에서 환경 오류로 멈췄다: `libnspr4.so: cannot open shared object file`. 이는 제품 assertion 실패가 아니라 현재 WSL 런타임 의존성 누락이며, PR CI에서 같은 head의 전체 결과를 확인해야 한다. 실제 브라우저 조작은 하지 않았고 실제 전송·파일 첨부도 여전히 0건이다.
+당시 로컬 검증은 BrowserUse extension bridge 관련 단위/통합시험 `14/14 PASS`, V2 static audit `2/2 PASS`, `node --check` 및 `git diff --check` PASS였다. 두 Playwright/Chromium 기반 suite는 당시 WSL에서 `libnspr4.so` 누락으로 시작하지 못했다. 이는 제품 assertion 실패가 아니었다. 이 수치는 과거 revision 기록이며 현재 filechooser patch 검증은 상단 P96 요약을 따른다.
 
 ### 2026-09-24 23:02 KST: 기존 탭 재확인과 UI 문구 보정
 
@@ -187,3 +189,30 @@ ChatGPT 전송           없음 (submit_count=0)
 3. Chrome-owned chooser가 실제 나타나고 선택 packet의 파일명·SHA-256을 검증하기 전에는 composer 입력이나 전송을 하지 않는다. chooser가 다시 없으면 정확한 오류와 `submit_count/capture_count`를 기록하고 즉시 중단한다.
 
 새 창, 새 브라우저 세션, CDP 대체, 재로그인, 전역 키 입력으로 이 문제를 우회하지 않는다. 인증된 브라우저 작업이 필요하면 오직 사용자의 **이미 로그인된 기존 BrowserUse 세션과 확인된 기존 탭**을 쓴다.
+
+## P96 — 기존 로그인 탭 유지와 BrowserUse filechooser 연결 수정 (2026-09-25 01:17 KST)
+
+사용자가 다시 명시한 운영 요구는 “로그인이 필요한 BrowserUse 작업은 로그인되어 있는 바로 그 세션에서 진행”이다. 다음 작업자는 문서상의 tab ID를 그대로 쓰지 말고 현재 BrowserUse `extension` session에서 `browser.user.openTabs()`를 다시 호출해 작업 탭을 찾고, 반환 descriptor를 `claimTab()`한 후 **그 claim이 반환한 동일 Tab 객체**로만 진행한다. 세션 연결이나 탭 일치가 실패하면 기존 창을 그대로 둔 채 실제 오류를 기록하고 멈춘다. 새 브라우저·탭·프로필·CDP·로그인으로 옮기거나 사용자에게 다시 로그인하라고 하지 않는다. 새 대화가 필요한 경우에도 기존 로그인 탭 내부에서만 시작한다.
+
+### 기술 원인 정정
+
+앞선 `dialog_not_found`는 `https://chatgpt.com/` 로그인이 풀렸다는 증거가 아니다. installed Chrome plugin source와 현재 extension tab API를 확인한 결과 `tab.playwright.waitForEvent("filechooser")` 및 반환 `FileChooser.setFiles(path)`를 쓸 수 있었다. bridge의 과거 경로는 visible attach control/menu 이후 Windows Chrome-owned `Open` dialog만 기다렸기 때문에, BrowserUse가 제공하는 filechooser handle과 연결되지 않았다. 즉 실패는 **같은 로그인 탭은 살아 있었지만 첨부 chooser backend를 잘못 골랐던 bridge/API mismatch**로 기록한다.
+
+### 코드 수정과 경계
+
+- visible 첨부 버튼이 in-page menu를 여는 경우, menu toggle 전에 filechooser event를 기다리며 방치하지 않는다. 메뉴의 일반 파일 업로드 행을 찾은 뒤 **그 visible row click 직전** `waitForEvent("filechooser")`를 arm하고, 반환된 BrowserUse handle에 `setFiles(exact_packet_path)`를 호출한다.
+- 메뉴가 아닌 UI가 attach click에서 곧바로 chooser를 여는 경우는 그 attach click 직전에 event를 arm한다. filechooser API가 없는 구형 extension에만 Windows dialog fallback을 쓰며 이 watcher 역시 triggering click 전에 arm한다.
+- Python downstream은 기존처럼 화면 파일명과 browser-selected `File`의 canonical hash를 durable packet hash와 대조한다. 정확히 일치하기 전 prompt를 채우거나 보내지 않는다. event timeout·미확인 chooser·hash mismatch는 모두 실패로 남고 자동 전송하지 않는다.
+- Windows path에서 Linux `path.basename()`이 파일명 대신 드라이브 경로 전체를 돌려줄 수 있어 cross-platform basename과 `path.win32.extname()` 검증을 추가했다.
+- same-job read-only recovery gate는 정확히 확인된 BrowserUse filechooser timeout 오류만 허용하고, 문구가 조금이라도 다른 오류는 계속 차단한다.
+
+### 확인 결과와 현재 상태
+
+- 수정 검증: 관련 두 unittest module `111/111 PASS`; `PYTHONPATH=src python -m e2r.cli.audit_e2r_pro_first_v2 --repo-root .` `PASS`, critical `0`; `node --check`, `compileall`, `git diff --check` PASS.
+- 로컬 수정 직전의 commit `4aca6686aa7155fcaedcaef90d3ff83f55b4586a`에서 Pro Actions [36022829567](https://github.com/Daikisong/stock_agent/actions/runs/36022829567)은 2026-09-25 01:17 KST 확인 시 `in_progress`(세 job SUCCESS, `full-regression` reviewer gate 진행 중), V6 [36022834278](https://github.com/Daikisong/stock_agent/actions/runs/36022834278)은 SUCCESS였다. **P96 수정 diff는 아직 commit/push 및 exact-head CI 검증 전이다.**
+- 기존 탭에서 attach menu를 열었다가 다시 닫는 가시 UI 점검을 했지만 file chooser event 실 attach는 아직 시도하지 않았다. 같은 C15 job은 마지막 read-only DB snapshot에서 `USER_ATTENTION_REQUIRED`, version `24`, submit/capture `0/0`, conversation/session/approval 없음, prepare receipt 없음이다. packet hash는 `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`다.
+- 결과: packet upload `0`, prompt input `0`, send `0`, capture `0`, score/Stage 변경 `0`. 이 작업은 성공 canary가 아니라 첨부 경로 코드 수정이다. 새 query/fetch, 새 job, 새 pass, 다른 archetype 실행도 하지 않았다.
+
+### 다음 한 단계
+
+현재 feature worktree의 변경을 한글 commit/push하고 그 정확한 head의 필수 Pro/V6 Actions를 확인한다. exact-head CI green이 확인되면 same-job durable state를 read-only로 재확인하고, 그때도 **사용자의 기존 BrowserUse 로그인 세션에서 현재 탭을 다시 열거·claim한 다음** filechooser 경로를 검증한다. 다른 창이나 세션은 열지 않는다. CI가 pending/fail이거나 같은 탭을 확실히 claim할 수 없으면 첨부/입력 전에 멈춘다.

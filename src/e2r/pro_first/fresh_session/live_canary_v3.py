@@ -110,6 +110,10 @@ _STRUCTURED_NATIVE_FILE_CHOOSER_FAILURE = re.compile(
     r"(?:; category=[^;\r\n]*)?"
     r"; message=[^\r\n]{0,240}\)\Z"
 )
+_BROWSERUSE_FILE_CHOOSER_EVENT_TIMEOUT_FAILURE = (
+    "BRIDGE_OPERATION_FAILED: BrowserUse file chooser event did not arrive before timeout; "
+    "no file was assigned"
+)
 
 
 def _is_exact_native_file_chooser_failure(error_class: str, message: str) -> bool:
@@ -572,6 +576,15 @@ class FreshV3InitialLiveCanaryRunner:
             == "DRAFT_PREPARATION_OR_UNKNOWN"
             and attention_event.payload.get("submit_count") == 0
         )
+        exact_browseruse_file_chooser_event_timeout = bool(
+            job.last_error_class == "BrowserUseBridgeError"
+            and job.last_error_message == _BROWSERUSE_FILE_CHOOSER_EVENT_TIMEOUT_FAILURE
+            and attention_event is not None
+            and attention_event.payload.get("safe_unprepared_resume") is False
+            and attention_event.payload.get("preparation_failure_stage")
+            == "DRAFT_PREPARATION_OR_UNKNOWN"
+            and attention_event.payload.get("submit_count") == 0
+        )
         prepared_receipt = (
             boundary.fresh_job_root
             / "fresh_session/fresh_v3_prepare_receipt.json"
@@ -607,6 +620,7 @@ class FreshV3InitialLiveCanaryRunner:
                 or exact_windows_packet_path_preflight_error
                 or exact_browseruse_attach_transport_timeout
                 or exact_native_file_chooser_failure
+                or exact_browseruse_file_chooser_event_timeout
             )
             or attention_event is None
             or attention_event.from_status != JobStatus.BROWSER_PREPARING.value
