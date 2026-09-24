@@ -125,6 +125,14 @@ function jsonRegex(value) {
   return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, jsonRegex(item)]));
 }
 
+export function getByRoleLocator(base, page, role, options = {}) {
+  const owner = base || page;
+  if (!owner || typeof owner.getByRole !== "function") {
+    throw new Error("get_by_role locator requires a BrowserUse page or parent locator");
+  }
+  return owner.getByRole(String(role), jsonRegex(options));
+}
+
 export function browserUseOptions(value = {}) {
   const options = jsonRegex(value || {});
   if (!options || typeof options !== "object" || Array.isArray(options)) return options;
@@ -1052,7 +1060,7 @@ export async function startBrowserUseExtensionBridge({
     else if (method === "last") locator = await resolveBrowserUseLocatorMember(base, "last");
     else if (method === "nth") locator = base.nth(Number(index));
     else if (method === "locator") locator = base.locator(String(selector), jsonRegex(options));
-    else if (method === "get_by_role") locator = base.getByRole(String(value), jsonRegex(options));
+    else if (method === "get_by_role") locator = getByRoleLocator(base, tab.playwright, value, options);
     else if (method === "get_by_label") locator = (base || tab.playwright).getByLabel(jsonRegex(value), jsonRegex(options));
     else if (method === "get_by_text") locator = (base || tab.playwright).getByText(jsonRegex(value), jsonRegex(options));
     else if (method === "filter") {

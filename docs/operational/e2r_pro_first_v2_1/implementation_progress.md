@@ -7527,3 +7527,47 @@ P102 문서 commit `6679186fe6c279230a069e134a3fa39c5057b840`의 Pro PR run `360
 P103에는 BrowserUse live attempt가 없다. C15 DB는 마지막으로 P102에서 read-only 확인한 v26/`USER_ATTENTION_REQUIRED`/submit-capture `0/0` 그대로라는 것이 최신 확인 증거다. code/test 진행 중 durable DB나 browser UI를 쓰지 않았다. 다음 UI 시도도 사용자의 기존 로그인 BrowserUse `extension` session에서 현재 탭을 재열거하고 exact descriptor를 claim한 동일 Tab 객체에서만 한다. 새 browser/window/tab/profile/CDP/relogin 경로는 금지한다.
 
 P103 machine receipt: [p103_c15_attachment_label_recovery_patch_receipt.json](p103_c15_attachment_label_recovery_patch_receipt.json). 전체 master goal은 미완료이며 PR #7은 Draft/Open, main 미병합이다.
+
+## P104 — 로그인된 기존 BrowserUse 세션 지시 재확인 및 exact-head CI 대기 (2026-09-25 05:22 KST)
+
+사용자는 다시 명확히 지시했다. **로그인 상태가 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 바로 그 세션 안에서 한다.** 작업할 때 새 Chrome/창/프로필/CDP 세션을 열거나 재로그인으로 옮기지 않는다. 실제 작업 직전에 BrowserUse `extension`을 연결하고 `browser.user.openTabs()`로 현재 기존 사용자 탭을 다시 열거한다. URL/작업 대화/로그인 상태를 확인한 descriptor를 `claimTab()`한 뒤 반환된 동일 Tab 객체만 쓴다. 연결, 대상 탭, 화면 상태가 하나라도 확인되지 않으면 입력 전에 멈추고 정확한 오류와 확인 범위만 남긴다. 예전 tab ID나 과거 로그인 관찰을 현재 확인으로 취급하지 않는다.
+
+2026-09-25 05:22 KST에 PR #7과 Actions를 다시 확인했다. head는 `ff929834f2d6f87576d6c80c54f5bec08ca60763`, PR은 `OPEN/DRAFT`, `mergeStateStatus=UNSTABLE`이다.
+
+- Pro PR [run 36052355870](https://github.com/Daikisong/stock_agent/actions/runs/36052355870): `static-security`, `core-unit`, `browser-mock-e2e` SUCCESS; `full-regression` 전체 suite 진행 중, Reviewer A–H 및 compile/whitespace 대기.
+- V6 PR [run 36052354380](https://github.com/Daikisong/stock_agent/actions/runs/36052354380): portable checkout, Gate 1 receipt consistency, production static audit SUCCESS; 전체 unit suite 진행 중.
+- Pro push [run 36052348009](https://github.com/Daikisong/stock_agent/actions/runs/36052348009): `static-security`, `core-unit`, `browser-mock-e2e` SUCCESS; `full-regression` 전체 suite 진행 중.
+
+이들은 확인 시점에 여전히 진행 중이므로 exact-head 전체 SUCCESS로 기록하지 않는다. P104에서 BrowserUse 연결·preflight·탭 열거/claim/UI 접근은 하지 않았고, prompt 입력, 첨부, 다운로드, 전송, capture, query/fetch도 모두 0이다. C15 `PROJOB-df15a37c58ae7583924e58c0`의 마지막 알려진 DB 상태는 P102 read-only snapshot의 `USER_ATTENTION_REQUIRED` v26, submit/capture `0/0`, approval/binding/prepare receipt 없음이다. live 재개 전에 현재 row/event를 다시 read-only로 확인한다.
+
+다음 한 단계는 위 Pro PR, V6 PR, Pro push workflow가 같은 `ff929834...`에서 종료될 때까지 기다려 결론을 확인하는 것이다. 요구 CI가 SUCCESS면 same-job state를 읽고, 그 다음에만 사용자의 현재 로그인 BrowserUse `extension` 세션에서 기존 탭을 재열거·claim해 그 객체로 same-job을 재개한다. 기존 로그인 세션을 쓸 수 없으면 대체 브라우저를 열지 않고 입력 전에 중단한다. 전체 master goal은 미완료이며 PR #7은 Draft/Open, main 미병합이다.
+
+최신 인수인계와 절차는 [P104 BrowserUse handoff](browseruse_existing_session_handoff.md#최신-인계--p104-2026-09-25-0522-kst)에서 시작한다.
+
+## P105 — 기존 로그인 탭 recovery의 root locator 오류 수정 (2026-09-25 05:52 KST)
+
+### BrowserUse 세션과 same-job 검증
+
+사용자 지시에 따라 login-required UI는 기존 로그인 BrowserUse `extension` 세션에서만 수행했다. preflight exit 0 후 현재 사용자 탭을 `openTabs()`로 열거해 기존 ChatGPT 탭 descriptor를 claim하고, claim 반환 동일 Tab 객체만 사용했다. 새 Chrome/창/탭/프로필/CDP/relogin은 없었다. 읽기 전용으로 인증 계정 표시, Chat의 actual `6 Pro`, 빈 composer, turns `0/0`, existing packet tile 1개를 확인했다.
+
+P103 parser 수정의 exact-head CI는 코드 SHA `ff929834f2d6f87576d6c80c54f5bec08ca60763`에서 확인됐다. Pro PR [36052355870](https://github.com/Daikisong/stock_agent/actions/runs/36052355870), V6 PR [36052354380](https://github.com/Daikisong/stock_agent/actions/runs/36052354380), Pro push [36052348009](https://github.com/Daikisong/stock_agent/actions/runs/36052348009) 모두 SUCCESS였고 PR #7은 `OPEN/DRAFT/CLEAN`이다. 이 CI에는 P105 수정이 포함되지 않는다.
+
+C15 `PROJOB-df15a37c58ae7583924e58c0`을 기존 predecessor identity 및 packet hash 그대로 read-only boundary 검증한 결과 PASS였다. 처음 recovery harness에 independent spec을 넘긴 설정 실수는 기존 frozen predecessor job/run/conversation spec으로 바로잡았다. recovery worker는 이후 같은 existing BrowserUse tab에서 preflight에 진입했지만 generic MJS locator bridge의 오류로 packet hash proof가 끝나기 전에 멈췄다.
+
+```text
+BRIDGE_OPERATION_FAILED: Cannot read properties of null (reading 'getByRole')
+```
+
+`BrowserUsePage.get_by_role()` root locator는 page 기준이어야 하는데 MJS dispatcher가 parent locator가 없는 경우 `null.getByRole()`을 불렀다. 로그인 문제도, prompt/attachment/send 실패도 아니다. `getByRoleLocator(base, page, ...)` helper를 추가해 root이면 page, nested이면 parent로 위임하고 두 경로 regression을 넣었다.
+
+### 현재 상태 및 검증
+
+- 실패 직후 SQLite `mode=ro` + `PRAGMA query_only=ON`: job `USER_ATTENTION_REQUIRED` v26, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, submit/capture `0/0`, approval/browser/conversation null, last durable error는 이전 exact packet file/hash visibility 실패 그대로.
+- 같은 claimed tab 재확인: `https://chatgpt.com/`, `6 Pro`, 빈 composer, user/assistant turns `0/0`, packet tile 1, selected file input 0.
+- 이 시도 prompt input, attachment upload, download, submit, capture, source query/fetch, 새 job/pass, score/Stage 변경: **모두 0**.
+- 관련 BrowserUse adapter/bridge/orchestration **174/174 PASS**; Node check, Python compile, diff check PASS.
+- production static audit **PASS / critical 0**, production hash `dd4ff07ac1579bc8e8c43940cb7bc162b7b4e4e7708b67b1b83264a5e645fdee`.
+
+P105 root locator source/test/doc diff는 아직 local이다. 한글 commit/push 뒤 새 exact-head Pro push/Pro PR/V6 CI 전체가 SUCCESS가 되기 전에는 same-job recovery를 다시 실행하지 않는다. green 뒤 durable state를 재확인하고 사용자의 기존 BrowserUse 세션에서 탭을 다시 열거·claim해 그 세션에서만 계속한다. 새 창/재로그인은 대체가 아니다. PR #7은 Draft/Open으로 두고 main에 병합하지 않는다. 전체 master goal은 미완료다.
+
+세부 인계와 P105 machine receipt는 [BrowserUse handoff P105](browseruse_existing_session_handoff.md#최신-인계--p105-2026-09-25-0552-kst) 및 [P105 receipt](p105_c15_root_locator_recovery_receipt.json)다.

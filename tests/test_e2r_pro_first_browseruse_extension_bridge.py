@@ -418,6 +418,10 @@ assert.ok(!powershell.includes("cancelPattern.Invoke"));
         self.assertEqual([name for name, _ in calls], [
             "locator.create", "locator.create", "locator.create", "locator.count"
         ])
+        self.assertEqual(
+            calls[0][1],
+            {"method": "get_by_role", "value": "dialog", "options": {}},
+        )
         self.assertEqual(calls[1][1]["parent_handle"], "handle-1")
         self.assertEqual(calls[2][1]["parent_handle"], "handle-2")
         self.assertEqual(calls[3][1]["handle"], "handle-3")
@@ -536,7 +540,7 @@ assert.ok(!powershell.includes("cancelPattern.Invoke"));
         ).resolve()
         script = f"""
 import assert from "node:assert/strict";
-const {{ resolveBrowserUseLocatorMember, resolveFirstVisibleEnabledLocator, readonlyCallback, evaluateReadOnlyLocator, countReadOnlyLocator, isVisibleReadOnlyLocator, isEnabledReadOnlyLocator, callReadOnlyLocatorMethod, browserUseOptions, wslUncPath, BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS, nativeFileChooserInspectionScript }} = await import({json.dumps(bridge_path.as_uri())});
+const {{ resolveBrowserUseLocatorMember, resolveFirstVisibleEnabledLocator, readonlyCallback, evaluateReadOnlyLocator, countReadOnlyLocator, isVisibleReadOnlyLocator, isEnabledReadOnlyLocator, callReadOnlyLocatorMethod, getByRoleLocator, browserUseOptions, wslUncPath, BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS, nativeFileChooserInspectionScript }} = await import({json.dumps(bridge_path.as_uri())});
 assert.equal(BROWSERUSE_NATIVE_FILE_CHOOSER_TIMEOUT_MS, 45000);
 const nativeChooserInspection = nativeFileChooserInspectionScript();
 assert.match(nativeChooserInspection, /AutomationElement\]::RootElement/);
@@ -560,6 +564,12 @@ const playwrightStyle = {{ first: child, last: child }};
 assert.strictEqual(await resolveBrowserUseLocatorMember(playwrightStyle, "first"), child);
 assert.strictEqual(await resolveBrowserUseLocatorMember(playwrightStyle, "last"), child);
 await assert.rejects(resolveBrowserUseLocatorMember({{}}, "first"), /did not return a locator/);
+const roleLocatorCalls = [];
+const rootRolePage = {{ getByRole(role, options) {{ roleLocatorCalls.push(["page", role, options]); return child; }} }};
+const nestedRoleParent = {{ getByRole(role, options) {{ roleLocatorCalls.push(["parent", role, options]); return child; }} }};
+assert.strictEqual(getByRoleLocator(null, rootRolePage, "button", {{name:"packet.json", exact:true}}), child);
+assert.strictEqual(getByRoleLocator(nestedRoleParent, rootRolePage, "button", {{name:"dialog"}}), child);
+assert.deepEqual(roleLocatorCalls, [["page", "button", {{name:"packet.json", exact:true}}], ["parent", "button", {{name:"dialog"}}]]);
 const selectorCalls = [];
 globalThis.window = {{ getComputedStyle: element => ({{ visibility: element.visibility || "visible" }}) }};
 const element = ({{ width = 10, height = 10, visibility = "visible", disabled = false, ariaDisabled = false }} = {{}}) => ({{

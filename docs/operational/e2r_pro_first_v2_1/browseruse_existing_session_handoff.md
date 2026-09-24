@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-25 05:02 KST (P103: remove-action 오분류와 후속 BrowserUse read-only callback 공백을 수리하고 관련 테스트를 통과; exact-head CI 대기).
+최종 갱신: 2026-09-25 05:52 KST (P105: existing-tab same-job recovery에서 발견한 root locator 오류와 수정/검증 상태 기록).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,60 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 인계 — P103, 2026-09-25 05:02 KST
+## 최신 인계 — P105, 2026-09-25 05:52 KST
+
+### 인증 세션은 사용자의 기존 로그인 탭만 사용
+
+사용자가 다시 요청한 대로 로그인 UI가 필요하면 이미 로그인된 사용자의 BrowserUse `extension` 세션에서 작업한다. 이번 same-job 복구도 기존 extension session의 현재 탭을 열거하고 ChatGPT 탭 descriptor를 claim한 뒤 claim이 반환한 동일 객체 하나로만 진행했다. 새 Chrome/창/탭/프로필/CDP 세션이나 재로그인은 사용하지 않았다. 이후 CI 대기 뒤 실제 재개 전에도 `openTabs()` 결과를 다시 확인하고 그때 반환된 정확한 탭만 claim한다. 새 연결·탭·작업 대화가 확인되지 않으면 대체 창을 열지 않고 중단한다.
+
+### exact-head CI와 same-job 상태
+
+- PR #7은 `OPEN/DRAFT`, head `ff929834f2d6f87576d6c80c54f5bec08ca60763`, 확인 시 `mergeStateStatus=CLEAN`이다. draft 해제 및 main 병합은 하지 않았다.
+- 이 head의 [Pro PR 36052355870](https://github.com/Daikisong/stock_agent/actions/runs/36052355870), [V6 PR 36052354380](https://github.com/Daikisong/stock_agent/actions/runs/36052354380), [Pro push 36052348009](https://github.com/Daikisong/stock_agent/actions/runs/36052348009)은 모두 `SUCCESS`다. 이 결과는 아래 P105 로컬 수정은 포함하지 않는다.
+- 중앙 DB는 `mode=ro`와 `PRAGMA query_only=ON`으로 재확인했다. C15 `PROJOB-df15a37c58ae7583924e58c0`은 `USER_ATTENTION_REQUIRED` v26, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, submit/capture `0/0`, approval/browser/conversation binding 없음, 기존 `safe_unprepared_resume=false` event 유지다. 마지막 durable error는 기존 `BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab`이며 이번 bridge 오류가 DB를 변경하지 않았다.
+
+### P105 실제 시도와 기술 원인
+
+같은 `https://chatgpt.com/` 탭에서 읽기 전용 확인한 상태는 인증된 계정 표시 있음, Chat의 실제 `6 Pro`, 빈 composer, user/assistant turns `0/0`, visible packet tile 1개(`research_packet(20260924-172107).json`), file input 선택 0개였다. recovery worker는 same-job packet을 재사용하고 사전 검증에 진입했으나 prompt/attachment/submit 전에 BrowserUse RPC가 다음 오류로 멈췄다.
+
+```text
+BRIDGE_OPERATION_FAILED: Cannot read properties of null (reading 'getByRole')
+```
+
+원인은 `BrowserUsePage.get_by_role()`가 root locator descriptor를 보내지만 MJS dispatcher가 부모 locator가 없을 때도 `base.getByRole()`을 호출하던 일반 wrapper bug다. 이는 로그인/세션 문제가 아니다. Python BrowserUse page의 root `get_by_role`은 `tab.playwright.getByRole()`을 사용해야 한다. `getByRoleLocator(base, page, ...)` helper에서 parent가 없으면 page, 있으면 parent를 사용하도록 수정하고 root/nested 회귀 테스트를 추가했다.
+
+이 시도 직후 DB와 같은 claimed tab을 다시 확인했다: job은 여전히 v26/`USER_ATTENTION_REQUIRED`, submit/capture `0/0`; UI는 같은 root Chat, 실제 `6 Pro`, 빈 composer, 대화 0/0, 기존 tile 1개다. prompt 입력·추가 첨부·다운로드·전송·capture·query/fetch는 모두 0이며 새 job/pass도 없다. 앞선 두 harness 오류도 worker/UI 이전에 중단됐다: Node REPL `globalThis.require` 부재로 spawn 이전 실패, 그리고 recovery에 independent spec을 잘못 넘긴 frozen-predecessor identity mismatch. 원본 predecessor job/run/conversation spec으로 고친 read-only boundary check는 PASS했다.
+
+### 로컬 검증과 다음 한 단계
+
+- BrowserUse adapter/bridge/fresh orchestration 테스트: **174/174 PASS**.
+- `node --check`, `py_compile`, `git diff --check`: PASS.
+- production static audit: **PASS**, `critical_count=0`; production hash `dd4ff07ac1579bc8e8c43940cb7bc162b7b4e4e7708b67b1b83264a5e645fdee`.
+- P105 bridge/test/document diff는 현재 로컬 변경이다. ff929 exact-head CI는 수정 전 코드만 검증했으므로 P105 수정의 원격 green으로 세지 않는다.
+
+다음 한 단계는 root `get_by_role` 수정·회귀시험·P105 문서를 기존 PR #7 branch에 한글 commit/push하고, Pro push/Pro PR/V6 Actions를 새 exact head에서 끝까지 확인하는 것이다. **그 새 exact-head CI가 모두 SUCCESS가 되기 전에는 same-job BrowserUse 재개/입력을 하지 않는다.** 통과한 뒤 durable state를 다시 read-only로 확인하고 사용자의 현재 기존 `extension` 탭을 재열거·claim해 그 세션에서만 이어간다. 전체 master goal은 미완료다.
+
+P105 machine receipt: [p105_c15_root_locator_recovery_receipt.json](p105_c15_root_locator_recovery_receipt.json).
+
+## 과거 인계 — P104, 2026-09-25 05:22 KST (P105로 superseded)
+
+사용자는 다시 분명히 지시했다: **로그인 상태가 필요한 BrowserUse 작업이면 그 작업을 사용자가 이미 로그인해 둔 바로 그 세션/기존 탭에서 한다.** 이는 기록만 해 둘 문구가 아니라 실행 조건이다. 새 창이나 별도 Chrome을 열지 않고, 현재 Codex 대화에서 BrowserUse `extension`을 연결한 뒤 `browser.user.openTabs()`로 기존 탭을 그때 다시 찾는다. 대상 탭을 `claimTab()`하고 claim이 반환한 동일 객체만 사용한다. 기존 세션을 연결·claim·대상 확인하지 못하면 새 세션으로 대체하지 말고 거기서 멈춘다. 이전 기록의 tab ID나 로그인 화면은 이번 실행의 증거로 재사용하지 않는다.
+
+### 현재 코드·CI checkpoint
+
+- PR #7은 `OPEN/DRAFT`, head `ff929834f2d6f87576d6c80c54f5bec08ca60763`, 확인 시 `mergeStateStatus=UNSTABLE`이다. Draft 해제나 main 병합은 하지 않았다.
+- [Pro PR workflow 36052355870](https://github.com/Daikisong/stock_agent/actions/runs/36052355870): `static-security`, `core-unit`, `browser-mock-e2e` 성공; `full-regression` 전체 테스트 실행 중이며 Reviewer A–H와 compile/whitespace는 대기.
+- [V6 PR workflow 36052354380](https://github.com/Daikisong/stock_agent/actions/runs/36052354380): portable checkout, Gate 1 receipt consistency, production static audit 성공; 전체 unit suite 실행 중.
+- [Pro push workflow 36052348009](https://github.com/Daikisong/stock_agent/actions/runs/36052348009): `static-security`, `core-unit`, `browser-mock-e2e` 성공; `full-regression` 전체 테스트 실행 중.
+- 세 workflow 모두 위 exact head에서 아직 종료되지 않았다. 따라서 이를 green이라고 부르지 않으며, BrowserUse live retry도 아직 시작하지 않는다.
+
+P104는 문서 및 GitHub 상태만 확인했다. BrowserUse preflight/extension 연결/탭 열거·claim/UI 접근, prompt 입력, attachment·download·submit·capture, query/fetch는 모두 수행하지 않았다. 마지막으로 알려진 same-job C15 durable 상태는 P102의 read-only snapshot인 `USER_ATTENTION_REQUIRED` v26, submit/capture `0/0`, approval/browser/conversation binding 및 prepare receipt 없음이다. 현재 상태는 다음 live 시도 직전에 다시 read-only로 확인해야 한다.
+
+### 다음 한 단계
+
+먼저 위 세 workflow가 exact SHA `ff929834f2d6f87576d6c80c54f5bec08ca60763`에서 모두 끝나는지 확인한다. 요구 workflow가 SUCCESS가 된 뒤 same-job durable state를 read-only로 다시 읽는다. 그 다음에만 사용자의 현재 BrowserUse `extension` 세션에서 기존 탭을 다시 열거하고 exact tab을 claim한다. 모든 인증 UI 작업은 **그 기존 세션 안에서만** 한다. 연결이나 탭 확인이 안 되면 입력·첨부·전송 없이 중단하고 실제 오류와 확인 범위만 기록한다.
+
+## 과거 인계 — P103, 2026-09-25 05:02 KST (후속 P104/P105 참조)
 
 ### 사용자의 인증 세션 지시
 
