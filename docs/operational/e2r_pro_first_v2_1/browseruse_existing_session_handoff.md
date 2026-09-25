@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-25 09:15 KST (P111: 사용자의 기존 로그인 세션 원칙 재확인, 최신 exact-head CI 및 P110 CI 기록 정정).
+최종 갱신: 2026-09-25 09:44 KST (P112: 새 문서 head CI 완료 및 기존 로그인 탭·C15 durable 상태 재확인).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,29 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 인계 — P111, 2026-09-25 09:15 KST
+## 최신 인계 — P112, 2026-09-25 09:44 KST
+
+### 기존 로그인 세션을 사용한다 — 사용자 지시 재확인
+
+로그인 필요한 실제 Pro UI 작업은 사용자가 이미 로그인한 BrowserUse `extension` 세션 안에서만 한다. `browser.user.openTabs()`로 기존 탭을 열거하고, 정확한 기존 ChatGPT descriptor를 `claimTab()`한 뒤 **반환된 바로 그 Tab 객체**를 쓴다. 다른 Chrome/창/프로필/CDP/재로그인이나 새 탭으로 바꾸지 않는다. 새 대화가 필요하면 같은 로그인 탭 안에서만 만든다. 기존 초안·첨부가 있는 경우 사용자 지시 없이 지우거나 덮지 않는다. 연결이나 대상/모드 확인이 실패하면 화면을 바꾸지 않고 멈춘다.
+
+### P112에서 실제 확인한 상태
+
+- 최신 PR #7 branch head는 `2a6b60f2686309536e53dcc76982285fa0b70a42`이다. PR은 `OPEN/DRAFT/CLEAN`; main에 병합하지 않았다. local/origin SHA가 같고 worktree clean이다.
+- 해당 exact SHA의 [Pro PR 36077141865](https://github.com/Daikisong/stock_agent/actions/runs/36077141865), [Pro push 36077138635](https://github.com/Daikisong/stock_agent/actions/runs/36077138635), [V6 36077141902](https://github.com/Daikisong/stock_agent/actions/runs/36077141902)는 모두 `SUCCESS`다. 두 Pro full regression 및 V6 full suite는 각 7,952 tests, failure/error 0, skipped 38이다. Pro PR core-unit 300개, browser-mock-e2e 105개, Reviewer A–H 및 compile/diff-check가 성공했다. V6 Gate 1 tracked receipt 4/4, Phase100 15/15, production static audit `critical_count_sum=0`이다.
+- 문서 변경 후에도 Actions가 실행된다는 사실을 이 exact SHA에서 재확인했다. `2a6b60f2`는 P111 문서 push로 발생한 실행 head이며, 결과가 모두 green이다. P112 자체를 push하면 새 workflow가 실행될 수 있으므로 그 resulting SHA는 별도로 확인한다.
+- 이번에는 실제 BrowserUse persistent Node REPL의 `extension` 연결을 확인하고 `browser.tabs.list()` 1개, `browser.user.openTabs()` 4개를 열거했다. 정확한 ChatGPT root descriptor 하나를 claim하고 동일 tab 객체에서 read-only로 확인했다. 다른 ChatGPT 탭은 없었다. URL은 `https://chatgpt.com/`; 로그인 prompt는 보이지 않았고 composer의 실제 선택 label은 `6 Pro`, 입력 텍스트는 비어 있었다.
+- 그 기존 composer에는 `research_packet(20260924-172107).json` 첨부와 제거 action이 여전히 표시된다. 이는 C15 packet filename `research_packet.json`/canonical hash와 동일하다고 증명되지 않았다. 기존 첨부 삭제, 새 대화 전환, 다운로드, 입력, 업로드, submit, capture는 전혀 하지 않았다. 사용자의 “로그인된 기존 세션에서 하라”는 재지시는 **이 미전송 첨부를 제거해도 된다는 구체 허가로 해석하지 않았다.**
+- C15 job `PROJOB-df15a37c58ae7583924e58c0`를 SQLite URI `mode=ro` 및 `PRAGMA query_only=ON`으로 다시 읽었다. S-Oil `010950`, `as_of_date=2026-08-23`, `USER_ATTENTION_REQUIRED` v26, packet canonical hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, submit/capture `0/0`, approval/browser/conversation binding 없음, `safe_unprepared_resume=false`, successor 없음이다. 마지막 event도 `BROWSER_PREPARING → USER_ATTENTION_REQUIRED` / `DRAFT_PREPARATION_OR_UNKNOWN` / `new_chat_route_required=true`다. DB read-only 확인은 상태를 바꾸지 않았다.
+- master goal은 미완료다. P9 required live full-thesis canaries C06/C17/C28은 `1/3` (C06 PASS, C17/C28 미완료). C15는 별도의 same-job 재개 작업이라 이 3개 수에 포함하지 않으며 아직 미해결이다. 이 P112에서는 새 research/query/fetch/job/pass, 다른 archetype, score/Stage 변경을 하지 않았다.
+
+### 다음 한 단계
+
+기존 첨부를 제거해도 된다는 명시적 허가가 오기 전에는 composer를 보존한다. 허가가 오면 같은 로그인 탭에서만 작업하고, 전송 직전에 대상 대화, 실제 `6 Pro`, exact packet filename/hash, job approval/bindings를 모두 다시 확인한다. 허가/검증이 없으면 실제 Pro 요청을 보내지 않는다.
+
+P112 상태 receipt: [p112_existing_session_revalidation_and_exact_head_ci_receipt.json](p112_existing_session_revalidation_and_exact_head_ci_receipt.json).
+
+## 과거 인계 — P111, 2026-09-25 09:15 KST (P112에서 대체됨)
 
 ### 사용자의 명시 지시 — 로그인된 바로 그 세션을 사용
 
