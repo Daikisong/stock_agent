@@ -1,0 +1,48 @@
+{
+  "runtime": {
+    "root": "output/pro_first",
+    "reconciliation_poll_seconds": 5.0
+  },
+  "dashboard": {
+    "host": "127.0.0.1",
+    "port": 8765
+  },
+  "scheduler": {
+    "timezone": "Asia/Seoul",
+    "morning": {"enabled": true, "at": "05:30"},
+    "evening": {"enabled": true, "at": "18:30"},
+    "maximum_idle_poll_seconds": 60.0
+  },
+  "browser": {
+    "mode": "CDP_ATTACH",
+    "cdp_url": "http://127.0.0.1:9222",
+    "cdp_active_port_file": null,
+    "chatgpt_url": "https://chatgpt.com/",
+    "require_manual_login": true,
+    "require_user_start_approval": true,
+    "auto_capture_after_completion": true,
+    "hidden_api_access": false,
+    "poll_interval_seconds": 5.0,
+    "required_stable_observations": 3
+  },
+  "scan": {
+    "production_deep_only": true,
+    "universe_limit": null,
+    "top_n": null,
+    "deep_research_min_score": 45.0
+  },
+  "supplement": {
+    "core_score_blocker": true,
+    "stage_boundary_gap": true,
+    "hard_break_gap": true,
+    "corroboration_cap": false,
+    "monitoring_gap": false,
+    "full_research_restart": false
+  },
+  "authority": {
+    "pro_score_authority": false,
+    "pro_stage_authority": false,
+    "deterministic_score_required": true,
+    "deterministic_stagecourt_required": true
+  }
+}

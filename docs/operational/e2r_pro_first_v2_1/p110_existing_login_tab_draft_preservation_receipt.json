@@ -1,0 +1,114 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p110_existing_login_tab_draft_preservation_v1",
+  "recorded_at": "2026-09-25T08:27:37+09:00",
+  "status": "EXISTING_LOGIN_SESSION_CONFIRMED_DRAFT_PRESERVED_USER_DIRECTION_REQUIRED",
+  "user_instruction": {
+    "login_required_browseruse_must_use_users_existing_logged_in_session": true,
+    "use_browseruse_extension_session": true,
+    "enumerate_existing_tabs_before_live_action": true,
+    "claim_exact_existing_tab_and_use_returned_same_tab_object": true,
+    "new_browser_window_tab_profile_cdp_or_relogin_as_fallback": false,
+    "preserve_existing_unsent_draft_without_explicit_direction": true
+  },
+  "browseruse_observation": {
+    "windows_preflight_exit_code": 0,
+    "connection": "persistent_node_repl_browseruse_extension",
+    "existing_tabs_enumerated": 4,
+    "claimed_tab_title": "ChatGPT",
+    "claimed_tab_url": "https://chatgpt.com/",
+    "same_claimed_tab_object_used_for_read_only_checks": true,
+    "login_ui_visible": true,
+    "visible_model_label": "6 Pro",
+    "user_turn_count": 0,
+    "assistant_turn_count": 0,
+    "composer_text_empty": true,
+    "visible_existing_attachment_tile": "research_packet(20260924-172107).json",
+    "visible_attachment_remove_action": true,
+    "browser_file_inputs_with_selected_file": 0,
+    "visible_tile_hash_verified_as_c15_packet": false,
+    "navigation_or_new_chat": false,
+    "prompt_input": false,
+    "attachment_removed_or_replaced": false,
+    "download": false,
+    "upload": false,
+    "submit": false,
+    "response_capture": false,
+    "existing_tab_or_login_modified": false
+  },
+  "c15_durable_job_read_only_observation": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "target": "S-Oil 010950",
+    "as_of_date": "2026-08-23",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 26,
+    "packet_filename": "research_packet.json",
+    "packet_canonical_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "submit_count": 0,
+    "capture_count": 0,
+    "approval_browser_conversation_binding_present": false,
+    "safe_unprepared_resume": false,
+    "read_only_mode": true,
+    "sqlite_query_only": true
+  },
+  "ci_for_exact_source_code_head": {
+    "head_sha": "617e204b4c0b4f9dce15f4185eff589af9042920",
+    "pro_pr": {
+      "run_id": "36069234793",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/36069234793",
+      "conclusion": "SUCCESS"
+    },
+    "pro_push": {
+      "run_id": "36069233229",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/36069233229",
+      "conclusion": "SUCCESS"
+    },
+    "v6": {
+      "run_id": "36069234853",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/36069234853",
+      "conclusion": "SUCCESS"
+    },
+    "total_test_count_reported": null,
+    "exact_source_head_full_ci_green": true
+  },
+  "git_at_start_of_p110_documentation": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "head_sha": "7c215bfa668d334a87e113e124811c0b929aa37d",
+    "origin_head_sha": "7c215bfa668d334a87e113e124811c0b929aa37d",
+    "worktree_clean": true
+  },
+  "documentation_commit": {
+    "short_sha": "d6672968",
+    "message": "기존 로그인 탭 초안 보존 상태 문서화",
+    "pushed_to_feature_branch": true
+  },
+  "pull_request_last_confirmed": {
+    "number": 7,
+    "url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "state": "OPEN",
+    "draft": true,
+    "merged_to_main": false,
+    "observation_source": "P109 exact-head repository check"
+  },
+  "scope_this_checkpoint": {
+    "documentation_updated": [
+      "docs/operational/e2r_pro_first_v2_1/browseruse_existing_session_handoff.md",
+      "docs/operational/e2r_pro_first_v2_1/implementation_progress.md",
+      "docs/operational/e2r_pro_first_v2_1/p110_existing_login_tab_draft_preservation_receipt.json"
+    ],
+    "new_research_or_query_fetch": false,
+    "new_job_or_pass": false,
+    "other_archetype": false,
+    "score_or_stage_change": false,
+    "pr_merge_or_draft_release": false
+  },
+  "blocker": "An unrelated existing unsent JSON attachment is visible in the user's logged-in composer. Removing it or navigating to a new conversation could destroy the user's draft; explicit user direction is needed before changing it.",
+  "next_step": "Wait for user confirmation whether the existing composer attachment may be removed; until then preserve the existing logged-in tab and do not input, attach, navigate, or submit.",
+  "master_goal_complete": false,
+  "p9_live_full_thesis_canaries_passed": 1,
+  "p9_live_full_thesis_canaries_required": 3,
+  "completed_archetype": "C06",
+  "pending_archetypes": [
+    "C17",
+    "C28"
+  ]
+}

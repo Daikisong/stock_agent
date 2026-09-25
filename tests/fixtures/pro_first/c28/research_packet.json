@@ -1,0 +1,37 @@
+{
+  "schema_version": "e2r_pro_research_packet_v1",
+  "job_id": "PROJOB-282828282828282828282828",
+  "run_id": "PRORUN-282828282828282828282828",
+  "target": {
+    "symbol": "333333",
+    "company_name": "리텐션소프트",
+    "aliases": ["Retention Soft"]
+  },
+  "as_of_date": "2026-06-30",
+  "latest_trading_snapshot_date": "2026-06-30",
+  "research_mode": "FULL_RESEARCH",
+  "trigger_summary": [
+    {
+      "trigger_id": "TRIGGER-C28-GOLDEN",
+      "reason": "ARR 성장과 고객 갱신의 계약 가시성 검증 필요"
+    }
+  ],
+  "candidate_archetypes": ["C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"],
+  "business_snapshot": {"segments": ["SOFTWARE"], "products": ["SECURITY_SOFTWARE"]},
+  "structured_financial_snapshot": {"period": "2026Q2", "source_status": "issuer_metric_available"},
+  "revision_valuation_snapshot": {"snapshot_date": "2026-06-30"},
+  "existing_thesis_digest": null,
+  "historical_anchor_digest": [],
+  "known_positive_facts": [],
+  "known_counterfacts": [],
+  "research_objectives": [
+    "정의된 ARR 성장과 고객 갱신을 확인한다.",
+    "제품 소개 문구가 계약 유지 증거로 승격되지 않게 한다."
+  ],
+  "source_preferences": ["ISSUER_EARNINGS_RELEASE", "CUSTOMER_OFFICIAL"],
+  "forbidden_inferences": ["제품 기능 소개를 ARR 또는 고객 갱신 증거로 사용하지 않는다."],
+  "delta_context": null,
+  "output_contract": "e2r_pro_research_dossier_v1",
+  "score_authority": false,
+  "stage_authority": false
+}

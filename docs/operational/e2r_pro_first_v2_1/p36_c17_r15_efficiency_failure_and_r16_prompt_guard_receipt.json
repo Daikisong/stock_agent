@@ -1,0 +1,95 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_c17_r15_efficiency_failure_and_r16_prompt_guard_receipt_v1",
+  "phase": "P36_C17_R15_EFFICIENCY_FAILURE_AND_R16_PROMPT_GUARD",
+  "status": "R15_DIAGNOSTIC_ONLY_R16_BLIND_RERUN_READY",
+  "target_id": "011170",
+  "company_name": "롯데케미칼",
+  "as_of_date": "2026-08-23",
+  "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+  "r15": {
+    "fresh_session_id": "FRESH-V2-1-C17-R15-20260830T052335Z",
+    "job_id": "PROJOB-312387371378cd5a5c1e378c",
+    "run_id": "PRORUN-6121ceae520bb75519b0acfa",
+    "conversation_id": "6a93be74-db60-83ee-a7ab-c8262cbb0b39",
+    "initial_pass_id": "PROPASS-4b0a65bd8315e8bc2ed18aaf",
+    "public_gap_pass_id": "PROPASS-32e644fe538d1b659cd982bd",
+    "initial_submit_count": 1,
+    "public_gap_submit_count": 1,
+    "additional_submit_after_budget_gate": 0,
+    "final_status": "FRESH_SESSION_DIAGNOSTIC_ONLY",
+    "publication_withheld": true,
+    "score_authority": false,
+    "stage_authority": false
+  },
+  "operational_efficiency_gate": {
+    "initial_pass_limit": 1,
+    "public_gap_or_counter_pass_limit": 1,
+    "semantic_repair_pass_limit": 1,
+    "saturation_audit_target_count": 1,
+    "submitted_public_gap_or_counter_count": 1,
+    "second_public_gap_needed": true,
+    "verdict": "OPERATIONAL_EFFICIENCY_GATE_FAILED",
+    "reason": "public-gap/counter submitted pass budget exceeded: allowed=1, already_submitted=1; seal this diagnostic run and start a new conversation",
+    "fixed_pass_limit_used_as_research_completion": false,
+    "score_valid": false,
+    "new_conversation_required": true,
+    "new_browser_window_required": false,
+    "new_browser_tab_required": false
+  },
+  "r15_terminal_diagnostic": {
+    "effective_fact_count": 65,
+    "accepted_fact_count": 47,
+    "genuine_semantic_or_source_defect_count": 6,
+    "nonterminal_mandatory_question_count": 6,
+    "provider_parser_core_pending_count": 5,
+    "public_material_gap_count": 14,
+    "source_linkage_incomplete_count": 5,
+    "verifier_repair_pending_count": 7,
+    "component_entry_allowed": false,
+    "query_count": 0,
+    "search_count": 0
+  },
+  "root_cause_evidence": {
+    "wrong_subject_count": 4,
+    "source_unavailable_count": 2,
+    "wrong_subject_pattern": "issuer_scoped=false facts used synthesized subject labels that were not literal source substrings",
+    "source_unavailable_pattern": "market-data facts used a canonical page that returned HTTP 403 to the downstream public verifier",
+    "ticker_or_archetype_specific_query_added": false,
+    "deterministic_query_template_added": false
+  },
+  "generic_prompt_repair": {
+    "initial_contract": [
+      "for issuer_scoped=false facts, copy the shortest literal subject expression from the source",
+      "do not synthesize a subject from company, facility, and transaction names found at separate locations",
+      "require a public representation reusable without login, personal cookies, or a JavaScript challenge",
+      "replace 401/403/login/anti-bot sources with a replayable official, filing, issuer-data, or public-mirror representation",
+      "when no replayable representation exists, record the route and source gap instead of fabricating a fact"
+    ],
+    "followup_delta_contract_has_same_guards": true,
+    "all_canonical_archetype_snapshots_regenerated": true,
+    "canonical_snapshot_count": 36,
+    "prompt_audit_status": "PASS",
+    "prompt_audit_critical_count": 0,
+    "score_or_stage_instruction_added": false
+  },
+  "verification": {
+    "windows_prompt_and_fresh_tests": 75,
+    "windows_failures": 0,
+    "windows_errors": 0,
+    "linux_prompt_and_fresh_tests": 75,
+    "linux_failures": 0,
+    "linux_errors": 0,
+    "prompt_snapshot_audit_count": 36,
+    "prompt_snapshot_audit_critical_count": 0,
+    "python_compileall": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "artifact_sha256": {
+    "r15_efficiency_failure_runtime_receipt": "d3a6f82fbe1cc4a4184cebc83e8a37c00ad9fce5f830c915c8e0ce54bd7a1784",
+    "initial_prompt_v3_snapshot_audit_json": "e4dc234c19b03352fa2b23aa72b2541ac74789d8cd92ad436979351d314551e8",
+    "initial_prompt_v3_snapshot_audit_markdown": "df60746ba6b236ca91fa347606abf0049931758188f8afebd17de8d2de6f97ba",
+    "initial_full_research_prompt_template": "d953bd724056813aad27b60c30fc90d32442f7063e05b2dba9d61a42651fc30d"
+  },
+  "runtime_artifacts_tracked": false,
+  "next_action": "commit and push the generic prompt repair, then run a blind C17 R16 in a new ChatGPT conversation by navigating the exact existing logged-in browser tab; create no new window or tab"
+}

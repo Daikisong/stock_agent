@@ -320,7 +320,8 @@
           "claim_ids": [
             "CLM-47103baa9b99062ef88a",
             "CLM-48f304f4471c4d575cec",
-            "CLM-4df55f27da648bb0024e"
+            "CLM-4df55f27da648bb0024e",
+            "CLM-e0a7f204219f352da273"
           ],
           "content_identity": "d78e3500c9e0882567b5dd0faad9294545d46c11e2170db773c44a1b35a6dbae",
           "document_cluster_id": "DOC_CLUSTER-fafe7c46908325e3bcbc9de2",
@@ -330,6 +331,7 @@
           "impact_ids": [
             "IMPACT-02497e327a056821ed95ef08",
             "IMPACT-670ee1af47facb3f742f04b3",
+            "IMPACT-9ea105fc1c6c7b438e1ee42c",
             "IMPACT-aadca754270a4e9b2a2bf29d",
             "IMPACT-ebec773a33c9561fbc1e85f8"
           ],
@@ -769,6 +771,28 @@
           "primary_impact_id": "IMPACT-6a7e9b68bd4d2d6e5a1ae8d4"
         },
         {
+          "business_mechanism": "supply response",
+          "claim_ids": [
+            "CLM-e0a7f204219f352da273"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-fafe7c46908325e3bcbc9de2"
+          ],
+          "evidence_confidence": 0.82,
+          "fact_cluster_id": "FACT-ea6e5c655e6a19cd9ec21ca1",
+          "impact_ids": [
+            "IMPACT-9ea105fc1c6c7b438e1ee42c"
+          ],
+          "normalized_object_value": "ds 부문 및 sdc 등의 첨단공정 증설 전환과 인프라를 중심으로 11조 2 332억원을 투자",
+          "normalized_predicate": "시설투자액",
+          "normalized_subject": "005930 corporate generic corporate generic",
+          "period": "2026-01-01 2026-03-31",
+          "primary_impact_id": "IMPACT-9ea105fc1c6c7b438e1ee42c"
+        },
+        {
           "business_mechanism": "product commercialization",
           "claim_ids": [
             "CLM-13d3c5605df791dcf819"
@@ -820,13 +844,13 @@
           "primary_impact_id": "IMPACT-32ca15e9021b43e5cb129abe"
         }
       ],
-      "ledger_scope_rejected_count": 4,
-      "ledger_validated_count": 28,
+      "ledger_scope_rejected_count": 3,
+      "ledger_validated_count": 29,
       "proposal_count": 32,
       "validator_audit": {
         "claim_budget_scaled_count": 7,
         "correlation_scaled_count": 0,
-        "credited_impact_count": 8,
+        "credited_impact_count": 9,
         "critical_count_sum": 0,
         "critical_counts": {
           "claim_credit_budget_violation_count": 0,
@@ -845,7 +869,7 @@
         },
         "document_budget_scaled_count": 0,
         "document_cluster_count": 3,
-        "economic_fact_cluster_count": 21,
+        "economic_fact_cluster_count": 22,
         "evidence_family_budget_scaled_count": 0,
         "fact_budget_scaled_count": 0,
         "information_diversity_scaled_count": 2,
@@ -854,7 +878,7 @@
         "status": "STRICT_IMPACT_VALIDATOR_V2_PASS",
         "suppressed_same_document_duplicate_count": 17,
         "suppressed_same_fact_duplicate_count": 1,
-        "validated_impact_count": 28
+        "validated_impact_count": 29
       }
     }
   }

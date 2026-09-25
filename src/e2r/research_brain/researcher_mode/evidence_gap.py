@@ -546,8 +546,11 @@ class EvidenceGapKey:
                 }
             )
         )
-        if not components:
-            raise ValueError("affected component ids are required")
+        # V3 cross-guard questions can leave a monitoring-only audit gap that
+        # intentionally owns no scoring component.  Material score gaps still
+        # fail closed later because an empty affected roster cannot satisfy a
+        # CORE_SCORE_SOURCE assessment; the empty roster is only meaningful
+        # with a deterministic MONITORING_ONLY context.
         object.__setattr__(self, "affected_component_ids", components)
         object.__setattr__(
             self,

@@ -73,7 +73,7 @@
     }
   ],
   "schema_version": "e2r_business_mechanism_scope_audit_v1",
-  "scope_pass_impact_count": 39,
+  "scope_pass_impact_count": 40,
   "scope_rows": [
     {
       "claim_id": "CLM-464ca5cde1b30c363997",
@@ -223,9 +223,9 @@
       "claim_id": "CLM-e0a7f204219f352da273",
       "component_id": "capital_allocation",
       "impact_id": "IMPACT-9ea105fc1c6c7b438e1ee42c",
-      "original_gap_open": true,
+      "original_gap_open": false,
       "primitive_id": "capacity_supply_response",
-      "reason_code": "GENERIC_COMPANY_FACT_ARCHETYPE_LINK_MISSING",
+      "reason_code": "",
       "rerouted_archetype_id": null,
       "scope": {
         "business_segment": "CORPORATE_GENERIC",
@@ -239,8 +239,8 @@
         "technology_family": "CORPORATE_GENERIC",
         "transaction_type": "CAPACITY_INVESTMENT"
       },
-      "scope_match": false,
-      "status": "MECHANISM_SCOPE_REJECTED",
+      "scope_match": true,
+      "status": "MECHANISM_SCOPE_PASS",
       "target_id": "005930"
     },
     {
@@ -1133,5 +1133,5 @@
     }
   ],
   "status": "BUSINESS_MECHANISM_SCOPE_PASS",
-  "wrong_scope_rejected_impact_count": 5
+  "wrong_scope_rejected_impact_count": 4
 }

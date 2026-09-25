@@ -36,7 +36,7 @@ from e2r.research.pdf_text_extractor import (
 
 
 PUBLICATION_METADATA_SEMANTICS_VERSION = (
-    "e2r_page_fetch_publication_metadata_v1"
+    "e2r_page_fetch_publication_metadata_v2"
 )
 TEXT_CACHE_SEMANTICS_VERSION = "e2r_page_fetch_text_cache_v2"
 RESPONSE_CONTENT_CLASSIFICATION_SEMANTICS_VERSION = (
@@ -940,6 +940,7 @@ class _HTMLPublicationMetadataExtractor(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self._parts: list[str] = []
+        self._head_depth = 0
         self._single_document_body = False
         self._article_selected = False
         self._article_depth = 0
@@ -953,6 +954,8 @@ class _HTMLPublicationMetadataExtractor(HTMLParser):
         attrs: list[tuple[str, str | None]],
     ) -> None:
         tag = tag.lower()
+        if tag == "head":
+            self._head_depth += 1
         attrs_by_name = {
             key.lower(): str(value)
             for key, value in attrs
@@ -973,7 +976,16 @@ class _HTMLPublicationMetadataExtractor(HTMLParser):
             )
             content = attrs_by_name.get("content", "").strip()
             normalized_key = re.sub(r"[^a-z0-9]", "", key.casefold())
-            if normalized_key in self._META_KEYS and content:
+            # Listing cards commonly put their own ``datePublished`` meta
+            # elements in the article body's "latest news" rail.  Those
+            # dates describe the linked cards, not the document currently
+            # being fetched.  Accept meta publication dates only from the
+            # document head or from the selected primary article.
+            if (
+                normalized_key in self._META_KEYS
+                and content
+                and (self._head_depth or self._article_depth)
+            ):
                 self._parts.append(f"HTML_META_{normalized_key}:{content}")
             return
         class_tokens = {
@@ -982,6 +994,10 @@ class _HTMLPublicationMetadataExtractor(HTMLParser):
             if value.strip()
         }
         if tag == "body":
+            # A malformed page can omit ``</head>``.  Entering the body is an
+            # unambiguous boundary, so do not let related-card meta elements
+            # inherit head authority in that case.
+            self._head_depth = 0
             self._single_document_body = bool(
                 class_tokens & self._SINGLE_BODY_CLASSES
                 or any(value.startswith("single-") for value in class_tokens)
@@ -1026,6 +1042,8 @@ class _HTMLPublicationMetadataExtractor(HTMLParser):
             self._date_capture_parts = []
         if tag == "article" and self._article_depth:
             self._article_depth -= 1
+        if tag == "head" and self._head_depth:
+            self._head_depth -= 1
 
     def handle_data(self, data: str) -> None:
         if self._json_ld_parts is not None:

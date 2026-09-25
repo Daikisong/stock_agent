@@ -1,0 +1,85 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_c17_r21_scaffold_only_output_and_single_tab_recovery_receipt_v1",
+  "status": "R21_INITIAL_PROMPT_OUTPUT_DEFECT_DIAGNOSTIC_ONLY_NEW_CHAT_REQUIRED_IN_EXISTING_TAB",
+  "recorded_at": "2026-08-31T11:17:56Z",
+  "source_head_before_patch": "1ecb026c0037f35a6491035414bd1c3e847e63cc",
+  "target": {
+    "symbol": "011170",
+    "company_name": "롯데케미칼",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+  },
+  "r21": {
+    "fresh_session_id": "FRESH-V2-1-C17-R21-20260831T092632Z",
+    "job_id": "PROJOB-75dd86fa437270eddc1dabb6",
+    "run_id": "PRORUN-2dfc0d974d912ad4b149c1c9",
+    "research_pass_id": "PROPASS-e70e4c97bdaf8d1dc70dd0d3",
+    "conversation_id": "6a9548fa-5844-83e8-b426-c66f79a8dac1",
+    "submit_count": 1,
+    "capture_count": 1,
+    "capture_source": "DOWNLOAD_JSON",
+    "automatic_resubmit_allowed": false,
+    "raw_dossier_sha256": "f37087cf1bb61e830931b07afe688543e227a10528b2ba21c1b18e4f0285cc28",
+    "capture_receipt_sha256": "192c229a40777c99b50e65d50e8e57ce105f557e069e83790956e05b16b6375b"
+  },
+  "observed_output": {
+    "source_document_count": 0,
+    "source_lineage_count": 0,
+    "material_fact_count": 0,
+    "counterfact_count": 0,
+    "resolution_fact_count": 0,
+    "question_family_result_count": 26,
+    "search_route_receipt_count": 62,
+    "literal_placeholder_values": [
+      "ID-PLACEHOLDER",
+      "확인값"
+    ],
+    "classification": "INITIAL_PROMPT_OUTPUT_DEFECT",
+    "parser_discarded_fact_count": 0,
+    "score_authority": false,
+    "stage_authority": false
+  },
+  "generic_repairs": {
+    "initial_parent_none_alias": "exact initial scope only: NONE to null",
+    "initial_conversation_alias": "exact initial scope only: PENDING_NEW_CONVERSATION to captured conversation",
+    "followup_lineage_relaxed": false,
+    "scaffold_only_guard": "zero source/facts plus literal filler fails before evidence import",
+    "truthful_provider_pending_zero_fact_allowed_for_diagnosis": true,
+    "prompt_scaffold_ban_added": true,
+    "all_36_prompt_snapshots_regenerated": true
+  },
+  "verification": {
+    "focused_tests": "21/21 PASS",
+    "prompt_snapshot_audit": "36/36 PASS / critical 0",
+    "actual_r21_guard_probe": "PASS: explicit INITIAL_PROMPT_OUTPUT_DEFECT",
+    "full_local_discovery_attempt": "1220 tests / failure 0 / environment error 1 / skipped 14 / stopped fail-fast",
+    "full_local_discovery_environment_error": "Playwright Linux chrome-headless-shell missing libnspr4.so before browser test setup",
+    "compileall": "PASS",
+    "git_diff_check": "PASS",
+    "prompt_template_sha256": "af588bff15e8feb1e5270981dde70625c4ed947917d9aaeb91908a1834989472",
+    "identity_binding_sha256": "00162695535c4abade8b526c0d72153edee1cbb4ccf798bbadddf94460df6f91",
+    "importer_sha256": "9275dc892ce7209de09e150d54d09e221dbb11f54f03b79d20ac393e8858d609",
+    "snapshot_audit_sha256": "9fa551215a5e18f3e91cf4b274a41efd840c5886991c51c86d8c926ac0f0ab51"
+  },
+  "browser_safety": {
+    "existing_logged_in_chatgpt_tab_reused": true,
+    "observed_browser_page_count": 26,
+    "observed_chatgpt_page_count": 1,
+    "chatgpt_target_id": "F6DC0979950E8B311DC6F6207BF6197E",
+    "new_window_count": 0,
+    "new_tab_count": 0,
+    "new_target_count": 0,
+    "r21_resubmit_count": 0,
+    "next_attempt_navigation": "same existing ChatGPT tab to new-chat route"
+  },
+  "master_goal_state": {
+    "live_full_thesis_pass_count": 1,
+    "live_full_thesis_required_count": 3,
+    "c06": "PASS",
+    "c17": "R21_DIAGNOSTIC_ONLY_PENDING_NEW_CHAT_CANARY",
+    "c28": "PENDING",
+    "operational_research_ready_allowed": false,
+    "pr_draft_release_allowed": false,
+    "main_merge_allowed": false
+  }
+}

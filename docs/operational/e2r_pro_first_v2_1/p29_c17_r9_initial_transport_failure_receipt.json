@@ -1,0 +1,95 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_c17_r9_initial_transport_failure_receipt_v1",
+  "phase": "P29_C17_R9_INITIAL_TRANSPORT_FAILURE",
+  "status": "FRESH_SESSION_DIAGNOSTIC_ONLY",
+  "target_id": "011170",
+  "as_of_date": "2026-08-23",
+  "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+  "fresh_session_id": "FRESH-V2-1-C17-R9-20260830T030222Z",
+  "job_id": "PROJOB-61af1aacb152d31ff4af16f3",
+  "run_id": "PRORUN-278c60ac5d42c6bea0e317f9",
+  "initial_pass_id": "PROPASS-b9831d09cdaa64b34e4c7fa0",
+  "conversation_id": null,
+  "fresh_runtime_id": "20260830T030222Z",
+  "fresh_preparation": {
+    "status": "PASS",
+    "new_chat_route_verified": true,
+    "mandatory_question_count": 26,
+    "prompt_char_count": 60439,
+    "packet_leakage_count": 0,
+    "prompt_old_answer_token_count": 0,
+    "prompt_forbidden_answer_field_token_count": 0,
+    "packet_hash": "e0ed5261d6984d404f68ae36ecd50e2267844f99370b0a0b45576b7f5ad07bf8",
+    "prompt_hash": "cf8a667196f2c7e80d11d437fce4e383e3f43f70c5fb5bcd70ce5a68fdc10f32"
+  },
+  "exactly_once_transport": {
+    "upload_count": 1,
+    "submit_claim_count": 1,
+    "browser_submit_count": 1,
+    "conversation_id_persisted": false,
+    "exact_user_turn_persisted": false,
+    "observed_user_turn_count": 0,
+    "server_persistence_confirmed": false,
+    "server_persistence_observation_id": "PROSERVERVIEW-fb8a5f363edf04d2e648c291",
+    "missing_exact_marker_count": 2,
+    "automatic_resubmit_allowed": false,
+    "existing_logged_in_tab_reused": true,
+    "new_chatgpt_tab_open_count": 0
+  },
+  "diagnosis": {
+    "failure_class": "INITIAL_SAME_TAB_OPTIMISTIC_USER_TURN_ABSENT_AFTER_EXACTLY_ONCE_SUBMIT",
+    "root_cause": "the same-tab persistence refresh was allowed before the large initial user turn appeared in the DOM, so navigation could cancel the in-flight new-chat submit",
+    "research_answer_received": false,
+    "research_pass_count": 1,
+    "accepted_fact_count": 0,
+    "score_receipt_present": false,
+    "stagecourt_receipt_present": false
+  },
+  "freeze": {
+    "old_job_frozen": true,
+    "old_job_frozen_at": "2026-08-30T03:13:51.420623Z",
+    "new_conversation_required": true,
+    "publication_withheld": true,
+    "score_authority": false,
+    "stage_authority": false
+  },
+  "generic_repair": {
+    "poll_exact_optimistic_user_turn_before_refresh": true,
+    "skip_same_tab_refresh_when_optimistic_turn_is_absent": true,
+    "minimum_post_render_settle_ms": 1000,
+    "same_existing_tab_only": true,
+    "worker_new_page_fallback_removed": true,
+    "missing_existing_chatgpt_tab_fails_closed": true,
+    "new_page_or_temporary_tab_added": false,
+    "ticker_or_archetype_query_hardcoding_added": false
+  },
+  "focused_test_run": {
+    "scope": "browser adapter, exactly-once approval submit, completion capture, multi-pass",
+    "tests": 97,
+    "failures": 0,
+    "errors": 0,
+    "explicit_no_refresh_sentinel_regression": true,
+    "explicit_no_new_tab_worker_regression": true,
+    "post_patch_worker_targeted_rerun": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0
+    },
+    "environment": "Windows Python 3.14 Playwright"
+  },
+  "artifact_sha256": {
+    "fresh_session_boundary_receipt": "e38a69d7205899644d5b928f63981a4ed9bc7b342da51709c5ad5606139ca42e",
+    "old_answer_leakage_manifest": "d66fe39623fe39f90059dcf9fe76f3349a1d5904ba508244a9e5e2e552880aeb",
+    "fresh_blind_packet_audit": "93768470b6776d683ded7e8a6681c8b3b20fd513dadc776f441f5ffef4a8bfdb",
+    "fresh_initial_prompt_leakage_audit": "7bf4aa16f2fa42d0cc8c3d02f1c5e3a2e896b5a2fc2a66c9be7381dfad0d31c6",
+    "fresh_v3_prepare_receipt": "fcb24b1efddc51ec09b2cfd733340116cf473f35335215ca1ebf9c07bda702c8",
+    "initial_prompt_v3_receipt": "bd3ac14a079197930bc9ee31fbd493913af8f36b258dda0f15d83fa3646a0af4",
+    "fresh_efficiency_failure_receipt": "80878269c2098ddb9667c651c2a354275faececfbdcf74b9a59c5962bf9ea2d7",
+    "packet_manifest": "a2daada8a7fbdf74ca152b4ba4487c9dfeed2952e48d0b2ff7b173abdc25418a",
+    "research_packet": "3885a01337d2966332f93944907ea83310e191e539e4ac44d35ebcd7c4782ab3"
+  },
+  "runtime_artifacts_tracked": false,
+  "score_authority": false,
+  "stage_authority": false,
+  "next_action": "start C17 R10 as a blind fresh run in a new ChatGPT conversation by navigating the one existing logged-in browser tab"
+}

@@ -1,0 +1,93 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p109_existing_login_session_exact_head_ci_v1",
+  "recorded_at": "2026-09-25T07:49:42+09:00",
+  "status": "EXACT_HEAD_CI_IN_PROGRESS_DOCUMENTATION_UPDATED",
+  "user_instruction": {
+    "login_required_browseruse_must_use_users_existing_logged_in_session": true,
+    "existing_extension_session_only": true,
+    "enumerate_current_user_tabs_before_each_live_action": true,
+    "claim_exact_existing_task_tab_and_use_returned_same_tab_object": true,
+    "new_window_browser_tab_profile_cdp_session_or_relogin_as_fallback": false,
+    "stop_before_input_if_session_or_exact_target_tab_cannot_be_confirmed": true
+  },
+  "git": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "head_sha": "617e204b4c0b4f9dce15f4185eff589af9042920",
+    "origin_head_sha": "617e204b4c0b4f9dce15f4185eff589af9042920",
+    "worktree_clean_before_p109_documentation": true
+  },
+  "pull_request": {
+    "number": 7,
+    "url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "state": "OPEN",
+    "draft": true,
+    "merge_state_at_recorded_time": "UNSTABLE",
+    "merged_to_main": false
+  },
+  "ci_for_exact_source_head": {
+    "head_sha": "617e204b4c0b4f9dce15f4185eff589af9042920",
+    "pro_pr": {
+      "run_id": "36069234793",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/36069234793",
+      "status_at_recorded_time": "IN_PROGRESS",
+      "static_security": "SUCCESS",
+      "full_regression": "IN_PROGRESS",
+      "core_unit": "IN_PROGRESS",
+      "browser_mock_e2e": "IN_PROGRESS"
+    },
+    "pro_push": {
+      "run_id": "36069233229",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/36069233229",
+      "status_at_recorded_time": "IN_PROGRESS",
+      "static_security": "SUCCESS",
+      "full_regression": "IN_PROGRESS",
+      "core_unit": "IN_PROGRESS",
+      "browser_mock_e2e": "IN_PROGRESS"
+    },
+    "v6": {
+      "run_id": "36069234853",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/36069234853",
+      "status_at_recorded_time": "IN_PROGRESS",
+      "offline_contract": "IN_PROGRESS"
+    },
+    "overall_success": false
+  },
+  "scope_this_checkpoint": {
+    "documentation_updated": [
+      "docs/operational/e2r_pro_first_v2_1/browseruse_existing_session_handoff.md",
+      "docs/operational/e2r_pro_first_v2_1/implementation_progress.md",
+      "docs/operational/e2r_pro_first_v2_1/p109_existing_login_session_and_exact_head_ci_receipt.json"
+    ],
+    "browseruse_connected_or_tabs_inspected": false,
+    "c15_database_rechecked": false,
+    "prompt_input": false,
+    "attachment_change_or_download": false,
+    "submit": false,
+    "capture": false,
+    "query_or_fetch": false,
+    "new_job_or_pass": false,
+    "other_archetype": false,
+    "score_or_stage_change": false,
+    "pr_merge_or_draft_release": false
+  },
+  "last_recorded_c15_state_not_rechecked_in_p109": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 26,
+    "packet_canonical_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "submit_count": 0,
+    "capture_count": 0,
+    "approval_browser_conversation_binding": false,
+    "source_receipt": "p107_c15_existing_login_session_checkpoint_receipt.json",
+    "current_state_asserted": false
+  },
+  "master_goal": {
+    "complete": false,
+    "p9_live_full_thesis_canaries_passed": 1,
+    "p9_live_full_thesis_canaries_required": 3,
+    "completed_archetype": "C06",
+    "pending_archetypes": ["C17", "C28"]
+  },
+  "next_step": "Wait for all three exact-source-head Actions runs to finish. If all succeed, recheck the C15 durable state read-only; if UI work is needed, re-enumerate and claim the user's exact existing logged-in BrowserUse tab and use only the returned same Tab object.",
+  "master_goal_complete": false
+}

@@ -1,0 +1,287 @@
+{
+  "as_of_date": "2026-08-22",
+  "counterfact_count": 15,
+  "dossier_payload_hash": "aa16665b8ffbe01830748ea336f8613158564f5c07d03a27474630731a54747e",
+  "first_pass_diagnostic_score": 23.202275,
+  "first_pass_diagnostic_stage": "0",
+  "job_id": "PROJOB-70e6a50ae757bd874e602a85",
+  "legacy_publication_status": "PUBLISHED",
+  "legacy_research_status": "COMPLETE",
+  "lineage_group_count": 15,
+  "material_fact_count": 20,
+  "parser_operations": [
+    "EXTRACT_DOSSIER_SENTINEL_BLOCK",
+    "REMOVE_JSON_CODE_FENCE"
+  ],
+  "primary_archetype_ids": [
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
+  ],
+  "projection_contains_article_or_quote_text": false,
+  "projection_hash": "2da1fe46c3a389a146331ca708ec96454b2c58fd99a46805e94293e029d488d7",
+  "raw_report_tracked": false,
+  "run_id": "PRORUN-643c723370681970b5bcc582",
+  "schema_version": "e2r_pro_first_v2_frozen_v1_projection_v1",
+  "score_authority": false,
+  "source_report_byte_count": 127517,
+  "source_report_sha256": "92394591d8d56dc52321f5a2df60a72a658c7347353f99ae96f3584fda211f9b",
+  "stage_authority": false,
+  "target": {
+    "company_name": "SK하이닉스",
+    "symbol": "000660",
+    "target_id": "000660"
+  },
+  "unresolved_gap_count": 13,
+  "unresolved_gaps": [
+    {
+      "affected_component_ids": [
+        "earnings_visibility",
+        "bottleneck_pricing",
+        "information_confidence"
+      ],
+      "dossier_gap_id": "GAP-000660-001",
+      "economic_reason": "Around ten LTAs are confirmed, but minimum volumes, price formulas, duration, termination rights and take-or-pay protection are not public; those terms determine whether LTA evidence is relationship visibility or enforceable demand.",
+      "predicate_or_fact_need_id": "NEED-LTA-MINIMUM-VOLUME-PRICE-TERM",
+      "proposed_could_change_hard_break": true,
+      "proposed_could_change_score": true,
+      "proposed_could_change_stage": true,
+      "proposed_missing_source_role": "DIRECT_CONTRACT_TERMS",
+      "required_source_families": [
+        "ISSUER_CONTRACT_FILING",
+        "CUSTOMER_OFFICIAL",
+        "ISSUER_EARNINGS_TRANSCRIPT"
+      ]
+    },
+    {
+      "affected_component_ids": [
+        "earnings_visibility",
+        "information_confidence"
+      ],
+      "dossier_gap_id": "GAP-000660-002",
+      "economic_reason": "Customer identities, HBM generation allocations and revenue sensitivity are not disclosed; concentration percentages alone cannot show which platform or customer drives the next revenue bridge.",
+      "predicate_or_fact_need_id": "NEED-CUSTOMER-IDENTITY-SKU-ALLOCATION",
+      "proposed_could_change_hard_break": false,
+      "proposed_could_change_score": true,
+      "proposed_could_change_stage": true,
+      "proposed_missing_source_role": "CUSTOMER_ATTRIBUTION",
+      "required_source_families": [
+        "CUSTOMER_OFFICIAL",
+        "ISSUER_CUSTOMER_DISCLOSURE",
+        "REGULATORY_CUSTOMER_CONCENTRATION_NOTE"
+      ]
+    },
+    {
+      "affected_component_ids": [
+        "earnings_visibility",
+        "bottleneck_pricing",
+        "information_confidence"
+      ],
+      "dossier_gap_id": "GAP-000660-003",
+      "economic_reason": "General HBM4 customer-speed achievement and mass shipment are confirmed, but customer-by-customer qualification, platform, capacity and requalification requirements remain unknown.",
+      "predicate_or_fact_need_id": "NEED-HBM4-CUSTOMER-SKU-QUALIFICATION-STATUS",
+      "proposed_could_change_hard_break": true,
+      "proposed_could_change_score": true,
+      "proposed_could_change_stage": true,
+      "proposed_missing_source_role": "DIRECT_QUALIFICATION_EVIDENCE",
+      "required_source_families": [
+        "CUSTOMER_OFFICIAL_QUALIFICATION",
+        "ISSUER_PRODUCT_QUALIFICATION_UPDATE",
+        "PARTNER_TECHNICAL_DOCUMENT"
+      ]
+    },
+    {
+      "affected_component_ids": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "dossier_gap_id": "GAP-000660-004",
+      "economic_reason": "Public sources do not disclose HBM4 bit shipments, units, realized ASP, gross margin or mix. Without them, the HBM4 revenue and FCF bridge cannot be independently reconstructed.",
+      "predicate_or_fact_need_id": "NEED-HBM4-SHIPMENTS-ASP-MARGIN-MIX",
+      "proposed_could_change_hard_break": true,
+      "proposed_could_change_score": true,
+      "proposed_could_change_stage": true,
+      "proposed_missing_source_role": "PRODUCT_UNIT_ECONOMICS",
+      "required_source_families": [
+        "ISSUER_SEGMENT_KPI",
+        "ISSUER_EARNINGS_TRANSCRIPT",
+        "AUDITED_PRODUCT_REVENUE_NOTE"
+      ]
+    },
+    {
+      "affected_component_ids": [
+        "bottleneck_pricing",
+        "capital_allocation",
+        "earnings_visibility"
+      ],
+      "dossier_gap_id": "GAP-000660-005",
+      "economic_reason": "The filing shows 100% utilization but not HBM wafer yield, TSV/packaging yield, qualified output or monthly ramp. Nameplate investment does not establish saleable HBM capacity.",
+      "predicate_or_fact_need_id": "NEED-HBM-YIELD-QUALIFIED-CAPACITY-RAMP",
+      "proposed_could_change_hard_break": true,
+      "proposed_could_change_score": true,
+      "proposed_could_change_stage": true,
+      "proposed_missing_source_role": "DIRECT_CAPACITY_AND_YIELD",
+      "required_source_families": [
+        "ISSUER_CAPACITY_KPI",
+        "ISSUER_YIELD_DISCLOSURE",
+        "EQUIPMENT_SUPPLIER_OFFICIAL",
+        "PACKAGING_PARTNER_OFFICIAL"
+      ]
+    },
+    {
+      "affected_component_ids": [
+        "eps_fcf_explosion",
+        "capital_allocation",
+        "valuation_rerating"
+      ],
+      "dossier_gap_id": "GAP-000660-006",
+      "economic_reason": "P&T7, Y2 and M17 headline totals span years and remain changeable. Annual cash draw, depreciation, startup costs, qualified output, utilization and project returns are not disclosed.",
+      "predicate_or_fact_need_id": "NEED-ANNUAL-CASH-DRAW-RAMP-ROIC",
+      "proposed_could_change_hard_break": true,
+      "proposed_could_change_score": true,
+      "proposed_could_change_stage": true,
+      "proposed_missing_source_role": "PROJECT_EXECUTION_AND_ROIC",
+      "required_source_families": [
+        "ISSUER_CAPEX_SCHEDULE",
+        "REGULATORY_PROJECT_UPDATE",
+        "AUDITED_CASH_FLOW",
+        "ISSUER_ROIC_DISCLOSURE"
+      ]
+    },
+    {
+      "affected_component_ids": [
+        "eps_fcf_explosion",
+        "market_mispricing",
+        "valuation_rerating",
+        "information_confidence"
+      ],
+      "dossier_gap_id": "GAP-000660-007",
+      "economic_reason": "The large valuation gain makes reported net income and trailing P/E non-comparable to recurring operations; the Visible Alpha FCF figure also does not reconcile transparently to the simple filing-based proxy.",
+      "predicate_or_fact_need_id": "NEED-RECURRING-EPS-AND-FCF-RECONCILIATION",
+      "proposed_could_change_hard_break": true,
+      "proposed_could_change_score": true,
+      "proposed_could_change_stage": true,
+      "proposed_missing_source_role": "NORMALIZATION_RECONCILIATION",
+      "required_source_families": [
+        "AUDITED_FINANCIAL_NOTES",
+        "ISSUER_NON_GAAP_RECONCILIATION",
+        "CONSENSUS_MODEL_DEFINITION"
+      ]
+    },
+    {
+      "affected_component_ids": [
+        "eps_fcf_explosion",
+        "bottleneck_pricing",
+        "earnings_visibility",
+        "valuation_rerating"
+      ],
+      "dossier_gap_id": "GAP-000660-008",
+      "economic_reason": "Multiple suppliers are ramping HBM4 and SK hynix is expanding capacity. Public data do not fully map qualified HBM/DRAM/NAND supply versus customer demand by year.",
+      "predicate_or_fact_need_id": "NEED-2027-2029-QUALIFIED-BIT-SUPPLY-BALANCE",
+      "proposed_could_change_hard_break": true,
+      "proposed_could_change_score": true,
+      "proposed_could_change_stage": true,
+      "proposed_missing_source_role": "INDUSTRY_SUPPLY_DEMAND",
+      "required_source_families": [
+        "PEER_CAPACITY_GUIDANCE",
+        "EQUIPMENT_SUPPLIER_BACKLOG",
+        "INDUSTRY_BIT_SUPPLY_DATA",
+        "CUSTOMER_CAPEX_GUIDANCE"
+      ]
+    },
+    {
+      "affected_component_ids": [
+        "capital_allocation",
+        "valuation_rerating",
+        "information_confidence"
+      ],
+      "dossier_gap_id": "GAP-000660-009",
+      "economic_reason": "The board decision is confirmed, but actual shares purchased, average price, cash spent and final cancellation were not yet available at the cutoff.",
+      "predicate_or_fact_need_id": "NEED-ACTUAL-SHARES-PRICE-CASH-CANCELLATION",
+      "proposed_could_change_hard_break": false,
+      "proposed_could_change_score": true,
+      "proposed_could_change_stage": true,
+      "proposed_missing_source_role": "CAPITAL_RETURN_EXECUTION",
+      "required_source_families": [
+        "REGULATORY_BUYBACK_PROGRESS",
+        "REGULATORY_CANCELLATION_COMPLETION",
+        "ISSUER_TREASURY_SHARE_REPORT"
+      ]
+    },
+    {
+      "affected_component_ids": [
+        "capital_allocation",
+        "earnings_visibility",
+        "information_confidence"
+      ],
+      "dossier_gap_id": "GAP-000660-010",
+      "economic_reason": "The company explicitly said no decision had been made. The correct state is UNKNOWN, not ABSENT and not committed CAPEX.",
+      "predicate_or_fact_need_id": "NEED-JAPAN-FACILITY-DECISION-SCOPE-COST",
+      "proposed_could_change_hard_break": false,
+      "proposed_could_change_score": true,
+      "proposed_could_change_stage": true,
+      "proposed_missing_source_role": "PRIMARY_DECISION_DISCLOSURE",
+      "required_source_families": [
+        "REGULATORY_FACILITY_DECISION",
+        "ISSUER_BOARD_APPROVAL",
+        "GOVERNMENT_INCENTIVE_OFFICIAL"
+      ]
+    },
+    {
+      "affected_component_ids": [
+        "bottleneck_pricing",
+        "earnings_visibility",
+        "market_mispricing"
+      ],
+      "dossier_gap_id": "GAP-000660-011",
+      "economic_reason": "Samsung and Micron shipments are confirmed, but platform-level supplier shares, second-source policies and qualified capacity are not public enough to quantify SK hynix pricing power.",
+      "predicate_or_fact_need_id": "NEED-HBM4-SUPPLIER-SHARE-BY-PLATFORM",
+      "proposed_could_change_hard_break": false,
+      "proposed_could_change_score": true,
+      "proposed_could_change_stage": true,
+      "proposed_missing_source_role": "COMPETITIVE_ALLOCATION",
+      "required_source_families": [
+        "CUSTOMER_SUPPLIER_ALLOCATION_OFFICIAL",
+        "PEER_HBM_CAPACITY_GUIDANCE",
+        "PLATFORM_VENDOR_OFFICIAL"
+      ]
+    },
+    {
+      "affected_component_ids": [
+        "earnings_visibility",
+        "information_confidence"
+      ],
+      "dossier_gap_id": "GAP-000660-012",
+      "economic_reason": "Top-customer percentages are known, but names, products, margin contribution and order elasticity are unknown; a concentration shock cannot be modeled reliably.",
+      "predicate_or_fact_need_id": "NEED-TOP-CUSTOMER-IDENTITY-ORDER-SENSITIVITY",
+      "proposed_could_change_hard_break": true,
+      "proposed_could_change_score": true,
+      "proposed_could_change_stage": true,
+      "proposed_missing_source_role": "CUSTOMER_CONCENTRATION_DETAIL",
+      "required_source_families": [
+        "AUDITED_CUSTOMER_NOTE",
+        "ISSUER_RISK_UPDATE",
+        "CUSTOMER_OFFICIAL_CAPEX_AND_PRODUCT_ROADMAP"
+      ]
+    },
+    {
+      "affected_component_ids": [
+        "market_mispricing",
+        "valuation_rerating"
+      ],
+      "dossier_gap_id": "GAP-000660-013",
+      "economic_reason": "A trailing P/E of 7.60 is observable, but normalized forward earnings, cycle-midpoint cash flow and comparable peer definitions are required before any rerating or mispricing conclusion.",
+      "predicate_or_fact_need_id": "NEED-FORWARD-NORMALIZED-EPS-FCF-AND-PEER-BASIS",
+      "proposed_could_change_hard_break": false,
+      "proposed_could_change_score": true,
+      "proposed_could_change_stage": true,
+      "proposed_missing_source_role": "NORMALIZED_VALUATION_INPUTS",
+      "required_source_families": [
+        "NORMALIZED_CONSENSUS_EPS",
+        "CONSENSUS_FCF",
+        "PEER_VALUATION_DATA",
+        "MARKET_DATA_SNAPSHOT"
+      ]
+    }
+  ],
+  "verified_fact_count": 26
+}

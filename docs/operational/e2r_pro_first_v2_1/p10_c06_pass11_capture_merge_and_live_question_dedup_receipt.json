@@ -1,0 +1,133 @@
+{
+  "schema_version": "e2r_pro_p10_c06_pass11_capture_merge_and_live_question_dedup_receipt_v1",
+  "status": "PASS11_CAPTURE_MERGE_REVERIFY_AND_LIVE_QUESTION_DEDUP_PASS",
+  "completion_claimed": false,
+  "final_full_thesis_allowed": false,
+  "job_id": "PROJOB-ab48ce7e94097cf9b6846602",
+  "run_id": "PRORUN-683f5a5423a6e367f443c6de",
+  "target_id": "000660",
+  "as_of_date": "2026-08-23",
+  "conversation_id": "6a8db0ad-8ed0-83e8-888e-dce26c950343",
+  "pass_11": {
+    "pass_id": "PROPASS-ca6f4aba9e077315067b5f67",
+    "parent_pass_id": "PROPASS-222c4db866a10be35f8aa25b",
+    "pass_name": "PUBLIC_GAP_CLOSURE",
+    "pass_ordinal": 11,
+    "status": "COMPLETE",
+    "submit_count": 1,
+    "automatic_resubmit_count": 0,
+    "submitted_at": "2026-08-27T00:48:34.573907Z",
+    "completed_at": "2026-08-27T01:29:12.733038Z",
+    "response_hash": "51fe5707774140924435b993da1a6815a70bd206f907c9b79d65eb672598ad5d",
+    "prompt_char_count": 18275,
+    "question_family_count": 5
+  },
+  "current_turn_capture": {
+    "status": "PASS",
+    "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+    "capture_mode": "CHATGPT_WEB_VISIBLE_PRO_FOLLOWUP",
+    "assistant_turn_id": "request-6a8db0ad-8ed0-83e8-888e-dce26c950343-0",
+    "captured_at": "2026-08-27T01:29:12.325198Z",
+    "expected_attachment_filename": "ResearchDossierV3_SKHynix_000660_PUBLIC_GAP_CLOSURE_PROPASS-ca6f4aba9e077315067b5f67_delta.json",
+    "old_or_other_pass_attachment_accepted": false,
+    "exact_job_run_pass_markers_required": true,
+    "capture_prompt_hash": "a58d797db210449aec8cee1b198c1289b79280e5c6c99dde077c68ab3780a522",
+    "raw_report_md_hash": "7ecf102e2779f18d3ae2673ef370b918753e5041b53762d71aef98681f96a283",
+    "report_md_hash": "51fe5707774140924435b993da1a6815a70bd206f907c9b79d65eb672598ad5d",
+    "dossier_json_hash": "64de29628fdbc4b504cbbc024db800a76ab6f14677bad74ec88d982947841c93",
+    "report_pdf_hash": null,
+    "optional_pdf_error": null
+  },
+  "append_only_merge": {
+    "status": "PASS",
+    "new_fact_count": 5,
+    "new_fact_ids": [
+      "PROFACT-P11-R13-CLOSE-20260821",
+      "PROFACT-P11-R13-FOREIGN-NETBUY-20260821",
+      "PROFACT-P11-R13-INSTITUTION-NETBUY-20260821",
+      "PROFACT-P11-R13-TRADING-VALUE-20260821",
+      "PROFACT-P11-R13-VOLUME-20260821"
+    ],
+    "new_source_document_count": 3,
+    "new_source_lineage_count": 3,
+    "new_source_lineage_ids": [
+      "SL-P11-WELCL-MARKET-20260821",
+      "SL-P11-INFOMAX-FOREIGN-20260821",
+      "SL-P11-INFOMAX-INSTITUTION-20260821"
+    ],
+    "new_route_receipt_count": 11,
+    "effective_fact_count_before": 97,
+    "effective_fact_count_after": 102,
+    "source_document_count_before": 32,
+    "source_document_count_after": 35,
+    "source_lineage_count_before": 30,
+    "source_lineage_count_after": 33,
+    "route_receipt_count_before": 255,
+    "route_receipt_count_after": 266,
+    "effective_question_count": 28,
+    "effective_dossier_hash": "07b4060411e5e231133dd4eaa7f6e3080a6aeb8ff7da5562b33fa6f151f251ed"
+  },
+  "source_reverification": {
+    "status": "SOURCE_VERIFICATION_COMPLETE",
+    "verification_attempt": 11,
+    "accepted_fact_count_before": 48,
+    "accepted_fact_count_after": 48,
+    "new_fact_accepted_count": 0,
+    "quote_mismatch_count_before": 17,
+    "quote_mismatch_count_after": 21,
+    "source_unavailable_count_before": 12,
+    "source_unavailable_count_after": 13,
+    "fact_snapshot_hash": "46b1a8ad3ab90a65c1c25c364ba3b5229d116a96682236a349d440299cd050858",
+    "accepted_lineage_roster_hash": "4b90671d45fea080dbfad3a6b02c941d84fb3f29414a8182d55179676ea54f86",
+    "query_count": 0,
+    "search_count": 0,
+    "unverified_value_promoted_to_score_graph": false
+  },
+  "saturation_after_pass_11": {
+    "research_saturation_valid": false,
+    "deterministic_research_status": "RESEARCH_SATURATION_PENDING",
+    "mandatory_question_count": 28,
+    "nonterminal_mandatory_question_count_before": 4,
+    "nonterminal_mandatory_question_count_after": 2,
+    "nonterminal_mandatory_question_ids": [
+      "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q01",
+      "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_Q01"
+    ],
+    "provider_parser_core_pending_count": 2,
+    "public_material_gap_count": 16,
+    "verifier_repair_pending_count": 14,
+    "source_linkage_incomplete_count_before": 3,
+    "source_linkage_incomplete_count_after": 2,
+    "component_entry_allowed": false,
+    "score_authority": false,
+    "stage_authority": false,
+    "saturation_receipt_hash": "74bea90554912c488d011535cd13bc051336dc4f2d4a92dd390cfdb7d00bfa66"
+  },
+  "live_per_question_dedup_proof": {
+    "status": "PASS",
+    "pass_11_question_count": 5,
+    "pass_12_question_count": 4,
+    "unchanged_question_excluded": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_Q01",
+    "aggregate_snapshot_change_did_not_force_unchanged_question_resubmit": true,
+    "pass_12_question_family_ids": [
+      "C06_HBM_MEMORY_CUSTOMER_CAPACITY_Q07",
+      "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_Q05",
+      "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_Q01",
+      "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_Q01"
+    ],
+    "target_specific_rule_used": false
+  },
+  "pass_12_dispatch": {
+    "pass_id": "PROPASS-787438355e0c6f2da764cd1e",
+    "pass_name": "PUBLIC_GAP_CLOSURE",
+    "pass_ordinal": 12,
+    "status_at_receipt": "RESEARCH_RUNNING",
+    "submit_count": 1,
+    "prompt_char_count": 16532,
+    "same_conversation": true,
+    "automatic_resubmit_count": 0
+  },
+  "code_commit_containing_question_dedup": "df2925bf7a1436a388d945dd29ce61e13a5bf5dd",
+  "receipt_payload_hash": "4f0de286b0f40cf028fdc922cfedd21a285ec8f66fa30efd8261d989bc19d4c3",
+  "next_action": "CAPTURE_EXACT_PASS12_CURRENT_TURN_RESULT_AND_CONTINUE_DETERMINISTIC_SATURATION_WITHOUT_SCORE_OR_STAGE_AUTHORITY"
+}

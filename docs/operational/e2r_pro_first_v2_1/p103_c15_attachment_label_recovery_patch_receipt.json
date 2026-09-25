@@ -1,0 +1,80 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p103_c15_attachment_label_recovery_patch_v1",
+  "recorded_at": "2026-09-25T05:02:00+09:00",
+  "status": "LOCAL_PATCH_VERIFIED_REMOTE_EXACT_HEAD_CI_PENDING",
+  "target": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "run_id": "PRORUN-ff542ef979f09bcaf7cf2545",
+    "symbol": "010950",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "packet_canonical_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df"
+  },
+  "root_cause": "A visible remove-file action button includes the attachment filename in its accessible label. The generic composer snapshot treated that action label as a second file, although there was only one visible tile.",
+  "patch": {
+    "python_and_browseruse_snapshots_ignore_explicit_attachment_action_labels": true,
+    "english_remove_delete_clear_detach_cancel_labels_supported": true,
+    "korean_remove_delete_clear_detach_cancel_labels_supported": true,
+    "symbol_archetype_or_packet_name_special_case_added": false,
+    "post_download_snapshot_reuses_allowlisted_readonly_callback": true,
+    "packet_button_same_composer_form_readonly_callback_added": true
+  },
+  "regression_behavior": {
+    "one_attachment_with_korean_remove_button_yields_one_file_signal": "PASS",
+    "two_real_attachments_remain_two_signals": "PASS",
+    "packet_button_in_same_composer_form": "PASS",
+    "packet_button_in_different_form": "FAIL_CLOSED"
+  },
+  "verification": {
+    "focused_tests": {
+      "command": "PYTHONPATH=src python -m unittest tests.test_e2r_pro_first_browseruse_extension_bridge tests.test_e2r_pro_first_browser_adapter.UnpreparedRecoveryReadOnlyGateTest -v",
+      "count": 19,
+      "failures": 0,
+      "errors": 0,
+      "status": "PASS"
+    },
+    "related_module_tests": {
+      "command": "LD_LIBRARY_PATH=/home/eorb915/.cache/e2r-playwright-libs/usr/lib/x86_64-linux-gnu PYTHONPATH=src python -m unittest tests.test_e2r_pro_first_browser_adapter tests.test_e2r_pro_first_browseruse_extension_bridge tests.test_e2r_pro_first_v2_1_fresh_orchestration -q",
+      "count": 174,
+      "failures": 0,
+      "errors": 0,
+      "status": "PASS"
+    },
+    "static_audit": {
+      "command": "PYTHONPATH=src python -m e2r.cli.audit_e2r_pro_first_v2 --repo-root .",
+      "status": "PASS",
+      "critical_count": 0,
+      "production_static_audit_hash": "4d5bcbe91d597ff3873cf0fcdd6ef62bc48cace422104b5792f59873992866c4"
+    },
+    "node_check": "PASS",
+    "python_compile": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "previous_head_ci_not_applicable_to_patch": {
+    "head_sha": "6679186fe6c279230a069e134a3fa39c5057b840",
+    "pro_pr_run_id": "36051031300",
+    "v6_pr_run_id": "36051031101",
+    "pro_push_run_id": "36051024824",
+    "observed_status": "IN_PROGRESS",
+    "reason": "These runs predate and do not contain the P103 source patch."
+  },
+  "live_browser_attempt_in_p103": false,
+  "prompt_input_count": 0,
+  "attachment_upload_count": 0,
+  "download_count": 0,
+  "submit_count": 0,
+  "capture_count": 0,
+  "source_query_count": 0,
+  "source_fetch_count": 0,
+  "new_job_or_pass_count": 0,
+  "last_known_readonly_durable_state_from_p102": {
+    "state": "USER_ATTENTION_REQUIRED",
+    "version": 26,
+    "submit_count": 0,
+    "capture_count": 0,
+    "safe_unprepared_resume": false,
+    "read_again_in_p103": false
+  },
+  "next_action": "Create a Korean commit containing the generic patch, regression tests, and P103 documentation; push to the existing PR #7 branch; wait for SUCCESS on the exact pushed head in required Pro and V6 workflows. Only then re-read the same C15 job and attempt recovery via the user's current existing logged-in BrowserUse extension session and exact claimed tab.",
+  "master_goal_complete": false
+}

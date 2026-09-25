@@ -1,0 +1,79 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_c17_r21_late_persistence_read_only_recovery_receipt_v1",
+  "status": "R21_LATE_PERSISTENCE_CONFIRMED_RESEARCH_RUNNING_NO_RESUBMIT",
+  "recorded_at": "2026-08-31T09:52:00Z",
+  "source_commit_sha": "7b076a934bcde8339812e815a91844dcd1dc5d9b",
+  "target": {
+    "symbol": "011170",
+    "company_name": "롯데케미칼",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+  },
+  "r21": {
+    "fresh_session_id": "FRESH-V2-1-C17-R21-20260831T092632Z",
+    "job_id": "PROJOB-75dd86fa437270eddc1dabb6",
+    "run_id": "PRORUN-2dfc0d974d912ad4b149c1c9",
+    "initial_pass_id": "PROPASS-e70e4c97bdaf8d1dc70dd0d3",
+    "conversation_id": "6a9548fa-5844-83e8-b426-c66f79a8dac1",
+    "submit_count": 1,
+    "capture_count": 0,
+    "job_frozen_at": "2026-08-31T09:32:19.951658Z",
+    "late_persistence_observation_id": "PROSERVERVIEW-fca95fba0739e71823736964",
+    "late_persistence_user_turn_id": "50980e11-f54b-47bc-bac1-8b62d10f884c",
+    "exact_job_marker_visible": true,
+    "exact_run_marker_visible": true,
+    "browser_state": "RESEARCH_RUNNING",
+    "browser_submit_delta": 0,
+    "automatic_resubmit_allowed": false
+  },
+  "corrected_root_cause": {
+    "observed": "the current ChatGPT Pro surface created an initially empty durable route and hydrated the exact user turn plus research progress after the two-minute persistence poll had failed",
+    "r19_late_markers_also_visible": true,
+    "input_fill_event_is_trusted": true,
+    "pointer_click_event_is_trusted": true,
+    "p43_synthetic_click_inference": "NOT_CONFIRMED_AS_ROOT_CAUSE",
+    "operational_rule": "never create another fresh canary merely because the exact user turn is absent at the early persistence poll; retain submit_count=1 and recover read-only when the turn hydrates"
+  },
+  "generic_code_repair": {
+    "boundary_default": "frozen fresh jobs remain non-recoverable",
+    "read_only_exception": "allow_frozen_submitted_recovery only when old_job_frozen_at is set and submit_count equals 1",
+    "zero_submit_frozen_job_allowed": false,
+    "followup_submit_unfrozen": false,
+    "artifact_reexport_submit_unfrozen": false,
+    "new_submit_path_added": false
+  },
+  "verification": {
+    "focused_late_persistence_and_boundary_tests": "3/3 PASS",
+    "compileall": "PASS",
+    "git_diff_check": "PASS",
+    "source_head_ci": {
+      "pro_first_run": {
+        "run_id": 33377674135,
+        "conclusion": "SUCCESS"
+      },
+      "v6_run": {
+        "run_id": 33377674162,
+        "conclusion": "SUCCESS"
+      }
+    },
+    "terminal_result": "PENDING_CURRENT_PRO_RESEARCH_COMPLETION"
+  },
+  "browser_safety": {
+    "existing_logged_in_chatgpt_tab_reused": true,
+    "browser_page_count": 1,
+    "new_window_count": 0,
+    "new_tab_count": 0,
+    "new_target_count": 0,
+    "r21_recovery_submit_delta": 0
+  },
+  "master_goal_state": {
+    "live_full_thesis_pass_count": 1,
+    "live_full_thesis_required_count": 3,
+    "c06": "PASS",
+    "c17": "R21_RESEARCH_RUNNING_LATE_PERSISTENCE_CONFIRMED",
+    "c28": "PENDING",
+    "operational_research_ready_allowed": false,
+    "pr_draft_release_allowed": false,
+    "main_merge_allowed": false
+  }
+}

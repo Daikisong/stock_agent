@@ -1,0 +1,87 @@
+{
+  "schema_version": "e2r_pro_v2_1_p10_full_thesis_tail_preflight_receipt_v1",
+  "status": "P10_IMPLEMENTATION_PREFLIGHT_PASS",
+  "recorded_at": "2026-08-26T12:30:00Z",
+  "source_base_commit": "a62e4895f43786b7e5a7945149e75c3a56200d65",
+  "branch": "feature/e2r-pro-first-browser-platform-20260822",
+  "implementation": {
+    "same_conversation_recovery_without_initial_resubmit": true,
+    "v3_delta_json_followup": true,
+    "append_only_effective_dossier_merge": true,
+    "semantic_gap_context_dedup": true,
+    "durable_verification_receipt_reuse_fixed": true,
+    "public_counter_repair_audit_routing": true,
+    "deterministic_score_stage_authority_preserved": true,
+    "receipt_atomic_fsync_write": true
+  },
+  "c06_actual_json_binding": {
+    "conversation_id": "6a8db0ad-8ed0-83e8-888e-dce26c950343",
+    "run_id": "PRORUN-683f5a5423a6e367f443c6de",
+    "research_pass_id": "PROPASS-e49762cc3ad556d6b211d92b",
+    "capture_mode": "CHATGPT_WEB_VISIBLE_CHAT_PRO_FRESH_V3",
+    "dossier_json_path": "capture/incoming/research_dossier.json",
+    "dossier_json_hash": "0e43559193138e74d69a22f1c081cca1baa02fd110fba4490b9b95e381e9d9cd",
+    "dossier_schema_version": "e2r_pro_research_dossier_v3",
+    "import_validation_status": "PASS",
+    "submit_count": 1,
+    "capture_count": 1,
+    "report_pdf_path": null
+  },
+  "actual_read_only_inspections": [
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "job_id": "PROJOB-ab48ce7e94097cf9b6846602",
+      "accepted_fact_count": 21,
+      "next_public_question_count": 25,
+      "material_repair_candidate_count": 3,
+      "browser_submit_count_delta": 0
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "job_id": "PROJOB-41ec024bdbc0c9c8d56c9d05",
+      "accepted_fact_count": 18,
+      "next_public_question_count": 21,
+      "material_repair_candidate_count": 1,
+      "browser_submit_count_delta": 0
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "job_id": "PROJOB-e3d57e985cd3a1617b717ccd",
+      "accepted_fact_count": 17,
+      "next_public_question_count": 24,
+      "material_repair_candidate_count": 3,
+      "browser_submit_count_delta": 0
+    }
+  ],
+  "verification": {
+    "focused_test_count": 72,
+    "focused_failure_count": 0,
+    "phase100_pass_count": 15,
+    "phase100_failure_count": 0,
+    "pro_first_static_critical_count": 0,
+    "pro_first_v2_static_critical_count": 0,
+    "fresh_efficiency_static_critical_count": 0,
+    "fresh_efficiency_audit_hash": "47d96d1f3b602ef0b963ce3772ffc70cbacdb655fb399aefdcf0a61fb9b87b6a",
+    "wsl_full_test_count": 7717,
+    "wsl_code_assertion_failure_count": 0,
+    "wsl_browser_dependency_error_count": 60,
+    "windows_browser_pass_count": 78,
+    "windows_posix_subprocess_environment_error_count": 1,
+    "compileall_pass": true,
+    "git_diff_check_pass": true
+  },
+  "authority": {
+    "score_authority": false,
+    "stage_authority": false,
+    "publication_withheld": true,
+    "automatic_initial_resubmit_allowed": false,
+    "hidden_chatgpt_api_used": false
+  },
+  "next_action": "PUSH_AND_WAIT_FOR_INDEPENDENT_CI_BEFORE_ACTUAL_SAME_CONVERSATION_TAIL",
+  "remaining_blockers": [
+    "ACTUAL_P10_FOLLOWUP_NOT_YET_SUBMITTED",
+    "FULL_THESIS_SATURATION_NOT_YET_PROVEN",
+    "DETERMINISTIC_SCORE_JUDGE_STAGE_NOT_YET_RUN"
+  ],
+  "receipt_hash": "51b0af2b140cffee7f753d4b8b8f6e967e38e7a7692d880debbb732e73cdc0e4"
+}

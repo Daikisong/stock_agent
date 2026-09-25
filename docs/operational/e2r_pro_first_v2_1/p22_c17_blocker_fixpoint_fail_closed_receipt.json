@@ -1,0 +1,135 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p22_c17_blocker_fixpoint_receipt_v1",
+  "status": "C17_RESEARCH_BLOCKER_FIXPOINT_PENDING",
+  "recorded_at": "2026-08-28T09:50:55Z",
+  "target_id": "011170",
+  "company_name": "롯데케미칼",
+  "as_of_date": "2026-08-23",
+  "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+  "job_id": "PROJOB-41ec024bdbc0c9c8d56c9d05",
+  "run_id": "PRORUN-b9e5878d77b712aa7a378561",
+  "conversation_id": "6a8e5f55-a7f8-83e8-bd89-82c1e4529916",
+  "pass_4_baseline": {
+    "pass_id": "PROPASS-dea9fc87fbe6c98e8987ff33",
+    "accepted_fact_count": 40,
+    "effective_fact_count": 59,
+    "effective_route_count": 98,
+    "effective_source_count": 12
+  },
+  "pass_5": {
+    "pass_id": "PROPASS-8dbaf9a5111f7e833ad1fa2b",
+    "pass_name": "PUBLIC_GAP_CLOSURE",
+    "submit_count": 1,
+    "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+    "response_hash": "4a6a53e4cc07fbd9e7d78f46ec63cdbcc4e5a6a36bbe1140fcce91f065c6a034",
+    "raw_response_hash": "1a67f7cbc8bc070ba941b75364c539a286a4f7c106dea1d3a1fdc43678312c1e",
+    "new_fact_count": 1,
+    "new_route_count": 14,
+    "accepted_fact_count": 41,
+    "effective_fact_count": 60,
+    "effective_route_count": 112,
+    "effective_source_count": 13
+  },
+  "pass_6": {
+    "pass_id": "PROPASS-e048e03952a3c592799113fe",
+    "parent_pass_id": "PROPASS-8dbaf9a5111f7e833ad1fa2b",
+    "pass_name": "PUBLIC_GAP_CLOSURE",
+    "submit_count": 1,
+    "server_persistence_confirmed": true,
+    "server_persistence_observation_id": "PROSERVERVIEW-22bbd240b22c983109e328a3",
+    "recovery_browser_submit_delta": 0,
+    "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+    "response_hash": "d3e3eddf118cb894e1c684fcfc1c1f439c68656e46237c6a89fbbbd324bd4352",
+    "raw_response_hash": "3a5305cff100a7be451e9694319284656db4d9446e5356b994f7b9260b7232c2",
+    "new_fact_count": 1,
+    "new_route_count": 12,
+    "accepted_fact_count": 42,
+    "effective_fact_count": 61,
+    "effective_route_count": 124,
+    "effective_source_count": 14,
+    "effective_dossier_hash": "8d98fa150bdc8205a0f0b872308bda7fe65c738112c4700274f103f8c0ccfbec",
+    "recovery_receipt_hash": "ffe8a1d3fd689fe1e9a58411b0462c1f6a3973b48c3dc3dadd1e1700ccc74f8e"
+  },
+  "source_verification": {
+    "status": "SOURCE_VERIFICATION_COMPLETE",
+    "verification_hash": "40b2f56c03d353fdbf6fa8b63455fc9dd82ffa0970e21f7587b4432b1626723c",
+    "candidate_fact_count": 61,
+    "accepted_fact_count": 42,
+    "accepted_current_count": 30,
+    "accepted_counter_count": 10,
+    "accepted_resolution_count": 2,
+    "historical_only_count": 17,
+    "rejected_wrong_subject_count": 1,
+    "unverified_pending_count": 1,
+    "genuine_semantic_or_source_defect_count": 2,
+    "query_count": 0,
+    "search_count": 0,
+    "full_document_fetch_count": 14,
+    "document_cache_reuse_count": 60
+  },
+  "deterministic_saturation": {
+    "receipt_hash": "aa766263865d7113c168e72d33f7beba203d45d54cd2c7f1d51b113ebfe25a1e",
+    "expected_mandatory_question_count": 26,
+    "nonterminal_mandatory_question_count": 7,
+    "provider_parser_core_pending_count": 5,
+    "public_material_gap_count": 9,
+    "source_linkage_incomplete_count": 6,
+    "verifier_repair_pending_count": 3,
+    "lifecycle_hard_break_pending_count": 0,
+    "research_saturation_valid": false,
+    "component_entry_allowed": false
+  },
+  "fixpoint_evidence": {
+    "consecutive_passes_with_same_blocker_counts": 3,
+    "pass_ids": [
+      "PROPASS-dea9fc87fbe6c98e8987ff33",
+      "PROPASS-8dbaf9a5111f7e833ad1fa2b",
+      "PROPASS-e048e03952a3c592799113fe"
+    ],
+    "accepted_fact_counts": [
+      40,
+      41,
+      42
+    ],
+    "effective_fact_counts": [
+      59,
+      60,
+      61
+    ],
+    "effective_route_counts": [
+      98,
+      112,
+      124
+    ],
+    "blocker_counts_unchanged": true,
+    "next_pass_created": false,
+    "next_pass_submit_count": 0
+  },
+  "generic_pipeline_changes": {
+    "recover_submitted_only_mode": true,
+    "verify_and_inspect_only_mode": true,
+    "saturation_blocker_identity_hash": true,
+    "fact_id_only_progress_can_reopen_same_blocker": false,
+    "symbol_or_archetype_hardcoding_added": false,
+    "local_llm_added": false,
+    "pro_score_or_stage_authority_added": false
+  },
+  "verification": {
+    "fresh_orchestration_test_count": 46,
+    "live_runtime_test_count": 31,
+    "dossier_import_test_count": 20,
+    "windows_browser_e2e_test_count": 2,
+    "focused_total_test_count": 99,
+    "focused_failure_error_count": 0,
+    "git_diff_check_pass": true
+  },
+  "terminal_authority": {
+    "score": null,
+    "stage": null,
+    "score_authority": false,
+    "stage_authority": false,
+    "publication": "WITHHELD"
+  },
+  "next_action": "CONTINUE_EXISTING_C28_FRESH_CONVERSATION_WITH_GENERIC_FIXPOINT_GUARD",
+  "receipt_hash": "1a6694305bbcd0b0c34d3583a16ec2838f0d08958b24afcc55307cf9be7d21e6"
+}

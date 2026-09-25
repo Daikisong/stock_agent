@@ -18,7 +18,6 @@ writing the normal Codex CLI response cache directly.
 from __future__ import annotations
 
 from contextlib import contextmanager
-import fcntl
 import hashlib
 import json
 import os
@@ -27,6 +26,12 @@ import tempfile
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Mapping, Sequence
+
+try:
+    import fcntl as _fcntl
+except ImportError:  # pragma: no cover - exercised by the Windows browser helper
+    _fcntl = None
+    import msvcrt as _msvcrt
 
 from e2r.research_brain.planning.provider_transport import (
     StructuredProviderRejected,
@@ -649,11 +654,29 @@ def _request_journal_lock(root: Path, request_id: str):
         0o600,
     )
     try:
-        fcntl.flock(descriptor, fcntl.LOCK_EX)
+        _lock_descriptor(descriptor)
         yield
     finally:
-        fcntl.flock(descriptor, fcntl.LOCK_UN)
+        _unlock_descriptor(descriptor)
         os.close(descriptor)
+
+
+def _lock_descriptor(descriptor: int) -> None:
+    if _fcntl is not None:
+        _fcntl.flock(descriptor, _fcntl.LOCK_EX)
+        return
+    if os.fstat(descriptor).st_size == 0:
+        os.write(descriptor, b"\0")
+    os.lseek(descriptor, 0, os.SEEK_SET)
+    _msvcrt.locking(descriptor, _msvcrt.LK_LOCK, 1)
+
+
+def _unlock_descriptor(descriptor: int) -> None:
+    if _fcntl is not None:
+        _fcntl.flock(descriptor, _fcntl.LOCK_UN)
+        return
+    os.lseek(descriptor, 0, os.SEEK_SET)
+    _msvcrt.locking(descriptor, _msvcrt.LK_UNLCK, 1)
 
 
 def _read_json_object(path: Path) -> Mapping[str, Any]:

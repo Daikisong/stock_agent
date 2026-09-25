@@ -1,0 +1,96 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_c17_r8_operational_efficiency_failure_receipt_v1",
+  "phase": "P28_C17_R8_OPERATIONAL_EFFICIENCY_FAILURE",
+  "status": "FRESH_SESSION_DIAGNOSTIC_ONLY",
+  "target_id": "011170",
+  "as_of_date": "2026-08-23",
+  "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+  "fresh_session_id": "FRESH-V2-1-C17-R8-20260829T091134Z",
+  "job_id": "PROJOB-22fdf2fdb1c458be082f3cbd",
+  "run_id": "PRORUN-56ff66fa86b4ab918f0d5e55",
+  "conversation_id": "6a92a26e-bee8-83e8-a424-bbd9eb59ff79",
+  "fresh_runtime_id": "20260829T091134Z",
+  "initial_efficiency_receipt": {
+    "status": "PASS",
+    "mandatory_question_count": 26,
+    "mandatory_question_covered_count": 26,
+    "initial_material_candidate_count": 6,
+    "post_preflight_accepted_material_count": 6,
+    "post_preflight_acceptance_ratio": 1.0,
+    "initial_question_statuses": {
+      "PUBLIC_SEARCHABLE": 16,
+      "PARSER_PENDING": 6,
+      "NOT_APPLICABLE_WITH_REASON": 3,
+      "SUPPORTED_NON_SCORING": 1
+    },
+    "diagnosis": "question row presence was counted as coverage even though 22 of 26 mandatory questions were nonterminal"
+  },
+  "full_thesis_tail": {
+    "research_pass_count": 18,
+    "complete_pass_count": 16,
+    "failed_hard_pass_count": 2,
+    "initial_pass_count": 1,
+    "public_gap_pass_count": 11,
+    "verifier_repair_pass_count": 5,
+    "saturation_audit_pass_count": 1,
+    "accepted_fact_count": 44,
+    "nonterminal_mandatory_question_count": 3,
+    "public_material_gap_count": 6,
+    "verifier_repair_pending_count": 2,
+    "provider_parser_core_pending_count": 3,
+    "source_linkage_incomplete_count": 3,
+    "score_valid": false,
+    "score_receipt_present": false,
+    "stagecourt_receipt_present": false
+  },
+  "operational_efficiency_gate": {
+    "status": "OPERATIONAL_EFFICIENCY_GATE_FAILED",
+    "allowed_public_gap_counter_pass_count": 1,
+    "observed_public_gap_counter_pass_count": 11,
+    "old_job_frozen": true,
+    "new_conversation_required": true,
+    "automatic_resubmit_allowed": false,
+    "publication_withheld": true
+  },
+  "generic_repairs": {
+    "same_tab_server_persistence_audit": true,
+    "duplicate_chatgpt_tab_creation_removed": true,
+    "atomic_user_turn_persistence_scan": true,
+    "exact_expected_pass_completion_binding": true,
+    "stale_prior_pass_capture_blocked": true,
+    "failed_hard_pass_excluded_from_active_planner": true,
+    "initial_source_saturation_gate_added": true,
+    "fresh_operational_followup_budget_enforced": true,
+    "ticker_or_archetype_query_hardcoding_added": false
+  },
+  "focused_test_runs": [
+    {
+      "scope": "browser adapter, completion capture, multi-pass",
+      "tests": 88,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "scope": "same-tab atomic persistence and multi-pass",
+      "tests": 60,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "scope": "all-archetype initial prompt and fresh orchestration",
+      "tests": 68,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "artifact_sha256": {
+    "fresh_v3_full_thesis_receipt": "733de7901e693c8db56dc008080eea080e6717b9f8de3005d4616e6138520c96",
+    "fresh_efficiency_failure_receipt": "ac7b745e9be28d79d9c30d3699b59e3e8db31362d61b72b425c64b0903ce3b45",
+    "pass18_visible_failure_receipt": "10f5d8d09e8b25ada9fd2981201d9297fb65d54aa7479beb8ce6045bc2675288",
+    "research_saturation_receipt": "b902444a5a035a9104ab80f91a992e319460ec5c2fc65f636a76f76622af2afc"
+  },
+  "runtime_artifacts_tracked": false,
+  "score_authority": false,
+  "stage_authority": false,
+  "next_action": "start C17 R9 as a blind fresh run in a new ChatGPT conversation inside the existing browser tab"
+}

@@ -1,0 +1,12 @@
+# C28 독립 원문 조사 보고서
+
+[[E2R_PRO_RUN_ID:PRORUN-282828282828282828282828]]
+[[E2R_PRO_JOB_ID:PROJOB-282828282828282828282828]]
+
+리텐션소프트의 정의된 ARR 변화와 실제 고객 갱신을 확인했다. 제품 기능 소개 자료는 사실로 보존하되, 계약 유지나 매출 가시성의 점수 근거로 승격하지 않는다.
+
+E2R_RESEARCH_DOSSIER_JSON_BEGIN
+```json
+{{RESEARCH_DOSSIER_JSON}}
+```
+E2R_RESEARCH_DOSSIER_JSON_END

@@ -206,6 +206,77 @@ class BusinessMechanismScopeTests(unittest.TestCase):
             ).scope_match
         )
 
+    def test_explicit_corporate_valuation_scope_uses_closed_enum_policy(self) -> None:
+        contracts = load_mechanism_scope_contracts(
+            self.ROOT / "configs/e2r_archetype_mechanism_scopes_v1.json"
+        )
+        scope = BusinessMechanismScope(
+            issuer_id="SYNTHETIC-TARGET",
+            business_segment="CORPORATE_GENERIC",
+            product_family="CORPORATE_GENERIC",
+            technology_family="CORPORATE_GENERIC",
+            customer_or_counterparty="",
+            transaction_type="VALUATION_ANALYSIS",
+            economic_mechanism="VALUATION_EARNINGS_BRIDGE",
+            geography="GLOBAL",
+            effective_period="2026Q2",
+            scope_confidence=0.95,
+        )
+        validator = MechanismScopeValidator()
+        self.assertTrue(
+            validator.validate(
+                scope=scope,
+                contract=contracts["C06_HBM_MEMORY_CUSTOMER_CAPACITY"],
+                component_id="valuation_rerating",
+            ).scope_match
+        )
+        self.assertFalse(
+            validator.validate(
+                scope=scope,
+                contract=contracts["C06_HBM_MEMORY_CUSTOMER_CAPACITY"],
+                component_id="bottleneck_pricing",
+            ).scope_match
+        )
+
+    def test_generic_information_does_not_become_valuation_or_market_credit(self) -> None:
+        contract = load_mechanism_scope_contracts(
+            self.ROOT / "configs/e2r_archetype_mechanism_scopes_v1.json"
+        )["C06_HBM_MEMORY_CUSTOMER_CAPACITY"]
+        scope = BusinessMechanismScope(
+            issuer_id="SYNTHETIC-TARGET",
+            business_segment="CORPORATE_GENERIC",
+            product_family="CORPORATE_GENERIC",
+            technology_family="CORPORATE_GENERIC",
+            customer_or_counterparty="",
+            transaction_type="GENERIC_INFORMATION",
+            economic_mechanism="INFORMATION_ONLY",
+            geography="GLOBAL",
+            effective_period="2026Q2",
+            scope_confidence=0.95,
+        )
+        validator = MechanismScopeValidator()
+        self.assertTrue(
+            validator.validate(
+                scope=scope,
+                contract=contract,
+                component_id="information_confidence",
+            ).scope_match
+        )
+        self.assertFalse(
+            validator.validate(
+                scope=scope,
+                contract=contract,
+                component_id="market_mispricing",
+            ).scope_match
+        )
+        self.assertFalse(
+            validator.validate(
+                scope=scope,
+                contract=contract,
+                component_id="valuation_rerating",
+            ).scope_match
+        )
+
     def test_operational_scope_audit_recomputes_from_frozen_leaves(self) -> None:
         audit = audit_business_mechanism_scope(repo_root=self.ROOT)
         artifact = json.loads(

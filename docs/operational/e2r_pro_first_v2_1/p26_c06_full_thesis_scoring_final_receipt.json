@@ -1,0 +1,95 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_c06_full_thesis_scoring_final_receipt_v1",
+  "phase": "P26_C06_FULL_THESIS_SCORING_FINAL",
+  "status": "PASS",
+  "target_id": "000660",
+  "as_of_date": "2026-08-23",
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "job_id": "PROJOB-287556cc59c10f124d615c4d",
+  "run_id": "PRORUN-b412396d383c92aaf08e9837",
+  "conversation_id": "6a91f0dd-4fa4-83ee-b2b9-434f39437b07",
+  "fresh_runtime_id": "20260828T203034Z",
+  "job_status": "FINAL",
+  "research_saturation": {
+    "status": "FULL_THESIS_READY",
+    "mandatory_question_count": 28,
+    "nonterminal_mandatory_question_count": 0,
+    "public_material_gap_count": 0,
+    "verifier_repair_pending_count": 0,
+    "provider_parser_core_pending_count": 0,
+    "lifecycle_hard_break_pending_count": 0,
+    "source_linkage_incomplete_count": 0,
+    "research_saturation_valid": true,
+    "component_entry_allowed": true,
+    "receipt_hash": "34416085416b25dfefcc09b1891dfe0740063d45833bea7a229a41664a0d24e7"
+  },
+  "source_verification": {
+    "candidate_fact_count": 69,
+    "terminal_fact_count": 69,
+    "compiled_evidence_fact_count": 56,
+    "current_fact_count": 46,
+    "counter_fact_count": 6,
+    "resolution_fact_count": 4,
+    "historical_only_count": 12,
+    "superseded_count": 1,
+    "unverified_pending_count": 0,
+    "verification_hash": "e1f3dbdf202360ac828d49860e5af6389c4b646581d076709fc225b6f5785293",
+    "effective_dossier_hash": "8540c070c1e79cfedd465bb16d3605f9b308921a2a474e3568941036a0e8244e"
+  },
+  "scoring": {
+    "component_memo_count": 7,
+    "judge_decision_count": 21,
+    "validated_impact_count": 19,
+    "score_valid": true,
+    "full_e2r_score": 23.275,
+    "provisional_score_lower": 23.275,
+    "provisional_score_upper": 23.275,
+    "component_score_vector": {
+      "eps_fcf_explosion": 7.0,
+      "earnings_visibility": 8.65,
+      "bottleneck_pricing": 1.5,
+      "market_mispricing": 1.0,
+      "valuation_rerating": 2.0,
+      "capital_allocation": 2.125,
+      "information_confidence": 1.0
+    },
+    "scorer_critical_count": 0,
+    "canonical_stage": "0",
+    "decision_status": "FINAL",
+    "stagecourt_class": "AtomicStageCourtV2",
+    "new_score_engine_count": 0,
+    "new_stage_engine_count": 0
+  },
+  "transport_accounting": {
+    "recovery_browser_submit_delta": 0,
+    "scoring_query_count": 0,
+    "scoring_fetch_count": 0,
+    "hidden_chatgpt_api_used": false
+  },
+  "component_bridge_repair": {
+    "old_semantics": "e2r_pro_component_bridge_v1_legacy",
+    "new_semantics": "e2r_pro_component_bridge_v2_support_alias_and_context_retention",
+    "v3_support_fact_ids_recognized": true,
+    "unassigned_eligible_facts_retained_as_context": true,
+    "old_pre_score_artifacts_archived": true,
+    "old_score_receipt_present": false,
+    "old_stagecourt_receipt_present": false,
+    "old_component_memos_hash": "bdf265586560b67e7cf50a608e6768a9cf863f01db6f1e8fa2ced39e1ffd9699"
+  },
+  "artifact_sha256": {
+    "fresh_v3_full_thesis_receipt": "abed909067a1b863be8fecd72c5ae10200db9dcb6440b830a38f54943e757e52",
+    "score_receipt": "afd46d7af8eabe5351742b7e8e5df6153a137af4787064b08b8abead3b14df4c",
+    "stagecourt_receipt": "c407414391bf42f062a7028b8f605c99333698571da2c76bd4cb74f9d5d64b38",
+    "component_memos": "4789f54579f0884d4bc6f3be446067208133e1270f2b83532b7e669bdffc2efc",
+    "judge_decisions": "e702eba700e59b82f744e3fb96c56eed58508850788de859e21177a45d89caa6",
+    "validated_impacts": "ebf8ebd729a7df1a9b41f021d3f58aa6cb0727c39bf2fb8195ed52d6f4beb9ed"
+  },
+  "runtime_artifacts_tracked": false,
+  "score_authority": false,
+  "stage_authority": false,
+  "remaining_live_canaries": [
+    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
+  ],
+  "operational_research_ready": false
+}

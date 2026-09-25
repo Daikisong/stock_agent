@@ -1142,22 +1142,22 @@
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
         "ELIG-8266c822fbeb28cd8c5abdc9",
-        "ELIG-48534f33af46f9217888ff37"
+        "ELIG-6424bc864ea13842a176150e"
       ],
       "compatibility_adapter": true,
       "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
-        "ELIG-8266c822fbeb28cd8c5abdc9"
+        "ELIG-8266c822fbeb28cd8c5abdc9",
+        "ELIG-6424bc864ea13842a176150e"
       ],
       "failure_class": "SOURCE_EXHAUSTED",
       "final_stage_authority": false,
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
-      "non_scoring_claim_ids": [
-        "CLM-e0a7f204219f352da273"
-      ],
+      "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [
-        "CLM-47103baa9b99062ef88a"
+        "CLM-47103baa9b99062ef88a",
+        "CLM-e0a7f204219f352da273"
       ],
       "production_score_authority": false,
       "question_contract_hash": "90ecd06662c06263d60c45df2c9de63eb63c27825a78fe98a8c2de61a1b384d2",
@@ -1172,7 +1172,8 @@
       "source_task_id": "DST-efed8905b729bd8d8239d29b",
       "status": "PARTIALLY_SUPPORTED_SCORING",
       "supporting_claim_ids": [
-        "CLM-47103baa9b99062ef88a"
+        "CLM-47103baa9b99062ef88a",
+        "CLM-e0a7f204219f352da273"
       ],
       "target_id": "005930",
       "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
@@ -1273,8 +1274,8 @@
         "ELIG-75653b0326ee5de4981fe984",
         "ELIG-dbd703b6eb0f311ea88ceb2a",
         "ELIG-8a850cecf502758443000ccd",
-        "ELIG-a0a78066f70e1023aac373f0",
-        "ELIG-0fb6404865a7a6c38d4a63cd",
+        "ELIG-f6804ea31e4662e47281559b",
+        "ELIG-1e26b01276e544ca29c1fddf",
         "ELIG-3bbf7f78526059707c56f30a"
       ],
       "compatibility_adapter": true,
@@ -1347,8 +1348,8 @@
       "candidate_eligibility_decision_ids": [
         "ELIG-7a4c58f4c7d6d8b06ec00dec",
         "ELIG-d3852c630790065f99f18a79",
-        "ELIG-a0a78066f70e1023aac373f0",
-        "ELIG-0fb6404865a7a6c38d4a63cd",
+        "ELIG-f6804ea31e4662e47281559b",
+        "ELIG-1e26b01276e544ca29c1fddf",
         "ELIG-78879650ab628278387d33e5"
       ],
       "compatibility_adapter": true,
@@ -1401,7 +1402,7 @@
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
         "ELIG-2fce4ee33a7d391b466d8a2e",
-        "ELIG-5405821d8ef9510565c9cf31"
+        "ELIG-0244f9a8a32bc2e4e8ee3743"
       ],
       "compatibility_adapter": true,
       "component_completion_authority": false,
@@ -1451,9 +1452,9 @@
       "candidate_eligibility_decision_ids": [
         "ELIG-7a4c58f4c7d6d8b06ec00dec",
         "ELIG-d3852c630790065f99f18a79",
-        "ELIG-5405821d8ef9510565c9cf31",
-        "ELIG-a0a78066f70e1023aac373f0",
-        "ELIG-0fb6404865a7a6c38d4a63cd",
+        "ELIG-0244f9a8a32bc2e4e8ee3743",
+        "ELIG-f6804ea31e4662e47281559b",
+        "ELIG-1e26b01276e544ca29c1fddf",
         "ELIG-78879650ab628278387d33e5"
       ],
       "compatibility_adapter": true,
@@ -1505,7 +1506,7 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
-        "ELIG-5405821d8ef9510565c9cf31"
+        "ELIG-0244f9a8a32bc2e4e8ee3743"
       ],
       "compatibility_adapter": true,
       "component_completion_authority": false,
@@ -1664,22 +1665,22 @@
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
         "ELIG-8266c822fbeb28cd8c5abdc9",
-        "ELIG-48534f33af46f9217888ff37"
+        "ELIG-6424bc864ea13842a176150e"
       ],
       "compatibility_adapter": true,
       "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
-        "ELIG-8266c822fbeb28cd8c5abdc9"
+        "ELIG-8266c822fbeb28cd8c5abdc9",
+        "ELIG-6424bc864ea13842a176150e"
       ],
       "failure_class": null,
       "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
-      "non_scoring_claim_ids": [
-        "CLM-e0a7f204219f352da273"
-      ],
+      "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [
-        "CLM-47103baa9b99062ef88a"
+        "CLM-47103baa9b99062ef88a",
+        "CLM-e0a7f204219f352da273"
       ],
       "production_score_authority": false,
       "question_contract_hash": "4a313a74e5f00297821ed8945c6c4f09ad038cfd7d6866a4a0e0e3a5591aa040",
@@ -1688,7 +1689,8 @@
       "source_task_id": "DST-e158f322d8946ecab0f8bc9b",
       "status": "PARTIALLY_SUPPORTED_SCORING",
       "supporting_claim_ids": [
-        "CLM-47103baa9b99062ef88a"
+        "CLM-47103baa9b99062ef88a",
+        "CLM-e0a7f204219f352da273"
       ],
       "target_id": "005930",
       "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
@@ -1793,7 +1795,7 @@
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
         "ELIG-01809387c78c08c1993ab405",
-        "ELIG-3ce44bc98745eccf945e1acb"
+        "ELIG-bd0f4888cb0236ecd05a5fb4"
       ],
       "compatibility_adapter": true,
       "component_completion_authority": false,
@@ -2008,8 +2010,8 @@
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
         "ELIG-88eb7e49838f035048d43687",
-        "ELIG-e8efeeba74530e9fcfe1c5a0",
-        "ELIG-f169dee905259f29aca81250"
+        "ELIG-73a7cbef6c870ab304ce39a3",
+        "ELIG-fd7ec3c93d45da202ea8e8e8"
       ],
       "compatibility_adapter": true,
       "component_completion_authority": false,
@@ -2067,8 +2069,8 @@
         "ELIG-294a8582c9b1ac0bc1361d44",
         "ELIG-88eb7e49838f035048d43687",
         "ELIG-f02b97d999ef35e8d998a473",
-        "ELIG-e8efeeba74530e9fcfe1c5a0",
-        "ELIG-f169dee905259f29aca81250",
+        "ELIG-73a7cbef6c870ab304ce39a3",
+        "ELIG-fd7ec3c93d45da202ea8e8e8",
         "ELIG-23e091c3726567e206929a3d"
       ],
       "compatibility_adapter": true,
@@ -2125,32 +2127,37 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
+        "ELIG-6bac85d6cfbe2062e89e8c10",
         "ELIG-88eb7e49838f035048d43687",
-        "ELIG-e8efeeba74530e9fcfe1c5a0",
-        "ELIG-e97f40918f6adf7a353c2193",
-        "ELIG-f169dee905259f29aca81250"
+        "ELIG-73a7cbef6c870ab304ce39a3",
+        "ELIG-fd7ec3c93d45da202ea8e8e8"
       ],
       "compatibility_adapter": true,
       "component_completion_authority": false,
       "counter_claim_ids": [],
-      "eligibility_decision_ids": [],
+      "eligibility_decision_ids": [
+        "ELIG-6bac85d6cfbe2062e89e8c10"
+      ],
       "failure_class": null,
       "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-15ee8897fe8ae2155f25",
         "CLM-fcc98ec139169a04e7ae",
-        "CLM-53ae6758183d6993b268",
         "CLM-b0012c7f76d639aed2da"
       ],
-      "partial_supporting_claim_ids": [],
+      "partial_supporting_claim_ids": [
+        "CLM-53ae6758183d6993b268"
+      ],
       "production_score_authority": false,
       "question_contract_hash": "6b63ecec211aea06ad5b38fdff6809634b688d04febda9385748b1a038195ebf",
       "question_family_id": "margin_fcf_conversion",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-b6ea859526c1fabd382754a9",
-      "status": "SUPPORTED_NON_SCORING",
-      "supporting_claim_ids": [],
+      "status": "PARTIALLY_SUPPORTED_SCORING",
+      "supporting_claim_ids": [
+        "CLM-53ae6758183d6993b268"
+      ],
       "target_id": "000660",
       "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
@@ -2284,7 +2291,7 @@
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
         "ELIG-01809387c78c08c1993ab405",
-        "ELIG-3ce44bc98745eccf945e1acb"
+        "ELIG-bd0f4888cb0236ecd05a5fb4"
       ],
       "compatibility_adapter": true,
       "component_completion_authority": false,
@@ -2356,8 +2363,8 @@
   "status": "QUESTION_IMPACT_CONTRACT_PASS",
   "status_counts": {
     "EVALUATED_ABSENT": 10,
-    "PARTIALLY_SUPPORTED_SCORING": 9,
-    "SUPPORTED_NON_SCORING": 5,
+    "PARTIALLY_SUPPORTED_SCORING": 10,
+    "SUPPORTED_NON_SCORING": 4,
     "SUPPORTED_SCORING": 2
   }
 }

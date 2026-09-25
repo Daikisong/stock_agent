@@ -1,0 +1,62 @@
+{
+  "schema_version": "e2r_pro_first_v2_multi_pass_orchestration_audit_v1",
+  "phase": "P4",
+  "status": "PASS",
+  "approval_scope": {
+    "initial_user_approval_required": true,
+    "same_target_required": true,
+    "same_as_of_date_required": true,
+    "same_primary_contract_roster_required": true,
+    "same_conversation_required": true,
+    "new_private_account_requires_new_approval": true,
+    "new_user_judgment_requires_new_approval": true,
+    "allowed_bounded_followups": [
+      "PUBLIC_GAP_CLOSURE",
+      "COUNTER_SUPERSESSION",
+      "VERIFIER_REPAIR",
+      "SATURATION_AUDIT"
+    ]
+  },
+  "exactly_once": {
+    "initial_job_submit_count_domain": [0, 1],
+    "followup_pass_submit_count_domain": [0, 1],
+    "database_claim_before_dom_action": true,
+    "guarded_dom_send_click_path_count": 1,
+    "automatic_resubmit_after_uncertain_click": false
+  },
+  "lineage": {
+    "prompt_hash_persisted": true,
+    "response_hash_persisted": true,
+    "parent_pass_id_persisted": true,
+    "conversation_id_persisted": true,
+    "approval_scope_id_persisted": true
+  },
+  "transport_limit_semantics": {
+    "research_status": "TRANSPORT_PENDING",
+    "score_valid": false,
+    "publication_withheld": true
+  },
+  "stable_gap_reopen": {
+    "first_reopen_allowed": true,
+    "second_reopen_allowed": true,
+    "third_reopen": "HARD_FAIL",
+    "supervisor_wording_changes_identity": false
+  },
+  "verification": {
+    "focused_multi_pass_tests": 15,
+    "combined_regression_tests": 78,
+    "existing_browser_dom_e2e_tests": 41,
+    "all_pro_first_tests": 237,
+    "failures": 0,
+    "errors": 0,
+    "static_audit_critical": 0,
+    "compileall": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "authority": {
+    "pro_score_authority": false,
+    "pro_stage_authority": false,
+    "full_thesis_publication_authorized": false
+  },
+  "remaining_phases": ["P5", "P6", "P7", "P8", "P9", "P10"]
+}

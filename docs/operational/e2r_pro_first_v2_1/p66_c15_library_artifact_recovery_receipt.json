@@ -1,0 +1,96 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_library_artifact_recovery_receipt_v1",
+  "recorded_at_utc": "2026-09-23T20:22:49Z",
+  "artifact_observed_at_utc": "2026-09-23T20:14:33Z",
+  "operation": "RECOVER_EXISTING_LIBRARY_JSON_WITHOUT_NEW_PRO_SUBMIT",
+  "browser": {
+    "backend": "BrowserUse extension",
+    "user_tab_count": 1,
+    "exact_claimed_tab_used": true,
+    "new_window_or_profile_created": false,
+    "tab_id_or_account_identifier_recorded": false
+  },
+  "download": {
+    "filename": "S-OIL_010950_E2R_ResearchDossierV3_PROJOB-04140b7ffd8accef505deeda.json",
+    "completed": true,
+    "available_in_user_downloads": true,
+    "byte_count": 180794,
+    "sha256": "332c4be02d598f143567ec9366904e5e4bf4eb9c524ba9a2fa6baf20003a78e5",
+    "post_download_tool_error": "globalThis.e2rDownload.suggestedFilename is not a function",
+    "retried_download": false
+  },
+  "artifact_identity": {
+    "schema_version": "e2r_pro_research_dossier_v3",
+    "job_id": "PROJOB-04140b7ffd8accef505deeda",
+    "run_id": "PRORUN-87c15cd5bef1e1723bf19129",
+    "pass_id": "PROPASS-64ef728f2ff790e7fce6ae95",
+    "conversation_id": "PENDING_NEW_CONVERSATION",
+    "target_id": "010950",
+    "company_name": "S-Oil",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "raw_research_status": "NEEDS_PUBLIC_GAP_CLOSURE"
+  },
+  "existing_parser_result": {
+    "parser_source": "DOWNLOADED_JSON",
+    "input_sha256_equals_output_sha256": true,
+    "material_fact_count": 16,
+    "counterfact_count": 3,
+    "resolution_fact_count": 3,
+    "total_fact_object_count": 22,
+    "question_family_count": 27,
+    "source_document_count": 8,
+    "source_lineage_count": 8,
+    "search_route_count": 62,
+    "unresolved_gap_count": 10,
+    "normalized_deterministic_research_status": "PROVIDER_PENDING"
+  },
+  "structural_validation": {
+    "result": "PASS_STRUCTURAL_ONLY_UNBOUND",
+    "conversation_id_is_placeholder": true,
+    "source_verification_performed": false,
+    "capture_bound_import_performed": false,
+    "canary_pass": false
+  },
+  "existing_job_store_state": {
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 8,
+    "submit_count": 1,
+    "capture_count": 0,
+    "conversation_id": null,
+    "capture_receipt_exists": false,
+    "normalized_import_exists": false,
+    "dossier_import_record_exists": false,
+    "last_error_class": "RuntimeError",
+    "server_persistence_observation_id": "PROSERVERVIEW-4d0c23c883a121f47107d279",
+    "missing_initial_user_turn_markers": [
+      "[[E2R_PRO_JOB_ID:PROJOB-04140b7ffd8accef505deeda]]",
+      "[[E2R_PRO_RUN_ID:PRORUN-87c15cd5bef1e1723bf19129]]"
+    ]
+  },
+  "active_r6_state": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "status": "PACKET_READY",
+    "submit_count": 0,
+    "capture_count": 0,
+    "modified_by_this_recovery": false
+  },
+  "this_turn": {
+    "prompt_input_count": 0,
+    "upload_count": 0,
+    "submit_count": 0,
+    "source_query_count": 0,
+    "source_fetch_count": 0,
+    "score_or_stage_change": false,
+    "last_screenshot_model_label": "GPT-6 Sol Light",
+    "composer_empty": true
+  },
+  "prior_p65_head_ci": {
+    "head_sha": "59c5691b8c69e5d5e908a5a04742fbfbbc2c09ee",
+    "pro_first_push_run": "https://github.com/Daikisong/stock_agent/actions/runs/35912990099",
+    "pro_first_pr_run": "https://github.com/Daikisong/stock_agent/actions/runs/35912995141",
+    "v6_pr_run": "https://github.com/Daikisong/stock_agent/actions/runs/35912995167",
+    "required_jobs_conclusion": "success"
+  },
+  "next_gate": "Recover the actual historical conversation identity from the same authenticated BrowserUse session, or implement an explicit auditable Library-artifact recovery path; do not fabricate capture identity or count this report as a canary pass."
+}
