@@ -74,7 +74,18 @@ def issuer_consolidated_actual_scope_match(
     contract = ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT
     return bool(
         component_id == contract.allowed_component_id
-        and scope.business_segment == contract.scope_business_segment
+        and _issuer_consolidated_actual_scope_identity_match(scope)
+    )
+
+
+def _issuer_consolidated_actual_scope_identity_match(
+    scope: "BusinessMechanismScope",
+) -> bool:
+    """Recognize the closed consolidated-actual tuple before component routing."""
+
+    contract = ISSUER_CONSOLIDATED_ACTUAL_SCOPE_CONTRACT
+    return bool(
+        scope.business_segment == contract.scope_business_segment
         and scope.product_family == contract.scope_product_family
         and scope.technology_family == contract.scope_technology_family
         and (scope.transaction_type, scope.economic_mechanism)
@@ -83,6 +94,50 @@ def issuer_consolidated_actual_scope_match(
             for _, transaction_type, economic_mechanism
             in contract.metric_scope_rows
         }
+    )
+
+
+def issuer_corporate_component_scope_match(
+    *, scope: "BusinessMechanismScope", component_id: str
+) -> bool:
+    """Validate corporate facts from closed scope enums, never prose tokens."""
+
+    allowed_mechanisms_by_component = {
+        "capital_allocation": {
+            "SUPPLY_RESPONSE",
+            "REVENUE_CONVERSION",
+            "RISK_COUNTER",
+            "INFORMATION_ONLY",
+            "VALUATION_EARNINGS_BRIDGE",
+        },
+        "market_mispricing": {
+            "VALUATION_EARNINGS_BRIDGE",
+            "MARKET_EXPECTATION_GAP",
+            "RISK_COUNTER",
+        },
+        "valuation_rerating": {
+            "VALUATION_EARNINGS_BRIDGE",
+            "MARKET_EXPECTATION_GAP",
+            "RISK_COUNTER",
+        },
+        # Information confidence can use any contract-recognized corporate
+        # mechanism; the archetype config still controls whether this
+        # component is enabled at all.
+        "information_confidence": None,
+    }
+    return bool(
+        scope.business_segment == "CORPORATE_GENERIC"
+        and scope.product_family == "CORPORATE_GENERIC"
+        and scope.technology_family == "CORPORATE_GENERIC"
+        and (
+            # Preserve the pre-existing generic-information rule regardless
+            # of the upstream transaction label.  The component still must be
+            # explicitly enabled by its archetype contract.
+            allowed_mechanisms_by_component.get(component_id) is None
+            and component_id in allowed_mechanisms_by_component
+            or scope.economic_mechanism
+            in (allowed_mechanisms_by_component.get(component_id) or set())
+        )
     )
 
 
@@ -145,11 +200,12 @@ class MechanismScopeValidator:
         elif scope.product_family in contract.forbidden_product_families:
             reason = "WRONG_PRODUCT_FAMILY"
         elif scope.business_segment == "CORPORATE_GENERIC":
-            if issuer_consolidated_actual_scope_match(
-                scope=scope,
-                component_id=component_id,
-            ):
-                reason = ""
+            if _issuer_consolidated_actual_scope_identity_match(scope):
+                if not issuer_consolidated_actual_scope_match(
+                    scope=scope,
+                    component_id=component_id,
+                ):
+                    reason = "ISSUER_CONSOLIDATED_ACTUAL_COMPONENT_NOT_ALLOWED"
             elif (
                 scope.product_family != "CORPORATE_GENERIC"
                 or scope.technology_family != "CORPORATE_GENERIC"
@@ -157,7 +213,10 @@ class MechanismScopeValidator:
                 reason = "GENERIC_COMPANY_FACT_SCOPE_COORDINATES_INVALID"
             elif component_id not in contract.generic_company_allowed_components:
                 reason = "GENERIC_COMPANY_FACT_COMPONENT_NOT_ALLOWED"
-            elif scope.economic_mechanism != "INFORMATION_ONLY":
+            elif not issuer_corporate_component_scope_match(
+                scope=scope,
+                component_id=component_id,
+            ):
                 reason = "GENERIC_COMPANY_FACT_ARCHETYPE_LINK_MISSING"
         elif scope.business_segment not in contract.allowed_business_segments:
             reason = "BUSINESS_SEGMENT_NOT_ALLOWED"

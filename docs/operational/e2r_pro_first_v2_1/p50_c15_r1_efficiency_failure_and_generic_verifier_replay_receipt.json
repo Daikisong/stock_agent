@@ -1,0 +1,145 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_c15_r1_efficiency_failure_and_generic_verifier_replay_receipt_v1",
+  "status": "C15_R1_DIAGNOSTIC_ONLY_GENERIC_VERIFIER_REPLAY_PASS",
+  "recorded_at": "2026-09-01T01:24:09Z",
+  "source_parent_sha": "02fcd315d317be2d1b14828feae25a9a9a181f3a",
+  "r1": {
+    "fresh_session_id": "FRESH-V2-1-C15-R1-20260831T235359Z",
+    "job_id": "PROJOB-af3dbc0abc4082ab7560f0a1",
+    "run_id": "PRORUN-8a0ccc493749e17fadf96b17",
+    "conversation_id": "6a96143d-9838-83e8-90f7-ba8c4cf2019b",
+    "initial_pass_id": "PROPASS-064adf8ca5c29b889aa84f7d",
+    "target_id": "010950",
+    "company_name": "S-Oil",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "runtime_root": "C:\\Users\\eorb9\\AppData\\Local\\E2R\\ProFirstRuntime\\fresh_v2_1\\20260831T235359Z"
+  },
+  "transport": {
+    "submit_count": 1,
+    "browser_submit_delta_during_recovery": 0,
+    "server_persistence_recovered_without_submit": true,
+    "terminal_stable_observations": 3,
+    "capture_source": "DOWNLOAD_JSON",
+    "captured_dossier_hash": "aa86b6afb395514f920ce6238643b6b1e9630d0c6301787ba8e5f64a3b1c8546",
+    "new_browser_window_count": 0,
+    "new_browser_tab_count": 0,
+    "new_browser_target_count": 0
+  },
+  "original_efficiency_failure": {
+    "status": "FAIL",
+    "verdict": "OPERATIONAL_EFFICIENCY_GATE_FAILED",
+    "source_document_count": 13,
+    "material_candidate_count": 34,
+    "accepted_material_count": 23,
+    "post_preflight_acceptance_ratio": 0.676471,
+    "mandatory_question_covered": "27/27",
+    "genuine_semantic_repair_candidate_count": 10,
+    "genuine_semantic_repair_candidate_limit": 5,
+    "initial_prompt_output_defect_count": 1,
+    "failure_reasons": [
+      "INITIAL_PROMPT_OUTPUT_DEFECT",
+      "INITIAL_ACCEPTANCE_RATIO_BELOW_80_PERCENT",
+      "GENUINE_SEMANTIC_REPAIR_ROSTER_TOO_LARGE"
+    ],
+    "initial_efficiency_receipt_hash": "4c7e91df01070b11f178ccd63ab41a561e0a41f13b662a3635e150a83bc47abf",
+    "failure_receipt_hash": "3f64fc7d3844cb1f4f41648340e62321bd786227d102cca8514b32d9c4149ecb",
+    "diagnostic_only": true,
+    "new_conversation_required": true,
+    "score_authority": false,
+    "stage_authority": false
+  },
+  "root_causes": [
+    {
+      "class": "RELATED_NEWS_PUBLICATION_DATE_FALSE_POSITIVE",
+      "before": "current article publication was maxed with body latest-news card dates",
+      "generic_fix": "accept publication meta only from document head or selected primary article"
+    },
+    {
+      "class": "PDF_TOKEN_WHITESPACE_FALSE_QUOTE_MISMATCH",
+      "before": "identical Korean glyphs split by PDF layout whitespace were rejected",
+      "generic_fix": "add Unicode-whitespace-only literal comparison while preserving punctuation and order"
+    },
+    {
+      "class": "BILINGUAL_OFFICIAL_LEGAL_SUBJECT_FALSE_MISMATCH",
+      "before": "literal Korean consolidated legal subject was not bound to the English issuer identity",
+      "generic_fix": "bind literal legal subject only with issuer role, target-publisher identity, and publisher-hostname affinity"
+    }
+  ],
+  "generic_patch": {
+    "publication_metadata_semantics": "e2r_page_fetch_publication_metadata_v2",
+    "source_verification_semantics": "e2r_pro_source_verification_v12",
+    "target_or_archetype_specific_branch_added": false,
+    "future_leakage_guard_weakened": false,
+    "paraphrase_acceptance_added": false,
+    "table_cell_reconstruction_accepted": false
+  },
+  "isolated_replay": {
+    "original_runtime_mutated": false,
+    "chatgpt_submit_count": 0,
+    "before_material_accepted": 23,
+    "before_material_count": 34,
+    "before_acceptance_ratio": 0.676471,
+    "after_material_accepted": 32,
+    "after_material_count": 34,
+    "after_acceptance_ratio": 0.941176,
+    "after_material_status_counts": {
+      "ACCEPTED_CURRENT": 32,
+      "REJECTED_QUOTE_MISMATCH": 2
+    },
+    "remaining_material_rejection_ids": [
+      "PROFACT-SOIL-M33",
+      "PROFACT-SOIL-M34"
+    ],
+    "remaining_rejections_are_actual_table_reconstruction": true
+  },
+  "verification": {
+    "focused_tests": "5/5 PASS",
+    "related_source_preflight_fetch_regression": "137/137 PASS",
+    "source_graph_metadata_tests": "2/2 PASS",
+    "full_unittest_discovery": "7885_PASS_FAILURE_ERROR_0_EXISTING_SKIP_38",
+    "full_unittest_elapsed_seconds": 744.445,
+    "full_unittest_environment_note": "The authoritative rerun used the repository's existing Playwright shared-library path; an earlier run without that path was an environment-invalid attempt and is not counted.",
+    "static_audits": "PRO_FIRST_V1_V2_FRESH_EFFICIENCY_V6_PASS_CRITICAL_0",
+    "static_audit_results": {
+      "pro_first_v1": {
+        "status": "E2R_PRO_FIRST_STATIC_AUDIT_PASS",
+        "critical_count_sum": 0,
+        "guarded_dom_submit_path_count": 1
+      },
+      "pro_first_v2": {
+        "status": "PASS",
+        "critical_count": 0,
+        "audit_hash": "3b335c8e1e5e850c0f11035559a08adf1f6c8d1aaf48724268cac95e3c533a8c"
+      },
+      "fresh_efficiency": {
+        "status": "PASS",
+        "critical_count": 0,
+        "audit_hash": "47d96d1f3b602ef0b963ce3772ffc70cbacdb655fb399aefdcf0a61fb9b87b6a"
+      },
+      "v6_production": {
+        "status": "E2R_V6_PRODUCTION_STATIC_AUDIT_PASS",
+        "critical_count_sum": 0,
+        "audit_hash": "079862edfe898eea5c23c49d2031e99cffd75e338a37d071ff28a27bd8f8d4f1"
+      }
+    },
+    "independent_reviewers_a_to_h": {
+      "status": "PASS",
+      "reviewer_count": 8,
+      "leaf_test_count": 340,
+      "receipt_hash": "06edbc4fee91f1301a72e6838f05af0b3a92245835a842ce5183bbc0d52277b0",
+      "environment_note": "Reviewer C was rerun with the same existing Playwright shared-library path as full discovery; all 77 browser and multi-pass leaf tests then passed."
+    },
+    "github_actions_current_patch": "PENDING"
+  },
+  "master_goal_state": {
+    "live_full_thesis_pass_count": "1/3",
+    "c06": "PASS",
+    "c17": "R25_PROVIDER_FAILED_NOT_A_FULL_THESIS_PASS",
+    "c15": "R1_DIAGNOSTIC_ONLY_NEW_CONVERSATION_REQUIRED",
+    "third_mechanism_pending": "C24_OR_C28",
+    "operational_research_ready": false,
+    "pr_7_must_remain_draft_open": true,
+    "main_merge_allowed": false
+  }
+}

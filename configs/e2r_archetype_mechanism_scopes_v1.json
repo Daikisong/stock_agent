@@ -7,7 +7,7 @@
       "allowed_technology_families": ["HBM", "DRAM", "MEMORY", "AI_MEMORY"],
       "allowed_transaction_types": ["CUSTOMER_COMMITMENT", "PRODUCT_SHIPMENT", "PRODUCT_PROFILE", "REVENUE_ACTUAL", "PRICING_ACTUAL", "CAPACITY_INVESTMENT", "QUALIFICATION", "VALUATION_ANALYSIS", "RISK", "GENERIC_INFORMATION"],
       "allowed_economic_mechanisms": ["CUSTOMER_ALLOCATION", "CAPACITY_SCARCITY", "PRODUCT_COMMERCIALIZATION", "REVENUE_CONVERSION", "PRICING_POWER", "SUPPLY_RESPONSE", "QUALIFICATION_EXECUTION", "MARKET_EXPECTATION_GAP", "VALUATION_EARNINGS_BRIDGE", "RISK_COUNTER", "INFORMATION_ONLY"],
-      "generic_company_allowed_components": ["information_confidence", "capital_allocation"],
+      "generic_company_allowed_components": ["information_confidence", "capital_allocation", "market_mispricing", "valuation_rerating"],
       "forbidden_business_segments": ["FOUNDRY", "DISPLAY", "MOBILE", "APPLIANCE"],
       "forbidden_product_families": ["LOGIC_FOUNDRY", "PACKAGE_SUBSTRATE_ADJACENT", "NAND"],
       "reroute_by_segment": {"FOUNDRY": "C01_ORDER_BACKLOG_MARGIN_BRIDGE"}

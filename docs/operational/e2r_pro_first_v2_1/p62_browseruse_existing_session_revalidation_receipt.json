@@ -1,0 +1,85 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p62_browseruse_existing_session_revalidation_v1",
+  "recorded_at": "2026-09-24T03:48:10+09:00",
+  "scope": "existing_browseruse_session_read_only_revalidation",
+  "browseruse": {
+    "preflight_exit_code": 0,
+    "node_repl_tool_exposed": true,
+    "backend": "Chrome plugin extension through the current persistent node_repl",
+    "external_user_tab_count": 1,
+    "chatgpt_candidate_count": 1,
+    "exact_openTabs_object_claimed": true,
+    "claim_return_has_playwright_control": true,
+    "tab_id_persisted": false,
+    "url": "https://chatgpt.com/",
+    "title": "ChatGPT",
+    "signed_in_ui_indicators": {
+      "composer_visible": true,
+      "profile_menu_control_visible": true
+    },
+    "chat_selected": true,
+    "work_selected": false,
+    "visible_model_control_label": "6 Pro",
+    "visible_composer_count": 1,
+    "composer_has_draft": false,
+    "generation_in_progress": false,
+    "chat_body_read": false,
+    "new_browser_window_tab_or_profile_created": false,
+    "prompt_input_count": 0,
+    "upload_count": 0,
+    "submit_count": 0,
+    "source_query_count": 0,
+    "source_fetch_count": 0
+  },
+  "api_diagnosis": {
+    "openTabs_object_is_metadata_descriptor": true,
+    "descriptor_contains_playwright_control": false,
+    "claim_return_is_required_for_playwright_control": true,
+    "initial_read_attempt_error": "Cannot read properties of undefined (reading 'evaluate')",
+    "resolved_by_assigning_claimTab_return_value": true,
+    "browser_session_failure": false,
+    "cdp_fallback_used": false
+  },
+  "pipeline_boundary": {
+    "pro_browser_worker_mode": "CDP_ATTACH",
+    "same_claimed_browseruse_tab_bound_to_python_pipeline": false,
+    "live_submit_allowed": false,
+    "reason": "The Python worker still attaches to its separate CDP endpoint; no exact-tab bridge has been implemented."
+  },
+  "c15_r6": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "symbol": "010950",
+    "status": "PACKET_READY",
+    "state_version": 2,
+    "submit_count": 0,
+    "capture_count": 0,
+    "browser_session_id": null,
+    "conversation_id": null,
+    "updated_at": "2026-09-07T21:21:14.716162Z",
+    "read_mode": "sqlite mode=ro"
+  },
+  "pull_request": {
+    "number": 7,
+    "url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "head_sha": "f26b6f654b8f577790630afe7ee2900a0c0f1b2d",
+    "state": "OPEN",
+    "draft": true,
+    "mergeable": true
+  },
+  "ci_at_recorded_at": {
+    "pr_pro_first_run_id": "35902761257",
+    "pr_pro_first_status": "in_progress",
+    "pr_pro_first_static_security_job": "success",
+    "v6_run_id": "35902761194",
+    "v6_status": "in_progress",
+    "push_pro_first_run_id": "35902757082",
+    "push_pro_first_status": "in_progress"
+  },
+  "master_goal": {
+    "status": "active",
+    "live_full_thesis_pass_count": 1,
+    "required_live_full_thesis_pass_count": 3,
+    "complete": false
+  },
+  "next_step": "Add and test a Python-to-current-BrowserUse-tab worker bridge. Do not enter, upload, or submit the C15 R6 packet until the bridge proves it controls the exact claimed extension tab and preserves the durable approval and capture boundaries."
+}

@@ -1,0 +1,114 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p108_c15_attachment_replacement_validation_v1",
+  "recorded_at": "2026-09-25T07:42:00+09:00",
+  "status": "LOCAL_PATCH_FOCUSED_PASS_FULL_SUITE_OOM_CI_BASELINE_ONLY",
+  "git": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "head_sha": "8f3845454519127cbc840449e80115a5b693801e",
+    "origin_head_sha": "8f3845454519127cbc840449e80115a5b693801e",
+    "uncommitted_source_and_test_files": [
+      "src/e2r/pro_first/browser/chatgpt_adapter.py",
+      "src/e2r/pro_first/browser/protocol.py",
+      "src/e2r/pro_first/fresh_session/live_canary_v3.py",
+      "src/e2r/pro_first/fresh_session/orchestrator_v3.py",
+      "tests/test_e2r_pro_first_browser_adapter.py",
+      "tests/test_e2r_pro_first_v2_1_fresh_orchestration.py"
+    ],
+    "uncommitted_documentation_files": [
+      "docs/operational/e2r_pro_first_v2_1/browseruse_existing_session_handoff.md",
+      "docs/operational/e2r_pro_first_v2_1/implementation_progress.md",
+      "docs/operational/e2r_pro_first_v2_1/p108_c15_attachment_replacement_and_validation_receipt.json"
+    ],
+    "worktree_clean": false
+  },
+  "pull_request": {
+    "number": 7,
+    "url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "state": "OPEN",
+    "draft": true,
+    "merge_state_at_recorded_time": "UNSTABLE",
+    "main_merged": false
+  },
+  "ci_for_remote_head_only": {
+    "head_sha": "8f3845454519127cbc840449e80115a5b693801e",
+    "pro_pr": {
+      "run_id": "36067055134",
+      "status_at_recorded_time": "IN_PROGRESS_REVIEWER_A_H_LEAF_GATES",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/36067055134"
+    },
+    "pro_push": {
+      "run_id": "36067050644",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/36067050644"
+    },
+    "v6": {
+      "run_id": "36067055253",
+      "conclusion": "SUCCESS",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/36067055253"
+    },
+    "includes_uncommitted_p108_code": false
+  },
+  "local_validation": {
+    "focused_adapter_orchestration_tests_after_final_hash_tightening": {
+      "tests_run": 9,
+      "failures": 0,
+      "errors": 0,
+      "conclusion": "PASS"
+    },
+    "related_browser_adapter_bridge_orchestration_suite_before_final_hash_tightening": {
+      "tests_run": 178,
+      "failures": 0,
+      "errors": 0,
+      "conclusion": "PASS"
+    },
+    "py_compile": "PASS",
+    "git_diff_check": "PASS",
+    "production_static_audit": {
+      "conclusion": "PASS",
+      "critical_count": 0,
+      "production_hash": "731b15cb0631ee40a836fb12f1c507e8aaf91354ef44930d585e04886e8c688c"
+    },
+    "full_unit_suite": {
+      "command": "PYTHONPATH=src python -m unittest discover -s tests -q",
+      "process_exit_code": 137,
+      "completed": false,
+      "failure_error_summary_available": false,
+      "kernel_evidence": "During the unittest run, dmesg recorded the OOM killer terminating a Python process",
+      "conclusion": "INCOMPLETE_NOT_A_PASS_OR_TEST_FAILURE"
+    }
+  },
+  "replacement_flow": {
+    "filename_button_used_as_download": false,
+    "unverified_visible_tile_state": "VISIBLE_PACKET_HASH_UNVERIFIED_REPLACEMENT_REQUIRED",
+    "exact_composer_group_binding_required": true,
+    "single_exact_remove_action_required": true,
+    "same_browseruse_filechooser_upload_required": true,
+    "raw_sha256_and_canonical_packet_hash_required": true,
+    "ambiguous_or_multiple_attachment_state_fails_closed": true,
+    "actual_upload_count_reported": true
+  },
+  "browseruse_current_checkpoint": {
+    "live_browser_operation_performed_in_p108": false,
+    "existing_logged_in_extension_session_must_be_used_if_needed": true,
+    "new_window_tab_profile_cdp_or_relogin_used": false,
+    "prompt_input": false,
+    "tile_removed_or_replaced": false,
+    "packet_upload": false,
+    "download": false,
+    "submit": false,
+    "capture": false
+  },
+  "target_job_last_read_only_state_from_p107": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 26,
+    "packet_canonical_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "safe_unprepared_resume": false,
+    "submit_count": 0,
+    "capture_count": 0,
+    "successor_job_id": null,
+    "database_or_ui_rechecked_in_p108": false
+  },
+  "next_step": "Commit source/test/P108 documentation in Korean, push to PR #7, and wait for Pro PR, Pro push and V6 SUCCESS on that exact new head before rechecking the same C15 job in the user's existing logged-in BrowserUse extension tab.",
+  "master_goal_complete": false
+}

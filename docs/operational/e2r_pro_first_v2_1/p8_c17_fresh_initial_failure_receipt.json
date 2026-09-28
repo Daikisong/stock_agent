@@ -1,0 +1,76 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p8_initial_failure_receipt_v1",
+  "status": "FRESH_SESSION_DIAGNOSTIC_ONLY",
+  "recorded_at": "2026-08-26T04:59:12+09:00",
+  "target": {
+    "target_id": "011170",
+    "company_name": "롯데케미칼",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+  },
+  "job_id": "PROJOB-bd77f3912ada3fdc878330c6",
+  "run_id": "PRORUN-6d2c7188521024cf65e94101",
+  "research_pass_id": "PROPASS-6de9211605df22e8d1e255ce",
+  "conversation_id": "6a8ddfc4-f27c-83e8-829d-919ecb97c815",
+  "submit_count": 1,
+  "capture_count": 1,
+  "automatic_resubmit_count": 0,
+  "durable_status": "GAP_ADJUDICATION",
+  "frozen_at": "2026-08-25T19:52:06.575987Z",
+  "initial_gate": {
+    "status": "FAIL",
+    "verdict": "OPERATIONAL_EFFICIENCY_GATE_FAILED",
+    "material_candidate_count": 9,
+    "accepted_material_count": 3,
+    "acceptance_ratio": 0.333333,
+    "mandatory_question_count": 26,
+    "mandatory_question_covered_count": 26,
+    "genuine_semantic_repair_candidate_count": 9,
+    "genuine_semantic_repair_candidate_limit": 5,
+    "initial_prompt_output_defect_count": 1,
+    "failure_reasons": [
+      "INITIAL_PROMPT_OUTPUT_DEFECT",
+      "INITIAL_ACCEPTANCE_RATIO_BELOW_80_PERCENT",
+      "GENUINE_SEMANTIC_REPAIR_ROSTER_TOO_LARGE"
+    ]
+  },
+  "verification": {
+    "source_document_count": 8,
+    "fact_count": 20,
+    "full_document_fetch_count": 8,
+    "document_cache_reuse_count": 12,
+    "query_count": 0,
+    "search_count": 0,
+    "accepted_current_count": 4,
+    "accepted_counter_count": 5,
+    "accepted_resolution_count": 0,
+    "historical_only_count": 1,
+    "rejected_future_count": 1,
+    "rejected_quote_mismatch_count": 7,
+    "rejected_wrong_subject_count": 2,
+    "unverified_pending_count": 0
+  },
+  "canonical_hashes": {
+    "normalized_dossier_sha256": "8e6ac0b05c027e2acfe7f185c44c3b0fb8bbba23f2043681e8ec71f887b02b30",
+    "source_verification_receipt_sha256": "0cc64b92843a764ae91b12e79ad42420bc315a198e535b87c94281e9eb3fe178",
+    "source_verifications_sha256": "6430e58d9484e47347362c6f7eae8b1cb3444ca8cacad19e0b9437446edcca51",
+    "rejection_classifications_sha256": "92a4c9361910e5483854a8b6a328114f907a4f3a557817410dd3c3071466c56a",
+    "initial_efficiency_receipt_sha256": "ae64e826a6dc967628118f47b8665a9e6bb1c147237e5607dc52ac20159b7268",
+    "initial_efficiency_receipt_hash": "a025a63b564bf148a32a3f8a17d4adb7ed4771ddcd5ca08fa0a13051f5fc2f87"
+  },
+  "postmortem": {
+    "retroactive_gate_change_allowed": false,
+    "same_conversation_repair_allowed": false,
+    "new_conversation_required": true,
+    "confirmed_generic_verifier_false_positive_classes": [
+      "VERTICAL_TABLE_DELIMITER_LITERAL_MATCH",
+      "BODY_MATURITY_DATE_MISREAD_AS_PUBLICATION_DATE",
+      "TARGET_NAMED_IN_EXACT_NONISSUER_EXCERPT_REJECTED_BY_SUBJECT_SPACING"
+    ],
+    "confirmed_genuine_output_defects_remain": true,
+    "score_authority": false,
+    "stage_authority": false,
+    "publication_withheld": true,
+    "p8_verdict": "NOT_YET_DECLARED"
+  }
+}

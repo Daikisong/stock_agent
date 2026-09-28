@@ -1,0 +1,126 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_windows_utf8_portability_and_current_independent_review_receipt_v1",
+  "phase": "P40_WINDOWS_UTF8_PORTABILITY_AND_CURRENT_INDEPENDENT_REVIEW",
+  "status": "LOCAL_ALL_GREEN_COMMIT_PUSH_CI_PENDING_LIVE_CANARY_1_OF_3",
+  "audited_base_head": "e7b650d4badb3466251cb44f327a956599aab22c",
+  "base_head_github_actions": {
+    "pro_first": {
+      "run_id": 33309102083,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/33309102083",
+      "conclusion": "SUCCESS"
+    },
+    "v6_operational_cutover": {
+      "run_id": 33309101988,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/33309101988",
+      "conclusion": "SUCCESS"
+    }
+  },
+  "root_cause": {
+    "symptom": "Windows Python decoded the UTF-8 Evidence Contract JSON with the CP949 platform default and raised UnicodeDecodeError before a future-query guard test could execute.",
+    "affected_loaders": [
+      "src/e2r/agentic/evidence_contract.py",
+      "src/e2r/agentic/evidence_contract_v2.py"
+    ],
+    "linux_ci_masked_the_bug": true,
+    "ticker_or_archetype_specific": false
+  },
+  "repair": {
+    "explicit_json_encoding": "utf-8",
+    "portable_loader_regression_test_count": 2,
+    "reviewer_d_exact_input_manifest_extended": true,
+    "ci_full_unittest_floor_before": 7858,
+    "ci_full_unittest_floor_after": 7860,
+    "assertion_weakened": false
+  },
+  "verification": {
+    "portable_loader_regression": {
+      "tests_run": 2,
+      "failure_count": 0,
+      "error_count": 0
+    },
+    "reviewer_c_browser_and_exactly_once": {
+      "tests_run": 70,
+      "failure_count": 0,
+      "error_count": 0
+    },
+    "reviewer_d_gap_and_saturation": {
+      "tests_run": 63,
+      "failure_count": 0,
+      "error_count": 0
+    },
+    "focused_changed_surface": {
+      "tests_run": 91,
+      "failure_count": 0,
+      "error_count": 0
+    },
+    "independent_reviewer_gate": {
+      "verdict": "PASS",
+      "reviewer_count": 8,
+      "reviewer_test_counts": {
+        "A": 8,
+        "B": 13,
+        "C": 70,
+        "D": 63,
+        "E": 50,
+        "F": 62,
+        "G": 15,
+        "H": 47
+      },
+      "receipt_hash": "ac0e3e60146c28243d98882d17dc5b7ffa74420945bcbca60532aecf1deae097",
+      "receipt_hash_recomputed_equal": true,
+      "shared_report_counter_used": false
+    },
+    "full_unittest_discovery": {
+      "discovered_test_count": 7860,
+      "command_exit_code": 0,
+      "failure_error_zero_proven_by_exit_code": true,
+      "status": "PASS"
+    },
+    "production_static_audit": {
+      "status": "E2R_PRO_FIRST_STATIC_AUDIT_PASS",
+      "critical_count_sum": 0,
+      "guarded_dom_submit_path_count": 1
+    },
+    "requirement_level_v2_static_audit": {
+      "status": "PASS",
+      "critical_count": 0,
+      "audit_hash": "660f3292e6b8e40f5590af88c323b1174e20c62da80386795bae69fa1a7ce128"
+    },
+    "python_compileall": "PASS",
+    "git_diff_check": "PASS",
+    "github_actions_on_this_patch": "PENDING_COMMIT_AND_PUSH"
+  },
+  "r16_submitted_recovery_preflight": {
+    "job_id": "PROJOB-6ec66fa741cd95ba92bc9672",
+    "run_id": "PRORUN-9986fb0a09050c540cbbb5aa",
+    "durable_status": "USER_ATTENTION_REQUIRED",
+    "submit_count": 1,
+    "capture_count": 0,
+    "conversation_id": null,
+    "manifest_commit_sha": "01b812b3544476d8761cbbea5d3be3dc54bce7d7",
+    "manifest_config_hash": "f079a7a459ca58e17046f1d0e566d20501ef193cef4ec9dd62ec91587f8e7a1c",
+    "windows_runtime_config_hash": "f079a7a459ca58e17046f1d0e566d20501ef193cef4ec9dd62ec91587f8e7a1c",
+    "config_hash_match": true,
+    "automatic_resubmit_allowed": false
+  },
+  "browser_external_boundary": {
+    "cdp_endpoint": "http://127.0.0.1:9222",
+    "current_page_count": 12,
+    "current_chatgpt_page_count": 0,
+    "new_window_created": false,
+    "new_tab_created": false,
+    "unrelated_tab_navigated": false,
+    "next_allowed_browser_action": "reuse one already-open logged-in ChatGPT target; never create a replacement target and never resend R16"
+  },
+  "master_goal_state": {
+    "live_full_thesis_canary_count": 1,
+    "required_live_full_thesis_canary_count": 3,
+    "c06": "PASS",
+    "c17": "PENDING_EXISTING_CHATGPT_TARGET_AND_R16_NO_RESEND_RECOVERY",
+    "c28": "PENDING_NEW_BLIND_FULL_THESIS_RUN",
+    "operational_research_readiness": "WITHHELD"
+  },
+  "runtime_artifacts_tracked": false,
+  "score_authority": false,
+  "stage_authority": false
+}

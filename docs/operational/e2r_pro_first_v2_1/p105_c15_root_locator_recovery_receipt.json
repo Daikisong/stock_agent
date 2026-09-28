@@ -1,0 +1,125 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p105_c15_root_locator_recovery_v1",
+  "recorded_at": "2026-09-25T05:52:00+09:00",
+  "status": "LOCAL_PATCH_VERIFIED_EXACT_HEAD_CI_PENDING",
+  "target": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "run_id": "PRORUN-ff542ef979f09bcaf7cf2545",
+    "initial_pass_id": "PROPASS-a7654d1d80c9c041afb5777f",
+    "fresh_session_id": "FRESH-V2-1-C15-R6-20260907T212025Z",
+    "symbol": "010950",
+    "company_name": "S-Oil",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "packet_canonical_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df"
+  },
+  "browseruse_existing_session": {
+    "backend": "Chrome BrowserUse extension",
+    "existing_user_session_reused": true,
+    "existing_tab_descriptor_claimed": true,
+    "claim_returned_tab_object_reused": true,
+    "new_window_tab_profile_or_cdp_session_created": false,
+    "relogin_performed": false,
+    "machine_preflight_exit_code": 0,
+    "origin": "https://chatgpt.com/",
+    "actual_chat_model_read_only_confirmed": "6 Pro",
+    "mode": "Chat",
+    "composer_empty": true,
+    "user_turn_count": 0,
+    "assistant_turn_count": 0,
+    "visible_existing_packet_tile_count": 1,
+    "visible_existing_packet_filename": "research_packet(20260924-172107).json",
+    "selected_file_input_count": 0,
+    "tab_id_or_authentication_secret_recorded": false
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "failure_stage": "NODE_REPL_SPAWN_SETUP_BEFORE_WORKER",
+      "exact_error": "globalThis.require is not a function",
+      "python_worker_started": false,
+      "browser_ui_mutation": false,
+      "bridge_cleanup_completed": true
+    },
+    {
+      "attempt": 2,
+      "failure_stage": "DURABLE_BOUNDARY_IDENTITY_CHECK_BEFORE_BROWSER_WORKER",
+      "exact_error": "FreshSessionBoundaryError: fresh boundary differs from the old-answer leakage manifest",
+      "cause": "The existing predecessor-bound job was incorrectly supplied as an independent canary spec.",
+      "corrected_identity_read_only_boundary_check": "PASS",
+      "browser_ui_mutation": false
+    },
+    {
+      "attempt": 3,
+      "failure_stage": "SAME_TAB_READ_ONLY_RECOVERY_PREFLIGHT",
+      "exact_error": "BRIDGE_OPERATION_FAILED: Cannot read properties of null (reading 'getByRole')",
+      "root_cause": "The generic MJS locator dispatcher called base.getByRole() for a root get_by_role locator where base is null, instead of starting from tab.playwright.",
+      "prompt_input_or_attachment_action_reached": false,
+      "submit_observed": false
+    }
+  ],
+  "durable_job_after_attempts": {
+    "database_access": "SQLite mode=ro; PRAGMA query_only=ON",
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 26,
+    "packet_hash_unchanged": true,
+    "approval_packet_hash": null,
+    "approval_prompt_hash": null,
+    "approval_browser_session_id": null,
+    "approval_consumed_at": null,
+    "browser_session_id": null,
+    "conversation_id": null,
+    "submit_count": 0,
+    "capture_count": 0,
+    "latest_durable_error_unchanged": "BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab",
+    "safe_unprepared_resume": false,
+    "state_version_changed_during_attempt": false
+  },
+  "patch": {
+    "file": "src/e2r/pro_first/browser/browseruse_extension_bridge.mjs",
+    "generic_root_locator_fallback_added": "getByRoleLocator(base, page, role, options): page when no parent; parent locator otherwise",
+    "symbol_archetype_or_packet_specific_branch_added": false,
+    "regressions": [
+      "Root get_by_role starts from BrowserUse page",
+      "Nested get_by_role remains bound to its parent locator",
+      "Python BrowserUsePage sends an unparented root get_by_role descriptor"
+    ]
+  },
+  "verification": {
+    "related_test_command": "LD_LIBRARY_PATH=/home/eorb915/.cache/e2r-playwright-libs/usr/lib/x86_64-linux-gnu PYTHONPATH=src python -m unittest tests.test_e2r_pro_first_browser_adapter tests.test_e2r_pro_first_browseruse_extension_bridge tests.test_e2r_pro_first_v2_1_fresh_orchestration -q",
+    "related_tests": 174,
+    "failures": 0,
+    "errors": 0,
+    "test_status": "PASS",
+    "node_check": "PASS",
+    "python_compile": "PASS",
+    "git_diff_check": "PASS",
+    "static_audit_status": "PASS",
+    "production_static_audit_critical_count": 0,
+    "production_static_audit_hash": "dd4ff07ac1579bc8e8c43940cb7bc162b7b4e4e7708b67b1b83264a5e645fdee"
+  },
+  "pre_patch_exact_head_ci": {
+    "head_sha": "ff929834f2d6f87576d6c80c54f5bec08ca60763",
+    "pro_pr_run_id": "36052355870",
+    "pro_pr_status": "SUCCESS",
+    "v6_pr_run_id": "36052354380",
+    "v6_pr_status": "SUCCESS",
+    "pro_push_run_id": "36052348009",
+    "pro_push_status": "SUCCESS",
+    "applies_to_p105_patch": false
+  },
+  "actions_during_p105": {
+    "prompt_input_count": 0,
+    "attachment_upload_count": 0,
+    "download_count": 0,
+    "submit_count": 0,
+    "capture_count": 0,
+    "source_query_count": 0,
+    "source_fetch_count": 0,
+    "new_job_or_pass_count": 0,
+    "score_or_stage_change_count": 0
+  },
+  "next_step": "Make a Korean commit with the generic root-locator fix, regression tests, and P105 documentation; push to the existing PR #7 branch; require exact-head Pro push, Pro PR, and V6 PR workflows to succeed before attempting same-job recovery again through the user's current existing logged-in BrowserUse extension tab.",
+  "master_goal_complete": false
+}

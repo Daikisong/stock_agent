@@ -1,0 +1,86 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p72_browseruse_rpc_preflight_recovery_v1",
+  "observed_at": "2026-09-24T08:40:06+09:00",
+  "status": "BROWSERUSE_PREFLIGHT_FAILED_BEFORE_INPUT_OR_SUBMIT",
+  "goal_complete": false,
+  "repository": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "verified_parent_head": "5f2b617e6d50c9ccb6d3c08e3574c7e9949f6546",
+    "parent_head_ci": {
+      "35930595172": "SUCCESS",
+      "35930598358": "SUCCESS",
+      "35930598323": "SUCCESS"
+    },
+    "p72_changes_committed": false,
+    "p72_changes_pushed": false,
+    "p72_exact_head_ci": "PENDING",
+    "pull_request": 7,
+    "main_merge": false
+  },
+  "browseruse": {
+    "backend": "Chrome BrowserUse extension",
+    "same_existing_logged_in_session": true,
+    "same_existing_claimed_tab_preserved": true,
+    "new_browser_or_tab_created": false,
+    "relogin_performed": false,
+    "preflight_ui": {
+      "chat_selected": true,
+      "model_label": "6 Pro",
+      "work_selected": false,
+      "deep_research_selected": false,
+      "composer_blank_before_attempt": true,
+      "composer_blank_after_failure": true,
+      "packet_attachment_after_failure": false
+    },
+    "failure": {
+      "stage": "READ_ONLY_BROWSER_PREFLIGHT_LOCATOR_CREATE",
+      "exception_class": "TypeError",
+      "message": "'NoneType' object is not subscriptable",
+      "root_cause": "JavaScript locator.create returned a top-level handle while Python RPC client unwraps only the value field.",
+      "devtools_console_observation": "React hydration error #418 at 2026-09-23T23:27:07Z; separate from the direct bridge traceback.",
+      "cdp_capability": "Capability is not available: cdp"
+    },
+    "prompt_input_count": 0,
+    "packet_upload_count": 0,
+    "submit_count": 0,
+    "capture_count": 0
+  },
+  "job": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "symbol": "010950",
+    "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "prior_status": "PACKET_READY",
+    "prior_state_version": 2,
+    "current_status": "USER_ATTENTION_REQUIRED",
+    "current_state_version": 4,
+    "packet_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "run_id": "PRORUN-ff542ef979f09bcaf7cf2545",
+    "initial_pass_id": "PROPASS-a7654d1d80c9c041afb5777f",
+    "browser_session_bound": false,
+    "conversation_bound": false,
+    "approval_issued_or_consumed": false,
+    "submit_count": 0,
+    "capture_count": 0,
+    "successor_job_created": false
+  },
+  "code_and_tests": {
+    "rpc_wire_fix": "locator.create now returns the same value envelope expected by BrowserUseBridgeClient.call.",
+    "missing_handle_behavior": "Raises explicit BrowserUseBridgeError instead of leaking a TypeError.",
+    "safe_resume": "Adds an exact-job gate for read-only preflight failures; prepared receipts, approval, browser binding, submit, or capture reject the path.",
+    "browseruse_bridge_tests": "PASS",
+    "fresh_orchestration_tests": "PASS",
+    "combined_tests_passed": 90,
+    "combined_tests_failed": 0,
+    "combined_tests_errors": 0,
+    "python_compileall": "PASS",
+    "node_check": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "other_zero_counts": {
+    "new_source_queries": 0,
+    "new_source_fetches": 0,
+    "score_changes": 0,
+    "stage_changes": 0
+  },
+  "next_step": "Commit P72 code/tests/docs in Korean, push only to existing PR #7 branch, verify exact-head full CI success, then resume this same job in the same existing BrowserUse session/tab through the explicit unprepared-attention gate."
+}

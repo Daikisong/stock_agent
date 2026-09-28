@@ -1,0 +1,171 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p56_legacy_dispatch_proof_guard_v1",
+  "recorded_at": "2026-09-07T20:27:18Z",
+  "source_parent_sha": "6f572eddc863f69f4d2c9abbe3d5b745c1ec63d4",
+  "status": "FOCUSED_AND_LEAF_VERIFIED_FULL_CI_REQUIRED",
+  "root_cause": {
+    "function": "e2r.pro_first.canary.live_v2._is_sealed_unpersisted_dispatch",
+    "before": "Cached absence count and hash lengths could hide an unproven submitted pass from dossier history and operational research accounting.",
+    "failing_regression": "test_operational_gap_budget_counts_unproven_legacy_seal",
+    "before_test_count": 1,
+    "before_subtest_failures": 4,
+    "before_exit_code": 1,
+    "cases": [
+      "No observation history",
+      "Repeated identical observation ID",
+      "One fresh absence and one unrefreshed absence",
+      "One absence and one positive persistence confirmation"
+    ]
+  },
+  "correction": {
+    "proof": "Require two distinct nonempty observation IDs with persistence_confirmed=false and fresh_page_loaded=true, and no positive persistence observation.",
+    "dossier_projection": "Unproven prior dispatch cannot be silently omitted as an absent transport-only row.",
+    "research_accounting": "Unproven submitted attempt is not excluded from the operational follow-up budget.",
+    "continuation_gate": "Validate the durable dispatch chain after submitted-only recovery and before planning more research or entering scoring.",
+    "invalid_history_status": "OPERATIONAL_EFFICIENCY_GATE_FAILED",
+    "historical_rows_rewritten": false,
+    "existing_capture_hashes_preserved": true,
+    "score_rule_changed": false,
+    "stage_rule_changed": false,
+    "symbol_specific_branch_added": false,
+    "source_query_template_added": false
+  },
+  "runtime_read_only_reinspection": {
+    "job_id": "PROJOB-7c02db014fefb06b1258ffe9",
+    "run_id": "PRORUN-b66fab297a8016c613f2d46a",
+    "conversation_id": "6a96c840-4440-83ee-abe8-c8742eb17741",
+    "sqlite_mode": "ro",
+    "invalid_original_pass_id": "PROPASS-2ced92878a16c36601168af7",
+    "already_submitted_replacement_id": "PROPASS-20c07c841f9c4ba5a16e727f",
+    "computed_history_status": "OPERATIONAL_EFFICIENCY_GATE_FAILED",
+    "stored_observer_status": "TRANSPORT_PENDING",
+    "stored_replacement_database_status": "RESEARCH_RUNNING",
+    "current_server_execution_confirmed": false,
+    "runtime_ledger_changed": false,
+    "new_browser_submit_count": 0,
+    "new_source_query_count": 0,
+    "new_source_fetch_count": 0,
+    "r5_can_count_as_operational_live_pass": false,
+    "r5_initial_evidence_preserved": true,
+    "new_fresh_c15_run_required_for_operational_proof": true
+  },
+  "verification": {
+    "focused_command": "PYTHONPATH=src:tests python -m unittest test_e2r_pro_first_v2_1_fresh_orchestration.ProFirstV21FreshOrchestrationTest.test_operational_gap_budget_counts_unproven_legacy_seal test_e2r_pro_first_v2_1_fresh_orchestration.ProFirstV21FreshOrchestrationTest.test_operational_gap_budget_allows_one_exact_unpersisted_replacement test_e2r_pro_first_v2_multi_pass.ProFirstV2MultiPassTest.test_completed_replacement_cannot_hide_unproven_legacy_seal -v",
+    "focused_test_count": 3,
+    "focused_status": "PASS",
+    "related_regression": "148/148 PASS",
+    "related_regression_command": "LD_LIBRARY_PATH=/home/eorb915/.cache/e2r-playwright-libs/usr/lib/x86_64-linux-gnu PYTHONPATH=src:tests python -m unittest test_e2r_pro_first_v2_multi_pass test_e2r_pro_first_v2_1_fresh_orchestration test_e2r_pro_first_v2_live_runtime -q",
+    "full_offline_ci": "RUNNING_AT_RECEIPT_CREATION_SEE_PR_EXACT_HEAD_CHECKS",
+    "full_discovery_count": 7899,
+    "full_discovery_count_is_pass_result": false,
+    "final_ci_evidence_url": "https://github.com/Daikisong/stock_agent/pull/7/checks",
+    "leaf_test_groups": "8/8 PASS",
+    "leaf_test_count": 347,
+    "leaf_receipt_hash": "af9f8b1171cdb0fcb2877c67f90a39282dfc0ce6a61900b334b18f3e351adc26",
+    "leaf_evidence_type": "DIRECT_LEAF_TEST_EXECUTION_NOT_NEW_EXTERNAL_REVIEW",
+    "v2_static_audit": "PASS",
+    "v2_static_critical_count": 0,
+    "v2_static_audit_hash": "1997a7264484f63d6baee09c0e1ae3ebc6f16c760d0c841f49d6691651dae680",
+    "existing_fixture_expectations_weakened": false,
+    "valid_transport_fixtures_strengthened_with_actual_fresh_observation_rows": true,
+    "new_skip_count": 0,
+    "patch_github_ci": "NOT_RUN_AT_RECEIPT_CREATION_SEE_PR_EXACT_HEAD_CHECKS",
+    "leaf_test_evidence": [
+      {
+        "reviewer_id": "A",
+        "scope": "36 contract totality / primitive coverage",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_v2_contract_totality",
+        "test_count": 8,
+        "exit_code": 0,
+        "input_hash": "52964316eb7633c53bb8c90a3c8cf86afc243f75be70af37957788cae597ecab",
+        "output_hash": "5ef7ab3db7b98837faf6b3b055262d8f7ce6583d948b547b9879007e47a799eb",
+        "finding": "8 leaf-level tests passed for 36 contract totality / primitive coverage."
+      },
+      {
+        "reviewer_id": "B",
+        "scope": "prompt compiler / archetype specificity / no gold leakage",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_v2_prompt_compiler",
+        "test_count": 13,
+        "exit_code": 0,
+        "input_hash": "88f294cc76e96ef2f2730859e0c6b0d9bf652be0070c484e2bb5202550ac0568",
+        "output_hash": "a681b53b37c8dcc4ee25aba1b0126c0546c0bc7104cb51c982a9875b7afe95f2",
+        "finding": "13 leaf-level tests passed for prompt compiler / archetype specificity / no gold leakage."
+      },
+      {
+        "reviewer_id": "C",
+        "scope": "multi-pass browser state / exactly-once follow-up",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_browser_adapter tests.test_e2r_pro_first_v2_multi_pass",
+        "test_count": 84,
+        "exit_code": 0,
+        "input_hash": "8b83191b445b84471168ee6fc99fbc0f7d4b08a40592c951910993885e08602e",
+        "output_hash": "d1b1f8e0fb19e0bc241f4cc571667562d37541370e85c359d50517edd4ad5c00",
+        "finding": "84 leaf-level tests passed for multi-pass browser state / exactly-once follow-up."
+      },
+      {
+        "reviewer_id": "D",
+        "scope": "gap availability / adequate search / fixpoint",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_evidence_contract_utf8 tests.test_e2r_pro_first_gap_adjudication tests.test_e2r_pro_first_v2_saturation",
+        "test_count": 63,
+        "exit_code": 0,
+        "input_hash": "c10c7c556aea55b84b5a6d2bba0b9388242ef8a3603f85bab332569d593a2c00",
+        "output_hash": "c9d2ee38febf5ddd6859c03c637c0efb4f9dd9468a85b9e3b274a3bceebdb326",
+        "finding": "63 leaf-level tests passed for gap availability / adequate search / fixpoint."
+      },
+      {
+        "reviewer_id": "E",
+        "scope": "source verifier / repair / lifecycle",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_source_verification tests.test_e2r_pro_first_v2_verifier_repair",
+        "test_count": 52,
+        "exit_code": 0,
+        "input_hash": "cacdbe1a9f1e518ee819d7763f3ab2d228b515b79fbfb046817cd51567386fb3",
+        "output_hash": "78d24e3bc7e2d9a16b2fb27d8bd3b5a0e08b10fcc9b590a9589cc10fc32d224c",
+        "finding": "52 leaf-level tests passed for source verifier / repair / lifecycle."
+      },
+      {
+        "reviewer_id": "F",
+        "scope": "component/Judge/scoring/Stage publication gate",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_scoring_bridge tests.test_e2r_pro_first_v2_dossier_status tests.test_e2r_pro_first_v2_readiness_view",
+        "test_count": 62,
+        "exit_code": 0,
+        "input_hash": "4ca6fca508781921b54fe891af1522c92bdc965d5bcf373353ae6a66dd51ec5d",
+        "output_hash": "73442b3416d79f2ec18949b85027f01d0e6090922a7ecebfb5f78a5f3c41c56a",
+        "finding": "62 leaf-level tests passed for component/Judge/scoring/Stage publication gate."
+      },
+      {
+        "reviewer_id": "G",
+        "scope": "cross-archetype generalization / known-bad",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_v2_generalization tests.test_e2r_pro_first_v2_frozen_replay",
+        "test_count": 15,
+        "exit_code": 0,
+        "input_hash": "519436485a06532cf71adfeab60d1dd55b3d4dd1938593d861796ac50df2b3ee",
+        "output_hash": "f816969c5aaa6de486336e932afb07ba554af85f958b953773f57484fcb2dd3a",
+        "finding": "15 leaf-level tests passed for cross-archetype generalization / known-bad."
+      },
+      {
+        "reviewer_id": "H",
+        "scope": "CI/security/performance/idempotency",
+        "verdict": "PASS",
+        "exact_command": "PYTHONPATH=src python -m unittest -v tests.test_e2r_pro_first_v2_static_audit tests.test_e2r_pro_first_v2_1_fresh_efficiency_audit tests.test_e2r_pro_first_v2_live_runtime tests.test_e2r_pro_first_v2_independent_review",
+        "test_count": 50,
+        "exit_code": 0,
+        "input_hash": "5cdc564fa07222588b938e7541b2d9eb863e02cb6ecf72de14f1429657c3d10c",
+        "output_hash": "d717414ec48b42f3eb22ab1aa11fd8f21dcb0376a109856f3001c11af798ca08",
+        "finding": "50 leaf-level tests passed for CI/security/performance/idempotency."
+      }
+    ]
+  },
+  "master_goal": {
+    "live_full_thesis_pass_count": 1,
+    "required_live_full_thesis_pass_count": 3,
+    "operational_research_ready": false,
+    "pr_7_must_remain_draft_open": true,
+    "main_merge_allowed": false
+  }
+}

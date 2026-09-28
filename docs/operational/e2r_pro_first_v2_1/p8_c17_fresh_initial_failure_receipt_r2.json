@@ -1,0 +1,91 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p8_initial_failure_receipt_v1",
+  "status": "FRESH_SESSION_DIAGNOSTIC_ONLY",
+  "recorded_at": "2026-08-26T05:58:49+09:00",
+  "target": {
+    "target_id": "011170",
+    "company_name": "롯데케미칼",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+  },
+  "job_id": "PROJOB-2136f20fb124e6b76760230b",
+  "run_id": "PRORUN-e53f79d5009fb8a7248a71ac",
+  "research_pass_id": "PROPASS-68c4c79b446b0c16bdb9ff40",
+  "conversation_id": "6a8df4a7-1690-83ee-bd01-036d058c979f",
+  "submit_count": 1,
+  "capture_count": 1,
+  "automatic_resubmit_count": 0,
+  "durable_status": "GAP_ADJUDICATION",
+  "frozen_at": "2026-08-25T20:53:38.094743Z",
+  "initial_gate": {
+    "status": "FAIL",
+    "verdict": "OPERATIONAL_EFFICIENCY_GATE_FAILED",
+    "serialized_material_fact_count": 12,
+    "material_candidate_count": 12,
+    "accepted_material_count": 6,
+    "acceptance_ratio": 0.5,
+    "mandatory_question_count": 26,
+    "mandatory_question_covered_count": 26,
+    "genuine_semantic_repair_candidate_count": 4,
+    "genuine_semantic_repair_candidate_limit": 5,
+    "initial_prompt_output_defect_count": 0,
+    "failure_reasons": [
+      "INITIAL_ACCEPTANCE_RATIO_BELOW_80_PERCENT"
+    ]
+  },
+  "verification": {
+    "dossier_source_document_count": 8,
+    "deduplicated_source_document_count": 5,
+    "fact_count": 21,
+    "full_document_fetch_count": 8,
+    "document_cache_reuse_count": 16,
+    "query_count": 0,
+    "search_count": 0,
+    "accepted_current_count": 7,
+    "accepted_counter_count": 5,
+    "accepted_resolution_count": 2,
+    "historical_only_count": 3,
+    "rejected_future_count": 0,
+    "rejected_quote_mismatch_count": 3,
+    "rejected_wrong_subject_count": 1,
+    "unverified_pending_count": 0
+  },
+  "canonical_hashes": {
+    "report_md_sha256": "e353b051332af43ab60af225b7b535a3d8fb93e5d87f2f99edcede76ec48c19e",
+    "normalized_dossier_sha256": "54eb42e04139b087432f82b05dc0d0e325e5babb4484a476302e447047365cff",
+    "source_verification_receipt_sha256": "d7d5d2a73aa02c0fdcc8c1bded82d53fb2e283726a55b424a6100196d857ff9f",
+    "source_verifications_sha256": "451c930031b136d2aee4a1e26288be79eb0cb835a39554b406cc0d54f14fef32",
+    "rejection_classifications_sha256": "e4db349ee5e64fce17acbeaf4ea9dc27c4037344f462d2a08ccd58f0c629b7a9",
+    "initial_efficiency_receipt_sha256": "e658c5cea8a0fd95c080a1a85decc03d6842cf3ae466aa22c3ced4c6c50c5f96",
+    "initial_efficiency_receipt_hash": "e55a3808aeb8a6b264d4072950bd22d4e1c5663cc3b9322e6ab911f83dd64563"
+  },
+  "postmortem": {
+    "retroactive_gate_change_allowed": false,
+    "same_conversation_repair_allowed": false,
+    "new_conversation_required": true,
+    "confirmed_generic_gate_defect": "HISTORICAL_ONLY_MATERIAL_INCLUDED_IN_CURRENT_ACCEPTANCE_DENOMINATOR",
+    "historical_material_fact_ids_preserved": [
+      "PROFACT-M001-Q1-BASIC-SALES",
+      "PROFACT-M002-Q1-BASIC-OP",
+      "PROFACT-M003-Q1-BASIC-SPREAD",
+      "PROFACT-M004-Q1-POSITIVE-LAG",
+      "PROFACT-M005-Q1-UTILIZATION"
+    ],
+    "read_only_fixed_rule_projection": {
+      "status": "PASS",
+      "serialized_material_fact_count": 12,
+      "current_material_candidate_count": 7,
+      "excluded_noncurrent_material_fact_count": 5,
+      "accepted_current_material_count": 6,
+      "acceptance_ratio": 0.857143,
+      "genuine_semantic_repair_candidate_count": 1,
+      "failure_reasons": [],
+      "receipt_hash": "b5c6a2e0a1c6d96489ca1df2d43cc4ad0adf1836fc3c1764f59cc8e32814545a",
+      "operational_gate_authority": false
+    },
+    "score_authority": false,
+    "stage_authority": false,
+    "publication_withheld": true,
+    "p8_verdict": "NOT_YET_DECLARED"
+  }
+}

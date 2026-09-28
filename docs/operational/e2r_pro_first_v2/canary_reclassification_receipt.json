@@ -1,0 +1,39 @@
+{
+  "schema_version": "e2r_pro_first_canary_reclassification_v2",
+  "status": "FIRST_PASS_PARTIAL_CORPUS_DIAGNOSTIC_ONLY",
+  "supersedes_semantics_of": "docs/operational/e2r_pro_first_v1/live_canary_acceptance_2026-08-22.json",
+  "superseded_artifact_sha256": "1ad42b1917389efb26d5d5119a9442b03e7b2476fca3c5e6622a5ce06d0debf5",
+  "superseded_artifact_mutated": false,
+  "job_id": "PROJOB-70e6a50ae757bd874e602a85",
+  "run_id": "PRORUN-643c723370681970b5bcc582",
+  "target_id": "000660",
+  "as_of_date": "2026-08-22",
+  "transport_canary_status": "PRO_FIRST_END_TO_END_TRANSPORT_CANARY_PASS",
+  "operational_score_status": "NOT_A_FULL_THESIS_OPERATIONAL_SCORE",
+  "first_pass_diagnostic_score": 23.202275,
+  "first_pass_diagnostic_stage": "0",
+  "full_thesis_score": null,
+  "full_thesis_stage": null,
+  "full_thesis_score_valid": false,
+  "research_status": "RESEARCH_INCOMPLETE",
+  "publication_status": "WITHHELD_PENDING_RESEARCH_SATURATION",
+  "legacy_publication_status": "PUBLISHED",
+  "observed_first_pass": {
+    "candidate_fact_count": 35,
+    "compiled_evidence_fact_count": 26,
+    "unresolved_gap_count": 13,
+    "corroboration_cap_count": 13,
+    "supplemental_task_count": 0,
+    "component_coverage": "7/7",
+    "judge_coverage": "21/21"
+  },
+  "withhold_reasons": [
+    "V2_RESEARCH_CONTRACT_CLOSURE_NOT_PROVEN",
+    "PUBLIC_MATERIAL_GAP_CLOSURE_NOT_PROVEN",
+    "VERIFIER_REPAIR_CLOSURE_NOT_PROVEN"
+  ],
+  "score_authority": "ResearchCalibratedComponentScorer",
+  "stage_authority": "AtomicStageCourtV2",
+  "pro_score_authority": false,
+  "pro_stage_authority": false
+}

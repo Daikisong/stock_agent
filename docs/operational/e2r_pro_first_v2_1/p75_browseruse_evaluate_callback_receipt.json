@@ -1,0 +1,154 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p75_browseruse_evaluate_callback_v1",
+  "observed_at": "2026-09-24T10:42:25+09:00",
+  "status": "STATIC_READONLY_CALLBACK_ALLOWLIST_LOCAL_PASS_SAME_EXISTING_TAB_SMOKE_PASS_EXACT_HEAD_CI_PENDING",
+  "goal_complete": false,
+  "repository": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "pre_patch_head": "8b86d2db6479c40d4bc0463354dc9a3de711087e",
+    "patch_committed": false,
+    "patch_pushed": false,
+    "exact_head_ci": "PENDING",
+    "pull_request": 7,
+    "pull_request_state": "OPEN",
+    "pull_request_draft": true,
+    "pull_request_mergeable": true,
+    "main_merge": false
+  },
+  "previous_head_ci": {
+    "head_sha": "8b86d2db6479c40d4bc0463354dc9a3de711087e",
+    "all_required_runs_success": true,
+    "pro_first_push_run": {
+      "run_id": 35940763725,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35940763725",
+      "conclusion": "SUCCESS",
+      "full_unittest_count": 7920,
+      "skipped_count": 38,
+      "failure_count": 0,
+      "error_count": 0
+    },
+    "pro_first_pr_run": {
+      "run_id": 35940765268,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35940765268",
+      "conclusion": "SUCCESS"
+    },
+    "v6_pr_run": {
+      "run_id": 35940765227,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35940765227",
+      "conclusion": "SUCCESS"
+    },
+    "note": "These runs verify the P74 head only and do not verify the P75 diff."
+  },
+  "browseruse": {
+    "backend": "Chrome BrowserUse extension",
+    "existing_logged_in_session_reused": true,
+    "same_existing_claimed_tab_reused": true,
+    "new_browser_window_tab_or_profile_created": false,
+    "cdp_fallback_used": false,
+    "relogin_performed": false,
+    "last_read_only_tab_observation": {
+      "origin": "https://chatgpt.com/",
+      "title": "ChatGPT",
+      "composer_count": 1,
+      "composer_blank": true,
+      "adapter_editor_ready": true,
+      "adapter_ordinary_chat_plus_pro_ready": true,
+      "adapter_work_mode_active": false,
+      "adapter_legacy_deep_research_active": false,
+      "adapter_prompt_ready": false,
+      "adapter_send_ready": false,
+      "adapter_stop_visible": false,
+      "adapter_state": "DEEP_RESEARCH_MODE_READY",
+      "note": "The compatibility field/state name is historical; the adapter readiness guard requires ordinary Chat with Pro, Work inactive, and legacy Deep Research inactive."
+    },
+    "failed_smoke_harness": {
+      "stage": "BEFORE_BROWSERUSE_RPC",
+      "error": "ModuleNotFoundError: No module named 'e2r'",
+      "cause": "The WSL Python smoke command did not add the worktree src directory to sys.path.",
+      "browser_ui_interaction": false,
+      "durable_job_state_changed": false
+    },
+    "same_existing_tab_pipeline_smoke": {
+      "status": "PASS",
+      "operation": "BrowserUse bridge to Python ProBrowserWorker.adapter.inspect_state",
+      "ephemeral_smoke_identity_only": true,
+      "input_or_navigation": false,
+      "attachment_or_upload": false,
+      "submit": false,
+      "capture": false,
+      "user_session_closed_or_reset": false
+    }
+  },
+  "root_cause_and_fix": {
+    "failure_stage": "READ_ONLY_BROWSER_PREFLIGHT",
+    "observed_error": "BRIDGE_OPERATION_FAILED: Timed out after 3000ms evaluating selector div.ProseMirror[contenteditable=\"true\"] >> nth=0: Playwright selector deadline exceeded",
+    "root_cause": "BrowserUse extension evaluate APIs require function callbacks, but the bridge passed a synthesized JavaScript string invocation.",
+    "fix": "Replace dynamic invocation with a reviewed static read-only callback allowlist; pass JSON-safe arguments separately and reject unreviewed expressions.",
+    "dynamic_function_or_eval_added": false,
+    "unknown_expression_behavior": "FAIL_CLOSED",
+    "mutation_callback_tested_as_rejected": true
+  },
+  "durable_job_read_only": {
+    "database_access": "mode=ro; PRAGMA query_only=ON",
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "symbol": "010950",
+    "archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 8,
+    "packet_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "packet_hash_matches_expected": true,
+    "last_event": {
+      "from_status": "BROWSER_PREPARING",
+      "to_status": "USER_ATTENTION_REQUIRED",
+      "event_time_utc": "2026-09-24T01:24:22.768105Z",
+      "preparation_failure_stage": "READ_ONLY_BROWSER_PREFLIGHT",
+      "safe_unprepared_resume": true,
+      "submit_count": 0
+    },
+    "approval_fields_null": true,
+    "browser_session_bound": false,
+    "conversation_bound": false,
+    "submit_count": 0,
+    "capture_count": 0,
+    "successor_job_created": false
+  },
+  "code_change": {
+    "file": "src/e2r/pro_first/browser/browseruse_extension_bridge.mjs",
+    "change": "Map active adapter read-only evaluation expressions to static function callbacks and pass arguments as values; remove synthesized string invocation.",
+    "regression_file": "tests/test_e2r_pro_first_browseruse_extension_bridge.py",
+    "coverage": [
+      "tag and input value",
+      "body marker and bounded body tail",
+      "user-turn marker snapshot",
+      "citation registry",
+      "turn id and local download-container guard",
+      "assistant identity and latest assistant snapshot",
+      "exact editor text",
+      "selected file metadata/text",
+      "mutation rejection and unknown-expression fail-closed"
+    ]
+  },
+  "local_verification": {
+    "focused_suites": [
+      "tests.test_e2r_pro_first_browseruse_extension_bridge",
+      "tests.test_e2r_pro_first_v2_1_fresh_orchestration"
+    ],
+    "tests_run": 91,
+    "passed": 91,
+    "failure_count": 0,
+    "error_count": 0,
+    "node_check": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "other_zero_counts": {
+    "prompt_input": 0,
+    "packet_upload": 0,
+    "submit": 0,
+    "capture": 0,
+    "new_source_queries": 0,
+    "new_source_fetches": 0,
+    "score_changes": 0,
+    "stage_changes": 0
+  },
+  "next_step": "Commit the P75 code, regression, Korean progress documentation, and receipt; push only to the existing PR #7 branch. Wait for exact-head Pro push, Pro PR, and V6 PR Actions SUCCESS. Only then resume the same unsent C15 R6 job through the same existing logged-in BrowserUse tab."
+}

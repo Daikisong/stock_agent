@@ -1,0 +1,127 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p111_existing_login_session_and_ci_v1",
+  "recorded_at": "2026-09-25T09:15:40+09:00",
+  "user_instruction": {
+    "login_required_browseruse_must_use_users_existing_logged_in_session": true,
+    "use_browseruse_extension_session": true,
+    "enumerate_existing_tabs_before_live_action": true,
+    "claim_exact_existing_tab_and_use_returned_same_tab_object": true,
+    "new_browser_window_tab_profile_cdp_or_relogin_as_fallback": false,
+    "preserve_existing_unsent_draft_without_explicit_direction": true
+  },
+  "documentation_checkpoint": {
+    "worktree": ".worktrees/e2r-pro-first-browser-platform-20260822",
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "head_at_checkpoint_start": "d7654ca99233e71657afc6135c1c072999554685",
+    "origin_head_at_checkpoint_start": "d7654ca99233e71657afc6135c1c072999554685",
+    "worktree_clean_at_checkpoint_start": true,
+    "pr_number": 7,
+    "pr_url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "pr_state": "OPEN",
+    "pr_draft": true,
+    "pr_merge_state": "CLEAN",
+    "merged_to_main": false
+  },
+  "browseruse_activity_this_checkpoint": {
+    "browseruse_connected": false,
+    "tabs_enumerated_or_claimed": false,
+    "ui_modified": false,
+    "draft_or_attachment_modified": false,
+    "prompt_input": false,
+    "upload_or_download": false,
+    "submit_or_capture": false,
+    "last_read_only_ui_observation": {
+      "checkpoint": "P110",
+      "observed_at": "2026-09-25T08:27:00+09:00",
+      "existing_logged_in_chatgpt_tab": true,
+      "visible_attachment_tile": "research_packet(20260924-172107).json",
+      "tile_proven_to_match_c15_packet": false,
+      "user_permission_to_remove_existing_attachment_confirmed": false
+    }
+  },
+  "exact_head_ci": {
+    "head_sha": "d7654ca99233e71657afc6135c1c072999554685",
+    "workflow_runs": [
+      {
+        "workflow": "E2R Pro-first verification",
+        "event": "pull_request",
+        "run_id": 36073197665,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36073197665",
+        "conclusion": "SUCCESS",
+        "full_regression_tests": 7952,
+        "skipped_tests": 38,
+        "duration_seconds": 1023.081,
+        "core_unit_tests": 300,
+        "browser_mock_e2e_tests": 105,
+        "static_audit_critical_count_sum": 0
+      },
+      {
+        "workflow": "E2R Pro-first verification",
+        "event": "push",
+        "run_id": 36073192427,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36073192427",
+        "conclusion": "SUCCESS",
+        "full_regression_tests": 7952,
+        "skipped_tests": 38,
+        "duration_seconds": 1049.424,
+        "static_audit_critical_count_sum": 0
+      },
+      {
+        "workflow": "E2R v6 operational cutover verification",
+        "event": "pull_request",
+        "run_id": 36073197731,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36073197731",
+        "conclusion": "SUCCESS",
+        "gate1_tracked_receipt_tests": "4/4 PASS",
+        "full_regression_tests": 7952,
+        "skipped_tests": 38,
+        "phase100": "15/15 PASS",
+        "production_static_audit_critical_count_sum": 0
+      }
+    ],
+    "exact_head_all_required_workflows_success": true
+  },
+  "prior_document_correction": {
+    "p110_claim_that_docs_only_commits_did_not_trigger_actions": "INCORRECT",
+    "verified_behavior": "Both d6672968 and d7654ca9 pushes triggered Pro PR, Pro push, and V6 Actions; all six runs succeeded.",
+    "latest_head_run_ids": [36073197665, 36073192427, 36073197731]
+  },
+  "c15_last_durable_observation_not_rechecked_this_checkpoint": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "target": "S-Oil 010950",
+    "as_of_date": "2026-08-23",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 26,
+    "packet_filename": "research_packet.json",
+    "packet_canonical_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "submit_count": 0,
+    "capture_count": 0,
+    "approval_browser_conversation_binding_present": false,
+    "safe_unprepared_resume": false,
+    "read_only_mode": true,
+    "sqlite_query_only": true,
+    "observation_checkpoint": "P110"
+  },
+  "scope_this_checkpoint": {
+    "documentation_updated": [
+      "docs/operational/e2r_pro_first_v2_1/browseruse_existing_session_handoff.md",
+      "docs/operational/e2r_pro_first_v2_1/implementation_progress.md",
+      "docs/operational/e2r_pro_first_v2_1/p111_existing_login_session_and_ci_receipt.json"
+    ],
+    "new_research_or_query_fetch": false,
+    "new_job_or_pass": false,
+    "other_archetype": false,
+    "score_or_stage_change": false,
+    "pr_merge_or_draft_release": false
+  },
+  "master_goal": {
+    "complete": false,
+    "p9_live_full_thesis_canaries_passed": 1,
+    "p9_live_full_thesis_canaries_required": 3,
+    "completed_archetype": "C06",
+    "pending_archetypes": ["C17", "C28"],
+    "separate_unresolved_same_job_task": "C15 R6"
+  },
+  "blocker": "The last observed existing logged-in composer contained an attachment not proven to be the C15 packet. The explicit user answer on whether it may be removed is not confirmed; preserve the tab and draft.",
+  "next_step": "After explicit user authorization only, recheck the durable C15 job read-only and use the same existing logged-in BrowserUse extension session and exact existing tab. Verify target, conversation, actual Pro mode, packet filename and hash before any input or submit."
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p14_server_persistence_receipt_v1",
+  "status": "C06_CONVERSATION_FAILED_CLOSED_NEW_CHAT_REQUIRED",
+  "recorded_at": "2026-08-27T17:37:34Z",
+  "job_id": "PROJOB-ab48ce7e94097cf9b6846602",
+  "run_id": "PRORUN-683f5a5423a6e367f443c6de",
+  "conversation_id": "6a8db0ad-8ed0-83e8-888e-dce26c950343",
+  "accepted_fact_count_preserved_for_audit": 66,
+  "score_authority": false,
+  "stage_authority": false,
+  "completion_claimed": false,
+  "pass_24": {
+    "pass_id": "PROPASS-0b188e6ae08632f0773af6d8",
+    "status": "FAILED_HARD",
+    "failure_domain": "TRANSPORT",
+    "failure_class": "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED",
+    "submit_count": 1,
+    "new_repair_click_count": 0,
+    "automatic_resubmit_allowed": false,
+    "server_persistence_observation_ids": [
+      "PROSERVERVIEW-b263ac56a7b57f1763edf81f",
+      "PROSERVERVIEW-e65a0550e7217a2b1757b468"
+    ]
+  },
+  "pass_25": {
+    "pass_id": "PROPASS-098c6fa0009b452f1f4d6662",
+    "supersedes_unpersisted_pass_id": "PROPASS-0b188e6ae08632f0773af6d8",
+    "status": "FAILED_HARD",
+    "failure_domain": "TRANSPORT",
+    "failure_class": "CHATGPT_SUBMITTED_TURN_NOT_SERVER_PERSISTED",
+    "submit_count": 1,
+    "same_pass_retry_count": 0,
+    "automatic_resubmit_allowed": false,
+    "server_persistence_observation_ids": [
+      "PROSERVERVIEW-8c86f318ab5a19cada92456f",
+      "PROSERVERVIEW-2668e94091c7ec8dc4b9bdf3"
+    ]
+  },
+  "generic_contract": {
+    "same_page_running_is_server_authority": false,
+    "fresh_public_exact_turn_required": true,
+    "independent_absence_count_before_seal": 2,
+    "same_pass_resubmit_allowed": false,
+    "distinct_replacement_pass_limit": 1,
+    "second_transport_failure_requires_new_conversation": true,
+    "hidden_chatgpt_api_used": false,
+    "score_or_stage_changed": false
+  },
+  "verification": {
+    "focused_test_count": 78,
+    "focused_failure_error_count": 0,
+    "pro_first_core_test_count": 238,
+    "pro_first_core_failure_error_skip_count": 0,
+    "browser_mock_e2e_test_count": 69,
+    "browser_mock_failure_error_skip_count": 0,
+    "full_unittest_count": 7769,
+    "full_failure_error_count": 0,
+    "production_static_critical_count": 0,
+    "guarded_dom_submit_path_count": 1
+  },
+  "next_action": "SEAL_CURRENT_FRESH_JOB_AND_START_BLIND_SUCCESSOR_IN_NEW_CHAT",
+  "receipt_hash": "775a2cd406b9e988688c76b4334e52d4e21cbac66b21a4d48bc2fe47dcf9e459"
+}

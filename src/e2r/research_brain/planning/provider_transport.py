@@ -6,6 +6,7 @@ import json
 import os
 import re
 import signal
+import shutil
 import subprocess
 import tempfile
 from dataclasses import dataclass
@@ -120,6 +121,10 @@ class CodexStructuredProviderTransport:
             str(output_path),
             "--color",
             "never",
+            # Structured providers receive the complete bounded payload over
+            # stdin and never depend on repository discovery.  This also
+            # makes the Windows .CMD launcher valid from a neutral user home.
+            "--skip-git-repo-check",
         ]
         if self.working_directory is not None:
             command.extend(("-C", str(self.working_directory)))
@@ -134,12 +139,36 @@ def run_codex_command(
     prompt: str,
     timeout: float,
 ) -> subprocess.CompletedProcess[str]:
+    process_command = list(command)
+    working_directory = None
+    if "-C" in process_command:
+        position = process_command.index("-C")
+        if position + 1 < len(process_command):
+            working_directory = process_command[position + 1]
+    if os.name == "nt":
+        executable = shutil.which(process_command[0])
+        if executable is None:
+            raise FileNotFoundError(process_command[0])
+        if Path(executable).suffix.casefold() in {".cmd", ".bat"}:
+            process_command = [
+                os.environ.get("COMSPEC") or "cmd.exe",
+                "/d",
+                "/s",
+                "/c",
+                executable,
+                *process_command[1:],
+            ]
+        else:
+            process_command[0] = executable
     process = subprocess.Popen(
-        list(command),
+        process_command,
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
+        encoding="utf-8",
+        errors="replace",
+        cwd=working_directory,
         start_new_session=(os.name == "posix"),
         env=codex_subprocess_env(),
     )
@@ -149,7 +178,7 @@ def run_codex_command(
         terminate_process_tree(process)
         raise
     return subprocess.CompletedProcess(
-        list(command),
+        process_command,
         process.returncode,
         stdout,
         stderr,

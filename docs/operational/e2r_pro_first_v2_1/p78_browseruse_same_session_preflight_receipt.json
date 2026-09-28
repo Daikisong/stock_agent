@@ -1,0 +1,124 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p78_browseruse_same_session_preflight_v1",
+  "observed_at": "2026-09-24T12:59:22+09:00",
+  "status": "EXISTING_BROWSERUSE_SESSION_REUSED_PREFLIGHT_TIMEOUT_UNSUBMITTED",
+  "goal_complete": false,
+  "repository": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "head_sha": "96b73876a5d0fb58f2b226bb31420c4b6cf37b24",
+    "origin_head_sha": "96b73876a5d0fb58f2b226bb31420c4b6cf37b24",
+    "pull_request": 7,
+    "pull_request_url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "pull_request_state": "OPEN",
+    "pull_request_draft": true,
+    "pull_request_mergeable": true,
+    "main_merge": false,
+    "worktree_clean_before_p78_docs": true
+  },
+  "github_actions": {
+    "exact_head_sha": "96b73876a5d0fb58f2b226bb31420c4b6cf37b24",
+    "pro_push": {
+      "run_id": 35950648915,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35950648915",
+      "conclusion": "SUCCESS",
+      "full_unittest_count": 7923,
+      "skipped_count": 38,
+      "failure_count": 0,
+      "error_count": 0,
+      "independent_reviewer_gate": "A-H PASS"
+    },
+    "pro_pr": {
+      "run_id": 35950652188,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35950652188",
+      "conclusion": "SUCCESS",
+      "full_unittest_count": 7923,
+      "skipped_count": 38,
+      "failure_count": 0,
+      "error_count": 0
+    },
+    "v6_pr": {
+      "run_id": 35950652197,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35950652197",
+      "conclusion": "SUCCESS",
+      "gate1_receipt": "4/4 PASS",
+      "phase100": "15/15 PASS",
+      "production_static_audit_critical_count": 0,
+      "full_unittest_failure_count": 0,
+      "full_unittest_error_count": 0
+    }
+  },
+  "user_instruction": "For login-required BrowserUse work, use the user's already signed-in BrowserUse extension session and its existing task tab. Do not open a replacement window, tab, profile, CDP session, or login flow.",
+  "browseruse": {
+    "backend": "existing Chrome BrowserUse extension session",
+    "existing_user_tab_reused": true,
+    "existing_user_tab_count": 1,
+    "origin": "https://chatgpt.com",
+    "title": "ChatGPT",
+    "actual_pro_selection_read_only_confirmed": true,
+    "composer_blank_read_only_confirmed": true,
+    "file_input_count": 0,
+    "stop_control_count": 0,
+    "deep_research_active": false,
+    "visible_user_turn_count": 0,
+    "new_window_tab_or_profile_created": false,
+    "cdp_fallback_used": false,
+    "cdp_capability_error": "Capability is not available: cdp",
+    "devtools_error_warn_logs": [],
+    "relogin_performed": false,
+    "navigation_or_input_performed": false,
+    "prompt_input_upload_download_submit_capture": [0, 0, 0, 0, 0],
+    "source_query_fetch": [0, 0],
+    "score_stage_changes": [0, 0],
+    "observed_preflight_error": "BrowserUseBridgeError: BRIDGE_OPERATION_FAILED: Timed out after 3000ms evaluating selector div.ProseMirror[contenteditable=\"true\"] >> nth=0: Playwright selector deadline exceeded",
+    "failure_classification": "READ_ONLY_BROWSER_PREFLIGHT; technical timeout, not login expiration or policy refusal",
+    "root_cause_confirmed": false,
+    "note": "The extension-connected existing tab was used for read-only inspection. No replacement browser/session was created. The browser-page callback path and Python locator RPC path behaved differently; the underlying 3-second RPC timeout cause remains undetermined."
+  },
+  "harness_attempts": [
+    {
+      "attempt": 1,
+      "host": "Windows-hosted persistent Node REPL",
+      "failure": "spawn(\"python\") selected Windows Python, which failed with PermissionError [WinError 5] while accessing the WSL UNC SQLite path before the runner started.",
+      "runner_started": false,
+      "browser_ui_reached": false,
+      "corrective_action": "Use wsl.exe --distribution Ubuntu-22.04 --cd <worktree> --exec /usr/bin/python3 for the WSL worker."
+    },
+    {
+      "attempt": 2,
+      "host": "WSL Python invoked from the active BrowserUse node_repl call",
+      "failure_stage": "READ_ONLY_BROWSER_PREFLIGHT",
+      "worker_and_bridge_same_active_node_repl_call": true,
+      "result": "The read-only composer text evaluation exceeded the BrowserUse selector deadline after 3000ms.",
+      "page_mutation": false
+    }
+  ],
+  "active_c15_r6_job_last_read_only_state": {
+    "database": "/mnt/c/Users/eorb9/AppData/Local/E2R/ProFirstRuntime/live_v2/20260823T145430Z/pro_first.sqlite3",
+    "read_mode": "SQLite mode=ro; PRAGMA query_only=ON",
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "symbol": "010950",
+    "archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 12,
+    "packet_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "approval_browser_conversation_bound": false,
+    "preparation_failure_stage": "READ_ONLY_BROWSER_PREFLIGHT",
+    "safe_unprepared_resume": true,
+    "submit_count": 0,
+    "capture_count": 0,
+    "successor_job_created": false,
+    "last_error_class": "BrowserUseBridgeError",
+    "last_error_message": "BRIDGE_OPERATION_FAILED: Timed out after 3000ms evaluating selector div.ProseMirror[contenteditable=\"true\"] >> nth=0: Playwright selector deadline exceeded"
+  },
+  "next_step": "Inspect the generic Python-to-BrowserUse locator/evaluate RPC path and deadline propagation with focused tests. Do not blindly retry the same selector. If code changes are required, push only to PR #7 and wait for exact-head Pro push, Pro PR, and V6 PR Actions SUCCESS; then revalidate and resume only this same C15 R6 job in the same user's existing logged-in BrowserUse extension session and existing tab.",
+  "forbidden_for_this_step": [
+    "Open a new browser window, tab, profile, or CDP replacement session",
+    "Ask for or perform relogin because of this technical timeout",
+    "Create a successor job or new research pass",
+    "Input or submit a prompt before resolving the read-only preflight issue",
+    "Start new source searches or fetches",
+    "Change score or Stage",
+    "Merge PR #7 or declare the master goal complete"
+  ],
+  "main_goal_complete": false
+}

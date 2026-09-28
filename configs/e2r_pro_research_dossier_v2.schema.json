@@ -1,0 +1,394 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://e2r.local/schema/e2r_pro_research_dossier_v2.schema.json",
+  "title": "E2R Pro Research Dossier V2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "job_id",
+    "run_id",
+    "conversation_id",
+    "research_pass_id",
+    "parent_pass_id",
+    "target",
+    "as_of_date",
+    "candidate_archetypes",
+    "selected_archetypes",
+    "research_status",
+    "business_model",
+    "material_facts",
+    "counterfacts",
+    "resolution_facts",
+    "question_family_results",
+    "component_research",
+    "structured_metrics",
+    "unresolved_gaps",
+    "source_lineages",
+    "search_route_receipts",
+    "research_passes",
+    "research_saturation",
+    "verification_repair_register",
+    "proposed_score_ranges",
+    "score_authority",
+    "stage_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "e2r_pro_research_dossier_v2"},
+    "job_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "conversation_id": {"type": "string", "minLength": 1},
+    "research_pass_id": {"type": "string", "minLength": 1},
+    "parent_pass_id": {"type": ["string", "null"]},
+    "target": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["target_id", "company_name"],
+      "properties": {
+        "target_id": {"type": "string", "minLength": 1},
+        "symbol": {"type": "string"},
+        "company_name": {"type": "string", "minLength": 1},
+        "aliases": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}
+      }
+    },
+    "as_of_date": {"type": "string", "format": "date"},
+    "candidate_archetypes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "selected_archetypes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "research_status": {
+      "enum": [
+        "NEEDS_PUBLIC_GAP_CLOSURE",
+        "NEEDS_COUNTER_SUPERSESSION",
+        "NEEDS_VERIFIER_REPAIR",
+        "COMPLETE_WITH_LIKELY_NONPUBLIC_REMAINDER",
+        "COMPLETE",
+        "PROVIDER_PENDING",
+        "TRANSPORT_PENDING",
+        "BLOCKED_EXTERNAL"
+      ]
+    },
+    "business_model": {"type": "object"},
+    "material_facts": {"type": "array", "items": {"$ref": "#/$defs/fact"}},
+    "counterfacts": {"type": "array", "items": {"$ref": "#/$defs/fact"}},
+    "resolution_facts": {"type": "array", "items": {"$ref": "#/$defs/fact"}},
+    "question_family_results": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/questionFamilyResult"}
+    },
+    "component_research": {"type": "object"},
+    "structured_metrics": {"type": "object"},
+    "unresolved_gaps": {"type": "array", "items": {"$ref": "#/$defs/gap"}},
+    "source_lineages": {"type": "array", "items": {"$ref": "#/$defs/sourceLineage"}},
+    "search_route_receipts": {"type": "array", "items": {"$ref": "#/$defs/searchRouteReceipt"}},
+    "research_passes": {"type": "array", "items": {"$ref": "#/$defs/researchPass"}},
+    "research_saturation": {"type": "object"},
+    "verification_repair_register": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/repairRecord"}
+    },
+    "proposed_score_ranges": {"type": "array", "maxItems": 0},
+    "score_authority": {"const": false},
+    "stage_authority": {"const": false}
+  },
+  "$defs": {
+    "componentId": {
+      "enum": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing",
+        "market_mispricing",
+        "valuation_rerating",
+        "capital_allocation",
+        "information_confidence"
+      ]
+    },
+    "questionStatus": {
+      "enum": [
+        "SUPPORTED_SCORING",
+        "PARTIALLY_SUPPORTED_SCORING",
+        "SUPPORTED_NON_SCORING",
+        "COUNTER_SUPPORTED",
+        "EVALUATED_ABSENT_AFTER_ADEQUATE_SEARCH",
+        "LIKELY_NONPUBLIC",
+        "FUTURE_EVENT_ONLY",
+        "NOT_APPLICABLE_WITH_REASON",
+        "PUBLIC_SEARCHABLE",
+        "UNKNOWN_ROUTE_NOT_YET_TESTED",
+        "CONTRADICTED_UNRESOLVED",
+        "SOURCE_PENDING",
+        "PROVIDER_PENDING",
+        "PARSER_PENDING",
+        "VERIFIER_REPAIR_REQUIRED"
+      ]
+    },
+    "availabilityClass": {
+      "enum": [
+        "PUBLIC_SEARCHABLE",
+        "LIKELY_NONPUBLIC",
+        "FUTURE_EVENT_ONLY",
+        "PROVIDER_BLOCKED",
+        "PARSER_BLOCKED",
+        "NOT_APPLICABLE",
+        "UNKNOWN_ROUTE_NOT_YET_TESTED"
+      ]
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "dossier_fact_id",
+        "research_pass_id",
+        "source_lineage_id",
+        "question_family_ids",
+        "statement",
+        "direction",
+        "subject",
+        "target_id",
+        "issuer_scoped",
+        "business_segment",
+        "product_family",
+        "economic_mechanism",
+        "predicate",
+        "value",
+        "unit",
+        "period",
+        "event_date",
+        "current_status",
+        "candidate_components",
+        "source_url",
+        "source_title",
+        "source_publisher",
+        "published_at",
+        "supporting_excerpt",
+        "confidence"
+      ],
+      "properties": {
+        "dossier_fact_id": {"type": "string", "pattern": "^PROFACT-[A-Za-z0-9._:-]+$"},
+        "research_pass_id": {"type": "string", "minLength": 1},
+        "source_lineage_id": {"type": "string", "minLength": 1},
+        "question_family_ids": {
+          "type": "array",
+          "minItems": 0,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "repair_of_candidate_id": {"type": ["string", "null"]},
+        "statement": {"type": "string", "minLength": 1},
+        "direction": {"enum": ["POSITIVE", "COUNTER", "NEGATIVE", "NEUTRAL", "RESOLUTION"]},
+        "subject": {"type": "string", "minLength": 1},
+        "target_id": {"type": "string", "minLength": 1},
+        "issuer_scoped": {"type": "boolean"},
+        "business_segment": {"type": ["string", "null"]},
+        "product_family": {"type": ["string", "null"]},
+        "economic_mechanism": {"type": "string", "minLength": 1},
+        "predicate": {"type": "string", "minLength": 1},
+        "value": {},
+        "unit": {"type": ["string", "null"]},
+        "period": {"type": ["string", "null"]},
+        "event_date": {"type": ["string", "null"]},
+        "current_status": {"enum": ["CURRENT", "OPEN", "RESOLVED", "SUPERSEDED", "HISTORICAL", "UNKNOWN"]},
+        "candidate_components": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/componentId"}
+        },
+        "source_url": {"type": "string", "format": "uri"},
+        "source_title": {"type": "string"},
+        "source_publisher": {"type": "string"},
+        "published_at": {"type": ["string", "null"]},
+        "supporting_excerpt": {"type": "string", "minLength": 1},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "questionFamilyResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "archetype_id",
+        "question_family_id",
+        "status",
+        "support_fact_ids",
+        "counter_fact_ids",
+        "resolution_fact_ids",
+        "attempted_source_role_ids",
+        "search_route_receipt_ids",
+        "required_source_roles_satisfied",
+        "required_source_roles_missing",
+        "availability_class",
+        "affected_component_ids",
+        "could_change_score",
+        "could_change_stage",
+        "could_change_hard_break",
+        "closure_reason",
+        "adequate_search_proven"
+      ],
+      "properties": {
+        "archetype_id": {"type": "string", "minLength": 1},
+        "question_family_id": {"type": "string", "minLength": 1},
+        "status": {"$ref": "#/$defs/questionStatus"},
+        "support_fact_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "counter_fact_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "resolution_fact_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "attempted_source_role_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "search_route_receipt_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "required_source_roles_satisfied": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "required_source_roles_missing": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "availability_class": {"$ref": "#/$defs/availabilityClass"},
+        "affected_component_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/componentId"}},
+        "could_change_score": {"type": "boolean"},
+        "could_change_stage": {"type": "boolean"},
+        "could_change_hard_break": {"type": "boolean"},
+        "closure_reason": {"type": "string", "minLength": 1},
+        "adequate_search_proven": {"type": "boolean"}
+      }
+    },
+    "searchRouteReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route_receipt_id",
+        "pass_id",
+        "archetype_id",
+        "question_family_id",
+        "gap_id",
+        "source_role_id",
+        "query_or_navigation_objective",
+        "query_text",
+        "result_count_seen",
+        "opened_source_urls",
+        "accepted_fact_ids",
+        "rejected_candidate_ids",
+        "provider_status",
+        "no_new_route_reason",
+        "performed_at"
+      ],
+      "properties": {
+        "route_receipt_id": {"type": "string", "minLength": 1},
+        "pass_id": {"type": "string", "minLength": 1},
+        "archetype_id": {"type": "string", "minLength": 1},
+        "question_family_id": {"type": "string", "minLength": 1},
+        "gap_id": {"type": ["string", "null"]},
+        "source_role_id": {"type": "string", "minLength": 1},
+        "query_or_navigation_objective": {"type": "string", "minLength": 1},
+        "query_text": {"type": ["string", "null"]},
+        "result_count_seen": {"type": "integer", "minimum": 0},
+        "opened_source_urls": {"type": "array", "uniqueItems": true, "items": {"type": "string", "format": "uri"}},
+        "accepted_fact_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "rejected_candidate_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "provider_status": {"enum": ["SUCCESS", "PROVIDER_PENDING", "PARSER_PENDING", "TRANSPORT_PENDING", "FAILED"]},
+        "no_new_route_reason": {"type": ["string", "null"]},
+        "performed_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "gap_id",
+        "stable_gap_key",
+        "archetype_id",
+        "question_family_id",
+        "status",
+        "availability_class",
+        "materiality",
+        "required_source_role_ids",
+        "attempted_source_role_ids",
+        "affected_component_ids",
+        "could_change_score",
+        "could_change_stage",
+        "could_change_hard_break"
+      ],
+      "properties": {
+        "gap_id": {"type": "string", "minLength": 1},
+        "stable_gap_key": {"type": "string", "minLength": 1},
+        "archetype_id": {"type": "string", "minLength": 1},
+        "question_family_id": {"type": "string", "minLength": 1},
+        "status": {"$ref": "#/$defs/questionStatus"},
+        "availability_class": {"$ref": "#/$defs/availabilityClass"},
+        "materiality": {"enum": ["CORE_SCORE", "SCORE_BOUNDARY", "STAGE_BOUNDARY", "HARD_BREAK", "MONITORING"]},
+        "required_source_role_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "attempted_source_role_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "affected_component_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/componentId"}},
+        "could_change_score": {"type": "boolean"},
+        "could_change_stage": {"type": "boolean"},
+        "could_change_hard_break": {"type": "boolean"}
+      }
+    },
+    "sourceLineage": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["source_lineage_id", "source_urls", "fact_ids", "independence_group_id", "status"],
+      "properties": {
+        "source_lineage_id": {"type": "string", "minLength": 1},
+        "source_urls": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "format": "uri"}},
+        "fact_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "independence_group_id": {"type": "string", "minLength": 1},
+        "status": {"enum": ["ACTIVE", "SUPERSEDED", "REJECTED", "WITHDRAWN"]}
+      }
+    },
+    "researchPass": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["pass_id", "parent_pass_id", "pass_name", "status", "prompt_hash", "response_hash"],
+      "properties": {
+        "pass_id": {"type": "string", "minLength": 1},
+        "parent_pass_id": {"type": ["string", "null"]},
+        "pass_name": {
+          "enum": [
+            "INITIAL_FULL_RESEARCH",
+            "ARCHETYPE_CONFIRMATION",
+            "PRIMARY_OFFICIAL_RESEARCH",
+            "ECOSYSTEM_COUNTER_RESEARCH",
+            "REVISION_VALUATION_RESEARCH",
+            "QUESTION_CLOSURE_AUDIT",
+            "PUBLIC_GAP_CLOSURE",
+            "COUNTER_SUPERSESSION_CLOSURE",
+            "SOURCE_VERIFICATION",
+            "VERIFIER_REPAIR",
+            "SATURATION_AUDIT",
+            "FULL_THESIS_READY"
+          ]
+        },
+        "status": {"enum": ["COMPLETE", "PENDING", "PROVIDER_PENDING", "PARSER_PENDING", "TRANSPORT_PENDING", "FAILED"]},
+        "prompt_hash": {"type": "string", "minLength": 1},
+        "response_hash": {"type": ["string", "null"]}
+      }
+    },
+    "repairRecord": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["candidate_id", "question_family_id", "rejection_category", "status"],
+      "properties": {
+        "candidate_id": {"type": "string", "minLength": 1},
+        "question_family_id": {"type": "string", "minLength": 1},
+        "rejection_category": {
+          "enum": [
+            "QUOTE_MISMATCH",
+            "WRONG_SUBJECT",
+            "WRONG_TARGET",
+            "WRONG_SEGMENT",
+            "WRONG_PRODUCT",
+            "FUTURE_SOURCE",
+            "SNIPPET_ONLY",
+            "SOURCE_UNAVAILABLE",
+            "DATE_UNRESOLVED",
+            "DUPLICATE_LINEAGE",
+            "UNSUPPORTED_DERIVATION"
+          ]
+        },
+        "status": {"enum": ["REPAIR_REQUIRED", "CORRECTED", "REPLACED", "NARROWED", "WITHDRAWN", "REVERIFIED_ACCEPTED", "REVERIFIED_REJECTED"]}
+      }
+    }
+  }
+}

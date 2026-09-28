@@ -1,0 +1,90 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_c17_r19_r20_trusted_pointer_dispatch_receipt_v1",
+  "status": "R19_R20_DIAGNOSTIC_ONLY_AND_TRUSTED_POINTER_REPAIR_PASS_PENDING_R21",
+  "recorded_at": "2026-08-31T09:18:00Z",
+  "git_head_before_fix": "6eb21ca712c187673fa78987a62f958c3ab5c82c",
+  "target": {
+    "symbol": "011170",
+    "company_name": "롯데케미칼",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+  },
+  "r19": {
+    "fresh_session_id": "FRESH-V2-1-C17-R19-20260831T085026Z",
+    "job_id": "PROJOB-d2d5d6a9411cab4b4db573be",
+    "run_id": "PRORUN-28a253a6a973e32815b56445",
+    "initial_pass_id": "PROPASS-535e7fd87ca078bf4db8f8f3",
+    "submit_count": 1,
+    "capture_count": 0,
+    "normal_conversation_candidate": "6a95407d-dc38-83e8-a284-9275094078cd",
+    "transient_web_candidate": "WEB:0a5f7c9e-838a-4a1c-b204-31458402a192",
+    "normal_candidate_exact_job_run_markers": false,
+    "transient_candidate_durable": false,
+    "automatic_resubmit_count": 0,
+    "score_authority": false,
+    "stage_authority": false,
+    "frozen_at": "2026-08-31T09:03:37.718221Z"
+  },
+  "r20": {
+    "fresh_session_id": "FRESH-V2-1-C17-R20-20260831T090650Z",
+    "job_id": "PROJOB-b4c24d701a94734313f0a6b0",
+    "run_id": "PRORUN-ea00361003ad6708f4242637",
+    "initial_pass_id": "PROPASS-d227711fe8692bd08bc4f972",
+    "submit_count": 1,
+    "capture_count": 0,
+    "transient_web_candidate": "WEB:d7b574ab-1bee-4796-9d50-a9f94483a181",
+    "exact_job_run_markers_persisted": false,
+    "automatic_resubmit_count": 0,
+    "score_authority": false,
+    "stage_authority": false,
+    "frozen_at": "2026-08-31T09:12:34.082350Z"
+  },
+  "diagnosis": {
+    "observed_fact": "two consecutive approved submits created an optimistic or transient conversation shell without a durable user turn containing the exact job/run markers",
+    "source_fact": "the only guarded send boundary used locator.evaluate with element.click(), which dispatches a synthetic DOM click",
+    "inference": "the current ChatGPT framework can clear the composer on that synthetic click without durably accepting the framework-owned prompt state",
+    "repeated_fresh_attempts_before_fix_allowed": false
+  },
+  "generic_code_repairs": {
+    "send_dispatch_before": "send.evaluate(element => element.click())",
+    "send_dispatch_after": "send.click(force=True, timeout=30000)",
+    "trusted_event_required": true,
+    "animated_button_stability_wait_bypassed": true,
+    "second_click_fallback_added": false,
+    "approval_and_exactly_once_guards_preserved": true,
+    "static_audit_counts_trusted_and_synthetic_dispatches": true,
+    "ci_floor_expectation_synced": "7860 -> 7862"
+  },
+  "verification": {
+    "trusted_pointer_regression": "PASS / event.isTrusted=true / submit_count=1",
+    "windows_approval_browser_adapter_submit_guard_tests": "55/55 PASS / failure 0 / error 0",
+    "linux_static_and_submit_guard_tests": "12/12 PASS",
+    "git_diff_check": "PASS",
+    "old_head_ci": {
+      "pro_first_run": 33374694831,
+      "v6_run": 33374694738,
+      "conclusion": "FAILURE",
+      "root_cause": "operational acceptance still expected the historical 7860 floor after the workflow moved to 7862",
+      "functional_live_result_used": false
+    },
+    "new_head_ci": "PENDING_AFTER_COMMIT"
+  },
+  "browser_safety": {
+    "existing_logged_in_chatgpt_tab_reused": true,
+    "new_window_count": 0,
+    "new_tab_count": 0,
+    "new_target_count": 0,
+    "r19_same_job_resubmit_count": 0,
+    "r20_same_job_resubmit_count": 0
+  },
+  "master_goal_state": {
+    "live_full_thesis_pass_count": 1,
+    "live_full_thesis_required_count": 3,
+    "c06": "PASS",
+    "c17": "PENDING_R21_ON_TRUSTED_POINTER_HEAD",
+    "c28": "PENDING",
+    "operational_research_ready_allowed": false,
+    "pr_draft_release_allowed": false,
+    "main_merge_allowed": false
+  }
+}

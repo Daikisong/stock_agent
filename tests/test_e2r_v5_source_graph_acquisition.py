@@ -653,7 +653,7 @@ class PublicationMetadataFetcher:
                 f"JSON_LD_DATE_PUBLISHED:{self.published_at}",
             ),
             publication_metadata_semantics_version=(
-                "e2r_page_fetch_publication_metadata_v1"
+                "e2r_page_fetch_publication_metadata_v2"
             ),
         )
 
@@ -10306,7 +10306,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         )
         self.assertEqual(
             document["publication_metadata_semantics_version"],
-            "e2r_page_fetch_publication_metadata_v1",
+            "e2r_page_fetch_publication_metadata_v2",
         )
 
     def test_future_fetched_publication_metadata_is_rejected(self) -> None:

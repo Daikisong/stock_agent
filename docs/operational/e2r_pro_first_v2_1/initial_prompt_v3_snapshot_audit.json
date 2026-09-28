@@ -1,0 +1,773 @@
+{
+  "audit_hash": "725e63da185ebbcdc90007c11d8834195b058195d580c18019b1ede140fd4b98",
+  "canonical_contract_count": 36,
+  "counters": {
+    "atomic_contract_missing_snapshot_count": 0,
+    "compile_failure_count": 0,
+    "cross_archetype_question_pollution_count": 0,
+    "derived_metric_separation_missing_snapshot_count": 0,
+    "forced_complete_snapshot_count": 0,
+    "mandatory_question_missing_count": 0,
+    "output_v3_schema_missing_snapshot_count": 0,
+    "prompt_over_limit_count": 0,
+    "score_stage_leakage_snapshot_count": 0,
+    "source_role_policy_missing_snapshot_count": 0,
+    "verifier_preflight_missing_snapshot_count": 0
+  },
+  "critical_count": 0,
+  "cross_guard_prompt_snapshot_count": 4,
+  "extra_snapshot_ids": [],
+  "missing_snapshot_ids": [],
+  "primary_prompt_snapshot_count": 32,
+  "prompt_snapshot_count": 36,
+  "r13_cross_guard_ids": [
+    "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+    "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+    "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+    "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+  ],
+  "schema_version": "e2r_pro_first_v2_1_initial_prompt_v3_audit_v1",
+  "snapshots": [
+    {
+      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "attached_contract_ids": [
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 53215,
+      "prompt_hash": "739e57cc7aac80a201965efd9366e53808d90f2a919f0f5538a19f434e3329ed",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C01_ORDER_BACKLOG_MARGIN_BRIDGE.md"
+    },
+    {
+      "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "attached_contract_ids": [
+        "C02_POWER_GRID_DATACENTER_CAPEX",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 53200,
+      "prompt_hash": "50cccf9b7b454fdee90163da6b01238a1565d3c82de4111cba1d1e1403dfe9cf",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C02_POWER_GRID_DATACENTER_CAPEX.md"
+    },
+    {
+      "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "attached_contract_ids": [
+        "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52948,
+      "prompt_hash": "da29c2003341f68b8b2270b49fb0ca98bd26a3350e5dfd08c5c113e9a77ff681",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG.md"
+    },
+    {
+      "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "attached_contract_ids": [
+        "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 53343,
+      "prompt_hash": "a97b8b06cd738bddd0f7a6d45813e44ac92d64822a17b44d517265acf27ba846",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY.md"
+    },
+    {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "attached_contract_ids": [
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52784,
+      "prompt_hash": "f00f503da858b7382113ef41f99f2604fb92ed7b61fb2dba44508a1c299afd6d",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C05_EPC_MEGA_CONTRACT_MARGIN_GAP.md"
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "attached_contract_ids": [
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 28,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 54220,
+      "prompt_hash": "69d5d1ecd45fcaf46a57bea461d88cf2d8d92244fcbc6265aee82a3aad2bd37a",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C06_HBM_MEMORY_CUSTOMER_CAPACITY.md"
+    },
+    {
+      "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "attached_contract_ids": [
+        "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 28,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 54178,
+      "prompt_hash": "287a5c64f5cbeb7278da62b6ff5bfcbd8d61f4d087f6a3697c1802e36f81c6a3",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH.md"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "attached_contract_ids": [
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 53450,
+      "prompt_hash": "e68bb363d4ec51ab9e2b570e255fa0b7dd5669f8c67afa9acbf3d69635a6c5eb",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY.md"
+    },
+    {
+      "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "attached_contract_ids": [
+        "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 53355,
+      "prompt_hash": "0d6ee3d4a70a4501846eef69fbf7f6ada19da0d02e876d3df140e45fdfa21e65",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF.md"
+    },
+    {
+      "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "attached_contract_ids": [
+        "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 53450,
+      "prompt_hash": "54780d92c0717a2990c3d97ac28a9b5b5d1ad2be791d4ad101881a8c78d213af",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE.md"
+    },
+    {
+      "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "attached_contract_ids": [
+        "C11_BATTERY_ORDERBOOK_RERATING",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52280,
+      "prompt_hash": "098ce0708fcb9e9452ac9e7b860164e5b82e2478d52376c5e4b8755b9c68ffc6",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C11_BATTERY_ORDERBOOK_RERATING.md"
+    },
+    {
+      "archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "attached_contract_ids": [
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52233,
+      "prompt_hash": "b34e99c4326e8fb31cca1ffae6660e907fa0496bb3109dd8b81233f6a62c535e",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK.md"
+    },
+    {
+      "archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "attached_contract_ids": [
+        "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52198,
+      "prompt_hash": "1567427a53b5638282e260b2826513b8b027e1286422b13a919504043ddd47bd",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C13_BATTERY_JV_UTILIZATION_AMPC_IRA.md"
+    },
+    {
+      "archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "attached_contract_ids": [
+        "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 51967,
+      "prompt_hash": "4c2bd78cb07fa7631349842ab5facf78f40e16f541014dd6670a6910355011f7",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C14_EV_DEMAND_SLOWDOWN_4B_4C.md"
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "attached_contract_ids": [
+        "C15_MATERIAL_SPREAD_SUPERCYCLE",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 53062,
+      "prompt_hash": "61df1d396cb043b852653b07b599faca96f8898fc9f6be9659a37af56e6bc71f",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C15_MATERIAL_SPREAD_SUPERCYCLE.md"
+    },
+    {
+      "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "attached_contract_ids": [
+        "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52178,
+      "prompt_hash": "87fb94dd84be08171e64f421ea3dce50e251c38bcd666753592c961ab21a14fe",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C16_STRATEGIC_RESOURCE_POLICY_SUPPLY.md"
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "attached_contract_ids": [
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52215,
+      "prompt_hash": "4cd46230d7f9ca04eb2f5126c5f0dc984e46fd2f92726685d819c994bf144ee3",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C17_CHEMICAL_COMMODITY_MARGIN_SPREAD.md"
+    },
+    {
+      "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "attached_contract_ids": [
+        "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 53192,
+      "prompt_hash": "0cb51f10f5d1543559d0a93055d87daea5a703b7af3563e7fb4c25975145b296",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C18_CONSUMER_EXPORT_CHANNEL_REORDER.md"
+    },
+    {
+      "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "attached_contract_ids": [
+        "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52168,
+      "prompt_hash": "3a116f307769d6b7794dcc91790641a138459e7f17edc82614a9942c90d6843e",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C19_BRAND_RETAIL_INVENTORY_MARGIN.md"
+    },
+    {
+      "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "attached_contract_ids": [
+        "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52428,
+      "prompt_hash": "c8aea641bc02fd06ea04ddca2c98e877e73e0f755806816f6e5e327ac27ecedc",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION.md"
+    },
+    {
+      "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "attached_contract_ids": [
+        "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 53180,
+      "prompt_hash": "0de7a4064ab79a8128f4a6b8b56a50b9c64deeca860ca710df5d8fabbf673544",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN.md"
+    },
+    {
+      "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "attached_contract_ids": [
+        "C22_INSURANCE_RATE_CYCLE_RESERVE",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52237,
+      "prompt_hash": "6d8ff11137382036ca022e4a20c81242fb9e76578bd50e6eb8f579e12874b633",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C22_INSURANCE_RATE_CYCLE_RESERVE.md"
+    },
+    {
+      "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "attached_contract_ids": [
+        "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52471,
+      "prompt_hash": "faef6ce1b0905473798a80006dd662dd1bf4f3577f1a6ec20f8a32528923e880",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION.md"
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "attached_contract_ids": [
+        "C24_BIO_TRIAL_DATA_EVENT_RISK",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 28,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 54347,
+      "prompt_hash": "997543f9e517730568ddbc44939dfe7bc471178eea63728033d52a9cfcd241ad",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C24_BIO_TRIAL_DATA_EVENT_RISK.md"
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "attached_contract_ids": [
+        "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52820,
+      "prompt_hash": "306cf882bdc1e3d840ea8cdfceaee1ee013f9958ab486719165c7ebca1a5da91",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT.md"
+    },
+    {
+      "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "attached_contract_ids": [
+        "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52447,
+      "prompt_hash": "9f124d3f04fdae86f8a8442e10abd02c98a3fb66a34b7b1608165934b96e9645",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE.md"
+    },
+    {
+      "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "attached_contract_ids": [
+        "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52270,
+      "prompt_hash": "d635149d9595a9e3e171f36ad6dd2e1390f0979e509c2e83a031d2964b3f356a",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C27_CONTENT_IP_GLOBAL_MONETIZATION.md"
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "attached_contract_ids": [
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 53457,
+      "prompt_hash": "6196d8957dbc755e5d5d29f2289cdbcbaf20f1959fc5d836d9eae27859044d32",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C28_SOFTWARE_SECURITY_CONTRACT_RETENTION.md"
+    },
+    {
+      "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "attached_contract_ids": [
+        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 53306,
+      "prompt_hash": "9886375e723085ed795bba463857ee08af520344b7fa7eb03a6fcc9b4b957334",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE.md"
+    },
+    {
+      "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "attached_contract_ids": [
+        "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 53138,
+      "prompt_hash": "dda5869b447a7c4a43dcd14e56a6faf27c62da6b0a0b7c8f570ec0d49c53c8d4",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK.md"
+    },
+    {
+      "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "attached_contract_ids": [
+        "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 27,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 53081,
+      "prompt_hash": "e81a682a61691eec4e14e2682000eb8cb5a22029911b7f562ab4ba898a66cbf8",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C31_POLICY_SUBSIDY_LEGISLATION_EVENT.md"
+    },
+    {
+      "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "attached_contract_ids": [
+        "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "PRIMARY",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 26,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 52288,
+      "prompt_hash": "46c76ce87cc2fd4c871a02f685cc86b6329563f26690a992ad2953810792a585",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP.md"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "attached_contract_ids": [
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW"
+      ],
+      "contract_role": "CROSS_GUARD",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 5,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 31707,
+      "prompt_hash": "61311d7c65e229eba073f6c3290b534db44d98de6d0bf50f801536a05a724187",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW.md"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "attached_contract_ids": [
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM"
+      ],
+      "contract_role": "CROSS_GUARD",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 5,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 31300,
+      "prompt_hash": "f45e4b7c61958c189de030f28c4198218528b40bfc772cd32cc5caf997640af9",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/R13_CROSS_ARCHETYPE_4B_4C_REDTEAM.md"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "attached_contract_ids": [
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION"
+      ],
+      "contract_role": "CROSS_GUARD",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 5,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 31628,
+      "prompt_hash": "6504ea782aefb1e2055e37f312630bc57eba3fedcb0cc26e803567f7e2bb1009",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION.md"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "attached_contract_ids": [
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "contract_role": "CROSS_GUARD",
+      "dossier_schema_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+      "failure_codes": [],
+      "mandatory_question_count": 5,
+      "missing_atomic_markers": [],
+      "missing_mandatory_question_ids": [],
+      "missing_preflight_fields": [],
+      "polluted_question_ids": [],
+      "prompt_char_count": 31514,
+      "prompt_hash": "73ac36ef68d8ae03f0351afa67055837c899ced731d89f4005475607ab10e4cb",
+      "snapshot_path": "docs/operational/e2r_pro_first_v2_1/prompt_snapshots_v3/R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL.md"
+    }
+  ],
+  "status": "PASS"
+}

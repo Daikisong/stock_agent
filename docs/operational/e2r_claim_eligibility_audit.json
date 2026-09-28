@@ -1,5 +1,5 @@
 {
-  "component_eligible_count": 28,
+  "component_eligible_count": 36,
   "critical_count_sum": 0,
   "critical_counts": {
     "component_score_without_eligibility_decision_count": 0,
@@ -66,13 +66,11 @@
     {
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "claim_id": "CLM-8a6484cd91e4ef637201",
-      "component_scoring_eligibility": false,
-      "eligibility_decision_id": "ELIG-5405821d8ef9510565c9cf31",
-      "eligibility_reasons": [
-        "WRONG_BUSINESS_MECHANISM"
-      ],
-      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
-      "full_thesis_eligibility": false,
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-0244f9a8a32bc2e4e8ee3743",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
       "ledger_acceptance": true,
       "risk_scoring_eligibility": false,
       "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
@@ -81,13 +79,11 @@
     {
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "claim_id": "CLM-db034d8f03ce72819564",
-      "component_scoring_eligibility": false,
-      "eligibility_decision_id": "ELIG-a0a78066f70e1023aac373f0",
-      "eligibility_reasons": [
-        "WRONG_BUSINESS_MECHANISM"
-      ],
-      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
-      "full_thesis_eligibility": false,
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-f6804ea31e4662e47281559b",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
       "ledger_acceptance": true,
       "risk_scoring_eligibility": false,
       "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
@@ -96,13 +92,11 @@
     {
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "claim_id": "CLM-63f797bc4396e1bff5f0",
-      "component_scoring_eligibility": false,
-      "eligibility_decision_id": "ELIG-0fb6404865a7a6c38d4a63cd",
-      "eligibility_reasons": [
-        "WRONG_BUSINESS_MECHANISM"
-      ],
-      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
-      "full_thesis_eligibility": false,
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-1e26b01276e544ca29c1fddf",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
       "ledger_acceptance": true,
       "risk_scoring_eligibility": false,
       "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
@@ -111,13 +105,11 @@
     {
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "claim_id": "CLM-e0a7f204219f352da273",
-      "component_scoring_eligibility": false,
-      "eligibility_decision_id": "ELIG-48534f33af46f9217888ff37",
-      "eligibility_reasons": [
-        "WRONG_BUSINESS_MECHANISM"
-      ],
-      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
-      "full_thesis_eligibility": false,
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-6424bc864ea13842a176150e",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
       "ledger_acceptance": true,
       "risk_scoring_eligibility": false,
       "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
@@ -388,13 +380,11 @@
     {
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "claim_id": "CLM-95da73592de9afc97446",
-      "component_scoring_eligibility": false,
-      "eligibility_decision_id": "ELIG-3ce44bc98745eccf945e1acb",
-      "eligibility_reasons": [
-        "WRONG_BUSINESS_MECHANISM"
-      ],
-      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
-      "full_thesis_eligibility": false,
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-bd0f4888cb0236ecd05a5fb4",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
       "ledger_acceptance": true,
       "risk_scoring_eligibility": false,
       "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
@@ -429,13 +419,11 @@
     {
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "claim_id": "CLM-fcc98ec139169a04e7ae",
-      "component_scoring_eligibility": false,
-      "eligibility_decision_id": "ELIG-e8efeeba74530e9fcfe1c5a0",
-      "eligibility_reasons": [
-        "WRONG_BUSINESS_MECHANISM"
-      ],
-      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
-      "full_thesis_eligibility": false,
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-73a7cbef6c870ab304ce39a3",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
       "ledger_acceptance": true,
       "risk_scoring_eligibility": false,
       "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
@@ -444,13 +432,11 @@
     {
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "claim_id": "CLM-53ae6758183d6993b268",
-      "component_scoring_eligibility": false,
-      "eligibility_decision_id": "ELIG-e97f40918f6adf7a353c2193",
-      "eligibility_reasons": [
-        "WRONG_BUSINESS_MECHANISM"
-      ],
-      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
-      "full_thesis_eligibility": false,
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-6bac85d6cfbe2062e89e8c10",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
       "ledger_acceptance": true,
       "risk_scoring_eligibility": false,
       "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
@@ -459,13 +445,11 @@
     {
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "claim_id": "CLM-b0012c7f76d639aed2da",
-      "component_scoring_eligibility": false,
-      "eligibility_decision_id": "ELIG-f169dee905259f29aca81250",
-      "eligibility_reasons": [
-        "WRONG_BUSINESS_MECHANISM"
-      ],
-      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
-      "full_thesis_eligibility": false,
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-fd7ec3c93d45da202ea8e8e8",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
       "ledger_acceptance": true,
       "risk_scoring_eligibility": false,
       "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
@@ -539,7 +523,7 @@
       "stage_event_eligibility": false
     }
   ],
-  "full_thesis_eligible_count": 28,
+  "full_thesis_eligible_count": 36,
   "legacy_boolean_contradiction_count": 39,
   "legacy_boolean_contradictions": [
     {

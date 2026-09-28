@@ -1,0 +1,92 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p102_existing_session_attachment_label_misclassification_v1",
+  "recorded_at": "2026-09-25T04:49:13+09:00",
+  "status": "FAILED_SAFE_NO_AUTOMATIC_RESUBMIT",
+  "user_instruction": "When authentication is needed, use the user's already-logged-in BrowserUse session and an existing task tab in that session; do not open a substitute browser/session or relogin.",
+  "target": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "run_id": "PRORUN-ff542ef979f09bcaf7cf2545",
+    "initial_pass_id": "PROPASS-a7654d1d80c9c041afb5777f",
+    "symbol": "010950",
+    "company": "S-Oil",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "packet_canonical_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df"
+  },
+  "browser": {
+    "backend": "Chrome BrowserUse plugin extension",
+    "existing_logged_in_session_reused": true,
+    "existing_tab_reenumerated_and_claimed": true,
+    "claimed_tab_object_only": true,
+    "observed_url": "https://chatgpt.com/",
+    "observed_mode": "Chat / 6 Pro",
+    "login_visible": true,
+    "new_browser_window_tab_profile_or_cdp_session": false,
+    "relogin": false,
+    "console_errors_and_warnings": [],
+    "cdp_capability_error": "Capability is not available: cdp"
+  },
+  "composer_snapshot": {
+    "root_tag": "FORM",
+    "visible_attachment_tile_count": 1,
+    "visible_attachment_filename": "research_packet(20260924-172107).json",
+    "signals": [
+      {
+        "source": "attachment DIV aria-label",
+        "value": "research_packet(20260924-172107).json",
+        "is_attachment_identity": true
+      },
+      {
+        "source": "attachment BUTTON aria-label",
+        "value": "research_packet(20260924-172107).json",
+        "is_attachment_identity": true
+      },
+      {
+        "source": "remove BUTTON aria-label",
+        "value": "파일 1 제거: research_packet(20260924-172107).json",
+        "is_attachment_identity": false,
+        "misclassified_as_file_signal": true
+      }
+    ],
+    "root_cause": "The generic file-signal matcher recognizes the filename suffix embedded in an accessible remove-action label and counts it as another composer attachment. This inflates one visible tile into multiple signals."
+  },
+  "attempt": {
+    "exact_error": "BrowserUIIncompatible: unprepared recovery found multiple visible composer attachments",
+    "result": "FAILED_SAFE_NO_AUTOMATIC_RESUBMIT",
+    "submit_observed": false,
+    "stopped_before_browser_preparation_or_prompt_input": true,
+    "prompt_input_count": 0,
+    "new_attachment_count": 0,
+    "download_count": 0,
+    "submit_count": 0,
+    "capture_count": 0,
+    "source_query_count": 0,
+    "source_fetch_count": 0,
+    "new_job_or_pass_count": 0
+  },
+  "durable_state": {
+    "read_mode": "SQLite mode=ro; PRAGMA query_only=ON",
+    "before_and_after_unchanged": true,
+    "state": "USER_ATTENTION_REQUIRED",
+    "version": 26,
+    "submit_count": 0,
+    "capture_count": 0,
+    "approval_packet_hash": null,
+    "approval_consumed_at": null,
+    "browser_session_id": null,
+    "conversation_id": null,
+    "prepare_receipt": null,
+    "safe_unprepared_resume": false,
+    "durable_last_error_unchanged": "BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab"
+  },
+  "next_action": "Fix the generic composer snapshot classifier so remove/delete action labels are not attachment identities; add regression coverage for one exact visible attachment plus its remove button and for two real attachments remaining fail-closed. Run focused tests/static audit and wait for exact-head CI SUCCESS before another same-job recovery attempt in the user's existing logged-in BrowserUse session.",
+  "not_done": [
+    "No code fix in P102",
+    "No prompt typed or transmitted",
+    "No new packet upload or download",
+    "No response captured",
+    "No new browser, window, tab, profile, CDP session, or login",
+    "No new research query/fetch, job, pass, archetype, score, or Stage change"
+  ],
+  "master_goal_complete": false
+}

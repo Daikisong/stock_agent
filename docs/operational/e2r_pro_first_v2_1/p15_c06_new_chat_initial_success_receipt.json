@@ -1,0 +1,131 @@
+{
+  "schema_version": "e2r_pro_first_progress_checkpoint_v1",
+  "recorded_at": "2026-08-28T04:25:42+09:00",
+  "phase": "P15_C06_NEW_CHAT_INITIAL_SUCCESS",
+  "status": "PASS",
+  "completion_claimed": false,
+  "old_conversation_seal": {
+    "job_id": "PROJOB-ab48ce7e94097cf9b6846602",
+    "run_id": "PRORUN-683f5a5423a6e367f443c6de",
+    "conversation_id": "6a8db0ad-8ed0-83e8-888e-dce26c950343",
+    "status": "DIAGNOSTIC_ONLY_SEALED",
+    "reason": "CHATGPT_CONVERSATION_SERVER_PERSISTENCE_FAILED_TWICE",
+    "old_facts_injected_into_successor_count": 0,
+    "new_submit_after_seal_count": 0
+  },
+  "successor_identity": {
+    "runtime_root": "C:\\Users\\eorb9\\AppData\\Local\\E2R\\ProFirstRuntime\\fresh_v2_1\\20260827T174738Z",
+    "fresh_session_id": "FRESH-V2-1-C06-SUCCESSOR-20260827T174738Z",
+    "job_id": "PROJOB-821fd91d8204a7c366ec86f0",
+    "run_id": "PRORUN-f34eb764254e9fd6c7e21cb4",
+    "research_pass_id": "PROPASS-05c3820ffb6f29285d34d702",
+    "conversation_id": "6a90786a-8234-83e8-b7b4-c03f18b4e725",
+    "durable_user_turn_id": "58089b79-d992-487c-920e-4089ae859769",
+    "assistant_turn_id": "request-WEB:f195e5b5-12e1-40e8-a78c-2105aa0b2116-0",
+    "submit_count": 1,
+    "capture_count": 1,
+    "browser_submit_delta_during_recovery": 0
+  },
+  "server_persistence_recovery": {
+    "initial_observation": "LARGE_USER_TURN_HYDRATION_TIMEOUT",
+    "recovery_mode": "READ_ONLY_EXACT_JOB_RUN_TURN_REPROOF",
+    "late_persistence_confirmed": true,
+    "terminal_result_hash": "0cde307edd3290a9f96fa3af0e5e3733a772a91b9d9a89f95fc0f141d29613f6",
+    "stable_terminal_observations": 3,
+    "same_pass_resubmit_count": 0,
+    "automatic_resubmit_allowed": false
+  },
+  "capture": {
+    "capture_source": "DOWNLOAD_JSON",
+    "capture_report_hash": "9026afe6f016f4953ee32b3b1488c1aacc536643d7d49821962580ae57fba838",
+    "dossier_json_hash": "159cc35e82abc5a4856ae3901642b32ccdec040809d1bdc7ef5f5388b14e63c2",
+    "first_download_was_zero_bytes": true,
+    "recovery_resubmitted_prompt": false,
+    "optional_pdf_error": null
+  },
+  "import": {
+    "dossier_id": "DOSSIER-e0994458e91e1ed06f047985",
+    "normalized_dossier_hash": "579e6a86a272f59f8d0c05af54cccb066c33f760dabb190c368813e1873b6b80",
+    "fact_count": 45,
+    "source_document_count": 16,
+    "mandatory_question_count": 28,
+    "component_count": 7,
+    "derived_metric_count": 1,
+    "research_status": "NEEDS_PUBLIC_GAP_CLOSURE",
+    "coarse_predicate_disambiguation_count": 2,
+    "coarse_predicate_disambiguation_policy": "DISTINCT_NORMALIZED_STATEMENT_HASH_ONLY",
+    "evidence_text_changed_count": 0,
+    "fact_id_changed_count": 0,
+    "question_binding_changed_count": 0
+  },
+  "source_verification": {
+    "verification_id": "PROVERIFY-3ccf0931bef88e10b51e61f9",
+    "verification_hash": "e729dafb010c6ee163c777898cc58832d37a969dafbf4772f2384065042c17ea",
+    "effective_dossier_snapshot_id": "PRODOSSIERSNAPSHOT-1de033260fbf37aef732792f",
+    "candidate_fact_count": 45,
+    "terminal_fact_count": 45,
+    "compiled_evidence_fact_count": 30,
+    "accepted_current_count": 25,
+    "accepted_counter_count": 5,
+    "historical_only_count": 2,
+    "rejected_quote_mismatch_count": 1,
+    "rejected_source_unavailable_count": 1,
+    "rejected_wrong_subject_count": 11,
+    "full_document_fetch_count": 16,
+    "document_cache_reuse_count": 29,
+    "fact_graph_ready": true,
+    "query_count": 0,
+    "search_count": 0
+  },
+  "initial_efficiency_gate": {
+    "status": "PASS",
+    "verdict": "PRO_FIRST_V2_1_INITIAL_EFFICIENCY_PASS",
+    "initial_material_candidate_count": 27,
+    "accepted_material_count": 23,
+    "acceptance_ratio": 0.851852,
+    "mandatory_question_covered_count": 28,
+    "mandatory_question_count": 28,
+    "genuine_semantic_repair_candidate_count": 4,
+    "genuine_semantic_repair_candidate_limit": 5,
+    "initial_prompt_output_defect_count": 0,
+    "unclassified_rejection_count": 0,
+    "initial_prompt_char_count": 61286,
+    "initial_response_char_count": 237127,
+    "initial_research_elapsed_seconds": 5442.354423,
+    "gate_receipt_hash": "c792f0bd0e5eeca8b08fa10d248849910120081c114ebef1d43cc4c05bfe5049"
+  },
+  "authority_guards": {
+    "score_authority": false,
+    "stage_authority": false,
+    "publication_withheld": true,
+    "partial_score_published_count": 0
+  },
+  "verification": {
+    "focused_regression": {
+      "tests_run": 111,
+      "failure_count": 0,
+      "error_count": 0,
+      "status": "PASS"
+    },
+    "pro_first_core": {
+      "tests_run": 238,
+      "failure_count": 0,
+      "error_count": 0,
+      "status": "PASS"
+    },
+    "production_static_audit": {
+      "status": "PASS",
+      "critical_count": 0,
+      "guarded_dom_submit_path_count": 1
+    },
+    "compileall": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "next_required_actions": [
+    "RUN_C06_BOUNDED_FULL_THESIS_TAIL_IN_SAME_SUCCESSOR_CONVERSATION",
+    "RUN_C17_BOUNDED_FULL_THESIS_TAIL",
+    "RUN_C28_BOUNDED_FULL_THESIS_TAIL",
+    "RUN_FINAL_FULL_SUITE_AND_GITHUB_ACTIONS"
+  ],
+  "receipt_hash": "4520d675ffd00f5cf1fdb836b4cac12154a60c5cc0eda24f3efd60ff2fe30149"
+}

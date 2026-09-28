@@ -1,0 +1,104 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p70_current_status_v1",
+  "observed_at": "2026-09-24T07:31:00+09:00",
+  "status": "EXACT_HEAD_CI_PASS_BROWSERUSE_EXISTING_SESSION_PRO_CONFIRMED_RESUME_BLOCKED_BY_WSL_PATH_IDENTITY",
+  "goal_complete": false,
+  "scope_note": "Status/documentation and read-only verification only; no research submission or score/stage change.",
+  "repository": {
+    "pull_request": 7,
+    "state": "OPEN",
+    "draft": true,
+    "mergeable": true,
+    "head_sha": "43524413c24ab5e4ff32eca7ee0aaaa64bd49477",
+    "base_branch": "main",
+    "merged": false
+  },
+  "github_actions": [
+    {
+      "run_id": 35925176718,
+      "workflow": "E2R Pro-first verification",
+      "event": "push",
+      "head_sha": "43524413c24ab5e4ff32eca7ee0aaaa64bd49477",
+      "conclusion": "success",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35925176718"
+    },
+    {
+      "run_id": 35925180418,
+      "workflow": "E2R Pro-first verification",
+      "event": "pull_request",
+      "head_sha": "43524413c24ab5e4ff32eca7ee0aaaa64bd49477",
+      "conclusion": "success",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35925180418"
+    },
+    {
+      "run_id": 35925180440,
+      "workflow": "E2R v6 operational cutover verification",
+      "event": "pull_request",
+      "head_sha": "43524413c24ab5e4ff32eca7ee0aaaa64bd49477",
+      "conclusion": "success",
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35925180440"
+    }
+  ],
+  "verification": {
+    "full_unittest_count": 7911,
+    "skipped_count": 38,
+    "failure_count": 0,
+    "error_count": 0,
+    "independent_reviewers": "8/8 PASS",
+    "gate_1_receipt": "4/4 PASS",
+    "phase100": "15/15 PASS",
+    "production_static_audit_critical_count": 0
+  },
+  "browseruse": {
+    "backend": "Chrome BrowserUse extension",
+    "used_existing_user_session": true,
+    "used_existing_tab": true,
+    "created_browser_window_tab_or_profile": false,
+    "navigation_scope": "Opened a blank Chat conversation inside the same existing claimed tab.",
+    "chat_mode_selected": true,
+    "selected_model_label": "6 Pro",
+    "work_mode_selected": false,
+    "deep_research_selected": false,
+    "composer_blank": true,
+    "prior_library_artifact_used": false,
+    "tab_id_or_account_identifier_recorded": false,
+    "prompt_input_count": 0,
+    "packet_upload_count": 0,
+    "submit_count": 0,
+    "capture_count": 0
+  },
+  "active_job": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "symbol": "010950",
+    "archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "state": "PACKET_READY",
+    "state_version": 2,
+    "submit_count": 0,
+    "capture_count": 0,
+    "browser_session_bound": false,
+    "conversation_bound": false,
+    "state_check_mode": "SQLite read-only; query_only enabled"
+  },
+  "resume_preflight": {
+    "result": "blocked_read_only",
+    "exception": "FreshSessionBoundaryError",
+    "message": "fresh boundary receipt failed hash/path validation",
+    "cause": "Persisted Windows absolute runtime-root values do not compare equal to the caller's WSL /mnt/<drive>/ path representation.",
+    "receipt_or_database_modified": false,
+    "new_job_created": false,
+    "hash_validation_bypassed": false
+  },
+  "zero_counts": {
+    "new_source_queries": 0,
+    "new_source_fetches": 0,
+    "score_changes": 0,
+    "stage_changes": 0
+  },
+  "next_step": "Implement generic Windows-drive-to-existing-WSL-mount path normalization for fresh-boundary load_existing; preserve original receipt hash validation and fail closed when no mount mapping exists. Add regression tests, run focused tests/audits, commit and push to PR #7, then verify exact-head CI before resuming C15 through the same existing BrowserUse claimed tab.",
+  "remaining_goal_gaps": [
+    "Fix Windows/WSL runtime-root path identity mismatch before resuming C15 R6.",
+    "Complete C15 R6 live full-thesis canary and artifact capture.",
+    "Complete required C28 live full-thesis canary; current live full-thesis PASS count remains C06 1/3.",
+    "Run final goal-wide review and CI without claiming completion before all live gates pass."
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p8_pre_submit_boundary_failure_v1",
+  "status": "PRE_SUBMIT_BOUNDARY_DIAGNOSTIC_ONLY",
+  "recorded_at": "2026-08-26T12:10:00+09:00",
+  "target": {
+    "target_id": "011170",
+    "company_name": "롯데케미칼",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+  },
+  "intended_fresh_identity": {
+    "fresh_runtime_root": "C:\\Users\\eorb9\\AppData\\Local\\E2R\\ProFirstRuntime\\fresh_v2_1\\20260826T025720Z",
+    "fresh_session_id": "FRESH-V2-1-C17-R6-20260826T025720Z",
+    "code_binding": "953eede0ae6b81dddce19277aa4661f4b4c6ef2f"
+  },
+  "predecessor": {
+    "job_id": "PROJOB-6ed24292874ceae06e5e7f27",
+    "run_id": "PRORUN-10f8b5284f7fe8bd52ca12d8",
+    "research_pass_id": "PROPASS-25f410895f717db11ff4fe5a",
+    "conversation_id": "6a8e3c60-3b58-83ee-ad02-e81700c63463",
+    "durable_status": "USER_ATTENTION_REQUIRED",
+    "state_version": 15,
+    "old_job_frozen_at": "2026-08-26T02:21:55.533043Z"
+  },
+  "transport_boundary": {
+    "fresh_runtime_created": false,
+    "fresh_job_created": false,
+    "fresh_run_created": false,
+    "fresh_pass_created": false,
+    "fresh_conversation_created": false,
+    "packet_upload_count": 0,
+    "composer_fill_count": 0,
+    "submit_count": 0,
+    "capture_count": 0,
+    "automatic_resubmit_count": 0,
+    "chatgpt_state_mutated": false,
+    "predecessor_state_mutated": false
+  },
+  "failure": {
+    "phase": "OLD_ANSWER_LEAKAGE_MANIFEST_BUILD",
+    "error_class": "FileNotFoundError",
+    "cause": "SCHEMA_FAILED_PREDECESSOR_HAS_READY_CAPTURE_BUT_NO_EFFECTIVE_DOSSIER_POINTER",
+    "missing_relative_path": "research_passes/effective_dossier.latest.json",
+    "actual_pro_submission_failure": false,
+    "new_conversation_required_due_to_this_attempt": false
+  },
+  "generic_fix": {
+    "effective_dossier_preferred": true,
+    "ready_certified_capture_fallback": true,
+    "capture_receipt_identity_required": true,
+    "capture_bundle_sha256_required": true,
+    "bounded_existing_dossier_parser_reused": true,
+    "captured_dossier_scoring_authority": false,
+    "captured_dossier_stage_authority": false,
+    "captured_dossier_source_verification_authority": false,
+    "captured_dossier_usage": "DENY_ONLY_OLD_ANSWER_LEAKAGE_MANIFEST"
+  },
+  "r5_deny_manifest_projection": {
+    "old_fact_id_count": 33,
+    "old_route_receipt_id_count": 26,
+    "old_research_pass_id_count": 1,
+    "old_question_answer_count": 26,
+    "expected_source_url_count": 14,
+    "expected_fact_id_count": 33,
+    "score_authority": false,
+    "stage_authority": false
+  },
+  "verification": {
+    "focused_fresh_orchestration_test_count": 21,
+    "focused_failure_count": 0,
+    "tampered_capture_rejected": true,
+    "pro_first_static_audit_critical_count": 0,
+    "pro_first_v2_static_audit_critical_count": 0,
+    "production_static_audit_critical_count": 0,
+    "compileall": "PASS",
+    "full_test_count": 7702,
+    "full_test_status": "PASS",
+    "full_test_failure_count": 0,
+    "full_test_error_count": 0,
+    "full_test_skipped_count": 38,
+    "full_test_elapsed_seconds": 614.767
+  },
+  "next_action": "COMMIT_AND_CI_GREEN_BEFORE_ONE_ACTUAL_R6_SUBMISSION"
+}

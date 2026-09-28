@@ -1,0 +1,72 @@
+{
+  "schema_version": "e2r_pro_first_progress_checkpoint_v1",
+  "recorded_at": "2026-08-28T12:30:00+09:00",
+  "phase": "P19_C06_PASS14_LINEAGE_RECOVERY",
+  "status": "PASS14_COMPLETE_PASS15_RESEARCH_RUNNING",
+  "completion_claimed": false,
+  "job_id": "PROJOB-821fd91d8204a7c366ec86f0",
+  "run_id": "PRORUN-f34eb764254e9fd6c7e21cb4",
+  "conversation_id": "6a90786a-8234-83e8-b7b4-c03f18b4e725",
+  "lineage_repair": {
+    "policy": "SKIP_ONLY_EXACT_SUPERSEDED_UNPERSISTED_PASS",
+    "superseded_pass_id": "PROPASS-b1184fe6bd83e5f7de8ca23c",
+    "replacement_pass_id": "PROPASS-739ea5decbf04f0a0298e25f",
+    "required_status": "FAILED_HARD",
+    "required_submit_count": 1,
+    "required_response_hash": null,
+    "required_server_persistence_confirmed": false,
+    "required_root_input_hash": "1f01a43575204b42e80390c296e60df038fd7b3ada458dea7bebe1be785bcb49",
+    "broad_failed_pass_skip_allowed": false,
+    "sql_audit_row_deleted": false
+  },
+  "pass14": {
+    "pass_id": "PROPASS-739ea5decbf04f0a0298e25f",
+    "pass_name": "SATURATION_AUDIT",
+    "status": "COMPLETE",
+    "submit_count": 1,
+    "recovery_browser_submit_delta": 0,
+    "capture_source": "DIRECT_REPORT_DOM",
+    "capture_receipt_file_hash": "af88bea61f8b01ab6074ef15f5a725042436e9a1e77297bd0decfcc5669fca22",
+    "response_hash": "b086e703ff955b88268be5a693fe48f7f8660e8d6db0802e7100edc309b50946",
+    "new_fact_count": 0,
+    "new_route_count": 0,
+    "semantic_progress": true,
+    "accepted_fact_count": 73,
+    "effective_fact_count": 77,
+    "effective_route_count": 154,
+    "effective_dossier_hash": "901243418201805ebc9e7cba7ff35882abb545cb17563b7d7a2a94620148114b"
+  },
+  "post_pass14_saturation": {
+    "nonterminal_mandatory_question_count": 5,
+    "provider_parser_core_pending_count": 0,
+    "source_linkage_incomplete_count": 5,
+    "public_material_gap_count": 4,
+    "verifier_repair_pending_count": 1,
+    "research_saturation_valid": false,
+    "receipt_hash": "013ccc187805b612e5dfbb7a8f75e42b601a9ee34b42badde6bee8a39dc1980c"
+  },
+  "pass15": {
+    "pass_id": "PROPASS-27592c5831d15f6e364cb8a6",
+    "pass_name": "PUBLIC_GAP_CLOSURE",
+    "parent_pass_id": "PROPASS-739ea5decbf04f0a0298e25f",
+    "prompt_char_count": 22533,
+    "question_count": 4,
+    "submit_count": 1,
+    "server_persistence_observation_count": 2,
+    "server_persistence_absence_confirmation_count": 1,
+    "server_persistence_confirmed": true,
+    "recovery_browser_submit_delta": 0,
+    "status": "RESEARCH_RUNNING"
+  },
+  "verification": {
+    "live_runtime_and_fresh_orchestration": "74/74 PASS",
+    "failure_count": 0,
+    "error_count": 0,
+    "git_diff_check": "PASS"
+  },
+  "score_authority": false,
+  "stage_authority": false,
+  "publication_withheld": true,
+  "next_action": "CAPTURE_AND_VERIFY_PASS15_WITHOUT_RESUBMIT",
+  "receipt_hash": "ce373e953f2a55e08e0a0a96760e5103acf6c985f73cf0bbb2a379881e35ec9d"
+}

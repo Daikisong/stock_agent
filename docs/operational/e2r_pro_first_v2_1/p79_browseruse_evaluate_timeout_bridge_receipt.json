@@ -1,0 +1,107 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p79_browseruse_evaluate_timeout_bridge_v1",
+  "observed_at": "2026-09-24T13:26:29+09:00",
+  "status": "TIMEOUT_OPTION_FORWARDING_PATCH_LOCAL_TESTS_PASS_AWAITING_EXACT_HEAD_CI",
+  "goal_complete": false,
+  "repository": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "pushed_base_sha": "7f74d55b2c96851ca394c5f01de88b17a8f2961e",
+    "local_origin_equal_at_checkpoint": true,
+    "pull_request": 7,
+    "pull_request_url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "pull_request_state": "OPEN",
+    "pull_request_draft": true,
+    "pull_request_mergeable": true,
+    "main_merge": false,
+    "p79_patch_committed": false
+  },
+  "last_green_pushed_head_ci": {
+    "exact_head_sha": "7f74d55b2c96851ca394c5f01de88b17a8f2961e",
+    "pro_push": {
+      "run_id": 35953918533,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35953918533",
+      "conclusion": "SUCCESS",
+      "full_unittest_count": 7923,
+      "skipped_count": 38,
+      "failure_count": 0,
+      "error_count": 0,
+      "independent_reviewer_gate": "A-H PASS"
+    },
+    "pro_pr": {
+      "run_id": 35953921419,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35953921419",
+      "conclusion": "SUCCESS",
+      "full_unittest_count": 7923,
+      "skipped_count": 38,
+      "failure_count": 0,
+      "error_count": 0
+    },
+    "v6_pr": {
+      "run_id": 35953921411,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35953921411",
+      "conclusion": "SUCCESS",
+      "gate1_receipt": "4/4 PASS",
+      "phase100": "15/15 PASS",
+      "production_static_audit_critical_count": 0,
+      "full_unittest_failure_count": 0,
+      "full_unittest_error_count": 0
+    }
+  },
+  "browseruse_failure_and_code_evidence": {
+    "required_backend": "user's existing logged-in Chrome BrowserUse extension session and existing ChatGPT task tab only",
+    "previous_read_only_error": "BRIDGE_OPERATION_FAILED: Timed out after 3000ms evaluating selector div.ProseMirror[contenteditable=\"true\"] >> nth=0: Playwright selector deadline exceeded",
+    "local_plugin_api_contract": "PlaywrightLocator.evaluate(pageFunction, arg?, options?) and evaluateAll(..., options?); PlaywrightEvaluateOptions exposes timeoutMs.",
+    "old_bridge_gap": [
+      "Python locator evaluate/evaluateAll options were in the RPC payload but the JS bridge dropped the third evaluation-options argument.",
+      "Page evaluate dropped options.",
+      "Python Playwright-style timeout keyword was not normalized to BrowserUse timeoutMs.",
+      "input_value directly invoked locator.evaluate without the reviewed callback/default evaluation timeout path."
+    ],
+    "p79_patch": [
+      "Bounded read-only evaluate default of 10000ms in the Python facade and JS extension bridge.",
+      "Normalize timeout to timeoutMs while preserving an explicit timeoutMs value.",
+      "Forward read-only options to locator.evaluate, locator.evaluateAll, and page.evaluate.",
+      "Route input_value through the reviewed read-only callback and bounded evaluation helper."
+    ],
+    "live_root_cause_confirmed": false,
+    "note": "The bridge/API contract omission is confirmed in code. It is not yet proven to be the only cause of the prior live selector timeout; same-tab before/after validation remains pending exact-head CI."
+  },
+  "active_job_last_read_only_state": {
+    "database_mode": "SQLite mode=ro; PRAGMA query_only=ON",
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "symbol": "010950",
+    "archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 12,
+    "packet_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "last_preparation_failure_stage": "READ_ONLY_BROWSER_PREFLIGHT",
+    "safe_unprepared_resume": true,
+    "approval_browser_conversation_bound": false,
+    "submit_count": 0,
+    "capture_count": 0,
+    "successor_job_created": false,
+    "p79_same_job_retry_performed": false
+  },
+  "p79_local_verification": {
+    "browseruse_extension_preflight_exit_code": 0,
+    "browseruse_extension_tab_reconnected_this_checkpoint": false,
+    "focused_browseruse_bridge_unittest": "10/10 PASS",
+    "fresh_orchestration_unittest": "85/85 PASS",
+    "python_compileall": "PASS",
+    "browseruse_bridge_node_check": "PASS",
+    "git_diff_check": "PASS",
+    "fresh_browser_e2e": "2 setup errors: Chromium could not start because WSL is missing libnspr4.so",
+    "combined_local_browser_adapter_suite": "Interrupted after repeated Chromium launch failures caused by missing libnspr4.so; not a completed suite result.",
+    "full_unittest_on_p79_patch": "NOT RUN",
+    "p79_exact_head_github_actions": "NOT RUN; patch is uncommitted at this checkpoint"
+  },
+  "p79_activity_counts": {
+    "prompt_input_upload_download_submit_capture": [0, 0, 0, 0, 0],
+    "source_query_fetch": [0, 0],
+    "score_stage_changes": [0, 0],
+    "new_browser_window_tab_profile_or_cdp_session": false,
+    "relogin": false
+  },
+  "next_step": "Commit the P79 generic bridge/test/docs/receipt changes in Korean and push only to PR #7. Wait for exact-head Pro push, Pro PR, and V6 PR Actions SUCCESS. Then use the same existing logged-in BrowserUse extension session and exact existing ChatGPT tab for a read-only preflight of the same C15 R6 job; do not submit until tab identity, actual Pro selection, composer state, packet hash, and no-submit state are revalidated.",
+  "main_goal_complete": false
+}

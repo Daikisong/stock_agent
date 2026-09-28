@@ -1,0 +1,143 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p112_existing_session_revalidation_and_exact_head_ci_v1",
+  "recorded_at": "2026-09-25T09:44:45+09:00",
+  "user_instruction": {
+    "login_required_browseruse_must_use_users_existing_logged_in_session": true,
+    "browseruse_extension_is_the_required_authenticated_backend": true,
+    "enumerate_existing_tabs_before_live_action": true,
+    "claim_exact_existing_descriptor_and_reuse_returned_tab_object": true,
+    "new_window_profile_cdp_or_relogin_as_fallback": false,
+    "preserve_existing_unsent_attachment_without_specific_user_direction": true
+  },
+  "git_pr_at_checkpoint_start": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "head_sha": "2a6b60f2686309536e53dcc76982285fa0b70a42",
+    "origin_head_sha": "2a6b60f2686309536e53dcc76982285fa0b70a42",
+    "worktree_clean": true,
+    "pr_number": 7,
+    "pr_url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "pr_state": "OPEN",
+    "pr_draft": true,
+    "merge_state": "CLEAN",
+    "merged_to_main": false
+  },
+  "exact_head_ci": {
+    "head_sha": "2a6b60f2686309536e53dcc76982285fa0b70a42",
+    "all_required_workflows_success": true,
+    "workflows": [
+      {
+        "workflow": "E2R Pro-first verification",
+        "event": "pull_request",
+        "run_id": 36077141865,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36077141865",
+        "conclusion": "SUCCESS",
+        "full_regression_tests": 7952,
+        "skipped_tests": 38,
+        "duration_seconds": 1032.213,
+        "core_unit_tests": 300,
+        "browser_mock_e2e_tests": 105,
+        "reviewer_a_to_h": "PASS",
+        "compile_and_diff_check": "PASS",
+        "static_audit_critical_count_sum": 0
+      },
+      {
+        "workflow": "E2R Pro-first verification",
+        "event": "push",
+        "run_id": 36077138635,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36077138635",
+        "conclusion": "SUCCESS",
+        "full_regression_tests": 7952,
+        "skipped_tests": 38,
+        "static_audit_critical_count_sum": 0
+      },
+      {
+        "workflow": "E2R v6 operational cutover verification",
+        "event": "pull_request",
+        "run_id": 36077141902,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36077141902",
+        "conclusion": "SUCCESS",
+        "gate1_tracked_receipt_consistency": "4/4 PASS",
+        "full_regression_tests": 7952,
+        "skipped_tests": 38,
+        "duration_seconds": 949.900,
+        "phase100": "15/15 PASS",
+        "production_static_audit_critical_count_sum": 0
+      }
+    ]
+  },
+  "browseruse_same_existing_session_read_only_check": {
+    "windows_preflight_exit_code": 0,
+    "persistent_node_repl_extension_connected": true,
+    "agent_tab_list_count": 1,
+    "user_open_tab_count": 4,
+    "chatgpt_tab_count": 1,
+    "claimed_exact_existing_tab": true,
+    "same_claimed_tab_object_used_for_dom_read": true,
+    "url": "https://chatgpt.com/",
+    "title": "ChatGPT",
+    "login_prompt_visible": false,
+    "composer_model_label": "6 Pro",
+    "composer_prompt_text_empty": true,
+    "existing_attachment_tile": "research_packet(20260924-172107).json",
+    "attachment_remove_action_visible": true,
+    "tile_hash_verified_as_c15_packet": false,
+    "other_existing_chatgpt_tab_available": false,
+    "navigation_or_new_chat": false,
+    "attachment_removed_or_replaced": false,
+    "download": false,
+    "upload": false,
+    "prompt_input": false,
+    "submit": false,
+    "response_capture": false,
+    "existing_tab_or_login_modified": false
+  },
+  "c15_durable_job_read_only_recheck": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "target": "S-Oil 010950",
+    "as_of_date": "2026-08-23",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 26,
+    "packet_id": "PROPACKET-a907435b849121866c7cc0a3",
+    "packet_canonical_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "submit_count": 0,
+    "capture_count": 0,
+    "approval_browser_conversation_binding_present": false,
+    "successor_job_id": null,
+    "last_error_class": "BrowserUIIncompatible",
+    "last_error_message": "the exact BrowserUse packet file/hash was not visible in the claimed tab",
+    "latest_event": {
+      "from_status": "BROWSER_PREPARING",
+      "to_status": "USER_ATTENTION_REQUIRED",
+      "actor": "v2.1-fresh-v3-browser-worker",
+      "preparation_failure_stage": "DRAFT_PREPARATION_OR_UNKNOWN",
+      "safe_unprepared_resume": false,
+      "new_chat_route_required": true,
+      "submit_count": 0
+    },
+    "sqlite_uri_mode_read_only": true,
+    "pragma_query_only": 1
+  },
+  "goal_state": {
+    "master_goal_complete": false,
+    "p9_required_live_full_thesis_canaries": ["C06", "C17", "C28"],
+    "p9_live_full_thesis_canaries_passed": 1,
+    "p9_pending_canaries": ["C17", "C28"],
+    "completed_canary": "C06",
+    "separate_unresolved_same_job_task": "C15 R6"
+  },
+  "scope_this_checkpoint": {
+    "research_or_query_fetch": false,
+    "new_job_or_pass": false,
+    "other_archetype_execution": false,
+    "score_or_stage_change": false,
+    "composer_mutation_or_submission": false,
+    "pr_draft_release_or_merge": false,
+    "documentation_updated": [
+      "docs/operational/e2r_pro_first_v2_1/browseruse_existing_session_handoff.md",
+      "docs/operational/e2r_pro_first_v2_1/implementation_progress.md",
+      "docs/operational/e2r_pro_first_v2_1/p112_existing_session_revalidation_and_exact_head_ci_receipt.json"
+    ]
+  },
+  "blocker": "The only existing ChatGPT tab has an unsent attachment that is not hash-verified as the exact C15 packet. The user has reiterated to use the logged-in session but has not specifically authorized removing/replacing this composer attachment.",
+  "next_step": "Preserve the existing composer until the user gives specific direction on its attachment. Then continue only in the same existing logged-in extension session/tab, with exact job packet/hash, target, conversation and actual Pro mode verified before any submit."
+}

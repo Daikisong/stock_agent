@@ -1,0 +1,103 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p8_initial_failure_receipt_v1",
+  "status": "FRESH_SESSION_DIAGNOSTIC_ONLY",
+  "recorded_at": "2026-08-26T11:34:10+09:00",
+  "target": {
+    "target_id": "011170",
+    "company_name": "롯데케미칼",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+  },
+  "code_binding": "e8f0b25c8d6858bd6bf0b5d0b998f3b540c20c43",
+  "job_id": "PROJOB-6ed24292874ceae06e5e7f27",
+  "run_id": "PRORUN-10f8b5284f7fe8bd52ca12d8",
+  "research_pass_id": "PROPASS-25f410895f717db11ff4fe5a",
+  "conversation_id": "6a8e3c60-3b58-83ee-ad02-e81700c63463",
+  "submit_count": 1,
+  "capture_count": 1,
+  "automatic_resubmit_count": 0,
+  "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+  "durable_status": "USER_ATTENTION_REQUIRED",
+  "frozen_at": "2026-08-26T02:21:55.533043Z",
+  "actual_failure": {
+    "phase": "DOSSIER_IMPORT_SCHEMA_VALIDATION",
+    "error_class": "DOSSIER_INVALID",
+    "cause_class": "DossierValidationError",
+    "message": "e2r_pro_research_dossier_v3 schema validation failed: counterfacts/0/supporting_excerpt: '정기보수 영향' is too short",
+    "initial_efficiency_gate_reached": false,
+    "same_conversation_repair_allowed": false,
+    "new_conversation_required": true,
+    "publication_withheld": true
+  },
+  "pro_output": {
+    "source_document_count": 9,
+    "fact_count": 33,
+    "material_fact_count": 12,
+    "counterfact_count": 15,
+    "resolution_fact_count": 6,
+    "derived_metric_count": 1,
+    "question_result_count": 26,
+    "search_route_receipt_count": 26,
+    "research_status": "NEEDS_PUBLIC_GAP_CLOSURE",
+    "short_nonempty_excerpt_count": 1,
+    "short_nonempty_excerpt_fact_id": "PROFACT-C01",
+    "short_nonempty_excerpt": "정기보수 영향"
+  },
+  "performance": {
+    "initial_prompt_char_count": 59254,
+    "initial_response_char_count": 148393,
+    "initial_research_elapsed_seconds": 3812.572911
+  },
+  "canonical_hashes": {
+    "report_md_sha256": "c9fe840b8923d5b8f210608abaed306943a78a02cb8db4ec9fffeb9e48700fd3",
+    "raw_report_md_sha256": "392134a238ef885050cdfd8eca37f1a78188bd33910ac002875143a0a59e869c",
+    "raw_dossier_sha256": "810b1ae65b85509281c4888589851beb8cb00049ffd9f940016cbc8ae9eace26",
+    "capture_receipt_sha256": "d755085121244e067396cdf45b9fd2d0d4b648eccd7717e9e2283182942a9d0d",
+    "import_failure_sha256": "4452ed55d61c35eba286afc943e9373772827956dbe83b8a9d9b84a24ac141ac",
+    "read_only_projection_hash": "1809818ec02bdf546e2741e1275ae33e1305fd1218e6c55a03ea10eccf39fc5f",
+    "new_dossier_schema_canonical_hash": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+    "new_repair_schema_canonical_hash": "3aea7e04298f518ef8661e97502dd44508d3cb61ea7fbad77499ec408866b598"
+  },
+  "postmortem": {
+    "root_cause_class": "PRE_DOWNSTREAM_SCHEMA_OVERREJECTION",
+    "root_cause": "NONEMPTY_SHORT_EXCERPT_REJECTED_THE_ENTIRE_DOSSIER_BEFORE_FACT_LEVEL_VERIFICATION",
+    "generic_fix": "V3 initial and repair schemas preserve every nonempty excerpt; the existing literal source verifier continues to reject or hold an insufficient short fact individually",
+    "empty_excerpt_still_rejected": true,
+    "short_excerpt_auto_promoted": false,
+    "score_authority": false,
+    "stage_authority": false,
+    "r5_retroactive_pass_allowed": false,
+    "new_conversation_required": true
+  },
+  "read_only_projection": {
+    "status": "SCHEMA_PASS",
+    "source_document_count": 9,
+    "fact_count": 33,
+    "material_fact_count": 12,
+    "counterfact_count": 15,
+    "resolution_fact_count": 6,
+    "question_result_count": 26,
+    "search_route_receipt_count": 26,
+    "query_count": 0,
+    "fetch_count": 0,
+    "operational_gate_authority": false,
+    "source_verification_authority": false
+  },
+  "local_verification": {
+    "focused_test_count": 56,
+    "focused_failure_count": 0,
+    "full_test_count": 7701,
+    "full_test_exit_code": 0,
+    "full_test_failure_count": 0,
+    "full_test_error_count": 0,
+    "prompt_snapshot_count": 36,
+    "prompt_snapshot_critical_count": 0,
+    "pro_first_static_audit_critical_count": 0,
+    "pro_first_v2_static_audit_critical_count": 0,
+    "production_static_audit_critical_count": 0,
+    "compileall": "PASS",
+    "git_diff_check": "PASS",
+    "windows_chatgpt_profile_mutated": false,
+    "sealed_conversation_mutated": false
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "assistant_turn_id": "2be36aa2-e447-4460-8814-af29af0e733f",
+  "automatic_resubmit_allowed": false,
+  "browser_state": "DEEP_RESEARCH_MODE_READY",
+  "capture_completed": false,
+  "conversation_id": "6a8b09c3-bfcc-83ee-b15b-9f76eca52249",
+  "dossier_begin_marker_count": 1,
+  "dossier_end_marker_count": 0,
+  "exact_scope_marker_counts": {
+    "job": 1,
+    "parent_pass": 1,
+    "pass": 1,
+    "run": 1
+  },
+  "expected_terminal_marker": "E2R_RESEARCH_DOSSIER_JSON_END",
+  "initial_attachment_observed": {
+    "button_label": "E2R_SKHynix_2026-08-23_full_response.md",
+    "is_current_repair_attachment": false,
+    "turn_id": "263c5818-5bb0-4a31-9a0f-f31a24a5adcb"
+  },
+  "job_id": "PROJOB-cdd91020f15891533e61431f",
+  "next_action": "CAPTURE_CURRENT_VISIBLE_TURN_WITH_AUDITED_MARKER_NORMALIZATION_THEN_REVERIFY",
+  "observation_mode": "READ_ONLY_EXACT_CONVERSATION_CDP_DOM",
+  "observed_at": "2026-08-24T12:27:45Z",
+  "observed_terminal_marker": "E2R_RESEARCH_DOSSIER_SON_END",
+  "parent_pass_id": "PROPASS-ab2d8bd7520a8ce7de71f306",
+  "pass_id": "PROPASS-3ef919d661d3bfa39f201c4e",
+  "pass_status": "RESEARCH_RUNNING",
+  "report_text_length": 68788,
+  "run_id": "PRORUN-a7dacadb7088fc23535bfdde",
+  "schema_version": "e2r_pro_first_v2_live_capture_pending_receipt_v1",
+  "score_authority": false,
+  "source_commit_before_documentation": "0755b085b96e482608ea5f8218996de6e0bb9f2d",
+  "stable_observations": 0,
+  "stage_authority": false,
+  "submit_count": 1,
+  "target_id": "000660",
+  "visible_generation_finished": true
+}

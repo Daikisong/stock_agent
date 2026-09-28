@@ -1,0 +1,71 @@
+{
+  "schema_version": "e2r_pro_p10_c06_public_gap_fourth_capture_merge_receipt_v1",
+  "verdict": "PASS_ACTUAL_CAPTURE_MERGE_AND_REVERIFICATION",
+  "final_full_thesis_allowed": false,
+  "job_id": "PROJOB-ab48ce7e94097cf9b6846602",
+  "run_id": "PRORUN-683f5a5423a6e367f443c6de",
+  "target_id": "000660",
+  "as_of_date": "2026-08-23",
+  "conversation_id": "6a8db0ad-8ed0-83e8-888e-dce26c950343",
+  "pass_id": "PROPASS-26c03ab89ff306eec50c9e3c",
+  "parent_pass_id": "PROPASS-b2a41069565bc54d9c941209",
+  "pass_name": "PUBLIC_GAP_CLOSURE",
+  "submit_count": 1,
+  "automatic_resubmit_count": 0,
+  "capture_source": "DIRECT_REPORT_DOM_NORMALIZED",
+  "assistant_turn_id": "request-6a8db0ad-8ed0-83e8-888e-dce26c950343-3",
+  "captured_at": "2026-08-26T19:28:22.450888Z",
+  "prompt_hash": "0d5f0b61adfa86544ccf4987e58a2cf4b0e51bbdba0704d42efe86a0ed1b6a6e",
+  "raw_report_md_hash": "4403d04d1a70f2beba18e23512dbc4ac5ffaaf24d7fd53c7bdc9c8678ab4e41e",
+  "report_md_hash": "432b9d72dcbc13b88ead8cae113456b65d14fade6c646d7be4f165c439b4bc54",
+  "dossier_json_hash": "95e7b4cb6c85cf5029f4da69c3882ee487a2ecb19e400bfbfb710879ff2ae745",
+  "report_pdf_hash": null,
+  "optional_pdf_error": null,
+  "captured_delta": {
+    "new_source_document_count": 2,
+    "new_material_fact_count": 11,
+    "new_counterfact_count": 2,
+    "new_resolution_fact_count": 4,
+    "new_fact_count": 17,
+    "new_source_lineage_row_count": 6,
+    "new_route_receipt_count": 27,
+    "pro_reported_updated_question_count": 19,
+    "pro_reported_research_status": "NEEDS_PUBLIC_GAP_CLOSURE"
+  },
+  "actual_effective_dossier": {
+    "status": "PASS",
+    "effective_fact_count": 69,
+    "effective_source_document_count": 28,
+    "effective_source_lineage_count": 26,
+    "effective_route_receipt_count": 142,
+    "effective_question_count": 28,
+    "effective_pass_count": 5,
+    "effective_research_status": "PROVIDER_PENDING",
+    "persisted_file_hash": "f6de52e011c4cb48a3804cf3649aa1e113b0b4756ede80aee6b66c1a81dd7eb8"
+  },
+  "cumulative_question_fact_reference_projection": {
+    "question_family_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_Q05",
+    "reference_field": "support_fact_ids",
+    "dropped_fact_id": "PROFACT-R13-TOTAL-ISSUED-SHARES",
+    "reason": "MISSING_FACT_BACKLINK",
+    "fact_content_mutation_allowed": false
+  },
+  "post_merge_reverification": {
+    "accepted_fact_count": 36,
+    "nonterminal_mandatory_question_count": 3,
+    "provider_parser_core_pending_count": 1,
+    "public_material_gap_count": 18,
+    "source_linkage_incomplete_count": 2,
+    "research_saturation_valid": false
+  },
+  "next_pass": {
+    "pass_id": "PROPASS-330252bb6db7ee3267fab916",
+    "pass_name": "PUBLIC_GAP_CLOSURE",
+    "pass_ordinal": 6,
+    "submit_count": 1
+  },
+  "raw_capture_tracked_in_git": false,
+  "score_authority": false,
+  "stage_authority": false,
+  "next_action": "WAIT_FOR_PASS_06_CAPTURE_THEN_CONTINUE_DETERMINISTIC_SATURATION"
+}

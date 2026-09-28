@@ -1,0 +1,117 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_current_ci_and_r16_history_recovery_receipt_v1",
+  "phase": "P41_CURRENT_CI_AND_R16_HISTORY_RECOVERY",
+  "status": "CURRENT_HEAD_CI_GREEN_LIVE_CANARY_1_OF_3_R16_NO_RESEND_RECOVERY_PENDING",
+  "audited_head": "2ba0151d75d98e4af9d03ffc032aba7708bb8594",
+  "git": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "pull_request": 7,
+    "pull_request_state": "OPEN",
+    "pull_request_draft": true,
+    "pull_request_mergeable": "MERGEABLE",
+    "head_equals_origin_branch": true,
+    "ahead": 0,
+    "behind": 0,
+    "worktree_clean_before_this_documentation_commit": true,
+    "main_merge_allowed": false
+  },
+  "github_actions": {
+    "pro_first": {
+      "run_id": 33311986597,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/33311986597",
+      "conclusion": "SUCCESS",
+      "full_unittest_count": 7860,
+      "full_unittest_failure_count": 0,
+      "full_unittest_error_count": 0,
+      "existing_skip_count": 38,
+      "reviewer_gate": "PASS",
+      "reviewer_count": 8,
+      "reviewer_test_counts": {
+        "A": 8,
+        "B": 13,
+        "C": 70,
+        "D": 63,
+        "E": 50,
+        "F": 62,
+        "G": 15,
+        "H": 47
+      },
+      "reviewer_receipt_hash": "cb4a397c17e42a74a6245869f37ab505048e4de6ecc5965871d64b238be757c2",
+      "core_unit_count": 273,
+      "browser_mock_e2e_count": 83
+    },
+    "v6_operational_cutover": {
+      "run_id": 33311986620,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/33311986620",
+      "conclusion": "SUCCESS",
+      "gate1_receipt_tests": 4,
+      "gate1_receipt_failures": 0,
+      "full_unittest_count": 7860,
+      "full_unittest_failure_count": 0,
+      "full_unittest_error_count": 0,
+      "existing_skip_count": 38,
+      "production_static_critical_count_sum": 0
+    },
+    "cancelled_duplicate_run_id": 33311984958,
+    "cancelled_duplicate_is_not_completion_authority": true
+  },
+  "r16_durable_state": {
+    "state_database_path": "C:/Users/eorb9/AppData/Local/E2R/ProFirstRuntime/live_v2/20260823T145430Z/pro_first.sqlite3",
+    "job_id": "PROJOB-6ec66fa741cd95ba92bc9672",
+    "run_id": "PRORUN-9986fb0a09050c540cbbb5aa",
+    "initial_pass_id": "PROPASS-fc5bbd72814520298efeeaf6",
+    "status": "USER_ATTENTION_REQUIRED",
+    "conversation_id": null,
+    "submit_count": 1,
+    "capture_count": 0,
+    "last_error_class": "RuntimeError",
+    "missing_exact_marker_count": 2,
+    "automatic_resubmit_allowed": false,
+    "resume_mode": "RESUME_SUBMITTED_NO_DOM_SEND_ONLY"
+  },
+  "read_only_browser_history_recovery_clue": {
+    "history_database": "C:/Users/eorb9/AppData/Local/E2R/ChromeProfile/Default/History",
+    "inspection_was_read_only": true,
+    "candidate_conversation_id": "6a940328-b848-83e8-ab85-ee7079eaeac2",
+    "candidate_url": "https://chatgpt.com/c/6a940328-b848-83e8-ab85-ee7079eaeac2",
+    "candidate_visit_utc": "2026-08-30T10:17:14.215719+00:00",
+    "candidate_visible_duration_microseconds": 496757,
+    "subsequent_navigation": "https://chatgpt.com/",
+    "proves_server_turn_persisted": false,
+    "required_next_verification": "open the candidate only in one already-existing logged-in ChatGPT target and require the exact job/run markers; never resend R16"
+  },
+  "browser_boundary": {
+    "existing_e2r_chrome_pid": 18964,
+    "cdp_endpoint": "http://127.0.0.1:9222",
+    "current_page_count": 12,
+    "current_chatgpt_page_count": 0,
+    "new_window_created": false,
+    "new_tab_created": false,
+    "unrelated_tab_navigated": false,
+    "r16_resubmitted": false,
+    "watch_seconds": 55,
+    "chatgpt_page_seen_during_watch": false
+  },
+  "master_goal_state": {
+    "contract_totality": "PRO_FIRST_V2_ALL_ARCHETYPE_CONTRACT_READY",
+    "research_saturation_engine": "PRO_FIRST_V2_RESEARCH_SATURATION_ENGINE_READY",
+    "offline_e2e": "PRO_FIRST_V2_OFFLINE_E2E_PASS",
+    "frozen_md_replay": "PRO_FIRST_V2_PARTIAL_CORPUS_GUARD_PASS",
+    "live_full_thesis_canary_count": 1,
+    "required_live_full_thesis_canary_count": 3,
+    "c06": "PASS",
+    "c17": "PENDING_EXISTING_CHATGPT_TARGET_AND_R16_NO_RESEND_RECOVERY",
+    "c28": "PENDING_NEW_BLIND_FULL_THESIS_RUN",
+    "operational_research_readiness": "WITHHELD"
+  },
+  "remaining_required_work": [
+    "restore exactly one logged-in ChatGPT page in the existing E2R Chrome without creating a window or tab and without navigating an unrelated page",
+    "inspect the R16 candidate conversation and accept it only if the exact job and run markers are visible",
+    "finish the C17 full-thesis tail without resending R16",
+    "finish one new blind C28 full-thesis canary in the same ChatGPT tab",
+    "rerun final A-H, full unittest, static audits and GitHub Actions after live 3-of-3 evidence is committed"
+  ],
+  "score_authority": false,
+  "stage_authority": false,
+  "runtime_artifacts_tracked": false
+}

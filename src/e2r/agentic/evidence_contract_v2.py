@@ -31,7 +31,7 @@ def load_evidence_contracts_v2(
     require_all_archetypes: bool = False,
 ) -> Mapping[str, EvidenceContractV2]:
     contract_path = Path(path) if path is not None else DEFAULT_EVIDENCE_CONTRACT_V2_PATH
-    payload = json.loads(contract_path.read_text())
+    payload = json.loads(contract_path.read_text(encoding="utf-8"))
     return load_evidence_contracts_v2_from_mapping(
         payload,
         require_all_archetypes=require_all_archetypes,

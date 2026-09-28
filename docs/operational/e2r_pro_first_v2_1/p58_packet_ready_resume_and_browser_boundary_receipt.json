@@ -1,0 +1,62 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p58_packet_ready_resume_browser_boundary_v1",
+  "recorded_at": "2026-09-24T02:10:07+09:00",
+  "status": "PACKET_READY_BROWSERUSE_SESSION_NOT_BOUND_NO_SUBMIT",
+  "browser_boundary": {
+    "requested_backend": "BrowserUse Chrome plugin extension attached to the user's existing signed-in session",
+    "preflight_exit_code": 0,
+    "node_repl_tool_exposed": true,
+    "extension_runtime_initialized": true,
+    "browseruse_tabs_list_count": 0,
+    "user_login_session_exists": "NOT_DETERMINED_BY_EMPTY_EXTENSION_LIST",
+    "cdp_fallback_attempted": true,
+    "cdp_backend": "Codex CDP at the configured C:\\ChromeDebug profile / 127.0.0.1:9222",
+    "same_browseruse_instance_and_tab_proven": false,
+    "cdp_task_tab_must_be_reused_for_live_work": false,
+    "visible_account_plan": "대규 / Pro",
+    "ordinary_chat_visible": true,
+    "actual_pro_model_mode_confirmed": false,
+    "later_unrelated_financial_screen_interacted_with": false,
+    "page_change_cause": "UNKNOWN"
+  },
+  "live_research": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "run_id": "PRORUN-ff542ef979f09bcaf7cf2545",
+    "fresh_session_id": "FRESH-V2-1-C15-R6-20260907T212025Z",
+    "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "symbol": "010950",
+    "as_of_date": "2026-08-23",
+    "state": "PACKET_READY",
+    "packet_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "browser_session_id": null,
+    "conversation_id": null,
+    "prompt_input_count": 0,
+    "upload_count": 0,
+    "submit_count": 0,
+    "capture_count": 0,
+    "source_query_count": 0,
+    "source_fetch_count": 0
+  },
+  "verification": {
+    "exact_packet_ready_resume_test": "PASS",
+    "exact_packet_ready_resume_test_count": 1,
+    "fresh_orchestration_file": "PASS",
+    "fresh_orchestration_test_count": 76,
+    "full_suite_for_p58": "NOT_RUN",
+    "remote_ci_for_p58": "PENDING"
+  },
+  "next_action": "Use BrowserUse extension to inspect the user's current existing tabs read-only; continue the exact R6 only after the existing ChatGPT tab and ordinary Chat Pro model mode are verified in that same tab. If the extension list is empty, stop and record the exact technical boundary; do not open a CDP replacement session.",
+  "prohibited_shortcuts": [
+    "Treating an empty BrowserUse tab list as proof that the user has no signed-in session",
+    "Switching to a newly opened CDP ChatGPT tab without proof it is the same existing BrowserUse session and target tab",
+    "Opening another browser window, profile, or substitute task tab",
+    "Resending any prompt or creating another job/pass to compensate for browser connection failure"
+  ],
+  "master_goal": {
+    "actual_live_full_thesis_pass_count": 1,
+    "required_count": 3,
+    "operational_research_ready": false,
+    "pr_7_must_remain_draft_open": true,
+    "main_merge_allowed": false
+  }
+}

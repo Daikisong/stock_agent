@@ -1,0 +1,115 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p74_browseruse_attachment_locator_v1",
+  "observed_at": "2026-09-24T09:55:00+09:00",
+  "status": "ATTACHMENT_LOCATOR_API_GAP_FIXED_LOCAL_PASS_EXACT_HEAD_CI_PENDING",
+  "goal_complete": false,
+  "repository": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "pre_patch_head": "c456397f38da814b0ced218ed15b0a7436c0a99d",
+    "patch_committed": false,
+    "patch_pushed": false,
+    "exact_head_ci": "PENDING",
+    "pull_request": 7,
+    "pull_request_state": "OPEN",
+    "pull_request_draft": true,
+    "pull_request_mergeable": true,
+    "main_merge": false
+  },
+  "previous_head_ci": {
+    "head_sha": "c456397f38da814b0ced218ed15b0a7436c0a99d",
+    "all_three_runs_success": true,
+    "pro_first_push_run": {
+      "run_id": 35938647681,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35938647681",
+      "conclusion": "SUCCESS",
+      "full_unittest_count": 7920,
+      "skipped_count": 38,
+      "failure_count": 0,
+      "error_count": 0
+    },
+    "pro_first_pr_run": {
+      "run_id": 35938651371,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35938651371",
+      "conclusion": "SUCCESS"
+    },
+    "v6_pr_run": {
+      "run_id": 35938651326,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35938651326",
+      "conclusion": "SUCCESS"
+    },
+    "note": "These runs verify the P73 head, not the P74 patch."
+  },
+  "browseruse": {
+    "backend": "Chrome BrowserUse extension",
+    "existing_logged_in_session_reused": true,
+    "same_existing_claimed_tab_reused": true,
+    "new_browser_window_tab_or_profile_created": false,
+    "relogin_performed": false,
+    "read_only_ui_state": {
+      "origin": "https://chatgpt.com/",
+      "title": "ChatGPT",
+      "ordinary_chat_selected": true,
+      "work_selected": false,
+      "selected_composer_model_label": "Pro",
+      "composer_count": 1,
+      "composer_blank": true,
+      "attachment_locator_read_only_smoke": "PASS",
+      "attachment_locator_count": 1,
+      "attachment_locator_visible": true,
+      "attachment_locator_enabled": true,
+      "attachment_button_clicked": false,
+      "file_chooser_opened": false,
+      "packet_selected_or_uploaded": false,
+      "navigation_performed": false,
+      "prompt_input_count": 0,
+      "packet_upload_count": 0,
+      "submit_count": 0,
+      "capture_count": 0
+    },
+    "remaining_issue_found_before_resume": {
+      "file": "src/e2r/pro_first/browser/browseruse_extension_bridge.mjs",
+      "function": "attachPacket",
+      "old_behavior": "tab.playwright.locator(selector).first treated a BrowserUse first() method as a Playwright property",
+      "failure_effect": "Could pass a function instead of a locator to count/isVisible/isEnabled and fail before packet upload.",
+      "scope": "Native packet-attachment helper, separate from locator.create fixed in P73."
+    }
+  },
+  "job_read_only": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "symbol": "010950",
+    "archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 6,
+    "packet_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "approval_fields_null": true,
+    "browser_session_bound": false,
+    "conversation_bound": false,
+    "submit_count": 0,
+    "capture_count": 0,
+    "successor_job_created": false
+  },
+  "code_change": {
+    "file": "src/e2r/pro_first/browser/browseruse_extension_bridge.mjs",
+    "change": "Use resolveFirstVisibleEnabledLocator in attachPacket; it resolves callable or property-style first and checks count/visibility/enabled in selector order.",
+    "regression_test": "tests/test_e2r_pro_first_browseruse_extension_bridge.py exercises BrowserUse method form, Playwright property form, fallback order, and no-match."
+  },
+  "local_verification": {
+    "suites": [
+      "tests.test_e2r_pro_first_browseruse_extension_bridge",
+      "tests.test_e2r_pro_first_v2_1_fresh_orchestration"
+    ],
+    "tests_run": 91,
+    "passed": 91,
+    "failure_count": 0,
+    "error_count": 0,
+    "node_check": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "other_zero_counts": {
+    "new_source_queries": 0,
+    "new_source_fetches": 0,
+    "score_changes": 0,
+    "stage_changes": 0
+  },
+  "next_step": "Commit P74 code/tests/progress/receipt in Korean and push only to existing PR #7 branch; wait for exact-head Pro push, Pro PR, and V6 PR Actions SUCCESS before resuming the same C15 R6 job through the same existing BrowserUse tab."
+}

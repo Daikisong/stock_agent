@@ -1,0 +1,102 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_c17_r22_r23_provider_failure_receipt_v1",
+  "status": "C17_R22_FULL_THESIS_PENDING_R23_PROVIDER_FAILURE_SEALED",
+  "recorded_at": "2026-08-31T16:37:00Z",
+  "source_parent_sha": "85e5880870dfdbf7799b92b22bb2d6b96bd6f69b",
+  "target": {
+    "symbol": "011170",
+    "company_name": "롯데케미칼",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+  },
+  "r22": {
+    "job_id": "PROJOB-772e68540d3d8620e7f84433",
+    "run_id": "PRORUN-d172b08cfad4b25ad2616245",
+    "conversation_id": "6a9566ad-f940-83e8-a29c-21c8f4b707ab",
+    "replacement_public_gap_pass_id": "PROPASS-fbbf22d3c9f1fa7e63b8c15a",
+    "verifier_repair_pass_id": "PROPASS-b3d8c4f58d1bcebf1d383371",
+    "replacement_new_fact_count": 21,
+    "replacement_new_route_count": 52,
+    "accepted_fact_count": 40,
+    "nonterminal_mandatory_question_count": 1,
+    "provider_parser_core_pending_count": 1,
+    "public_material_gap_count": 2,
+    "source_linkage_incomplete_count": 0,
+    "verifier_repair_pending_count": 1,
+    "research_saturation_valid": false,
+    "full_thesis_status": "OPERATIONAL_EFFICIENCY_GATE_FAILED",
+    "full_thesis_receipt_hash": "7ae04ec5321e22200127de0246b7d85008edc3fc9d326b97b0b82d2f33bc0795",
+    "score_authority": false,
+    "stage_authority": false,
+    "old_job_frozen": true,
+    "superseded_by_fresh_job_id": "PROJOB-8a76fe34e22a6ed768fd0629"
+  },
+  "r23": {
+    "fresh_session_id": "FRESH-V2-1-C17-R23-20260831T154145Z",
+    "job_id": "PROJOB-8a76fe34e22a6ed768fd0629",
+    "run_id": "PRORUN-a6824ac21d029a6238b9fef6",
+    "initial_pass_id": "PROPASS-0225600f0d2df0d80d09671f",
+    "conversation_id": "6a95a0e5-20a4-83e9-9276-eb537f593f6b",
+    "submit_count": 1,
+    "capture_count": 0,
+    "failure_class": "CHATGPT_RETRYABLE_PROVIDER_ERROR",
+    "visible_provider_error": "A network error occurred. Please check your connection and try again.",
+    "later_fresh_view_absence_observation_ids": [
+      "PROSERVERVIEW-6dafaebb25b600fc8603bd45",
+      "PROSERVERVIEW-ad275e9176253e5af344365e"
+    ],
+    "old_job_frozen_at": "2026-08-31T16:36:22.553033Z",
+    "automatic_resubmit_allowed": false,
+    "score_authority": false,
+    "stage_authority": false,
+    "publication_withheld": true,
+    "provider_failure_receipt_hash": "a8209af2c1d955aec46006172c334cc5f37b61b7712bf9caff9341c6545ad431",
+    "successor_deny_manifest": {
+      "old_research_pass_ids": [
+        "PROPASS-0225600f0d2df0d80d09671f"
+      ],
+      "old_fact_count": 0,
+      "old_route_receipt_count": 0
+    }
+  },
+  "generic_repair": {
+    "stable_invalid_terminal_observations_required": true,
+    "latest_assistant_network_failure_beats_stale_stop_control": true,
+    "global_stale_network_toast_still_loses_to_stop_control": true,
+    "visible_retry_button_clicked": false,
+    "provider_failure_freezes_job": true,
+    "provider_failure_binds_canonical_conversation": true,
+    "provider_failure_writes_hash_bound_receipt": true,
+    "captureless_provider_failure_can_seed_deny_only_successor_manifest": true,
+    "automatic_resubmit_path_added": false,
+    "score_or_stage_authority_added": false
+  },
+  "verification": {
+    "focused_late_persistence_tests": "3/3 PASS",
+    "fresh_orchestration_old_freeze_state_machine": "82/82 PASS",
+    "windows_chromium_browser_adapter": "45/45 PASS",
+    "static_audits": "PRO_FIRST_V1_V2_V2_1_AND_V6_PASS_CRITICAL_0",
+    "compileall": "PASS",
+    "git_diff_check": "PASS",
+    "full_related_and_ci": "PENDING_CURRENT_PATCH"
+  },
+  "browser_safety": {
+    "existing_logged_in_chatgpt_target_id": "F6DC0979950E8B311DC6F6207BF6197E",
+    "chatgpt_page_count": 1,
+    "new_window_count": 0,
+    "new_tab_count": 0,
+    "new_target_count": 0,
+    "r23_submit_count": 1,
+    "recovery_browser_submit_delta": 0
+  },
+  "master_goal_state": {
+    "live_full_thesis_pass_count": 1,
+    "live_full_thesis_required_count": 3,
+    "c06": "PASS",
+    "c17": "R22_PENDING_THEN_R23_PROVIDER_FAILURE_SEALED",
+    "c28": "PENDING",
+    "operational_research_ready_allowed": false,
+    "pr_draft_release_allowed": false,
+    "main_merge_allowed": false
+  }
+}

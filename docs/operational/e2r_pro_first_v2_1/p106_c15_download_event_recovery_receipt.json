@@ -1,0 +1,127 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p106_c15_download_event_recovery_v1",
+  "recorded_at": "2026-09-25T06:47:00+09:00",
+  "status": "EXACT_HEAD_CI_GREEN_C15_DOWNLOAD_EVENT_BLOCKED",
+  "head_sha": "1fc9e8024a9103e56c9d94f1fa0d42c4d583b62c",
+  "ci": {
+    "pro_pr": {
+      "run_id": "36058257097",
+      "conclusion": "SUCCESS",
+      "tests_run": 7948,
+      "skipped": 38,
+      "failures": 0,
+      "errors": 0
+    },
+    "v6_pr": {
+      "run_id": "36058257109",
+      "conclusion": "SUCCESS",
+      "tests_run": 7948,
+      "skipped": 38,
+      "failures": 0,
+      "errors": 0
+    },
+    "pro_push": {
+      "run_id": "36058250305",
+      "conclusion": "SUCCESS",
+      "tests_run": 7948,
+      "skipped": 38,
+      "failures": 0,
+      "errors": 0
+    }
+  },
+  "target": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "run_id": "PRORUN-ff542ef979f09bcaf7cf2545",
+    "initial_pass_id": "PROPASS-a7654d1d80c9c041afb5777f",
+    "fresh_session_id": "FRESH-V2-1-C15-R6-20260907T212025Z",
+    "symbol": "010950",
+    "company_name": "S-Oil",
+    "as_of_date": "2026-08-23",
+    "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "packet_canonical_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df"
+  },
+  "browseruse_existing_session": {
+    "backend": "Chrome BrowserUse extension",
+    "current_open_tab_count": 4,
+    "existing_user_tab_reenumerated": true,
+    "exact_existing_chatgpt_root_tab_reclaimed": true,
+    "same_claimed_tab_object_used": true,
+    "origin": "https://chatgpt.com",
+    "root_route": true,
+    "chat_selected": true,
+    "actual_pro_model_marker_present": true,
+    "visible_packet_tile_count": 1,
+    "visible_packet_filename": "research_packet(20260924-172107).json",
+    "file_input_count": 5,
+    "selected_file_count": 0,
+    "dev_error_warn_log_count": 0,
+    "cdp_error": "Capability is not available: cdp",
+    "new_window_tab_profile_or_cdp_session_created": false,
+    "relogin_performed": false
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "failure_stage": "DETACHED_NODE_REPL_WORKER",
+      "exact_error": "BRIDGE_OPERATION_FAILED: node_repl exec context not found",
+      "cause": "The worker promise was detached from the active Node REPL call instead of being awaited inside runUntil.",
+      "ui_mutation": false,
+      "durable_state_change": false
+    },
+    {
+      "attempt": 2,
+      "failure_stage": "SAME_TAB_VISIBLE_PACKET_DOWNLOAD_VERIFICATION",
+      "exact_error": "BrowserUIIncompatible: visible composer packet download was not observed in the claimed tab",
+      "progress_phases": [
+        "FRESH_PACKET_READY",
+        "FRESH_UNPREPARED_ATTENTION_RESUME"
+      ],
+      "prompt_input": false,
+      "attachment_upload": false,
+      "submit": false,
+      "capture": false
+    },
+    {
+      "attempt": 3,
+      "failure_stage": "DIRECT_BROWSERUSE_DOWNLOAD_EVENT_DIAGNOSTIC",
+      "exact_error": "Timed out after 12000ms waiting for download",
+      "visible_exact_button_clicked": true,
+      "saved_download_copy": false,
+      "ui_state_changed": false
+    }
+  ],
+  "prior_p100_download_evidence": {
+    "same_filename_tile_downloaded_previously": true,
+    "downloaded_bytes": 175126,
+    "raw_sha256": "e1d1c44edfd0467aeac3aff1bd362cbb927bf01da135e91f3d9d5cd39f81324f",
+    "matched_local_packet_at_p100": true,
+    "reused_as_current_success": false
+  },
+  "durable_job_after_attempts": {
+    "database_access": "SQLite mode=ro; PRAGMA query_only=ON",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 26,
+    "packet_hash_unchanged": true,
+    "approval_binding": null,
+    "browser_session_id": null,
+    "conversation_id": null,
+    "submit_count": 0,
+    "capture_count": 0,
+    "successor_job_id": null,
+    "latest_durable_error_unchanged": "BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab",
+    "state_changed": false
+  },
+  "actions_during_p106": {
+    "new_job_or_pass_count": 0,
+    "prompt_input_count": 0,
+    "attachment_upload_count": 0,
+    "submit_count": 0,
+    "capture_count": 0,
+    "source_query_count": 0,
+    "source_fetch_count": 0,
+    "score_or_stage_change_count": 0,
+    "download_event_observed_current_attempt": false
+  },
+  "next_step": "Fix generic BrowserUse file-card download verification with regression tests and exact-head CI before same-job retry. Preserve the current one-tile draft; do not remove or replace the visible packet unless the user explicitly authorizes that replacement.",
+  "master_goal_complete": false
+}

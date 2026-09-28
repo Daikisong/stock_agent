@@ -1,0 +1,74 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p59_browseruse_external_tab_cdp_mismatch_v1",
+  "recorded_at": "2026-09-24T02:37:40+09:00",
+  "status": "EXISTING_BROWSERUSE_CHATGPT_TAB_FOUND_CDP_WORKER_TARGET_MISMATCH_NO_SUBMIT",
+  "browseruse": {
+    "preflight_exit_code": 0,
+    "node_repl_tool_exposed": true,
+    "extension_runtime_initialized": true,
+    "registered_extension_browser_count": 2,
+    "selected_browser_id": "3",
+    "selected_profile_name": "대규",
+    "agent_tab_list_count": 0,
+    "agent_selected_tab": null,
+    "external_user_tab_count": 2,
+    "external_chatgpt_tab_count": 1,
+    "external_tab_claimed_by_exact_openTabs_object": true,
+    "chat_body_read": false,
+    "composer_present": true,
+    "composer_has_draft": false,
+    "generation_in_progress": false,
+    "visible_model_mode": "Instant",
+    "actual_pro_model_mode_confirmed": false,
+    "task_conversation_or_page_changed": false
+  },
+  "cdp_comparison": {
+    "check_only": true,
+    "endpoint": "http://127.0.0.1:9222",
+    "profile_path": "C:\\ChromeDebug",
+    "process_id": 26036,
+    "started_new_process": false,
+    "wsl_loopback_read_error": "ConnectionRefusedError",
+    "windows_read_only_page_count": 1,
+    "windows_chatgpt_target_count": 0,
+    "exact_browseruse_title_url_match_count": 0,
+    "same_external_tab_proven": false
+  },
+  "research": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "run_id": "PRORUN-ff542ef979f09bcaf7cf2545",
+    "fresh_session_id": "FRESH-V2-1-C15-R6-20260907T212025Z",
+    "state": "PACKET_READY",
+    "submit_count": 0,
+    "capture_count": 0,
+    "browser_session_id": null,
+    "conversation_id": null,
+    "prompt_input_count": 0,
+    "upload_count": 0,
+    "source_query_count": 0,
+    "source_fetch_count": 0
+  },
+  "pipeline_constraint": {
+    "worker": "ProBrowserWorker",
+    "connection_mode": "CDP_ATTACH",
+    "requires_existing_chatgpt_page_on_cdp_endpoint": true,
+    "can_safely_run_against_current_9222_target": false,
+    "persistent_or_other_profile_fallback_used": false
+  },
+  "ci_at_recorded_at": {
+    "head_sha": "6db110ef546fd5918873b290f77632afc45053f7",
+    "pro_first_pull_request_run": "in_progress",
+    "pro_first_push_run": "in_progress",
+    "v6_run": "in_progress",
+    "browser_mock_core_static_jobs": "PASS",
+    "full_regression_and_v6_full_tests": "IN_PROGRESS"
+  },
+  "next_action": "Preserve the claimed BrowserUse tab and establish an E2R worker path that controls that exact external tab/session. Do not open a replacement Chrome profile or use the mismatching CDP target. Before live work, verify the ordinary Chat Pro mode on the exact new-chat route; only then resume this exact R6 job.",
+  "master_goal": {
+    "live_full_thesis_pass_count": 1,
+    "required_live_full_thesis_pass_count": 3,
+    "operational_research_ready": false,
+    "pr_7_must_remain_draft_open": true,
+    "main_merge_allowed": false
+  }
+}

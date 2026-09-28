@@ -1,0 +1,155 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p73_browseruse_locator_api_v1",
+  "observed_at": "2026-09-24T09:27:38+09:00",
+  "status": "LOCATOR_METHOD_PROPERTY_MISMATCH_FIXED_LOCAL_READ_ONLY_SMOKE_PASS_EXACT_HEAD_CI_PENDING",
+  "goal_complete": false,
+  "repository": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "pre_patch_head": "b8c4c77ecc01c6f184b85bfaca25da7ffb3504b0",
+    "patch_committed": false,
+    "patch_pushed": false,
+    "exact_head_ci": "PENDING",
+    "pull_request": 7,
+    "pull_request_state": "OPEN",
+    "pull_request_draft": true,
+    "pull_request_mergeable": true,
+    "main_merge": false
+  },
+  "previous_head_ci": {
+    "head_sha": "b8c4c77ecc01c6f184b85bfaca25da7ffb3504b0",
+    "all_three_runs_success": true,
+    "pro_first_push_run": {
+      "run_id": 35935060913,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35935060913",
+      "conclusion": "SUCCESS",
+      "full_unittest_count": 7919,
+      "skipped_count": 38,
+      "failure_count": 0,
+      "error_count": 0
+    },
+    "pro_first_pr_run": {
+      "run_id": 35935064145,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35935064145",
+      "conclusion": "SUCCESS",
+      "full_unittest_count": 7919,
+      "skipped_count": 38,
+      "failure_count": 0,
+      "error_count": 0
+    },
+    "v6_pr_run": {
+      "run_id": 35935064172,
+      "url": "https://github.com/Daikisong/stock_agent/actions/runs/35935064172",
+      "conclusion": "SUCCESS"
+    },
+    "note": "These runs predate this P73 patch and do not verify it."
+  },
+  "browseruse": {
+    "backend": "Chrome BrowserUse extension",
+    "existing_logged_in_session_reused": true,
+    "same_existing_claimed_tab_reused": true,
+    "new_browser_window_tab_or_profile_created": false,
+    "relogin_performed": false,
+    "pre_runner_route_check": {
+      "ordinary_chat_selected": true,
+      "visible_model_label": "6 Pro",
+      "work_selected": false,
+      "composer_blank": true
+    },
+    "last_read_only_ui_check": {
+      "origin": "https://chatgpt.com/",
+      "ordinary_chat_selected": true,
+      "selected_composer_control": "button[aria-label=\"ChatGPT 모델 선택\"]",
+      "selected_public_pro_label": "Pro",
+      "model_label_is_subscription_badge": false,
+      "work_selected": false,
+      "deep_research_selected": false,
+      "composer_blank": true,
+      "packet_attachment_present": false,
+      "adapter_exact_pro_label_policy_matches": true
+    },
+    "first_failed_launch": {
+      "failure": "File URL path must be absolute",
+      "stage": "WINDOWS_NODE_REPL_IMPORT_URL_CONVERSION",
+      "bridge_started": false,
+      "browser_ui_interaction": false,
+      "job_state_changed": false
+    },
+    "second_failed_launch": {
+      "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+      "resumed_exact_existing_job": true,
+      "failure_class": "BrowserUseBridgeError",
+      "failure": "BRIDGE_OPERATION_FAILED: locator.count is not a function",
+      "stage": "READ_ONLY_LOGIN_PREFLIGHT",
+      "prompt_input_count": 0,
+      "packet_upload_count": 0,
+      "submit_count": 0,
+      "capture_count": 0
+    },
+    "runtime_api_observation": {
+      "browseruse_locator_first_type": "function",
+      "browseruse_locator_last_type": "function",
+      "first_call_returns_locator": true,
+      "first_call_count_is_readable": true,
+      "root_cause": "Bridge treated BrowserUse first/last methods as Playwright-style locator properties and stored the method function instead of the returned locator."
+    },
+    "post_patch_same_tab_read_only_bridge_smoke": {
+      "status": "PASS",
+      "composer_locator_counts": {
+        "div.ProseMirror[contenteditable=true]": 1,
+        "[contenteditable=true]": 1,
+        "[role=textbox]": 1
+      },
+      "all_composer_locators_visible": true,
+      "ui_mutation": false,
+      "navigation": false,
+      "input_upload_submit_capture": [0, 0, 0, 0],
+      "new_browser_or_tab": false
+    },
+    "cdp_capability": "Capability is not available: cdp"
+  },
+  "durable_job_read_only": {
+    "database_uri_mode": "mode=ro",
+    "query_only": true,
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "symbol": "010950",
+    "archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 6,
+    "packet_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "latest_preflight_event": {
+      "preparation_failure_stage": "READ_ONLY_BROWSER_PREFLIGHT",
+      "safe_unprepared_resume": true,
+      "submit_count": 0
+    },
+    "approval_fields_null": true,
+    "browser_session_bound": false,
+    "conversation_bound": false,
+    "submit_count": 0,
+    "capture_count": 0,
+    "successor_job_created": false
+  },
+  "code_change": {
+    "file": "src/e2r/pro_first/browser/browseruse_extension_bridge.mjs",
+    "change": "Resolve first/last as methods when callable, preserve locator-property compatibility, await result, and fail closed unless a locator is returned.",
+    "regression_test": "tests/test_e2r_pro_first_browseruse_extension_bridge.py covers BrowserUse method form, Playwright property form, async method form, and invalid result."
+  },
+  "local_verification": {
+    "suites": [
+      "tests.test_e2r_pro_first_browseruse_extension_bridge",
+      "tests.test_e2r_pro_first_v2_1_fresh_orchestration"
+    ],
+    "tests_run": 91,
+    "passed": 91,
+    "failure_count": 0,
+    "error_count": 0,
+    "node_check": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "other_zero_counts": {
+    "new_source_queries": 0,
+    "new_source_fetches": 0,
+    "score_changes": 0,
+    "stage_changes": 0
+  },
+  "next_step": "Commit P73 code/tests/docs in Korean and push only to the existing PR #7 branch. Wait for exact-head Pro-first and V6 GitHub Actions success before resuming the same C15 R6 job in this same existing BrowserUse tab."
+}

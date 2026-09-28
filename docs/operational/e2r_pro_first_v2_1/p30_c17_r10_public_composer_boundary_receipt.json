@@ -1,0 +1,118 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_c17_r10_public_composer_boundary_receipt_v1",
+  "phase": "P30_C17_R10_PUBLIC_COMPOSER_BOUNDARY",
+  "status": "FRESH_SESSION_DIAGNOSTIC_ONLY",
+  "target_id": "011170",
+  "as_of_date": "2026-08-23",
+  "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+  "fresh_session_id": "FRESH-V2-1-C17-R10-20260830T032712Z",
+  "job_id": "PROJOB-fa068a50ec045802bbb8d448",
+  "run_id": "PRORUN-7b5e5a8f4454bd8dd8a31954",
+  "initial_pass_id": "PROPASS-7212ffb02ca51476c8bd77ac",
+  "conversation_id": null,
+  "fresh_runtime_id": "20260830T032712Z",
+  "pre_browser_preflight": {
+    "predecessor_style_attempt_status": "FAILED_BEFORE_RUNTIME_CREATION",
+    "reason": "R9 has no effective dossier or READY-certified capture and therefore is not an answer-bearing predecessor",
+    "runtime_created": false,
+    "job_created": false,
+    "upload_count": 0,
+    "submit_count": 0,
+    "corrected_boundary_mode": "INDEPENDENT_CROSS_ARCHETYPE_CANARY"
+  },
+  "fresh_preparation": {
+    "status": "PASS",
+    "new_chat_route_verified": true,
+    "mandatory_question_count": 26,
+    "prompt_char_count": 60455,
+    "packet_leakage_count": 0,
+    "prompt_old_answer_token_count": 0,
+    "prompt_forbidden_answer_field_token_count": 0,
+    "packet_hash": "992f04aedf8b22af74b98586035c77690b73d2b6a60d987f2625f56a676c0c20",
+    "prompt_hash": "b4333d87d46aae9164db6e3d1fb116445130c5873ab7ab91e7ba63170aac7c2e"
+  },
+  "exactly_once_transport": {
+    "upload_count": 1,
+    "submit_claim_count": 1,
+    "browser_submit_count": 1,
+    "same_tab_refresh_after_submit": false,
+    "conversation_id_persisted": false,
+    "exact_user_turn_persisted": false,
+    "server_persistence_confirmed": false,
+    "server_persistence_observation_id": "PROSERVERVIEW-7756013effd54b985a1ee022",
+    "missing_exact_marker_count": 2,
+    "automatic_resubmit_allowed": false,
+    "existing_logged_in_chatgpt_tab_count": 1,
+    "new_chatgpt_tab_open_count": 0
+  },
+  "post_failure_read_only_dom": {
+    "url": "https://chatgpt.com/",
+    "editor_present": true,
+    "editor_char_count": 0,
+    "user_turn_count": 0,
+    "assistant_turn_count": 0,
+    "job_marker_in_editor_or_user_turn": false,
+    "run_marker_in_editor_or_user_turn": false,
+    "visible_operational_error_text": false,
+    "pro_mode_control_visible": true
+  },
+  "diagnosis": {
+    "failure_class": "INITIAL_EXACT_USER_TURN_ABSENT_AFTER_SAFE_NO_REFRESH_EXACTLY_ONCE_SUBMIT",
+    "comparison": {
+      "last_successful_c17_prompt_char_count": 59270,
+      "r9_failed_prompt_char_count": 60439,
+      "r10_failed_prompt_char_count": 60455
+    },
+    "inference": "the public composer cleared two prompts above 60,000 characters without creating a durable user turn",
+    "research_answer_received": false,
+    "accepted_fact_count": 0,
+    "score_receipt_present": false,
+    "stagecourt_receipt_present": false
+  },
+  "freeze": {
+    "old_job_frozen": true,
+    "old_job_frozen_at": "2026-08-30T03:31:10.492252Z",
+    "new_conversation_required": true,
+    "publication_withheld": true,
+    "score_authority": false,
+    "stage_authority": false
+  },
+  "lossless_transport_repair": {
+    "complete_schema_preserved": true,
+    "dossier_schema_hash_before_and_after": "40647e7ee4e83bb05cf4a9b668e86f985968e12ba407668de73cb79c15fe5a47",
+    "pretty_schema_char_count": 23412,
+    "compact_schema_char_count": 13813,
+    "non_semantic_whitespace_removed": 9599,
+    "same_r10_packet_recompiled_prompt_char_count": 50856,
+    "live_initial_pre_browser_char_limit": 59800,
+    "source_saturation_contract_preserved": true,
+    "ticker_or_archetype_query_hardcoding_added": false
+  },
+  "verification": {
+    "canonical_contract_snapshot_count": 36,
+    "snapshot_audit_status": "PASS",
+    "snapshot_audit_critical_count": 0,
+    "snapshot_prompt_char_min": 29200,
+    "snapshot_prompt_char_max": 52247,
+    "snapshot_audit_hash": "766dcb04f5d65af328be600308a962536d2e82734109114c101aaf1f297757b9",
+    "initial_and_fresh_orchestration_tests": 69,
+    "failures": 0,
+    "errors": 0
+  },
+  "artifact_sha256": {
+    "fresh_session_boundary_receipt": "0d497a37609102cfc02e85e58f8575a487781a4ded2beebadfc93776e1c8fd7c",
+    "old_answer_leakage_manifest": "85b2c1136c74338d540664054f4000dd50e8aa091c0c62781ace7465bae77a58",
+    "fresh_blind_packet_audit": "3e19b753499f52a8d22d0484a152278f855c33ded146299218c922fa439509cc",
+    "fresh_initial_prompt_leakage_audit": "e2e472b17d9185a95ea7ead5ed9f2adc42d45ac388a522a62ef3a659523bd397",
+    "fresh_v3_prepare_receipt": "eed967e46ee5b4e9f2d0ac1b746f5db84356dc49cfe063e4633237186ce29264",
+    "initial_prompt_v3_receipt": "d7d0f6c6b8181c96f177735dfe244d52d7d1894644e46e7f90a6a94ce46a1234",
+    "fresh_efficiency_failure_receipt": "c7de262edcc552dd5ff4a447429f5bc2e415e83c571a45358aed6e54af9061d4",
+    "packet_manifest": "79fc5b9c1950ca699930044b6baecf901728bcc167990feb564336376e63c59a",
+    "research_packet": "5d4d20afa4c992921114f206ea09a40294dba2aabb8f2b12b0474ec641ffb1fa",
+    "tracked_snapshot_audit_json": "ce716bb1cd1a641e446ba07714ae00837f733e8872d8550a1614f379fa7b29f5"
+  },
+  "runtime_artifacts_tracked": false,
+  "score_authority": false,
+  "stage_authority": false,
+  "next_action": "start C17 R11 in a new conversation by navigating the one existing logged-in ChatGPT tab with the losslessly compacted initial prompt"
+}
