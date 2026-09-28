@@ -1,0 +1,218 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p113_current_audit_and_browseruse_tool_availability_v1",
+  "recorded_at": "2026-09-28T17:30:19+09:00",
+  "user_instruction": {
+    "authenticated_browser_work_must_use_existing_logged_in_user_session": true,
+    "required_backend": "BrowserUse Chrome extension",
+    "enumerate_existing_user_tabs_before_action": true,
+    "claim_exact_existing_tab_and_use_returned_same_object": true,
+    "new_browser_profile_tab_window_or_relogin_as_fallback": false,
+    "preserve_existing_unsent_composer_attachment_unless_verified_and_authorized": true
+  },
+  "git_pr_checkpoint_start": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "head_sha": "bf225509382f5391c61d98507f93cef20c705d6d",
+    "origin_head_sha": "bf225509382f5391c61d98507f93cef20c705d6d",
+    "ahead_behind": "0/0",
+    "worktree_clean": true,
+    "pr_number": 7,
+    "pr_url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "pr_state": "OPEN",
+    "pr_draft": true,
+    "pr_merge_state": "CLEAN",
+    "base_branch": "main",
+    "merged": false,
+    "base_sha_reported_by_pr_api": "b408b0b6887ea3ca20367a3dc64f543263cd123f",
+    "older_run_head_not_current_pr_head": "2b66103af8e14c50ccc322d5a858df303f4c8a4e"
+  },
+  "exact_head_ci": {
+    "head_sha": "bf225509382f5391c61d98507f93cef20c705d6d",
+    "all_required_workflows_success": true,
+    "runs": [
+      {
+        "workflow": "E2R Pro-first verification",
+        "event": "pull_request",
+        "run_id": 36079242405,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36079242405",
+        "conclusion": "SUCCESS",
+        "full_suite_tests": 7952,
+        "skipped": 38,
+        "failures": 0,
+        "errors": 0,
+        "duration_seconds": 929.171,
+        "core_unit_tests": 300,
+        "browser_mock_e2e_tests": 105,
+        "independent_reviewers_a_to_h": "PASS",
+        "compile_diff_check": "PASS",
+        "static_audit_critical_count_sum": 0
+      },
+      {
+        "workflow": "E2R Pro-first verification",
+        "event": "push",
+        "run_id": 36079238509,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36079238509",
+        "conclusion": "SUCCESS",
+        "full_suite_tests": 7952,
+        "skipped": 38,
+        "failures": 0,
+        "errors": 0,
+        "duration_seconds": 846.282,
+        "static_audit_critical_count_sum": 0
+      },
+      {
+        "workflow": "E2R v6 operational cutover verification",
+        "event": "pull_request",
+        "run_id": 36079242306,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36079242306",
+        "conclusion": "SUCCESS",
+        "gate1_tracked_receipt_tests": "4/4 PASS",
+        "full_suite_tests": 7952,
+        "skipped": 38,
+        "failures": 0,
+        "errors": 0,
+        "duration_seconds": 737.044,
+        "phase100": "15/15 PASS",
+        "production_static_audit_critical_count_sum": 0
+      }
+    ]
+  },
+  "local_audits_recomputed_this_checkpoint": {
+    "requirement_level_static_audit": {
+      "status": "PASS",
+      "critical_count": 0,
+      "contract_audit_status": "PASS",
+      "generalization_audit_status": "PASS",
+      "prompt_audit_status": "PASS",
+      "verifier_repair_audit_status": "VERIFIER_REPAIR_CONTRACT_READY",
+      "scoring_publication_audit_status": "PASS",
+      "audit_hash": "2faaa70151b95bc4e405dd7348d527820fff5e40db80680b0d8901e7ccfca91a",
+      "contract_audit_hash": "2a7585c003689e584588575f24b1c65562e6133e686d38c2d2a60d298213913b",
+      "generalization_audit_hash": "6290ca74cf59cf910a4139be5391d22ce651a733a697c6bb71457ca4a5d2f0f2",
+      "prompt_audit_hash": "5a3950837a1e2bfea3587f6f93699d895bc088952b1ecc54c4fc0195a1048416",
+      "zero_counters": {
+        "canonical_contract_missing_count": 0,
+        "component_count_used_as_adequacy_count": 0,
+        "deterministic_query_template_count": 0,
+        "future_leakage_count": 0,
+        "generic_filler_contract_count": 0,
+        "green_gate_unmapped_count": 0,
+        "guard_unmapped_count": 0,
+        "material_gap_without_followup_count": 0,
+        "partial_score_published_count": 0,
+        "pro_score_authority_count": 0,
+        "pro_stage_authority_count": 0,
+        "prompt_forced_complete_count": 0,
+        "prompt_gold_leakage_count": 0,
+        "prompt_snapshot_missing_count": 0,
+        "public_gap_downgraded_to_corroboration_count": 0,
+        "required_primitive_unmapped_count": 0,
+        "research_contract_missing_count": 0,
+        "research_incomplete_stage_final_count": 0,
+        "symbol_specific_branch_count": 0,
+        "verifier_repair_skipped_count": 0
+      }
+    },
+    "generalization_acceptance": {
+      "status": "PASS",
+      "audit_hash": "6290ca74cf59cf910a4139be5391d22ce651a733a697c6bb71457ca4a5d2f0f2",
+      "mandatory_mechanism_count": 13,
+      "golden_replay_pass_count": 13,
+      "prompt_snapshot_count": 36,
+      "known_bad_required_count": 30,
+      "known_bad_observed_count": 30,
+      "critical_count_sum": 0,
+      "fixture_only": true,
+      "production_runtime_ready": false
+    },
+    "fresh_session_efficiency": {
+      "status": "PASS",
+      "audit_hash": "47d96d1f3b602ef0b963ce3772ffc70cbacdb655fb399aefdcf0a61fb9b87b6a",
+      "comparison_hash": "b1778795d32c4b434ac9537c430d4b24898e7e36a518367ae83615c0ed5c8e01",
+      "fresh_archetype_count": 3,
+      "critical_count": 0,
+      "all_required_zero_counters_zero": true
+    },
+    "focused_tests": {
+      "command": "PYTHONPATH=src python -m unittest -q tests.test_e2r_pro_first_v2_generalization tests.test_e2r_pro_first_v2_static_audit tests.test_e2r_pro_first_v2_1_fresh_efficiency_audit",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "duration_seconds": 0.883
+    }
+  },
+  "browseruse_tool_availability_this_checkpoint": {
+    "node_repl_tool_present_in_active_tool_registry": false,
+    "node_repl_call_exact_error": "tools.mcp__node_repl__js is not a function",
+    "fallback_attempt": "mcp__playwright__browser_tabs(action=list)",
+    "fallback_error": "Error: async initializeServer: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome; Run \"npx playwright install chrome\"",
+    "fallback_session_identity_verified": false,
+    "fresh_chrome_or_profile_launched": false,
+    "browser_tabs_enumerated_this_checkpoint": false,
+    "claim_or_navigation": false,
+    "download_or_upload": false,
+    "prompt_input_or_submit": false,
+    "capture": false,
+    "draft_or_attachment_modified": false,
+    "classification": "TECHNICAL_TOOL_AVAILABILITY_FAILURE_NOT_POLICY_REFUSAL"
+  },
+  "attachment_identity_evidence": {
+    "p100_historical_same_filename_tile_downloaded": true,
+    "p100_downloaded_bytes": 175126,
+    "p100_raw_sha256": "e1d1c44edfd0467aeac3aff1bd362cbb927bf01da135e91f3d9d5cd39f81324f",
+    "p100_canonical_hash_matched_c15_packet": true,
+    "p106_later_same_tab_download_event_reverified": false,
+    "p106_exact_failure": "Timed out after 12000ms waiting for download",
+    "current_p113_tile_bytes_reverified": false,
+    "do_not_infer_current_bytes_from_name_or_historical_observation": true
+  },
+  "c15_durable_state_read_only_this_checkpoint": {
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "target": "S-Oil 010950",
+    "as_of_date": "2026-08-23",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 26,
+    "packet_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "submit_count": 0,
+    "capture_count": 0,
+    "approval_browser_conversation_binding_present": false,
+    "successor_job_id": null,
+    "last_error_class": "BrowserUIIncompatible",
+    "last_error_message": "the exact BrowserUse packet file/hash was not visible in the claimed tab",
+    "latest_event": {
+      "from_status": "BROWSER_PREPARING",
+      "to_status": "USER_ATTENTION_REQUIRED",
+      "actor": "v2.1-fresh-v3-browser-worker",
+      "preparation_failure_stage": "DRAFT_PREPARATION_OR_UNKNOWN",
+      "safe_unprepared_resume": false,
+      "automatic_resubmit_allowed": false,
+      "new_chat_route_required": true,
+      "submit_count": 0
+    },
+    "sqlite_mode_ro": true,
+    "pragma_query_only": 1
+  },
+  "p9_live_state": {
+    "required_full_thesis_canaries": ["C06", "C17", "C28"],
+    "passed": 1,
+    "completed": ["C06"],
+    "pending": ["C17", "C28"],
+    "separate_unresolved_task": "C15 R6",
+    "goal_complete": false
+  },
+  "scope_this_checkpoint": {
+    "research_query_or_fetch": false,
+    "new_job_or_pass": false,
+    "other_live_archetype": false,
+    "score_or_stage_change": false,
+    "ui_or_composer_mutation": false,
+    "submit_or_capture": false,
+    "pr_draft_release_or_merge": false,
+    "documentation_updated": [
+      "docs/operational/e2r_pro_first_v2_1/browseruse_existing_session_handoff.md",
+      "docs/operational/e2r_pro_first_v2_1/implementation_progress.md",
+      "docs/operational/e2r_pro_first_v2_1/p113_current_audit_and_browseruse_tool_availability_receipt.json"
+    ]
+  },
+  "next_step": "Restore access to the existing BrowserUse extension session in the resumed Codex tool connection; then re-enumerate and claim the exact existing tab and verify the current attachment bytes/hash before resuming same-job or live canary work.",
+  "blocker": "The current Codex turn does not expose the persistent BrowserUse Node REPL tool, while its Playwright fallback cannot initialize Chromium and does not prove same-session identity. Preserve the logged-in tab and do not send until an authorized existing-session backend is available."
+}

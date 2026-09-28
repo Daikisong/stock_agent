@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-25 09:44 KST (P112: 새 문서 head CI 완료 및 기존 로그인 탭·C15 durable 상태 재확인).
+최종 갱신: 2026-09-28 17:30 KST (P113: 36-contract·golden·fresh-efficiency 재감사, C15 DB 재확인, 현재 turn BrowserUse 도구 부재 기록).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,36 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 인계 — P112, 2026-09-25 09:44 KST
+## 최신 인계 — P113, 2026-09-28 17:30 KST
+
+### 사용자의 세션 지시와 이번 실제 BrowserUse 도달 범위
+
+인증 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션과 정확한 기존 작업 탭에서만 한다. P112에서 확인했던 Node REPL 상태를 현재 상태로 추정하지 않고, 이번 실행에서 도구 사용 가능 여부부터 새로 확인했다. `ALL_TOOLS`에는 `mcp__node_repl__js`가 없었고, 호출 시 실제 오류는 `tools.mcp__node_repl__js is not a function`이었다. 대체 도구 `mcp__playwright__browser_tabs({action:"list"})`는 **읽기 전용 tab list 시도** 중 아래 기술 오류로 초기화되지 않았다.
+
+```text
+Error: async initializeServer: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome
+Run "npx playwright install chrome"
+```
+
+이는 정책 거부가 아니다. 대체 Playwright 도구가 사용자의 기존 로그인 세션/정확한 탭에 연결된다는 증거도 얻지 못했으므로, 제시된 설치 안내를 실행하거나 새 Chrome/프로필/CDP/탭을 만들지 않았다. 이번 P113에서는 BrowserUse 탭을 열거·claim·검사하지 못했다. 마지막 실제 same-tab read-only 확인은 P112(2026-09-25 09:44 KST)다. 이번 turn에 navigation, 첨부 조작·다운로드, 입력·전송·capture는 0회다.
+
+### P113 재검증 결과
+
+- 저장소는 P113 시작 시 local/origin feature head `bf225509382f5391c61d98507f93cef20c705d6d`, worktree clean이었다. PR #7은 `OPEN/DRAFT/CLEAN`, base `main`, 미병합이다. PR API와 `git ls-remote`가 같은 head를 가리킨다. `gh run list`에 보였던 older SHA `2b66103...`는 별도 과거 successful run이며 PR/origin 현재 head가 아니다.
+- 현재 head `bf225509...` exact CI는 모두 SUCCESS: [Pro PR 36079242405](https://github.com/Daikisong/stock_agent/actions/runs/36079242405), [Pro push 36079238509](https://github.com/Daikisong/stock_agent/actions/runs/36079238509), [V6 36079242306](https://github.com/Daikisong/stock_agent/actions/runs/36079242306). 각각 전체 7,952 tests, skipped 38, failure/error 0. PR run의 core-unit 300, browser-mock-e2e 105, Reviewer A–H와 compile/diff-check도 성공했다. V6 Gate 1 tracked-receipt tests 4/4, Phase100 15/15, production static audit critical 0이다.
+- 이 실행에서 local requirement-level static audit을 다시 계산했다: PASS, `critical_count=0`; contract/generalization/prompt/scoring-publication audits PASS; all 20 reported counters 0. Audit hash `2faaa70151b95bc4e405dd7348d527820fff5e40db80680b0d8901e7ccfca91a`, contract hash `2a7585c003689e584588575f24b1c65562e6133e686d38c2d2a60d298213913b`, generalization hash `6290ca74cf59cf910a4139be5391d22ce651a733a697c6bb71457ca4a5d2f0f2`, prompt hash `5a3950837a1e2bfea3587f6f93699d895bc088952b1ecc54c4fc0195a1048416`이다.
+- P8 generalization acceptance 재계산은 PASS: 13/13 mechanism golden, 36 prompt snapshots, 30/30 known-bad, critical 0. Separate fresh-session efficiency audit는 PASS, 3 archetypes, critical 0, 필수 zero-counter 모두 0; 관련 focused tests 15/15 PASS. Golden은 offline fixture replay이며 Pro live canary를 대신하지 않는다.
+- P9 실제 live full-thesis canary는 여전히 1/3 (C06 완료, C17/C28 대기). C15는 별도의 same-job 재개 작업으로 미완료다. Full goal의 실제 live 증거는 이 offline 감사로 충족되지 않았다.
+- C15 `PROJOB-df15a37c58ae7583924e58c0`는 오늘 SQLite `mode=ro`, `PRAGMA query_only=ON`으로 재확인했다. S-Oil `010950`, as-of `2026-08-23`, `USER_ATTENTION_REQUIRED` v26, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, submit/capture `0/0`, approval/browser/conversation binding과 successor 없음, `safe_unprepared_resume=false`. Last error는 `BrowserUIIncompatible: the exact BrowserUse packet file/hash was not visible in the claimed tab`; last event stage는 `DRAFT_PREPARATION_OR_UNKNOWN`이고 `new_chat_route_required=true`다. 읽기는 DB를 변경하지 않았다.
+- 파일 타일 증거를 과장하지 않는다. P100에서 같은 이름 `research_packet(20260924-172107).json` 타일을 내려받아 175,126 bytes/raw SHA-256 `e1d1c44edfd0467aeac3aff1bd362cbb927bf01da135e91f3d9d5cd39f81324f` 및 canonical C15 hash와 일치시킨 **과거** 기록은 있다. 하지만 P106의 후속 same-tab 다운로드 재검증은 download event timeout으로 실패했고, 이번에는 BrowserUse 도구에 닿지 못했다. 따라서 현재 composer의 현재 바이트/hash가 재검증됐다고 주장하지 않는다.
+
+### 다음 한 단계
+
+사용자의 로그인된 기존 Chrome 세션을 유지한 채, `mcp__node_repl__js`/BrowserUse extension을 사용할 수 있는 정상 resumed Codex 도구 연결에서 preflight를 실행하고 기존 탭을 다시 열거·claim한다. 같은 탭에서 현재 타일의 실제 bytes를 확인할 수 있으면 C15 exact hash와 비교한다. 연결/파일 검증이 안 되면 기존 첨부를 그대로 두고 전송하지 않는다. 사용자 초안의 첨부를 임의 제거하거나 새 창/프로필로 우회하지 않는다. 검증 통과 뒤에도 durable approval/exactly-once gate를 확인하고, P9 C17/C28은 새 대화가 필요하더라도 반드시 동일 기존 로그인 탭 안에서만 실행한다.
+
+P113 상태 receipt: [p113_current_audit_and_browseruse_tool_availability_receipt.json](p113_current_audit_and_browseruse_tool_availability_receipt.json).
+
+## 과거 인계 — P112, 2026-09-25 09:44 KST (P113에서 대체됨)
 
 ### 기존 로그인 세션을 사용한다 — 사용자 지시 재확인
 

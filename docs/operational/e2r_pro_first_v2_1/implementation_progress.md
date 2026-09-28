@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-25 09:44 KST / P112: PR #7 exact head 2a6b60f…의 Pro PR·Pro push·V6 CI 모두 SUCCESS; 인증 UI는 기존 로그인 BrowserUse 세션·기존 작업 탭만 사용`
+기준 시각: `2026-09-28 17:30 KST / P113: PR #7 head bf225509…의 exact CI green 재확인; static/generalization/fresh-efficiency 감사 PASS; live P9 1/3`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -19,9 +19,24 @@ ChatGPT 로그인 상태가 필요한 화면 작업은 사용자가 이미 로�
 
 WSL direct setup 전 machine preflight를 한 번 실행한다. Exit code `23`이면 stale BrowserUse session이다. 새 Chrome/profile이나 재로그인으로 우회하지 말고, 기존 로그인 세션과 같은 탭을 보존할 연결이 없으면 실제 오류를 기록하고 멈춘다. 상세 명령과 recovery 순서는 아래 handoff를 따른다.
 
-안정된 실행 규칙과 최신 C15 handoff는 [BrowserUse 기존 로그인 세션 인수인계 P112](browseruse_existing_session_handoff.md#최신-인계--p112-2026-09-25-0944-kst)에 기록한다. P98 및 이전 상세 파일은 당시 장애 이력이지 현재 브라우저 상태가 아니다. 서로 모순되면 이 문서의 최상단 규칙과 가장 최근 checkpoint가 우선한다. 인증값·쿠키·세션 토큰·tab ID는 기록하지 않는다.
+안정된 실행 규칙과 최신 C15 handoff는 [BrowserUse 기존 로그인 세션 인수인계 P113](browseruse_existing_session_handoff.md#최신-인계--p113-2026-09-28-1730-kst)에 기록한다. P98 및 이전 상세 파일은 당시 장애 이력이지 현재 브라우저 상태가 아니다. 서로 모순되면 이 문서의 최상단 규칙과 가장 최근 checkpoint가 우선한다. 인증값·쿠키·세션 토큰·tab ID는 기록하지 않는다.
 
-## 지금 상태 — P112, 2026-09-25 09:44 KST
+## 지금 상태 — P113, 2026-09-28 17:30 KST
+
+- **Git/PR:** P113 시작 시 local/origin feature head `bf225509382f5391c61d98507f93cef20c705d6d`로 일치, worktree clean, ahead/behind 0/0. PR #7 `OPEN/DRAFT/CLEAN`, main 미병합. PR API 및 `ls-remote`가 현재 head를 확인했다.
+- **Exact-head CI:** [Pro PR 36079242405](https://github.com/Daikisong/stock_agent/actions/runs/36079242405), [Pro push 36079238509](https://github.com/Daikisong/stock_agent/actions/runs/36079238509), [V6 36079242306](https://github.com/Daikisong/stock_agent/actions/runs/36079242306) 모두 SUCCESS, full suite 각각 7,952, skipped 38, failure/error 0. Pro PR core-unit 300, browser-mock-e2e 105, Reviewer A–H, compile/diff-check PASS; V6 Gate 1 4/4, Phase100 15/15, static audit critical 0.
+- **현재 로컬 정적 감사:** `audit_e2r_pro_first_v2` PASS, critical 0, 20 critical counters 0. contract/generalization/prompt/scoring-publication PASS. Audit hash `2faaa70151b95bc4e405dd7348d527820fff5e40db80680b0d8901e7ccfca91a`; 상세 hash/카운터는 [P113 receipt](p113_current_audit_and_browseruse_tool_availability_receipt.json).
+- **P8 offline generalization:** 13/13 mechanism golden, 36 prompt snapshot, 30/30 known-bad, critical 0, PASS. P9 live evidence 대체 아님. Fresh-efficiency audit도 3 archetypes, critical 0, 필수 zero-counter 전부 0, PASS. 세 audit test module focused run 15/15 PASS.
+- **남은 실제 live 작업:** P9 full-thesis Pro canary C06/C17/C28 중 C06만 완료해 1/3; C17/C28 pending. C15 R6는 별도 same-job recovery 미완료. 전체 goal은 미완료.
+- **BrowserUse 도구 가용성 이번 turn:** 기존 Node REPL BrowserUse 도구가 tool registry에 없었고 `tools.mcp__node_repl__js is not a function` 반환. 대체 Playwright tab-list는 실행되지 않고 `async initializeServer: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome` 오류를 냈다. 이는 기술적 실패이지 정책 거부가 아니다. 새 창/브라우저/프로필 설치·생성, 기존 탭 이동, 로그인/초안 변경, download/upload/input/submit/capture는 하지 않았다. 마지막 same-tab 증거는 P112 9/25이며, 현재 세션 상태로 과장하지 않는다.
+- **C15 durable job:** 오늘 SQLite `mode=ro`, `PRAGMA query_only=ON` 재확인: `PROJOB-df15a37c58ae7583924e58c0`, S-Oil `010950`/2026-08-23, `USER_ATTENTION_REQUIRED` v26, canonical packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, submit/capture `0/0`, approval/browser/conversation binding과 successor 없음, `safe_unprepared_resume=false`. Exact error/event는 P113 handoff/receipt에 기록.
+- **현재 file tile 주의:** P100 과거 다운로드는 현재와 같은 filename tile bytes를 C15 packet과 hash 일치시켰지만, P106 이후 재검증은 download timeout이었다. 지금의 현재 bytes/hash는 BrowserUse가 안 되어 재검증되지 않았다. 파일 이름만으로 exact identity를 인정하거나 현재 첨부를 제거·대체하지 않는다.
+- **이번 P113 범위:** offline audit/test와 GitHub/SQLite read-only 점검 및 문서화뿐. 새 research/query/fetch, job/pass, archetype, score/Stage, browser state mutation, submit/capture, PR draft 해제/merge는 없다.
+- **다음 한 단계:** 기존 로그인 탭/세션을 보존한 채 BrowserUse extension 도구가 제공되는 Codex 연결에서 preflight 후 `openTabs() → exact descriptor → claimTab() → same object`로 재개하고 현재 packet bytes/hash를 검증한다. 이후에만 durable approval/exactly-once gate를 통과시켜 C15 same-job 또는 P9 canary를 진행한다.
+
+P113 상태 영수증: [p113_current_audit_and_browseruse_tool_availability_receipt.json](p113_current_audit_and_browseruse_tool_availability_receipt.json).
+
+## 과거 기준선 — P112, 2026-09-25 09:44 KST (P113에서 대체됨)
 
 - **사용자 지시/필수 브라우저 경계:** 인증된 작업은 사용자가 이미 로그인한 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다. `openTabs() → 정확한 descriptor → claimTab() → 반환된 동일 Tab` 절차를 실행 직전에 수행한다. 새 창·브라우저·탭·프로필·CDP·재로그인으로 대체하지 않는다. 기존 미전송 첨부를 사용자 지시 없이 삭제/덮지 않는다.
 - **Git/PR:** P112 시작 시점 local/origin SHA `2a6b60f2686309536e53dcc76982285fa0b70a42`로 같고 clean이었다. PR #7은 `OPEN/DRAFT/CLEAN`, main 미병합.
