@@ -1,0 +1,206 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p115_existing_chat_session_and_canary_json_audit_v1",
+  "recorded_at": "2026-09-28T18:42:29+09:00",
+  "user_instruction": {
+    "authenticated_chatgpt_work_must_use_existing_logged_in_user_session": true,
+    "create_new_browser_window_profile_or_relogin_as_fallback": false,
+    "preserve_existing_user_tabs_and_drafts": true,
+    "keep_progress_and_external_review_documentation_current": true,
+    "reaffirmed_at": "2026-09-28T18:51:00+09:00"
+  },
+  "pre_action_session_and_mode_guard": {
+    "recheck_exact_existing_tab_id_url_conversation_and_logged_in_account_before_input_attachment_download_or_send": true,
+    "chatgpt_pro_workflow_surface": "Chat",
+    "required_selected_model": "Pro",
+    "deep_research_or_work_is_not_a_substitute": true,
+    "subscription_badge_alone_proves_selected_model": false,
+    "if_extension_tab_identity_login_or_mode_cannot_be_verified": "stop_without_browser_side_effect_and_record_exact_error",
+    "fallback_new_window_tab_profile_relogin_or_other_conversation": false
+  },
+  "git_pr_checkpoint_before_p115_docs": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "local_head_sha": "c39e2c20d6f4f1b54c6238fdc713bea9d0151379",
+    "origin_head_sha": "c39e2c20d6f4f1b54c6238fdc713bea9d0151379",
+    "worktree_clean": true,
+    "ahead_behind": "0/0",
+    "pr_number": 7,
+    "pr_url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "pr_state": "OPEN",
+    "pr_draft": true,
+    "pr_merge_state_at_check": "UNSTABLE",
+    "merged": false
+  },
+  "exact_head_ci_before_p115_docs": {
+    "head_sha": "c39e2c20d6f4f1b54c6238fdc713bea9d0151379",
+    "runs": [
+      {
+        "workflow": "E2R Pro-first verification",
+        "event": "pull_request",
+        "run_id": 36401379352,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36401379352",
+        "conclusion": "SUCCESS"
+      },
+      {
+        "workflow": "E2R v6 operational cutover verification",
+        "event": "pull_request",
+        "run_id": 36401379177,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36401379177",
+        "conclusion": "SUCCESS"
+      },
+      {
+        "workflow": "E2R Pro-first verification",
+        "event": "push",
+        "run_id": 36401374519,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36401374519",
+        "conclusion_at_checkpoint": "IN_PROGRESS",
+        "active_job": "full-regression / Run the full existing regression suite"
+      }
+    ],
+    "note": "All statuses above refer to the pre-P115 SHA; the new documentation commit requires independent exact-head checks."
+  },
+  "active_tool_registry_and_wsl": {
+    "mcp_node_repl_js_present": false,
+    "dedicated_computer_use_tool_present": false,
+    "playwright_tools_visible_but_not_used": true,
+    "playwright_alternative_identity_proven_same_user_session": false,
+    "direct_powershell_preflight_exit_code": 126,
+    "direct_powershell_exact_error": "/bin/bash: line 1: /mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/powershell.exe: cannot execute binary file: Exec format error",
+    "binfmt_misc_enabled": true,
+    "wsl_interop_socket_present": true,
+    "wsl_interop_binfmt_handler_present": false,
+    "passwordless_sudo_available": false,
+    "system_handler_or_wsl_config_changed": false,
+    "wsl_restarted": false,
+    "official_preflight_via_init_dispatcher_exit_code": 0,
+    "node_repl_tool_became_available_after_preflight": false,
+    "bridge_spawn_failure_confirmed_directly": false,
+    "bridge_failure_is_inference_only": true
+  },
+  "existing_browser_read_only_checks": {
+    "cdp_checkonly_endpoint": "http://127.0.0.1:9222",
+    "cdp_checkonly_profile": "C:\\ChromeDebug",
+    "cdp_checkonly_started_new_browser": false,
+    "cdp_existing_page_hosts": ["www.threads.com"],
+    "cdp_existing_chatgpt_page_count": 0,
+    "normal_chrome_window_read_by_windows_accessibility": true,
+    "normal_chrome_existing_tab_categories": {
+      "blog_tabs": 3,
+      "about_blank_tabs": 1,
+      "chatgpt_task_tabs": 0
+    },
+    "new_window_or_tab_created": false,
+    "navigation_or_click": false,
+    "user_input_attachment_download_upload_submit_capture": false,
+    "existing_draft_or_attachment_modified": false,
+    "identity_basis": "The expected persistent C:\\ChromeDebug profile was owner-checked; its tab list was Threads-only. The already visible normal Chrome window exposed blog tabs and about:blank only, not the ChatGPT task page."
+  },
+  "screenshot_000660_job_audit": {
+    "job_id": "PROJOB-ab48ce7e94097cf9b6846602",
+    "run_id": "PRORUN-683f5a5423a6e367f443c6de",
+    "target_id": "000660",
+    "as_of_date": "2026-08-23",
+    "selected_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+    "runtime_dossier_import_validation": "PASS",
+    "imported_material_fact_count": 25,
+    "question_family_count": 28,
+    "source_document_count": 16,
+    "import_receipt_sha256": "c1922350b739a82a148542b79376ca188ce329e1f9f915e506abe3fe23c805b6",
+    "full_thesis_receipt_status": "TRANSPORT_PENDING",
+    "job_status": "GAP_ADJUDICATION",
+    "score_authority": false,
+    "stage_authority": false,
+    "saturation_status": "RESEARCH_SATURATION_PENDING",
+    "mandatory_question_count": 28,
+    "nonterminal_mandatory_question_count": 3,
+    "public_material_gap_count": 2,
+    "verifier_repair_pending_count": 1,
+    "component_entry_allowed": false,
+    "full_thesis_pending_reason": "submitted follow-up is absent from the fresh public conversation; sealed after two independent fresh-view absences",
+    "saturation_receipt_sha256": "6d924428af7770d2f3640cd164a531964078d5776aa174c1bdcf913d65a45822",
+    "full_thesis_receipt_sha256": "ef4ce92e7eed1a1b337545b5daf8129ddcdb1b1dd3078692e1640baa4151e725",
+    "screenshot_file_bytes_or_hash_locally_reverified": false,
+    "interpretation": "This matching job has a passing recorded V3 import followed by unresolved follow-up transport. Do not classify the screenshot's exact bytes as imported without a direct hash match."
+  },
+  "canonical_c06_live_full_thesis_receipt": {
+    "job_id": "PROJOB-287556cc59c10f124d615c4d",
+    "run_id": "PRORUN-b412396d383c92aaf08e9837",
+    "target_id": "000660",
+    "status": "FRESH_V3_FULL_THESIS_FINAL",
+    "job_status": "FINAL",
+    "mandatory_question_count": 28,
+    "nonterminal_mandatory_question_count": 0,
+    "public_material_gap_count": 0,
+    "provider_parser_core_pending_count": 0,
+    "verifier_repair_pending_count": 0,
+    "research_saturation_valid": true,
+    "component_entry_allowed": true,
+    "component_memo_count": 7,
+    "judge_decision_count": 21,
+    "accepted_claim_count": 56,
+    "deterministic_score_valid": true,
+    "deterministic_full_e2r_score": 23.275,
+    "deterministic_stagecourt_status": "FINAL",
+    "deterministic_stage": "0",
+    "full_thesis_receipt_sha256": "abed909067a1b863be8fecd72c5ae10200db9dcb6440b830a38f54943e757e52",
+    "score_receipt_sha256": "afd46d7af8eabe5351742b7e8e5df6153a137af4787064b08b8abead3b14df4c",
+    "judge_bridge_receipt_sha256": "6ebea5e60b11c10611d689a543f597e7b2f4c267e781033afce0528f6128a932",
+    "stagecourt_receipt_sha256": "c407414391bf42f062a7028b8f605c99333698571da2c76bd4cb74f9d5d64b38"
+  },
+  "c15_r6_durable_state_read_only": {
+    "database_path": "C:\\Users\\eorb9\\AppData\\Local\\E2R\\ProFirstRuntime\\live_v2\\20260823T145430Z\\pro_first.sqlite3",
+    "sqlite_mode_ro": true,
+    "pragma_query_only": 1,
+    "job_id": "PROJOB-df15a37c58ae7583924e58c0",
+    "target": "S-Oil 010950",
+    "as_of_date": "2026-08-23",
+    "status": "USER_ATTENTION_REQUIRED",
+    "state_version": 26,
+    "packet_hash": "fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df",
+    "submit_count": 0,
+    "capture_count": 0,
+    "browser_session_binding_present": false,
+    "conversation_binding_present": false,
+    "approval_consumed": false,
+    "superseded_by_fresh_job_id": null
+  },
+  "p9_live_canaries": {
+    "required_count": 3,
+    "completed": ["C06"],
+    "pending": ["C17", "C28"],
+    "passed_count": 1,
+    "goal_complete": false
+  },
+  "scope_this_checkpoint": {
+    "research_query_or_fetch": false,
+    "new_job_or_pass": false,
+    "other_live_archetype": false,
+    "score_or_stage_change": false,
+    "browser_ui_mutation": false,
+    "submit_or_capture": false,
+    "pr_draft_release_or_merge": false,
+    "documents_updated_in_working_tree": [
+      "docs/operational/e2r_pro_first_v2_1/browseruse_existing_session_handoff.md",
+      "docs/operational/e2r_pro_first_v2_1/implementation_progress.md",
+      "docs/operational/e2r_pro_first_v2_1/p115_existing_chat_session_and_canary_json_audit_receipt.json"
+    ]
+  },
+  "documentation_follow_up": {
+    "recorded_at": "2026-09-28T18:51:00+09:00",
+    "trigger": "User reaffirmed that login-required BrowserUse work must use their already logged-in session.",
+    "updates": [
+      "Before any input, attachment, download, or send, bind to and recheck the exact existing tab ID, URL, task conversation, and signed-in account.",
+      "For ChatGPT Pro tasks, verify the actual Pro model is selected in the ordinary Chat surface; do not substitute Deep Research, Work, or a subscription badge.",
+      "If the same session, exact tab, login, or mode cannot be verified, stop without browser side effects and record the exact error."
+    ],
+    "files": [
+      "docs/operational/e2r_pro_first_v2_1/browseruse_existing_session_handoff.md",
+      "docs/operational/e2r_pro_first_v2_1/implementation_progress.md",
+      "docs/operational/e2r_pro_first_v2_1/p115_existing_chat_session_and_canary_json_audit_receipt.json"
+    ],
+    "diff_check": "PASS",
+    "json_parse": "PASS",
+    "browser_side_effects": false,
+    "existing_c39_push_run_36401374519_at_checkpoint": "IN_PROGRESS; not cancelled or restarted"
+  },
+  "next_step": "Commit and push this documentation-only follow-up, then verify checks on its exact resulting SHA without cancelling the already-running c39e2c20 push workflow. Do not resume login-required Pro work until the active Codex session exposes BrowserUse extension access or same-Windows-session ComputerUse to the exact existing task tab; do not create a substitute browser session or resend."
+}

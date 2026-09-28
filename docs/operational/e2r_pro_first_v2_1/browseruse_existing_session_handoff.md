@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-28 18:01 KST (P114: 기존 로그인 세션 사용 지시 재확인, 현재 도구/preflight 도달 범위 기록).
+최종 갱신: 2026-09-28 18:42 KST (P115: BrowserUse 미노출 원인 범위, 기존 Chrome 탭, C06/000660 JSON job 상태 재감사).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -13,8 +13,8 @@
 
 1. 현재 Codex 대화에서 실제 BrowserUse 연결 도구를 사용한다. WSL이면 canonical persistent `mcp__node_repl__js` bootstrap을 쓰고 `setupBrowserRuntime()`이 반환한 Agent를 `globalThis.agent`에 저장한 뒤 `agent.browsers.get("extension")`을 사용한다. 설정 파일이나 preflight 성공만으로 브라우저 연결 성공이라고 하지 않는다.
 2. `browser.user.openTabs()`로 사용자가 이미 열어 둔 탭을 확인하고, 서비스·대화·작업이 일치하는 정확한 descriptor 하나를 `browser.user.claimTab()`에 넘긴다. 이후에는 claim이 반환한 **바로 그 tab 객체 하나**만 사용한다.
-3. 입력·첨부·다운로드·전송 전에 같은 탭의 URL/대화와 로그인 상태를 다시 확인한다. 기존 응답이나 파일이 있으면 새 요청을 보내지 말고 그 탭에서 회수한다. 새 대화가 필요해도 기존 로그인 탭 안에서만 연다.
-4. extension 연결, 기존 탭 열거/claim, 대상 대화 확인 중 하나라도 실패하면 즉시 멈춘다. 확인 범위와 **실제 오류 문자열**만 기록한다. 새 Chrome/창/탭/프로필, 별도 CDP 세션, 재로그인, 다른 대화에서의 재전송·재다운로드로 우회하지 않는다. 다른 backend는 동일한 로그인 세션과 정확한 탭을 보존한다는 사실이 확인될 때만 사용할 수 있다.
+3. 입력·첨부·다운로드·전송 직전에 같은 tab ID와 URL, 작업 대화, 로그인 계정을 다시 확인한다. ChatGPT Pro 작업은 **일반 Chat 화면에서 실제 `Pro` 모델이 선택된 상태**도 확인한다. Pro 구독 배지나 모델 이름을 기억하는 것만으로 확인을 대신하지 않으며, Deep Research/Work/다른 모드로 보내지 않는다. 기존 응답·파일·초안이 있으면 먼저 그 탭에서 회수하고 중복 요청을 보내지 않는다. 새 대화가 꼭 필요해도 기존 로그인 탭 안에서만 연다.
+4. extension 연결, 기존 탭 열거/claim, 대상 대화·로그인 계정·요청 모드 확인 중 하나라도 실패하면 즉시 멈춘다. 확인 범위와 **실제 오류 문자열**만 기록한다. 새 Chrome/창/탭/프로필, 별도 CDP 세션, 재로그인, 다른 대화에서의 재전송·재다운로드로 우회하지 않는다. 다른 backend는 동일한 로그인 세션과 정확한 탭을 보존한다는 사실이 확인될 때만 사용할 수 있다.
 5. 기존 초안·응답·첨부를 덮어쓰거나, 결과가 이미 있을 수 있는 요청을 중복 전송하지 않는다. 전송은 durable job의 approval/exactly-once gate까지 통과한 경우에만 한다.
 
 WSL에서 직접 BrowserUse runtime을 연결하기 전에는 machine preflight를 한 번 실행한다. Exit code `23`은 stale BrowserUse session이므로 새 Chrome/profile을 열거나 다시 로그인해 우회하지 말고, 같은 로그인 세션을 보존할 수 있는 현재 경로가 없으면 그 자리에서 오류와 확인 범위를 기록하고 멈춘다.
@@ -27,7 +27,43 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 인계 — P114, 2026-09-28 18:01 KST
+## 최신 인계 — P115, 2026-09-28 18:42 KST
+
+### 사용자 지시와 정확한 로그인 세션 도달 범위
+
+로그인이 필요한 Pro 작업은 사용자가 이미 로그인한 바로 그 세션·작업 탭에서만 한다. 새 창/프로필/재로그인/다른 대화로 대체하지 않는다. 이번 Codex tool registry에는 `mcp__node_repl__js`와 ComputerUse 도구가 없었다. BrowserUse extension 탭을 열거·claim할 수 없으므로 현재 ChatGPT 로그인 상태를 추정하지 않았다.
+
+WSL에서 문서상의 직접 `powershell.exe` preflight는 exit 126이었다.
+
+```text
+/bin/bash: line 1: /mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/powershell.exe: cannot execute binary file: Exec format error
+```
+
+read-only 시스템 확인에서 `/proc/sys/fs/binfmt_misc/status`는 `enabled`, `WSL_INTEROP` socket은 존재했지만 `/proc/sys/fs/binfmt_misc/WSLInterop` handler는 없었다. `sudo -n`은 인증 없이 권한을 얻지 못했다. WSL 설정·handler를 바꾸거나 WSL을 재시작하지 않았다. `/init`을 Windows PowerShell dispatcher로 직접 지정하자 동일한 공식 BrowserUse preflight가 exit 0으로 끝났으나, 이 방법으로도 현재 Codex tool registry에 `mcp__node_repl__js`가 생기지는 않았다. node-repl server가 configured bridge에서 시작되지 못한 원인이라는 것은 bridge가 Windows `.exe`를 직접 spawn하는 구조와 누락된 handler에서 나온 **추정**이며, server 시작 자체는 이 turn에서 수동 우회하지 않았다.
+
+기존 프로필을 바꾸지 않고 대체 경로 가능성만 읽기 전용으로 확인했다. `Start-CodexChrome.ps1 -CheckOnly -Json`은 사용자가 지정한 이미 실행 중인 `C:\ChromeDebug` / port 9222를 `Started=false`로 확인했다. 그 endpoint의 기존 page는 Threads뿐이어서 ChatGPT 세션이 아니므로 CDP로 ChatGPT에 연결하지 않았다. 일반 Chrome의 현재 창은 블로그 페이지였고, 해당 창 접근성 tab list는 기존 블로그 탭 3개와 `about:blank` 하나였으며 ChatGPT 작업 탭은 없었다. 빈 탭을 ChatGPT로 이동하거나 새 tab/window/profile을 만들지 않았다. UI navigation·click·download/upload·입력·전송·capture·첨부 변경은 모두 0회다.
+
+### Pro JSON과 canary runtime 증거 — 서로 다른 job을 결합하지 않음
+
+- 사용자 스크린샷의 000660 JSON과 식별자가 맞는 runtime job은 `PROJOB-ab48ce7e94097cf9b6846602`다. 이 job의 기록된 V3 dossier import는 schema validation PASS, 25 facts / 28 question families / 16 source documents다. 다만 해당 job의 full-thesis receipt는 `TRANSPORT_PENDING` / `GAP_ADJUDICATION`, score/stage authority false이고, saturation은 28 mandatory 중 3 nonterminal, public material gap 2, verifier repair 1, component entry denied다. 기록된 대기 사유는 submitted follow-up이 새 public conversation에 나타나지 않아 두 번 확인 뒤 봉인됐다는 것이다. 따라서 이 job의 확인된 병목은 receipt상 JSON schema parsing 실패가 아니라 follow-up transport다. 스크린샷의 JSON 원본 bytes/hash는 Downloads에서 찾지 못해 runtime import bytes와 직접 hash 대조하지 않았다.
+- P9에서 인정하는 기존 C06 full-thesis PASS는 별도 job `PROJOB-287556cc59c10f124d615c4d`다. 그 receipt는 28/28 mandatory terminal, public gap/parser pending/repair pending 0, saturation valid, component entry allowed다. Receipt-linked scoring artifacts는 component memo 7개, Judge decision 21개, deterministic `score_valid=true`, full score `23.275`, deterministic StageCourt `FINAL` / Stage `0`을 기록한다. 이것은 P9 C06의 한 PASS이지 새 JSON screenshot job의 완료를 뜻하지 않는다.
+- P9 live canary는 여전히 C06 1/3; C17/C28 pending이다. C15 R6 `PROJOB-df15a37c58ae7583924e58c0`은 중앙 SQLite를 `mode=ro`, `PRAGMA query_only=ON`으로 다시 읽었고 S-Oil `010950`/2026-08-23, `USER_ATTENTION_REQUIRED` v26, packet hash `fa5845a055661c99c2ab1eb9cfb65f66fb84d2c85b267b3cde33b54843c320df`, submit/capture 0/0, approval/browser/conversation binding 없음, successor 없음이다. Downloads의 S-Oil V3 JSON `PROJOB-04140...`는 이 R6가 아닌 과거 job이므로 섞지 않는다.
+
+### 정확한 PR/CI 기준
+
+P115 문서 수정 전 local/origin head는 `c39e2c20d6f4f1b54c6238fdc713bea9d0151379`, worktree clean, PR #7 OPEN/DRAFT였다. 해당 SHA의 Pro PR [36401379352](https://github.com/Daikisong/stock_agent/actions/runs/36401379352)와 V6 [36401379177](https://github.com/Daikisong/stock_agent/actions/runs/36401379177)는 SUCCESS였고, Pro push [36401374519](https://github.com/Daikisong/stock_agent/actions/runs/36401374519)는 full regression 진행 중이었다. 이는 P115 문서 commit 전 상태이며, 문서 commit의 checks는 새 exact head에서 별도로 확인한다.
+
+### 다음 한 단계
+
+현재 로그인 세션을 유지한 정상 resumed Codex 연결에서 configured `node_repl`/BrowserUse extension 도구가 실제로 노출되거나, 같은 Windows 사용자 세션의 ComputerUse 도구가 제공될 때만 기존 ChatGPT 작업 탭을 다시 열거·확인한다. exact task tab과 로그인 상태를 확인하지 못하면 중단한다. 재로그인이나 새 Chrome/ChatGPT 창으로 우회하지 않는다.
+
+P115 상세 영수증: [p115_existing_chat_session_and_canary_json_audit_receipt.json](p115_existing_chat_session_and_canary_json_audit_receipt.json).
+
+### 사용자 재확인 — 2026-09-28 18:51 KST
+
+사용자는 다시 한 번 로그인된 BrowserUse 세션을 사용하라고 지시했다. 따라서 “Chrome이 열려 있음”, “계정에 Pro 구독이 있음”, “다른 자동화 브라우저가 같은 사이트에 연결됨”은 같은 세션/대상 탭 확인으로 간주하지 않는다. 전송 직전 기존 탭의 identity와 요청 모드를 함께 확인한다. 실제 `Pro` 선택이 보이지 않으면 보내지 않는다. 현재 도구 연결에서 그 확인을 수행할 수 없을 때의 다음 행동은 **기존 탭을 건드리지 않고 중단·기록**하는 것뿐이다.
+
+## 과거 인계 — P114, 2026-09-28 18:01 KST
 
 ### 사용자 지시와 이번 실제 도달 범위
 

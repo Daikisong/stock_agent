@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-28 18:01 KST / P114: 기존 로그인 BrowserUse 세션 원칙 재확인; 현재 Codex tool registry/preflight 확인 실패를 기록; live P9 1/3`
+기준 시각: `2026-09-28 18:51 KST / P115 addendum: 기존 로그인 탭/계정과 실제 Chat-Pro 모드 전송 전 확인을 명문화; live P9 1/3`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -19,9 +19,23 @@ ChatGPT 로그인 상태가 필요한 화면 작업은 사용자가 이미 로�
 
 WSL direct setup 전 machine preflight를 한 번 실행한다. Exit code `23`이면 stale BrowserUse session이다. 새 Chrome/profile이나 재로그인으로 우회하지 말고, 기존 로그인 세션과 같은 탭을 보존할 연결이 없으면 실제 오류를 기록하고 멈춘다. 상세 명령과 recovery 순서는 아래 handoff를 따른다.
 
-안정된 실행 규칙과 최신 C15 handoff는 [BrowserUse 기존 로그인 세션 인수인계 P114](browseruse_existing_session_handoff.md#최신-인계--p114-2026-09-28-1801-kst)에 기록한다. P98 및 이전 상세 파일은 당시 장애 이력이지 현재 브라우저 상태가 아니다. 서로 모순되면 이 문서의 최상단 규칙과 가장 최근 checkpoint가 우선한다. 인증값·쿠키·세션 토큰·tab ID는 기록하지 않는다.
+안정된 실행 규칙과 최신 handoff는 [BrowserUse 기존 로그인 세션 인수인계 P115](browseruse_existing_session_handoff.md#최신-인계--p115-2026-09-28-1842-kst)에 기록한다. P98 및 이전 상세 파일은 당시 장애 이력이지 현재 브라우저 상태가 아니다. 서로 모순되면 이 문서의 최상단 규칙과 가장 최근 checkpoint가 우선한다. 인증값·쿠키·세션 토큰·tab ID는 기록하지 않는다.
 
-## 지금 상태 — P114, 2026-09-28 18:01 KST
+## 지금 상태 — P115, 2026-09-28 18:42 KST
+
+- **사용자 경계:** 로그인된 사용자 BrowserUse session의 정확한 기존 task tab만 사용한다. 입력/첨부/다운로드/전송 직전에 같은 tab ID·URL·대화·로그인 계정을 재확인한다. ChatGPT Pro 요청은 일반 Chat의 실제 `Pro` 선택까지 확인하며 구독 배지나 Deep Research/Work 화면을 대체 증거로 보지 않는다. 하나라도 연결·확인할 수 없으면 멈추고 오류를 기록한다. 새 창/profile/relogin/다른 대화로 대신하지 않는다.
+- **PR/CI before this documentation:** exact base SHA `c39e2c20d6f4f1b54c6238fdc713bea9d0151379`, local/origin 일치, clean, PR #7 OPEN/DRAFT. Pro PR [36401379352](https://github.com/Daikisong/stock_agent/actions/runs/36401379352) 및 V6 [36401379177](https://github.com/Daikisong/stock_agent/actions/runs/36401379177) SUCCESS; Pro push [36401374519](https://github.com/Daikisong/stock_agent/actions/runs/36401374519) 당시 full regression 진행 중이었다. 이것은 새 P115 docs commit의 CI가 아니다.
+- **BrowserUse 도달 범위:** tool registry에 `mcp__node_repl__js`/ComputerUse가 없다. 직접 `powershell.exe` preflight exit 126 (`Exec format error`); read-only 확인 결과 binfmt_misc enabled, WSL interop socket 존재, `WSLInterop` handler 부재. `/init`을 통해 동일 공식 preflight exit 0을 얻었으나 tool registry는 변하지 않았다. WSL handler/config를 변경하거나 WSL을 재시작하지 않았다.
+- **기존 브라우저 확인:** `C:\ChromeDebug`/9222는 check-only에서 정확한 configured profile/process로 확인됐지만 기존 tab은 Threads뿐이다. 일반 Chrome의 UIA tab list는 blog tabs 3개와 `about:blank`; ChatGPT 작업 탭은 보이지 않았다. 아무 tab도 전환/이동하지 않았고 browser UI side effect는 0이다.
+- **000660 screenshot job:** `PROJOB-ab48ce7e94097cf9b6846602`의 V3 import validation PASS(25 facts, 28 questions, 16 documents)지만 `TRANSPORT_PENDING`, saturation 28 중 3 nonterminal/2 public gaps/1 verifier repair, component entry denied다. JSON parsing이 막혔다고 결론내릴 근거가 없고, receipt가 가리키는 pending은 follow-up transport다. Screenshot 원본 bytes/hash는 확보되지 않아 exact-byte equivalence는 미확정이다.
+- **canonical C06 P9 receipt:** 별도 `PROJOB-287556cc59c10f124d615c4d`는 `FRESH_V3_FULL_THESIS_FINAL`, 28/28 terminal, pending gap/parser/repair 0; 7 component memo/21 Judge, score_valid=true, deterministic 23.275 / Stage 0. P9 canary 총 1/3이며 C17/C28 pending.
+- **C15 same-job:** 중앙 DB `mode=ro`/`query_only=ON`에서 `PROJOB-df15a37c58ae7583924e58c0`는 `USER_ATTENTION_REQUIRED` v26, submit/capture 0/0, browser/conversation/approval binding 없음. 기존 S-Oil `PROJOB-04140...` dossier는 과거 다른 job이다.
+- **이번 P115 범위:** goal/PR/CI/current browser availability/runtime receipts를 읽기 전용으로 감사하고 P115 handoff/receipt를 작성 중이다. query/fetch, new job/pass, 다른 archetype, score/Stage 변경, browser tab 이동, prompt/input/submit/capture, PR draft 해제/merge는 없다.
+- **다음 한 단계:** 같은 user Chrome session의 exact ChatGPT task tab에 붙는 실제 BrowserUse/ComputerUse 도구가 현재 Codex 연결에서 제공될 때까지 세션을 바꾸지 않는다. 그때 `existing tabs → exact target → same returned tab` 확인 후 pending C06 transport/C15 R6/C17/C28만 진행한다.
+
+P115 상세: [handoff](browseruse_existing_session_handoff.md#최신-인계--p115-2026-09-28-1842-kst) / [receipt](p115_existing_chat_session_and_canary_json_audit_receipt.json).
+
+## 직전 기준 — P114, 2026-09-28 18:01 KST
 
 - **사용자 지시:** 로그인 필요한 BrowserUse 작업은 사용자가 이미 로그인한 바로 그 세션과 정확한 기존 탭에서만 한다. 새 창/브라우저/프로필/CDP/relogin/대체 대화로 우회하지 않는다. 같은 탭 연결이 확인되지 않으면 조작하지 않고 실제 도달 범위와 오류를 기록한다.
 - **Git/PR 기준점:** P114 문서 변경 전 local/origin SHA `9cb9bd6762d9856d688658db416235d085c44258`, clean, ahead/behind 0/0. PR #7 `OPEN/DRAFT/CLEAN`, main 미병합. 해당 exact SHA의 Pro PR [36398167936](https://github.com/Daikisong/stock_agent/actions/runs/36398167936), Pro push [36398163276](https://github.com/Daikisong/stock_agent/actions/runs/36398163276), V6 [36398167891](https://github.com/Daikisong/stock_agent/actions/runs/36398167891)은 SUCCESS; 각각 full suite 7,952 tests, skipped 38, failure/error 0. V6 Gate1 4/4, Phase100 15/15, static audit critical 0. 이 CI는 P114 docs commit 전 head에 대한 결과다.
