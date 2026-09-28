@@ -1,0 +1,116 @@
+{
+  "schema_version": "e2r_pro_first_v2_1_p114_existing_login_session_tool_reachability_v1",
+  "recorded_at": "2026-09-28T18:01:53+09:00",
+  "user_instruction": {
+    "keep_progress_documentation_current": true,
+    "authenticated_browser_work_must_use_existing_logged_in_user_session": true,
+    "required_session": "the user's already logged-in BrowserUse Chrome extension session and exact existing task tab",
+    "new_browser_window_profile_or_relogin_as_fallback": false,
+    "preserve_existing_draft_and_attachment_without_explicit_authorization": true
+  },
+  "git_pr_checkpoint_before_documentation": {
+    "branch": "feature/e2r-pro-first-browser-platform-20260822",
+    "local_head_sha": "9cb9bd6762d9856d688658db416235d085c44258",
+    "origin_head_sha": "9cb9bd6762d9856d688658db416235d085c44258",
+    "ahead_behind": "0/0",
+    "worktree_clean": true,
+    "pr_number": 7,
+    "pr_url": "https://github.com/Daikisong/stock_agent/pull/7",
+    "pr_state": "OPEN",
+    "pr_draft": true,
+    "pr_merge_state": "CLEAN",
+    "merged": false
+  },
+  "exact_head_ci_before_documentation": {
+    "head_sha": "9cb9bd6762d9856d688658db416235d085c44258",
+    "required_workflows_success": true,
+    "runs": [
+      {
+        "workflow": "E2R Pro-first verification",
+        "event": "pull_request",
+        "run_id": 36398167936,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36398167936",
+        "conclusion": "SUCCESS",
+        "full_suite_tests": 7952,
+        "skipped": 38,
+        "failures": 0,
+        "errors": 0
+      },
+      {
+        "workflow": "E2R Pro-first verification",
+        "event": "push",
+        "run_id": 36398163276,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36398163276",
+        "conclusion": "SUCCESS",
+        "full_suite_tests": 7952,
+        "skipped": 38,
+        "failures": 0,
+        "errors": 0
+      },
+      {
+        "workflow": "E2R v6 operational cutover verification",
+        "event": "pull_request",
+        "run_id": 36398167891,
+        "url": "https://github.com/Daikisong/stock_agent/actions/runs/36398167891",
+        "conclusion": "SUCCESS",
+        "full_suite_tests": 7952,
+        "skipped": 38,
+        "failures": 0,
+        "errors": 0,
+        "gate1_receipt": "4/4 PASS",
+        "phase100": "15/15 PASS",
+        "production_static_audit_critical_count": 0
+      }
+    ],
+    "note": "These runs apply to the pre-documentation SHA, not the subsequent P114 documentation commit."
+  },
+  "browseruse_reachability_this_checkpoint": {
+    "mcp_node_repl_tool_present": false,
+    "playwright_browser_tools_visible": true,
+    "playwright_tools_called": false,
+    "reason_playwright_not_used": "No evidence that these tools preserve the user's existing logged-in BrowserUse extension session and exact task tab.",
+    "wsl_preflight_attempted": true,
+    "wsl_preflight_exit_code": 126,
+    "wsl_preflight_exact_error": "/bin/bash: line 1: /mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/powershell.exe: cannot execute binary file: Exec format error",
+    "classified_as_stale_session_exit_23": false,
+    "classified_as_policy_refusal": false,
+    "extension_setup_or_connection_attempted": false,
+    "existing_tabs_enumerated": false,
+    "exact_tab_claimed": false,
+    "page_or_login_state_inspected": false,
+    "browser_window_profile_or_cdp_started": false,
+    "navigation_download_upload_input_submit_capture": false,
+    "existing_draft_or_attachment_modified": false,
+    "classification": "TECHNICAL_WSL_INTEROP_AND_TOOL_AVAILABILITY_FAILURE_NOT_POLICY_REFUSAL"
+  },
+  "current_session_evidence_boundary": {
+    "last_recorded_same_tab_read_only_check": "P112, 2026-09-25 09:44 KST",
+    "current_tab_state_verified": false,
+    "current_attachment_state_verified": false,
+    "historical_attachment_name_must_not_be_treated_as_current_hash_proof": true
+  },
+  "goal_checkpoint": {
+    "required_live_full_thesis_canaries": ["C06", "C17", "C28"],
+    "completed_canaries": ["C06"],
+    "pending_canaries": ["C17", "C28"],
+    "passed_count": 1,
+    "required_count": 3,
+    "separate_unresolved_same_job_task": "C15 R6",
+    "goal_complete": false
+  },
+  "scope_this_checkpoint": {
+    "research_query_or_fetch": false,
+    "new_job_or_pass": false,
+    "other_live_archetype": false,
+    "score_or_stage_change": false,
+    "browser_ui_mutation": false,
+    "submit_or_capture": false,
+    "pr_draft_release_or_merge": false,
+    "documentation_updated": [
+      "docs/operational/e2r_pro_first_v2_1/browseruse_existing_session_handoff.md",
+      "docs/operational/e2r_pro_first_v2_1/implementation_progress.md",
+      "docs/operational/e2r_pro_first_v2_1/p114_existing_login_session_tool_reachability_receipt.json"
+    ]
+  },
+  "next_step": "When Windows interop works and the active Codex tool registry actually exposes mcp__node_repl__js, run preflight, connect only to the BrowserUse extension, enumerate existing user tabs, claim the exact existing task tab, and use that same returned Tab object. If that connection is unavailable, preserve the user's session and drafts, do not substitute a browser backend without same-session proof, and record the exact technical error."
+}

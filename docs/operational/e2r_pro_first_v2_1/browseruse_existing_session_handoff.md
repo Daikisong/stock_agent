@@ -1,6 +1,6 @@
 # BrowserUse: 로그인된 기존 세션 사용 및 재개 지침
 
-최종 갱신: 2026-09-28 17:30 KST (P113: 36-contract·golden·fresh-efficiency 재감사, C15 DB 재확인, 현재 turn BrowserUse 도구 부재 기록).
+최종 갱신: 2026-09-28 18:01 KST (P114: 기존 로그인 세션 사용 지시 재확인, 현재 도구/preflight 도달 범위 기록).
 이 문서는 인증된 UI 작업의 실행 지침이다. **로그인이 필요한 BrowserUse 작업은 사용자가 이미 로그인해 둔 BrowserUse `extension` 세션의 기존 작업 탭에서만 한다.**
 
 ## 최우선 규칙 — 로그인된 그 세션에서만
@@ -27,7 +27,33 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command '& "$
 
 예: 로그인된 같은 ChatGPT 탭의 Library 미리보기에 JSON과 다운로드 버튼이 이미 있으면, 그 탭을 claim해 그대로 다운로드한다. 새 브라우저/대화를 열어 같은 요청을 다시 보내지 않는다.
 
-## 최신 인계 — P113, 2026-09-28 17:30 KST
+## 최신 인계 — P114, 2026-09-28 18:01 KST
+
+### 사용자 지시와 이번 실제 도달 범위
+
+사용자는 문서화를 계속 최신 상태로 유지하고, 로그인 상태가 필요한 BrowserUse 작업은 본인이 로그인해 둔 **그 세션/그 탭에서만** 하라고 다시 지시했다. 이 지시를 최우선으로 적용한다. 새 브라우저·창·프로필·별도 CDP 세션으로 로그인 상태를 대체하지 않는다.
+
+이번 Codex 도구 registry에 `mcp__node_repl__js`가 없었다. `mcp__playwright__browser_*` 도구 이름은 보였지만, 그것이 사용자의 기존 BrowserUse `extension` 세션 및 정확한 탭을 보존한다는 근거가 없으므로 호출하지 않았다. WSL preflight도 시도했으나 stale-session 판정(exit 23)에 이르기 전, Windows PowerShell 실행에서 exit 126으로 실패했다.
+
+```text
+/bin/bash: line 1: /mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/powershell.exe: cannot execute binary file: Exec format error
+```
+
+이는 WSL/Windows 실행 연결의 기술 오류다. BrowserUse 세션이 stale하다는 증거도, 정책 거부도 아니다. 따라서 이번 P114에서 기존 탭 열거·claim·페이지 확인을 하지 못했다. 새 browser/profile을 시작하거나 Playwright로 우회하지 않았고, navigation·download/upload·입력·전송·capture·기존 초안 변경도 0회다. 마지막으로 실제 same-tab read-only 확인된 기록은 P112(2026-09-25 09:44 KST)이며, 현재 탭/첨부 상태는 확인하지 못했다.
+
+### 저장소 및 검증 기준점
+
+- P114 문서 수정 전 local/origin branch SHA는 `9cb9bd6762d9856d688658db416235d085c44258`로 같고 worktree는 clean이었다. PR #7은 [OPEN/DRAFT/CLEAN](https://github.com/Daikisong/stock_agent/pull/7), `main` 미병합이다.
+- 해당 SHA의 Pro PR [36398167936](https://github.com/Daikisong/stock_agent/actions/runs/36398167936), Pro push [36398163276](https://github.com/Daikisong/stock_agent/actions/runs/36398163276), V6 [36398167891](https://github.com/Daikisong/stock_agent/actions/runs/36398167891)은 모두 SUCCESS다. 두 Pro run과 V6 full suite는 각각 7,952 tests, skipped 38, failure/error 0이며, V6 Gate 1 receipt 4/4, Phase100 15/15, production static audit critical 0이다. 이는 **P114 문서 push 전 SHA의 결과**다.
+- 전체 goal은 미완료다. 마지막 durable live canary 기록은 C06만 완료해 P9 1/3, C17/C28 대기이며 C15 R6 same-job 복구도 별도 미완료다. P114는 조사/query/fetch, job/pass, 다른 archetype, score/Stage 변경, PR draft 해제/merge를 하지 않았다.
+
+### 다음 한 단계
+
+WSL Windows interop가 정상이고 현재 Codex 세션에 `mcp__node_repl__js`가 제공될 때, preflight 후 canonical BrowserUse bootstrap으로 `extension → openTabs() → 정확한 기존 작업 탭 → claimTab() → 반환된 동일 Tab 객체` 순서로 재개한다. 현재 도구가 계속 없으면 기존 사용자의 로그인 세션/탭이 없는 것으로 단정하지 말고, 세션을 보존할 연결이 제공될 때까지 브라우저 조작을 멈춘다. 미전송 첨부/초안은 확인 없이 제거하지 않는다.
+
+P114 상세 상태 영수증: [p114_existing_login_session_tool_reachability_receipt.json](p114_existing_login_session_tool_reachability_receipt.json).
+
+## 과거 최신 인계 — P113, 2026-09-28 17:30 KST
 
 ### 사용자의 세션 지시와 이번 실제 BrowserUse 도달 범위
 

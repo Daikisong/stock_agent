@@ -1,6 +1,6 @@
 # E2R Pro-First V2.1 구현 진행 장부
 
-기준 시각: `2026-09-28 17:30 KST / P113: PR #7 head bf225509…의 exact CI green 재확인; static/generalization/fresh-efficiency 감사 PASS; live P9 1/3`
+기준 시각: `2026-09-28 18:01 KST / P114: 기존 로그인 BrowserUse 세션 원칙 재확인; 현재 Codex tool registry/preflight 확인 실패를 기록; live P9 1/3`
 
 기준 Goal:
 `C:\Users\eorb9\Downloads\e2r_pro_first_v2_all_archetype_research_saturation_master_goal.md`
@@ -19,9 +19,19 @@ ChatGPT 로그인 상태가 필요한 화면 작업은 사용자가 이미 로�
 
 WSL direct setup 전 machine preflight를 한 번 실행한다. Exit code `23`이면 stale BrowserUse session이다. 새 Chrome/profile이나 재로그인으로 우회하지 말고, 기존 로그인 세션과 같은 탭을 보존할 연결이 없으면 실제 오류를 기록하고 멈춘다. 상세 명령과 recovery 순서는 아래 handoff를 따른다.
 
-안정된 실행 규칙과 최신 C15 handoff는 [BrowserUse 기존 로그인 세션 인수인계 P113](browseruse_existing_session_handoff.md#최신-인계--p113-2026-09-28-1730-kst)에 기록한다. P98 및 이전 상세 파일은 당시 장애 이력이지 현재 브라우저 상태가 아니다. 서로 모순되면 이 문서의 최상단 규칙과 가장 최근 checkpoint가 우선한다. 인증값·쿠키·세션 토큰·tab ID는 기록하지 않는다.
+안정된 실행 규칙과 최신 C15 handoff는 [BrowserUse 기존 로그인 세션 인수인계 P114](browseruse_existing_session_handoff.md#최신-인계--p114-2026-09-28-1801-kst)에 기록한다. P98 및 이전 상세 파일은 당시 장애 이력이지 현재 브라우저 상태가 아니다. 서로 모순되면 이 문서의 최상단 규칙과 가장 최근 checkpoint가 우선한다. 인증값·쿠키·세션 토큰·tab ID는 기록하지 않는다.
 
-## 지금 상태 — P113, 2026-09-28 17:30 KST
+## 지금 상태 — P114, 2026-09-28 18:01 KST
+
+- **사용자 지시:** 로그인 필요한 BrowserUse 작업은 사용자가 이미 로그인한 바로 그 세션과 정확한 기존 탭에서만 한다. 새 창/브라우저/프로필/CDP/relogin/대체 대화로 우회하지 않는다. 같은 탭 연결이 확인되지 않으면 조작하지 않고 실제 도달 범위와 오류를 기록한다.
+- **Git/PR 기준점:** P114 문서 변경 전 local/origin SHA `9cb9bd6762d9856d688658db416235d085c44258`, clean, ahead/behind 0/0. PR #7 `OPEN/DRAFT/CLEAN`, main 미병합. 해당 exact SHA의 Pro PR [36398167936](https://github.com/Daikisong/stock_agent/actions/runs/36398167936), Pro push [36398163276](https://github.com/Daikisong/stock_agent/actions/runs/36398163276), V6 [36398167891](https://github.com/Daikisong/stock_agent/actions/runs/36398167891)은 SUCCESS; 각각 full suite 7,952 tests, skipped 38, failure/error 0. V6 Gate1 4/4, Phase100 15/15, static audit critical 0. 이 CI는 P114 docs commit 전 head에 대한 결과다.
+- **이번 BrowserUse reachability:** 현재 tool registry에는 `mcp__node_repl__js`가 없었다. `mcp__playwright__browser_*` 도구는 보였으나 기존 사용자 로그인 세션/정확한 탭을 보존한다는 근거가 없어 사용하지 않았다. WSL preflight 시도는 exit `126`: `/bin/bash: line 1: /mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/powershell.exe: cannot execute binary file: Exec format error`. 따라서 기존 사용자 탭은 열거·claim·검사하지 못했다. 이를 stale-session exit `23`이나 정책 거부로 분류하지 않는다. 새 창/프로필/CDP를 열지 않았고 기존 탭·초안 변경도 없었다.
+- **현재 로그인/첨부 상태:** P112(2026-09-25 09:44 KST)에 로그인된 `6 Pro` root 탭을 same-object read-only 확인했고 미전송 `research_packet(20260924-172107).json` 타일이 보였다는 과거 기록이 있다. P114에서는 탭에 접근하지 못했으므로 그 첨부가 현재도 남아 있는지, 내용/hash가 무엇인지는 확인하지 않았다. 과거 filename/다운로드 기록을 현재 확인으로 승격하지 않는다.
+- **남은 실제 live 작업:** P9 full-thesis Pro canary는 C06/C17/C28 중 C06만 완료해 1/3; C17/C28 pending. C15 R6 same-job recovery도 미완료. 전체 goal 미완료.
+- **이번 P114 범위:** 사용자 지시·도구 미도달·정확한 preflight 오류·다음 안전 단계를 handoff 및 receipt에 기록한다. query/fetch, 새 job/pass, 다른 archetype, score/Stage 변경, browser UI 조작, submit/capture, PR draft 해제/merge는 없다.
+- **다음 한 단계:** Windows interop가 정상이고 현재 resumed Codex 연결에서 `mcp__node_repl__js`가 실제로 제공되면 preflight 후 기존 `extension` 로그인 탭을 열거하고 정확한 탭을 claim한다. 그렇지 않으면 로그인 세션이 없다고 단정하거나 다른 브라우저로 우회하지 말고 중단 상태를 기록한다. 세부사항은 [P114 handoff](browseruse_existing_session_handoff.md#최신-인계--p114-2026-09-28-1801-kst)와 [P114 receipt](p114_existing_login_session_tool_reachability_receipt.json)에 둔다.
+
+## 직전 전체 검증 — P113, 2026-09-28 17:30 KST
 
 - **Git/PR:** P113 시작 시 local/origin feature head `bf225509382f5391c61d98507f93cef20c705d6d`로 일치, worktree clean, ahead/behind 0/0. PR #7 `OPEN/DRAFT/CLEAN`, main 미병합. PR API 및 `ls-remote`가 현재 head를 확인했다.
 - **Exact-head CI:** [Pro PR 36079242405](https://github.com/Daikisong/stock_agent/actions/runs/36079242405), [Pro push 36079238509](https://github.com/Daikisong/stock_agent/actions/runs/36079238509), [V6 36079242306](https://github.com/Daikisong/stock_agent/actions/runs/36079242306) 모두 SUCCESS, full suite 각각 7,952, skipped 38, failure/error 0. Pro PR core-unit 300, browser-mock-e2e 105, Reviewer A–H, compile/diff-check PASS; V6 Gate 1 4/4, Phase100 15/15, static audit critical 0.
